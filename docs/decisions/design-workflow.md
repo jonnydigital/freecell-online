@@ -2,26 +2,40 @@
 
 *Date: 2026-02-23*
 
-## Approach: Gemini 3.1 Pro + Claude Frontend Design Skill
+## Approach: Multi-Model Design Council
 
-### Gemini 3.1 Pro (via AI Studio / CLI)
-- **Role**: Primary frontend designer — generates UI concepts, component designs, layout ideas
-- **Strength**: Bold, distinctive visual design; strong with React + Tailwind + shadcn/ui
-- **Use for**: Initial mockups, component styling, animation concepts, responsive layouts, visual polish
+### ChatGPT / GPT-5.x (via `codex` CLI)
+- **CLI**: `codex exec -m gpt-5.1 "prompt"` or `codex exec -m o3 "prompt"`
+- **Role**: Frontend designer — generates UI concepts, component designs, layout ideas
+- **Strength**: Strong visual design intuition, creative concepts
 
-### Claude (frontend-design-ultimate skill)
-- **Role**: Design critic, refinement, and production implementation
-- **Strength**: Anti-AI-slop aesthetics, mobile-first responsive patterns, production-grade code
-- **Use for**: Reviewing Gemini's output, catching generic/cookie-cutter patterns, ensuring distinctiveness, bundling for production
+### Claude Opus (via `claude` CLI)  
+- **CLI**: `claude --model opus --print "prompt"`
+- **Role**: Architecture, design critique, production implementation
+- **Strength**: Deep technical reasoning, anti-AI-slop aesthetics (via frontend-design-ultimate skill)
+
+### Gemini 3.1 Pro (via AI Studio browser — not yet in CLI)
+- **Access**: Browser → AI Studio (aistudio.google.com) or Gemini app
+- **Role**: Frontend designer, deep research, alternative perspectives
+- **Note**: CLI only has gemini-2.5-pro (`gemini -m gemini-2.5-pro "prompt"`). Use browser for 3.1.
 
 ### Workflow
-1. **Brief Gemini** with specific design task (e.g., "Design the game board layout for desktop and mobile")
-2. **Gemini generates** concepts with code
-3. **Claude reviews** through frontend-design-ultimate lens — critiques, refines, ensures it doesn't look like every other AI-generated site
-4. **Iterate** until the design is distinctive, performant, and production-ready
+1. **Brief all models** with the same design task
+2. **Compare outputs** — pick the best ideas from each
+3. **Fred synthesizes** through frontend-design-ultimate lens — kill anything generic, push for distinctiveness
+4. **Iterate** with the strongest model for that specific task
 5. **Integrate** into the Phaser + Next.js architecture
 
-### Why Both?
-- Gemini excels at creative generation — more divergent, surprising ideas
-- Claude excels at critical evaluation — catches sameness, ensures quality
-- Together they produce designs that are both creative AND polished
+### CLI Quick Reference
+```bash
+# ChatGPT (via Codex)
+codex exec -m gpt-5.1 "Design a FreeCell game board..."
+
+# Claude Opus
+claude --model opus --print "Review this design..."
+
+# Gemini 2.5 Pro (CLI fallback)
+gemini -m gemini-2.5-pro "Design the TopBar component..."
+
+# Gemini 3.1 Pro → use browser (AI Studio)
+```

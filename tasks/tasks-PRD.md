@@ -1,6 +1,7 @@
 # Tasks: PlayFreeCellOnline.com MVP
 
 *Generated from: `docs/PRD.md` (Phase 1 — MVP)*
+*Refined with Gemini 3.1 Pro review (2026-02-23)*
 
 ## Relevant Files
 
@@ -65,6 +66,11 @@
 
 ## Tasks
 
+- [ ] 0.0 Spikes & Prototypes (DO FIRST — de-risk before building)
+  - [ ] 0.1 **(SPIKE)** Time-box 8 hours to compile fc-solve C library to WebAssembly via Emscripten. Create a build script and a simple HTML test page that calls `getHint()` on a sample game state. Document the build process. **This is the highest technical risk — if it fails, we need an alternative hint strategy.**
+  - [ ] 0.2 **(PROTOTYPE)** Create a minimal `GameShell.tsx` that dynamically loads a basic Phaser scene via `next/dynamic` with `ssr: false`. Verify: scene renders, resizes with window, and unmounts cleanly without memory leaks. **Proves the Phaser + Next.js integration pattern before building on it.**
+  - [ ] 0.3 **(DECISION)** Finalize card asset strategy — purchase from marketplace, use open-source set (e.g., svg-cards), or commission custom designs. This blocks all rendering work. Document decision in `docs/decisions/card-assets.md`.
+
 - [ ] 1.0 Project Scaffolding & Infrastructure
   - [ ] 1.1 Initialize Next.js 14+ project with TypeScript, Tailwind CSS, and App Router (`npx create-next-app@latest freecell-online --typescript --tailwind --app`)
   - [ ] 1.2 Configure ESLint and Prettier with consistent rules; add lint/format scripts to `package.json`
@@ -82,14 +88,17 @@
   - [ ] 2.3 Create `src/engine/Deck.ts` — 52-card deck generation using seeded PRNG (e.g., mulberry32). Given a game number (1–9,999,999), always produce the same deal. Include `dealToTableau()` returning 8 cascades.
   - [ ] 2.4 Write tests for Deck — verify same seed = same deal, different seed = different deal, all 52 cards present, correct cascade distribution (4 cascades of 7, 4 of 6)
   - [ ] 2.5 Create `src/engine/FreeCellEngine.ts` — Game state manager: 8 cascades, 4 free cells, 4 foundations. Methods: `getLegalMoves()`, `executeMove(from, to)`, `isWon()`, `canAutoMove()`, `getMaxMovableCards(emptyFreeCells, emptyCascades)`
-  - [ ] 2.6 Implement sequence-aware move logic — when moving a card to a cascade, engine calculates if enough free cells/empty cascades exist to move the implied run, then executes intermediate parking moves
+  - [ ] 2.6 Implement sequence-aware move logic:
+    - [ ] 2.6.1 Implement `calculateMaxMovableCards(emptyFreeCells, emptyCascades)` based on standard FreeCell rules (formula: (1 + emptyFreeCells) * 2^emptyCascades)
+    - [ ] 2.6.2 Update `executeMove` to handle sequence moves — validate via `calculateMaxMovableCards`, then generate the list of intermediate "parking" moves required
+    - [ ] 2.6.3 Write specific unit tests for `calculateMaxMovableCards` and sequence-move execution with various free cell/empty cascade combinations
   - [ ] 2.7 Implement auto-move to foundations — after each player move, check if any card can safely go to a foundation (safe = both cards of opposite color with rank-1 are already on foundations)
   - [ ] 2.8 Write extensive tests for FreeCellEngine — legal moves, illegal moves, sequence moves, auto-move, win detection, edge cases (empty cascades, full free cells)
   - [ ] 2.9 Create `src/game/PhaserConfig.ts` — Phaser game config (Canvas renderer preferred with WebGL fallback, responsive scaling, transparent background for CSS integration)
   - [ ] 2.10 Create `src/game/FreeCellScene.ts` — Main Phaser scene: `preload()` card assets, `create()` layout (cascade positions, free cell positions, foundation positions), handle game state rendering
 
 - [ ] 3.0 Card Rendering, Drag-and-Drop & Animations
-  - [ ] 3.1 Source or create card sprite assets — 52 card faces + card back, optimized for web (SVG or compressed PNG sprite sheet). Save to `public/cards/`
+  - [ ] 3.1 Implement card assets per decision from task 0.3 — 52 card faces + card back, optimized for web (SVG or compressed PNG sprite sheet). Save to `public/cards/`. Include multiple card back designs for future customization.
   - [ ] 3.2 Create `src/game/CardSprite.ts` — Phaser sprite wrapper: render card at position, flip animation, highlight states (valid target, selected), z-index management for overlapping cascades
   - [ ] 3.3 Implement drag-and-drop in FreeCellScene — on drag start: validate card is top of cascade or in free cell; on drag: move sprite with pointer (0-latency pickup); on drop: check if target is valid via engine, animate to position or snap back
   - [ ] 3.4 Implement sequence-aware drag — when dragging a card that's part of a valid run, visually pick up the entire sub-stack; if dropped on valid target, engine executes intermediate moves with sequential animations
@@ -98,6 +107,9 @@
   - [ ] 3.7 Ensure locked 60fps — profile with Chrome DevTools, avoid layout thrash, use Phaser tweens (not CSS transitions), batch sprite updates
   - [ ] 3.8 Add click-to-move as alternative to drag — tap a card to select it, tap a valid destination to move. Mobile-friendly fallback.
   - [ ] 3.9 Write tests for CardSprite and animation utilities
+  - [ ] 3.10 Create an animation queue/manager in FreeCellScene to execute a series of moves sequentially (needed for sequence moves and auto-finish)
+  - [ ] 3.11 Implement keyboard controls for game interaction: arrow keys to navigate cascades/cells, Enter to pick up/place card, Esc to cancel selection
+  - [ ] 3.12 Implement a loading screen/skeleton displayed while Phaser assets and WASM module initialize
 
 - [ ] 4.0 Player Controls, Solver & Stats
   - [ ] 4.1 Create `src/engine/MoveHistory.ts` — stack-based undo/redo system. Each entry stores: move type, source, destination, cards moved, any auto-moves triggered. Support unlimited undo.
@@ -125,6 +137,8 @@
   - [ ] 5.12 Create `src/components/AdSlot.tsx` — reusable component for ad placements. Props: position (sidebar, footer, interstitial), size. Lazy-loaded to not block game rendering.
   - [ ] 5.13 Integrate Google AdSense — sidebar banners flanking game board (desktop), footer banner (mobile), interstitial between games (post-win only). Verify ads don't degrade performance.
   - [ ] 5.14 Write tests for React components (GameShell mount/unmount, TopBar button states, NewGameModal form)
+  - [ ] 5.15 Add ARIA labels and roles to all interactive UI elements (buttons, modals, controls). Ensure all non-game UI is keyboard-navigable.
+  - [ ] 5.16 (CONTENT) Write and populate the actual content for `/how-to-play`, `/strategy`, and `/faq` pages — not just page shells
 
 - [ ] 6.0 Authentication & Cross-Device Sync
   - [ ] 6.1 Set up Supabase project — create tables: `profiles` (user_id, display_name, created_at), `game_stats` (user_id, games_played, games_won, best_time, avg_time, current_streak, longest_streak), `saved_games` (user_id, game_number, state_json, updated_at)
@@ -134,3 +148,14 @@
   - [ ] 6.5 Create `src/lib/sync.ts` — on login: merge LocalStorage stats with server stats (take higher values for bests, sum for totals). On each game completion: write to both local and server. On load: prefer server if logged in, fallback to local.
   - [ ] 6.6 Implement saved game sync — if user closes browser mid-game and reopens on another device, resume from saved state
   - [ ] 6.7 Write tests for auth flow, sync merge logic (conflict resolution), and saved game persistence
+
+- [ ] 7.0 Legal & Compliance
+  - [ ] 7.1 Create `/privacy` and `/terms` pages in Next.js with proper legal content (Privacy Policy covering analytics, ads, Supabase data; Terms of Service)
+  - [ ] 7.2 Integrate cookie consent banner (e.g., `react-cookie-consent`) that blocks analytics/ad scripts until user consents (GDPR compliance)
+  - [ ] 7.3 Add links to Privacy Policy and Terms in site footer on all pages
+
+- [ ] 8.0 Analytics & Monitoring
+  - [ ] 8.1 Set up Google Analytics 4 property for playfreecellonline.com
+  - [ ] 8.2 Create `src/lib/analytics.ts` — wrapper service for GA4 event tracking, respecting cookie consent state
+  - [ ] 8.3 Implement tracking for core game events: `game_start` (game_number, is_winnable), `game_win` (time_seconds, moves, used_hints, used_undo), `game_lose`, `hint_used`, `undo_used`, `daily_challenge_started`
+  - [ ] 8.4 Set up Sentry.io (free tier) for runtime error monitoring — integrate SDK into `next.config.js`, configure source maps upload for production builds

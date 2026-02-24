@@ -31,11 +31,27 @@ export default function GameShell() {
   const [showGameInput, setShowGameInput] = useState(false);
   const [isMuted, setIsMuted] = useState(() => soundManager.muted);
   const [showMoreMenu, setShowMoreMenu] = useState(false);
+  const [isLandscapeMobile, setIsLandscapeMobile] = useState(false);
 
   // Load stats on mount
   useEffect(() => {
     setStats(loadStats());
     initErrorTracking();
+  }, []);
+
+  // Detect landscape on mobile (hide toolbars to maximize game area)
+  useEffect(() => {
+    const checkOrientation = () => {
+      setIsLandscapeMobile(window.innerWidth > window.innerHeight && window.innerHeight < 500);
+    };
+    checkOrientation();
+    window.addEventListener('resize', checkOrientation);
+    const onOrientationChange = () => setTimeout(checkOrientation, 200);
+    window.addEventListener('orientationchange', onOrientationChange);
+    return () => {
+      window.removeEventListener('resize', checkOrientation);
+      window.removeEventListener('orientationchange', onOrientationChange);
+    };
   }, []);
 
   const winDataRef = useRef<{ time: number; moves: number } | null>(null);
@@ -227,27 +243,29 @@ export default function GameShell() {
         </div>
       </div>
 
-      {/* ── Mobile Top Bar (only info, hidden on desktop) ── */}
-      <div className="flex md:hidden items-center justify-between px-3 py-1.5 bg-[#072907] border-b border-[#1a5c1a]/30">
-        <div className="flex items-center gap-3 text-xs text-white/70">
-          {gameNumber && (
-            <button
-              onClick={() => setShowGameInput(true)}
-              className="font-medium hover:text-white transition-colors"
-              title="Enter game number"
-            >
-              {isDailyGame && <span className="text-yellow-400 mr-1">&#9819;</span>}
-              Game #{gameNumber}
-            </button>
-          )}
+      {/* ── Mobile Top Bar (only info, hidden on desktop and landscape) ── */}
+      {!isLandscapeMobile && (
+        <div className="flex md:hidden items-center justify-between px-3 py-1.5 bg-[#072907] border-b border-[#1a5c1a]/30">
+          <div className="flex items-center gap-3 text-xs text-white/70">
+            {gameNumber && (
+              <button
+                onClick={() => setShowGameInput(true)}
+                className="font-medium hover:text-white transition-colors"
+                title="Enter game number"
+              >
+                {isDailyGame && <span className="text-yellow-400 mr-1">&#9819;</span>}
+                Game #{gameNumber}
+              </button>
+            )}
+          </div>
+          <div className="flex items-center gap-3 text-xs text-white/70">
+            <span>{moveCount} moves</span>
+            {isWon && (
+              <span className="text-yellow-400 font-bold animate-pulse">Win!</span>
+            )}
+          </div>
         </div>
-        <div className="flex items-center gap-3 text-xs text-white/70">
-          <span>{moveCount} moves</span>
-          {isWon && (
-            <span className="text-yellow-400 font-bold animate-pulse">Win!</span>
-          )}
-        </div>
-      </div>
+      )}
 
       {/* Game Canvas Container */}
       <div className="relative flex-1">
@@ -280,10 +298,22 @@ export default function GameShell() {
             }}
           />
         )}
+
+        {/* Floating landscape overlay: undo/redo when toolbars are hidden */}
+        {isLandscapeMobile && (
+          <div className="absolute bottom-2 right-2 z-20 flex gap-1.5 md:hidden">
+            <button onClick={handleUndo} className="p-2 bg-black/40 active:bg-black/60 rounded-lg text-white/70" title="Undo">
+              <RotateCcw size={18} />
+            </button>
+            <button onClick={handleRedo} className="p-2 bg-black/40 active:bg-black/60 rounded-lg text-white/70" title="Redo">
+              <RotateCw size={18} />
+            </button>
+          </div>
+        )}
       </div>
 
-      {/* ── Mobile Bottom Bar (hidden on desktop) ── */}
-      <div className="flex md:hidden items-center justify-around px-2 py-2 bg-[#072907] border-t border-[#1a5c1a]/30 safe-area-bottom">
+      {/* ── Mobile Bottom Bar (hidden on desktop and landscape) ── */}
+      {!isLandscapeMobile && <div className="flex md:hidden items-center justify-around px-2 py-2 bg-[#072907] border-t border-[#1a5c1a]/30 safe-area-bottom">
         <button onClick={handleNewGame} className="flex flex-col items-center gap-0.5 p-2 text-white/70 active:text-white" title="New Game">
           <Shuffle size={22} />
           <span className="text-[10px]">New</span>
@@ -332,7 +362,7 @@ export default function GameShell() {
             </div>
           )}
         </div>
-      </div>
+      </div>}
 
       {/* Stats Modal */}
       <StatsPanel

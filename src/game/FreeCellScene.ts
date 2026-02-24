@@ -17,10 +17,8 @@ import { soundManager } from '../lib/sounds';
 
 // Layout constants
 const CARD_RATIO = 1.4; // height/width ratio
-const CASCADE_OVERLAP = 0.30; // fraction of card height visible when overlapping
 const MIN_CASCADE_OVERLAP_PX = 22; // minimum pixels visible per card (ensures rank+suit corner is readable)
-const TOP_MARGIN_LANDSCAPE = 0.08;
-const TOP_MARGIN_PORTRAIT = 0.02;
+const MAX_CASCADE_OVERLAP_FRAC = 0.65; // max fraction of card height visible per buried card
 const SIDE_MARGIN = 0.02;
 const GAP = 0.01;
 
@@ -43,6 +41,7 @@ export class FreeCellScene extends Phaser.Scene {
   private boardOffsetY: number = 0;
   private isPortrait: boolean = false;
   private topRowHeight: number = 0; // Height used by free cells + foundations area
+  private cascadeGap: number = 0; // Gap between top row and cascade area
 
   // Drag state
   private dragCards: CardSprite[] = [];
@@ -143,6 +142,7 @@ export class FreeCellScene extends Phaser.Scene {
 
     // Listen for resize
     this.scale.on('resize', () => {
+      this.clearSelection();
       this.calculateLayout();
       this.drawBackgroundEffects();
       this.rebuildBoard();
@@ -216,46 +216,53 @@ export class FreeCellScene extends Phaser.Scene {
     const h = this.scale.height;
     this.isPortrait = h > w * 1.1; // Portrait if significantly taller than wide
 
-    const topMargin = this.isPortrait ? TOP_MARGIN_PORTRAIT : TOP_MARGIN_LANDSCAPE;
+    // Card width from fitting 8 columns across the screen
+    const usableWidth = w * (1 - 2 * SIDE_MARGIN);
+    const gapPx = w * GAP;
+    const cardWidthFromWidth = Math.floor((usableWidth - 7 * gapPx) / 8);
+    const cardHeightFromWidth = Math.floor(cardWidthFromWidth * CARD_RATIO);
 
     if (this.isPortrait) {
       // Portrait: 2 rows of 4 at top (free cells row, then foundations row)
-      // Cards need to be sized for 8 cascade columns
-      const usableWidth = w * (1 - 2 * SIDE_MARGIN);
-      this.cardWidth = Math.floor((usableWidth - 7 * (w * GAP)) / 8);
-      this.cardHeight = Math.floor(this.cardWidth * CARD_RATIO);
+      const topMargin = Math.floor(h * 0.01);
+      const rowGap = Math.floor(h * 0.008);
+      this.cascadeGap = Math.floor(h * 0.015);
 
-      // Cap card size for portrait
+      // Cap card size for portrait (rarely needed — width is usually the constraint)
       const maxCardHeight = h * 0.12;
-      if (this.cardHeight > maxCardHeight) {
-        this.cardHeight = Math.floor(maxCardHeight);
-        this.cardWidth = Math.floor(this.cardHeight / CARD_RATIO);
-      }
+      this.cardHeight = Math.min(cardHeightFromWidth, Math.floor(maxCardHeight));
+      this.cardWidth = this.cardHeight === cardHeightFromWidth
+        ? cardWidthFromWidth
+        : Math.floor(this.cardHeight / CARD_RATIO);
 
       this.boardOffsetX = Math.floor(
-        (w - (8 * this.cardWidth + 7 * (w * GAP))) / 2
+        (w - (8 * this.cardWidth + 7 * gapPx)) / 2
       );
-      this.boardOffsetY = Math.floor(h * topMargin);
-
-      // Two rows: free cells then foundations
-      const rowGap = Math.floor(h * 0.008);
+      this.boardOffsetY = topMargin;
       this.topRowHeight = this.cardHeight * 2 + rowGap;
     } else {
-      // Landscape: classic single row with 4 free cells + 4 foundations
-      const usableWidth = w * (1 - 2 * SIDE_MARGIN);
-      this.cardWidth = Math.floor((usableWidth - 7 * (w * GAP)) / 8);
-      this.cardHeight = Math.floor(this.cardWidth * CARD_RATIO);
+      // Landscape: maximize card size within both width and height constraints
+      // Single row with 4 free cells + 4 foundations, then 8 cascade columns below
+      const topPad = Math.max(Math.floor(h * 0.005), 2);
+      this.cascadeGap = Math.floor(h * 0.01);
+      const bottomPad = 4;
+      const minOverlapsNeeded = 6; // initial deal has max 7-card cascades
 
-      const maxCardHeight = h * 0.18;
-      if (this.cardHeight > maxCardHeight) {
-        this.cardHeight = Math.floor(maxCardHeight);
-        this.cardWidth = Math.floor(this.cardHeight / CARD_RATIO);
-      }
+      // Max card height that fits: topRow + cascade(1 card + 6 min overlaps)
+      const vertBudget = h - topPad - this.cascadeGap - bottomPad;
+      const maxCardHeight = Math.floor(
+        (vertBudget - minOverlapsNeeded * MIN_CASCADE_OVERLAP_PX) / 2
+      );
+
+      this.cardHeight = Math.min(cardHeightFromWidth, maxCardHeight);
+      this.cardWidth = this.cardHeight === cardHeightFromWidth
+        ? cardWidthFromWidth
+        : Math.floor(this.cardHeight / CARD_RATIO);
 
       this.boardOffsetX = Math.floor(
-        (w - (8 * this.cardWidth + 7 * (w * GAP))) / 2
+        (w - (8 * this.cardWidth + 7 * gapPx)) / 2
       );
-      this.boardOffsetY = Math.floor(h * topMargin);
+      this.boardOffsetY = topPad;
       this.topRowHeight = this.cardHeight;
     }
   }
@@ -303,27 +310,33 @@ export class FreeCellScene extends Phaser.Scene {
   private getCurrentOverlap(): number {
     const state = this.engine.getState();
     const maxCascadeLength = Math.max(...state.cascades.map(c => c.length), 1);
-    const cascadeGap = this.scale.height * 0.02;
-    const topRow = this.boardOffsetY + this.topRowHeight + cascadeGap;
-    const availableHeight = this.scale.height - topRow - 10;
+    const topRow = this.boardOffsetY + this.topRowHeight + this.cascadeGap;
+    const availableHeight = this.scale.height - topRow - 4;
 
-    const defaultOverlap = Math.max(
-      Math.floor(this.cardHeight * CASCADE_OVERLAP),
-      MIN_CASCADE_OVERLAP_PX
-    );
-    const maxOverlap = maxCascadeLength > 1
+    // Target: fill 85% of available cascade area for a comfortable spread
+    const targetOverlap = maxCascadeLength > 1
+      ? Math.floor((availableHeight * 0.85 - this.cardHeight) / (maxCascadeLength - 1))
+      : this.cardHeight;
+
+    // Cap: don't spread cards more than 65% of card height apart
+    const maxDesiredOverlap = Math.floor(this.cardHeight * MAX_CASCADE_OVERLAP_FRAC);
+
+    // Must physically fit in available space
+    const maxFittingOverlap = maxCascadeLength > 1
       ? Math.floor((availableHeight - this.cardHeight) / (maxCascadeLength - 1))
-      : defaultOverlap;
+      : this.cardHeight;
 
-    return Math.min(defaultOverlap, maxOverlap);
+    return Math.max(
+      MIN_CASCADE_OVERLAP_PX,
+      Math.min(targetOverlap, maxDesiredOverlap, maxFittingOverlap)
+    );
   }
 
   private getCascadeCardPosition(
     col: number,
     row: number
   ): { x: number; y: number } {
-    const cascadeGap = this.scale.height * 0.02;
-    const topRow = this.boardOffsetY + this.topRowHeight + cascadeGap;
+    const topRow = this.boardOffsetY + this.topRowHeight + this.cascadeGap;
     const overlap = this.getCurrentOverlap();
 
     return {
@@ -450,15 +463,7 @@ export class FreeCellScene extends Phaser.Scene {
           );
         } else {
           // Buried card: only a thin strip is visible (the overlap amount)
-          const defaultOverlap = Math.floor(this.cardHeight * CASCADE_OVERLAP);
-          const maxCascadeLength = Math.max(...state.cascades.map(c => c.length), 1);
-          const cascadeGap = this.scale.height * 0.02;
-          const topRow = this.boardOffsetY + this.topRowHeight + cascadeGap;
-          const availableHeight = this.scale.height - topRow - 10;
-          const maxOverlap = maxCascadeLength > 1
-            ? Math.floor((availableHeight - this.cardHeight) / (maxCascadeLength - 1))
-            : defaultOverlap;
-          const visibleHeight = Math.min(defaultOverlap, maxOverlap);
+          const visibleHeight = this.getCurrentOverlap();
 
           // Expand the hit area slightly for easier tapping, minimum 44px
           const hitHeight = Math.max(visibleHeight + 10, 44);
@@ -545,7 +550,7 @@ export class FreeCellScene extends Phaser.Scene {
 
         this.dragCards.forEach((card, i) => {
           card.x = this.dragStartX + offsetX;
-          card.y = this.dragStartY + offsetY + i * Math.floor(this.cardHeight * CASCADE_OVERLAP);
+          card.y = this.dragStartY + offsetY + i * this.getCurrentOverlap();
         });
       });
 
@@ -634,8 +639,7 @@ export class FreeCellScene extends Phaser.Scene {
   }
 
   private getCascadeColumnAtPoint(x: number, y: number): number {
-    const cascadeGap = this.scale.height * 0.02;
-    const cascadeTop = this.boardOffsetY + this.topRowHeight + cascadeGap;
+    const cascadeTop = this.boardOffsetY + this.topRowHeight + this.cascadeGap;
     if (y < cascadeTop - 5) return -1;
 
     const w = this.scale.width;
@@ -710,8 +714,7 @@ export class FreeCellScene extends Phaser.Scene {
     }
 
     // Calculate which card was tapped based on Y position
-    const cascadeGap = this.scale.height * 0.02;
-    const cascadeTop = this.boardOffsetY + this.topRowHeight + cascadeGap;
+    const cascadeTop = this.boardOffsetY + this.topRowHeight + this.cascadeGap;
     const overlap = this.getCurrentOverlap();
 
     const relativeY = tapY - cascadeTop;
@@ -885,8 +888,7 @@ export class FreeCellScene extends Phaser.Scene {
 
     // Position tooltip avoiding screen edges
     let tooltipX = x - tooltipWidth / 2;
-    const cascadeGap = this.scale.height * 0.02;
-    const cascadeTop = this.boardOffsetY + this.topRowHeight + cascadeGap;
+    const cascadeTop = this.boardOffsetY + this.topRowHeight + this.cascadeGap;
     let tooltipY = cascadeTop;
 
     if (tooltipX < 5) tooltipX = 5;
@@ -1109,8 +1111,7 @@ export class FreeCellScene extends Phaser.Scene {
   private showDestinationHighlights(destinations: Location[]): void {
     this.clearHighlights();
 
-    const cascadeGap = this.scale.height * 0.02;
-    const cascadeTop = this.boardOffsetY + this.topRowHeight + cascadeGap;
+    const cascadeTop = this.boardOffsetY + this.topRowHeight + this.cascadeGap;
     const cascadeBottom = this.scale.height;
 
     for (const dest of destinations) {

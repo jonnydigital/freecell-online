@@ -27,7 +27,7 @@ export function createPhaserConfig(
       touch: true,
     },
     audio: {
-      noAudio: true, // We'll add audio later
+      noAudio: true, // Audio handled via Web Audio API in src/lib/sounds.ts
     },
   };
 }

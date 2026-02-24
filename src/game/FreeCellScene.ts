@@ -14,6 +14,7 @@ import { getCardAssetKey } from './CardAssets';
 import { generateCardTextures } from './CardTextureGenerator';
 import { getHint } from '../solver/solver';
 import { getRandomSolvableGame } from '../lib/solvableDeals';
+import { soundManager } from '../lib/sounds';
 
 // Layout constants
 const CARD_RATIO = 1.4; // height/width ratio
@@ -1019,7 +1020,8 @@ export class FreeCellScene extends Phaser.Scene {
     // Highlight valid destinations so user knows where to tap
     this.showDestinationHighlights(destinations);
 
-    // Haptic feedback on select
+    // Audio + haptic feedback on select
+    soundManager.cardSelect();
     this.vibrate();
   }
 
@@ -1190,6 +1192,7 @@ export class FreeCellScene extends Phaser.Scene {
   }
 
   private flashInvalid(sprite: CardSprite): void {
+    soundManager.invalidMove();
     const gfx = this.add.graphics();
     gfx.fillStyle(0xff0000, 0.3);
     gfx.fillRoundedRect(sprite.x, sprite.y, this.cardWidth, this.cardHeight, 6);
@@ -1437,6 +1440,13 @@ export class FreeCellScene extends Phaser.Scene {
     const autoMoves = this.engine.autoMoveToFoundations();
     this.history.push(move, autoMoves);
 
+    // Play sound based on destination type
+    if (to.type === 'foundation') {
+      soundManager.cardToFoundation();
+    } else {
+      soundManager.cardPlace();
+    }
+
     this.repositionAllCards();
     this.performAutoMoves();
 
@@ -1446,6 +1456,7 @@ export class FreeCellScene extends Phaser.Scene {
     });
 
     if (this.engine.getState().isWon) {
+      soundManager.winFanfare();
       gameBridge.emit('gameWon', {
         time: this.timer.seconds,
         moves: this.engine.getState().moveCount,
@@ -1494,6 +1505,7 @@ export class FreeCellScene extends Phaser.Scene {
       if (bestCard) {
         const move = this.engine.executeMove(bestCard.from, { type: 'foundation', suit: bestCard.suit });
         this.history.push(move, []);
+        soundManager.cardToFoundation();
         this.repositionAllCards();
 
         gameBridge.emit('moveExecuted', {
@@ -1502,6 +1514,7 @@ export class FreeCellScene extends Phaser.Scene {
         });
 
         if (this.engine.getState().isWon) {
+          soundManager.winFanfare();
           gameBridge.emit('autoCompletable', { completable: false });
           gameBridge.emit('gameWon', {
             time: this.timer.seconds,
@@ -1817,6 +1830,8 @@ export class FreeCellScene extends Phaser.Scene {
   private undoLastMove(): void {
     const entry = this.history.popUndo();
     if (!entry) return;
+
+    soundManager.undo();
 
     // Undo auto-moves in reverse
     for (let i = entry.autoMoves.length - 1; i >= 0; i--) {

@@ -7,11 +7,12 @@ import { loadStats, saveStats } from '../lib/storage';
 import { trackGameStart, trackWin, trackAbandoned, trackHint, trackUndo, trackMove, trackDeadlock, gameSession } from '../lib/analytics';
 import { initErrorTracking, setGameContext } from '../lib/errorTracking';
 import { getTodaysSeed, getTodayStr, recordDailyCompletion } from '../lib/dailyChallenge';
-import { RotateCcw, RotateCw, Lightbulb, BarChart3, MessageSquare, Shuffle, Calendar, Hash } from 'lucide-react';
+import { RotateCcw, RotateCw, Lightbulb, BarChart3, MessageSquare, Shuffle, Calendar, Hash, Volume2, VolumeX, MoreHorizontal } from 'lucide-react';
 import StatsPanel from './StatsPanel';
 import FeedbackModal from './FeedbackModal';
 import DailyChallengePanel from './DailyChallengePanel';
 import GameNumberInput from './GameNumberInput';
+import { soundManager } from '../lib/sounds';
 
 export default function GameShell() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -27,6 +28,8 @@ export default function GameShell() {
   const [isDailyGame, setIsDailyGame] = useState(false);
   const [autoCompletable, setAutoCompletable] = useState(false);
   const [showGameInput, setShowGameInput] = useState(false);
+  const [isMuted, setIsMuted] = useState(() => soundManager.muted);
+  const [showMoreMenu, setShowMoreMenu] = useState(false);
 
   // Load stats on mount
   useEffect(() => {
@@ -144,6 +147,11 @@ export default function GameShell() {
     gameBridge.emit('newGame', num);
   };
 
+  const handleToggleMute = () => {
+    const muted = soundManager.toggleMute();
+    setIsMuted(muted);
+  };
+
   // Keyboard shortcuts
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -195,6 +203,9 @@ export default function GameShell() {
           </button>
           <button onClick={() => setShowFeedback(true)} className={iconBtnClass} title="Feedback">
             <MessageSquare size={iconSize} />
+          </button>
+          <button onClick={handleToggleMute} className={iconBtnClass} title={isMuted ? "Unmute" : "Mute"}>
+            {isMuted ? <VolumeX size={iconSize} /> : <Volume2 size={iconSize} />}
           </button>
         </div>
         <div className="flex items-center gap-4 text-sm text-white/70">
@@ -283,10 +294,30 @@ export default function GameShell() {
           <BarChart3 size={22} />
           <span className="text-[10px]">Stats</span>
         </button>
-        <button onClick={() => setShowFeedback(true)} className="flex flex-col items-center gap-0.5 p-2 text-white/70 active:text-white" title="Feedback">
-          <MessageSquare size={22} />
-          <span className="text-[10px]">More</span>
-        </button>
+        <div className="relative">
+          <button onClick={() => setShowMoreMenu(!showMoreMenu)} className="flex flex-col items-center gap-0.5 p-2 text-white/70 active:text-white" title="More">
+            <MoreHorizontal size={22} />
+            <span className="text-[10px]">More</span>
+          </button>
+          {showMoreMenu && (
+            <div className="absolute bottom-full right-0 mb-2 bg-[#0d2f0d] border border-[#1a5c1a]/50 rounded-lg shadow-xl overflow-hidden min-w-[160px] z-50">
+              <button
+                onClick={() => { handleToggleMute(); setShowMoreMenu(false); }}
+                className="flex items-center gap-3 w-full px-4 py-3 text-sm text-white/80 hover:bg-[#1a5c1a]/40 active:bg-[#1a5c1a]/60"
+              >
+                {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
+                {isMuted ? 'Unmute' : 'Mute'}
+              </button>
+              <button
+                onClick={() => { setShowFeedback(true); setShowMoreMenu(false); }}
+                className="flex items-center gap-3 w-full px-4 py-3 text-sm text-white/80 hover:bg-[#1a5c1a]/40 active:bg-[#1a5c1a]/60"
+              >
+                <MessageSquare size={16} />
+                Feedback
+              </button>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Stats Modal */}

@@ -22,11 +22,16 @@ export default function Home() {
   const [showSplash, setShowSplash] = useState<boolean | null>(null);
 
   useEffect(() => {
+    let skip = false;
     try {
-      setShowSplash(!localStorage.getItem('skipSplash'));
+      skip = !!localStorage.getItem('skipSplash');
     } catch {
-      setShowSplash(false);
+      skip = true;
     }
+    // Use requestAnimationFrame to avoid synchronous setState in effect
+    requestAnimationFrame(() => {
+      setShowSplash(!skip);
+    });
   }, []);
 
   // Don't render anything until we've checked localStorage (prevents flash)

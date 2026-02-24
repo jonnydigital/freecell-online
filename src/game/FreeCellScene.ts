@@ -136,9 +136,22 @@ export class FreeCellScene extends Phaser.Scene {
     row: number
   ): { x: number; y: number } {
     const topRow = this.boardOffsetY + this.cardHeight + this.scale.height * 0.02;
+    const availableHeight = this.scale.height - topRow - 10; // leave 10px bottom margin
+    
+    // Find the longest cascade to calculate dynamic overlap
+    const state = this.engine.getState();
+    const maxCascadeLength = Math.max(...state.cascades.map(c => c.length), 1);
+    
+    // Calculate overlap: use default, but shrink if cascade would exceed available space
+    const defaultOverlap = Math.floor(this.cardHeight * CASCADE_OVERLAP);
+    const maxOverlap = maxCascadeLength > 1
+      ? Math.floor((availableHeight - this.cardHeight) / (maxCascadeLength - 1))
+      : defaultOverlap;
+    const overlap = Math.min(defaultOverlap, maxOverlap);
+    
     return {
       x: this.getColumnX(col),
-      y: topRow + row * Math.floor(this.cardHeight * CASCADE_OVERLAP),
+      y: topRow + row * overlap,
     };
   }
 

@@ -24,6 +24,7 @@ export type GameToUIEvent =
   | 'statsUpdate'
   | 'gameReady'
   | 'hintResult'
+  | 'autoCompletable'
   | 'error';
 
 export type BridgeEvent = UIToGameEvent | GameToUIEvent;

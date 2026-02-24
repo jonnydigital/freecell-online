@@ -345,6 +345,28 @@ export class FreeCellEngine {
   }
 
   /**
+   * Check if the game is mathematically solved:
+   * All free cells are empty AND every cascade is in descending order
+   * (each card can be placed on its foundation without needing any other moves).
+   * This means all remaining cards can simply be moved to foundations.
+   */
+  isAutoCompletable(): boolean {
+    // Free cells must be empty
+    if (this.emptyFreeCells < 4) return false;
+
+    // Every cascade must be in descending order by rank (same suit isn't required,
+    // but each card must be stackable on its foundation given current foundation state)
+    for (const cascade of this.state.cascades) {
+      for (let i = 0; i < cascade.length - 1; i++) {
+        // Cards must be in descending rank order within each cascade
+        if (cascade[i].rank <= cascade[i + 1].rank) return false;
+      }
+    }
+
+    return true;
+  }
+
+  /**
    * Check if any legal moves remain (deadlock detection)
    */
   hasLegalMoves(): boolean {

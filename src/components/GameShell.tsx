@@ -23,6 +23,7 @@ export default function GameShell() {
   const [showFeedback, setShowFeedback] = useState(false);
   const [showDaily, setShowDaily] = useState(false);
   const [isDailyGame, setIsDailyGame] = useState(false);
+  const [autoCompletable, setAutoCompletable] = useState(false);
 
   // Load stats on mount
   useEffect(() => {
@@ -72,6 +73,7 @@ export default function GameShell() {
       setGameNumber(d.gameNumber);
       setMoveCount(0);
       setIsWon(false);
+      setAutoCompletable(false);
       trackGameStart(d.gameNumber);
       // Check if this is the daily game
       setIsDailyGame(d.gameNumber === getTodaysSeed());
@@ -90,11 +92,17 @@ export default function GameShell() {
       trackDeadlock();
     });
 
+    const unsubAutoComplete = gameBridge.on('autoCompletable', (data: unknown) => {
+      const d = data as { completable: boolean };
+      setAutoCompletable(d.completable);
+    });
+
     return () => {
       unsubReady();
       unsubMove();
       unsubWin();
       unsubDeadlock();
+      unsubAutoComplete();
       if (gameRef.current) {
         gameRef.current.destroy(true);
         gameRef.current = null;
@@ -215,7 +223,24 @@ export default function GameShell() {
       </div>
 
       {/* Game Canvas Container */}
-      <div ref={containerRef} id="game-container" className="flex-1" />
+      <div className="relative flex-1">
+        <div ref={containerRef} id="game-container" className="absolute inset-0" />
+
+        {/* Auto-Finish Button */}
+        {autoCompletable && !isWon && (
+          <div className="absolute top-4 left-1/2 -translate-x-1/2 z-10">
+            <button
+              onClick={() => {
+                setAutoCompletable(false);
+                gameBridge.emit('autoFinish');
+              }}
+              className="px-6 py-3 bg-yellow-500 hover:bg-yellow-400 text-black font-bold text-lg rounded-lg shadow-lg animate-bounce transition-colors"
+            >
+              Auto-Finish
+            </button>
+          </div>
+        )}
+      </div>
 
       {/* Stats Modal */}
       <StatsPanel

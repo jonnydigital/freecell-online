@@ -133,6 +133,7 @@ export class FreeCellScene extends Phaser.Scene {
     gameBridge.on('undo', () => this.undoLastMove());
     gameBridge.on('redo', () => this.redoMove());
     gameBridge.on('hint', () => this.showHint());
+    gameBridge.on('autoFinish', () => this.performAutoFinish());
 
     // Tap on empty areas to deselect or complete move
     this.input.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
@@ -936,10 +937,65 @@ export class FreeCellScene extends Phaser.Scene {
     if (!this.engine.hasLegalMoves() && !this.engine.getState().isWon) {
       gameBridge.emit('deadlock');
     }
+
+    // Check if game is auto-completable
+    if (!this.engine.getState().isWon && this.engine.isAutoCompletable()) {
+      gameBridge.emit('autoCompletable', { completable: true });
+    }
   }
 
   private performAutoMoves(): void {
     this.repositionAllCards();
+  }
+
+  /**
+   * Auto-finish: rapidly move all remaining cards to foundations
+   * with a 50ms stagger animation per card.
+   */
+  private performAutoFinish(): void {
+    if (!this.engine.isAutoCompletable()) return;
+
+    const moveCards = () => {
+      // Find the lowest-rank card that can go to a foundation
+      let bestCard: { from: Location; suit: Suit } | null = null;
+      let bestRank = 14;
+
+      for (let col = 0; col < 8; col++) {
+        const cascade = this.engine.getState().cascades[col];
+        if (cascade.length === 0) continue;
+        const card = cascade[cascade.length - 1];
+        const foundationTarget: Location = { type: 'foundation', suit: card.suit };
+        if (this.engine.isLegalMove({ type: 'cascade', index: col }, foundationTarget) && card.rank < bestRank) {
+          bestRank = card.rank;
+          bestCard = { from: { type: 'cascade', index: col }, suit: card.suit };
+        }
+      }
+
+      if (bestCard) {
+        const move = this.engine.executeMove(bestCard.from, { type: 'foundation', suit: bestCard.suit });
+        this.history.push(move, []);
+        this.repositionAllCards();
+
+        gameBridge.emit('moveExecuted', {
+          moveCount: this.engine.getState().moveCount,
+          gameNumber: this.gameNumber,
+        });
+
+        if (this.engine.getState().isWon) {
+          gameBridge.emit('autoCompletable', { completable: false });
+          gameBridge.emit('gameWon', {
+            time: this.timer.seconds,
+            moves: this.engine.getState().moveCount,
+          });
+          this.timer.stop();
+          this.time.delayedCall(400, () => this.winCelebration());
+        } else {
+          this.time.delayedCall(50, moveCards);
+        }
+      }
+    };
+
+    moveCards();
   }
 
   private tryAutoMoveCard(sprite: CardSprite): void {

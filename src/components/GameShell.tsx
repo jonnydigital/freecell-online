@@ -6,8 +6,10 @@ import { GameStats, createEmptyStats, recordWin, recordLoss } from '../lib/stats
 import { loadStats, saveStats } from '../lib/storage';
 import { trackGameStart, trackWin, trackAbandoned, trackHint, trackUndo, trackMove, trackDeadlock, gameSession } from '../lib/analytics';
 import { initErrorTracking, setGameContext } from '../lib/errorTracking';
+import { getTodaysSeed, getTodayStr, recordDailyCompletion, isTodayCompleted } from '../lib/dailyChallenge';
 import StatsPanel from './StatsPanel';
 import FeedbackModal from './FeedbackModal';
+import DailyChallengePanel from './DailyChallengePanel';
 
 export default function GameShell() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -19,6 +21,8 @@ export default function GameShell() {
   const [stats, setStats] = useState<GameStats>(createEmptyStats);
   const [showStats, setShowStats] = useState(false);
   const [showFeedback, setShowFeedback] = useState(false);
+  const [showDaily, setShowDaily] = useState(false);
+  const [isDailyGame, setIsDailyGame] = useState(false);
 
   // Load stats on mount
   useEffect(() => {
@@ -26,9 +30,12 @@ export default function GameShell() {
     initErrorTracking();
   }, []);
 
+  const winDataRef = useRef<{ time: number; moves: number } | null>(null);
+
   const handleWin = useCallback(
     (data: unknown) => {
       const d = data as { time: number; moves: number };
+      winDataRef.current = d;
       setIsWon(true);
       trackWin(d.time, d.moves);
       setStats((prev) => {
@@ -66,6 +73,8 @@ export default function GameShell() {
       setMoveCount(0);
       setIsWon(false);
       trackGameStart(d.gameNumber);
+      // Check if this is the daily game
+      setIsDailyGame(d.gameNumber === getTodaysSeed());
     });
 
     const unsubMove = gameBridge.on('moveExecuted', (data: unknown) => {
@@ -94,7 +103,18 @@ export default function GameShell() {
     };
   }, [handleWin]);
 
-  const handleNewGame = () => gameBridge.emit('newGame');
+  // Record daily challenge completion when winning a daily game
+  useEffect(() => {
+    if (isWon && isDailyGame && winDataRef.current) {
+      const todayStr = getTodayStr();
+      recordDailyCompletion(todayStr, winDataRef.current.moves, winDataRef.current.time);
+    }
+  }, [isWon, isDailyGame]);
+
+  const handleNewGame = () => {
+    setIsDailyGame(false);
+    gameBridge.emit('newGame');
+  };
   const handleUndo = () => {
     trackUndo();
     gameBridge.emit('undo');
@@ -103,6 +123,11 @@ export default function GameShell() {
   const handleHint = () => {
     trackHint();
     gameBridge.emit('hint');
+  };
+
+  const handlePlayDaily = (seed: number) => {
+    setIsDailyGame(true);
+    gameBridge.emit('newGame', seed);
   };
 
   // Keyboard shortcuts
@@ -129,6 +154,13 @@ export default function GameShell() {
             className="px-2 sm:px-3 py-1.5 text-xs sm:text-sm bg-[#1a5c1a] hover:bg-[#2a7c2a] text-white rounded transition-colors"
           >
             New Game
+          </button>
+          <button
+            onClick={() => setShowDaily(true)}
+            className="px-2 sm:px-3 py-1.5 text-xs sm:text-sm bg-yellow-700/80 hover:bg-yellow-600 text-white rounded transition-colors"
+            title="Daily Challenge"
+          >
+            Daily
           </button>
           <button
             onClick={handleUndo}
@@ -167,7 +199,12 @@ export default function GameShell() {
           </button>
         </div>
         <div className="flex items-center gap-3 sm:gap-4 text-xs sm:text-sm text-white/70">
-          {gameNumber && <span>#{gameNumber}</span>}
+          {gameNumber && (
+            <span>
+              {isDailyGame && <span className="text-yellow-400 mr-1" title="Daily Challenge">&#9819;</span>}
+              #{gameNumber}
+            </span>
+          )}
           <span>{moveCount} moves</span>
           {isWon && (
             <span className="text-yellow-400 font-bold animate-pulse">
@@ -193,6 +230,13 @@ export default function GameShell() {
         onClose={() => setShowFeedback(false)}
         gameNumber={gameNumber}
         moveCount={moveCount}
+      />
+
+      {/* Daily Challenge Modal */}
+      <DailyChallengePanel
+        isOpen={showDaily}
+        onClose={() => setShowDaily(false)}
+        onPlayDaily={handlePlayDaily}
       />
     </div>
   );

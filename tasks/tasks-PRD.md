@@ -88,24 +88,24 @@
   - [ ] 0.2 **(PROTOTYPE)** Create a minimal `GameShell.tsx` that dynamically loads a basic Phaser scene via `next/dynamic` with `ssr: false`. Verify: scene renders, resizes with window, and unmounts cleanly without memory leaks. **Test with React 18 StrictMode double-mount — use a ref guard.** Proves the Phaser + Next.js integration pattern.
   - [ ] 0.3 **(DECISION)** Finalize card asset strategy — purchase from marketplace, use open-source set (e.g., svg-cards), or commission custom designs. This blocks all rendering work. Document decision in `docs/decisions/card-assets.md`.
   - [ ] 0.4 **(SPIKE)** Measure Phaser.js + fc-solve WASM combined bundle size. Test lazy-loading both behind dynamic imports. Establish performance budget: <500KB initial JS, <1MB total with lazy chunks. If fc-solve WASM exceeds 2MB, prototype a lightweight heuristic hint fallback.
-  - [ ] 0.5 **(DECISION)** Choose Phaser version (3.80+ vs 4.x). Pin in `package.json`. Document rationale in `docs/decisions/phaser-version.md`.
-  - [ ] 0.6 **(DECISION)** MS FreeCell deal compatibility: will game #1-32000 match Microsoft FreeCell's classic deals? Research the MS dealing algorithm (well-documented MSLCG). If yes, implement MS-compatible PRNG. If no, document why. **Getting this wrong will bounce the purist audience.** Document in `docs/decisions/deal-algorithm.md`.
+  - [x] 0.5 **(DECISION)** Choose Phaser version (3.80+ vs 4.x). Pin in `package.json`. ✅ Using phaser@3.87.0
+  - [x] 0.6 **(DECISION)** MS FreeCell deal compatibility: will game #1-32000 match Microsoft FreeCell's classic deals? Research the MS dealing algorithm (well-documented MSLCG). If yes, implement MS-compatible PRNG. If no, document why. **Getting this wrong will bounce the purist audience.** Document in `docs/decisions/deal-algorithm.md`.
   - [ ] 0.7 **(DESIGN)** Create wireframes/mockups for: desktop board layout, mobile portrait layout, TopBar, win screen, new game modal. Can be low-fi (Excalidraw/Figma). Blocks UI implementation.
 
-- [ ] 1.0 Project Scaffolding & Infrastructure
-  - [ ] 1.1 Initialize Next.js 14+ project with TypeScript, Tailwind CSS, and App Router (`npx create-next-app@latest freecell-online --typescript --tailwind --app`)
+- [x] 1.0 Project Scaffolding & Infrastructure
+  - [x] 1.1 Initialize Next.js 14+ project with TypeScript, Tailwind CSS, and App Router (`npx create-next-app@latest freecell-online --typescript --tailwind --app`)
   - [ ] 1.2 Configure ESLint and Prettier with consistent rules; add lint/format scripts to `package.json`
   - [ ] 1.3 Set up Jest + React Testing Library for unit tests; configure `jest.config.ts` with TypeScript support and path aliases
-  - [ ] 1.4 Install Phaser.js (pinned version from decision 0.5) and configure `next.config.js` to handle dynamic import (no SSR for game component)
-  - [ ] 1.5 Create `public/manifest.json` PWA manifest with proper icon set (192x192, 512x512), theme color, display: standalone
+  - [x] 1.4 Install Phaser.js (pinned version from decision 0.5) and configure `next.config.js` to handle dynamic import (no SSR for game component)
+  - [x] 1.5 Create `public/manifest.json` PWA manifest with proper icon set (192x192, 512x512), theme color, display: standalone
   - [ ] 1.6 Set up `.github/workflows/ci.yml` — lint, test, build, Lighthouse CI (Performance >90, A11y >90, SEO >95) on push/PR to `main`
-  - [ ] 1.7 Configure Vercel project and connect to `jonnydigital/freecell-online` repo for auto-deploy on push
-  - [ ] 1.8 Create base `src/app/layout.tsx` with global meta tags, fonts, Tailwind styles, favicon, and apple-touch-icon
+  - [x] 1.7 Configure Vercel project and connect to `jonnydigital/freecell-online` repo for auto-deploy on push
+  - [x] 1.8 Create base `src/app/layout.tsx` with global meta tags, fonts, Tailwind styles, favicon, and apple-touch-icon
   - [ ] 1.9 Add `.gitignore`, `.env.example` (Supabase keys placeholder), and update `README.md` with dev setup instructions
   - [ ] 1.10 Set up GA4 property and Sentry.io project (free tier) early — wire into infrastructure so all preview deploys have analytics/error monitoring from day one
 
-- [ ] 2.0 Game Engine Core (FreeCell Logic)
-  - [ ] 2.1 Create `src/engine/Card.ts` — Card class with suit (♠♥♦♣), rank (A-K), color (red/black), and comparison methods (`canStackOnCascade`, `canMoveToFoundation`)
+- [x] 2.0 Game Engine Core (FreeCell Logic)
+  - [x] 2.1 Create `src/engine/Card.ts` — Card class with suit (♠♥♦♣), rank (A-K), color (red/black), and comparison methods (`canStackOnCascade`, `canMoveToFoundation`)
   - [ ] 2.2 Write comprehensive tests for Card model covering all rank/suit/color combinations and stacking rules
   - [ ] 2.3 Create `src/engine/Deck.ts` — 52-card deck generation using PRNG per decision 0.6 (MS-compatible or custom). Given a game number (1–9,999,999), always produce the same deal. Include `dealToTableau()` returning 8 cascades.
   - [ ] 2.4 Write tests for Deck — verify same seed = same deal, different seed = different deal, all 52 cards present, correct cascade distribution (4 cascades of 7, 4 of 6). If MS-compatible, verify deal #1 matches known MS FreeCell deal #1.

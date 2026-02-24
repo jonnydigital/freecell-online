@@ -56,6 +56,9 @@ export class FreeCellScene extends Phaser.Scene {
   private lastTapCard: CardSprite | null = null;
   private lastTapTime: number = 0;
 
+  // Track whether a card handled the current pointer event (prevents board tap stealing it)
+  private cardTappedThisFrame: boolean = false;
+
   // Board slot graphics (for redraw on resize)
   private slotGraphics: Phaser.GameObjects.GameObject[] = [];
 
@@ -116,6 +119,9 @@ export class FreeCellScene extends Phaser.Scene {
     this.history = new MoveHistory();
     this.timer = new GameTimer();
 
+    // Ensure only the topmost overlapping card captures taps
+    this.input.setTopOnly(true);
+
     this.drawBackgroundEffects();
     this.calculateLayout();
     this.createBoard();
@@ -166,13 +172,16 @@ export class FreeCellScene extends Phaser.Scene {
     gameBridge.on('autoFinish', () => this.performAutoFinish());
 
     // Tap on empty areas to deselect or complete move
-    this.input.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
-      // Small delay to let card clicks fire first
-      this.time.delayedCall(50, () => {
-        if (this.selectedCard && this.dragCards.length === 0) {
-          this.handleBoardTap(pointer.x, pointer.y);
-        }
-      });
+    // Use a frame flag instead of a delay — card pointerdown sets cardTappedThisFrame,
+    // and pointerup on the scene checks it to avoid stealing taps from cards.
+    this.input.on('pointerup', (pointer: Phaser.Input.Pointer) => {
+      if (this.cardTappedThisFrame) {
+        this.cardTappedThisFrame = false;
+        return;
+      }
+      if (this.selectedCard && this.dragCards.length === 0) {
+        this.handleBoardTap(pointer.x, pointer.y);
+      }
     });
 
     // Notify UI that game is ready
@@ -404,23 +413,93 @@ export class FreeCellScene extends Phaser.Scene {
     shadow.fillRoundedRect(2, 2, this.cardWidth, this.cardHeight, 6);
     container.addAt(shadow, 0); // Behind the card
 
-    // Make interactive - ensure minimum 44px touch target
-    const hitWidth = Math.max(this.cardWidth, 44);
-    const hitHeight = Math.max(this.cardHeight, 44);
-    const hitOffsetX = (hitWidth - this.cardWidth) / 2;
-    const hitOffsetY = (hitHeight - this.cardHeight) / 2;
+    // Make interactive with full card hit area (will be refined per-position in updateHitAreas)
     container.setInteractive(
-      new Phaser.Geom.Rectangle(-hitOffsetX, -hitOffsetY, hitWidth, hitHeight),
+      new Phaser.Geom.Rectangle(0, 0, this.cardWidth, this.cardHeight),
       Phaser.Geom.Rectangle.Contains
     );
 
     this.input.setDraggable(container);
     container.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
+      this.cardTappedThisFrame = true;
       this.onCardClick(container, pointer);
     });
 
     this.cardSprites.set(card.id, container);
     return container;
+  }
+
+  /**
+   * Update hit areas and input priority for all cards based on their current positions.
+   * - Cascade cards get priorityID = row index (higher = on top = wins tap)
+   * - Buried cascade cards get expanded hit areas matching their visible strip
+   * - Top cascade cards, free cell cards, and foundation cards get full card hit area
+   */
+  private updateHitAreas(): void {
+    const state = this.engine.getState();
+
+    for (let col = 0; col < 8; col++) {
+      const cascade = state.cascades[col];
+      for (let row = 0; row < cascade.length; row++) {
+        const sprite = this.cardSprites.get(cascade[row].id);
+        if (!sprite || !sprite.input) continue;
+
+        const isTop = row === cascade.length - 1;
+        if (isTop) {
+          // Top card: full card hit area with minimum 44px touch target
+          const hitWidth = Math.max(this.cardWidth, 44);
+          const hitHeight = Math.max(this.cardHeight, 44);
+          const hitOffsetX = (hitWidth - this.cardWidth) / 2;
+          const hitOffsetY = (hitHeight - this.cardHeight) / 2;
+          sprite.input.hitArea = new Phaser.Geom.Rectangle(
+            -hitOffsetX, -hitOffsetY, hitWidth, hitHeight
+          );
+        } else {
+          // Buried card: only a thin strip is visible (the overlap amount)
+          const defaultOverlap = Math.floor(this.cardHeight * CASCADE_OVERLAP);
+          const maxCascadeLength = Math.max(...state.cascades.map(c => c.length), 1);
+          const cascadeGap = this.scale.height * 0.02;
+          const topRow = this.boardOffsetY + this.topRowHeight + cascadeGap;
+          const availableHeight = this.scale.height - topRow - 10;
+          const maxOverlap = maxCascadeLength > 1
+            ? Math.floor((availableHeight - this.cardHeight) / (maxCascadeLength - 1))
+            : defaultOverlap;
+          const visibleHeight = Math.min(defaultOverlap, maxOverlap);
+
+          // Expand the hit area slightly for easier tapping, minimum 44px
+          const hitHeight = Math.max(visibleHeight + 10, 44);
+          const hitWidth = this.cardWidth + 10;
+          sprite.input.hitArea = new Phaser.Geom.Rectangle(
+            -5, -5, hitWidth, hitHeight
+          );
+        }
+      }
+    }
+
+    // Free cell and foundation cards: full hit area, high priority
+    for (let i = 0; i < 4; i++) {
+      const card = state.freeCells[i];
+      if (card) {
+        const sprite = this.cardSprites.get(card.id);
+        if (sprite?.input) {
+          sprite.input.hitArea = new Phaser.Geom.Rectangle(
+            0, 0, this.cardWidth, this.cardHeight
+          );
+        }
+      }
+    }
+
+    for (const [, pile] of state.foundations) {
+      if (pile.length > 0) {
+        const topCard = pile[pile.length - 1];
+        const sprite = this.cardSprites.get(topCard.id);
+        if (sprite?.input) {
+          sprite.input.hitArea = new Phaser.Geom.Rectangle(
+            0, 0, this.cardWidth, this.cardHeight
+          );
+        }
+      }
+    }
   }
 
   private dealCards(staggered: boolean = false): void {
@@ -483,6 +562,9 @@ export class FreeCellScene extends Phaser.Scene {
     this.input.on('dragend', (_pointer: Phaser.Input.Pointer, gameObject: CardSprite) => {
       this.endDrag(gameObject);
     });
+
+    // Initial hit area setup after all cards are placed
+    this.updateHitAreas();
   }
 
   // ── Click-to-Move System ──────────────────────────────────
@@ -542,9 +624,21 @@ export class FreeCellScene extends Phaser.Scene {
       // Check if this card starts a valid run to the bottom
       const run = this.engine.getValidRun(location.index);
       const runStart = cascade.length - run.length;
-      if (cardIdx < runStart) return; // Can't move cards buried in the middle
+      if (cardIdx < runStart) {
+        // Can't move this card - show brief red flash
+        this.flashInvalid(sprite);
+        return;
+      }
     } else if (location.type === 'foundation') {
       return; // Don't select foundation cards
+    }
+
+    // Check if this card has any valid destinations
+    const destinations = this.getValidDestinations(sprite);
+    if (destinations.length === 0) {
+      // No valid moves - show brief red flash
+      this.flashInvalid(sprite);
+      return;
     }
 
     this.selectedCard = sprite;
@@ -552,38 +646,11 @@ export class FreeCellScene extends Phaser.Scene {
     // Show selection glow
     this.showSelectionGlow(sprite);
 
-    // Find and highlight valid destinations
-    const destinations = this.getValidDestinations(sprite);
+    // Highlight valid destinations so user knows where to tap
+    this.showDestinationHighlights(destinations);
 
-    if (destinations.length === 1) {
-      // Only one legal destination - move immediately
-      const from = this.findCardLocation(sprite.cardData);
-      if (from) {
-        this.clearSelection();
-        this.dragCards = [sprite];
-        // For sequence moves, gather all cards in the run
-        if (from.type === 'cascade') {
-          const state = this.engine.getState();
-          const cascade = state.cascades[from.index];
-          const cardIdx = cascade.findIndex(c => c.equals(sprite.cardData));
-          if (cardIdx < cascade.length - 1) {
-            this.dragCards = [];
-            for (let i = cardIdx; i < cascade.length; i++) {
-              const cs = this.cardSprites.get(cascade[i].id);
-              if (cs) this.dragCards.push(cs);
-            }
-            from.cardIndex = cardIdx;
-          }
-        }
-        this.executeMoveAndAnimate(from, destinations[0]);
-        this.dragCards = [];
-        this.vibrate();
-      }
-    } else if (destinations.length > 1) {
-      // Multiple destinations - highlight them
-      this.showDestinationHighlights(destinations);
-    }
-    // If no destinations, card stays selected (user can double-tap for foundation or tap elsewhere to deselect)
+    // Haptic feedback on select
+    this.vibrate();
   }
 
   private getValidDestinations(sprite: CardSprite): Location[] {
@@ -722,6 +789,20 @@ export class FreeCellScene extends Phaser.Scene {
       gfx.destroy();
     }
     this.highlightGraphics = [];
+  }
+
+  private flashInvalid(sprite: CardSprite): void {
+    const gfx = this.add.graphics();
+    gfx.fillStyle(0xff0000, 0.3);
+    gfx.fillRoundedRect(sprite.x, sprite.y, this.cardWidth, this.cardHeight, 6);
+    gfx.setDepth(999);
+    this.tweens.add({
+      targets: gfx,
+      alpha: 0,
+      duration: 300,
+      ease: 'Power2',
+      onComplete: () => gfx.destroy(),
+    });
   }
 
   private handleBoardTap(x: number, y: number): void {
@@ -1288,6 +1369,9 @@ export class FreeCellScene extends Phaser.Scene {
         }
       }
     }
+
+    // Update hit areas and input priority after repositioning
+    this.updateHitAreas();
   }
 
   private foundationBloom(sprite: CardSprite): void {

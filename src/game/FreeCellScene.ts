@@ -10,6 +10,7 @@ import { Card, Suit, RANK_NAMES, SUIT_SYMBOLS } from '../engine/Card';
 import { MoveHistory, MoveEntry } from '../engine/MoveHistory';
 import { GameTimer } from '../engine/GameTimer';
 import { gameBridge } from './GameBridge';
+import { getAllCardAssets, getCardAssetKey } from './CardAssets';
 
 // Layout constants
 const CARD_RATIO = 1.4; // height/width ratio
@@ -44,6 +45,14 @@ export class FreeCellScene extends Phaser.Scene {
 
   constructor() {
     super({ key: 'FreeCellScene' });
+  }
+
+  preload(): void {
+    // Load all card images
+    const assets = getAllCardAssets();
+    for (const asset of assets) {
+      this.load.image(asset.key, asset.path);
+    }
   }
 
   create(): void {
@@ -180,41 +189,52 @@ export class FreeCellScene extends Phaser.Scene {
     container.setSize(this.cardWidth, this.cardHeight);
     container.cardData = card;
 
-    // Card background
-    const bg = this.add.graphics();
-    bg.fillStyle(0xffffff, 1);
-    bg.fillRoundedRect(0, 0, this.cardWidth, this.cardHeight, 6);
-    bg.lineStyle(1, 0x999999, 1);
-    bg.strokeRoundedRect(0, 0, this.cardWidth, this.cardHeight, 6);
-    container.add(bg);
+    // Use image sprite if available, fall back to text rendering
+    const assetKey = getCardAssetKey(card.suit, card.rank);
+    if (this.textures.exists(assetKey)) {
+      const img = this.add.image(this.cardWidth / 2, this.cardHeight / 2, assetKey);
+      img.setDisplaySize(this.cardWidth, this.cardHeight);
+      container.add(img);
+    } else {
+      // Fallback: text-based card
+      const bg = this.add.graphics();
+      bg.fillStyle(0xffffff, 1);
+      bg.fillRoundedRect(0, 0, this.cardWidth, this.cardHeight, 6);
+      bg.lineStyle(1, 0x999999, 1);
+      bg.strokeRoundedRect(0, 0, this.cardWidth, this.cardHeight, 6);
+      container.add(bg);
 
-    // Card text (rank + suit)
-    const isRed = card.suit === Suit.Hearts || card.suit === Suit.Diamonds;
-    const color = isRed ? '#cc0000' : '#000000';
-    const fontSize = Math.floor(this.cardWidth * 0.22);
+      const isRed = card.suit === Suit.Hearts || card.suit === Suit.Diamonds;
+      const color = isRed ? '#cc0000' : '#000000';
+      const fontSize = Math.floor(this.cardWidth * 0.22);
 
-    // Top-left rank + suit
-    const topText = this.add.text(4, 2, `${RANK_NAMES[card.rank]}\n${SUIT_SYMBOLS[card.suit]}`, {
-      fontSize: `${fontSize}px`,
-      color,
-      fontFamily: 'Arial, sans-serif',
-      lineSpacing: -2,
-    });
-    container.add(topText);
-
-    // Center suit (larger)
-    const centerSuit = this.add.text(
-      this.cardWidth / 2,
-      this.cardHeight / 2,
-      SUIT_SYMBOLS[card.suit],
-      {
-        fontSize: `${Math.floor(this.cardWidth * 0.45)}px`,
+      const topText = this.add.text(4, 2, `${RANK_NAMES[card.rank]}\n${SUIT_SYMBOLS[card.suit]}`, {
+        fontSize: `${fontSize}px`,
         color,
-        fontFamily: 'serif',
-      }
-    );
-    centerSuit.setOrigin(0.5);
-    container.add(centerSuit);
+        fontFamily: 'Arial, sans-serif',
+        lineSpacing: -2,
+      });
+      container.add(topText);
+
+      const centerSuit = this.add.text(
+        this.cardWidth / 2,
+        this.cardHeight / 2,
+        SUIT_SYMBOLS[card.suit],
+        {
+          fontSize: `${Math.floor(this.cardWidth * 0.45)}px`,
+          color,
+          fontFamily: 'serif',
+        }
+      );
+      centerSuit.setOrigin(0.5);
+      container.add(centerSuit);
+    }
+
+    // Add subtle drop shadow
+    const shadow = this.add.graphics();
+    shadow.fillStyle(0x000000, 0.15);
+    shadow.fillRoundedRect(2, 2, this.cardWidth, this.cardHeight, 6);
+    container.addAt(shadow, 0); // Behind the card
 
     // Make interactive
     container.setInteractive(

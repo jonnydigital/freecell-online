@@ -81,6 +81,20 @@ export default function GameShell() {
   const handleRedo = () => gameBridge.emit('redo');
   const handleHint = () => gameBridge.emit('hint');
 
+  // Keyboard shortcuts
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.ctrlKey || e.metaKey) {
+        if (e.key === 'z') { e.preventDefault(); handleUndo(); }
+        if (e.key === 'y') { e.preventDefault(); handleRedo(); }
+      }
+      if (e.key === 'n' && !e.ctrlKey && !e.metaKey) handleNewGame();
+      if (e.key === 'h' && !e.ctrlKey && !e.metaKey) handleHint();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
   return (
     <div className="flex flex-col h-screen bg-[#0a3d0a]">
       {/* Top Bar */}

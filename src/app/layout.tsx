@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Analytics from "../components/Analytics";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -43,7 +44,10 @@ export default function RootLayout({
         <meta name="theme-color" content="#0a3d0a" />
         <link rel="icon" href="/favicon.ico" />
       </head>
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <Analytics />
+        {children}
+      </body>
     </html>
   );
 }

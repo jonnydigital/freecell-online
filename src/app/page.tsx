@@ -1,6 +1,7 @@
 'use client';
 
 import dynamic from 'next/dynamic';
+import GameErrorBoundary from '../components/GameErrorBoundary';
 
 // Dynamic import with SSR disabled — Phaser needs the browser
 const GameShell = dynamic(() => import('../components/GameShell'), {
@@ -16,5 +17,9 @@ const GameShell = dynamic(() => import('../components/GameShell'), {
 });
 
 export default function Home() {
-  return <GameShell />;
+  return (
+    <GameErrorBoundary>
+      <GameShell />
+    </GameErrorBoundary>
+  );
 }

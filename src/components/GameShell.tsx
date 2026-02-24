@@ -4,6 +4,8 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 import { gameBridge } from '../game/GameBridge';
 import { GameStats, createEmptyStats, recordWin, recordLoss } from '../lib/stats';
 import { loadStats, saveStats } from '../lib/storage';
+import { trackGameStart, trackWin, trackAbandoned, trackHint, trackUndo, trackMove, trackDeadlock, gameSession } from '../lib/analytics';
+import { initErrorTracking, setGameContext } from '../lib/errorTracking';
 import StatsPanel from './StatsPanel';
 
 export default function GameShell() {
@@ -19,12 +21,14 @@ export default function GameShell() {
   // Load stats on mount
   useEffect(() => {
     setStats(loadStats());
+    initErrorTracking();
   }, []);
 
   const handleWin = useCallback(
     (data: unknown) => {
       const d = data as { time: number; moves: number };
       setIsWon(true);
+      trackWin(d.time, d.moves);
       setStats((prev) => {
         const updated = recordWin(prev, d.time, d.moves);
         saveStats(updated);
@@ -52,22 +56,34 @@ export default function GameShell() {
 
     const unsubReady = gameBridge.on('gameReady', (data: unknown) => {
       const d = data as { gameNumber: number };
+      // Track abandoned game if we had an active one
+      if (gameSession.gameNumber > 0 && gameSession.moveCount > 0) {
+        trackAbandoned();
+      }
       setGameNumber(d.gameNumber);
       setMoveCount(0);
       setIsWon(false);
+      trackGameStart(d.gameNumber);
     });
 
     const unsubMove = gameBridge.on('moveExecuted', (data: unknown) => {
-      const d = data as { moveCount: number };
+      const d = data as { moveCount: number; gameNumber: number };
       setMoveCount(d.moveCount);
+      trackMove('tap'); // Default to tap; drag events will override
+      setGameContext(d.gameNumber, d.moveCount);
     });
 
     const unsubWin = gameBridge.on('gameWon', handleWin);
+
+    const unsubDeadlock = gameBridge.on('deadlock', () => {
+      trackDeadlock();
+    });
 
     return () => {
       unsubReady();
       unsubMove();
       unsubWin();
+      unsubDeadlock();
       if (gameRef.current) {
         gameRef.current.destroy(true);
         gameRef.current = null;
@@ -77,9 +93,15 @@ export default function GameShell() {
   }, [handleWin]);
 
   const handleNewGame = () => gameBridge.emit('newGame');
-  const handleUndo = () => gameBridge.emit('undo');
+  const handleUndo = () => {
+    trackUndo();
+    gameBridge.emit('undo');
+  };
   const handleRedo = () => gameBridge.emit('redo');
-  const handleHint = () => gameBridge.emit('hint');
+  const handleHint = () => {
+    trackHint();
+    gameBridge.emit('hint');
+  };
 
   // Keyboard shortcuts
   useEffect(() => {

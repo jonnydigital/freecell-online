@@ -51,6 +51,10 @@ export class FreeCellScene extends Phaser.Scene {
   private selectionGlow: Phaser.GameObjects.Graphics | null = null;
   private highlightGraphics: Phaser.GameObjects.Graphics[] = [];
 
+  // Double-tap detection
+  private lastTapCard: CardSprite | null = null;
+  private lastTapTime: number = 0;
+
   // Board slot graphics (for redraw on resize)
   private slotGraphics: Phaser.GameObjects.GameObject[] = [];
 
@@ -465,19 +469,30 @@ export class FreeCellScene extends Phaser.Scene {
       this.timer.start();
     }
 
-    // If this card is already selected, try foundation (double-tap behavior)
-    if (this.selectedCard === sprite) {
-      this.tryAutoMoveCard(sprite);
+    const now = Date.now();
+    const isDoubleTap = this.lastTapCard === sprite && (now - this.lastTapTime) < 400;
+    this.lastTapCard = sprite;
+    this.lastTapTime = now;
+
+    // Double-tap: smart auto-move with priority
+    if (isDoubleTap) {
+      this.lastTapCard = null; // Reset to prevent triple-tap
       this.clearSelection();
+      this.smartAutoMove(sprite);
+      return;
+    }
+
+    // If this card is already selected, try smart auto-move
+    if (this.selectedCard === sprite) {
+      this.clearSelection();
+      this.smartAutoMove(sprite);
       return;
     }
 
     // If we have a selected card and tap another card
     if (this.selectedCard) {
-      // Try to move selected card to this card's location
       const moved = this.tryMoveSelectedTo(sprite);
       if (!moved) {
-        // Didn't work as a destination - select this card instead
         this.clearSelection();
         this.selectCard(sprite);
       }
@@ -998,19 +1013,92 @@ export class FreeCellScene extends Phaser.Scene {
     moveCards();
   }
 
-  private tryAutoMoveCard(sprite: CardSprite): void {
-    const location = this.findCardLocation(sprite.cardData);
-    if (!location) return;
+  /**
+   * Smart auto-move: double-tap moves card to best destination.
+   * Priority: Foundation > compatible cascade > empty cascade > free cell
+   * Shows a brief highlight before moving.
+   */
+  private smartAutoMove(sprite: CardSprite): void {
+    const from = this.findCardLocation(sprite.cardData);
+    if (!from) return;
 
-    const card = sprite.cardData;
-    const foundationTarget: Location = { type: 'foundation', suit: card.suit };
+    // Don't move from foundation
+    if (from.type === 'foundation') return;
 
-    if (this.engine.isLegalMove(location, foundationTarget)) {
+    // Can only move top cards or valid runs
+    if (from.type === 'cascade') {
+      const state = this.engine.getState();
+      const cascade = state.cascades[from.index];
+      const cardIdx = cascade.findIndex(c => c.equals(sprite.cardData));
+      if (cardIdx === -1) return;
+      const run = this.engine.getValidRun(from.index);
+      const runStart = cascade.length - run.length;
+      if (cardIdx < runStart) return;
+    }
+
+    const destinations = this.getValidDestinations(sprite);
+    if (destinations.length === 0) return;
+
+    // Priority-based destination selection
+    let best: Location | null = null;
+
+    // 1. Foundation
+    best = destinations.find(d => d.type === 'foundation') || null;
+
+    // 2. Compatible non-empty cascade (building on existing cards)
+    if (!best) {
+      const state = this.engine.getState();
+      best = destinations.find(d =>
+        d.type === 'cascade' && state.cascades[d.index].length > 0
+      ) || null;
+    }
+
+    // 3. Empty cascade (strategic: only for Kings or if no other option)
+    if (!best) {
+      best = destinations.find(d => {
+        if (d.type !== 'cascade') return false;
+        const state = this.engine.getState();
+        return state.cascades[d.index].length === 0;
+      }) || null;
+    }
+
+    // 4. Free cell
+    if (!best) {
+      best = destinations.find(d => d.type === 'freecell') || null;
+    }
+
+    if (!best) return;
+
+    // Visual feedback: brief highlight flash
+    const highlightGfx = this.add.graphics();
+    highlightGfx.fillStyle(0xffd700, 0.3);
+    highlightGfx.fillRoundedRect(sprite.x, sprite.y, this.cardWidth, this.cardHeight, 6);
+    highlightGfx.setDepth(999);
+
+    // Set up cards for move
+    let moveFrom = { ...from };
+    if (from.type === 'cascade') {
+      const state = this.engine.getState();
+      const cascade = state.cascades[from.index];
+      const cardIdx = cascade.findIndex(c => c.equals(sprite.cardData));
+      moveFrom = { type: 'cascade', index: from.index, cardIndex: cardIdx };
+
+      this.dragCards = [];
+      for (let i = cardIdx; i < cascade.length; i++) {
+        const cs = this.cardSprites.get(cascade[i].id);
+        if (cs) this.dragCards.push(cs);
+      }
+    } else {
       this.dragCards = [sprite];
-      this.executeMoveAndAnimate(location, foundationTarget);
+    }
+
+    // Brief delay for visual feedback, then move
+    this.time.delayedCall(80, () => {
+      highlightGfx.destroy();
+      this.executeMoveAndAnimate(moveFrom, best!);
       this.dragCards = [];
       this.vibrate();
-    }
+    });
   }
 
   // ── Card Location Helpers ─────────────────────────────────

@@ -10,8 +10,7 @@ import { Card, Suit, Rank, SUIT_SYMBOLS } from '../engine/Card';
 import { MoveHistory } from '../engine/MoveHistory';
 import { GameTimer } from '../engine/GameTimer';
 import { gameBridge } from './GameBridge';
-import { getCardAssetKey } from './CardAssets';
-import { generateCardTextures } from './CardTextureGenerator';
+import { getCardAssetKey, getAllCardAssets } from './CardAssets';
 import { getHint } from '../solver/solver';
 import { getRandomSolvableGame } from '../lib/solvableDeals';
 import { soundManager } from '../lib/sounds';
@@ -119,8 +118,9 @@ export class FreeCellScene extends Phaser.Scene {
   }
 
   preload(): void {
-    // Card textures are generated at runtime in create() via CardTextureGenerator
-    // No external assets to load
+    for (const { key, path } of getAllCardAssets()) {
+      this.load.image(key, path);
+    }
   }
 
   create(): void {
@@ -138,14 +138,12 @@ export class FreeCellScene extends Phaser.Scene {
 
     this.drawBackgroundEffects();
     this.calculateLayout();
-    generateCardTextures(this, this.cardWidth, this.cardHeight);
     this.createBoard();
     this.dealCards(true); // staggered deal on first load
 
     // Listen for resize
     this.scale.on('resize', () => {
       this.calculateLayout();
-      generateCardTextures(this, this.cardWidth, this.cardHeight);
       this.drawBackgroundEffects();
       this.rebuildBoard();
       this.recreateAllCardSprites();
@@ -393,7 +391,6 @@ export class FreeCellScene extends Phaser.Scene {
     container.setSize(this.cardWidth, this.cardHeight);
     container.cardData = card;
 
-    // Card face texture (generated at runtime by CardTextureGenerator)
     const assetKey = getCardAssetKey(card.suit, card.rank);
     const img = this.add.image(this.cardWidth / 2, this.cardHeight / 2, assetKey);
     img.setDisplaySize(this.cardWidth, this.cardHeight);

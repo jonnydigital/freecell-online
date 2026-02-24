@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -29,11 +30,11 @@ export default function HowToPlayPage() {
 
       <div className="max-w-3xl mx-auto px-4 py-12">
         <nav className="mb-8 text-sm text-white/50">
-          <a href="/" className="hover:text-white/70">← Back to Game</a>
+          <Link href="/" className="hover:text-white/70">← Back to Game</Link>
           {' · '}
-          <a href="/strategy" className="hover:text-white/70">Strategy Guide</a>
+          <Link href="/strategy" className="hover:text-white/70">Strategy Guide</Link>
           {' · '}
-          <a href="/faq" className="hover:text-white/70">FAQ</a>
+          <Link href="/faq" className="hover:text-white/70">FAQ</Link>
         </nav>
 
         <h1 className="text-4xl font-bold mb-4">How to Play FreeCell</h1>
@@ -143,18 +144,18 @@ export default function HowToPlayPage() {
         </section>
 
         <div className="mt-12 flex gap-4 justify-center">
-          <a
+          <Link
             href="/"
             className="px-6 py-3 bg-[#1a5c1a] hover:bg-[#2a7c2a] rounded-lg text-white font-medium transition-colors"
           >
             Play FreeCell Now →
-          </a>
-          <a
+          </Link>
+          <Link
             href="/strategy"
             className="px-6 py-3 border border-[#1a5c1a] hover:bg-[#1a5c1a]/30 rounded-lg text-white font-medium transition-colors"
           >
             Strategy Guide →
-          </a>
+          </Link>
         </div>
       </div>
     </div>

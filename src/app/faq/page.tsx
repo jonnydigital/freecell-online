@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -72,9 +73,9 @@ export default function FAQPage() {
 
       <div className="max-w-3xl mx-auto px-4 py-12">
         <nav className="mb-8 text-sm text-white/50">
-          <a href="/" className="hover:text-white/70">
+          <Link href="/" className="hover:text-white/70">
             ← Back to Game
-          </a>
+          </Link>
         </nav>
 
         <h1 className="text-4xl font-bold mb-2">
@@ -97,12 +98,12 @@ export default function FAQPage() {
         </div>
 
         <div className="mt-12 text-center">
-          <a
+          <Link
             href="/"
             className="inline-block px-6 py-3 bg-[#1a5c1a] hover:bg-[#2a7c2a] rounded-lg text-white font-medium transition-colors"
           >
             Play FreeCell Now →
-          </a>
+          </Link>
         </div>
       </div>
     </div>

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -10,7 +11,7 @@ export default function TermsPage() {
     <div className="min-h-screen bg-[#0a3d0a] text-white">
       <div className="max-w-3xl mx-auto px-4 py-12">
         <nav className="mb-8 text-sm text-white/50">
-          <a href="/" className="hover:text-white/70">← Back to Game</a>
+          <Link href="/" className="hover:text-white/70">← Back to Game</Link>
         </nav>
 
         <h1 className="text-4xl font-bold mb-8">Terms of Service</h1>

@@ -6,7 +6,7 @@
  */
 import * as Phaser from 'phaser';
 import { FreeCellEngine, Location } from '../engine/FreeCellEngine';
-import { Card, Suit, SUIT_SYMBOLS } from '../engine/Card';
+import { Card, Suit, Rank, SUIT_SYMBOLS } from '../engine/Card';
 import { MoveHistory } from '../engine/MoveHistory';
 import { GameTimer } from '../engine/GameTimer';
 import { gameBridge } from './GameBridge';
@@ -1476,7 +1476,86 @@ export class FreeCellScene extends Phaser.Scene {
   }
 
   private performAutoMoves(): void {
+    // Auto-move Aces and safe low cards to foundations
+    let moved = true;
+    while (moved) {
+      moved = false;
+      const state = this.engine.getState();
+      
+      // Check cascades
+      for (let col = 0; col < 8; col++) {
+        const cascade = state.cascades[col];
+        if (cascade.length === 0) continue;
+        const card = cascade[cascade.length - 1];
+        if (this.isSafeAutoMove(card)) {
+          const from: Location = { type: 'cascade', index: col };
+          const to: Location = { type: 'foundation', suit: card.suit };
+          if (this.engine.isLegalMove(from, to)) {
+            const move = this.engine.executeMove(from, to);
+            this.history.push(move, []);
+            soundManager.cardToFoundation();
+            gameBridge.emit('moveExecuted', {
+              moveCount: this.engine.getState().moveCount,
+              gameNumber: this.gameNumber,
+            });
+            moved = true;
+            break; // restart scan
+          }
+        }
+      }
+      if (moved) continue;
+      
+      // Check free cells
+      for (let i = 0; i < 4; i++) {
+        const card = state.freeCells[i];
+        if (!card) continue;
+        if (this.isSafeAutoMove(card)) {
+          const from: Location = { type: 'freecell', index: i };
+          const to: Location = { type: 'foundation', suit: card.suit };
+          if (this.engine.isLegalMove(from, to)) {
+            const move = this.engine.executeMove(from, to);
+            this.history.push(move, []);
+            soundManager.cardToFoundation();
+            gameBridge.emit('moveExecuted', {
+              moveCount: this.engine.getState().moveCount,
+              gameNumber: this.gameNumber,
+            });
+            moved = true;
+            break;
+          }
+        }
+      }
+    }
+    
     this.repositionAllCards();
+    
+    // Check win
+    if (this.engine.getState().isWon) {
+      soundManager.winFanfare();
+      gameBridge.emit('gameWon', {
+        time: this.timer.seconds,
+        moves: this.engine.getState().moveCount,
+      });
+      this.timer.stop();
+      this.time.delayedCall(400, () => this.winCelebration());
+    }
+    
+    // Check auto-completable
+    if (this.engine.isAutoCompletable()) {
+      gameBridge.emit('autoCompletable', { completable: true });
+    }
+  }
+  
+  /**
+   * A card is safe to auto-move using the Card's built-in isSafeToAutoMove method.
+   */
+  private isSafeAutoMove(card: Card): boolean {
+    const state = this.engine.getState();
+    const foundationRanks = new Map<Suit, Rank | 0>();
+    for (const [suit, pile] of state.foundations) {
+      foundationRanks.set(suit, pile.length > 0 ? (pile[pile.length - 1].rank as Rank) : 0);
+    }
+    return card.isSafeToAutoMove(foundationRanks);
   }
 
   /**

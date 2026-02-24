@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="64" fill="#0a3d0a"/>
+  <rect x="96" y="80" width="140" height="196" rx="12" fill="white"/>
+  <rect x="276" y="80" width="140" height="196" rx="12" fill="white"/>
+  <text x="166" y="200" font-family="serif" font-size="80" fill="#cc0000" text-anchor="middle">A</text>
+  <text x="166" y="248" font-family="serif" font-size="48" fill="#cc0000" text-anchor="middle">&hearts;</text>
+  <text x="346" y="200" font-family="serif" font-size="80" fill="#000" text-anchor="middle">K</text>
+  <text x="346" y="248" font-family="serif" font-size="48" fill="#000" text-anchor="middle">&spades;</text>
+  <rect x="96" y="316" width="140" height="120" rx="12" fill="#1a5c1a" stroke="#2a7c2a" stroke-width="3"/>
+  <rect x="276" y="316" width="140" height="120" rx="12" fill="#1a5c1a" stroke="#2a7c2a" stroke-width="3"/>
+</svg>

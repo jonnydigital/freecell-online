@@ -19,7 +19,7 @@ export function getCardAssetKey(suit: Suit, rank: Rank): string {
 }
 
 const RANK_FILE_NAMES: Record<number, string> = {
-  1: '1',
+  1: 'Ace',
   2: '2',
   3: '3',
   4: '4',
@@ -29,16 +29,16 @@ const RANK_FILE_NAMES: Record<number, string> = {
   8: '8',
   9: '9',
   10: '10',
-  11: 'jack',
-  12: 'queen',
-  13: 'king',
+  11: 'Jack',
+  12: 'Queen',
+  13: 'King',
 };
 
 /**
  * Get the file path for a card image
  */
 export function getCardAssetPath(suit: Suit, rank: Rank): string {
-  return `/cards/${SUIT_FILE_NAMES[suit]}_${RANK_FILE_NAMES[rank]}.png`;
+  return `/cards/${SUIT_FILE_NAMES[suit]}${RANK_FILE_NAMES[rank]}.png`;
 }
 
 /**

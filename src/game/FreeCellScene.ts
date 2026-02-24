@@ -1886,86 +1886,227 @@ export class FreeCellScene extends Phaser.Scene {
     });
   }
 
-  // ── Win Celebration ────────────────────────────────────────
+  // ── Win Celebration (Windows Solitaire Nostalgia) ──────────
+
+  private winCelebrationActive: boolean = false;
+  private winCelebrationObjects: Phaser.GameObjects.GameObject[] = [];
 
   private winCelebration(): void {
+    this.winCelebrationActive = true;
+
     const w = this.scale.width;
     const h = this.scale.height;
+    const cw = this.cardWidth;
+    const ch = this.cardHeight;
 
-    // Cascade all cards off screen with physics-like animation
-    let delay = 0;
-    const allSprites = Array.from(this.cardSprites.values());
-
-    // Shuffle the sprites for visual variety
-    for (let i = allSprites.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [allSprites[i], allSprites[j]] = [allSprites[j], allSprites[i]];
+    // Collect cards from foundations (top card of each pile, then next, etc.)
+    const state = this.engine.getState();
+    const suitOrder = [Suit.Clubs, Suit.Diamonds, Suit.Hearts, Suit.Spades];
+    const cardQueue: { card: Card; foundationIdx: number }[] = [];
+    for (let rank = 13; rank >= 1; rank--) {
+      for (let si = 0; si < 4; si++) {
+        const pile = state.foundations.get(suitOrder[si]);
+        if (pile && pile.length >= rank) {
+          cardQueue.push({ card: pile[rank - 1], foundationIdx: si });
+        }
+      }
     }
 
-    for (const sprite of allSprites) {
-      const targetX = sprite.x + (Math.random() - 0.5) * w * 0.8;
-      const targetY = h + this.cardHeight + Math.random() * 200;
-      const rotation = (Math.random() - 0.5) * 3;
+    // Suit trail colors (RGBA tints)
+    const suitColors: Record<string, number> = {
+      [Suit.Hearts]: 0xff2222,
+      [Suit.Diamonds]: 0xff6622,
+      [Suit.Clubs]: 0x2244ff,
+      [Suit.Spades]: 0x22cc44,
+    };
 
-      sprite.setDepth(2000 + delay);
+    // Physics-based bouncing card simulation
+    const GRAVITY = 0.4;
+    const BOUNCE_DAMPING = 0.85;
+    const TRAIL_INTERVAL = 2; // leave trail every N frames
 
-      this.tweens.add({
-        targets: sprite,
-        x: targetX,
-        y: targetY,
-        angle: rotation * 57.3, // radians to degrees
-        duration: 600 + Math.random() * 400,
-        delay,
-        ease: 'Quad.easeIn',
-      });
-      delay += 25;
+    interface BouncingCard {
+      sprite: CardSprite;
+      x: number;
+      y: number;
+      vx: number;
+      vy: number;
+      trailColor: number;
+      frameCount: number;
+      alive: boolean;
     }
 
-    // Particle burst effect using graphics
-    for (let burst = 0; burst < 5; burst++) {
-      this.time.delayedCall(burst * 300, () => {
-        const cx = Math.random() * w;
-        const cy = Math.random() * h * 0.5;
-        this.createParticleBurst(cx, cy);
+    const activeCards: BouncingCard[] = [];
+    let launchIndex = 0;
+
+    // Launch a new card every 150ms
+    const launchTimer = this.time.addEvent({
+      delay: 150,
+      repeat: cardQueue.length - 1,
+      callback: () => {
+        if (launchIndex >= cardQueue.length) return;
+        const { card, foundationIdx } = cardQueue[launchIndex];
+        const pos = this.getFoundationPosition(foundationIdx);
+
+        // Get the existing sprite and bring it to celebration depth
+        const sprite = this.cardSprites.get(card.id);
+        if (!sprite) { launchIndex++; return; }
+
+        sprite.setDepth(2000 + launchIndex);
+        sprite.setPosition(pos.x, pos.y);
+
+        // Random launch direction
+        const launchAngle = -Math.PI * (0.2 + Math.random() * 0.6);
+        const speed = 4 + Math.random() * 5;
+
+        activeCards.push({
+          sprite,
+          x: pos.x,
+          y: pos.y,
+          vx: Math.cos(launchAngle) * speed,
+          vy: Math.sin(launchAngle) * speed,
+          trailColor: suitColors[card.suit] || 0xffffff,
+          frameCount: 0,
+          alive: true,
+        });
+
+        launchIndex++;
+      },
+    });
+    this.winCelebrationObjects.push(launchTimer as unknown as Phaser.GameObjects.GameObject);
+
+    // Physics update loop
+    const updateEvent = this.time.addEvent({
+      delay: 16, // ~60fps
+      loop: true,
+      callback: () => {
+        if (!this.winCelebrationActive) {
+          updateEvent.destroy();
+          return;
+        }
+
+        for (const bc of activeCards) {
+          if (!bc.alive) continue;
+
+          // Apply gravity
+          bc.vy += GRAVITY;
+
+          // Move
+          bc.x += bc.vx;
+          bc.y += bc.vy;
+
+          // Bounce off left/right walls
+          if (bc.x < 0) {
+            bc.x = 0;
+            bc.vx = Math.abs(bc.vx) * BOUNCE_DAMPING;
+          } else if (bc.x + cw > w) {
+            bc.x = w - cw;
+            bc.vx = -Math.abs(bc.vx) * BOUNCE_DAMPING;
+          }
+
+          // Bounce off bottom
+          if (bc.y + ch > h) {
+            bc.y = h - ch;
+            bc.vy = -Math.abs(bc.vy) * BOUNCE_DAMPING;
+            // Stop if barely bouncing
+            if (Math.abs(bc.vy) < 1) {
+              bc.alive = false;
+            }
+          }
+
+          // Bounce off top
+          if (bc.y < 0) {
+            bc.y = 0;
+            bc.vy = Math.abs(bc.vy) * BOUNCE_DAMPING;
+          }
+
+          // Leave colored trail/afterimage
+          bc.frameCount++;
+          if (bc.frameCount % TRAIL_INTERVAL === 0) {
+            const trail = this.add.graphics();
+            trail.fillStyle(bc.trailColor, 0.5);
+            trail.fillRoundedRect(0, 0, cw, ch, 6);
+            trail.setPosition(bc.x, bc.y);
+            trail.setDepth(1999);
+            this.winCelebrationObjects.push(trail);
+
+            // Fade out trail
+            this.tweens.add({
+              targets: trail,
+              alpha: 0,
+              duration: 1200,
+              ease: 'Power2',
+              onComplete: () => trail.destroy(),
+            });
+          }
+
+          // Update sprite position
+          bc.sprite.setPosition(bc.x, bc.y);
+        }
+      },
+    });
+    this.winCelebrationObjects.push(updateEvent as unknown as Phaser.GameObjects.GameObject);
+
+    // Confetti overlay
+    this.spawnConfetti();
+  }
+
+  private spawnConfetti(): void {
+    const w = this.scale.width;
+    const h = this.scale.height;
+    const confettiColors = [0xffd700, 0xff4444, 0x44ff44, 0x4444ff, 0xff44ff, 0xffaa00, 0x00ffff, 0xff8800];
+
+    for (let wave = 0; wave < 4; wave++) {
+      this.time.delayedCall(wave * 800, () => {
+        if (!this.winCelebrationActive) return;
+
+        for (let i = 0; i < 30; i++) {
+          const gfx = this.add.graphics();
+          const color = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+          const pw = 3 + Math.random() * 6;
+          const ph = pw * (0.5 + Math.random());
+          gfx.fillStyle(color, 1);
+          gfx.fillRect(-pw / 2, -ph / 2, pw, ph);
+
+          const startX = Math.random() * w;
+          const startY = -10 - Math.random() * 50;
+          gfx.setPosition(startX, startY);
+          gfx.setDepth(3000);
+          this.winCelebrationObjects.push(gfx);
+
+          const drift = (Math.random() - 0.5) * 100;
+          const duration = 2000 + Math.random() * 2000;
+
+          this.tweens.add({
+            targets: gfx,
+            x: startX + drift,
+            y: h + 20,
+            angle: 360 + Math.random() * 720,
+            duration,
+            ease: 'Sine.easeIn',
+            onComplete: () => gfx.destroy(),
+          });
+        }
       });
     }
   }
 
-  private createParticleBurst(cx: number, cy: number): void {
-    const colors = [0xffd700, 0xff4444, 0x44ff44, 0x4444ff, 0xff44ff, 0xffaa00];
-    const particleCount = 12;
-
-    for (let i = 0; i < particleCount; i++) {
-      const gfx = this.add.graphics();
-      const color = colors[Math.floor(Math.random() * colors.length)];
-      const size = 3 + Math.random() * 5;
-      gfx.fillStyle(color, 1);
-      gfx.fillCircle(0, 0, size);
-      gfx.setPosition(cx, cy);
-      gfx.setDepth(3000);
-
-      const angle = (i / particleCount) * Math.PI * 2 + Math.random() * 0.5;
-      const speed = 80 + Math.random() * 120;
-      const targetX = cx + Math.cos(angle) * speed;
-      const targetY = cy + Math.sin(angle) * speed;
-
-      this.tweens.add({
-        targets: gfx,
-        x: targetX,
-        y: targetY + 60, // gravity pull
-        alpha: 0,
-        scaleX: 0.2,
-        scaleY: 0.2,
-        duration: 600 + Math.random() * 400,
-        ease: 'Quad.easeOut',
-        onComplete: () => gfx.destroy(),
-      });
+  private cleanupWinCelebration(): void {
+    this.winCelebrationActive = false;
+    for (const obj of this.winCelebrationObjects) {
+      if (obj && 'destroy' in obj) {
+        try { obj.destroy(); } catch { /* already destroyed */ }
+      }
     }
+    this.winCelebrationObjects = [];
   }
 
   // ── New Game ──────────────────────────────────────────────
 
   private startNewGame(): void {
+    // Clean up any active celebration
+    this.cleanupWinCelebration();
+
     // Clear all sprites and touch state
     this.cardSprites.forEach((sprite) => sprite.destroy());
     this.cardSprites.clear();

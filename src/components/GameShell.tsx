@@ -12,6 +12,7 @@ import StatsPanel from './StatsPanel';
 import FeedbackModal from './FeedbackModal';
 import DailyChallengePanel from './DailyChallengePanel';
 import GameNumberInput from './GameNumberInput';
+import WinScreen from './WinScreen';
 import { soundManager } from '../lib/sounds';
 
 export default function GameShell() {
@@ -265,6 +266,19 @@ export default function GameShell() {
               Auto-Finish
             </button>
           </div>
+        )}
+
+        {/* Win Screen (appears 5s after win, overlays celebration) */}
+        {isWon && winDataRef.current && (
+          <WinScreen
+            time={winDataRef.current.time}
+            moves={winDataRef.current.moves}
+            hintsUsed={gameSession.hintsUsed}
+            onPlayAgain={handleNewGame}
+            onDailyChallenge={() => {
+              handlePlayDaily(getTodaysSeed());
+            }}
+          />
         )}
       </div>
 

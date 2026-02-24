@@ -17,7 +17,8 @@ import { getRandomSolvableGame } from '../lib/solvableDeals';
 
 // Layout constants
 const CARD_RATIO = 1.4; // height/width ratio
-const CASCADE_OVERLAP = 0.25; // fraction of card height visible when overlapping
+const CASCADE_OVERLAP = 0.30; // fraction of card height visible when overlapping
+const MIN_CASCADE_OVERLAP_PX = 22; // minimum pixels visible per card (ensures rank+suit corner is readable)
 const TOP_MARGIN_LANDSCAPE = 0.08;
 const TOP_MARGIN_PORTRAIT = 0.02;
 const SIDE_MARGIN = 0.02;
@@ -66,6 +67,15 @@ export class FreeCellScene extends Phaser.Scene {
   // Visual effects
   private vignette: Phaser.GameObjects.Graphics | null = null;
   private feltNoise: Phaser.GameObjects.Graphics | null = null;
+
+  // Touch device detection and zone-based input
+  private isTouchDevice: boolean = false;
+  private longPressTimer: ReturnType<typeof setTimeout> | null = null;
+  private longPressTriggered: boolean = false;
+  private longPressPointer: { x: number; y: number } | null = null;
+  private tooltipContainer: Phaser.GameObjects.Container | null = null;
+  private lastTapCol: number = -1;
+  private lastTapColTime: number = 0;
 
   constructor() {
     super({ key: 'FreeCellScene' });
@@ -117,8 +127,13 @@ export class FreeCellScene extends Phaser.Scene {
     this.history = new MoveHistory();
     this.timer = new GameTimer();
 
-    // Ensure only the topmost overlapping card captures taps
-    this.input.setTopOnly(true);
+    // Detect touch device
+    this.isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+    // Desktop: ensure only topmost overlapping card captures taps
+    if (!this.isTouchDevice) {
+      this.input.setTopOnly(true);
+    }
 
     this.drawBackgroundEffects();
     this.calculateLayout();
@@ -172,18 +187,21 @@ export class FreeCellScene extends Phaser.Scene {
     gameBridge.on('hint', () => this.showHint());
     gameBridge.on('autoFinish', () => this.performAutoFinish());
 
-    // Tap on empty areas to deselect or complete move
-    // Use a frame flag instead of a delay — card pointerdown sets cardTappedThisFrame,
-    // and pointerup on the scene checks it to avoid stealing taps from cards.
-    this.input.on('pointerup', (pointer: Phaser.Input.Pointer) => {
-      if (this.cardTappedThisFrame) {
-        this.cardTappedThisFrame = false;
-        return;
-      }
-      if (this.selectedCard && this.dragCards.length === 0) {
-        this.handleBoardTap(pointer.x, pointer.y);
-      }
-    });
+    if (this.isTouchDevice) {
+      // Mobile: zone-based tap input (no per-card hit detection)
+      this.setupTouchInput();
+    } else {
+      // Desktop: per-card click-to-move with frame flag to prevent board tap stealing
+      this.input.on('pointerup', (pointer: Phaser.Input.Pointer) => {
+        if (this.cardTappedThisFrame) {
+          this.cardTappedThisFrame = false;
+          return;
+        }
+        if (this.selectedCard && this.dragCards.length === 0) {
+          this.handleBoardTap(pointer.x, pointer.y);
+        }
+      });
+    }
 
     // Notify UI that game is ready
     gameBridge.emit('gameReady', { gameNumber: this.gameNumber });
@@ -283,24 +301,31 @@ export class FreeCellScene extends Phaser.Scene {
     };
   }
 
+  private getCurrentOverlap(): number {
+    const state = this.engine.getState();
+    const maxCascadeLength = Math.max(...state.cascades.map(c => c.length), 1);
+    const cascadeGap = this.scale.height * 0.02;
+    const topRow = this.boardOffsetY + this.topRowHeight + cascadeGap;
+    const availableHeight = this.scale.height - topRow - 10;
+
+    const defaultOverlap = Math.max(
+      Math.floor(this.cardHeight * CASCADE_OVERLAP),
+      MIN_CASCADE_OVERLAP_PX
+    );
+    const maxOverlap = maxCascadeLength > 1
+      ? Math.floor((availableHeight - this.cardHeight) / (maxCascadeLength - 1))
+      : defaultOverlap;
+
+    return Math.min(defaultOverlap, maxOverlap);
+  }
+
   private getCascadeCardPosition(
     col: number,
     row: number
   ): { x: number; y: number } {
     const cascadeGap = this.scale.height * 0.02;
     const topRow = this.boardOffsetY + this.topRowHeight + cascadeGap;
-    const availableHeight = this.scale.height - topRow - 10;
-
-    // Find the longest cascade to calculate dynamic overlap
-    const state = this.engine.getState();
-    const maxCascadeLength = Math.max(...state.cascades.map(c => c.length), 1);
-
-    // Calculate overlap: use default, but shrink if cascade would exceed available space
-    const defaultOverlap = Math.floor(this.cardHeight * CASCADE_OVERLAP);
-    const maxOverlap = maxCascadeLength > 1
-      ? Math.floor((availableHeight - this.cardHeight) / (maxCascadeLength - 1))
-      : defaultOverlap;
-    const overlap = Math.min(defaultOverlap, maxOverlap);
+    const overlap = this.getCurrentOverlap();
 
     return {
       x: this.getColumnX(col),
@@ -379,17 +404,20 @@ export class FreeCellScene extends Phaser.Scene {
     shadow.fillRoundedRect(2, 2, this.cardWidth, this.cardHeight, 6);
     container.addAt(shadow, 0); // Behind the card
 
-    // Make interactive with full card hit area (will be refined per-position in updateHitAreas)
-    container.setInteractive(
-      new Phaser.Geom.Rectangle(0, 0, this.cardWidth, this.cardHeight),
-      Phaser.Geom.Rectangle.Contains
-    );
+    // Desktop: per-card interactivity for click-to-move and drag
+    // Touch devices use zone-based input instead
+    if (!this.isTouchDevice) {
+      container.setInteractive(
+        new Phaser.Geom.Rectangle(0, 0, this.cardWidth, this.cardHeight),
+        Phaser.Geom.Rectangle.Contains
+      );
 
-    this.input.setDraggable(container);
-    container.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
-      this.cardTappedThisFrame = true;
-      this.onCardClick(container, pointer);
-    });
+      this.input.setDraggable(container);
+      container.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
+        this.cardTappedThisFrame = true;
+        this.onCardClick(container, pointer);
+      });
+    }
 
     this.cardSprites.set(card.id, container);
     return container;
@@ -402,6 +430,8 @@ export class FreeCellScene extends Phaser.Scene {
    * - Top cascade cards, free cell cards, and foundation cards get full card hit area
    */
   private updateHitAreas(): void {
+    if (this.isTouchDevice) return; // Touch devices use zone-based input
+
     const state = this.engine.getState();
 
     for (let col = 0; col < 8; col++) {
@@ -508,32 +538,406 @@ export class FreeCellScene extends Phaser.Scene {
       }
     }
 
-    // Set up drag handlers
-    this.input.on('drag', (_pointer: Phaser.Input.Pointer, _gameObject: CardSprite, dragX: number, dragY: number) => {
-      if (this.dragCards.length === 0) return;
-      const offsetX = dragX - this.dragStartX;
-      const offsetY = dragY - this.dragStartY;
+    // Set up drag handlers (desktop only — touch uses zone-based tapping)
+    if (!this.isTouchDevice) {
+      this.input.on('drag', (_pointer: Phaser.Input.Pointer, _gameObject: CardSprite, dragX: number, dragY: number) => {
+        if (this.dragCards.length === 0) return;
+        const offsetX = dragX - this.dragStartX;
+        const offsetY = dragY - this.dragStartY;
 
-      this.dragCards.forEach((card, i) => {
-        card.x = this.dragStartX + offsetX;
-        card.y = this.dragStartY + offsetY + i * Math.floor(this.cardHeight * CASCADE_OVERLAP);
+        this.dragCards.forEach((card, i) => {
+          card.x = this.dragStartX + offsetX;
+          card.y = this.dragStartY + offsetY + i * Math.floor(this.cardHeight * CASCADE_OVERLAP);
+        });
       });
-    });
 
-    this.input.on('dragstart', (_pointer: Phaser.Input.Pointer, gameObject: CardSprite) => {
-      this.clearSelection();
-      this.startDrag(gameObject);
-    });
+      this.input.on('dragstart', (_pointer: Phaser.Input.Pointer, gameObject: CardSprite) => {
+        this.clearSelection();
+        this.startDrag(gameObject);
+      });
 
-    this.input.on('dragend', (_pointer: Phaser.Input.Pointer, gameObject: CardSprite) => {
-      this.endDrag(gameObject);
-    });
+      this.input.on('dragend', (_pointer: Phaser.Input.Pointer, gameObject: CardSprite) => {
+        this.endDrag(gameObject);
+      });
+    }
 
     // Initial hit area setup after all cards are placed
     this.updateHitAreas();
   }
 
-  // ── Click-to-Move System ──────────────────────────────────
+  // ── Touch Zone System (Mobile) ───────────────────────────
+
+  private setupTouchInput(): void {
+    this.input.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
+      this.dismissTooltip();
+      this.longPressTriggered = false;
+      this.longPressPointer = { x: pointer.x, y: pointer.y };
+      this.longPressTimer = setTimeout(() => {
+        this.longPressTriggered = true;
+        this.handleLongPress(pointer);
+      }, 300);
+    });
+
+    this.input.on('pointermove', (pointer: Phaser.Input.Pointer) => {
+      if (this.longPressPointer) {
+        const dx = pointer.x - this.longPressPointer.x;
+        const dy = pointer.y - this.longPressPointer.y;
+        if (Math.sqrt(dx * dx + dy * dy) > 10) {
+          this.cancelLongPress();
+        }
+      }
+    });
+
+    this.input.on('pointerup', (pointer: Phaser.Input.Pointer) => {
+      this.cancelLongPress();
+      if (this.longPressTriggered) {
+        this.longPressTriggered = false;
+        return;
+      }
+      this.handleTouchTap(pointer);
+    });
+  }
+
+  private cancelLongPress(): void {
+    if (this.longPressTimer) {
+      clearTimeout(this.longPressTimer);
+      this.longPressTimer = null;
+    }
+    this.longPressPointer = null;
+  }
+
+  private handleTouchTap(pointer: Phaser.Input.Pointer): void {
+    this.dismissTooltip();
+
+    const { x, y } = pointer;
+
+    // Check top row first (free cells / foundations)
+    const topSlot = this.getTopRowSlotAtPoint(x, y);
+    if (topSlot) {
+      if (this.selectedCard) {
+        this.handleTopRowPlacement(topSlot);
+      } else if (topSlot.type === 'freecell') {
+        this.handleFreeCellTouchSelect(topSlot.index);
+      }
+      return;
+    }
+
+    // Check cascades
+    const cascadeCol = this.getCascadeColumnAtPoint(x, y);
+    if (cascadeCol !== -1) {
+      if (this.selectedCard) {
+        this.handleCascadePlacement(cascadeCol, y);
+      } else {
+        this.handleCascadeSelection(cascadeCol, y);
+      }
+      return;
+    }
+
+    // Tapped nothing — deselect
+    this.clearSelection();
+  }
+
+  private getCascadeColumnAtPoint(x: number, y: number): number {
+    const cascadeGap = this.scale.height * 0.02;
+    const cascadeTop = this.boardOffsetY + this.topRowHeight + cascadeGap;
+    if (y < cascadeTop - 5) return -1;
+
+    const w = this.scale.width;
+    const sideMargin = w * SIDE_MARGIN;
+    if (x < sideMargin || x > w - sideMargin) return -1;
+
+    const usableWidth = w - 2 * sideMargin;
+    const col = Math.floor((x - sideMargin) / (usableWidth / 8));
+    return Math.min(Math.max(col, 0), 7);
+  }
+
+  private getTopRowSlotAtPoint(x: number, y: number): { type: 'freecell' | 'foundation'; index: number } | null {
+    if (this.isPortrait) {
+      const rowGap = Math.floor(this.scale.height * 0.008);
+      const freeCellRowTop = this.boardOffsetY;
+      const freeCellRowBottom = this.boardOffsetY + this.cardHeight;
+      const foundationRowTop = freeCellRowBottom + rowGap;
+      const foundationRowBottom = foundationRowTop + this.cardHeight;
+
+      if (y >= freeCellRowTop - 5 && y <= freeCellRowBottom + 5) {
+        const pos0 = this.getFreeCellPosition(0);
+        const pos3 = this.getFreeCellPosition(3);
+        const rowLeft = pos0.x - this.cardWidth * 0.15;
+        const rowRight = pos3.x + this.cardWidth * 1.15;
+        if (x >= rowLeft && x <= rowRight) {
+          const zone = Math.floor((x - rowLeft) / ((rowRight - rowLeft) / 4));
+          return { type: 'freecell', index: Math.min(Math.max(zone, 0), 3) };
+        }
+      }
+
+      if (y >= foundationRowTop - 5 && y <= foundationRowBottom + 5) {
+        const pos0 = this.getFoundationPosition(0);
+        const pos3 = this.getFoundationPosition(3);
+        const rowLeft = pos0.x - this.cardWidth * 0.15;
+        const rowRight = pos3.x + this.cardWidth * 1.15;
+        if (x >= rowLeft && x <= rowRight) {
+          const zone = Math.floor((x - rowLeft) / ((rowRight - rowLeft) / 4));
+          return { type: 'foundation', index: Math.min(Math.max(zone, 0), 3) };
+        }
+      }
+    } else {
+      // Landscape: single row, zones 0-3 = free cells, 4-7 = foundations
+      const topRowTop = this.boardOffsetY;
+      const topRowBottom = this.boardOffsetY + this.cardHeight;
+
+      if (y >= topRowTop - 5 && y <= topRowBottom + 10) {
+        const w = this.scale.width;
+        const sideMargin = w * SIDE_MARGIN;
+        if (x >= sideMargin && x <= w - sideMargin) {
+          const usableWidth = w - 2 * sideMargin;
+          const zone = Math.floor((x - sideMargin) / (usableWidth / 8));
+          const idx = Math.min(Math.max(zone, 0), 7);
+          if (idx < 4) {
+            return { type: 'freecell', index: idx };
+          } else {
+            return { type: 'foundation', index: idx - 4 };
+          }
+        }
+      }
+    }
+
+    return null;
+  }
+
+  private handleCascadeSelection(col: number, tapY: number): void {
+    const state = this.engine.getState();
+    const cascade = state.cascades[col];
+    if (cascade.length === 0) return;
+
+    if (!this.timer.isRunning) {
+      this.timer.start();
+    }
+
+    // Calculate which card was tapped based on Y position
+    const cascadeGap = this.scale.height * 0.02;
+    const cascadeTop = this.boardOffsetY + this.topRowHeight + cascadeGap;
+    const overlap = this.getCurrentOverlap();
+
+    const relativeY = tapY - cascadeTop;
+    let cardIndex = Math.floor(relativeY / Math.max(overlap, 1));
+    cardIndex = Math.min(Math.max(cardIndex, 0), cascade.length - 1);
+
+    // Snap to valid run start (can't select cards that don't form a valid run)
+    const run = this.engine.getValidRun(col);
+    const runStart = cascade.length - run.length;
+    if (cardIndex < runStart) {
+      cardIndex = runStart;
+    }
+
+    // Double-tap on column: auto-move bottom card
+    const now = Date.now();
+    if (this.lastTapCol === col && (now - this.lastTapColTime) < 400) {
+      this.lastTapCol = -1;
+      const bottomCard = cascade[cascade.length - 1];
+      const sprite = this.cardSprites.get(bottomCard.id);
+      if (sprite) {
+        this.clearSelection();
+        this.smartAutoMove(sprite);
+      }
+      return;
+    }
+    this.lastTapCol = col;
+    this.lastTapColTime = now;
+
+    const card = cascade[cardIndex];
+    const sprite = this.cardSprites.get(card.id);
+    if (sprite) {
+      this.selectCard(sprite);
+    }
+  }
+
+  private handleCascadePlacement(col: number, tapY: number): void {
+    if (!this.selectedCard) return;
+
+    const from = this.findCardLocation(this.selectedCard.cardData);
+    if (!from) { this.clearSelection(); return; }
+
+    // Tapping the same cascade = deselect
+    if (from.type === 'cascade' && from.index === col) {
+      this.clearSelection();
+      return;
+    }
+
+    const to: Location = { type: 'cascade', index: col };
+
+    let moveFrom = { ...from };
+    if (from.type === 'cascade') {
+      const state = this.engine.getState();
+      const cascade = state.cascades[from.index];
+      const cardIdx = cascade.findIndex(c => c.equals(this.selectedCard!.cardData));
+      moveFrom = { type: 'cascade', index: from.index, cardIndex: cardIdx };
+
+      this.dragCards = [];
+      for (let i = cardIdx; i < cascade.length; i++) {
+        const cs = this.cardSprites.get(cascade[i].id);
+        if (cs) this.dragCards.push(cs);
+      }
+    } else {
+      this.dragCards = [this.selectedCard];
+    }
+
+    if (this.engine.isLegalMove(moveFrom, to)) {
+      this.clearSelection();
+      this.executeMoveAndAnimate(moveFrom, to);
+      this.dragCards = [];
+      this.vibrate();
+    } else {
+      this.dragCards = [];
+      this.clearSelection();
+      // Try selecting from this column instead
+      this.handleCascadeSelection(col, tapY);
+    }
+  }
+
+  private handleTopRowPlacement(slot: { type: 'freecell' | 'foundation'; index: number }): void {
+    if (!this.selectedCard) return;
+
+    const from = this.findCardLocation(this.selectedCard.cardData);
+    if (!from) { this.clearSelection(); return; }
+
+    const suits = [Suit.Clubs, Suit.Diamonds, Suit.Hearts, Suit.Spades];
+    const to: Location = slot.type === 'freecell'
+      ? { type: 'freecell', index: slot.index }
+      : { type: 'foundation', suit: suits[slot.index] };
+
+    let moveFrom = { ...from };
+    if (from.type === 'cascade') {
+      const state = this.engine.getState();
+      const cascade = state.cascades[from.index];
+      const cardIdx = cascade.findIndex(c => c.equals(this.selectedCard!.cardData));
+      moveFrom = { type: 'cascade', index: from.index, cardIndex: cardIdx };
+
+      this.dragCards = [];
+      for (let i = cardIdx; i < cascade.length; i++) {
+        const cs = this.cardSprites.get(cascade[i].id);
+        if (cs) this.dragCards.push(cs);
+      }
+    } else {
+      this.dragCards = [this.selectedCard];
+    }
+
+    if (this.engine.isLegalMove(moveFrom, to)) {
+      this.clearSelection();
+      this.executeMoveAndAnimate(moveFrom, to);
+      this.dragCards = [];
+      this.vibrate();
+    } else {
+      this.dragCards = [];
+      this.clearSelection();
+      // If tapped a free cell with a card, select it
+      if (slot.type === 'freecell') {
+        this.handleFreeCellTouchSelect(slot.index);
+      }
+    }
+  }
+
+  private handleFreeCellTouchSelect(index: number): void {
+    const state = this.engine.getState();
+    const card = state.freeCells[index];
+    if (!card) return;
+
+    if (!this.timer.isRunning) {
+      this.timer.start();
+    }
+
+    const sprite = this.cardSprites.get(card.id);
+    if (sprite) {
+      // Double-tap detection on free cell card
+      const now = Date.now();
+      if (this.lastTapCard === sprite && (now - this.lastTapTime) < 400) {
+        this.lastTapCard = null;
+        this.clearSelection();
+        this.smartAutoMove(sprite);
+        return;
+      }
+      this.lastTapCard = sprite;
+      this.lastTapTime = now;
+
+      this.selectCard(sprite);
+    }
+  }
+
+  private handleLongPress(pointer: Phaser.Input.Pointer): void {
+    const col = this.getCascadeColumnAtPoint(pointer.x, pointer.y);
+    if (col === -1) return;
+
+    const state = this.engine.getState();
+    const cascade = state.cascades[col];
+    if (cascade.length === 0) return;
+
+    this.vibrate();
+    this.showColumnTooltip(col, pointer.x, pointer.y);
+  }
+
+  private showColumnTooltip(col: number, x: number, _y: number): void {
+    this.dismissTooltip();
+
+    const state = this.engine.getState();
+    const cascade = state.cascades[col];
+
+    // Calculate tooltip dimensions — show cards at 1.5x or a readable minimum
+    const tooltipCardWidth = Math.max(this.cardWidth * 1.5, 60);
+    const tooltipCardHeight = tooltipCardWidth * CARD_RATIO;
+    const tooltipOverlap = tooltipCardHeight * 0.28;
+    const tooltipHeight = tooltipCardHeight + (cascade.length - 1) * tooltipOverlap + 20;
+    const tooltipWidth = tooltipCardWidth + 20;
+
+    // Position tooltip avoiding screen edges
+    let tooltipX = x - tooltipWidth / 2;
+    const cascadeGap = this.scale.height * 0.02;
+    const cascadeTop = this.boardOffsetY + this.topRowHeight + cascadeGap;
+    let tooltipY = cascadeTop;
+
+    if (tooltipX < 5) tooltipX = 5;
+    if (tooltipX + tooltipWidth > this.scale.width - 5) {
+      tooltipX = this.scale.width - tooltipWidth - 5;
+    }
+    if (tooltipY + tooltipHeight > this.scale.height - 5) {
+      tooltipY = this.scale.height - tooltipHeight - 5;
+    }
+
+    this.tooltipContainer = this.add.container(tooltipX, tooltipY);
+    this.tooltipContainer.setDepth(5000);
+
+    // Background
+    const bg = this.add.graphics();
+    bg.fillStyle(0x1a1a2e, 0.95);
+    bg.fillRoundedRect(0, 0, tooltipWidth, tooltipHeight, 10);
+    bg.lineStyle(2, 0xffd700, 0.8);
+    bg.strokeRoundedRect(0, 0, tooltipWidth, tooltipHeight, 10);
+    this.tooltipContainer.add(bg);
+
+    // Render each card in the cascade
+    const cardStartX = 10;
+    const cardStartY = 10;
+    for (let i = 0; i < cascade.length; i++) {
+      const card = cascade[i];
+      const assetKey = getCardAssetKey(card.suit, card.rank);
+      if (this.textures.exists(assetKey)) {
+        const img = this.add.image(
+          cardStartX + tooltipCardWidth / 2,
+          cardStartY + i * tooltipOverlap + tooltipCardHeight / 2,
+          assetKey
+        );
+        img.setDisplaySize(tooltipCardWidth, tooltipCardHeight);
+        this.tooltipContainer.add(img);
+      }
+    }
+  }
+
+  private dismissTooltip(): void {
+    if (this.tooltipContainer) {
+      this.tooltipContainer.destroy(true);
+      this.tooltipContainer = null;
+    }
+  }
+
+  // ── Click-to-Move System (Desktop) ─────────────────────────
 
   private onCardClick(sprite: CardSprite, pointer: Phaser.Input.Pointer): void {
     // Don't process click if we're dragging
@@ -673,9 +1077,23 @@ export class FreeCellScene extends Phaser.Scene {
     this.clearSelectionGlow();
     this.selectionGlow = this.add.graphics();
     this.selectionGlow.lineStyle(3, 0xffd700, 0.9);
+
+    // For cascade run selections, extend glow to cover all selected cards
+    let glowHeight = this.cardHeight + 4;
+    const location = this.findCardLocation(sprite.cardData);
+    if (location?.type === 'cascade') {
+      const state = this.engine.getState();
+      const cascade = state.cascades[location.index];
+      const cardIdx = cascade.findIndex(c => c.equals(sprite.cardData));
+      if (cardIdx >= 0 && cardIdx < cascade.length - 1) {
+        const bottomPos = this.getCascadeCardPosition(location.index, cascade.length - 1);
+        glowHeight = (bottomPos.y + this.cardHeight) - sprite.y + 4;
+      }
+    }
+
     this.selectionGlow.strokeRoundedRect(
       sprite.x - 2, sprite.y - 2,
-      this.cardWidth + 4, this.cardHeight + 4,
+      this.cardWidth + 4, glowHeight,
       8
     );
     this.selectionGlow.setDepth(999);
@@ -694,16 +1112,30 @@ export class FreeCellScene extends Phaser.Scene {
   private showDestinationHighlights(destinations: Location[]): void {
     this.clearHighlights();
 
+    const cascadeGap = this.scale.height * 0.02;
+    const cascadeTop = this.boardOffsetY + this.topRowHeight + cascadeGap;
+    const cascadeBottom = this.scale.height;
+
     for (const dest of destinations) {
-      const pos = this.getDestinationPosition(dest);
       const gfx = this.add.graphics();
-      gfx.lineStyle(3, 0x00ff88, 0.8);
-      gfx.fillStyle(0x00ff88, 0.15);
-      gfx.fillRoundedRect(pos.x, pos.y, this.cardWidth, this.cardHeight, 6);
-      gfx.strokeRoundedRect(pos.x, pos.y, this.cardWidth, this.cardHeight, 6);
+
+      if (this.isTouchDevice && dest.type === 'cascade') {
+        // Full column zone highlight for touch devices
+        const colX = this.getColumnX(dest.index);
+        gfx.fillStyle(0x00ff88, 0.08);
+        gfx.fillRoundedRect(colX - 2, cascadeTop, this.cardWidth + 4, cascadeBottom - cascadeTop, 4);
+        gfx.lineStyle(2, 0x00ff88, 0.4);
+        gfx.strokeRoundedRect(colX - 2, cascadeTop, this.cardWidth + 4, cascadeBottom - cascadeTop, 4);
+      } else {
+        const pos = this.getDestinationPosition(dest);
+        gfx.lineStyle(3, 0x00ff88, 0.8);
+        gfx.fillStyle(0x00ff88, 0.15);
+        gfx.fillRoundedRect(pos.x, pos.y, this.cardWidth, this.cardHeight, 6);
+        gfx.strokeRoundedRect(pos.x, pos.y, this.cardWidth, this.cardHeight, 6);
+      }
+
       gfx.setDepth(998);
 
-      // Pulse animation
       this.tweens.add({
         targets: gfx,
         alpha: 0.4,
@@ -1519,10 +1951,12 @@ export class FreeCellScene extends Phaser.Scene {
   // ── New Game ──────────────────────────────────────────────
 
   private startNewGame(): void {
-    // Clear all sprites
+    // Clear all sprites and touch state
     this.cardSprites.forEach((sprite) => sprite.destroy());
     this.cardSprites.clear();
     this.clearSelection();
+    this.dismissTooltip();
+    this.cancelLongPress();
 
     // Reset engine
     this.engine = new FreeCellEngine(this.gameNumber);

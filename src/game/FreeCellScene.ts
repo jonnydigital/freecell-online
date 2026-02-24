@@ -54,8 +54,48 @@ export class FreeCellScene extends Phaser.Scene {
   // Board slot graphics (for redraw on resize)
   private slotGraphics: Phaser.GameObjects.GameObject[] = [];
 
+  // Visual effects
+  private vignette: Phaser.GameObjects.Graphics | null = null;
+  private feltNoise: Phaser.GameObjects.Graphics | null = null;
+
   constructor() {
     super({ key: 'FreeCellScene' });
+  }
+
+  private drawBackgroundEffects(): void {
+    const w = this.scale.width;
+    const h = this.scale.height;
+
+    // Clean up old effects
+    if (this.vignette) { this.vignette.destroy(); this.vignette = null; }
+    if (this.feltNoise) { this.feltNoise.destroy(); this.feltNoise = null; }
+
+    // Vignette: radial darkening around edges
+    this.vignette = this.add.graphics();
+    this.vignette.setDepth(0);
+    // Draw concentric semi-transparent dark rects from edge inward
+    const steps = 8;
+    for (let i = 0; i < steps; i++) {
+      const alpha = 0.12 * (1 - i / steps);
+      const inset = (i / steps) * Math.min(w, h) * 0.35;
+      this.vignette.fillStyle(0x000000, alpha);
+      this.vignette.fillRect(0, 0, w, inset); // top
+      this.vignette.fillRect(0, h - inset, w, inset); // bottom
+      this.vignette.fillRect(0, 0, inset, h); // left
+      this.vignette.fillRect(w - inset, 0, inset, h); // right
+    }
+
+    // Felt noise texture: scattered subtle dark/light specks
+    this.feltNoise = this.add.graphics();
+    this.feltNoise.setDepth(1);
+    const noiseCount = Math.floor((w * h) / 800); // Density scales with screen
+    for (let i = 0; i < noiseCount; i++) {
+      const nx = Math.random() * w;
+      const ny = Math.random() * h;
+      const bright = Math.random() > 0.5;
+      this.feltNoise.fillStyle(bright ? 0x1a5c1a : 0x062e06, Math.random() * 0.15);
+      this.feltNoise.fillRect(nx, ny, 1 + Math.random(), 1 + Math.random());
+    }
   }
 
   preload(): void {
@@ -71,13 +111,15 @@ export class FreeCellScene extends Phaser.Scene {
     this.history = new MoveHistory();
     this.timer = new GameTimer();
 
+    this.drawBackgroundEffects();
     this.calculateLayout();
     this.createBoard();
-    this.dealCards();
+    this.dealCards(true); // staggered deal on first load
 
     // Listen for resize
     this.scale.on('resize', () => {
       this.calculateLayout();
+      this.drawBackgroundEffects();
       this.rebuildBoard();
       this.repositionAllCards(false);
     });
@@ -350,17 +392,43 @@ export class FreeCellScene extends Phaser.Scene {
     return container;
   }
 
-  private dealCards(): void {
+  private dealCards(staggered: boolean = false): void {
     const state = this.engine.getState();
+    const w = this.scale.width;
 
+    let dealIndex = 0;
     for (let col = 0; col < 8; col++) {
       const cascade = state.cascades[col];
       for (let row = 0; row < cascade.length; row++) {
         const card = cascade[row];
         const pos = this.getCascadeCardPosition(col, row);
-        const sprite = this.createCardSprite(card, pos.x, pos.y);
-        sprite.sourceLocation = { type: 'cascade', index: col, cardIndex: row };
-        sprite.setDepth(row + 10);
+
+        if (staggered) {
+          // Start cards off-screen at top-center, animate to position
+          const sprite = this.createCardSprite(card, w / 2 - this.cardWidth / 2, -this.cardHeight);
+          sprite.sourceLocation = { type: 'cascade', index: col, cardIndex: row };
+          sprite.setDepth(500 + dealIndex);
+          sprite.alpha = 0.7;
+
+          const delay = dealIndex * 30;
+          this.tweens.add({
+            targets: sprite,
+            x: pos.x,
+            y: pos.y,
+            alpha: 1,
+            duration: 250,
+            delay,
+            ease: 'Back.easeOut',
+            onComplete: () => {
+              sprite.setDepth(row + 10);
+            },
+          });
+          dealIndex++;
+        } else {
+          const sprite = this.createCardSprite(card, pos.x, pos.y);
+          sprite.sourceLocation = { type: 'cascade', index: col, cardIndex: row };
+          sprite.setDepth(row + 10);
+        }
       }
     }
 
@@ -862,6 +930,7 @@ export class FreeCellScene extends Phaser.Scene {
         moves: this.engine.getState().moveCount,
       });
       this.timer.stop();
+      this.time.delayedCall(400, () => this.winCelebration());
     }
 
     if (!this.engine.hasLegalMoves() && !this.engine.getState().isWon) {
@@ -952,9 +1021,16 @@ export class FreeCellScene extends Phaser.Scene {
 
   // ── Reposition / Animate ──────────────────────────────────
 
+  private getMoveDuration(sprite: CardSprite, targetX: number, targetY: number): number {
+    const dx = targetX - sprite.x;
+    const dy = targetY - sprite.y;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+    // Variable speed: 100ms base + scaled by distance, capped at 300ms
+    return Math.min(300, Math.max(100, distance * 0.4));
+  }
+
   private repositionAllCards(animate: boolean = true): void {
     const state = this.engine.getState();
-    const duration = animate ? 150 : 0;
 
     // Position cascade cards
     for (let col = 0; col < 8; col++) {
@@ -963,12 +1039,12 @@ export class FreeCellScene extends Phaser.Scene {
         const sprite = this.cardSprites.get(cascade[row].id);
         if (sprite) {
           const pos = this.getCascadeCardPosition(col, row);
-          if (duration > 0) {
+          if (animate) {
             this.tweens.add({
               targets: sprite,
               x: pos.x,
               y: pos.y,
-              duration,
+              duration: this.getMoveDuration(sprite, pos.x, pos.y),
               ease: 'Power2',
             });
           } else {
@@ -992,12 +1068,12 @@ export class FreeCellScene extends Phaser.Scene {
         const sprite = this.cardSprites.get(card.id);
         if (sprite) {
           const pos = this.getFreeCellPosition(i);
-          if (duration > 0) {
+          if (animate) {
             this.tweens.add({
               targets: sprite,
               x: pos.x,
               y: pos.y,
-              duration,
+              duration: this.getMoveDuration(sprite, pos.x, pos.y),
               ease: 'Power2',
             });
           } else {
@@ -1010,7 +1086,7 @@ export class FreeCellScene extends Phaser.Scene {
       }
     }
 
-    // Position foundation cards (only top visible)
+    // Position foundation cards (only top visible) with bloom effect
     for (const [suit, pile] of state.foundations) {
       if (pile.length > 0) {
         const topCard = pile[pile.length - 1];
@@ -1019,13 +1095,19 @@ export class FreeCellScene extends Phaser.Scene {
         const idx = suits.indexOf(suit);
         if (sprite) {
           const pos = this.getFoundationPosition(idx);
-          if (duration > 0) {
+          const isMovingToFoundation = animate && (
+            Math.abs(sprite.x - pos.x) > 5 || Math.abs(sprite.y - pos.y) > 5
+          );
+          if (animate) {
             this.tweens.add({
               targets: sprite,
               x: pos.x,
               y: pos.y,
-              duration,
+              duration: this.getMoveDuration(sprite, pos.x, pos.y),
               ease: 'Power2',
+              onComplete: isMovingToFoundation ? () => {
+                this.foundationBloom(sprite);
+              } : undefined,
             });
           } else {
             sprite.x = pos.x;
@@ -1036,6 +1118,18 @@ export class FreeCellScene extends Phaser.Scene {
         }
       }
     }
+  }
+
+  private foundationBloom(sprite: CardSprite): void {
+    // Scale-up "bloom" when card reaches foundation
+    this.tweens.add({
+      targets: sprite,
+      scaleX: 1.08,
+      scaleY: 1.08,
+      duration: 120,
+      yoyo: true,
+      ease: 'Quad.easeOut',
+    });
   }
 
   // ── Undo / Redo ───────────────────────────────────────────
@@ -1097,6 +1191,83 @@ export class FreeCellScene extends Phaser.Scene {
     });
   }
 
+  // ── Win Celebration ────────────────────────────────────────
+
+  private winCelebration(): void {
+    const w = this.scale.width;
+    const h = this.scale.height;
+
+    // Cascade all cards off screen with physics-like animation
+    let delay = 0;
+    const allSprites = Array.from(this.cardSprites.values());
+
+    // Shuffle the sprites for visual variety
+    for (let i = allSprites.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [allSprites[i], allSprites[j]] = [allSprites[j], allSprites[i]];
+    }
+
+    for (const sprite of allSprites) {
+      const targetX = sprite.x + (Math.random() - 0.5) * w * 0.8;
+      const targetY = h + this.cardHeight + Math.random() * 200;
+      const rotation = (Math.random() - 0.5) * 3;
+
+      sprite.setDepth(2000 + delay);
+
+      this.tweens.add({
+        targets: sprite,
+        x: targetX,
+        y: targetY,
+        angle: rotation * 57.3, // radians to degrees
+        duration: 600 + Math.random() * 400,
+        delay,
+        ease: 'Quad.easeIn',
+      });
+      delay += 25;
+    }
+
+    // Particle burst effect using graphics
+    for (let burst = 0; burst < 5; burst++) {
+      this.time.delayedCall(burst * 300, () => {
+        const cx = Math.random() * w;
+        const cy = Math.random() * h * 0.5;
+        this.createParticleBurst(cx, cy);
+      });
+    }
+  }
+
+  private createParticleBurst(cx: number, cy: number): void {
+    const colors = [0xffd700, 0xff4444, 0x44ff44, 0x4444ff, 0xff44ff, 0xffaa00];
+    const particleCount = 12;
+
+    for (let i = 0; i < particleCount; i++) {
+      const gfx = this.add.graphics();
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      const size = 3 + Math.random() * 5;
+      gfx.fillStyle(color, 1);
+      gfx.fillCircle(0, 0, size);
+      gfx.setPosition(cx, cy);
+      gfx.setDepth(3000);
+
+      const angle = (i / particleCount) * Math.PI * 2 + Math.random() * 0.5;
+      const speed = 80 + Math.random() * 120;
+      const targetX = cx + Math.cos(angle) * speed;
+      const targetY = cy + Math.sin(angle) * speed;
+
+      this.tweens.add({
+        targets: gfx,
+        x: targetX,
+        y: targetY + 60, // gravity pull
+        alpha: 0,
+        scaleX: 0.2,
+        scaleY: 0.2,
+        duration: 600 + Math.random() * 400,
+        ease: 'Quad.easeOut',
+        onComplete: () => gfx.destroy(),
+      });
+    }
+  }
+
   // ── New Game ──────────────────────────────────────────────
 
   private startNewGame(): void {
@@ -1110,9 +1281,9 @@ export class FreeCellScene extends Phaser.Scene {
     this.history.clear();
     this.timer.reset();
 
-    // Rebuild board and redeal
+    // Rebuild board and redeal with staggered animation
     this.rebuildBoard();
-    this.dealCards();
+    this.dealCards(true);
     gameBridge.emit('gameReady', { gameNumber: this.gameNumber });
   }
 }

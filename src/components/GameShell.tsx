@@ -162,7 +162,7 @@ export default function GameShell() {
   const iconSize = 16;
 
   return (
-    <div className="flex flex-col h-screen bg-[#0a3d0a]">
+    <div className="flex flex-col h-dvh bg-[#0a3d0a]">
       {/* ── Desktop Top Bar (hidden on mobile) ── */}
       <div className="hidden md:flex items-center justify-between px-4 py-2 bg-[#072907] border-b border-[#1a5c1a]/30">
         <div className="flex items-center gap-3">

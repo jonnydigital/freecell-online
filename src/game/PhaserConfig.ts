@@ -15,7 +15,8 @@ export function createPhaserConfig(
     backgroundColor: '#0a3d0a',
     scale: {
       mode: Phaser.Scale.RESIZE,
-      autoCenter: Phaser.Scale.CENTER_BOTH,
+      autoCenter: Phaser.Scale.NO_CENTER,
+      expandParent: false,
     },
     scene: [FreeCellScene],
     render: {

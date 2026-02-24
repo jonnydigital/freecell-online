@@ -1,18 +1,40 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import { gameBridge } from '../game/GameBridge';
+import { GameStats, createEmptyStats, recordWin, recordLoss } from '../lib/stats';
+import { loadStats, saveStats } from '../lib/storage';
+import StatsPanel from './StatsPanel';
 
 export default function GameShell() {
   const containerRef = useRef<HTMLDivElement>(null);
   const gameRef = useRef<Phaser.Game | null>(null);
-  const mountedRef = useRef(false); // StrictMode guard
+  const mountedRef = useRef(false);
   const [gameNumber, setGameNumber] = useState<number | null>(null);
   const [moveCount, setMoveCount] = useState(0);
   const [isWon, setIsWon] = useState(false);
+  const [stats, setStats] = useState<GameStats>(createEmptyStats);
+  const [showStats, setShowStats] = useState(false);
+
+  // Load stats on mount
+  useEffect(() => {
+    setStats(loadStats());
+  }, []);
+
+  const handleWin = useCallback(
+    (data: unknown) => {
+      const d = data as { time: number; moves: number };
+      setIsWon(true);
+      setStats((prev) => {
+        const updated = recordWin(prev, d.time, d.moves);
+        saveStats(updated);
+        return updated;
+      });
+    },
+    []
+  );
 
   useEffect(() => {
-    // StrictMode double-mount guard
     if (mountedRef.current) return;
     mountedRef.current = true;
 
@@ -28,7 +50,6 @@ export default function GameShell() {
 
     initPhaser();
 
-    // Listen for bridge events
     const unsubReady = gameBridge.on('gameReady', (data: unknown) => {
       const d = data as { gameNumber: number };
       setGameNumber(d.gameNumber);
@@ -41,9 +62,7 @@ export default function GameShell() {
       setMoveCount(d.moveCount);
     });
 
-    const unsubWin = gameBridge.on('gameWon', () => {
-      setIsWon(true);
-    });
+    const unsubWin = gameBridge.on('gameWon', handleWin);
 
     return () => {
       unsubReady();
@@ -55,7 +74,7 @@ export default function GameShell() {
       }
       mountedRef.current = false;
     };
-  }, []);
+  }, [handleWin]);
 
   const handleNewGame = () => gameBridge.emit('newGame');
   const handleUndo = () => gameBridge.emit('undo');
@@ -65,32 +84,41 @@ export default function GameShell() {
     <div className="flex flex-col h-screen bg-[#0a3d0a]">
       {/* Top Bar */}
       <div className="flex items-center justify-between px-4 py-2 bg-[#072907] border-b border-[#1a5c1a]/30">
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
           <button
             onClick={handleNewGame}
-            className="px-3 py-1.5 text-sm bg-[#1a5c1a] hover:bg-[#2a7c2a] text-white rounded transition-colors"
+            className="px-2 sm:px-3 py-1.5 text-xs sm:text-sm bg-[#1a5c1a] hover:bg-[#2a7c2a] text-white rounded transition-colors"
           >
             New Game
           </button>
           <button
             onClick={handleUndo}
-            className="px-3 py-1.5 text-sm bg-[#1a5c1a]/60 hover:bg-[#1a5c1a] text-white/80 rounded transition-colors"
+            className="px-2 sm:px-3 py-1.5 text-xs sm:text-sm bg-[#1a5c1a]/60 hover:bg-[#1a5c1a] text-white/80 rounded transition-colors"
+            title="Undo"
           >
-            ↩ Undo
+            ↩
           </button>
           <button
             onClick={handleRedo}
-            className="px-3 py-1.5 text-sm bg-[#1a5c1a]/60 hover:bg-[#1a5c1a] text-white/80 rounded transition-colors"
+            className="px-2 sm:px-3 py-1.5 text-xs sm:text-sm bg-[#1a5c1a]/60 hover:bg-[#1a5c1a] text-white/80 rounded transition-colors"
+            title="Redo"
           >
-            ↪ Redo
+            ↪
+          </button>
+          <button
+            onClick={() => setShowStats(true)}
+            className="px-2 sm:px-3 py-1.5 text-xs sm:text-sm bg-[#1a5c1a]/60 hover:bg-[#1a5c1a] text-white/80 rounded transition-colors"
+            title="Statistics"
+          >
+            📊
           </button>
         </div>
-        <div className="flex items-center gap-4 text-sm text-white/70">
-          {gameNumber && <span>Game #{gameNumber}</span>}
-          <span>Moves: {moveCount}</span>
+        <div className="flex items-center gap-3 sm:gap-4 text-xs sm:text-sm text-white/70">
+          {gameNumber && <span>#{gameNumber}</span>}
+          <span>{moveCount} moves</span>
           {isWon && (
             <span className="text-yellow-400 font-bold animate-pulse">
-              🎉 You Win!
+              🎉 Win!
             </span>
           )}
         </div>
@@ -98,6 +126,13 @@ export default function GameShell() {
 
       {/* Game Canvas Container */}
       <div ref={containerRef} id="game-container" className="flex-1" />
+
+      {/* Stats Modal */}
+      <StatsPanel
+        stats={stats}
+        isOpen={showStats}
+        onClose={() => setShowStats(false)}
+      />
     </div>
   );
 }

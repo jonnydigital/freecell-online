@@ -129,6 +129,31 @@ export class FreeCellScene extends Phaser.Scene {
       this.repositionAllCards(false);
     });
 
+    // Force resize on orientation change (Phaser doesn't always catch it)
+    const handleOrientationChange = () => {
+      // Delay to let browser finish viewport animation (address bar, etc.)
+      setTimeout(() => {
+        const parent = this.scale.parent as HTMLElement;
+        if (parent) {
+          this.scale.resize(parent.clientWidth, parent.clientHeight);
+        }
+      }, 200);
+      // Double-tap: some devices need a second pass after animation settles
+      setTimeout(() => {
+        const parent = this.scale.parent as HTMLElement;
+        if (parent) {
+          this.scale.resize(parent.clientWidth, parent.clientHeight);
+        }
+      }, 500);
+    };
+    window.addEventListener('orientationchange', handleOrientationChange);
+    // Also listen to resize as backup (some browsers fire resize instead)
+    let resizeTimeout: ReturnType<typeof setTimeout>;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(handleOrientationChange, 150);
+    });
+
     // Listen for bridge events
     gameBridge.on('newGame', (gameNum?: unknown) => {
       this.gameNumber = typeof gameNum === 'number' ? gameNum : getRandomSolvableGame();

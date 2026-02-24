@@ -6,7 +6,8 @@ import { GameStats, createEmptyStats, recordWin, recordLoss } from '../lib/stats
 import { loadStats, saveStats } from '../lib/storage';
 import { trackGameStart, trackWin, trackAbandoned, trackHint, trackUndo, trackMove, trackDeadlock, gameSession } from '../lib/analytics';
 import { initErrorTracking, setGameContext } from '../lib/errorTracking';
-import { getTodaysSeed, getTodayStr, recordDailyCompletion, isTodayCompleted } from '../lib/dailyChallenge';
+import { getTodaysSeed, getTodayStr, recordDailyCompletion } from '../lib/dailyChallenge';
+import { RotateCcw, RotateCw, Lightbulb, BarChart3, MessageSquare, Shuffle, Calendar } from 'lucide-react';
 import StatsPanel from './StatsPanel';
 import FeedbackModal from './FeedbackModal';
 import DailyChallengePanel from './DailyChallengePanel';
@@ -66,7 +67,6 @@ export default function GameShell() {
 
     const unsubReady = gameBridge.on('gameReady', (data: unknown) => {
       const d = data as { gameNumber: number };
-      // Track abandoned game if we had an active one
       if (gameSession.gameNumber > 0 && gameSession.moveCount > 0) {
         trackAbandoned();
       }
@@ -75,14 +75,13 @@ export default function GameShell() {
       setIsWon(false);
       setAutoCompletable(false);
       trackGameStart(d.gameNumber);
-      // Check if this is the daily game
       setIsDailyGame(d.gameNumber === getTodaysSeed());
     });
 
     const unsubMove = gameBridge.on('moveExecuted', (data: unknown) => {
       const d = data as { moveCount: number; gameNumber: number };
       setMoveCount(d.moveCount);
-      trackMove('tap'); // Default to tap; drag events will override
+      trackMove('tap');
       setGameContext(d.gameNumber, d.moveCount);
     });
 
@@ -152,61 +151,46 @@ export default function GameShell() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
+  const iconBtnClass = "p-2 bg-[#1a5c1a]/60 hover:bg-[#1a5c1a] text-white/80 rounded transition-colors";
+  const iconSize = 16;
+
   return (
     <div className="flex flex-col h-screen bg-[#0a3d0a]">
-      {/* Top Bar */}
-      <div className="flex items-center justify-between px-4 py-2 bg-[#072907] border-b border-[#1a5c1a]/30">
-        <div className="flex items-center gap-2 sm:gap-3">
+      {/* ── Desktop Top Bar (hidden on mobile) ── */}
+      <div className="hidden md:flex items-center justify-between px-4 py-2 bg-[#072907] border-b border-[#1a5c1a]/30">
+        <div className="flex items-center gap-3">
           <button
             onClick={handleNewGame}
-            className="px-2 sm:px-3 py-1.5 text-xs sm:text-sm bg-[#1a5c1a] hover:bg-[#2a7c2a] text-white rounded transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 text-sm bg-[#1a5c1a] hover:bg-[#2a7c2a] text-white rounded transition-colors"
           >
+            <Shuffle size={14} />
             New Game
           </button>
           <button
             onClick={() => setShowDaily(true)}
-            className="px-2 sm:px-3 py-1.5 text-xs sm:text-sm bg-yellow-700/80 hover:bg-yellow-600 text-white rounded transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 text-sm bg-yellow-700/80 hover:bg-yellow-600 text-white rounded transition-colors"
             title="Daily Challenge"
           >
+            <Calendar size={14} />
             Daily
           </button>
-          <button
-            onClick={handleUndo}
-            className="px-2 sm:px-3 py-1.5 text-xs sm:text-sm bg-[#1a5c1a]/60 hover:bg-[#1a5c1a] text-white/80 rounded transition-colors"
-            title="Undo"
-          >
-            ↩
+          <button onClick={handleUndo} className={iconBtnClass} title="Undo (Ctrl+Z)">
+            <RotateCcw size={iconSize} />
           </button>
-          <button
-            onClick={handleRedo}
-            className="px-2 sm:px-3 py-1.5 text-xs sm:text-sm bg-[#1a5c1a]/60 hover:bg-[#1a5c1a] text-white/80 rounded transition-colors"
-            title="Redo"
-          >
-            ↪
+          <button onClick={handleRedo} className={iconBtnClass} title="Redo (Ctrl+Y)">
+            <RotateCw size={iconSize} />
           </button>
-          <button
-            onClick={handleHint}
-            className="px-2 sm:px-3 py-1.5 text-xs sm:text-sm bg-[#1a5c1a]/60 hover:bg-[#1a5c1a] text-white/80 rounded transition-colors"
-            title="Hint"
-          >
-            💡
+          <button onClick={handleHint} className={iconBtnClass} title="Hint (H)">
+            <Lightbulb size={iconSize} />
           </button>
-          <button
-            onClick={() => setShowStats(true)}
-            className="px-2 sm:px-3 py-1.5 text-xs sm:text-sm bg-[#1a5c1a]/60 hover:bg-[#1a5c1a] text-white/80 rounded transition-colors"
-            title="Statistics"
-          >
-            📊
+          <button onClick={() => setShowStats(true)} className={iconBtnClass} title="Statistics">
+            <BarChart3 size={iconSize} />
           </button>
-          <button
-            onClick={() => setShowFeedback(true)}
-            className="px-2 sm:px-3 py-1.5 text-xs sm:text-sm bg-[#1a5c1a]/60 hover:bg-[#1a5c1a] text-white/80 rounded transition-colors"
-            title="Feedback"
-          >
-            💬
+          <button onClick={() => setShowFeedback(true)} className={iconBtnClass} title="Feedback">
+            <MessageSquare size={iconSize} />
           </button>
         </div>
-        <div className="flex items-center gap-3 sm:gap-4 text-xs sm:text-sm text-white/70">
+        <div className="flex items-center gap-4 text-sm text-white/70">
           {gameNumber && (
             <span>
               {isDailyGame && <span className="text-yellow-400 mr-1" title="Daily Challenge">&#9819;</span>}
@@ -215,9 +199,25 @@ export default function GameShell() {
           )}
           <span>{moveCount} moves</span>
           {isWon && (
-            <span className="text-yellow-400 font-bold animate-pulse">
-              🎉 Win!
+            <span className="text-yellow-400 font-bold animate-pulse">Win!</span>
+          )}
+        </div>
+      </div>
+
+      {/* ── Mobile Top Bar (only info, hidden on desktop) ── */}
+      <div className="flex md:hidden items-center justify-between px-3 py-1.5 bg-[#072907] border-b border-[#1a5c1a]/30">
+        <div className="flex items-center gap-3 text-xs text-white/70">
+          {gameNumber && (
+            <span className="font-medium">
+              {isDailyGame && <span className="text-yellow-400 mr-1">&#9819;</span>}
+              #{gameNumber}
             </span>
+          )}
+        </div>
+        <div className="flex items-center gap-3 text-xs text-white/70">
+          <span>{moveCount} moves</span>
+          {isWon && (
+            <span className="text-yellow-400 font-bold animate-pulse">Win!</span>
           )}
         </div>
       </div>
@@ -240,6 +240,38 @@ export default function GameShell() {
             </button>
           </div>
         )}
+      </div>
+
+      {/* ── Mobile Bottom Bar (hidden on desktop) ── */}
+      <div className="flex md:hidden items-center justify-around px-2 py-2 bg-[#072907] border-t border-[#1a5c1a]/30 safe-area-bottom">
+        <button onClick={handleNewGame} className="flex flex-col items-center gap-0.5 p-2 text-white/70 active:text-white" title="New Game">
+          <Shuffle size={22} />
+          <span className="text-[10px]">New</span>
+        </button>
+        <button onClick={() => setShowDaily(true)} className="flex flex-col items-center gap-0.5 p-2 text-yellow-400/80 active:text-yellow-400" title="Daily">
+          <Calendar size={22} />
+          <span className="text-[10px]">Daily</span>
+        </button>
+        <button onClick={handleUndo} className="flex flex-col items-center gap-0.5 p-2 text-white/70 active:text-white" title="Undo">
+          <RotateCcw size={22} />
+          <span className="text-[10px]">Undo</span>
+        </button>
+        <button onClick={handleRedo} className="flex flex-col items-center gap-0.5 p-2 text-white/70 active:text-white" title="Redo">
+          <RotateCw size={22} />
+          <span className="text-[10px]">Redo</span>
+        </button>
+        <button onClick={handleHint} className="flex flex-col items-center gap-0.5 p-2 text-white/70 active:text-white" title="Hint">
+          <Lightbulb size={22} />
+          <span className="text-[10px]">Hint</span>
+        </button>
+        <button onClick={() => setShowStats(true)} className="flex flex-col items-center gap-0.5 p-2 text-white/70 active:text-white" title="Stats">
+          <BarChart3 size={22} />
+          <span className="text-[10px]">Stats</span>
+        </button>
+        <button onClick={() => setShowFeedback(true)} className="flex flex-col items-center gap-0.5 p-2 text-white/70 active:text-white" title="Feedback">
+          <MessageSquare size={22} />
+          <span className="text-[10px]">More</span>
+        </button>
       </div>
 
       {/* Stats Modal */}

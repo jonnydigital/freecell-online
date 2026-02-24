@@ -41,3 +41,8 @@ body {
   display: block;
   touch-action: none;
 }
+
+/* Safe area padding for bottom bar on iOS */
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}

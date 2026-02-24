@@ -11,6 +11,7 @@ import { MoveHistory, MoveEntry } from '../engine/MoveHistory';
 import { GameTimer } from '../engine/GameTimer';
 import { gameBridge } from './GameBridge';
 import { getAllCardAssets, getCardAssetKey } from './CardAssets';
+import { getHint } from '../solver/solver';
 
 // Layout constants
 const CARD_RATIO = 1.4; // height/width ratio
@@ -78,6 +79,7 @@ export class FreeCellScene extends Phaser.Scene {
 
     gameBridge.on('undo', () => this.undoLastMove());
     gameBridge.on('redo', () => this.redoMove());
+    gameBridge.on('hint', () => this.showHint());
 
     // Notify UI that game is ready
     gameBridge.emit('gameReady', { gameNumber: this.gameNumber });
@@ -651,6 +653,32 @@ export class FreeCellScene extends Phaser.Scene {
     }
 
     this.repositionAllCards();
+  }
+
+  private showHint(): void {
+    const hint = getHint(this.engine);
+    if (!hint) {
+      gameBridge.emit('hintResult', { hint: null, reason: 'No moves available' });
+      return;
+    }
+
+    // Highlight the card(s) to move
+    const card = hint.cards[0];
+    const sprite = this.cardSprites.get(card.id);
+    if (sprite) {
+      // Flash highlight effect
+      this.tweens.add({
+        targets: sprite,
+        alpha: 0.5,
+        duration: 200,
+        yoyo: true,
+        repeat: 2,
+      });
+    }
+
+    gameBridge.emit('hintResult', {
+      hint: { from: hint.from, to: hint.to, reason: hint.reason },
+    });
   }
 
   private startNewGame(): void {

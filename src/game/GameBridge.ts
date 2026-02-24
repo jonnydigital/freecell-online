@@ -23,6 +23,7 @@ export type GameToUIEvent =
   | 'deadlock'
   | 'statsUpdate'
   | 'gameReady'
+  | 'hintResult'
   | 'error';
 
 export type BridgeEvent = UIToGameEvent | GameToUIEvent;

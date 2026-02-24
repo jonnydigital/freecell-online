@@ -79,6 +79,7 @@ export default function GameShell() {
   const handleNewGame = () => gameBridge.emit('newGame');
   const handleUndo = () => gameBridge.emit('undo');
   const handleRedo = () => gameBridge.emit('redo');
+  const handleHint = () => gameBridge.emit('hint');
 
   return (
     <div className="flex flex-col h-screen bg-[#0a3d0a]">
@@ -104,6 +105,13 @@ export default function GameShell() {
             title="Redo"
           >
             ↪
+          </button>
+          <button
+            onClick={handleHint}
+            className="px-2 sm:px-3 py-1.5 text-xs sm:text-sm bg-[#1a5c1a]/60 hover:bg-[#1a5c1a] text-white/80 rounded transition-colors"
+            title="Hint"
+          >
+            💡
           </button>
           <button
             onClick={() => setShowStats(true)}

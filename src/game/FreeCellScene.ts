@@ -5,12 +5,13 @@
  * Handles drag-and-drop and smart click-to-move interaction
  */
 import * as Phaser from 'phaser';
-import { FreeCellEngine, Location, Move } from '../engine/FreeCellEngine';
-import { Card, Suit, RANK_NAMES, SUIT_SYMBOLS } from '../engine/Card';
-import { MoveHistory, MoveEntry } from '../engine/MoveHistory';
+import { FreeCellEngine, Location } from '../engine/FreeCellEngine';
+import { Card, Suit, SUIT_SYMBOLS } from '../engine/Card';
+import { MoveHistory } from '../engine/MoveHistory';
 import { GameTimer } from '../engine/GameTimer';
 import { gameBridge } from './GameBridge';
-import { getAllCardAssets, getCardAssetKey } from './CardAssets';
+import { getCardAssetKey } from './CardAssets';
+import { generateCardTextures } from './CardTextureGenerator';
 import { getHint } from '../solver/solver';
 import { getRandomSolvableGame } from '../lib/solvableDeals';
 
@@ -107,11 +108,8 @@ export class FreeCellScene extends Phaser.Scene {
   }
 
   preload(): void {
-    // Load all card images
-    const assets = getAllCardAssets();
-    for (const asset of assets) {
-      this.load.image(asset.key, asset.path);
-    }
+    // Card textures are generated at runtime in create() via CardTextureGenerator
+    // No external assets to load
   }
 
   create(): void {
@@ -124,14 +122,17 @@ export class FreeCellScene extends Phaser.Scene {
 
     this.drawBackgroundEffects();
     this.calculateLayout();
+    generateCardTextures(this, this.cardWidth, this.cardHeight);
     this.createBoard();
     this.dealCards(true); // staggered deal on first load
 
     // Listen for resize
     this.scale.on('resize', () => {
       this.calculateLayout();
+      generateCardTextures(this, this.cardWidth, this.cardHeight);
       this.drawBackgroundEffects();
       this.rebuildBoard();
+      this.recreateAllCardSprites();
       this.repositionAllCards(false);
     });
 
@@ -366,46 +367,11 @@ export class FreeCellScene extends Phaser.Scene {
     container.setSize(this.cardWidth, this.cardHeight);
     container.cardData = card;
 
-    // Use image sprite if available, fall back to text rendering
+    // Card face texture (generated at runtime by CardTextureGenerator)
     const assetKey = getCardAssetKey(card.suit, card.rank);
-    if (this.textures.exists(assetKey)) {
-      const img = this.add.image(this.cardWidth / 2, this.cardHeight / 2, assetKey);
-      img.setDisplaySize(this.cardWidth, this.cardHeight);
-      container.add(img);
-    } else {
-      // Fallback: text-based card
-      const bg = this.add.graphics();
-      bg.fillStyle(0xffffff, 1);
-      bg.fillRoundedRect(0, 0, this.cardWidth, this.cardHeight, 6);
-      bg.lineStyle(1, 0x999999, 1);
-      bg.strokeRoundedRect(0, 0, this.cardWidth, this.cardHeight, 6);
-      container.add(bg);
-
-      const isRed = card.suit === Suit.Hearts || card.suit === Suit.Diamonds;
-      const color = isRed ? '#cc0000' : '#000000';
-      const fontSize = Math.floor(this.cardWidth * 0.22);
-
-      const topText = this.add.text(4, 2, `${RANK_NAMES[card.rank]}\n${SUIT_SYMBOLS[card.suit]}`, {
-        fontSize: `${fontSize}px`,
-        color,
-        fontFamily: 'Arial, sans-serif',
-        lineSpacing: -2,
-      });
-      container.add(topText);
-
-      const centerSuit = this.add.text(
-        this.cardWidth / 2,
-        this.cardHeight / 2,
-        SUIT_SYMBOLS[card.suit],
-        {
-          fontSize: `${Math.floor(this.cardWidth * 0.45)}px`,
-          color,
-          fontFamily: 'serif',
-        }
-      );
-      centerSuit.setOrigin(0.5);
-      container.add(centerSuit);
-    }
+    const img = this.add.image(this.cardWidth / 2, this.cardHeight / 2, assetKey);
+    img.setDisplaySize(this.cardWidth, this.cardHeight);
+    container.add(img);
 
     // Add subtle drop shadow
     const shadow = this.add.graphics();
@@ -1278,6 +1244,34 @@ export class FreeCellScene extends Phaser.Scene {
     const distance = Math.sqrt(dx * dx + dy * dy);
     // Variable speed: 100ms base + scaled by distance, capped at 300ms
     return Math.min(300, Math.max(100, distance * 0.4));
+  }
+
+  /**
+   * Rebuild the visual content of all card sprites after a resize/texture regeneration.
+   * Preserves the container + interactivity but replaces the image inside.
+   */
+  private recreateAllCardSprites(): void {
+    for (const [, sprite] of this.cardSprites) {
+      // Remove all children (image, shadow, text objects)
+      sprite.removeAll(true);
+
+      // Re-add card image
+      const assetKey = getCardAssetKey(sprite.cardData.suit, sprite.cardData.rank);
+      if (this.textures.exists(assetKey)) {
+        const img = this.add.image(this.cardWidth / 2, this.cardHeight / 2, assetKey);
+        img.setDisplaySize(this.cardWidth, this.cardHeight);
+        sprite.add(img);
+      }
+
+      // Re-add shadow behind the card
+      const shadow = this.add.graphics();
+      shadow.fillStyle(0x000000, 0.15);
+      shadow.fillRoundedRect(2, 2, this.cardWidth, this.cardHeight, 6);
+      sprite.addAt(shadow, 0);
+
+      // Update container size
+      sprite.setSize(this.cardWidth, this.cardHeight);
+    }
   }
 
   private repositionAllCards(animate: boolean = true): void {

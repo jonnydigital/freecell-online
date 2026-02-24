@@ -576,7 +576,7 @@ export class FreeCellScene extends Phaser.Scene {
       this.longPressTimer = setTimeout(() => {
         this.longPressTriggered = true;
         this.handleLongPress(pointer);
-      }, 300);
+      }, 600); // 600ms — generous threshold so normal taps aren't eaten
     });
 
     this.input.on('pointermove', (pointer: Phaser.Input.Pointer) => {

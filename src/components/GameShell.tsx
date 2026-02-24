@@ -7,10 +7,11 @@ import { loadStats, saveStats } from '../lib/storage';
 import { trackGameStart, trackWin, trackAbandoned, trackHint, trackUndo, trackMove, trackDeadlock, gameSession } from '../lib/analytics';
 import { initErrorTracking, setGameContext } from '../lib/errorTracking';
 import { getTodaysSeed, getTodayStr, recordDailyCompletion } from '../lib/dailyChallenge';
-import { RotateCcw, RotateCw, Lightbulb, BarChart3, MessageSquare, Shuffle, Calendar } from 'lucide-react';
+import { RotateCcw, RotateCw, Lightbulb, BarChart3, MessageSquare, Shuffle, Calendar, Hash } from 'lucide-react';
 import StatsPanel from './StatsPanel';
 import FeedbackModal from './FeedbackModal';
 import DailyChallengePanel from './DailyChallengePanel';
+import GameNumberInput from './GameNumberInput';
 
 export default function GameShell() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -25,6 +26,7 @@ export default function GameShell() {
   const [showDaily, setShowDaily] = useState(false);
   const [isDailyGame, setIsDailyGame] = useState(false);
   const [autoCompletable, setAutoCompletable] = useState(false);
+  const [showGameInput, setShowGameInput] = useState(false);
 
   // Load stats on mount
   useEffect(() => {
@@ -137,6 +139,11 @@ export default function GameShell() {
     gameBridge.emit('newGame', seed);
   };
 
+  const handlePlayNumber = (num: number) => {
+    setIsDailyGame(false);
+    gameBridge.emit('newGame', num);
+  };
+
   // Keyboard shortcuts
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -192,10 +199,14 @@ export default function GameShell() {
         </div>
         <div className="flex items-center gap-4 text-sm text-white/70">
           {gameNumber && (
-            <span>
+            <button
+              onClick={() => setShowGameInput(true)}
+              className="hover:text-white transition-colors cursor-pointer"
+              title="Click to enter a game number"
+            >
               {isDailyGame && <span className="text-yellow-400 mr-1" title="Daily Challenge">&#9819;</span>}
-              #{gameNumber}
-            </span>
+              Game #{gameNumber}
+            </button>
           )}
           <span>{moveCount} moves</span>
           {isWon && (
@@ -208,10 +219,14 @@ export default function GameShell() {
       <div className="flex md:hidden items-center justify-between px-3 py-1.5 bg-[#072907] border-b border-[#1a5c1a]/30">
         <div className="flex items-center gap-3 text-xs text-white/70">
           {gameNumber && (
-            <span className="font-medium">
+            <button
+              onClick={() => setShowGameInput(true)}
+              className="font-medium hover:text-white transition-colors"
+              title="Enter game number"
+            >
               {isDailyGame && <span className="text-yellow-400 mr-1">&#9819;</span>}
-              #{gameNumber}
-            </span>
+              Game #{gameNumber}
+            </button>
           )}
         </div>
         <div className="flex items-center gap-3 text-xs text-white/70">
@@ -294,6 +309,13 @@ export default function GameShell() {
         isOpen={showDaily}
         onClose={() => setShowDaily(false)}
         onPlayDaily={handlePlayDaily}
+      />
+
+      {/* Game Number Input Modal */}
+      <GameNumberInput
+        isOpen={showGameInput}
+        onClose={() => setShowGameInput(false)}
+        onPlay={handlePlayNumber}
       />
     </div>
   );

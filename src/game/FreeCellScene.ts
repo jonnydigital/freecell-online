@@ -12,6 +12,7 @@ import { GameTimer } from '../engine/GameTimer';
 import { gameBridge } from './GameBridge';
 import { getAllCardAssets, getCardAssetKey } from './CardAssets';
 import { getHint } from '../solver/solver';
+import { getRandomSolvableGame } from '../lib/solvableDeals';
 
 // Layout constants
 const CARD_RATIO = 1.4; // height/width ratio
@@ -130,7 +131,7 @@ export class FreeCellScene extends Phaser.Scene {
 
     // Listen for bridge events
     gameBridge.on('newGame', (gameNum?: unknown) => {
-      this.gameNumber = typeof gameNum === 'number' ? gameNum : Math.floor(Math.random() * 9999999) + 1;
+      this.gameNumber = typeof gameNum === 'number' ? gameNum : getRandomSolvableGame();
       this.startNewGame();
     });
 

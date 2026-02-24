@@ -7,6 +7,7 @@ import { loadStats, saveStats } from '../lib/storage';
 import { trackGameStart, trackWin, trackAbandoned, trackHint, trackUndo, trackMove, trackDeadlock, gameSession } from '../lib/analytics';
 import { initErrorTracking, setGameContext } from '../lib/errorTracking';
 import StatsPanel from './StatsPanel';
+import FeedbackModal from './FeedbackModal';
 
 export default function GameShell() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -17,6 +18,7 @@ export default function GameShell() {
   const [isWon, setIsWon] = useState(false);
   const [stats, setStats] = useState<GameStats>(createEmptyStats);
   const [showStats, setShowStats] = useState(false);
+  const [showFeedback, setShowFeedback] = useState(false);
 
   // Load stats on mount
   useEffect(() => {
@@ -156,6 +158,13 @@ export default function GameShell() {
           >
             📊
           </button>
+          <button
+            onClick={() => setShowFeedback(true)}
+            className="px-2 sm:px-3 py-1.5 text-xs sm:text-sm bg-[#1a5c1a]/60 hover:bg-[#1a5c1a] text-white/80 rounded transition-colors"
+            title="Feedback"
+          >
+            💬
+          </button>
         </div>
         <div className="flex items-center gap-3 sm:gap-4 text-xs sm:text-sm text-white/70">
           {gameNumber && <span>#{gameNumber}</span>}
@@ -176,6 +185,14 @@ export default function GameShell() {
         stats={stats}
         isOpen={showStats}
         onClose={() => setShowStats(false)}
+      />
+
+      {/* Feedback Modal */}
+      <FeedbackModal
+        isOpen={showFeedback}
+        onClose={() => setShowFeedback(false)}
+        gameNumber={gameNumber}
+        moveCount={moveCount}
       />
     </div>
   );

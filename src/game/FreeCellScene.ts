@@ -1,8 +1,8 @@
 /**
  * Main FreeCell Phaser Scene
- * 
+ *
  * Renders the game board: 8 cascades, 4 free cells, 4 foundations
- * Handles drag-and-drop card interaction
+ * Handles drag-and-drop and smart click-to-move interaction
  */
 import * as Phaser from 'phaser';
 import { FreeCellEngine, Location, Move } from '../engine/FreeCellEngine';
@@ -16,7 +16,8 @@ import { getHint } from '../solver/solver';
 // Layout constants
 const CARD_RATIO = 1.4; // height/width ratio
 const CASCADE_OVERLAP = 0.25; // fraction of card height visible when overlapping
-const TOP_MARGIN = 0.08; // fraction of screen height
+const TOP_MARGIN_LANDSCAPE = 0.08;
+const TOP_MARGIN_PORTRAIT = 0.02;
 const SIDE_MARGIN = 0.02;
 const GAP = 0.01;
 
@@ -37,12 +38,21 @@ export class FreeCellScene extends Phaser.Scene {
   private cardHeight: number = 0;
   private boardOffsetX: number = 0;
   private boardOffsetY: number = 0;
+  private isPortrait: boolean = false;
+  private topRowHeight: number = 0; // Height used by free cells + foundations area
 
   // Drag state
   private dragCards: CardSprite[] = [];
   private dragStartX: number = 0;
   private dragStartY: number = 0;
+
+  // Click-to-move state
   private selectedCard: CardSprite | null = null;
+  private selectionGlow: Phaser.GameObjects.Graphics | null = null;
+  private highlightGraphics: Phaser.GameObjects.Graphics[] = [];
+
+  // Board slot graphics (for redraw on resize)
+  private slotGraphics: Phaser.GameObjects.GameObject[] = [];
 
   constructor() {
     super({ key: 'FreeCellScene' });
@@ -68,7 +78,8 @@ export class FreeCellScene extends Phaser.Scene {
     // Listen for resize
     this.scale.on('resize', () => {
       this.calculateLayout();
-      this.repositionAllCards();
+      this.rebuildBoard();
+      this.repositionAllCards(false);
     });
 
     // Listen for bridge events
@@ -80,6 +91,16 @@ export class FreeCellScene extends Phaser.Scene {
     gameBridge.on('undo', () => this.undoLastMove());
     gameBridge.on('redo', () => this.redoMove());
     gameBridge.on('hint', () => this.showHint());
+
+    // Tap on empty areas to deselect or complete move
+    this.input.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
+      // Small delay to let card clicks fire first
+      this.time.delayedCall(50, () => {
+        if (this.selectedCard && this.dragCards.length === 0) {
+          this.handleBoardTap(pointer.x, pointer.y);
+        }
+      });
+    });
 
     // Notify UI that game is ready
     gameBridge.emit('gameReady', { gameNumber: this.gameNumber });
@@ -93,23 +114,50 @@ export class FreeCellScene extends Phaser.Scene {
   private calculateLayout(): void {
     const w = this.scale.width;
     const h = this.scale.height;
+    this.isPortrait = h > w * 1.1; // Portrait if significantly taller than wide
 
-    // 8 columns with gaps
-    const usableWidth = w * (1 - 2 * SIDE_MARGIN);
-    this.cardWidth = Math.floor((usableWidth - 7 * (w * GAP)) / 8);
-    this.cardHeight = Math.floor(this.cardWidth * CARD_RATIO);
+    const topMargin = this.isPortrait ? TOP_MARGIN_PORTRAIT : TOP_MARGIN_LANDSCAPE;
 
-    // Clamp card size
-    const maxCardHeight = h * 0.18;
-    if (this.cardHeight > maxCardHeight) {
-      this.cardHeight = Math.floor(maxCardHeight);
-      this.cardWidth = Math.floor(this.cardHeight / CARD_RATIO);
+    if (this.isPortrait) {
+      // Portrait: 2 rows of 4 at top (free cells row, then foundations row)
+      // Cards need to be sized for 8 cascade columns
+      const usableWidth = w * (1 - 2 * SIDE_MARGIN);
+      this.cardWidth = Math.floor((usableWidth - 7 * (w * GAP)) / 8);
+      this.cardHeight = Math.floor(this.cardWidth * CARD_RATIO);
+
+      // Cap card size for portrait
+      const maxCardHeight = h * 0.12;
+      if (this.cardHeight > maxCardHeight) {
+        this.cardHeight = Math.floor(maxCardHeight);
+        this.cardWidth = Math.floor(this.cardHeight / CARD_RATIO);
+      }
+
+      this.boardOffsetX = Math.floor(
+        (w - (8 * this.cardWidth + 7 * (w * GAP))) / 2
+      );
+      this.boardOffsetY = Math.floor(h * topMargin);
+
+      // Two rows: free cells then foundations
+      const rowGap = Math.floor(h * 0.008);
+      this.topRowHeight = this.cardHeight * 2 + rowGap;
+    } else {
+      // Landscape: classic single row with 4 free cells + 4 foundations
+      const usableWidth = w * (1 - 2 * SIDE_MARGIN);
+      this.cardWidth = Math.floor((usableWidth - 7 * (w * GAP)) / 8);
+      this.cardHeight = Math.floor(this.cardWidth * CARD_RATIO);
+
+      const maxCardHeight = h * 0.18;
+      if (this.cardHeight > maxCardHeight) {
+        this.cardHeight = Math.floor(maxCardHeight);
+        this.cardWidth = Math.floor(this.cardHeight / CARD_RATIO);
+      }
+
+      this.boardOffsetX = Math.floor(
+        (w - (8 * this.cardWidth + 7 * (w * GAP))) / 2
+      );
+      this.boardOffsetY = Math.floor(h * topMargin);
+      this.topRowHeight = this.cardHeight;
     }
-
-    this.boardOffsetX = Math.floor(
-      (w - (8 * this.cardWidth + 7 * (w * GAP))) / 2
-    );
-    this.boardOffsetY = Math.floor(h * TOP_MARGIN);
   }
 
   private getColumnX(col: number): number {
@@ -120,6 +168,15 @@ export class FreeCellScene extends Phaser.Scene {
   }
 
   private getFreeCellPosition(index: number): { x: number; y: number } {
+    if (this.isPortrait) {
+      // Portrait: free cells centered in first row, columns 0-3 offset to center
+      const totalWidth = 4 * this.cardWidth + 3 * (this.scale.width * GAP);
+      const startX = Math.floor((this.scale.width - totalWidth) / 2);
+      return {
+        x: startX + index * (this.cardWidth + this.scale.width * GAP),
+        y: this.boardOffsetY,
+      };
+    }
     return {
       x: this.getColumnX(index),
       y: this.boardOffsetY,
@@ -127,6 +184,16 @@ export class FreeCellScene extends Phaser.Scene {
   }
 
   private getFoundationPosition(index: number): { x: number; y: number } {
+    if (this.isPortrait) {
+      // Portrait: foundations centered in second row
+      const rowGap = Math.floor(this.scale.height * 0.008);
+      const totalWidth = 4 * this.cardWidth + 3 * (this.scale.width * GAP);
+      const startX = Math.floor((this.scale.width - totalWidth) / 2);
+      return {
+        x: startX + index * (this.cardWidth + this.scale.width * GAP),
+        y: this.boardOffsetY + this.cardHeight + rowGap,
+      };
+    }
     return {
       x: this.getColumnX(index + 4),
       y: this.boardOffsetY,
@@ -137,20 +204,21 @@ export class FreeCellScene extends Phaser.Scene {
     col: number,
     row: number
   ): { x: number; y: number } {
-    const topRow = this.boardOffsetY + this.cardHeight + this.scale.height * 0.02;
-    const availableHeight = this.scale.height - topRow - 10; // leave 10px bottom margin
-    
+    const cascadeGap = this.scale.height * 0.02;
+    const topRow = this.boardOffsetY + this.topRowHeight + cascadeGap;
+    const availableHeight = this.scale.height - topRow - 10;
+
     // Find the longest cascade to calculate dynamic overlap
     const state = this.engine.getState();
     const maxCascadeLength = Math.max(...state.cascades.map(c => c.length), 1);
-    
+
     // Calculate overlap: use default, but shrink if cascade would exceed available space
     const defaultOverlap = Math.floor(this.cardHeight * CASCADE_OVERLAP);
     const maxOverlap = maxCascadeLength > 1
       ? Math.floor((availableHeight - this.cardHeight) / (maxCascadeLength - 1))
       : defaultOverlap;
     const overlap = Math.min(defaultOverlap, maxOverlap);
-    
+
     return {
       x: this.getColumnX(col),
       y: topRow + row * overlap,
@@ -158,20 +226,30 @@ export class FreeCellScene extends Phaser.Scene {
   }
 
   private createBoard(): void {
-    const w = this.scale.width;
+    this.drawSlots();
+  }
 
-    // Free cell slots (top-left 4)
+  private drawSlots(): void {
+    // Clear old slots
+    this.slotGraphics.forEach(g => g.destroy());
+    this.slotGraphics = [];
+
+    // Free cell slots
     for (let i = 0; i < 4; i++) {
       const pos = this.getFreeCellPosition(i);
       this.createSlot(pos.x, pos.y, 'free');
     }
 
-    // Foundation slots (top-right 4)
+    // Foundation slots
     const suitSymbols = [Suit.Clubs, Suit.Diamonds, Suit.Hearts, Suit.Spades];
     for (let i = 0; i < 4; i++) {
       const pos = this.getFoundationPosition(i);
       this.createSlot(pos.x, pos.y, 'foundation', SUIT_SYMBOLS[suitSymbols[i]]);
     }
+  }
+
+  private rebuildBoard(): void {
+    this.drawSlots();
   }
 
   private createSlot(
@@ -183,6 +261,7 @@ export class FreeCellScene extends Phaser.Scene {
     const graphics = this.add.graphics();
     graphics.lineStyle(2, 0x1a5c1a, 0.8);
     graphics.strokeRoundedRect(x, y, this.cardWidth, this.cardHeight, 6);
+    this.slotGraphics.push(graphics);
 
     if (label) {
       const text = this.add.text(
@@ -196,6 +275,7 @@ export class FreeCellScene extends Phaser.Scene {
         }
       );
       text.setOrigin(0.5);
+      this.slotGraphics.push(text);
     }
   }
 
@@ -251,14 +331,20 @@ export class FreeCellScene extends Phaser.Scene {
     shadow.fillRoundedRect(2, 2, this.cardWidth, this.cardHeight, 6);
     container.addAt(shadow, 0); // Behind the card
 
-    // Make interactive
+    // Make interactive - ensure minimum 44px touch target
+    const hitWidth = Math.max(this.cardWidth, 44);
+    const hitHeight = Math.max(this.cardHeight, 44);
+    const hitOffsetX = (hitWidth - this.cardWidth) / 2;
+    const hitOffsetY = (hitHeight - this.cardHeight) / 2;
     container.setInteractive(
-      new Phaser.Geom.Rectangle(0, 0, this.cardWidth, this.cardHeight),
+      new Phaser.Geom.Rectangle(-hitOffsetX, -hitOffsetY, hitWidth, hitHeight),
       Phaser.Geom.Rectangle.Contains
     );
 
     this.input.setDraggable(container);
-    container.on('pointerdown', () => this.onCardClick(container));
+    container.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
+      this.onCardClick(container, pointer);
+    });
 
     this.cardSprites.set(card.id, container);
     return container;
@@ -279,7 +365,7 @@ export class FreeCellScene extends Phaser.Scene {
     }
 
     // Set up drag handlers
-    this.input.on('drag', (pointer: Phaser.Input.Pointer, gameObject: CardSprite, dragX: number, dragY: number) => {
+    this.input.on('drag', (_pointer: Phaser.Input.Pointer, _gameObject: CardSprite, dragX: number, dragY: number) => {
       if (this.dragCards.length === 0) return;
       const offsetX = dragX - this.dragStartX;
       const offsetY = dragY - this.dragStartY;
@@ -291,6 +377,7 @@ export class FreeCellScene extends Phaser.Scene {
     });
 
     this.input.on('dragstart', (_pointer: Phaser.Input.Pointer, gameObject: CardSprite) => {
+      this.clearSelection();
       this.startDrag(gameObject);
     });
 
@@ -299,22 +386,351 @@ export class FreeCellScene extends Phaser.Scene {
     });
   }
 
-  private onCardClick(sprite: CardSprite): void {
-    // Double-click to auto-move to foundation
+  // ── Click-to-Move System ──────────────────────────────────
+
+  private onCardClick(sprite: CardSprite, pointer: Phaser.Input.Pointer): void {
+    // Don't process click if we're dragging
+    if (this.dragCards.length > 0) return;
+
+    if (!this.timer.isRunning) {
+      this.timer.start();
+    }
+
+    // If this card is already selected, try foundation (double-tap behavior)
     if (this.selectedCard === sprite) {
       this.tryAutoMoveCard(sprite);
-      this.selectedCard = null;
+      this.clearSelection();
       return;
     }
 
+    // If we have a selected card and tap another card
     if (this.selectedCard) {
       // Try to move selected card to this card's location
-      this.tryMoveSelectedTo(sprite);
-      this.selectedCard = null;
-    } else {
-      this.selectedCard = sprite;
+      const moved = this.tryMoveSelectedTo(sprite);
+      if (!moved) {
+        // Didn't work as a destination - select this card instead
+        this.clearSelection();
+        this.selectCard(sprite);
+      }
+      return;
+    }
+
+    // No card selected - select this one and show destinations
+    this.selectCard(sprite);
+  }
+
+  private selectCard(sprite: CardSprite): void {
+    const location = this.findCardLocation(sprite.cardData);
+    if (!location) return;
+
+    // Only allow selecting cards that can actually move
+    if (location.type === 'cascade') {
+      const state = this.engine.getState();
+      const cascade = state.cascades[location.index];
+      const cardIdx = cascade.findIndex(c => c.equals(sprite.cardData));
+      if (cardIdx === -1) return;
+      // Check if this card starts a valid run to the bottom
+      const run = this.engine.getValidRun(location.index);
+      const runStart = cascade.length - run.length;
+      if (cardIdx < runStart) return; // Can't move cards buried in the middle
+    } else if (location.type === 'foundation') {
+      return; // Don't select foundation cards
+    }
+
+    this.selectedCard = sprite;
+
+    // Show selection glow
+    this.showSelectionGlow(sprite);
+
+    // Find and highlight valid destinations
+    const destinations = this.getValidDestinations(sprite);
+
+    if (destinations.length === 1) {
+      // Only one legal destination - move immediately
+      const from = this.findCardLocation(sprite.cardData);
+      if (from) {
+        this.clearSelection();
+        this.dragCards = [sprite];
+        // For sequence moves, gather all cards in the run
+        if (from.type === 'cascade') {
+          const state = this.engine.getState();
+          const cascade = state.cascades[from.index];
+          const cardIdx = cascade.findIndex(c => c.equals(sprite.cardData));
+          if (cardIdx < cascade.length - 1) {
+            this.dragCards = [];
+            for (let i = cardIdx; i < cascade.length; i++) {
+              const cs = this.cardSprites.get(cascade[i].id);
+              if (cs) this.dragCards.push(cs);
+            }
+            from.cardIndex = cardIdx;
+          }
+        }
+        this.executeMoveAndAnimate(from, destinations[0]);
+        this.dragCards = [];
+        this.vibrate();
+      }
+    } else if (destinations.length > 1) {
+      // Multiple destinations - highlight them
+      this.showDestinationHighlights(destinations);
+    }
+    // If no destinations, card stays selected (user can double-tap for foundation or tap elsewhere to deselect)
+  }
+
+  private getValidDestinations(sprite: CardSprite): Location[] {
+    const from = this.findCardLocation(sprite.cardData);
+    if (!from) return [];
+
+    const destinations: Location[] = [];
+    const state = this.engine.getState();
+
+    // If it's a cascade card, figure out the cardIndex for sequence moves
+    let moveFrom = { ...from };
+    if (from.type === 'cascade') {
+      const cascade = state.cascades[from.index];
+      const cardIdx = cascade.findIndex(c => c.equals(sprite.cardData));
+      moveFrom = { type: 'cascade', index: from.index, cardIndex: cardIdx };
+    }
+
+    // Check foundations
+    const foundationTo: Location = { type: 'foundation', suit: sprite.cardData.suit };
+    if (this.engine.isLegalMove(moveFrom, foundationTo)) {
+      destinations.push(foundationTo);
+    }
+
+    // Check cascades (non-empty first for better prioritization)
+    for (let j = 0; j < 8; j++) {
+      if (from.type === 'cascade' && from.index === j) continue;
+      const to: Location = { type: 'cascade', index: j };
+      if (state.cascades[j].length > 0 && this.engine.isLegalMove(moveFrom, to)) {
+        destinations.push(to);
+      }
+    }
+
+    // Check empty cascades (lower priority)
+    for (let j = 0; j < 8; j++) {
+      if (from.type === 'cascade' && from.index === j) continue;
+      const to: Location = { type: 'cascade', index: j };
+      if (state.cascades[j].length === 0 && this.engine.isLegalMove(moveFrom, to)) {
+        destinations.push(to);
+      }
+    }
+
+    // Check free cells
+    for (let j = 0; j < 4; j++) {
+      const to: Location = { type: 'freecell', index: j };
+      if (this.engine.isLegalMove(moveFrom, to)) {
+        destinations.push(to);
+      }
+    }
+
+    return destinations;
+  }
+
+  private showSelectionGlow(sprite: CardSprite): void {
+    this.clearSelectionGlow();
+    this.selectionGlow = this.add.graphics();
+    this.selectionGlow.lineStyle(3, 0xffd700, 0.9);
+    this.selectionGlow.strokeRoundedRect(
+      sprite.x - 2, sprite.y - 2,
+      this.cardWidth + 4, this.cardHeight + 4,
+      8
+    );
+    this.selectionGlow.setDepth(999);
+
+    // Subtle pulse animation
+    this.tweens.add({
+      targets: this.selectionGlow,
+      alpha: 0.5,
+      duration: 600,
+      yoyo: true,
+      repeat: -1,
+      ease: 'Sine.easeInOut',
+    });
+  }
+
+  private showDestinationHighlights(destinations: Location[]): void {
+    this.clearHighlights();
+
+    for (const dest of destinations) {
+      const pos = this.getDestinationPosition(dest);
+      const gfx = this.add.graphics();
+      gfx.lineStyle(3, 0x00ff88, 0.8);
+      gfx.fillStyle(0x00ff88, 0.15);
+      gfx.fillRoundedRect(pos.x, pos.y, this.cardWidth, this.cardHeight, 6);
+      gfx.strokeRoundedRect(pos.x, pos.y, this.cardWidth, this.cardHeight, 6);
+      gfx.setDepth(998);
+
+      // Pulse animation
+      this.tweens.add({
+        targets: gfx,
+        alpha: 0.4,
+        duration: 500,
+        yoyo: true,
+        repeat: -1,
+        ease: 'Sine.easeInOut',
+      });
+
+      this.highlightGraphics.push(gfx);
     }
   }
+
+  private getDestinationPosition(location: Location): { x: number; y: number } {
+    const state = this.engine.getState();
+    switch (location.type) {
+      case 'freecell':
+        return this.getFreeCellPosition(location.index);
+      case 'foundation': {
+        const suits = [Suit.Clubs, Suit.Diamonds, Suit.Hearts, Suit.Spades];
+        const idx = suits.indexOf(location.suit);
+        return this.getFoundationPosition(idx);
+      }
+      case 'cascade': {
+        const cascade = state.cascades[location.index];
+        const row = cascade.length; // Position where new card would go
+        return this.getCascadeCardPosition(location.index, Math.max(0, row === 0 ? 0 : row));
+      }
+    }
+  }
+
+  private clearSelection(): void {
+    this.selectedCard = null;
+    this.clearSelectionGlow();
+    this.clearHighlights();
+  }
+
+  private clearSelectionGlow(): void {
+    if (this.selectionGlow) {
+      this.tweens.killTweensOf(this.selectionGlow);
+      this.selectionGlow.destroy();
+      this.selectionGlow = null;
+    }
+  }
+
+  private clearHighlights(): void {
+    for (const gfx of this.highlightGraphics) {
+      this.tweens.killTweensOf(gfx);
+      gfx.destroy();
+    }
+    this.highlightGraphics = [];
+  }
+
+  private handleBoardTap(x: number, y: number): void {
+    if (!this.selectedCard) return;
+
+    // Check if tapped on a highlighted destination
+    const from = this.findCardLocation(this.selectedCard.cardData);
+    if (!from) {
+      this.clearSelection();
+      return;
+    }
+
+    const destinations = this.getValidDestinations(this.selectedCard);
+    const target = this.findTapTarget(x, y, destinations);
+
+    if (target) {
+      let moveFrom = { ...from };
+      if (from.type === 'cascade') {
+        const state = this.engine.getState();
+        const cascade = state.cascades[from.index];
+        const cardIdx = cascade.findIndex(c => c.equals(this.selectedCard!.cardData));
+        moveFrom = { type: 'cascade', index: from.index, cardIndex: cardIdx };
+
+        // Gather run cards for sequence move
+        this.dragCards = [];
+        for (let i = cardIdx; i < cascade.length; i++) {
+          const cs = this.cardSprites.get(cascade[i].id);
+          if (cs) this.dragCards.push(cs);
+        }
+      } else {
+        this.dragCards = [this.selectedCard];
+      }
+
+      this.clearSelection();
+      this.executeMoveAndAnimate(moveFrom, target);
+      this.dragCards = [];
+      this.vibrate();
+    } else {
+      this.clearSelection();
+    }
+  }
+
+  private findTapTarget(x: number, y: number, destinations: Location[]): Location | null {
+    for (const dest of destinations) {
+      const pos = this.getDestinationPosition(dest);
+      if (this.isInBounds(x, y, pos.x, pos.y)) {
+        return dest;
+      }
+    }
+
+    // Also check if tap is in a cascade column header area (for empty cascades)
+    for (const dest of destinations) {
+      if (dest.type === 'cascade') {
+        const colX = this.getColumnX(dest.index);
+        if (x >= colX - this.cardWidth * 0.3 && x <= colX + this.cardWidth * 1.3) {
+          return dest;
+        }
+      }
+    }
+
+    return null;
+  }
+
+  private tryMoveSelectedTo(targetSprite: CardSprite): boolean {
+    if (!this.selectedCard) return false;
+
+    const from = this.findCardLocation(this.selectedCard.cardData);
+    const targetLoc = this.findCardLocation(targetSprite.cardData);
+    if (!from || !targetLoc) return false;
+
+    // Determine the move destination
+    let to: Location | null = null;
+    if (targetLoc.type === 'cascade') {
+      to = { type: 'cascade', index: targetLoc.index };
+    } else if (targetLoc.type === 'freecell') {
+      to = { type: 'freecell', index: targetLoc.index };
+    } else if (targetLoc.type === 'foundation') {
+      to = { type: 'foundation', suit: targetLoc.suit };
+    }
+
+    if (!to) return false;
+
+    // Set up the from location with cardIndex for sequence moves
+    let moveFrom = { ...from };
+    if (from.type === 'cascade') {
+      const state = this.engine.getState();
+      const cascade = state.cascades[from.index];
+      const cardIdx = cascade.findIndex(c => c.equals(this.selectedCard!.cardData));
+      moveFrom = { type: 'cascade', index: from.index, cardIndex: cardIdx };
+
+      // Gather run cards
+      this.dragCards = [];
+      for (let i = cardIdx; i < cascade.length; i++) {
+        const cs = this.cardSprites.get(cascade[i].id);
+        if (cs) this.dragCards.push(cs);
+      }
+    } else {
+      this.dragCards = [this.selectedCard];
+    }
+
+    if (this.engine.isLegalMove(moveFrom, to)) {
+      this.clearSelection();
+      this.executeMoveAndAnimate(moveFrom, to);
+      this.dragCards = [];
+      this.vibrate();
+      return true;
+    }
+
+    this.dragCards = [];
+    return false;
+  }
+
+  private vibrate(): void {
+    if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
+      try { navigator.vibrate(10); } catch { /* ignore */ }
+    }
+  }
+
+  // ── Drag and Drop ─────────────────────────────────────────
 
   private startDrag(sprite: CardSprite): void {
     const location = this.findCardLocation(sprite.cardData);
@@ -335,9 +751,11 @@ export class FreeCellScene extends Phaser.Scene {
           cs.setDepth(1000 + i);
         }
       }
-    } else {
+    } else if (location.type === 'freecell') {
       this.dragCards = [sprite];
       sprite.setDepth(1000);
+    } else {
+      return; // Can't drag from foundation
     }
 
     this.dragStartX = sprite.x;
@@ -362,6 +780,7 @@ export class FreeCellScene extends Phaser.Scene {
     const target = this.findDropTarget(dropCard.x, dropCard.y);
     if (target && this.engine.isLegalMove(from, target)) {
       this.executeMoveAndAnimate(from, target);
+      this.vibrate();
     } else {
       this.snapCardsBack();
     }
@@ -389,14 +808,6 @@ export class FreeCellScene extends Phaser.Scene {
 
     // Check cascades
     for (let col = 0; col < 8; col++) {
-      const state = this.engine.getState();
-      const cascade = state.cascades[col];
-      const row = Math.max(0, cascade.length - 1);
-      const pos =
-        cascade.length === 0
-          ? this.getCascadeCardPosition(col, 0)
-          : this.getCascadeCardPosition(col, row);
-
       if (
         x >= this.getColumnX(col) - this.cardWidth * 0.3 &&
         x <= this.getColumnX(col) + this.cardWidth * 1.3
@@ -421,6 +832,8 @@ export class FreeCellScene extends Phaser.Scene {
       y <= slotY + this.cardHeight * 1.3
     );
   }
+
+  // ── Move Execution ────────────────────────────────────────
 
   private executeMoveAndAnimate(from: Location, to: Location): void {
     // Adjust from location for sequence moves
@@ -457,8 +870,6 @@ export class FreeCellScene extends Phaser.Scene {
   }
 
   private performAutoMoves(): void {
-    // Auto-moves are already executed in executeMoveAndAnimate
-    // This just triggers repositioning
     this.repositionAllCards();
   }
 
@@ -470,32 +881,18 @@ export class FreeCellScene extends Phaser.Scene {
     const foundationTarget: Location = { type: 'foundation', suit: card.suit };
 
     if (this.engine.isLegalMove(location, foundationTarget)) {
+      this.dragCards = [sprite];
       this.executeMoveAndAnimate(location, foundationTarget);
+      this.dragCards = [];
+      this.vibrate();
     }
   }
 
-  private tryMoveSelectedTo(targetSprite: CardSprite): void {
-    if (!this.selectedCard) return;
-
-    const from = this.findCardLocation(this.selectedCard.cardData);
-    const targetLoc = this.findCardLocation(targetSprite.cardData);
-    if (!from || !targetLoc) return;
-
-    // Move to the cascade containing the target card
-    if (targetLoc.type === 'cascade') {
-      const to: Location = { type: 'cascade', index: targetLoc.index };
-      if (this.engine.isLegalMove(from, to)) {
-        this.dragCards = [this.selectedCard];
-        this.executeMoveAndAnimate(from, to);
-        this.dragCards = [];
-      }
-    }
-  }
+  // ── Card Location Helpers ─────────────────────────────────
 
   private findCardLocation(card: Card): Location | null {
     const state = this.engine.getState();
 
-    // Check cascades
     for (let i = 0; i < 8; i++) {
       const idx = state.cascades[i].findIndex((c) => c.equals(card));
       if (idx !== -1) {
@@ -503,14 +900,12 @@ export class FreeCellScene extends Phaser.Scene {
       }
     }
 
-    // Check free cells
     for (let i = 0; i < 4; i++) {
       if (state.freeCells[i]?.equals(card)) {
         return { type: 'freecell', index: i };
       }
     }
 
-    // Check foundations
     for (const [suit, pile] of state.foundations) {
       if (pile.length > 0 && pile[pile.length - 1].equals(card)) {
         return { type: 'foundation', suit };
@@ -555,8 +950,11 @@ export class FreeCellScene extends Phaser.Scene {
     }
   }
 
-  private repositionAllCards(): void {
+  // ── Reposition / Animate ──────────────────────────────────
+
+  private repositionAllCards(animate: boolean = true): void {
     const state = this.engine.getState();
+    const duration = animate ? 150 : 0;
 
     // Position cascade cards
     for (let col = 0; col < 8; col++) {
@@ -565,13 +963,18 @@ export class FreeCellScene extends Phaser.Scene {
         const sprite = this.cardSprites.get(cascade[row].id);
         if (sprite) {
           const pos = this.getCascadeCardPosition(col, row);
-          this.tweens.add({
-            targets: sprite,
-            x: pos.x,
-            y: pos.y,
-            duration: 150,
-            ease: 'Power2',
-          });
+          if (duration > 0) {
+            this.tweens.add({
+              targets: sprite,
+              x: pos.x,
+              y: pos.y,
+              duration,
+              ease: 'Power2',
+            });
+          } else {
+            sprite.x = pos.x;
+            sprite.y = pos.y;
+          }
           sprite.setDepth(row + 10);
           sprite.sourceLocation = {
             type: 'cascade',
@@ -589,13 +992,18 @@ export class FreeCellScene extends Phaser.Scene {
         const sprite = this.cardSprites.get(card.id);
         if (sprite) {
           const pos = this.getFreeCellPosition(i);
-          this.tweens.add({
-            targets: sprite,
-            x: pos.x,
-            y: pos.y,
-            duration: 150,
-            ease: 'Power2',
-          });
+          if (duration > 0) {
+            this.tweens.add({
+              targets: sprite,
+              x: pos.x,
+              y: pos.y,
+              duration,
+              ease: 'Power2',
+            });
+          } else {
+            sprite.x = pos.x;
+            sprite.y = pos.y;
+          }
           sprite.setDepth(5);
           sprite.sourceLocation = { type: 'freecell', index: i };
         }
@@ -611,19 +1019,26 @@ export class FreeCellScene extends Phaser.Scene {
         const idx = suits.indexOf(suit);
         if (sprite) {
           const pos = this.getFoundationPosition(idx);
-          this.tweens.add({
-            targets: sprite,
-            x: pos.x,
-            y: pos.y,
-            duration: 150,
-            ease: 'Power2',
-          });
+          if (duration > 0) {
+            this.tweens.add({
+              targets: sprite,
+              x: pos.x,
+              y: pos.y,
+              duration,
+              ease: 'Power2',
+            });
+          } else {
+            sprite.x = pos.x;
+            sprite.y = pos.y;
+          }
           sprite.setDepth(5 + pile.length);
           sprite.sourceLocation = { type: 'foundation', suit };
         }
       }
     }
   }
+
+  // ── Undo / Redo ───────────────────────────────────────────
 
   private undoLastMove(): void {
     const entry = this.history.popUndo();
@@ -655,6 +1070,8 @@ export class FreeCellScene extends Phaser.Scene {
     this.repositionAllCards();
   }
 
+  // ── Hint ──────────────────────────────────────────────────
+
   private showHint(): void {
     const hint = getHint(this.engine);
     if (!hint) {
@@ -666,7 +1083,6 @@ export class FreeCellScene extends Phaser.Scene {
     const card = hint.cards[0];
     const sprite = this.cardSprites.get(card.id);
     if (sprite) {
-      // Flash highlight effect
       this.tweens.add({
         targets: sprite,
         alpha: 0.5,
@@ -681,17 +1097,21 @@ export class FreeCellScene extends Phaser.Scene {
     });
   }
 
+  // ── New Game ──────────────────────────────────────────────
+
   private startNewGame(): void {
     // Clear all sprites
     this.cardSprites.forEach((sprite) => sprite.destroy());
     this.cardSprites.clear();
+    this.clearSelection();
 
     // Reset engine
     this.engine = new FreeCellEngine(this.gameNumber);
     this.history.clear();
     this.timer.reset();
 
-    // Redeal
+    // Rebuild board and redeal
+    this.rebuildBoard();
     this.dealCards();
     gameBridge.emit('gameReady', { gameNumber: this.gameNumber });
   }

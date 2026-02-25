@@ -67,6 +67,14 @@ export class FreeCellScene extends Phaser.Scene {
   private vignette: Phaser.GameObjects.Graphics | null = null;
   private feltNoise: Phaser.GameObjects.Graphics | null = null;
 
+  // Juice: inactivity timers and effects
+  private lastMoveTime: number = 0;
+  private hintGlowGraphics: Phaser.GameObjects.Graphics | null = null;
+  private hintGlowTween: Phaser.Tweens.Tween | null = null;
+  private idleWiggleTweens: Phaser.Tweens.Tween[] = [];
+  private idleCheckTimer: Phaser.Time.TimerEvent | null = null;
+  private dragGlowGraphics: Phaser.GameObjects.Graphics[] = [];
+
   // Touch device detection and zone-based input
   private isTouchDevice: boolean = false;
   private longPressTimer: ReturnType<typeof setTimeout> | null = null;
@@ -259,6 +267,10 @@ export class FreeCellScene extends Phaser.Scene {
     this.time.delayedCall(500, () => {
       this.performAutoMoves();
     });
+
+    // Juice: start inactivity checker (hint glow at 8s, idle wiggle at 12s)
+    this.lastMoveTime = Date.now();
+    this.startIdleChecker();
   }
 
   private calculateLayout(): void {
@@ -543,17 +555,35 @@ export class FreeCellScene extends Phaser.Scene {
         const pos = this.getCascadeCardPosition(col, row);
 
         if (staggered) {
-          // Start cards off-screen at top-center, animate to position
+          // Start cards off-screen at top-center, animate with bounce into place
           const sprite = this.createCardSprite(card, w / 2 - this.cardWidth / 2, -this.cardHeight);
           sprite.sourceLocation = { type: 'cascade', index: col, cardIndex: row };
           sprite.setDepth(500 + dealIndex);
-          sprite.alpha = 0.7;
+          sprite.setScale(0.85);
+          sprite.alpha = 0;
 
-          const delay = dealIndex * 30;
+          const delay = dealIndex * 45;
+          // X slides into column
           this.tweens.add({
             targets: sprite,
             x: pos.x,
+            duration: 300,
+            delay,
+            ease: 'Power2',
+          });
+          // Y bounces into row position
+          this.tweens.add({
+            targets: sprite,
             y: pos.y,
+            duration: 450,
+            delay,
+            ease: 'Bounce.easeOut',
+          });
+          // Scale and alpha pop in
+          this.tweens.add({
+            targets: sprite,
+            scaleX: 1,
+            scaleY: 1,
             alpha: 1,
             duration: 250,
             delay,
@@ -1010,6 +1040,11 @@ export class FreeCellScene extends Phaser.Scene {
   }
 
   private selectCard(sprite: CardSprite): void {
+    // Juice: reset idle effects on any interaction
+    this.lastMoveTime = Date.now();
+    this.clearHintGlow();
+    this.clearIdleWiggles();
+
     const location = this.findCardLocation(sprite.cardData);
     if (!location) return;
 
@@ -1389,12 +1424,18 @@ export class FreeCellScene extends Phaser.Scene {
     this.dragStartX = sprite.x;
     this.dragStartY = sprite.y;
 
+    // Juice: show green glow on valid drop targets while dragging
+    this.showDragTargetGlow(sprite);
+
     if (!this.timer.isRunning) {
       this.timer.start();
     }
   }
 
   private endDrag(_sprite: CardSprite): void {
+    // Juice: clear drag target glow
+    this.clearDragTargetGlow();
+
     if (this.dragCards.length === 0) return;
 
     const dropCard = this.dragCards[0];
@@ -1476,6 +1517,11 @@ export class FreeCellScene extends Phaser.Scene {
     const move = this.engine.executeMove(from, to);
     const autoMoves = this.engine.autoMoveToFoundations();
     this.history.push(move, autoMoves);
+
+    // Juice: reset inactivity timer and clear idle effects
+    this.lastMoveTime = Date.now();
+    this.clearHintGlow();
+    this.clearIdleWiggles();
 
     // Play sound based on destination type
     if (to.type === 'foundation') {
@@ -1839,20 +1885,23 @@ export class FreeCellScene extends Phaser.Scene {
   private repositionAllCards(animate: boolean = true): void {
     const state = this.engine.getState();
 
-    // Position cascade cards
+    // Position cascade cards with spring snap (Back.easeOut = overshoot + settle)
     for (let col = 0; col < 8; col++) {
       const cascade = state.cascades[col];
       for (let row = 0; row < cascade.length; row++) {
         const sprite = this.cardSprites.get(cascade[row].id);
         if (sprite) {
           const pos = this.getCascadeCardPosition(col, row);
+          const isMoving = Math.abs(sprite.x - pos.x) > 3 || Math.abs(sprite.y - pos.y) > 3;
           if (animate) {
             this.tweens.add({
               targets: sprite,
               x: pos.x,
               y: pos.y,
-              duration: this.getMoveDuration(sprite, pos.x, pos.y),
-              ease: 'Power2',
+              duration: isMoving
+                ? Math.min(350, Math.max(120, this.getMoveDuration(sprite, pos.x, pos.y)))
+                : this.getMoveDuration(sprite, pos.x, pos.y),
+              ease: isMoving ? 'Back.easeOut' : 'Power2',
             });
           } else {
             sprite.x = pos.x;
@@ -1868,20 +1917,23 @@ export class FreeCellScene extends Phaser.Scene {
       }
     }
 
-    // Position free cell cards
+    // Position free cell cards with spring snap
     for (let i = 0; i < 4; i++) {
       const card = state.freeCells[i];
       if (card) {
         const sprite = this.cardSprites.get(card.id);
         if (sprite) {
           const pos = this.getFreeCellPosition(i);
+          const isMoving = Math.abs(sprite.x - pos.x) > 3 || Math.abs(sprite.y - pos.y) > 3;
           if (animate) {
             this.tweens.add({
               targets: sprite,
               x: pos.x,
               y: pos.y,
-              duration: this.getMoveDuration(sprite, pos.x, pos.y),
-              ease: 'Power2',
+              duration: isMoving
+                ? Math.min(350, Math.max(120, this.getMoveDuration(sprite, pos.x, pos.y)))
+                : this.getMoveDuration(sprite, pos.x, pos.y),
+              ease: isMoving ? 'Back.easeOut' : 'Power2',
             });
           } else {
             sprite.x = pos.x;
@@ -1893,7 +1945,7 @@ export class FreeCellScene extends Phaser.Scene {
       }
     }
 
-    // Position foundation cards (only top visible) with bloom effect
+    // Position foundation cards (only top visible) with bloom + particle burst
     for (const [suit, pile] of state.foundations) {
       if (pile.length > 0) {
         const topCard = pile[pile.length - 1];
@@ -1910,10 +1962,13 @@ export class FreeCellScene extends Phaser.Scene {
               targets: sprite,
               x: pos.x,
               y: pos.y,
-              duration: this.getMoveDuration(sprite, pos.x, pos.y),
-              ease: 'Power2',
+              duration: isMovingToFoundation
+                ? Math.min(350, Math.max(120, this.getMoveDuration(sprite, pos.x, pos.y)))
+                : this.getMoveDuration(sprite, pos.x, pos.y),
+              ease: isMovingToFoundation ? 'Back.easeOut' : 'Power2',
               onComplete: isMovingToFoundation ? () => {
                 this.foundationBloom(sprite);
+                this.foundationParticleBurst(pos.x, pos.y);
               } : undefined,
             });
           } else {
@@ -2224,6 +2279,11 @@ export class FreeCellScene extends Phaser.Scene {
     // Clean up any active celebration
     this.cleanupWinCelebration();
 
+    // Juice: clean up idle effects
+    this.clearHintGlow();
+    this.clearIdleWiggles();
+    this.clearDragTargetGlow();
+
     // Clear all sprites and touch state
     this.cardSprites.forEach((sprite) => sprite.destroy());
     this.cardSprites.clear();
@@ -2239,6 +2299,209 @@ export class FreeCellScene extends Phaser.Scene {
     // Rebuild board and redeal with staggered animation
     this.rebuildBoard();
     this.dealCards(true);
+    this.lastMoveTime = Date.now();
     gameBridge.emit('gameReady', { gameNumber: this.gameNumber });
+  }
+
+  // ── Juice: Inactivity Effects ────────────────────────────────
+
+  private startIdleChecker(): void {
+    if (this.idleCheckTimer) this.idleCheckTimer.destroy();
+    this.idleCheckTimer = this.time.addEvent({
+      delay: 2000,
+      loop: true,
+      callback: () => this.checkIdleEffects(),
+    });
+  }
+
+  private checkIdleEffects(): void {
+    if (this.engine.getState().isWon) return;
+    if (!this.engine.hasLegalMoves()) return;
+
+    const idle = (Date.now() - this.lastMoveTime) / 1000;
+
+    // Auto-hint glow after 8 seconds
+    if (idle >= 8 && !this.hintGlowGraphics) {
+      this.showAutoHintGlow();
+    }
+
+    // Idle card wiggle after 12 seconds
+    if (idle >= 12 && this.idleWiggleTweens.length === 0) {
+      this.showIdleWiggle();
+    }
+  }
+
+  /** Gently pulse a gold border around the best hint card after 8s idle */
+  private showAutoHintGlow(): void {
+    this.clearHintGlow();
+    const hint = getHint(this.engine);
+    if (!hint) return;
+
+    const card = hint.cards[0];
+    const sprite = this.cardSprites.get(card.id);
+    if (!sprite) return;
+
+    const gfx = this.add.graphics();
+    const pad = 4;
+    // Soft gold outer glow (two layers for bloom effect)
+    gfx.lineStyle(6, 0xffd700, 0.25);
+    gfx.strokeRoundedRect(
+      sprite.x - pad - 2, sprite.y - pad - 2,
+      this.cardWidth + (pad + 2) * 2, this.cardHeight + (pad + 2) * 2, 10
+    );
+    gfx.lineStyle(3, 0xffd700, 0.7);
+    gfx.strokeRoundedRect(
+      sprite.x - pad, sprite.y - pad,
+      this.cardWidth + pad * 2, this.cardHeight + pad * 2, 8
+    );
+    gfx.setDepth(997);
+    this.hintGlowGraphics = gfx;
+
+    this.hintGlowTween = this.tweens.add({
+      targets: gfx,
+      alpha: 0.3,
+      duration: 900,
+      yoyo: true,
+      repeat: -1,
+      ease: 'Sine.easeInOut',
+    });
+  }
+
+  private clearHintGlow(): void {
+    if (this.hintGlowTween) {
+      this.hintGlowTween.destroy();
+      this.hintGlowTween = null;
+    }
+    if (this.hintGlowGraphics) {
+      this.hintGlowGraphics.destroy();
+      this.hintGlowGraphics = null;
+    }
+  }
+
+  /** Subtle breathing scale pulse on playable cards after 12s idle */
+  private showIdleWiggle(): void {
+    this.clearIdleWiggles();
+    const state = this.engine.getState();
+
+    // Gather bottom-of-cascade cards that have legal moves
+    const playableIds: string[] = [];
+    for (let col = 0; col < 8; col++) {
+      const cascade = state.cascades[col];
+      if (cascade.length === 0) continue;
+      const bottomCard = cascade[cascade.length - 1];
+      const sprite = this.cardSprites.get(bottomCard.id);
+      if (!sprite) continue;
+      const dests = this.getValidDestinations(sprite);
+      if (dests.length > 0) playableIds.push(bottomCard.id);
+    }
+    for (let i = 0; i < 4; i++) {
+      const card = state.freeCells[i];
+      if (!card) continue;
+      const sprite = this.cardSprites.get(card.id);
+      if (!sprite) continue;
+      const dests = this.getValidDestinations(sprite);
+      if (dests.length > 0) playableIds.push(card.id);
+    }
+
+    for (const id of playableIds) {
+      const sprite = this.cardSprites.get(id);
+      if (!sprite) continue;
+      const tw = this.tweens.add({
+        targets: sprite,
+        scaleX: 1.02,
+        scaleY: 1.02,
+        duration: 1200 + Math.random() * 400,
+        yoyo: true,
+        repeat: -1,
+        ease: 'Sine.easeInOut',
+        delay: Math.random() * 600,
+      });
+      this.idleWiggleTweens.push(tw);
+    }
+  }
+
+  private clearIdleWiggles(): void {
+    for (const tw of this.idleWiggleTweens) {
+      if (tw.targets && tw.targets.length > 0) {
+        const target = tw.targets[0] as CardSprite;
+        if (target && target.active !== false) {
+          target.setScale(1);
+        }
+      }
+      tw.destroy();
+    }
+    this.idleWiggleTweens = [];
+  }
+
+  // ── Juice: Foundation Particle Burst ───────────────────────────
+
+  /** Emit a small burst of gold particles when a card reaches foundation */
+  private foundationParticleBurst(x: number, y: number): void {
+    const cx = x + this.cardWidth / 2;
+    const cy = y + this.cardHeight / 2;
+    const count = 10;
+    for (let i = 0; i < count; i++) {
+      const particle = this.add.graphics();
+      const size = 2 + Math.random() * 4;
+      const bright = Math.random() > 0.3;
+      particle.fillStyle(bright ? 0xffd700 : 0xffaa00, 1);
+      particle.fillCircle(0, 0, size);
+      particle.setPosition(cx, cy);
+      particle.setDepth(1500);
+
+      const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.5;
+      const dist = 25 + Math.random() * 40;
+      const tx = cx + Math.cos(angle) * dist;
+      const ty = cy + Math.sin(angle) * dist;
+
+      this.tweens.add({
+        targets: particle,
+        x: tx,
+        y: ty,
+        alpha: 0,
+        scaleX: 0.3,
+        scaleY: 0.3,
+        duration: 400 + Math.random() * 200,
+        ease: 'Power2',
+        onComplete: () => particle.destroy(),
+      });
+    }
+  }
+
+  // ── Juice: Valid Drop Target Glow (during drag) ────────────────
+
+  /** Show green glow on all valid drop locations while dragging */
+  private showDragTargetGlow(sprite: CardSprite): void {
+    this.clearDragTargetGlow();
+    const destinations = this.getValidDestinations(sprite);
+
+    for (const dest of destinations) {
+      const pos = this.getDestinationPosition(dest);
+      const gfx = this.add.graphics();
+      gfx.fillStyle(0x00ff88, 0.12);
+      gfx.fillRoundedRect(pos.x, pos.y, this.cardWidth, this.cardHeight, 6);
+      gfx.lineStyle(2, 0x00ff88, 0.5);
+      gfx.strokeRoundedRect(pos.x, pos.y, this.cardWidth, this.cardHeight, 6);
+      gfx.setDepth(996);
+
+      this.tweens.add({
+        targets: gfx,
+        alpha: 0.4,
+        duration: 600,
+        yoyo: true,
+        repeat: -1,
+        ease: 'Sine.easeInOut',
+      });
+
+      this.dragGlowGraphics.push(gfx);
+    }
+  }
+
+  private clearDragTargetGlow(): void {
+    for (const gfx of this.dragGlowGraphics) {
+      this.tweens.killTweensOf(gfx);
+      gfx.destroy();
+    }
+    this.dragGlowGraphics = [];
   }
 }

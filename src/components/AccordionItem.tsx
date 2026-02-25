@@ -15,7 +15,7 @@ export function AccordionItem({
     <div className="border-b border-[#d4c5a0]/40 last:border-b-0">
       <button
         onClick={() => setOpen(!open)}
-        className="py-5 px-8 sm:px-10 flex justify-between items-center w-full text-left transition-colors duration-200 hover:bg-[#f4edd8]/50"
+        className="py-5 px-10 sm:px-12 flex justify-between items-center w-full text-left transition-colors duration-200 hover:bg-[#f4edd8]/50"
       >
         <span
           className={`font-medium text-lg tracking-wide transition-colors duration-200 ${
@@ -45,7 +45,7 @@ export function AccordionItem({
         style={{ gridTemplateRows: open ? "1fr" : "0fr" }}
       >
         <div className="overflow-hidden">
-          <div className="px-8 sm:px-10 pb-8 pt-1">
+          <div className="px-10 sm:px-12 pb-8 pt-1">
             <p className="text-[#3a3a3a] leading-[1.75] tracking-[0.01em] max-w-prose">{answer}</p>
           </div>
         </div>

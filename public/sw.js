@@ -2,7 +2,7 @@
 // Network-first for code, cache-first for card images
 // Posts 'SW_UPDATED' to clients when a new version activates
 
-const CACHE_NAME = 'freecell-v2';
+const CACHE_NAME = 'freecell-v3';
 
 const PRECACHE_URLS = [
   '/',

@@ -46,7 +46,7 @@ export default function CookieConsent() {
   if (!visible) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 safe-area-bottom">
+    <div className="fixed bottom-14 md:bottom-0 left-0 right-0 z-50 safe-area-bottom">
       <div className="mx-2 mb-2 md:mx-4 md:mb-4 bg-[#0d2b0d]/95 backdrop-blur-sm border border-[#1a5c1a]/40 rounded-xl px-4 py-3 flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4 shadow-2xl">
         <p className="text-white/70 text-xs sm:text-sm flex-1">
           We use cookies to improve your experience and show relevant ads.{' '}

@@ -1,4 +1,8 @@
-const CACHE_NAME = 'freecell-v1';
+// Service Worker — FreeCell Online
+// Strategy: Network-first for everything except card images
+// This ensures users always get the latest code on deploy
+
+const CACHE_NAME = 'freecell-v2';
 
 const PRECACHE_URLS = [
   '/',
@@ -6,7 +10,7 @@ const PRECACHE_URLS = [
   '/icons/icon.svg',
 ];
 
-// Install: precache essential assets
+// Install: precache essential assets, immediately take over
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => cache.addAll(PRECACHE_URLS))
@@ -14,7 +18,7 @@ self.addEventListener('install', (event) => {
   self.skipWaiting();
 });
 
-// Activate: clean old caches
+// Activate: clean ALL old caches, claim clients immediately
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) =>
@@ -24,19 +28,19 @@ self.addEventListener('activate', (event) => {
   self.clients.claim();
 });
 
-// Fetch: network-first for pages, cache-first for assets
+// Fetch handler
 self.addEventListener('fetch', (event) => {
   const { request } = event;
   const url = new URL(request.url);
 
-  // Skip non-GET requests and external URLs
+  // Skip non-GET and external
   if (request.method !== 'GET' || url.origin !== self.location.origin) return;
 
-  // Skip API routes
+  // Skip API routes entirely
   if (url.pathname.startsWith('/api/')) return;
 
-  // Card images and static assets: cache-first
-  if (url.pathname.startsWith('/cards/') || url.pathname.startsWith('/icons/') || url.pathname.endsWith('.js') || url.pathname.endsWith('.css')) {
+  // Card images: cache-first (large files, rarely change)
+  if (url.pathname.startsWith('/cards/')) {
     event.respondWith(
       caches.match(request).then((cached) => {
         if (cached) return cached;
@@ -52,7 +56,7 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Pages: network-first with cache fallback
+  // Everything else: network-first (always get latest code)
   event.respondWith(
     fetch(request)
       .then((response) => {

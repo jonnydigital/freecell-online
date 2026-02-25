@@ -7,13 +7,14 @@ import { loadStats, saveStats } from '../lib/storage';
 import { trackGameStart, trackWin, trackAbandoned, trackHint, trackUndo, trackMove, trackDeadlock, gameSession } from '../lib/analytics';
 import { initErrorTracking, setGameContext } from '../lib/errorTracking';
 import { getTodaysSeed, getTodayStr, recordDailyCompletion, isTodayCompleted } from '../lib/dailyChallenge';
-import { BookOpen, HelpCircle, Swords, Info } from 'lucide-react';
-import { RotateCcw, RotateCw, Lightbulb, BarChart3, MessageSquare, Shuffle, Calendar, Hash, Volume2, VolumeX, MoreHorizontal } from 'lucide-react';
+import { RotateCcw, RotateCw, Lightbulb, BarChart3, MessageSquare, Shuffle, Calendar, Volume2, VolumeX, Home } from 'lucide-react';
 import StatsPanel from './StatsPanel';
 import FeedbackModal from './FeedbackModal';
 import DailyChallengePanel from './DailyChallengePanel';
 import GameNumberInput from './GameNumberInput';
 import WinScreen from './WinScreen';
+import HomeOverlay from './HomeOverlay';
+import DailyBanner from './DailyBanner';
 import { soundManager } from '../lib/sounds';
 
 export default function GameShell() {
@@ -32,6 +33,7 @@ export default function GameShell() {
   const [showGameInput, setShowGameInput] = useState(false);
   const [isMuted, setIsMuted] = useState(() => soundManager.muted);
   const [showMoreMenu, setShowMoreMenu] = useState(false);
+  const [showHome, setShowHome] = useState(false);
   const [isLandscapeMobile, setIsLandscapeMobile] = useState(false);
   const [dailyCompleted, setDailyCompleted] = useState(true); // assume completed until checked
 
@@ -275,6 +277,9 @@ export default function GameShell() {
       <div className="relative flex-1">
         <div ref={containerRef} id="game-container" className="absolute inset-0" />
 
+        {/* Daily Challenge Banner */}
+        <DailyBanner onPlayDaily={handlePlayDaily} />
+
         {/* Auto-Finish Button */}
         {autoCompletable && !isWon && (
           <div className="absolute top-4 left-1/2 -translate-x-1/2 z-10">
@@ -316,18 +321,15 @@ export default function GameShell() {
         )}
       </div>
 
-      {/* ── Mobile Bottom Bar (hidden on desktop and landscape) ── */}
+      {/* ── Mobile Bottom Bar — 5 icons: Home, New, Undo, Redo, Hint ── */}
       {!isLandscapeMobile && <div className="flex md:hidden items-center justify-around px-2 py-2 bg-[#072907] border-t border-[#1a5c1a]/30 safe-area-bottom">
+        <button onClick={() => setShowHome(true)} className="flex flex-col items-center gap-0.5 p-2 text-[#D4AF37]/80 active:text-[#D4AF37]" title="Home">
+          <Home size={22} />
+          <span className="text-[10px]">Home</span>
+        </button>
         <button onClick={handleNewGame} className="flex flex-col items-center gap-0.5 p-2 text-white/70 active:text-white" title="New Game">
           <Shuffle size={22} />
           <span className="text-[10px]">New</span>
-        </button>
-        <button onClick={() => setShowDaily(true)} className="relative flex flex-col items-center gap-0.5 p-2 text-yellow-400/80 active:text-yellow-400" title="Daily Challenge">
-          <Calendar size={22} />
-          <span className="text-[10px]">Daily</span>
-          {!dailyCompleted && (
-            <span className="absolute top-1 right-1 w-2.5 h-2.5 bg-red-500 rounded-full animate-pulse" />
-          )}
         </button>
         <button onClick={handleUndo} className="flex flex-col items-center gap-0.5 p-2 text-white/70 active:text-white" title="Undo">
           <RotateCcw size={22} />
@@ -341,57 +343,18 @@ export default function GameShell() {
           <Lightbulb size={22} />
           <span className="text-[10px]">Hint</span>
         </button>
-        <button onClick={() => setShowStats(true)} className="flex flex-col items-center gap-0.5 p-2 text-white/70 active:text-white" title="Stats">
-          <BarChart3 size={22} />
-          <span className="text-[10px]">Stats</span>
-        </button>
-        <div className="relative">
-          <button onClick={() => setShowMoreMenu(!showMoreMenu)} className="flex flex-col items-center gap-0.5 p-2 text-white/70 active:text-white" title="More">
-            <MoreHorizontal size={22} />
-            <span className="text-[10px]">More</span>
-          </button>
-          {showMoreMenu && (
-            <div className="absolute bottom-full right-0 mb-2 bg-[#0d2f0d] border border-[#1a5c1a]/50 rounded-lg shadow-xl overflow-hidden min-w-[160px] z-50">
-              <button
-                onClick={() => { handleToggleMute(); setShowMoreMenu(false); }}
-                className="flex items-center gap-3 w-full px-4 py-3 text-sm text-white/80 hover:bg-[#1a5c1a]/40 active:bg-[#1a5c1a]/60"
-              >
-                {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
-                {isMuted ? 'Unmute' : 'Mute'}
-              </button>
-              <button
-                onClick={() => { setShowFeedback(true); setShowMoreMenu(false); }}
-                className="flex items-center gap-3 w-full px-4 py-3 text-sm text-white/80 hover:bg-[#1a5c1a]/40 active:bg-[#1a5c1a]/60"
-              >
-                <MessageSquare size={16} />
-                Feedback
-              </button>
-              <div className="border-t border-[#1a5c1a]/30" />
-              <a
-                href="/how-to-play"
-                className="flex items-center gap-3 w-full px-4 py-3 text-sm text-white/80 hover:bg-[#1a5c1a]/40 active:bg-[#1a5c1a]/60"
-              >
-                <BookOpen size={16} />
-                How to Play
-              </a>
-              <a
-                href="/strategy"
-                className="flex items-center gap-3 w-full px-4 py-3 text-sm text-white/80 hover:bg-[#1a5c1a]/40 active:bg-[#1a5c1a]/60"
-              >
-                <Swords size={16} />
-                Strategy Guide
-              </a>
-              <a
-                href="/faq"
-                className="flex items-center gap-3 w-full px-4 py-3 text-sm text-white/80 hover:bg-[#1a5c1a]/40 active:bg-[#1a5c1a]/60"
-              >
-                <HelpCircle size={16} />
-                FAQ
-              </a>
-            </div>
-          )}
-        </div>
       </div>}
+
+      {/* Home Overlay */}
+      <HomeOverlay
+        isOpen={showHome}
+        onClose={() => setShowHome(false)}
+        onPlayDaily={(seed) => { handlePlayDaily(seed); setShowHome(false); }}
+        onNewGame={() => { handleNewGame(); setShowHome(false); }}
+        isMuted={isMuted}
+        onToggleMute={handleToggleMute}
+        onFeedback={() => { setShowFeedback(true); setShowHome(false); }}
+      />
 
       {/* Stats Modal */}
       <StatsPanel

@@ -26,10 +26,10 @@ export const metadata: Metadata = {
 
 /* ── Glass panel style ── */
 
-const GLASS =
-  "bg-white/[0.04] backdrop-blur-md border border-[rgba(212,175,55,0.15)] rounded-2xl shadow-[0_8px_32px_0_rgba(0,0,0,0.3)] relative overflow-hidden";
-const GLASS_TOP: React.CSSProperties = {
-  borderTop: "1px solid rgba(255, 255, 255, 0.1)",
+const CARD = 'card-panel';
+
+const CARD_TOP: React.CSSProperties = {
+  borderTop: "1px solid rgba(184, 134, 11, 0.08)",
 };
 
 /* ── Tiny helper components ── */
@@ -91,7 +91,7 @@ function SectionHeading({
       )}
       <h2
         id={id}
-        className="text-2xl sm:text-3xl font-semibold text-white"
+        className="text-2xl sm:text-3xl font-semibold text-[#2D2D2D]"
         style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
       >
         {children}
@@ -104,7 +104,7 @@ function SectionHeading({
 
 function BoardDiagram() {
   return (
-    <div className="bg-white/[0.06] border border-[rgba(212,175,55,0.1)] rounded-xl p-4 sm:p-6 my-6 overflow-x-auto">
+    <div className="bg-[#F0EDE5] border border-[rgba(212,175,55,0.1)] rounded-xl p-4 sm:p-6 my-6 overflow-x-auto">
       {/* Top row: Free Cells + Foundations */}
       <div className="flex justify-between items-start gap-4 min-w-[340px]">
         {/* Free Cells */}
@@ -180,7 +180,7 @@ function BoardDiagram() {
 
 function ColorAlternationDiagram() {
   return (
-    <div className="bg-white/[0.06] border border-[rgba(212,175,55,0.1)] rounded-xl p-5 sm:p-6 my-6">
+    <div className="bg-[#F0EDE5] border border-[rgba(212,175,55,0.1)] rounded-xl p-5 sm:p-6 my-6">
       <div className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-10">
         {/* Valid move */}
         <div className="text-center">
@@ -242,7 +242,7 @@ function ColorAlternationDiagram() {
 
 function SupermoveFormula() {
   return (
-    <div className="bg-white/[0.06] border border-[rgba(212,175,55,0.1)] rounded-xl p-5 sm:p-6 my-6">
+    <div className="bg-[#F0EDE5] border border-[rgba(212,175,55,0.1)] rounded-xl p-5 sm:p-6 my-6">
       <div className="text-center">
         <div className="text-xs text-[#D4AF37] font-semibold mb-3 uppercase tracking-wider">
           Supermove Formula
@@ -254,7 +254,7 @@ function SupermoveFormula() {
           (1 + <span className="text-[#D4AF37]">free cells</span>) ×
           2<sup className="text-[#D4AF37]">(empty columns)</sup>
         </div>
-        <p className="text-[#9EBAA8] text-sm mt-3">
+        <p className="text-[#6B7280] text-sm mt-3">
           = Maximum cards you can move at once
         </p>
       </div>
@@ -268,9 +268,9 @@ function SupermoveFormula() {
         ].map(({ fc, ec, result }) => (
           <div
             key={`${fc}-${ec}`}
-            className="bg-white/[0.06] rounded-lg p-3 text-center text-sm border border-[rgba(212,175,55,0.08)]"
+            className="bg-[#F0EDE5] rounded-lg p-3 text-center text-sm border border-[rgba(212,175,55,0.08)]"
           >
-            <span className="text-[#9EBAA8]">
+            <span className="text-[#6B7280]">
               {fc} free cells, {ec} empty col{ec !== 1 ? "s" : ""}
             </span>
             <br />
@@ -332,11 +332,7 @@ export default function HowToPlayPage() {
 
   return (
     <div
-      className="h-screen overflow-y-auto scroll-smooth"
-      style={{
-        background:
-          "radial-gradient(circle at 50% 0%, #0a331f 0%, #062516 70%)",
-      }}
+      className="h-screen overflow-y-auto scroll-smooth felt-bg"
     >
       <script
         type="application/ld+json"
@@ -373,7 +369,7 @@ export default function HowToPlayPage() {
 
         {/* Breadcrumbs */}
         <nav
-          className="max-w-4xl mx-auto mb-8 text-sm text-[#9EBAA8]"
+          className="max-w-4xl mx-auto mb-8 text-sm text-[#6B7280]"
           aria-label="Breadcrumb"
         >
           <ol className="flex items-center justify-center gap-2">
@@ -397,7 +393,7 @@ export default function HowToPlayPage() {
         >
           How to Play FreeCell Solitaire
         </h1>
-        <p className="text-[#9EBAA8] text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
+        <p className="text-[#6B7280] text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
           The complete guide to mastering the world&apos;s most rewarding
           card game — where every deal is solvable and every win is earned.
         </p>
@@ -446,13 +442,13 @@ export default function HowToPlayPage() {
       <main className="max-w-3xl mx-auto px-6 sm:px-10 pb-20 flex flex-col gap-12">
         {/* Section 1: What is FreeCell? */}
         <section id="what-is-freecell" className="scroll-mt-6">
-          <div className={GLASS} style={GLASS_TOP}>
+          <div className={CARD} style={CARD_TOP}>
             <SectionHeading sub="Introduction" id="what-is-freecell-heading">
               What is FreeCell Solitaire?
             </SectionHeading>
 
             <div className="p-6">
-              <p className="text-[#E0EFE6] leading-relaxed mb-4">
+              <p className="text-[#444444] leading-relaxed mb-4">
                 FreeCell is one of the most popular and intellectually rewarding
                 solitaire card games ever created. Unlike traditional solitaire
                 variants where hidden cards and random draws determine your fate,
@@ -460,7 +456,7 @@ export default function HowToPlayPage() {
                 means every game is almost entirely a test of skill, strategic
                 planning, and careful thinking — not luck.
               </p>
-              <p className="text-[#E0EFE6] leading-relaxed mb-4">
+              <p className="text-[#444444] leading-relaxed mb-4">
                 The game was first programmed by Paul Alfille for the PLATO
                 educational computer system in 1978. It later became a worldwide
                 phenomenon when Microsoft included it in Windows 95, introducing
@@ -470,7 +466,7 @@ export default function HowToPlayPage() {
                 for its fair gameplay and the deeply satisfying challenge it
                 offers.
               </p>
-              <p className="text-[#E0EFE6] leading-relaxed">
+              <p className="text-[#444444] leading-relaxed">
                 What makes FreeCell truly special is that nearly every deal is
                 solvable. Of the original 32,000 Microsoft FreeCell numbered
                 deals, only one — deal #11982 — has been proven impossible to
@@ -486,13 +482,13 @@ export default function HowToPlayPage() {
 
         {/* Section 2: The Board */}
         <section id="the-board" className="scroll-mt-6">
-          <div className={GLASS} style={GLASS_TOP}>
+          <div className={CARD} style={CARD_TOP}>
             <SectionHeading sub="Board Layout" id="the-board-heading">
               Understanding the Game Board
             </SectionHeading>
 
             <div className="p-6">
-              <p className="text-[#E0EFE6] leading-relaxed mb-4">
+              <p className="text-[#444444] leading-relaxed mb-4">
                 The FreeCell board is elegantly simple, consisting of three
                 distinct areas that each serve a specific purpose in your quest to
                 organize all 52 cards. Understanding how these areas work together
@@ -502,14 +498,14 @@ export default function HowToPlayPage() {
               <BoardDiagram />
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6">
-                <div className="bg-white/[0.06] rounded-xl p-4 border border-[rgba(212,175,55,0.1)]">
+                <div className="bg-[#F0EDE5] rounded-xl p-4 border border-[rgba(212,175,55,0.1)]">
                   <div className="flex items-center gap-2 mb-2">
                     <span className="text-[#D4AF37] text-lg">
                       {"\u25CF"}
                     </span>
                     <h3 className="font-medium text-white">Free Cells</h3>
                   </div>
-                  <p className="text-[#9EBAA8] text-sm leading-relaxed">
+                  <p className="text-[#6B7280] text-sm leading-relaxed">
                     Four empty spaces in the upper-left corner. These are your
                     temporary storage slots — your &quot;breathing room.&quot;
                     Each free cell holds exactly one card at a time. Using them
@@ -517,28 +513,28 @@ export default function HowToPlayPage() {
                     deeply buried cards.
                   </p>
                 </div>
-                <div className="bg-white/[0.06] rounded-xl p-4 border border-[rgba(212,175,55,0.1)]">
+                <div className="bg-[#F0EDE5] rounded-xl p-4 border border-[rgba(212,175,55,0.1)]">
                   <div className="flex items-center gap-2 mb-2">
                     <span className="text-[#D4AF37] text-lg">
                       {"\u25CF"}
                     </span>
                     <h3 className="font-medium text-white">Foundations</h3>
                   </div>
-                  <p className="text-[#9EBAA8] text-sm leading-relaxed">
+                  <p className="text-[#6B7280] text-sm leading-relaxed">
                     Four empty spaces in the upper-right corner. This is where you
                     build your completed suits. Each foundation starts empty and
                     must be built from Ace to King in a single suit. Once all four
                     foundations are complete, you&apos;ve won the game.
                   </p>
                 </div>
-                <div className="bg-white/[0.06] rounded-xl p-4 border border-[rgba(212,175,55,0.1)]">
+                <div className="bg-[#F0EDE5] rounded-xl p-4 border border-[rgba(212,175,55,0.1)]">
                   <div className="flex items-center gap-2 mb-2">
                     <span className="text-[#D4AF37] text-lg">
                       {"\u25CF"}
                     </span>
                     <h3 className="font-medium text-white">Cascades</h3>
                   </div>
-                  <p className="text-[#9EBAA8] text-sm leading-relaxed">
+                  <p className="text-[#6B7280] text-sm leading-relaxed">
                     Eight columns of cards in the center of the board. This is
                     your main workspace where all the strategic action happens. At
                     the start of the game, all 52 cards are distributed across
@@ -552,13 +548,13 @@ export default function HowToPlayPage() {
 
         {/* Section 3: Setup */}
         <section id="setup" className="scroll-mt-6">
-          <div className={GLASS} style={GLASS_TOP}>
+          <div className={CARD} style={CARD_TOP}>
             <SectionHeading sub="Getting Started" id="setup-heading">
               How the Game is Set Up
             </SectionHeading>
 
             <div className="p-6">
-              <p className="text-[#E0EFE6] leading-relaxed mb-4">
+              <p className="text-[#444444] leading-relaxed mb-4">
                 When a new game of FreeCell begins, all 52 cards from a standard
                 deck are dealt face-up into the 8 cascade columns. The first four
                 columns receive 7 cards each (28 cards total), and the remaining
@@ -567,18 +563,18 @@ export default function HowToPlayPage() {
               </p>
 
               {/* Visual of card distribution */}
-              <div className="bg-white/[0.06] rounded-xl p-4 border border-[rgba(212,175,55,0.1)] my-5">
+              <div className="bg-[#F0EDE5] rounded-xl p-4 border border-[rgba(212,175,55,0.1)] my-5">
                 <div className="flex items-center justify-center gap-1 sm:gap-2 text-center">
                   {[7, 7, 7, 7, 6, 6, 6, 6].map((n, i) => (
                     <div key={i} className="flex flex-col items-center">
-                      <div className="text-[10px] text-[#9EBAA8] mb-1">
+                      <div className="text-[10px] text-[#6B7280] mb-1">
                         Col {i + 1}
                       </div>
                       <div
                         className={`w-9 sm:w-11 h-8 sm:h-10 rounded-lg flex items-center justify-center text-sm font-bold ${
                           n === 7
                             ? "bg-[#D4AF37]/15 text-[#D4AF37] border border-[#D4AF37]/25"
-                            : "bg-white/[0.06] text-[#9EBAA8] border border-white/10"
+                            : "bg-[#F0EDE5] text-[#6B7280] border border-white/10"
                         }`}
                       >
                         {n}
@@ -586,19 +582,19 @@ export default function HowToPlayPage() {
                     </div>
                   ))}
                 </div>
-                <p className="text-center text-xs text-[#9EBAA8] mt-3">
+                <p className="text-center text-xs text-[#6B7280] mt-3">
                   Number of cards dealt to each cascade column
                 </p>
               </div>
 
-              <p className="text-[#E0EFE6] leading-relaxed mb-4">
+              <p className="text-[#444444] leading-relaxed mb-4">
                 There is no stock pile, no draw pile, and no hidden cards
                 whatsoever. Every single card is visible from the moment the game
                 begins. This complete transparency is what makes FreeCell a game of
                 pure skill rather than chance — you have all the information you
                 need to solve the puzzle from move one.
               </p>
-              <p className="text-[#E0EFE6] leading-relaxed">
+              <p className="text-[#444444] leading-relaxed">
                 Each game is identified by a unique deal number, which determines
                 exactly how the cards are arranged. This means you can replay
                 specific deals to improve your strategy, or share deal numbers with
@@ -612,13 +608,13 @@ export default function HowToPlayPage() {
 
         {/* Section 4: Rules */}
         <section id="rules" className="scroll-mt-6">
-          <div className={GLASS} style={GLASS_TOP}>
+          <div className={CARD} style={CARD_TOP}>
             <SectionHeading sub="The Rules" id="rules-heading">
               Rules of Play
             </SectionHeading>
 
             <div className="p-6">
-              <p className="text-[#E0EFE6] leading-relaxed mb-6">
+              <p className="text-[#444444] leading-relaxed mb-6">
                 FreeCell has a small set of elegant rules that are easy to learn
                 but take time to master. Here are the five core rules you need to
                 know before making your first move.
@@ -631,7 +627,7 @@ export default function HowToPlayPage() {
                   <h3 className="font-medium text-white text-lg mb-2">
                     Moving Cards Between Cascades
                   </h3>
-                  <p className="text-[#E0EFE6] leading-relaxed mb-3">
+                  <p className="text-[#444444] leading-relaxed mb-3">
                     The fundamental move in FreeCell: you can move the bottom
                     (exposed) card of any cascade onto the bottom card of another
                     cascade, but only if the destination card is{" "}
@@ -644,7 +640,7 @@ export default function HowToPlayPage() {
                     and a 7 cannot go on a 5 (must be exactly one rank higher).
                   </p>
                   <ColorAlternationDiagram />
-                  <p className="text-[#9EBAA8] text-sm leading-relaxed">
+                  <p className="text-[#6B7280] text-sm leading-relaxed">
                     This alternating-color, descending-rank rule is the backbone
                     of FreeCell gameplay. It&apos;s the same rule used for building
                     tableau columns in Klondike solitaire, so if you&apos;ve played
@@ -660,7 +656,7 @@ export default function HowToPlayPage() {
                   <h3 className="font-medium text-white text-lg mb-2">
                     Using Free Cells
                   </h3>
-                  <p className="text-[#E0EFE6] leading-relaxed">
+                  <p className="text-[#444444] leading-relaxed">
                     Any single exposed card can be moved to an empty free cell.
                     This is your safety valve — when you need to temporarily get a
                     card out of the way to access cards underneath it. However,
@@ -681,7 +677,7 @@ export default function HowToPlayPage() {
                   <h3 className="font-medium text-white text-lg mb-2">
                     Building Foundations
                   </h3>
-                  <p className="text-[#E0EFE6] leading-relaxed mb-3">
+                  <p className="text-[#444444] leading-relaxed mb-3">
                     Foundations are built up by suit, starting from the Ace. The
                     order is: A, 2, 3, 4, 5, 6, 7, 8, 9, 10, J, Q, K. Each of
                     the four foundations holds one suit — spades ({"\u2660"}),
@@ -692,21 +688,21 @@ export default function HowToPlayPage() {
                     only 6{"\u2660"} can go there next.
                   </p>
                   {/* Foundation build example */}
-                  <div className="bg-white/[0.06] rounded-lg p-4 border border-[rgba(212,175,55,0.1)] flex items-center gap-2 overflow-x-auto">
-                    <span className="text-xs text-[#9EBAA8] mr-1 shrink-0">
+                  <div className="bg-[#F0EDE5] rounded-lg p-4 border border-[rgba(212,175,55,0.1)] flex items-center gap-2 overflow-x-auto">
+                    <span className="text-xs text-[#6B7280] mr-1 shrink-0">
                       Example:
                     </span>
                     {["A", "2", "3", "4", "5"].map((r) => (
                       <MiniCard key={r} rank={r} suit={"\u2660"} />
                     ))}
-                    <span className="text-[#9EBAA8] text-lg shrink-0">
+                    <span className="text-[#6B7280] text-lg shrink-0">
                       {"\u2192"}
                     </span>
-                    <span className="text-[#9EBAA8] text-sm shrink-0">
+                    <span className="text-[#6B7280] text-sm shrink-0">
                       ...K{"\u2660"}
                     </span>
                   </div>
-                  <p className="text-[#9EBAA8] text-sm leading-relaxed mt-3">
+                  <p className="text-[#6B7280] text-sm leading-relaxed mt-3">
                     In most FreeCell implementations — including ours — cards that
                     are safe to move to foundations are moved there automatically,
                     saving you clicks and letting you focus on the strategic
@@ -722,7 +718,7 @@ export default function HowToPlayPage() {
                   <h3 className="font-medium text-white text-lg mb-2">
                     Using Empty Columns
                   </h3>
-                  <p className="text-[#E0EFE6] leading-relaxed">
+                  <p className="text-[#444444] leading-relaxed">
                     When a cascade column is completely emptied, any card or valid
                     sequence of cards can be moved there. Empty columns are
                     incredibly valuable — even more valuable than free cells —
@@ -743,7 +739,7 @@ export default function HowToPlayPage() {
                   <h3 className="font-medium text-white text-lg mb-2">
                     The Supermove (Moving Multiple Cards)
                   </h3>
-                  <p className="text-[#E0EFE6] leading-relaxed mb-3">
+                  <p className="text-[#444444] leading-relaxed mb-3">
                     Officially, FreeCell rules only allow moving one card at a
                     time. However, most computer versions — including ours — allow
                     you to move a properly ordered sequence of cards (descending
@@ -759,13 +755,13 @@ export default function HowToPlayPage() {
 
         {/* Section 5: Supermoves */}
         <section id="supermoves" className="scroll-mt-6">
-          <div className={GLASS} style={GLASS_TOP}>
+          <div className={CARD} style={CARD_TOP}>
             <SectionHeading sub="Advanced Mechanic" id="supermoves-heading">
               Understanding Supermoves
             </SectionHeading>
 
             <div className="p-6">
-              <p className="text-[#E0EFE6] leading-relaxed mb-4">
+              <p className="text-[#444444] leading-relaxed mb-4">
                 The supermove is one of the most important concepts in FreeCell.
                 The number of cards you can move at once depends on how many empty
                 free cells and empty cascade columns are available. The formula is
@@ -774,7 +770,7 @@ export default function HowToPlayPage() {
 
               <SupermoveFormula />
 
-              <p className="text-[#E0EFE6] leading-relaxed mt-4">
+              <p className="text-[#444444] leading-relaxed mt-4">
                 For example, if you have 2 empty free cells and 1 empty column,
                 you can move up to (1 + 2) × 2¹ = 6 cards at once. With all 4
                 free cells empty and 2 empty columns, you can move an impressive
@@ -783,7 +779,7 @@ export default function HowToPlayPage() {
                 dramatically increases your ability to make large moves and
                 reorganize the board efficiently.
               </p>
-              <p className="text-[#E0EFE6] leading-relaxed mt-3">
+              <p className="text-[#444444] leading-relaxed mt-3">
                 Understanding this formula will transform how you evaluate the
                 board. Before attempting a multi-card move, quickly count your
                 empty spaces to make sure the move is actually possible. Running
@@ -795,7 +791,7 @@ export default function HowToPlayPage() {
 
         {/* Section 6: Your First Game */}
         <section id="first-game" className="scroll-mt-6">
-          <div className={GLASS} style={GLASS_TOP}>
+          <div className={CARD} style={CARD_TOP}>
             <SectionHeading
               sub="Step-by-Step Walkthrough"
               id="first-game-heading"
@@ -804,7 +800,7 @@ export default function HowToPlayPage() {
             </SectionHeading>
 
             <div className="p-6">
-              <p className="text-[#E0EFE6] leading-relaxed mb-6">
+              <p className="text-[#444444] leading-relaxed mb-6">
                 Ready to play? Here&apos;s a step-by-step walkthrough of how to
                 approach your very first game of FreeCell. Follow these steps and
                 you&apos;ll be well on your way to a win.
@@ -817,7 +813,7 @@ export default function HowToPlayPage() {
                     <h3 className="font-medium text-white mb-1">
                       Scan the Board
                     </h3>
-                    <p className="text-[#E0EFE6] leading-relaxed">
+                    <p className="text-[#444444] leading-relaxed">
                       Before making any move, take 30 seconds to survey the entire
                       layout. Where are the four Aces? How deeply buried are they?
                       Are there any 2s or 3s that are blocked? Which columns
@@ -835,7 +831,7 @@ export default function HowToPlayPage() {
                     <h3 className="font-medium text-white mb-1">
                       Prioritize Freeing Aces and Low Cards
                     </h3>
-                    <p className="text-[#E0EFE6] leading-relaxed">
+                    <p className="text-[#444444] leading-relaxed">
                       Aces and 2s need to reach the foundations as soon as
                       possible. Every move you make in the early game should be
                       working toward uncovering and freeing these low-value cards.
@@ -852,7 +848,7 @@ export default function HowToPlayPage() {
                     <h3 className="font-medium text-white mb-1">
                       Build Descending Sequences
                     </h3>
-                    <p className="text-[#E0EFE6] leading-relaxed">
+                    <p className="text-[#444444] leading-relaxed">
                       Start moving cards between cascades to create descending,
                       alternating-color sequences. Focus on columns where you can
                       make meaningful progress toward freeing important buried
@@ -868,7 +864,7 @@ export default function HowToPlayPage() {
                     <h3 className="font-medium text-white mb-1">
                       Send Cards to Foundations Early
                     </h3>
-                    <p className="text-[#E0EFE6] leading-relaxed">
+                    <p className="text-[#444444] leading-relaxed">
                       As Aces become available, immediately move them to the
                       foundation area. Follow up with 2s, 3s, and higher cards as
                       they become accessible. Building foundations early creates
@@ -884,7 +880,7 @@ export default function HowToPlayPage() {
                     <h3 className="font-medium text-white mb-1">
                       Manage Free Cells and Empty Columns
                     </h3>
-                    <p className="text-[#E0EFE6] leading-relaxed">
+                    <p className="text-[#444444] leading-relaxed">
                       Keep careful track of your empty free cells and empty
                       columns. Every card you park in a free cell reduces your
                       flexibility and limits the number of cards you can move at
@@ -902,7 +898,7 @@ export default function HowToPlayPage() {
                     <h3 className="font-medium text-white mb-1">
                       Think Several Moves Ahead
                     </h3>
-                    <p className="text-[#E0EFE6] leading-relaxed">
+                    <p className="text-[#444444] leading-relaxed">
                       Before each move, ask: &quot;What does this move
                       enable?&quot; Try to see 3 to 5 moves into the future. If a
                       sequence of moves doesn&apos;t lead to something productive —
@@ -919,7 +915,7 @@ export default function HowToPlayPage() {
                     <h3 className="font-medium text-white mb-1">
                       Use Undo Freely — It&apos;s How You Learn
                     </h3>
-                    <p className="text-[#E0EFE6] leading-relaxed">
+                    <p className="text-[#444444] leading-relaxed">
                       If you feel stuck or realize a move was a mistake, hit the
                       undo button without hesitation. Undo is not cheating —
                       it&apos;s the single best learning tool available to you. Try
@@ -937,13 +933,13 @@ export default function HowToPlayPage() {
 
         {/* Section 7: How to Win */}
         <section id="winning" className="scroll-mt-6">
-          <div className={GLASS} style={GLASS_TOP}>
+          <div className={CARD} style={CARD_TOP}>
             <SectionHeading sub="Victory" id="winning-heading">
               How to Win at FreeCell
             </SectionHeading>
 
             <div className="p-6">
-              <p className="text-[#E0EFE6] leading-relaxed mb-4">
+              <p className="text-[#444444] leading-relaxed mb-4">
                 The game is won when all 52 cards have been moved to the four
                 foundation piles, with each pile containing a complete suit in
                 order from Ace through King. The game automatically detects when
@@ -951,14 +947,14 @@ export default function HowToPlayPage() {
                 to the foundations automatically once the solution becomes
                 inevitable.
               </p>
-              <p className="text-[#E0EFE6] leading-relaxed mb-4">
+              <p className="text-[#444444] leading-relaxed mb-4">
                 Since approximately 99.999% of FreeCell deals are solvable,
                 winning is almost always possible with the right strategy and
                 enough patience. Beginners typically win about 40–50% of their
                 games. Intermediate players reach 70–80%. Expert players can
                 consistently achieve win rates above 90%.
               </p>
-              <p className="text-[#E0EFE6] leading-relaxed">
+              <p className="text-[#444444] leading-relaxed">
                 The beauty of FreeCell is that every loss is a learning
                 opportunity. When you lose, you know it was a strategic mistake —
                 not bad luck. This is why FreeCell is so addictive: there is
@@ -967,7 +963,7 @@ export default function HowToPlayPage() {
               </p>
 
               {/* Win rate bar */}
-              <div className="bg-white/[0.06] rounded-xl p-5 border border-[rgba(212,175,55,0.1)] mt-6">
+              <div className="bg-[#F0EDE5] rounded-xl p-5 border border-[rgba(212,175,55,0.1)] mt-6">
                 <h3 className="font-medium text-[#D4AF37] text-sm mb-4 uppercase tracking-wider">
                   Typical Win Rates by Skill Level
                 </h3>
@@ -977,7 +973,7 @@ export default function HowToPlayPage() {
                   { label: "Expert", pct: 92, color: "bg-[#D4AF37]" },
                 ].map(({ label, pct, color }) => (
                   <div key={label} className="mb-3 last:mb-0">
-                    <div className="flex justify-between text-sm text-[#9EBAA8] mb-1">
+                    <div className="flex justify-between text-sm text-[#6B7280] mb-1">
                       <span>{label}</span>
                       <span className="font-bold text-white">{pct}%</span>
                     </div>
@@ -996,13 +992,13 @@ export default function HowToPlayPage() {
 
         {/* Section 8: Terminology */}
         <section id="terminology" className="scroll-mt-6">
-          <div className={GLASS} style={GLASS_TOP}>
+          <div className={CARD} style={CARD_TOP}>
             <SectionHeading sub="Glossary" id="terminology-heading">
               Key FreeCell Terminology
             </SectionHeading>
 
             <div className="p-6">
-              <p className="text-[#E0EFE6] leading-relaxed mb-5">
+              <p className="text-[#444444] leading-relaxed mb-5">
                 Knowing the correct terminology will help you follow strategy
                 guides and communicate with other players. Here are the essential
                 terms every FreeCell player should know.
@@ -1045,10 +1041,10 @@ export default function HowToPlayPage() {
                 ].map(([term, def]) => (
                   <div
                     key={term}
-                    className="bg-white/[0.06] rounded-lg p-4 border border-[rgba(212,175,55,0.1)]"
+                    className="bg-[#F0EDE5] rounded-lg p-4 border border-[rgba(212,175,55,0.1)]"
                   >
                     <dt className="font-medium text-white mb-1">{term}</dt>
-                    <dd className="text-[#9EBAA8] text-sm leading-relaxed">
+                    <dd className="text-[#6B7280] text-sm leading-relaxed">
                       {def}
                     </dd>
                   </div>
@@ -1060,13 +1056,13 @@ export default function HowToPlayPage() {
 
         {/* Section 9: Quick Tips */}
         <section id="tips" className="scroll-mt-6">
-          <div className={GLASS} style={GLASS_TOP}>
+          <div className={CARD} style={CARD_TOP}>
             <SectionHeading sub="Pro Tips" id="tips-heading">
               Quick Tips for Beginners
             </SectionHeading>
 
             <div className="p-6">
-              <p className="text-[#E0EFE6] leading-relaxed mb-5">
+              <p className="text-[#444444] leading-relaxed mb-5">
                 Keep these tips in mind as you play your first few games. They
                 represent the collected wisdom of experienced FreeCell players and
                 will help you build good habits from the start.
@@ -1109,18 +1105,18 @@ export default function HowToPlayPage() {
                 ].map(({ icon, tip }, i) => (
                   <div
                     key={i}
-                    className="flex items-start gap-3 bg-white/[0.06] rounded-lg p-4 border border-[rgba(212,175,55,0.1)]"
+                    className="flex items-start gap-3 bg-[#F0EDE5] rounded-lg p-4 border border-[rgba(212,175,55,0.1)]"
                   >
                     <span
                       className={`text-xl shrink-0 mt-0.5 ${
                         icon === "\u2665" || icon === "\u2666"
                           ? "text-red-400"
-                          : "text-white/60"
+                          : "text-[#4B5563]"
                       }`}
                     >
                       {icon}
                     </span>
-                    <p className="text-[#E0EFE6] text-sm leading-relaxed">
+                    <p className="text-[#444444] text-sm leading-relaxed">
                       {tip}
                     </p>
                   </div>
@@ -1133,9 +1129,9 @@ export default function HowToPlayPage() {
         {/* ── CTA ── */}
         <section>
           <div
-            className={GLASS}
+            className={CARD}
             style={{
-              ...GLASS_TOP,
+              ...CARD_TOP,
               background:
                 "linear-gradient(135deg, rgba(10,74,42,0.6) 0%, rgba(6,37,22,0.8) 100%)",
             }}
@@ -1156,12 +1152,12 @@ export default function HowToPlayPage() {
               </div>
 
               <h2
-                className="text-2xl sm:text-3xl font-semibold text-white mb-3"
+                className="text-2xl sm:text-3xl font-semibold text-[#2D2D2D] mb-3"
                 style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
               >
                 Ready to Play?
               </h2>
-              <p className="text-[#9EBAA8] mb-6 max-w-md mx-auto">
+              <p className="text-[#6B7280] mb-6 max-w-md mx-auto">
                 Put your new knowledge to the test. Every deal is solvable — the
                 only question is whether you can find the path.
               </p>
@@ -1191,25 +1187,25 @@ export default function HowToPlayPage() {
         </section>
 
         {/* ── Cross-links ── */}
-        <footer className="text-center text-sm text-[#9EBAA8]/60 pb-10">
+        <footer className="text-center text-sm text-[#6B7280]/60 pb-10">
           <div className="flex flex-wrap justify-center gap-4">
             <Link
               href="/strategy"
-              className="hover:text-[#9EBAA8] transition-colors"
+              className="hover:text-[#6B7280] transition-colors"
             >
               Strategy Guide
             </Link>
             <span className="text-white/20">|</span>
             <Link
               href="/faq"
-              className="hover:text-[#9EBAA8] transition-colors"
+              className="hover:text-[#6B7280] transition-colors"
             >
               FAQ
             </Link>
             <span className="text-white/20">|</span>
             <Link
               href="/"
-              className="hover:text-[#9EBAA8] transition-colors"
+              className="hover:text-[#6B7280] transition-colors"
             >
               Play Free
             </Link>

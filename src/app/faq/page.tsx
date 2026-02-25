@@ -153,10 +153,9 @@ const faqCategories: FaqCategory[] = [
 
 /* ── Glass panel style ── */
 
-const GLASS =
-  "bg-white/[0.04] backdrop-blur-md border border-[rgba(212,175,55,0.15)] rounded-2xl shadow-[0_8px_32px_0_rgba(0,0,0,0.3)] relative overflow-hidden";
-const GLASS_TOP: React.CSSProperties = {
-  borderTop: "1px solid rgba(255, 255, 255, 0.1)",
+const CARD = "card-panel";
+const CARD_TOP: React.CSSProperties = {
+  borderTop: "1px solid rgba(184, 134, 11, 0.08)",
 };
 
 /* ══════════════════════════════════════════════════════════════
@@ -181,11 +180,7 @@ export default function FAQPage() {
 
   return (
     <div
-      className="h-screen overflow-y-auto scroll-smooth"
-      style={{
-        background:
-          "radial-gradient(circle at 50% 0%, #0a331f 0%, #062516 70%)",
-      }}
+      className="h-screen overflow-y-auto scroll-smooth felt-bg"
     >
       <script
         type="application/ld+json"
@@ -216,7 +211,7 @@ export default function FAQPage() {
 
         {/* Breadcrumbs */}
         <nav
-          className="max-w-4xl mx-auto mb-8 text-sm text-[#9EBAA8]"
+          className="max-w-4xl mx-auto mb-8 text-sm text-[#6B7280]"
           aria-label="Breadcrumb"
         >
           <ol className="flex items-center justify-center gap-2">
@@ -240,7 +235,7 @@ export default function FAQPage() {
         >
           Frequently Asked Questions
         </h1>
-        <p className="text-[#9EBAA8] text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
+        <p className="text-[#6B7280] text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
           Everything you need to know about FreeCell Solitaire — from basic
           rules to advanced strategy and our game features.
         </p>
@@ -293,7 +288,7 @@ export default function FAQPage() {
               id={categoryId}
               className="scroll-mt-6"
             >
-              <div className={GLASS} style={GLASS_TOP}>
+              <div className={CARD} style={CARD_TOP}>
                 {/* Category heading */}
                 <div className="px-6 sm:px-8 pt-8 pb-5 border-b border-[#D4AF37]/10">
                   <span className="text-sm font-medium uppercase tracking-wider text-[#D4AF37] mb-1 block">
@@ -301,13 +296,13 @@ export default function FAQPage() {
                   </span>
                   <h2
                     id={`${categoryId}-heading`}
-                    className="text-2xl sm:text-3xl font-semibold text-white"
+                    className="text-2xl sm:text-3xl font-semibold text-[#2D2D2D]"
                     style={{
                       fontFamily: "var(--font-playfair), Georgia, serif",
                     }}
                   >
                     <span
-                      className={`mr-2 ${isRedSuit ? "text-red-400" : "text-white/60"}`}
+                      className={`mr-2 ${isRedSuit ? "text-red-400" : "text-[#4B5563]"}`}
                     >
                       {category.icon}
                     </span>
@@ -330,15 +325,15 @@ export default function FAQPage() {
 
         {/* ── Still have questions? ── */}
         <section>
-          <div className={GLASS} style={GLASS_TOP}>
+          <div className={CARD} style={CARD_TOP}>
             <div className="p-6 sm:p-8 text-center">
               <h2
-                className="text-2xl font-semibold text-white mb-3"
+                className="text-2xl font-semibold text-[#2D2D2D] mb-3"
                 style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
               >
                 Still Have Questions?
               </h2>
-              <p className="text-[#9EBAA8] mb-5 max-w-lg mx-auto leading-relaxed">
+              <p className="text-[#6B7280] mb-5 max-w-lg mx-auto leading-relaxed">
                 The best way to learn FreeCell is to play. Start a game and
                 experiment — use undo freely, try different approaches, and
                 you&apos;ll develop intuition faster than any guide can teach.
@@ -364,9 +359,9 @@ export default function FAQPage() {
         {/* ── CTA ── */}
         <section>
           <div
-            className={GLASS}
+            className={CARD}
             style={{
-              ...GLASS_TOP,
+              ...CARD_TOP,
               background:
                 "linear-gradient(135deg, rgba(10,74,42,0.6) 0%, rgba(6,37,22,0.8) 100%)",
             }}
@@ -386,12 +381,12 @@ export default function FAQPage() {
               </div>
 
               <h2
-                className="text-2xl sm:text-3xl font-semibold text-white mb-3"
+                className="text-2xl sm:text-3xl font-semibold text-[#2D2D2D] mb-3"
                 style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
               >
                 Ready to Play?
               </h2>
-              <p className="text-[#9EBAA8] mb-6 max-w-md mx-auto">
+              <p className="text-[#6B7280] mb-6 max-w-md mx-auto">
                 Now that you know everything about FreeCell, put your knowledge
                 to the test. Every deal is waiting to be solved.
               </p>
@@ -413,25 +408,25 @@ export default function FAQPage() {
         </section>
 
         {/* ── Cross-links ── */}
-        <footer className="text-center text-sm text-[#9EBAA8]/60 pb-10">
+        <footer className="text-center text-sm text-[#6B7280]/60 pb-10">
           <div className="flex flex-wrap justify-center gap-4">
             <Link
               href="/how-to-play"
-              className="hover:text-[#9EBAA8] transition-colors"
+              className="hover:text-[#6B7280] transition-colors"
             >
               How to Play
             </Link>
             <span className="text-white/20">|</span>
             <Link
               href="/strategy"
-              className="hover:text-[#9EBAA8] transition-colors"
+              className="hover:text-[#6B7280] transition-colors"
             >
               Strategy Guide
             </Link>
             <span className="text-white/20">|</span>
             <Link
               href="/"
-              className="hover:text-[#9EBAA8] transition-colors"
+              className="hover:text-[#6B7280] transition-colors"
             >
               Play Free
             </Link>

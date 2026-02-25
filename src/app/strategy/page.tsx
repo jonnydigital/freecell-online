@@ -27,10 +27,10 @@ export const metadata: Metadata = {
 
 /* ── Glass panel style ── */
 
-const GLASS =
-  "bg-white/[0.04] backdrop-blur-md border border-[rgba(212,175,55,0.15)] rounded-2xl shadow-[0_8px_32px_0_rgba(0,0,0,0.3)] relative overflow-hidden";
-const GLASS_TOP: React.CSSProperties = {
-  borderTop: "1px solid rgba(255, 255, 255, 0.1)",
+const CARD = 'card-panel';
+
+const CARD_TOP: React.CSSProperties = {
+  borderTop: "1px solid rgba(184, 134, 11, 0.08)",
 };
 
 /* ── Helper components ── */
@@ -53,7 +53,7 @@ function SectionHeading({
       )}
       <h2
         id={id}
-        className="text-2xl sm:text-3xl font-semibold text-white"
+        className="text-2xl sm:text-3xl font-semibold text-[#2D2D2D]"
         style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
       >
         {children}
@@ -87,7 +87,7 @@ function StrategyCard({
       </div>
       <div className="flex-1">
         <h3 className="font-medium text-white text-lg mb-2">{title}</h3>
-        <div className="text-[#E0EFE6] leading-relaxed">{children}</div>
+        <div className="text-[#444444] leading-relaxed">{children}</div>
       </div>
     </div>
   );
@@ -112,11 +112,7 @@ export default function StrategyPage() {
 
   return (
     <div
-      className="h-screen overflow-y-auto scroll-smooth"
-      style={{
-        background:
-          "radial-gradient(circle at 50% 0%, #0a331f 0%, #062516 70%)",
-      }}
+      className="h-screen overflow-y-auto scroll-smooth felt-bg"
     >
       <script
         type="application/ld+json"
@@ -147,7 +143,7 @@ export default function StrategyPage() {
 
         {/* Breadcrumbs */}
         <nav
-          className="max-w-4xl mx-auto mb-8 text-sm text-[#9EBAA8]"
+          className="max-w-4xl mx-auto mb-8 text-sm text-[#6B7280]"
           aria-label="Breadcrumb"
         >
           <ol className="flex items-center justify-center gap-2">
@@ -171,7 +167,7 @@ export default function StrategyPage() {
         >
           FreeCell Strategy Guide
         </h1>
-        <p className="text-[#9EBAA8] text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
+        <p className="text-[#6B7280] text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
           The difference between a 50% win rate and a 90%+ win rate is
           strategy. Master these techniques and you&apos;ll win nearly every
           game you play.
@@ -218,13 +214,13 @@ export default function StrategyPage() {
       <main className="max-w-3xl mx-auto px-6 sm:px-10 pb-20 flex flex-col gap-12">
         {/* Section: Fundamental Principles */}
         <section id="fundamentals" className="scroll-mt-6">
-          <div className={GLASS} style={GLASS_TOP}>
+          <div className={CARD} style={CARD_TOP}>
             <SectionHeading sub="Core Philosophy" id="fundamentals-heading">
               The Three Pillars of FreeCell Strategy
             </SectionHeading>
 
             <div className="p-6">
-              <p className="text-[#E0EFE6] leading-relaxed mb-6">
+              <p className="text-[#444444] leading-relaxed mb-6">
                 Before diving into specific tips, understand the three principles
                 that underpin every good FreeCell decision. Every strategy in this
                 guide flows from these foundational ideas.
@@ -250,11 +246,11 @@ export default function StrategyPage() {
                 ].map(({ icon, title, desc }) => (
                   <div
                     key={title}
-                    className="bg-white/[0.06] rounded-xl p-5 text-center border border-[rgba(212,175,55,0.1)]"
+                    className="bg-[#F0EDE5] rounded-xl p-5 text-center border border-[rgba(212,175,55,0.1)]"
                   >
                     <div className="text-3xl mb-2 text-[#D4AF37]">{icon}</div>
                     <h3 className="font-medium text-white mb-2">{title}</h3>
-                    <p className="text-[#9EBAA8] text-sm leading-relaxed">
+                    <p className="text-[#6B7280] text-sm leading-relaxed">
                       {desc}
                     </p>
                   </div>
@@ -266,13 +262,13 @@ export default function StrategyPage() {
 
         {/* Section: Beginner */}
         <section id="beginner" className="scroll-mt-6">
-          <div className={GLASS} style={GLASS_TOP}>
+          <div className={CARD} style={CARD_TOP}>
             <SectionHeading sub="Getting Started" id="beginner-heading">
               Beginner Strategies
             </SectionHeading>
 
             <div className="p-6">
-              <p className="text-[#E0EFE6] leading-relaxed mb-6">
+              <p className="text-[#444444] leading-relaxed mb-6">
                 If you&apos;re new to FreeCell or winning less than 60% of your
                 games, focus on mastering these four fundamental habits. They
                 will immediately improve your results.
@@ -356,13 +352,13 @@ export default function StrategyPage() {
 
         {/* Section: Intermediate */}
         <section id="intermediate" className="scroll-mt-6">
-          <div className={GLASS} style={GLASS_TOP}>
+          <div className={CARD} style={CARD_TOP}>
             <SectionHeading sub="Level Up" id="intermediate-heading">
               Intermediate Strategies
             </SectionHeading>
 
             <div className="p-6">
-              <p className="text-[#E0EFE6] leading-relaxed mb-6">
+              <p className="text-[#444444] leading-relaxed mb-6">
                 Once you&apos;re consistently winning 60%+ of your games, these
                 intermediate techniques will push your win rate toward the 80%
                 mark. These strategies require more planning but yield
@@ -449,13 +445,13 @@ export default function StrategyPage() {
 
         {/* Section: Advanced */}
         <section id="advanced" className="scroll-mt-6">
-          <div className={GLASS} style={GLASS_TOP}>
+          <div className={CARD} style={CARD_TOP}>
             <SectionHeading sub="Expert Level" id="advanced-heading">
               Advanced Techniques
             </SectionHeading>
 
             <div className="p-6">
-              <p className="text-[#E0EFE6] leading-relaxed mb-6">
+              <p className="text-[#444444] leading-relaxed mb-6">
                 These are the techniques that separate 80% win rates from 90%+.
                 They require deep board reading and careful calculation, but
                 mastering them will make you nearly unbeatable.
@@ -545,13 +541,13 @@ export default function StrategyPage() {
 
         {/* Section: Common Mistakes */}
         <section id="mistakes" className="scroll-mt-6">
-          <div className={GLASS} style={GLASS_TOP}>
+          <div className={CARD} style={CARD_TOP}>
             <SectionHeading sub="Avoid These" id="mistakes-heading">
               Common Mistakes That Cost Games
             </SectionHeading>
 
             <div className="p-6">
-              <p className="text-[#E0EFE6] leading-relaxed mb-5">
+              <p className="text-[#444444] leading-relaxed mb-5">
                 Even experienced players fall into these traps. Recognizing these
                 patterns in your own play is the fastest way to improve your
                 win rate.
@@ -586,14 +582,14 @@ export default function StrategyPage() {
                 ].map(({ title, desc }, i) => (
                   <div
                     key={i}
-                    className="flex items-start gap-3 bg-red-500/[0.08] rounded-lg p-4 border border-red-500/20"
+                    className="flex items-start gap-3 bg-red-50 rounded-lg p-4 border border-red-500/20"
                   >
                     <span className="text-red-400 font-bold text-lg shrink-0 mt-0.5">
                       {"\u2717"}
                     </span>
                     <div>
                       <h3 className="font-medium text-white mb-1">{title}</h3>
-                      <p className="text-[#9EBAA8] text-sm leading-relaxed">
+                      <p className="text-[#6B7280] text-sm leading-relaxed">
                         {desc}
                       </p>
                     </div>
@@ -606,13 +602,13 @@ export default function StrategyPage() {
 
         {/* Section: Win Rate Benchmarks */}
         <section id="benchmarks" className="scroll-mt-6">
-          <div className={GLASS} style={GLASS_TOP}>
+          <div className={CARD} style={CARD_TOP}>
             <SectionHeading sub="Track Your Progress" id="benchmarks-heading">
               Win Rate Benchmarks
             </SectionHeading>
 
             <div className="p-6">
-              <p className="text-[#E0EFE6] leading-relaxed mb-5">
+              <p className="text-[#444444] leading-relaxed mb-5">
                 Since nearly every FreeCell deal is solvable, your win rate is
                 a direct measure of your skill. Here&apos;s how to gauge your
                 progress and set realistic improvement goals.
@@ -658,7 +654,7 @@ export default function StrategyPage() {
                 ].map(({ level, range, pct, color, desc }) => (
                   <div
                     key={level}
-                    className="bg-white/[0.06] rounded-lg p-4 border border-[rgba(212,175,55,0.1)]"
+                    className="bg-[#F0EDE5] rounded-lg p-4 border border-[rgba(212,175,55,0.1)]"
                   >
                     <div className="flex items-center justify-between mb-2">
                       <h3 className="font-medium text-white">{level}</h3>
@@ -672,7 +668,7 @@ export default function StrategyPage() {
                         style={{ width: `${pct}%` }}
                       />
                     </div>
-                    <p className="text-[#9EBAA8] text-sm leading-relaxed">
+                    <p className="text-[#6B7280] text-sm leading-relaxed">
                       {desc}
                     </p>
                   </div>
@@ -685,9 +681,9 @@ export default function StrategyPage() {
         {/* ── CTA ── */}
         <section>
           <div
-            className={GLASS}
+            className={CARD}
             style={{
-              ...GLASS_TOP,
+              ...CARD_TOP,
               background:
                 "linear-gradient(135deg, rgba(10,74,42,0.6) 0%, rgba(6,37,22,0.8) 100%)",
             }}
@@ -707,12 +703,12 @@ export default function StrategyPage() {
               </div>
 
               <h2
-                className="text-2xl sm:text-3xl font-semibold text-white mb-3"
+                className="text-2xl sm:text-3xl font-semibold text-[#2D2D2D] mb-3"
                 style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
               >
                 Put These Strategies to Work
               </h2>
-              <p className="text-[#9EBAA8] mb-6 max-w-md mx-auto">
+              <p className="text-[#6B7280] mb-6 max-w-md mx-auto">
                 The best way to improve is practice. Apply these techniques in
                 your next game and watch your win rate climb.
               </p>
@@ -742,25 +738,25 @@ export default function StrategyPage() {
         </section>
 
         {/* ── Cross-links ── */}
-        <footer className="text-center text-sm text-[#9EBAA8]/60 pb-10">
+        <footer className="text-center text-sm text-[#6B7280]/60 pb-10">
           <div className="flex flex-wrap justify-center gap-4">
             <Link
               href="/how-to-play"
-              className="hover:text-[#9EBAA8] transition-colors"
+              className="hover:text-[#6B7280] transition-colors"
             >
               How to Play
             </Link>
             <span className="text-white/20">|</span>
             <Link
               href="/faq"
-              className="hover:text-[#9EBAA8] transition-colors"
+              className="hover:text-[#6B7280] transition-colors"
             >
               FAQ
             </Link>
             <span className="text-white/20">|</span>
             <Link
               href="/"
-              className="hover:text-[#9EBAA8] transition-colors"
+              className="hover:text-[#6B7280] transition-colors"
             >
               Play Free
             </Link>

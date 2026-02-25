@@ -47,22 +47,22 @@ const faqCategories: FaqCategory[] = [
       {
         question: "What is FreeCell Solitaire?",
         answer:
-          "FreeCell is a solitaire card game played with a standard 52-card deck. Unlike most solitaire games, all cards are dealt face-up from the start, making it almost entirely a game of skill rather than luck. The goal is to move all 52 cards to four foundation piles, building each suit from Ace to King. It was popularized by Microsoft when they included it in Windows 95, and it remains one of the most beloved card games in the world.",
+          "FreeCell is a solitaire card game played with a standard 52-card deck. Unlike most solitaire variants, every card is dealt face-up from the start. No luck involved, just pure skill. Your goal is to move all 52 cards to four foundation piles, building each suit from Ace to King. Microsoft bundled it with Windows 95, and it's been one of the most popular card games ever since.",
       },
       {
         question: "Is every FreeCell game winnable?",
         answer:
-          "Almost! Of the original 32,000 Microsoft FreeCell numbered deals, only one \u2014 deal #11982 \u2014 has been proven impossible to solve. Mathematically, approximately 99.999% of all randomly dealt FreeCell games have at least one solution. This is what makes FreeCell so uniquely rewarding: when you lose, it\u2019s nearly always because of a strategic mistake, not because the deal was impossible. That said, some deals are significantly harder than others, and even expert players occasionally encounter deals that require extraordinary effort to solve.",
+          "Almost. Of the original 32,000 Microsoft FreeCell numbered deals, only one (deal #11982) has been proven impossible. About 99.999% of all randomly dealt games have at least one solution. So when you lose, it's almost always a strategic mistake, not a bad deal. Some deals are definitely harder than others, though, and even expert players run into ones that take serious effort to crack.",
       },
       {
         question: "What are the free cells?",
         answer:
-          "The free cells are four empty spaces in the upper-left corner of the board. They serve as temporary storage \u2014 you can move any single exposed card to an empty free cell at any time. However, each free cell can only hold one card. The number of empty free cells directly affects how many cards you can move at once, so keeping them empty is a critical strategic priority. Think of free cells as your breathing room: the more you have available, the more complex moves you can execute.",
+          "The free cells are four empty spaces in the upper-left corner of the board. They're temporary storage. You can move any single exposed card to an empty free cell at any time, but each cell only holds one card. The number of empty free cells directly affects how many cards you can move at once, so keeping them clear is a top priority. Think of them as breathing room. The more you have open, the more complex moves you can pull off.",
       },
       {
         question: "What are the foundation piles?",
         answer:
-          "Foundation piles are the four spaces in the upper-right corner of the board. Your ultimate goal is to build each foundation from Ace to King in a single suit. Once a card is placed on a foundation, it\u2019s considered complete. When all 52 cards are on the four foundations (13 cards each, one per suit), you win the game. Most FreeCell implementations automatically move cards to foundations when it\u2019s safe to do so, saving you time.",
+          "Foundation piles are the four spaces in the upper-right corner. Your goal is to build each one from Ace to King in a single suit. Once a card lands on a foundation, it's done. When all 52 cards are on the four foundations (13 per suit), you win. Most FreeCell games auto-move cards to foundations when it's safe, which saves you time.",
       },
     ],
   },
@@ -73,27 +73,27 @@ const faqCategories: FaqCategory[] = [
       {
         question: "How is FreeCell different from Klondike (classic) solitaire?",
         answer:
-          "FreeCell and Klondike differ in several important ways. In FreeCell, all 52 cards are dealt face-up from the start \u2014 there are no hidden cards and no stock pile to draw from. This makes FreeCell almost entirely a game of skill. In Klondike, cards are partially hidden and you draw from a stock pile, introducing a significant element of luck. FreeCell also has four dedicated temporary storage spaces (free cells) that don\u2019t exist in Klondike. The win rate for FreeCell is much higher (99.999% of deals are solvable) compared to Klondike (roughly 80% of deals are solvable, and far fewer are won in practice).",
+          "The biggest difference: in FreeCell, all 52 cards are dealt face-up. No hidden cards, no stock pile to draw from, so it's almost entirely skill-based. Klondike hides cards and uses a draw pile, which adds a big luck factor. FreeCell also gives you four temporary storage spaces (free cells) that Klondike doesn't have. Win rates tell the story. 99.999% of FreeCell deals are solvable, compared to roughly 80% for Klondike (and far fewer are actually won in practice).",
       },
       {
         question: "How many cards can I move at once?",
         answer:
-          "Technically, the official FreeCell rules only allow moving one card at a time. However, most computer implementations (including ours) allow you to move an ordered sequence of cards as a shortcut \u2014 a \u2018supermove\u2019 \u2014 as long as there are enough empty free cells and empty columns to perform the individual moves theoretically. The formula is: (1 + empty free cells) \u00d7 2^(empty columns) = maximum movable cards. For example, with 2 empty free cells and 1 empty column, you can move up to 6 cards at once. With all 4 free cells empty and no empty columns, you can move 5 cards.",
+          "Technically, official FreeCell rules only let you move one card at a time. But most computer versions (including ours) let you move an ordered sequence as a shortcut, called a supermove, as long as there are enough empty free cells and columns to theoretically do the individual moves. The formula: (1 + empty free cells) \u00d7 2^(empty columns) = max movable cards. So with 2 empty free cells and 1 empty column, you can move up to 6 cards at once. With all 4 free cells empty and no empty columns, you can move 5.",
       },
       {
         question: "What\u2019s the color alternation rule?",
         answer:
-          "When building sequences on cascades (the main columns), cards must be placed in descending rank and alternating colors. For example: a red 5 can be placed on a black 6, and a black Jack can be placed on a red Queen. You cannot place a card on another card of the same color (black on black or red on red), even if the rank is correct. This rule only applies to cascade building \u2014 foundation piles are built by suit regardless of color.",
+          "When building sequences on the cascades (the main columns), cards must go in descending rank with alternating colors. A red 5 goes on a black 6. A black Jack goes on a red Queen. You can't place a card on another card of the same color, even if the rank is right. This rule only applies to cascade building. Foundation piles are built by suit regardless of color.",
       },
       {
         question: "What happens when I empty a column?",
         answer:
-          "When a cascade column is completely emptied, any card or any valid sequence of cards can be moved into it. Empty columns are extremely valuable \u2014 even more valuable than free cells \u2014 because they can hold multiple cards. Each empty column doubles the number of cards you can move in a single supermove. Experienced players treat empty columns as their most precious resource and think carefully before filling them.",
+          "When you completely empty a cascade column, you can move any card or valid sequence into it. Empty columns are incredibly valuable, even more so than free cells, because they can hold multiple cards. Each empty column doubles how many cards you can move in a single supermove. Experienced players treat empty columns as their most precious resource and think hard before filling them.",
       },
       {
         question: "What does \u2018auto-move\u2019 mean?",
         answer:
-          "Auto-move is a convenience feature where cards are automatically moved to the foundation piles when it\u2019s completely safe to do so. A card is \u2018safe\u2019 to auto-move when no other card in the cascades or free cells could possibly need to be placed on top of it. For example, if both black 3s are already on their foundations, it\u2019s safe to auto-move any red 4 because no card will ever need to go on top of a red 4 in a cascade. Auto-move saves time and reduces unnecessary clicks without affecting strategy.",
+          "Auto-move is a convenience feature that automatically sends cards to the foundation when it's completely safe. A card is safe to auto-move when nothing in the cascades or free cells could ever need to go on top of it. For example, if both black 3s are already on their foundations, any red 4 can be auto-moved safely because no card would ever need to go on a red 4 in a cascade. It saves clicks without affecting your strategy.",
       },
     ],
   },
@@ -104,22 +104,22 @@ const faqCategories: FaqCategory[] = [
       {
         question: "What is a good FreeCell win percentage?",
         answer:
-          "Win rates vary significantly by experience level. Beginners typically win 30\u201350% of their games. Intermediate players who understand the basic strategies win 65\u201380%. Advanced players consistently achieve 80\u201390%. Expert players \u2014 those who have fully mastered opening analysis, supermove calculation, and cascade management \u2014 can reach 90\u201395% or higher. Since almost every deal is solvable, your win rate is a direct measure of your strategic skill, making FreeCell an excellent game for tracking personal improvement over time.",
+          "It depends on your experience. Beginners typically win 30-50% of their games. Intermediate players who know the basics hit 65-80%. Advanced players land in the 80-90% range. Experts who've mastered opening analysis, supermove math, and cascade management can reach 90-95% or higher. Since nearly every deal is solvable, your win rate is a direct reflection of your skill. It's a great way to track your progress.",
       },
       {
         question: "What\u2019s the single most important FreeCell strategy?",
         answer:
-          "If we had to pick one tip, it would be: keep your free cells and empty columns as clear as possible. Everything in FreeCell flows from having available space. The supermove formula directly depends on empty spaces, and every occupied free cell or filled column reduces your ability to execute complex moves. Experienced players constantly ask themselves: \u2018How can I accomplish this while using the fewest temporary spaces?\u2019 Treating empty spaces as your most valuable resource is the single change that improves win rates the most.",
+          "Keep your free cells and empty columns as clear as possible. Everything in FreeCell flows from having open space. The supermove formula depends directly on empty spaces, and every occupied cell or filled column limits what you can do. Good players are constantly asking themselves: 'How do I pull this off while using the fewest temporary spaces?' Treating empty spaces as your most valuable resource is the single biggest thing you can do to win more games.",
       },
       {
         question: "Should I always move Aces to the foundation immediately?",
         answer:
-          "Yes \u2014 there is never a reason not to move an Ace to the foundation. An Ace cannot have any card placed on top of it in a cascade (it\u2019s the lowest rank), so it can never be useful in the tableau. The same applies to 2s once their corresponding Ace is on the foundation. Moving low cards to the foundation early frees up space and starts the chain of building that will eventually win the game. Our game auto-moves these cards for you when they\u2019re safe to play.",
+          "Yes, always. An Ace can't have any card placed on top of it in a cascade (it's the lowest rank), so it's never useful sitting in the tableau. Same goes for 2s once their matching Ace is on the foundation. Moving low cards up early frees space and starts the chain of building that wins the game. Our game auto-moves these cards for you when they're safe to play.",
       },
       {
         question: "How do I get better at FreeCell?",
         answer:
-          "The fastest path to improvement involves three habits. First, always scan the entire board before making your first move \u2014 locate the Aces, identify buried low cards, and spot potential empty columns. Second, use the undo button freely to explore different move sequences without committing. This builds intuition faster than anything else. Third, keep your free cells and empty columns clear as long as possible. These three habits alone can move a beginner from a 40% win rate to 70%+ within a few weeks of regular play. For more detailed strategies, check out our comprehensive Strategy Guide.",
+          "Focus on three habits. First, scan the entire board before your first move. Find the Aces, spot buried low cards, and look for potential empty columns. Second, use undo freely to explore different move sequences without committing. This builds intuition faster than anything else. Third, keep your free cells and empty columns clear as long as possible. These three habits alone can take you from a 40% win rate to 70%+ within a few weeks. For more depth, check out our Strategy Guide.",
       },
     ],
   },
@@ -130,22 +130,22 @@ const faqCategories: FaqCategory[] = [
       {
         question: "Does the deal number matter?",
         answer:
-          "Yes! Each deal number produces a specific, reproducible arrangement of cards. This means you can share a deal number with friends and compete on the exact same layout. It also means you can retry a specific deal if you want to find a better solution or improve your approach. Our deals #1 through #32,000 use the same algorithm as the original Microsoft FreeCell, so they produce identical card layouts. This compatibility means you can look up known solutions and difficulty ratings for specific deal numbers.",
+          "Yes. Each deal number produces a specific arrangement of cards. You can share a number with friends and compete on the exact same layout, or retry a deal to find a better solution. Our deals #1 through #32,000 use the same algorithm as the original Microsoft FreeCell, so the card layouts are identical. You can look up known solutions and difficulty ratings for any of those deal numbers.",
       },
       {
         question: "Can I play FreeCell on my phone?",
         answer:
-          "Absolutely! PlayFreeCellOnline.com is designed to work beautifully on any device \u2014 desktop, tablet, or mobile phone. The interface automatically adapts to your screen size for optimal gameplay. It\u2019s also a Progressive Web App (PWA), which means you can install it directly to your home screen for an app-like experience with no download required from any app store. Just visit the site in your mobile browser and use the \u2018Add to Home Screen\u2019 option.",
+          "Yes. PlayFreeCellOnline.com works on any device: desktop, tablet, or phone. The interface adapts to your screen size automatically. It's also a Progressive Web App (PWA), so you can install it to your home screen for an app-like experience. No app store download needed. Just visit the site in your mobile browser and tap 'Add to Home Screen.'",
       },
       {
         question: "Is this game really free?",
         answer:
-          "Yes, completely free. There\u2019s no premium version, no pay-to-win mechanics, no locking features behind a paywall, and no required account creation. You can play unlimited games with full access to all features \u2014 undo, hints, deal selection, and more \u2014 without spending a cent. We believe the best card games should be accessible to everyone.",
+          "Yes, 100% free. No premium version, no pay-to-win, no features locked behind a paywall, and no account required. You get unlimited games with full access to everything: undo, hints, deal selection, all of it. We think the best card games should be available to everyone.",
       },
       {
         question: "Does the game work offline?",
         answer:
-          "Yes! Because PlayFreeCellOnline.com is a Progressive Web App, it works offline after your first visit. The game is cached in your browser, so you can play even when you don\u2019t have an internet connection \u2014 perfect for flights, commutes, or anywhere with spotty WiFi. Just make sure to visit the site at least once while connected to the internet so the game files can be downloaded and cached.",
+          "Yes. Since PlayFreeCellOnline.com is a Progressive Web App, it works offline after your first visit. The game gets cached in your browser, so you can play without an internet connection. Great for flights, commutes, or anywhere with bad WiFi. Just visit the site once while you're connected so the game files can download.",
       },
     ],
   },
@@ -229,8 +229,8 @@ export default function FAQPage() {
           Frequently Asked Questions
         </h1>
         <p className="text-[#6B7280] text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
-          Everything you need to know about FreeCell Solitaire — from basic
-          rules to advanced strategy and our game features.
+          Your questions about FreeCell Solitaire, answered. Rules, strategy,
+          and game features all covered.
         </p>
 
         {/* Gold divider */}
@@ -329,9 +329,9 @@ export default function FAQPage() {
               </h2>
               <div className="card-title-separator mx-auto max-w-[120px] mb-5" />
               <p className="text-[#5a5a5a] mb-5 max-w-lg mx-auto leading-relaxed">
-                The best way to learn FreeCell is to play. Start a game and
-                experiment — use undo freely, try different approaches, and
-                you&apos;ll develop intuition faster than any guide can teach.
+                The best way to learn FreeCell is to play. Start a game,
+                experiment, use undo freely, and try different approaches.
+                You&apos;ll build intuition faster than any guide can teach.
               </p>
               <div className="flex flex-wrap justify-center gap-3 text-sm">
                 <Link
@@ -381,8 +381,8 @@ export default function FAQPage() {
                 Ready to Play?
               </h2>
               <p className="text-white/60 mb-6 max-w-md mx-auto">
-                Now that you know everything about FreeCell, put your knowledge
-                to the test. Every deal is waiting to be solved.
+                You&apos;ve got the knowledge. Time to put it to work. Every deal
+                is waiting to be solved.
               </p>
 
               <Link

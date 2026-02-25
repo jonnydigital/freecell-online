@@ -77,18 +77,7 @@ export default function HomeOverlay({
             aria-hidden="true"
           />
 
-          {/* Shimmer animation */}
-          <style jsx global>{`
-            @keyframes shimmer {
-              0% { background-position: -1000px 0; }
-              100% { background-position: 1000px 0; }
-            }
-            .shimmer-button {
-              background: linear-gradient(to right, #D4AF37 40%, #ffdf70 50%, #D4AF37 60%);
-              background-size: 2000px 100%;
-              animation: shimmer 3s linear infinite;
-            }
-          `}</style>
+          {/* Shimmer styles defined in globals.css */}
 
           {/* Overlay Panel */}
           <motion.div

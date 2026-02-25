@@ -90,20 +90,32 @@ export default function GameShell() {
       // Wait for container to have dimensions (mobile can be slow to layout)
       const container = containerRef.current;
       let attempts = 0;
-      while ((container.clientWidth === 0 || container.clientHeight === 0) && attempts < 20) {
+      while ((container.clientWidth === 0 || container.clientHeight === 0) && attempts < 50) {
         await new Promise(r => setTimeout(r, 100));
         attempts++;
       }
+
+      console.log(`[FreeCell] Container: ${container.clientWidth}x${container.clientHeight} after ${attempts} attempts`);
+
       if (container.clientWidth === 0 || container.clientHeight === 0) {
-        console.error('Game container has zero dimensions after waiting');
-        return;
+        console.error('[FreeCell] Container has zero dimensions — cannot init Phaser');
+        // Force dimensions as fallback
+        container.style.width = '100vw';
+        container.style.height = '100vh';
+        await new Promise(r => setTimeout(r, 200));
+        console.log(`[FreeCell] Forced dimensions: ${container.clientWidth}x${container.clientHeight}`);
       }
 
-      const Phaser = await import('phaser');
-      const { createPhaserConfig } = await import('../game/PhaserConfig');
+      try {
+        const Phaser = await import('phaser');
+        const { createPhaserConfig } = await import('../game/PhaserConfig');
 
-      const config = createPhaserConfig(container);
-      gameRef.current = new Phaser.Game(config);
+        const config = createPhaserConfig(container);
+        gameRef.current = new Phaser.Game(config);
+        console.log('[FreeCell] Phaser game created');
+      } catch (err) {
+        console.error('[FreeCell] Phaser init error:', err);
+      }
     };
 
     initPhaser();

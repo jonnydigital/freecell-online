@@ -283,7 +283,7 @@ export default function FAQPage() {
             >
               <div className="card-panel">
                 {/* Category heading — integrated into card body */}
-                <div className="px-8 sm:px-10 pt-8 sm:pt-10 pb-0">
+                <div className="px-8 sm:px-10 pt-8 pb-0">
                   <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#B8860B]/60 mb-1.5 block">
                     {category.title}
                   </span>

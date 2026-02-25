@@ -174,24 +174,26 @@ body {
 /* Card container — looks like a playing card resting on felt */
 .card-panel {
   background: #faf6f0;
-  border-radius: 1rem;
-  border: 1px solid rgba(212, 197, 160, 0.6);
+  border-radius: 1.25rem;
+  border: 1px solid rgba(212, 197, 160, 0.7);
   box-shadow:
-    0 10px 20px rgba(0, 0, 0, 0.2),
-    0 3px 6px rgba(0, 0, 0, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    0 2px 4px rgba(0, 0, 0, 0.2),
+    0 8px 20px rgba(0, 0, 0, 0.22),
+    0 20px 48px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
   position: relative;
   overflow: hidden;
   z-index: 1;
+  padding: 0;
 }
 
 /* Inner decorative border — mimics the printed border on real playing cards */
 .card-panel::after {
   content: '';
   position: absolute;
-  inset: 6px;
-  border: 1px solid rgba(201, 185, 122, 0.25);
-  border-radius: 0.75rem;
+  inset: 8px;
+  border: 1px solid rgba(201, 185, 122, 0.35);
+  border-radius: 1rem;
   pointer-events: none;
   z-index: 10;
 }

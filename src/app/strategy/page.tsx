@@ -39,25 +39,34 @@ function SectionHeading({
   children,
   id,
   sub,
+  icon,
 }: {
   children: React.ReactNode;
   id?: string;
   sub?: string;
+  icon?: string;
 }) {
+  const isRedSuit = icon === "\u2665" || icon === "\u2666";
   return (
-    <div className="bg-gradient-to-r from-[#0a3d1e] to-[#1a5c35] px-8 sm:px-10 py-4 ">
+    <div className="px-8 sm:px-10 pt-8 sm:pt-10 pb-0">
       {sub && (
-        <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#D4AF37]/80 mb-1 block">
+        <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#B8860B]/60 mb-1.5 block">
           {sub}
         </span>
       )}
       <h2
         id={id}
-        className="text-2xl sm:text-3xl font-semibold text-white"
+        className="text-2xl sm:text-3xl font-bold text-[#2a2522]"
         style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
       >
+        {icon && (
+          <span className={`mr-2 ${isRedSuit ? "text-red-500" : "text-[#c9a84c]"}`}>
+            {icon}
+          </span>
+        )}
         {children}
       </h2>
+      <div className="card-title-separator mt-5" />
     </div>
   );
 }
@@ -86,7 +95,7 @@ function StrategyCard({
         {number}
       </div>
       <div className="flex-1">
-        <h3 className="font-medium text-white text-lg mb-2">{title}</h3>
+        <h3 className="font-medium text-[#2a2522] text-lg mb-2">{title}</h3>
         <div className="text-[#444444] leading-relaxed">{children}</div>
       </div>
     </div>
@@ -215,7 +224,7 @@ export default function StrategyPage() {
         {/* Section: Fundamental Principles */}
         <section id="fundamentals" className="scroll-mt-6">
           <div className={CARD} style={CARD_TOP}>
-            <SectionHeading sub="Core Philosophy" id="fundamentals-heading">
+            <SectionHeading sub="Core Philosophy" id="fundamentals-heading" icon={"\u2660"}>
               The Three Pillars of FreeCell Strategy
             </SectionHeading>
 
@@ -249,7 +258,7 @@ export default function StrategyPage() {
                     className="bg-[#F0EDE5] rounded-xl p-5 text-center border border-[rgba(212,175,55,0.1)]"
                   >
                     <div className="text-3xl mb-2 text-[#D4AF37]">{icon}</div>
-                    <h3 className="font-medium text-white mb-2">{title}</h3>
+                    <h3 className="font-medium text-[#2a2522] mb-2">{title}</h3>
                     <p className="text-[#6B7280] text-sm leading-relaxed">
                       {desc}
                     </p>
@@ -263,7 +272,7 @@ export default function StrategyPage() {
         {/* Section: Beginner */}
         <section id="beginner" className="scroll-mt-6">
           <div className={CARD} style={CARD_TOP}>
-            <SectionHeading sub="Getting Started" id="beginner-heading">
+            <SectionHeading sub="Getting Started" id="beginner-heading" icon={"\u2665"}>
               Beginner Strategies
             </SectionHeading>
 
@@ -353,7 +362,7 @@ export default function StrategyPage() {
         {/* Section: Intermediate */}
         <section id="intermediate" className="scroll-mt-6">
           <div className={CARD} style={CARD_TOP}>
-            <SectionHeading sub="Level Up" id="intermediate-heading">
+            <SectionHeading sub="Level Up" id="intermediate-heading" icon={"\u2666"}>
               Intermediate Strategies
             </SectionHeading>
 
@@ -446,7 +455,7 @@ export default function StrategyPage() {
         {/* Section: Advanced */}
         <section id="advanced" className="scroll-mt-6">
           <div className={CARD} style={CARD_TOP}>
-            <SectionHeading sub="Expert Level" id="advanced-heading">
+            <SectionHeading sub="Expert Level" id="advanced-heading" icon={"\u2663"}>
               Advanced Techniques
             </SectionHeading>
 
@@ -542,7 +551,7 @@ export default function StrategyPage() {
         {/* Section: Common Mistakes */}
         <section id="mistakes" className="scroll-mt-6">
           <div className={CARD} style={CARD_TOP}>
-            <SectionHeading sub="Avoid These" id="mistakes-heading">
+            <SectionHeading sub="Avoid These" id="mistakes-heading" icon={"\u2660"}>
               Common Mistakes That Cost Games
             </SectionHeading>
 
@@ -588,7 +597,7 @@ export default function StrategyPage() {
                       {"\u2717"}
                     </span>
                     <div>
-                      <h3 className="font-medium text-white mb-1">{title}</h3>
+                      <h3 className="font-medium text-[#2a2522] mb-1">{title}</h3>
                       <p className="text-[#6B7280] text-sm leading-relaxed">
                         {desc}
                       </p>
@@ -603,7 +612,7 @@ export default function StrategyPage() {
         {/* Section: Win Rate Benchmarks */}
         <section id="benchmarks" className="scroll-mt-6">
           <div className={CARD} style={CARD_TOP}>
-            <SectionHeading sub="Track Your Progress" id="benchmarks-heading">
+            <SectionHeading sub="Track Your Progress" id="benchmarks-heading" icon={"\u2665"}>
               Win Rate Benchmarks
             </SectionHeading>
 
@@ -657,7 +666,7 @@ export default function StrategyPage() {
                     className="bg-[#F0EDE5] rounded-lg p-4 border border-[rgba(212,175,55,0.1)]"
                   >
                     <div className="flex items-center justify-between mb-2">
-                      <h3 className="font-medium text-white">{level}</h3>
+                      <h3 className="font-medium text-[#2a2522]">{level}</h3>
                       <span className="text-sm font-bold text-[#D4AF37]">
                         {range}
                       </span>
@@ -703,7 +712,7 @@ export default function StrategyPage() {
               </div>
 
               <h2
-                className="text-2xl sm:text-3xl font-semibold text-[#2D2D2D] mb-3"
+                className="text-2xl sm:text-3xl font-semibold text-white mb-3"
                 style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
               >
                 Put These Strategies to Work

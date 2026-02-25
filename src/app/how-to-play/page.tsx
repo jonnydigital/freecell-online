@@ -69,11 +69,14 @@ function SectionHeading({
   children,
   id,
   sub,
+  icon,
 }: {
   children: React.ReactNode;
   id?: string;
   sub?: string;
+  icon?: string;
 }) {
+  const isRedSuit = icon === "\u2665" || icon === "\u2666";
   return (
     <div className="px-8 sm:px-10 md:px-12 pt-8 sm:pt-10 pb-0">
       {sub && (
@@ -86,6 +89,11 @@ function SectionHeading({
         className="text-2xl sm:text-3xl font-bold text-[#2a2522]"
         style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
       >
+        {icon && (
+          <span className={`mr-2 ${isRedSuit ? "text-red-500" : "text-[#c9a84c]"}`}>
+            {icon}
+          </span>
+        )}
         {children}
       </h2>
       <div className="card-title-separator mt-5" />
@@ -436,7 +444,7 @@ export default function HowToPlayPage() {
         {/* Section 1: What is FreeCell? */}
         <section id="what-is-freecell" className="scroll-mt-6">
           <div className="card-panel">
-            <SectionHeading sub="Introduction" id="what-is-freecell-heading">
+            <SectionHeading sub="Introduction" id="what-is-freecell-heading" icon={"\u2660"}>
               What is FreeCell Solitaire?
             </SectionHeading>
 
@@ -461,7 +469,7 @@ export default function HowToPlayPage() {
               </p>
 
               {/* Pull-quote callout */}
-              <div className="border-l-4 border-[#c9a84c] pl-5 py-2 my-2">
+              <div className="border-l-4 border-[#c9a84c] pl-5 py-2 my-8">
                 <p className="text-[#2a2522] leading-[1.75] italic" style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}>
                   Nearly every deal is solvable. Of the original 32,000 Microsoft FreeCell deals, only one — deal #11982 — has been proven impossible.
                 </p>
@@ -486,7 +494,7 @@ export default function HowToPlayPage() {
         {/* Section 2: The Board */}
         <section id="the-board" className="scroll-mt-6">
           <div className="card-panel">
-            <SectionHeading sub="Board Layout" id="the-board-heading">
+            <SectionHeading sub="Board Layout" id="the-board-heading" icon={"\u2665"}>
               Understanding the Game Board
             </SectionHeading>
 
@@ -552,7 +560,7 @@ export default function HowToPlayPage() {
         {/* Section 3: Setup */}
         <section id="setup" className="scroll-mt-6">
           <div className="card-panel">
-            <SectionHeading sub="Getting Started" id="setup-heading">
+            <SectionHeading sub="Getting Started" id="setup-heading" icon={"\u2666"}>
               How the Game is Set Up
             </SectionHeading>
 
@@ -599,7 +607,7 @@ export default function HowToPlayPage() {
               </p>
 
               {/* Pull-quote callout */}
-              <div className="border-l-4 border-[#c9a84c] pl-5 py-2">
+              <div className="border-l-4 border-[#c9a84c] pl-5 py-2 my-8">
                 <p className="text-[#2a2522] leading-[1.75] italic" style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}>
                   Each game is identified by a unique deal number. Our deals #1 through #32,000 are fully compatible with the original Microsoft FreeCell.
                 </p>
@@ -622,7 +630,7 @@ export default function HowToPlayPage() {
         {/* Section 4: Rules */}
         <section id="rules" className="scroll-mt-6">
           <div className="card-panel">
-            <SectionHeading sub="The Rules" id="rules-heading">
+            <SectionHeading sub="The Rules" id="rules-heading" icon={"\u2663"}>
               Rules of Play
             </SectionHeading>
 
@@ -769,7 +777,7 @@ export default function HowToPlayPage() {
         {/* Section 5: Supermoves */}
         <section id="supermoves" className="scroll-mt-6">
           <div className="card-panel">
-            <SectionHeading sub="Advanced Mechanic" id="supermoves-heading">
+            <SectionHeading sub="Advanced Mechanic" id="supermoves-heading" icon={"\u2660"}>
               Understanding Supermoves
             </SectionHeading>
 
@@ -794,7 +802,7 @@ export default function HowToPlayPage() {
               </p>
 
               {/* Pull-quote callout */}
-              <div className="border-l-4 border-[#c9a84c] pl-5 py-2">
+              <div className="border-l-4 border-[#c9a84c] pl-5 py-2 my-8">
                 <p className="text-[#2a2522] leading-[1.75] italic" style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}>
                   Before attempting a multi-card move, quickly count your empty spaces to make sure the move is actually possible.
                 </p>
@@ -818,6 +826,7 @@ export default function HowToPlayPage() {
             <SectionHeading
               sub="Step-by-Step Walkthrough"
               id="first-game-heading"
+              icon={"\u2665"}
             >
               Playing Your First Game
             </SectionHeading>
@@ -957,7 +966,7 @@ export default function HowToPlayPage() {
         {/* Section 7: How to Win */}
         <section id="winning" className="scroll-mt-6">
           <div className="card-panel">
-            <SectionHeading sub="Victory" id="winning-heading">
+            <SectionHeading sub="Victory" id="winning-heading" icon={"\u2666"}>
               How to Win at FreeCell
             </SectionHeading>
 
@@ -1018,7 +1027,7 @@ export default function HowToPlayPage() {
         {/* Section 8: Terminology */}
         <section id="terminology" className="scroll-mt-6">
           <div className="card-panel">
-            <SectionHeading sub="Glossary" id="terminology-heading">
+            <SectionHeading sub="Glossary" id="terminology-heading" icon={"\u2663"}>
               Key FreeCell Terminology
             </SectionHeading>
 
@@ -1082,7 +1091,7 @@ export default function HowToPlayPage() {
         {/* Section 9: Quick Tips */}
         <section id="tips" className="scroll-mt-6">
           <div className="card-panel">
-            <SectionHeading sub="Pro Tips" id="tips-heading">
+            <SectionHeading sub="Pro Tips" id="tips-heading" icon={"\u2660"}>
               Quick Tips for Beginners
             </SectionHeading>
 

@@ -504,14 +504,13 @@ export class FreeCellScene extends Phaser.Scene {
             -hitOffsetX, -hitOffsetY, hitWidth, hitHeight
           );
         } else {
-          // Buried card: only a thin strip is visible (the overlap amount)
+          // Buried card: only the visible overlap strip is clickable
           const visibleHeight = this.getCurrentOverlap();
 
-          // Expand the hit area slightly for easier tapping, minimum 44px
-          const hitHeight = Math.max(visibleHeight + 10, 44);
-          const hitWidth = this.cardWidth + 10;
+          // Hit area matches visible area exactly — no expansion that could
+          // bleed into the card below and cause mis-selection
           sprite.input.hitArea = new Phaser.Geom.Rectangle(
-            -5, -5, hitWidth, hitHeight
+            0, 0, this.cardWidth, visibleHeight
           );
         }
       }

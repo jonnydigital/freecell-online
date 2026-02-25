@@ -58,7 +58,17 @@ export default function RootLayout({
             __html: `
               if ('serviceWorker' in navigator) {
                 window.addEventListener('load', () => {
-                  navigator.serviceWorker.register('/sw.js').catch(() => {});
+                  navigator.serviceWorker.register('/sw.js').then(function(reg) {
+                    // Check for updates every 60 seconds
+                    setInterval(function() { reg.update(); }, 60000);
+                  }).catch(function() {});
+
+                  // Listen for SW_UPDATED message — auto-reload when new version lands
+                  navigator.serviceWorker.addEventListener('message', function(event) {
+                    if (event.data && event.data.type === 'SW_UPDATED') {
+                      window.location.reload();
+                    }
+                  });
                 });
               }
             `,

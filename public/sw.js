@@ -1,6 +1,6 @@
 // Service Worker — FreeCell Online
-// Strategy: Network-first for everything except card images
-// This ensures users always get the latest code on deploy
+// Network-first for code, cache-first for card images
+// Posts 'SW_UPDATED' to clients when a new version activates
 
 const CACHE_NAME = 'freecell-v2';
 
@@ -10,7 +10,7 @@ const PRECACHE_URLS = [
   '/icons/icon.svg',
 ];
 
-// Install: precache essential assets, immediately take over
+// Install: precache essentials, skip waiting to activate immediately
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => cache.addAll(PRECACHE_URLS))
@@ -18,14 +18,19 @@ self.addEventListener('install', (event) => {
   self.skipWaiting();
 });
 
-// Activate: clean ALL old caches, claim clients immediately
+// Activate: purge old caches, notify all clients to reload
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then((keys) =>
-      Promise.all(keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k)))
-    )
+    caches.keys()
+      .then((keys) => Promise.all(keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k))))
+      .then(() => self.clients.claim())
+      .then(() => {
+        // Notify all open tabs that an update landed
+        return self.clients.matchAll({ type: 'window' }).then((clients) => {
+          clients.forEach((client) => client.postMessage({ type: 'SW_UPDATED' }));
+        });
+      })
   );
-  self.clients.claim();
 });
 
 // Fetch handler
@@ -33,13 +38,10 @@ self.addEventListener('fetch', (event) => {
   const { request } = event;
   const url = new URL(request.url);
 
-  // Skip non-GET and external
   if (request.method !== 'GET' || url.origin !== self.location.origin) return;
-
-  // Skip API routes entirely
   if (url.pathname.startsWith('/api/')) return;
 
-  // Card images: cache-first (large files, rarely change)
+  // Card images: cache-first (large, rarely change)
   if (url.pathname.startsWith('/cards/')) {
     event.respondWith(
       caches.match(request).then((cached) => {
@@ -56,7 +58,7 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Everything else: network-first (always get latest code)
+  // Everything else: network-first
   event.respondWith(
     fetch(request)
       .then((response) => {

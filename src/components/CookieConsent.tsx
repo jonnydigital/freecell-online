@@ -11,7 +11,19 @@ export default function CookieConsent() {
     try {
       const consent = localStorage.getItem(CONSENT_KEY);
       if (!consent) {
-        requestAnimationFrame(() => setVisible(true));
+        // Wait until splash screen is dismissed before showing cookie banner
+        // Splash sets 'skipSplash' in localStorage when dismissed
+        const checkSplash = () => {
+          const splashDone = !!localStorage.getItem('skipSplash');
+          if (splashDone) {
+            requestAnimationFrame(() => setVisible(true));
+          } else {
+            // Check again in 500ms
+            setTimeout(checkSplash, 500);
+          }
+        };
+        // Small initial delay to avoid flicker
+        setTimeout(checkSplash, 300);
       } else if (consent === 'accepted') {
         loadAdSense();
       }

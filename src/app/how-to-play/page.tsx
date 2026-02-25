@@ -83,7 +83,7 @@ function SectionHeading({
   sub?: string;
 }) {
   return (
-    <div className="bg-gradient-to-r from-[#0a3d1e] to-[#1a5c35] px-8 sm:px-10 py-4 rounded-t-[1rem]">
+    <div className="bg-gradient-to-r from-[#0a3d1e] to-[#1a5c35] px-8 sm:px-10 py-4 ">
       {sub && (
         <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#D4AF37]/80 mb-1 block">
           {sub}
@@ -409,7 +409,7 @@ export default function HowToPlayPage() {
       </header>
 
       {/* ── Table of Contents ── */}
-      <nav className="max-w-3xl mx-auto px-6 sm:px-10 mb-12">
+      <nav className="max-w-4xl mx-auto px-6 sm:px-10 lg:px-12 mb-12">
         <div className="flex md:flex-wrap md:justify-center gap-3 overflow-x-auto no-scrollbar pb-1">
           {[
             ["#what-is-freecell", "\u2660", "What is FreeCell?"],
@@ -439,7 +439,7 @@ export default function HowToPlayPage() {
       </nav>
 
       {/* ── Content ── */}
-      <main className="max-w-3xl mx-auto px-6 sm:px-10 pb-20 flex flex-col gap-12">
+      <main className="max-w-4xl mx-auto px-6 sm:px-10 lg:px-12 pb-20 flex flex-col gap-12">
         {/* Section 1: What is FreeCell? */}
         <section id="what-is-freecell" className="scroll-mt-6">
           <div className={CARD} style={CARD_TOP}>

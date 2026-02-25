@@ -18,6 +18,7 @@ interface HomeOverlayProps {
   onToggleMute: () => void;
   onFeedback: () => void;
   onShowShortcuts: () => void;
+  onAchievements?: () => void;
 }
 
 export default function HomeOverlay({
@@ -29,6 +30,7 @@ export default function HomeOverlay({
   onToggleMute,
   onFeedback,
   onShowShortcuts,
+  onAchievements,
 }: HomeOverlayProps) {
   const todaySeed = getTodaysSeed();
   const todayStr = getTodayStr();
@@ -216,8 +218,8 @@ export default function HomeOverlay({
                 {/* Theme Selector */}
                 <ThemeSelector />
 
-                {/* Content Links */}
-                <div className="grid grid-cols-3 gap-2 text-center">
+                {/* Content Links + Achievements */}
+                <div className="grid grid-cols-4 gap-2 text-center">
                   <a href="/how-to-play" className="flex flex-col items-center gap-1.5 p-3 rounded-xl hover:bg-black/20 transition-colors">
                     <HelpCircle size={22} className="text-[#D4AF37]" />
                     <span className="text-xs text-white/70">How to Play</span>
@@ -230,6 +232,10 @@ export default function HomeOverlay({
                     <MessageSquare size={22} className="text-[#D4AF37]" />
                     <span className="text-xs text-white/70">FAQ</span>
                   </a>
+                  <button onClick={() => { if (onAchievements) onAchievements(); onClose(); }} className="flex flex-col items-center gap-1.5 p-3 rounded-xl hover:bg-black/20 transition-colors">
+                    <Trophy size={22} className="text-[#D4AF37]" />
+                    <span className="text-xs text-white/70">Badges</span>
+                  </button>
                 </div>
 
                 {/* Settings */}

@@ -186,6 +186,56 @@ export class FreeCellScene extends Phaser.Scene {
     gameBridge.on('hint', () => this.showHint());
     gameBridge.on('autoFinish', () => this.performAutoFinish());
 
+    gameBridge.on('requestElementPosition', (elementKey: unknown) => {
+      if (typeof elementKey !== 'string') return;
+
+      let rect = { x: 0, y: 0, width: 0, height: 0 };
+
+      switch (elementKey) {
+        case 'freecells': {
+          const pos0 = this.getFreeCellPosition(0);
+          const pos3 = this.getFreeCellPosition(3);
+          rect = {
+            x: pos0.x,
+            y: pos0.y,
+            width: (pos3.x + this.cardWidth) - pos0.x,
+            height: this.cardHeight,
+          };
+          break;
+        }
+        case 'foundations': {
+          const pos0 = this.getFoundationPosition(0);
+          const pos3 = this.getFoundationPosition(3);
+          rect = {
+            x: pos0.x,
+            y: pos0.y,
+            width: (pos3.x + this.cardWidth) - pos0.x,
+            height: this.cardHeight,
+          };
+          break;
+        }
+        case 'tableau': {
+          const pos0 = this.getCascadeCardPosition(0, 0);
+          const pos7 = this.getCascadeCardPosition(7, 0);
+          rect = {
+            x: pos0.x,
+            y: pos0.y,
+            width: (pos7.x + this.cardWidth) - pos0.x,
+            height: this.scale.height - pos0.y,
+          };
+          break;
+        }
+      }
+      
+      // Adjust for canvas offset if the canvas is not at 0,0 of the page
+      const canvas = this.game.canvas;
+      const canvasRect = canvas.getBoundingClientRect();
+      rect.x += canvasRect.left;
+      rect.y += canvasRect.top;
+
+      gameBridge.emit('elementPositionResponse', { key: elementKey, rect });
+    });
+
     if (this.isTouchDevice) {
       // Mobile: zone-based tap input (no per-card hit detection)
       this.setupTouchInput();

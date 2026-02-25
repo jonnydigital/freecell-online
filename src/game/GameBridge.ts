@@ -14,7 +14,8 @@ export type UIToGameEvent =
   | 'hint'
   | 'restart'
   | 'settings'
-  | 'autoFinish';
+  | 'autoFinish'
+  | 'requestElementPosition';
 
 export type GameToUIEvent =
   | 'moveExecuted'
@@ -25,7 +26,8 @@ export type GameToUIEvent =
   | 'gameReady'
   | 'hintResult'
   | 'autoCompletable'
-  | 'error';
+  | 'error'
+  | 'elementPositionResponse';
 
 export type BridgeEvent = UIToGameEvent | GameToUIEvent;
 

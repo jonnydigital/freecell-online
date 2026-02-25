@@ -6,7 +6,8 @@ import { GameStats, createEmptyStats, recordWin, recordLoss } from '../lib/stats
 import { loadStats, saveStats } from '../lib/storage';
 import { trackGameStart, trackWin, trackAbandoned, trackHint, trackUndo, trackMove, trackDeadlock, gameSession } from '../lib/analytics';
 import { initErrorTracking, setGameContext } from '../lib/errorTracking';
-import { getTodaysSeed, getTodayStr, recordDailyCompletion } from '../lib/dailyChallenge';
+import { getTodaysSeed, getTodayStr, recordDailyCompletion, isTodayCompleted } from '../lib/dailyChallenge';
+import { BookOpen, HelpCircle, Swords, Info } from 'lucide-react';
 import { RotateCcw, RotateCw, Lightbulb, BarChart3, MessageSquare, Shuffle, Calendar, Hash, Volume2, VolumeX, MoreHorizontal } from 'lucide-react';
 import StatsPanel from './StatsPanel';
 import FeedbackModal from './FeedbackModal';
@@ -32,10 +33,12 @@ export default function GameShell() {
   const [isMuted, setIsMuted] = useState(() => soundManager.muted);
   const [showMoreMenu, setShowMoreMenu] = useState(false);
   const [isLandscapeMobile, setIsLandscapeMobile] = useState(false);
+  const [dailyCompleted, setDailyCompleted] = useState(true); // assume completed until checked
 
   // Load stats on mount
   useEffect(() => {
     setStats(loadStats());
+    setDailyCompleted(isTodayCompleted());
     initErrorTracking();
   }, []);
 
@@ -137,6 +140,7 @@ export default function GameShell() {
     if (isWon && isDailyGame && winDataRef.current) {
       const todayStr = getTodayStr();
       recordDailyCompletion(todayStr, winDataRef.current.moves, winDataRef.current.time);
+      setDailyCompleted(true);
     }
   }, [isWon, isDailyGame]);
 
@@ -318,9 +322,12 @@ export default function GameShell() {
           <Shuffle size={22} />
           <span className="text-[10px]">New</span>
         </button>
-        <button onClick={() => setShowDaily(true)} className="flex flex-col items-center gap-0.5 p-2 text-yellow-400/80 active:text-yellow-400" title="Daily">
+        <button onClick={() => setShowDaily(true)} className="relative flex flex-col items-center gap-0.5 p-2 text-yellow-400/80 active:text-yellow-400" title="Daily Challenge">
           <Calendar size={22} />
           <span className="text-[10px]">Daily</span>
+          {!dailyCompleted && (
+            <span className="absolute top-1 right-1 w-2.5 h-2.5 bg-red-500 rounded-full animate-pulse" />
+          )}
         </button>
         <button onClick={handleUndo} className="flex flex-col items-center gap-0.5 p-2 text-white/70 active:text-white" title="Undo">
           <RotateCcw size={22} />
@@ -359,6 +366,28 @@ export default function GameShell() {
                 <MessageSquare size={16} />
                 Feedback
               </button>
+              <div className="border-t border-[#1a5c1a]/30" />
+              <a
+                href="/how-to-play"
+                className="flex items-center gap-3 w-full px-4 py-3 text-sm text-white/80 hover:bg-[#1a5c1a]/40 active:bg-[#1a5c1a]/60"
+              >
+                <BookOpen size={16} />
+                How to Play
+              </a>
+              <a
+                href="/strategy"
+                className="flex items-center gap-3 w-full px-4 py-3 text-sm text-white/80 hover:bg-[#1a5c1a]/40 active:bg-[#1a5c1a]/60"
+              >
+                <Swords size={16} />
+                Strategy Guide
+              </a>
+              <a
+                href="/faq"
+                className="flex items-center gap-3 w-full px-4 py-3 text-sm text-white/80 hover:bg-[#1a5c1a]/40 active:bg-[#1a5c1a]/60"
+              >
+                <HelpCircle size={16} />
+                FAQ
+              </a>
             </div>
           )}
         </div>

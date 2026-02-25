@@ -40,7 +40,6 @@ export default function GameShell() {
   const [showShortcuts, setShowShortcuts] = useState(false);
   const [isLandscapeMobile, setIsLandscapeMobile] = useState(false);
   const [dailyCompleted, setDailyCompleted] = useState(true); // assume completed until checked
-  const [debugInfo, setDebugInfo] = useState<string>('');
 
   // Load stats on mount
   useEffect(() => {
@@ -96,35 +95,17 @@ export default function GameShell() {
         attempts++;
       }
 
-      const dbg = (msg: string) => { console.log(msg); setDebugInfo(prev => prev + '\n' + msg); };
-      dbg(`Container: ${container.clientWidth}x${container.clientHeight} after ${attempts} waits`);
-
       if (container.clientWidth === 0 || container.clientHeight === 0) {
-        dbg('ZERO dims — forcing 100vw/100vh');
         container.style.width = '100vw';
         container.style.height = '100vh';
         await new Promise(r => setTimeout(r, 200));
-        dbg(`Forced: ${container.clientWidth}x${container.clientHeight}`);
       }
 
-      try {
-        dbg('Importing Phaser...');
-        const Phaser = await import('phaser');
-        const { createPhaserConfig } = await import('../game/PhaserConfig');
-        dbg(`Phaser ${Phaser.VERSION} loaded`);
+      const Phaser = await import('phaser');
+      const { createPhaserConfig } = await import('../game/PhaserConfig');
 
-        const config = createPhaserConfig(container);
-        gameRef.current = new Phaser.Game(config);
-        dbg('Game created OK');
-
-        // Check canvas after a beat
-        setTimeout(() => {
-          const canvas = container.querySelector('canvas');
-          dbg(`Canvas: ${canvas?.width}x${canvas?.height}, WebGL: ${!!canvas?.getContext('webgl2') || !!canvas?.getContext('webgl')}`);
-        }, 2000);
-      } catch (err) {
-        dbg(`ERROR: ${err}`);
-      }
+      const config = createPhaserConfig(container);
+      gameRef.current = new Phaser.Game(config);
     };
 
     initPhaser();
@@ -314,13 +295,6 @@ export default function GameShell() {
       {/* Game Canvas Container */}
       <div className="relative flex-1">
         <div ref={containerRef} id="game-container" className="absolute inset-0" />
-
-        {/* Debug overlay - TEMPORARY */}
-        {debugInfo && (
-          <div className="absolute top-0 left-0 right-0 z-50 bg-black/80 text-green-400 text-[10px] font-mono p-2 whitespace-pre-wrap max-h-32 overflow-auto">
-            {debugInfo}
-          </div>
-        )}
 
         {/* Daily Challenge Banner */}
         <DailyBanner onPlayDaily={handlePlayDaily} />

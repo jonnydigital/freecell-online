@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "How to Play FreeCell Solitaire | Complete Rules & Tutorial Guide",
   description:
-    "Learn how to play FreeCell Solitaire with our complete beginner's guide. Step-by-step rules, board layout diagrams, card movement examples, and expert tips to win more games.",
+    "Learn how to play FreeCell Solitaire with clear rules, board layout diagrams, card movement examples, and tips to win more games.",
   keywords: [
     "how to play freecell",
     "freecell rules",
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "How to Play FreeCell Solitaire | Complete Rules & Tutorial",
     description:
-      "Master FreeCell with our visual guide. Board layout diagrams, step-by-step rules, and expert tips.",
+      "Learn FreeCell with board layout diagrams, clear rules, and practical tips.",
     url: "https://playfreecellonline.com/how-to-play",
     siteName: "PlayFreeCellOnline.com",
     type: "article",
@@ -231,7 +231,7 @@ function ColorAlternationDiagram() {
             </div>
           </div>
           <p className="text-white/50 text-xs mt-3">
-            Same color — not allowed
+            Same color, not allowed
           </p>
         </div>
       </div>
@@ -316,7 +316,7 @@ export default function HowToPlayPage() {
       {
         "@type": "HowToStep",
         name: "Use Free Cells Wisely",
-        text: "Store individual cards temporarily in the 4 free cells. Keep them empty when possible \u2014 they control how many cards you can move at once.",
+        text: "Store individual cards temporarily in the 4 free cells. Keep them empty when possible. They control how many cards you can move at once.",
       },
       {
         "@type": "HowToStep",
@@ -326,7 +326,7 @@ export default function HowToPlayPage() {
       {
         "@type": "HowToStep",
         name: "Plan Ahead and Win",
-        text: "Think several moves ahead. Use undo freely. Nearly every deal is solvable \u2014 winning is a matter of skill and patience.",
+        text: "Think several moves ahead. Use undo freely. Nearly every deal is solvable, so winning comes down to skill and patience.",
       },
     ],
   };
@@ -395,8 +395,8 @@ export default function HowToPlayPage() {
           How to Play FreeCell Solitaire
         </h1>
         <p className="text-[#6B7280] text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
-          The complete guide to mastering the world&apos;s most rewarding
-          card game — where every deal is solvable and every win is earned.
+          Everything you need to know about FreeCell, the card game
+          where every deal is solvable and every win is earned.
         </p>
 
         {/* Gold divider */}
@@ -450,40 +450,35 @@ export default function HowToPlayPage() {
 
             <div className="px-10 sm:px-12 py-8 space-y-5">
               <p className="text-lg font-serif text-[#3a3a3a] leading-[1.75]">
-                FreeCell is one of the most popular and intellectually rewarding
-                solitaire card games ever created. Unlike traditional solitaire
-                variants where hidden cards and random draws determine your fate,
-                FreeCell deals all 52 cards face-up from the very beginning. This
-                means every game is almost entirely a test of skill, strategic
-                planning, and careful thinking — not luck.
+                FreeCell is one of the most popular solitaire card games out
+                there. Unlike other solitaire games where hidden cards and random
+                draws decide whether you win, FreeCell deals all 52 cards
+                face-up from the start. Every game is a test of skill and
+                careful thinking, not luck.
               </p>
               <p className="text-[#3a3a3a] leading-[1.75]">
-                The game was first programmed by Paul Alfille for the PLATO
-                educational computer system in 1978. It later became a worldwide
-                phenomenon when Microsoft included it in Windows 95, introducing
-                millions of people to its addictive blend of logic and card play.
-                Today, FreeCell remains one of the most-played solitaire games in
-                the world, beloved by casual players and puzzle enthusiasts alike
-                for its fair gameplay and the deeply satisfying challenge it
-                offers.
+                Paul Alfille first programmed it for the PLATO educational
+                computer system in 1978. It blew up when Microsoft included it
+                in Windows 95, and millions of people got hooked. FreeCell is
+                still one of the most-played solitaire games in the world
+                because it&apos;s fair, it&apos;s challenging, and winning
+                actually feels like you accomplished something.
               </p>
 
               {/* Pull-quote callout */}
               <div className="border-l-4 border-[#c9a84c] bg-[#f4edd8]/60 pl-5 pr-5 py-4 my-8 rounded-r-lg">
                 <p className="text-[#2a2522] leading-[1.75] italic" style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}>
-                  Nearly every deal is solvable. Of the original 32,000 Microsoft FreeCell deals, only one — deal #11982 — has been proven impossible.
+                  Nearly every deal is solvable. Of the original 32,000 Microsoft FreeCell deals, only one (deal #11982) has been proven impossible.
                 </p>
               </div>
 
               <p className="text-[#3a3a3a] leading-[1.75]">
-                What makes FreeCell truly special is that nearly every deal is
+                Here&apos;s the thing that hooks people: nearly every deal is
                 solvable. Of the original 32,000 Microsoft FreeCell numbered
-                deals, only one — deal #11982 — has been proven impossible to
-                complete. This means that when you lose a game of FreeCell,
-                it&apos;s almost always because of a strategic error, not bad
-                luck. That&apos;s what makes winning so satisfying and what makes
-                improving your skills so rewarding. Every game is a puzzle
-                waiting to be solved.
+                deals, only one (deal #11982) has been proven impossible. So
+                when you lose, it&apos;s almost always a strategic mistake, not
+                bad luck. That&apos;s why winning feels so good and why you keep
+                wanting to get better.
               </p>
             </div>
           </div>
@@ -500,10 +495,9 @@ export default function HowToPlayPage() {
 
             <div className="px-10 sm:px-12 py-8 space-y-5">
               <p className="text-lg font-serif text-[#3a3a3a] leading-[1.75]">
-                The FreeCell board is elegantly simple, consisting of three
-                distinct areas that each serve a specific purpose in your quest to
-                organize all 52 cards. Understanding how these areas work together
-                is the first step toward mastering the game.
+                The FreeCell board has three areas. Each one does something
+                different, and you&apos;ll need to use all three to organize
+                the full 52-card deck.
               </p>
 
               <BoardDiagram />
@@ -517,11 +511,10 @@ export default function HowToPlayPage() {
                     <h3 className="font-medium text-[#2a2522]">Free Cells</h3>
                   </div>
                   <p className="text-[#5a5a5a] text-sm leading-relaxed">
-                    Four empty spaces in the upper-left corner. These are your
-                    temporary storage slots — your &quot;breathing room.&quot;
-                    Each free cell holds exactly one card at a time. Using them
-                    wisely is the key to unlocking complex moves and freeing
-                    deeply buried cards.
+                    Four empty spaces in the upper-left corner. Think of them
+                    as your breathing room. Each one holds exactly one card.
+                    Use them well and you&apos;ll be able to pull off bigger
+                    moves and dig out buried cards.
                   </p>
                 </div>
                 <div className="bg-[#f0ede5] rounded-xl p-4 border border-[rgba(212,175,55,0.12)]">
@@ -532,10 +525,9 @@ export default function HowToPlayPage() {
                     <h3 className="font-medium text-[#2a2522]">Foundations</h3>
                   </div>
                   <p className="text-[#5a5a5a] text-sm leading-relaxed">
-                    Four empty spaces in the upper-right corner. This is where you
-                    build your completed suits. Each foundation starts empty and
-                    must be built from Ace to King in a single suit. Once all four
-                    foundations are complete, you&apos;ve won the game.
+                    Four empty spaces in the upper-right corner. You build your
+                    completed suits here, from Ace up to King in a single suit.
+                    Fill all four foundations and you&apos;ve won.
                   </p>
                 </div>
                 <div className="bg-[#f0ede5] rounded-xl p-4 border border-[rgba(212,175,55,0.12)]">
@@ -547,9 +539,8 @@ export default function HowToPlayPage() {
                   </div>
                   <p className="text-[#5a5a5a] text-sm leading-relaxed">
                     Eight columns of cards in the center of the board. This is
-                    your main workspace where all the strategic action happens. At
-                    the start of the game, all 52 cards are distributed across
-                    these columns. Your job is to rearrange them.
+                    where you do most of your work. All 52 cards start here,
+                    and your job is to rearrange them.
                   </p>
                 </div>
               </div>
@@ -568,11 +559,10 @@ export default function HowToPlayPage() {
 
             <div className="px-10 sm:px-12 py-8 space-y-5">
               <p className="text-lg font-serif text-[#3a3a3a] leading-[1.75]">
-                When a new game of FreeCell begins, all 52 cards from a standard
-                deck are dealt face-up into the 8 cascade columns. The first four
-                columns receive 7 cards each (28 cards total), and the remaining
-                four columns receive 6 cards each (24 cards total), accounting for
-                all 52 cards in the deck.
+                When a new game starts, all 52 cards get dealt face-up into 8
+                columns. The first four columns get 7 cards each (28 total) and
+                the last four get 6 cards each (24 total). That covers the
+                whole deck.
               </p>
 
               {/* Visual of card distribution */}
@@ -601,11 +591,9 @@ export default function HowToPlayPage() {
               </div>
 
               <p className="text-[#3a3a3a] leading-[1.75]">
-                There is no stock pile, no draw pile, and no hidden cards
-                whatsoever. Every single card is visible from the moment the game
-                begins. This complete transparency is what makes FreeCell a game of
-                pure skill rather than chance — you have all the information you
-                need to solve the puzzle from move one.
+                No stock pile, no draw pile, no hidden cards. You can see
+                everything from the very first move. That&apos;s what makes
+                FreeCell a game of pure skill instead of chance.
               </p>
 
               {/* Pull-quote callout */}
@@ -616,12 +604,11 @@ export default function HowToPlayPage() {
               </div>
 
               <p className="text-[#3a3a3a] leading-[1.75]">
-                Each game is identified by a unique deal number, which determines
-                exactly how the cards are arranged. This means you can replay
-                specific deals to improve your strategy, or share deal numbers with
-                friends to compete on the exact same layout. Our deals #1 through
-                #32,000 are fully compatible with the original Microsoft FreeCell,
-                so you can even look up known solutions for specific deals.
+                Each game has a unique deal number that determines the card
+                layout. You can replay specific deals to practice, or share
+                numbers with friends so you&apos;re both playing the exact same
+                hand. Our deals #1 through #32,000 match the original Microsoft
+                FreeCell, so you can even look up known solutions online.
               </p>
             </div>
           </div>
@@ -638,9 +625,9 @@ export default function HowToPlayPage() {
 
             <div className="px-10 sm:px-12 py-8">
               <p className="text-lg font-serif text-[#3a3a3a] leading-[1.75] mb-8">
-                FreeCell has a small set of elegant rules that are easy to learn
-                but take time to master. Here are the five core rules you need to
-                know before making your first move.
+                FreeCell&apos;s rules are simple to learn but take time to get
+                good at. Here are the five core rules you need before your
+                first move.
               </p>
 
               {/* Rule 1 */}
@@ -664,10 +651,9 @@ export default function HowToPlayPage() {
                   </p>
                   <ColorAlternationDiagram />
                   <p className="text-[#5a5a5a] text-sm leading-relaxed">
-                    This alternating-color, descending-rank rule is the backbone
-                    of FreeCell gameplay. It&apos;s the same rule used for building
-                    tableau columns in Klondike solitaire, so if you&apos;ve played
-                    classic solitaire before, you already know the pattern.
+                    Alternating colors, descending rank. If you&apos;ve played
+                    Klondike (classic) solitaire before, you already know this
+                    pattern.
                   </p>
                 </div>
               </div>
@@ -680,15 +666,12 @@ export default function HowToPlayPage() {
                     <span className="text-[#c9a84c] mr-1.5">{"\u2665"}</span>Using Free Cells
                   </h3>
                   <p className="text-[#3a3a3a] leading-[1.75]">
-                    Any single exposed card can be moved to an empty free cell.
-                    This is your safety valve — when you need to temporarily get a
-                    card out of the way to access cards underneath it. However,
-                    each free cell can only hold one card, and you only have four
-                    of them. Using them wisely is absolutely critical. Every
-                    occupied free cell reduces the number of cards you can move in
-                    a single action. Think of free cells as your strategic reserve:
-                    the best players use them sparingly and empty them again as
-                    quickly as possible.
+                    You can move any single exposed card to an empty free cell.
+                    It&apos;s your safety valve when you need to temporarily
+                    get a card out of the way. But each free cell only holds
+                    one card, and you only have four. Every occupied free cell
+                    reduces how many cards you can move at once. Good players
+                    use them sparingly and clear them out as fast as they can.
                   </p>
                 </div>
               </div>
@@ -703,7 +686,7 @@ export default function HowToPlayPage() {
                   <p className="text-[#3a3a3a] leading-[1.75] mb-3">
                     Foundations are built up by suit, starting from the Ace. The
                     order is: A, 2, 3, 4, 5, 6, 7, 8, 9, 10, J, Q, K. Each of
-                    the four foundations holds one suit — spades ({"\u2660"}),
+                    the four foundations holds one suit: spades ({"\u2660"}),
                     hearts ({"\u2665"}), diamonds ({"\u2666"}), and clubs (
                     {"\u2663"}). You can only place a card on a foundation if
                     it&apos;s the next card in that suit&apos;s sequence. For
@@ -726,10 +709,9 @@ export default function HowToPlayPage() {
                     </span>
                   </div>
                   <p className="text-[#5a5a5a] text-sm leading-relaxed mt-3">
-                    In most FreeCell implementations — including ours — cards that
-                    are safe to move to foundations are moved there automatically,
-                    saving you clicks and letting you focus on the strategic
-                    decisions.
+                    In most FreeCell versions (including ours), cards that are
+                    safe to play get moved to foundations automatically. Saves
+                    you clicks so you can focus on the real decisions.
                   </p>
                 </div>
               </div>
@@ -742,15 +724,13 @@ export default function HowToPlayPage() {
                     <span className="text-[#c9a84c] mr-1.5">{"\u2663"}</span>Using Empty Columns
                   </h3>
                   <p className="text-[#3a3a3a] leading-[1.75]">
-                    When a cascade column is completely emptied, any card or valid
-                    sequence of cards can be moved there. Empty columns are
-                    incredibly valuable — even more valuable than free cells —
-                    because they can hold entire sequences of cards, not just
-                    single cards. Each empty column doubles the number of cards you
-                    can move at once. Protecting your empty columns is a hallmark
-                    of skilled play. Think twice before filling an empty column,
-                    especially with a King, since Kings have no card that can be
-                    placed on top of them in a cascade.
+                    When you empty a cascade column completely, you can move any
+                    card or valid sequence there. Empty columns are even more
+                    valuable than free cells because they hold entire sequences,
+                    not just single cards. Each one doubles the number of cards
+                    you can move at once. Think twice before filling an empty
+                    column, especially with a King, since nothing can go on top
+                    of a King in a cascade.
                   </p>
                 </div>
               </div>
@@ -763,12 +743,12 @@ export default function HowToPlayPage() {
                     <span className="text-[#c9a84c] mr-1.5">{"\u2660"}</span>The Supermove (Moving Multiple Cards)
                   </h3>
                   <p className="text-[#3a3a3a] leading-[1.75] mb-3">
-                    Officially, FreeCell rules only allow moving one card at a
-                    time. However, most computer versions — including ours — allow
-                    you to move a properly ordered sequence of cards (descending
-                    rank, alternating colors) as a single move. This works as long
-                    as there are enough empty free cells and empty columns to
-                    theoretically execute the move one card at a time.
+                    Technically, FreeCell only lets you move one card at a time.
+                    But most computer versions (including ours) let you move a
+                    properly ordered sequence (descending rank, alternating
+                    colors) in one shot. It works as long as there are enough
+                    empty free cells and columns to theoretically do it one card
+                    at a time.
                   </p>
                 </div>
               </div>
@@ -787,22 +767,19 @@ export default function HowToPlayPage() {
 
             <div className="px-10 sm:px-12 py-8 space-y-5">
               <p className="text-lg font-serif text-[#3a3a3a] leading-[1.75]">
-                The supermove is one of the most important concepts in FreeCell.
-                The number of cards you can move at once depends on how many empty
-                free cells and empty cascade columns are available. The formula is
-                straightforward:
+                Supermoves are a big deal in FreeCell. How many cards you can
+                move at once depends on your empty free cells and empty
+                columns. Here&apos;s the formula:
               </p>
 
               <SupermoveFormula />
 
               <p className="text-[#3a3a3a] leading-[1.75]">
-                For example, if you have 2 empty free cells and 1 empty column,
-                you can move up to (1 + 2) × 2¹ = 6 cards at once. With all 4
-                free cells empty and 2 empty columns, you can move an impressive
-                (1 + 4) × 2² = 20 cards in a single action. This is why
-                keeping free cells and columns empty is so powerful — it
-                dramatically increases your ability to make large moves and
-                reorganize the board efficiently.
+                Say you have 2 empty free cells and 1 empty column. That&apos;s
+                (1 + 2) × 2¹ = 6 cards at once. With all 4 free cells empty
+                and 2 empty columns, you can move (1 + 4) × 2² = 20 cards in
+                one shot. Keeping free cells and columns open gives you way
+                more flexibility to reorganize the board.
               </p>
 
               {/* Pull-quote callout */}
@@ -813,10 +790,11 @@ export default function HowToPlayPage() {
               </div>
 
               <p className="text-[#3a3a3a] leading-[1.75]">
-                Understanding this formula will transform how you evaluate the
-                board. Before attempting a multi-card move, quickly count your
-                empty spaces to make sure the move is actually possible. Running
-                out of move capacity mid-plan is a common way games go wrong.
+                Once you internalize this formula, you&apos;ll read the board
+                differently. Before you try a multi-card move, count your
+                empty spaces to make sure it&apos;s actually possible. Running
+                out of move capacity halfway through a plan is a common way
+                to lose.
               </p>
             </div>
           </div>
@@ -837,9 +815,8 @@ export default function HowToPlayPage() {
 
             <div className="px-10 sm:px-12 py-8">
               <p className="text-lg font-serif text-[#3a3a3a] leading-[1.75] mb-8">
-                Ready to play? Here&apos;s a step-by-step walkthrough of how to
-                approach your very first game of FreeCell. Follow these steps and
-                you&apos;ll be well on your way to a win.
+                Ready to play? Here&apos;s how to approach your first game of
+                FreeCell, step by step.
               </p>
 
               <div className="space-y-6">
@@ -850,13 +827,11 @@ export default function HowToPlayPage() {
                       <span className="text-[#c9a84c] mr-1.5">{"\u2660"}</span>Scan the Board
                     </h3>
                     <p className="text-[#3a3a3a] leading-[1.75]">
-                      Before making any move, take 30 seconds to survey the entire
-                      layout. Where are the four Aces? How deeply buried are they?
-                      Are there any 2s or 3s that are blocked? Which columns
-                      already have some natural ordering? This initial scan will
-                      save you from many dead ends later. The best FreeCell players
-                      always start by analyzing the board before touching a single
-                      card.
+                      Before you touch anything, take 30 seconds to look over
+                      the whole layout. Where are the Aces? How buried are they?
+                      Are any 2s or 3s blocked? Do any columns already have some
+                      natural ordering? This quick scan saves you from a lot of
+                      dead ends later.
                     </p>
                   </div>
                 </div>
@@ -868,12 +843,11 @@ export default function HowToPlayPage() {
                       <span className="text-[#c9a84c] mr-1.5">{"\u2665"}</span>Prioritize Freeing Aces and Low Cards
                     </h3>
                     <p className="text-[#3a3a3a] leading-[1.75]">
-                      Aces and 2s need to reach the foundations as soon as
-                      possible. Every move you make in the early game should be
-                      working toward uncovering and freeing these low-value cards.
-                      If an Ace is buried under six other cards, that column
-                      demands your attention. Plan a sequence of moves that will
-                      uncover it.
+                      Aces and 2s need to get to the foundations as soon as you
+                      can manage it. Your early moves should focus on uncovering
+                      these low cards. If an Ace is buried under six other cards,
+                      that column needs your attention first. Plan a sequence of
+                      moves to dig it out.
                     </p>
                   </div>
                 </div>
@@ -885,11 +859,11 @@ export default function HowToPlayPage() {
                       <span className="text-[#c9a84c] mr-1.5">{"\u2666"}</span>Build Descending Sequences
                     </h3>
                     <p className="text-[#3a3a3a] leading-[1.75]">
-                      Start moving cards between cascades to create descending,
-                      alternating-color sequences. Focus on columns where you can
-                      make meaningful progress toward freeing important buried
-                      cards. Avoid building sequences just because you can — every
-                      sequence should serve your larger plan.
+                      Move cards between cascades to build descending,
+                      alternating-color sequences. Focus on columns where
+                      you&apos;ll actually free up important buried cards.
+                      Don&apos;t build sequences just because you can. Every
+                      move should serve a purpose.
                     </p>
                   </div>
                 </div>
@@ -901,11 +875,10 @@ export default function HowToPlayPage() {
                       <span className="text-[#c9a84c] mr-1.5">{"\u2663"}</span>Send Cards to Foundations Early
                     </h3>
                     <p className="text-[#3a3a3a] leading-[1.75]">
-                      As Aces become available, immediately move them to the
-                      foundation area. Follow up with 2s, 3s, and higher cards as
-                      they become accessible. Building foundations early creates
-                      more room in the cascades and brings you closer to victory
-                      with every card you place.
+                      When Aces become available, move them to the foundations
+                      right away. Follow up with 2s, 3s, and so on as they open
+                      up. Building foundations early frees up space in the
+                      cascades and gets you closer to winning.
                     </p>
                   </div>
                 </div>
@@ -917,13 +890,11 @@ export default function HowToPlayPage() {
                       <span className="text-[#c9a84c] mr-1.5">{"\u2660"}</span>Manage Free Cells and Empty Columns
                     </h3>
                     <p className="text-[#3a3a3a] leading-[1.75]">
-                      Keep careful track of your empty free cells and empty
-                      columns. Every card you park in a free cell reduces your
-                      flexibility and limits the number of cards you can move at
-                      once. Only use free cells when absolutely necessary, and
-                      prioritize emptying them again quickly. If you create an
-                      empty column, protect it — it&apos;s your most valuable
-                      resource.
+                      Keep track of your empty free cells and columns. Every
+                      card you park in a free cell limits how many cards you can
+                      move at once. Only use free cells when you have to, and
+                      clear them out quickly. If you create an empty column,
+                      protect it. It&apos;s your most valuable resource.
                     </p>
                   </div>
                 </div>
@@ -935,12 +906,12 @@ export default function HowToPlayPage() {
                       <span className="text-[#c9a84c] mr-1.5">{"\u2665"}</span>Think Several Moves Ahead
                     </h3>
                     <p className="text-[#3a3a3a] leading-[1.75]">
-                      Before each move, ask: &quot;What does this move
-                      enable?&quot; Try to see 3 to 5 moves into the future. If a
-                      sequence of moves doesn&apos;t lead to something productive —
-                      freeing an important card, creating an empty column, or
-                      building foundations — reconsider your approach. The best
-                      FreeCell players think in chains, not individual actions.
+                      Before each move, ask yourself: &quot;What does this
+                      open up?&quot; Try to see 3 to 5 moves ahead. If a
+                      sequence of moves doesn&apos;t lead somewhere productive
+                      (freeing a key card, creating an empty column, or building
+                      foundations), reconsider. Good players think in chains, not
+                      single moves.
                     </p>
                   </div>
                 </div>
@@ -949,16 +920,14 @@ export default function HowToPlayPage() {
                   <GoldStep n={7} />
                   <div>
                     <h3 className="font-semibold font-serif text-[#2a2522] text-lg mb-3">
-                      <span className="text-[#c9a84c] mr-1.5">{"\u2666"}</span>Use Undo Freely — It&apos;s How You Learn
+                      <span className="text-[#c9a84c] mr-1.5">{"\u2666"}</span>Use Undo Freely. It&apos;s How You Learn
                     </h3>
                     <p className="text-[#3a3a3a] leading-[1.75]">
-                      If you feel stuck or realize a move was a mistake, hit the
-                      undo button without hesitation. Undo is not cheating —
-                      it&apos;s the single best learning tool available to you. Try
-                      a sequence of moves, observe the result, undo if it
-                      didn&apos;t work, and try a different path. Over time,
-                      you&apos;ll develop the intuition to see dead ends before you
-                      reach them.
+                      Stuck? Hit undo. Made a mistake? Hit undo. It&apos;s not
+                      cheating. It&apos;s the best way to learn. Try a sequence,
+                      see what happens, undo if it didn&apos;t work, and try
+                      something else. Over time, you&apos;ll start spotting dead
+                      ends before you reach them.
                     </p>
                   </div>
                 </div>
@@ -978,26 +947,23 @@ export default function HowToPlayPage() {
 
             <div className="px-10 sm:px-12 py-8 space-y-5">
               <p className="text-lg font-serif text-[#3a3a3a] leading-[1.75]">
-                The game is won when all 52 cards have been moved to the four
-                foundation piles, with each pile containing a complete suit in
-                order from Ace through King. The game automatically detects when
-                you&apos;ve won, and in many cases, the final cards will cascade
-                to the foundations automatically once the solution becomes
-                inevitable.
+                You win when all 52 cards are on the four foundation piles,
+                each containing a complete suit from Ace through King. The
+                game detects your win automatically, and often the final cards
+                cascade to the foundations on their own once the outcome is
+                certain.
               </p>
               <p className="text-[#3a3a3a] leading-[1.75]">
-                Since approximately 99.999% of FreeCell deals are solvable,
-                winning is almost always possible with the right strategy and
-                enough patience. Beginners typically win about 40–50% of their
-                games. Intermediate players reach 70–80%. Expert players can
-                consistently achieve win rates above 90%.
+                About 99.999% of FreeCell deals are solvable, so winning is
+                almost always possible if you play well enough. Beginners
+                typically win around 40-50% of their games. Intermediate
+                players hit 70-80%. Experts consistently clear 90%+.
               </p>
               <p className="text-[#3a3a3a] leading-[1.75]">
-                The beauty of FreeCell is that every loss is a learning
-                opportunity. When you lose, you know it was a strategic mistake —
-                not bad luck. This is why FreeCell is so addictive: there is
-                always room to improve, and every hard-earned victory feels
-                genuinely satisfying.
+                Every loss teaches you something because you know it was a
+                strategic mistake, not bad luck. That&apos;s why FreeCell is so
+                addictive. There&apos;s always room to improve, and a
+                hard-earned win actually feels like you did something.
               </p>
 
               {/* Win rate bar */}
@@ -1039,9 +1005,8 @@ export default function HowToPlayPage() {
 
             <div className="px-10 sm:px-12 py-8">
               <p className="text-lg font-serif text-[#3a3a3a] leading-[1.75] mb-5">
-                Knowing the correct terminology will help you follow strategy
-                guides and communicate with other players. Here are the essential
-                terms every FreeCell player should know.
+                These are the terms you&apos;ll see in strategy guides and
+                FreeCell discussions. Worth knowing so you can follow along.
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -1060,7 +1025,7 @@ export default function HowToPlayPage() {
                   ],
                   [
                     "Tableau",
-                    "The entire playing area containing all 8 cascades \u2014 your main workspace.",
+                    "The entire playing area containing all 8 cascades. Your main workspace.",
                   ],
                   [
                     "Supermove",
@@ -1072,7 +1037,7 @@ export default function HowToPlayPage() {
                   ],
                   [
                     "Exposed Card",
-                    "The bottom card of a cascade \u2014 the only card in the column that can be moved.",
+                    "The bottom card of a cascade. It's the only card in the column you can move.",
                   ],
                   [
                     "Deal Number",
@@ -1105,9 +1070,8 @@ export default function HowToPlayPage() {
 
             <div className="px-10 sm:px-12 py-8">
               <p className="text-lg font-serif text-[#3a3a3a] leading-[1.75] mb-5">
-                Keep these tips in mind as you play your first few games. They
-                represent the collected wisdom of experienced FreeCell players and
-                will help you build good habits from the start.
+                Keep these in mind for your first few games. They&apos;ll help
+                you build good habits early.
               </p>
 
               <div className="space-y-3">
@@ -1118,7 +1082,7 @@ export default function HowToPlayPage() {
                   },
                   {
                     icon: "\u2665",
-                    tip: "Keep free cells empty whenever you can. They are your most precious resource \u2014 filling all four is often a game-ending mistake.",
+                    tip: "Keep free cells empty whenever you can. Filling all four is often a game-ending mistake.",
                   },
                   {
                     icon: "\u2666",
@@ -1199,8 +1163,8 @@ export default function HowToPlayPage() {
                 Ready to Play?
               </h2>
               <p className="text-white/60 mb-6 max-w-md mx-auto">
-                Put your new knowledge to the test. Every deal is solvable — the
-                only question is whether you can find the path.
+                You know the rules. Every deal is solvable. The only question
+                is whether you can find the path.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-3 justify-center">

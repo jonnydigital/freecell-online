@@ -1330,6 +1330,14 @@ export class FreeCellScene extends Phaser.Scene {
       const cardIdx = cascade.findIndex((c) => c.equals(sprite.cardData));
       if (cardIdx === -1) return;
 
+      // Only allow dragging from valid run start
+      const run = this.engine.getValidRun(location.index);
+      const runStart = cascade.length - run.length;
+      if (cardIdx < runStart) {
+        this.flashInvalid(sprite);
+        return;
+      }
+
       // Pick up the run from this card
       this.dragCards = [];
       for (let i = cardIdx; i < cascade.length; i++) {
@@ -1337,6 +1345,8 @@ export class FreeCellScene extends Phaser.Scene {
         if (cs) {
           this.dragCards.push(cs);
           cs.setDepth(1000 + i);
+          // Lift effect — slight scale up for dragged cards
+          cs.setScale(1.05);
         }
       }
     } else if (location.type === 'freecell') {
@@ -1367,6 +1377,7 @@ export class FreeCellScene extends Phaser.Scene {
     // Find drop target based on position
     const target = this.findDropTarget(dropCard.x, dropCard.y);
     if (target && this.engine.isLegalMove(from, target)) {
+      this.dragCards.forEach((c) => c.setScale(1)); // Reset lift effect
       this.executeMoveAndAnimate(from, target);
       this.vibrate();
     } else {
@@ -1723,6 +1734,7 @@ export class FreeCellScene extends Phaser.Scene {
 
   private snapCardsBack(): void {
     this.dragCards.forEach((card) => {
+      card.setScale(1); // Reset lift effect
       const location = this.findCardLocation(card.cardData);
       if (location) {
         const pos = this.getLocationPosition(location);

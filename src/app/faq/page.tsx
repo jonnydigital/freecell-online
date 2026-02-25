@@ -289,20 +289,20 @@ export default function FAQPage() {
               className="scroll-mt-6"
             >
               <div className={CARD} style={CARD_TOP}>
-                {/* Category heading */}
-                <div className="px-6 sm:px-8 pt-8 pb-5 border-b border-[#D4AF37]/10">
-                  <span className="text-sm font-medium uppercase tracking-wider text-[#D4AF37] mb-1 block">
+                {/* Category heading — green band at top of card */}
+                <div className="bg-gradient-to-r from-[#0a3d1e] to-[#1a5c35] px-8 sm:px-10 py-4 rounded-t-[1rem]">
+                  <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#D4AF37]/80 mb-1 block">
                     {category.title}
                   </span>
                   <h2
                     id={`${categoryId}-heading`}
-                    className="text-2xl sm:text-3xl font-semibold text-[#2D2D2D]"
+                    className="text-2xl sm:text-3xl font-semibold text-white"
                     style={{
                       fontFamily: "var(--font-playfair), Georgia, serif",
                     }}
                   >
                     <span
-                      className={`mr-2 ${isRedSuit ? "text-red-400" : "text-[#4B5563]"}`}
+                      className={`mr-2 ${isRedSuit ? "text-red-400" : "text-white/60"}`}
                     >
                       {category.icon}
                     </span>
@@ -326,7 +326,7 @@ export default function FAQPage() {
         {/* ── Still have questions? ── */}
         <section>
           <div className={CARD} style={CARD_TOP}>
-            <div className="p-6 sm:p-8 text-center">
+            <div className="px-8 sm:px-10 py-8 sm:py-10 text-center">
               <h2
                 className="text-2xl font-semibold text-[#2D2D2D] mb-3"
                 style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}

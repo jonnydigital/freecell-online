@@ -45,15 +45,15 @@ function SectionHeading({
   sub?: string;
 }) {
   return (
-    <div className="px-6 sm:px-8 pt-8 pb-5 border-b border-[#D4AF37]/10">
+    <div className="bg-gradient-to-r from-[#0a3d1e] to-[#1a5c35] px-8 sm:px-10 py-4 rounded-t-[1rem]">
       {sub && (
-        <span className="text-sm font-medium uppercase tracking-wider text-[#D4AF37] mb-1 block">
+        <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#D4AF37]/80 mb-1 block">
           {sub}
         </span>
       )}
       <h2
         id={id}
-        className="text-2xl sm:text-3xl font-semibold text-[#2D2D2D]"
+        className="text-2xl sm:text-3xl font-semibold text-white"
         style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
       >
         {children}
@@ -219,7 +219,7 @@ export default function StrategyPage() {
               The Three Pillars of FreeCell Strategy
             </SectionHeading>
 
-            <div className="p-6">
+            <div className="px-8 sm:px-10 py-8">
               <p className="text-[#444444] leading-relaxed mb-6">
                 Before diving into specific tips, understand the three principles
                 that underpin every good FreeCell decision. Every strategy in this
@@ -267,7 +267,7 @@ export default function StrategyPage() {
               Beginner Strategies
             </SectionHeading>
 
-            <div className="p-6">
+            <div className="px-8 sm:px-10 py-8">
               <p className="text-[#444444] leading-relaxed mb-6">
                 If you&apos;re new to FreeCell or winning less than 60% of your
                 games, focus on mastering these four fundamental habits. They
@@ -357,7 +357,7 @@ export default function StrategyPage() {
               Intermediate Strategies
             </SectionHeading>
 
-            <div className="p-6">
+            <div className="px-8 sm:px-10 py-8">
               <p className="text-[#444444] leading-relaxed mb-6">
                 Once you&apos;re consistently winning 60%+ of your games, these
                 intermediate techniques will push your win rate toward the 80%
@@ -450,7 +450,7 @@ export default function StrategyPage() {
               Advanced Techniques
             </SectionHeading>
 
-            <div className="p-6">
+            <div className="px-8 sm:px-10 py-8">
               <p className="text-[#444444] leading-relaxed mb-6">
                 These are the techniques that separate 80% win rates from 90%+.
                 They require deep board reading and careful calculation, but
@@ -546,7 +546,7 @@ export default function StrategyPage() {
               Common Mistakes That Cost Games
             </SectionHeading>
 
-            <div className="p-6">
+            <div className="px-8 sm:px-10 py-8">
               <p className="text-[#444444] leading-relaxed mb-5">
                 Even experienced players fall into these traps. Recognizing these
                 patterns in your own play is the fastest way to improve your
@@ -607,7 +607,7 @@ export default function StrategyPage() {
               Win Rate Benchmarks
             </SectionHeading>
 
-            <div className="p-6">
+            <div className="px-8 sm:px-10 py-8">
               <p className="text-[#444444] leading-relaxed mb-5">
                 Since nearly every FreeCell deal is solvable, your win rate is
                 a direct measure of your skill. Here&apos;s how to gauge your

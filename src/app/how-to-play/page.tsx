@@ -83,15 +83,15 @@ function SectionHeading({
   sub?: string;
 }) {
   return (
-    <div className="px-6 sm:px-8 pt-8 pb-5 border-b border-[#D4AF37]/10">
+    <div className="bg-gradient-to-r from-[#0a3d1e] to-[#1a5c35] px-8 sm:px-10 py-4 rounded-t-[1rem]">
       {sub && (
-        <span className="text-sm font-medium uppercase tracking-wider text-[#D4AF37] mb-1 block">
+        <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#D4AF37]/80 mb-1 block">
           {sub}
         </span>
       )}
       <h2
         id={id}
-        className="text-2xl sm:text-3xl font-semibold text-[#2D2D2D]"
+        className="text-2xl sm:text-3xl font-semibold text-white"
         style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
       >
         {children}
@@ -447,7 +447,7 @@ export default function HowToPlayPage() {
               What is FreeCell Solitaire?
             </SectionHeading>
 
-            <div className="p-6">
+            <div className="px-8 sm:px-10 py-8">
               <p className="text-[#444444] leading-relaxed mb-4">
                 FreeCell is one of the most popular and intellectually rewarding
                 solitaire card games ever created. Unlike traditional solitaire
@@ -487,7 +487,7 @@ export default function HowToPlayPage() {
               Understanding the Game Board
             </SectionHeading>
 
-            <div className="p-6">
+            <div className="px-8 sm:px-10 py-8">
               <p className="text-[#444444] leading-relaxed mb-4">
                 The FreeCell board is elegantly simple, consisting of three
                 distinct areas that each serve a specific purpose in your quest to
@@ -553,7 +553,7 @@ export default function HowToPlayPage() {
               How the Game is Set Up
             </SectionHeading>
 
-            <div className="p-6">
+            <div className="px-8 sm:px-10 py-8">
               <p className="text-[#444444] leading-relaxed mb-4">
                 When a new game of FreeCell begins, all 52 cards from a standard
                 deck are dealt face-up into the 8 cascade columns. The first four
@@ -613,7 +613,7 @@ export default function HowToPlayPage() {
               Rules of Play
             </SectionHeading>
 
-            <div className="p-6">
+            <div className="px-8 sm:px-10 py-8">
               <p className="text-[#444444] leading-relaxed mb-6">
                 FreeCell has a small set of elegant rules that are easy to learn
                 but take time to master. Here are the five core rules you need to
@@ -760,7 +760,7 @@ export default function HowToPlayPage() {
               Understanding Supermoves
             </SectionHeading>
 
-            <div className="p-6">
+            <div className="px-8 sm:px-10 py-8">
               <p className="text-[#444444] leading-relaxed mb-4">
                 The supermove is one of the most important concepts in FreeCell.
                 The number of cards you can move at once depends on how many empty
@@ -799,7 +799,7 @@ export default function HowToPlayPage() {
               Playing Your First Game
             </SectionHeading>
 
-            <div className="p-6">
+            <div className="px-8 sm:px-10 py-8">
               <p className="text-[#444444] leading-relaxed mb-6">
                 Ready to play? Here&apos;s a step-by-step walkthrough of how to
                 approach your very first game of FreeCell. Follow these steps and
@@ -938,7 +938,7 @@ export default function HowToPlayPage() {
               How to Win at FreeCell
             </SectionHeading>
 
-            <div className="p-6">
+            <div className="px-8 sm:px-10 py-8">
               <p className="text-[#444444] leading-relaxed mb-4">
                 The game is won when all 52 cards have been moved to the four
                 foundation piles, with each pile containing a complete suit in
@@ -997,7 +997,7 @@ export default function HowToPlayPage() {
               Key FreeCell Terminology
             </SectionHeading>
 
-            <div className="p-6">
+            <div className="px-8 sm:px-10 py-8">
               <p className="text-[#444444] leading-relaxed mb-5">
                 Knowing the correct terminology will help you follow strategy
                 guides and communicate with other players. Here are the essential
@@ -1061,7 +1061,7 @@ export default function HowToPlayPage() {
               Quick Tips for Beginners
             </SectionHeading>
 
-            <div className="p-6">
+            <div className="px-8 sm:px-10 py-8">
               <p className="text-[#444444] leading-relaxed mb-5">
                 Keep these tips in mind as you play your first few games. They
                 represent the collected wisdom of experienced FreeCell players and

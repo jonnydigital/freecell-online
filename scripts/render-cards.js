@@ -221,19 +221,20 @@ function makeSVG(suit, rank) {
 
   let content = '';
 
-  // Corner indices - TOP LEFT (JUMBO for mobile readability)
-  const ix = 28;
-  const iy = 38;
-  const rSize = label === '10' ? 42 : 50;
+  // Corner indices - TOP LEFT (MEGA for mobile — match competitor size)
+  const ix = 30;
+  const iy = 44;
+  const rSize = label === '10' ? 52 : 60;
+  const suitSize = 42;
   content += `<text x="${ix}" y="${iy}" style="font-family:'Arial Black',Impact,'Helvetica Neue',sans-serif;font-size:${rSize}px;font-weight:900;fill:${s.color};text-anchor:middle;dominant-baseline:central">${label}</text>`;
-  content += `<text x="${ix}" y="${iy + 34}" style="font-family:'Arial Black',Impact,sans-serif;font-size:36px;fill:${s.color};text-anchor:middle;dominant-baseline:central">${s.symbol}</text>`;
+  content += `<text x="${ix}" y="${iy + 38}" style="font-family:'Arial Black',Impact,sans-serif;font-size:${suitSize}px;fill:${s.color};text-anchor:middle;dominant-baseline:central">${s.symbol}</text>`;
 
   // Corner indices - BOTTOM RIGHT
   const bx = CARD_W - ix;
   const by = CARD_H - iy;
   content += `<g transform="rotate(180 ${bx} ${by})">`;
   content += `<text x="${bx}" y="${by}" style="font-family:'Arial Black',Impact,'Helvetica Neue',sans-serif;font-size:${rSize}px;font-weight:900;fill:${s.color};text-anchor:middle;dominant-baseline:central">${label}</text>`;
-  content += `<text x="${bx}" y="${by + 34}" style="font-family:'Arial Black',Impact,sans-serif;font-size:36px;fill:${s.color};text-anchor:middle;dominant-baseline:central">${s.symbol}</text>`;
+  content += `<text x="${bx}" y="${by + 38}" style="font-family:'Arial Black',Impact,sans-serif;font-size:${suitSize}px;fill:${s.color};text-anchor:middle;dominant-baseline:central">${s.symbol}</text>`;
   content += `</g>`;
 
   // Pip area (inset from corners)
@@ -310,7 +311,7 @@ async function renderSVGtoPNG(ws, svgData, outPath) {
 
 async function main() {
   // Use a dedicated browser tab
-  const ws = new WebSocket('ws://127.0.0.1:18800/devtools/page/C82527C22985123923239DE6FADB38E0');
+  const ws = new WebSocket('ws://127.0.0.1:18800/devtools/page/5463089F665606468737EB1D85C1E57D');
   
   await new Promise((resolve, reject) => {
     ws.on('open', resolve);

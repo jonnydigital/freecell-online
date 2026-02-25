@@ -12,13 +12,13 @@ export function AccordionItem({
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="border-b border-[rgba(212,175,55,0.1)] last:border-b-0">
+    <div className="border-b border-[rgba(212,175,55,0.08)] last:border-b-0">
       <button
         onClick={() => setOpen(!open)}
-        className="py-5 px-6 flex justify-between items-center w-full text-left transition-colors duration-200 hover:bg-white/[0.05]"
+        className="py-6 px-6 sm:px-8 flex justify-between items-center w-full text-left transition-colors duration-200 hover:bg-white/[0.05]"
       >
         <span
-          className={`font-medium text-lg transition-colors duration-200 ${
+          className={`font-medium text-lg tracking-wide transition-colors duration-200 ${
             open ? "text-[#D4AF37]" : "text-white"
           }`}
         >
@@ -45,8 +45,8 @@ export function AccordionItem({
         style={{ gridTemplateRows: open ? "1fr" : "0fr" }}
       >
         <div className="overflow-hidden">
-          <div className="px-6 pb-6">
-            <p className="text-[#E0EFE6] leading-relaxed">{answer}</p>
+          <div className="px-6 sm:px-8 pb-8 pt-1">
+            <p className="text-[#E0EFE6] leading-[1.75] tracking-[0.01em]">{answer}</p>
           </div>
         </div>
       </div>

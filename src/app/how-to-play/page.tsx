@@ -83,7 +83,7 @@ function SectionHeading({
   sub?: string;
 }) {
   return (
-    <div className="px-6 pt-6 pb-4 border-b border-[#D4AF37]/10">
+    <div className="px-6 sm:px-8 pt-8 pb-5 border-b border-[#D4AF37]/10">
       {sub && (
         <span className="text-sm font-medium uppercase tracking-wider text-[#D4AF37] mb-1 block">
           {sub}
@@ -413,7 +413,7 @@ export default function HowToPlayPage() {
       </header>
 
       {/* ── Table of Contents ── */}
-      <nav className="max-w-4xl mx-auto px-6 mb-10">
+      <nav className="max-w-3xl mx-auto px-6 sm:px-10 mb-12">
         <div className="flex md:flex-wrap md:justify-center gap-3 overflow-x-auto no-scrollbar pb-1">
           {[
             ["#what-is-freecell", "\u2660", "What is FreeCell?"],
@@ -443,7 +443,7 @@ export default function HowToPlayPage() {
       </nav>
 
       {/* ── Content ── */}
-      <main className="max-w-4xl mx-auto px-6 pb-20 flex flex-col gap-8">
+      <main className="max-w-3xl mx-auto px-6 sm:px-10 pb-20 flex flex-col gap-12">
         {/* Section 1: What is FreeCell? */}
         <section id="what-is-freecell" className="scroll-mt-6">
           <div className={GLASS} style={GLASS_TOP}>

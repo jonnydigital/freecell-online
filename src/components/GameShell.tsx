@@ -297,7 +297,7 @@ export default function GameShell() {
         <div ref={containerRef} id="game-container" className="absolute inset-0" />
 
         {/* Daily Challenge Banner */}
-        <DailyBanner onPlayDaily={handlePlayDaily} />
+        {/* Daily Challenge moved to Home overlay — no banner during gameplay */}
 
         {/* Auto-Finish Button */}
         {autoCompletable && !isWon && (

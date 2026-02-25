@@ -46,9 +46,8 @@ function SectionHeading({
   sub?: string;
   icon?: string;
 }) {
-  const isRedSuit = icon === "\u2665" || icon === "\u2666";
   return (
-    <div className="px-8 sm:px-10 pt-8 sm:pt-10 pb-0">
+    <div className="px-8 sm:px-10 md:px-12 pt-8 sm:pt-10 pb-0">
       {sub && (
         <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#B8860B]/60 mb-1.5 block">
           {sub}
@@ -60,7 +59,7 @@ function SectionHeading({
         style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
       >
         {icon && (
-          <span className={`mr-2 ${isRedSuit ? "text-red-500" : "text-[#c9a84c]"}`}>
+          <span className="mr-2 text-[#c9a84c]">
             {icon}
           </span>
         )}
@@ -75,22 +74,16 @@ function StrategyCard({
   number,
   title,
   children,
-  level,
 }: {
   number: number;
   title: string;
   children: React.ReactNode;
-  level: "beginner" | "intermediate" | "advanced";
+  level?: "beginner" | "intermediate" | "advanced";
 }) {
-  const colors = {
-    beginner: "from-emerald-500 to-emerald-600",
-    intermediate: "from-amber-500 to-amber-600",
-    advanced: "from-red-500 to-red-600",
-  };
   return (
     <div className="flex gap-4">
       <div
-        className={`flex-shrink-0 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br ${colors[level]} text-white flex items-center justify-center font-bold text-base sm:text-lg shadow-md`}
+        className="flex-shrink-0 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#1b5e30] text-[#c9a84c] border border-[#c9a84c]/30 flex items-center justify-center font-bold text-base sm:text-lg shadow-md"
       >
         {number}
       </div>
@@ -228,8 +221,8 @@ export default function StrategyPage() {
               The Three Pillars of FreeCell Strategy
             </SectionHeading>
 
-            <div className="px-8 sm:px-10 py-8">
-              <p className="text-[#444444] leading-relaxed mb-6">
+            <div className="px-8 sm:px-10 md:px-12 py-8">
+              <p className="text-[#444444] leading-relaxed mb-5">
                 Before diving into specific tips, understand the three principles
                 that underpin every good FreeCell decision. Every strategy in this
                 guide flows from these foundational ideas.
@@ -255,7 +248,7 @@ export default function StrategyPage() {
                 ].map(({ icon, title, desc }) => (
                   <div
                     key={title}
-                    className="bg-[#F0EDE5] rounded-xl p-5 text-center border border-[rgba(212,175,55,0.1)]"
+                    className="card-inset rounded-xl p-5 text-center"
                   >
                     <div className="text-3xl mb-2 text-[#D4AF37]">{icon}</div>
                     <h3 className="font-medium text-[#2a2522] mb-2">{title}</h3>
@@ -276,8 +269,8 @@ export default function StrategyPage() {
               Beginner Strategies
             </SectionHeading>
 
-            <div className="px-8 sm:px-10 py-8">
-              <p className="text-[#444444] leading-relaxed mb-6">
+            <div className="px-8 sm:px-10 md:px-12 py-8">
+              <p className="text-[#444444] leading-relaxed mb-5">
                 If you&apos;re new to FreeCell or winning less than 60% of your
                 games, focus on mastering these four fundamental habits. They
                 will immediately improve your results.
@@ -366,8 +359,8 @@ export default function StrategyPage() {
               Intermediate Strategies
             </SectionHeading>
 
-            <div className="px-8 sm:px-10 py-8">
-              <p className="text-[#444444] leading-relaxed mb-6">
+            <div className="px-8 sm:px-10 md:px-12 py-8">
+              <p className="text-[#444444] leading-relaxed mb-5">
                 Once you&apos;re consistently winning 60%+ of your games, these
                 intermediate techniques will push your win rate toward the 80%
                 mark. These strategies require more planning but yield
@@ -459,8 +452,8 @@ export default function StrategyPage() {
               Advanced Techniques
             </SectionHeading>
 
-            <div className="px-8 sm:px-10 py-8">
-              <p className="text-[#444444] leading-relaxed mb-6">
+            <div className="px-8 sm:px-10 md:px-12 py-8">
+              <p className="text-[#444444] leading-relaxed mb-5">
                 These are the techniques that separate 80% win rates from 90%+.
                 They require deep board reading and careful calculation, but
                 mastering them will make you nearly unbeatable.
@@ -555,7 +548,7 @@ export default function StrategyPage() {
               Common Mistakes That Cost Games
             </SectionHeading>
 
-            <div className="px-8 sm:px-10 py-8">
+            <div className="px-8 sm:px-10 md:px-12 py-8">
               <p className="text-[#444444] leading-relaxed mb-5">
                 Even experienced players fall into these traps. Recognizing these
                 patterns in your own play is the fastest way to improve your
@@ -616,7 +609,7 @@ export default function StrategyPage() {
               Win Rate Benchmarks
             </SectionHeading>
 
-            <div className="px-8 sm:px-10 py-8">
+            <div className="px-8 sm:px-10 md:px-12 py-8">
               <p className="text-[#444444] leading-relaxed mb-5">
                 Since nearly every FreeCell deal is solvable, your win rate is
                 a direct measure of your skill. Here&apos;s how to gauge your

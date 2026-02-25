@@ -16,11 +16,8 @@ import WinScreen from './WinScreen';
 import HomeOverlay from './HomeOverlay';
 import DailyBanner from './DailyBanner';
 import AchievementsPanel from './AchievementsPanel';
-import { soundManager } from '../lib/sounds';
 import KeyboardShortcuts from './KeyboardShortcuts';
-import Tutorial from './Tutorial';
-
-type HighlightRect = { x: number; y: number; width: number; height: number };
+import { soundManager } from '../lib/sounds';
 
 export default function GameShell() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -44,14 +41,6 @@ export default function GameShell() {
   const [isLandscapeMobile, setIsLandscapeMobile] = useState(false);
   const [dailyCompleted, setDailyCompleted] = useState(true); // assume completed until checked
 
-  // Tutorial state
-  const [showTutorial, setShowTutorial] = useState(false);
-  const [tutorialHighlightRect, setTutorialHighlightRect] = useState<HighlightRect | null>(null);
-  const elementPositions = useRef<Record<string, HighlightRect>>({});
-  const dailyButtonRef = useRef<HTMLButtonElement>(null);
-  const mobileHomeButtonRef = useRef<HTMLButtonElement>(null);
-
-
   // Load stats on mount
   useEffect(() => {
     setStats(loadStats());
@@ -59,11 +48,34 @@ export default function GameShell() {
     initErrorTracking();
   }, []);
 
-  // --- Omitted for brevity ---
+  // Detect landscape on mobile (hide toolbars to maximize game area)
+  useEffect(() => {
+    const checkOrientation = () => {
+      setIsLandscapeMobile(window.innerWidth > window.innerHeight && window.innerHeight < 500);
+    };
+    checkOrientation();
+    window.addEventListener('resize', checkOrientation);
+    const onOrientationChange = () => setTimeout(checkOrientation, 200);
+    window.addEventListener('orientationchange', onOrientationChange);
+    return () => {
+      window.removeEventListener('resize', checkOrientation);
+      window.removeEventListener('orientationchange', onOrientationChange);
+    };
+  }, []);
+
+  const winDataRef = useRef<{ time: number; moves: number } | null>(null);
 
   const handleWin = useCallback(
     (data: unknown) => {
-      // --- Omitted for brevity ---
+      const d = data as { time: number; moves: number };
+      winDataRef.current = d;
+      setIsWon(true);
+      trackWin(d.time, d.moves);
+      setStats((prev) => {
+        const updated = recordWin(prev, d.time, d.moves);
+        saveStats(updated);
+        return updated;
+      });
     },
     []
   );
@@ -95,24 +107,13 @@ export default function GameShell() {
       setAutoCompletable(false);
       trackGameStart(d.gameNumber);
       setIsDailyGame(d.gameNumber === getTodaysSeed());
-      
-      // --- TUTORIAL LOGIC ---
-      try {
-        const tutorialSeen = !!localStorage.getItem('tutorialSeen');
-        if (!tutorialSeen) {
-          // Pre-fetch all tutorial element positions
-          ['freecells', 'foundations', 'tableau'].forEach(key => {
-            gameBridge.emit('requestElementPosition', key);
-          });
-          setShowTutorial(true);
-        }
-      } catch (e) {
-        console.error("Could not access localStorage", e);
-      }
     });
 
     const unsubMove = gameBridge.on('moveExecuted', (data: unknown) => {
-      // --- Omitted for brevity ---
+      const d = data as { moveCount: number; gameNumber: number };
+      setMoveCount(d.moveCount);
+      trackMove('tap');
+      setGameContext(d.gameNumber, d.moveCount);
     });
 
     const unsubWin = gameBridge.on('gameWon', handleWin);
@@ -126,60 +127,12 @@ export default function GameShell() {
       setAutoCompletable(d.completable);
     });
 
-    // --- TUTORIAL LISTENER ---
-    const unsubElementPos = gameBridge.on('elementPositionResponse', (data: unknown) => {
-        const d = data as { key: string; rect: HighlightRect };
-        if (d.key && d.rect) {
-            elementPositions.current[d.key] = d.rect;
-            // If this is the currently requested highlight, apply it
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            if ((window as any)._geminiTutorialHighlight === d.key) {
-                setTutorialHighlightRect(d.rect);
-            }
-        }
-    });
-
-    const handleTutorialStepChange = () => {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const key = (window as any)._geminiTutorialHighlight;
-        if (!key) {
-            setTutorialHighlightRect(null);
-            return;
-        }
-
-        if (elementPositions.current[key]) {
-            setTutorialHighlightRect(elementPositions.current[key]);
-        } else if (key === 'dailyButton') {
-            // The "Daily" button is part of the desktop UI bar
-            // On mobile, we point to the "Home" button which leads to it
-            const isMobile = window.innerWidth < 768;
-            const ref = isMobile ? mobileHomeButtonRef : dailyButtonRef;
-
-            if (ref.current) {
-                const rect = ref.current.getBoundingClientRect();
-                setTutorialHighlightRect({
-                    x: rect.left,
-                    y: rect.top,
-                    width: rect.width,
-                    height: rect.height,
-                });
-            }
-        } else {
-            // It's a game element we don't have yet, maybe it was just requested
-            setTutorialHighlightRect(null);
-        }
-    };
-    
-    window.addEventListener('gemini-tutorial-step-change', handleTutorialStepChange);
-
     return () => {
       unsubReady();
       unsubMove();
       unsubWin();
       unsubDeadlock();
       unsubAutoComplete();
-      unsubElementPos();
-      window.removeEventListener('gemini-tutorial-step-change', handleTutorialStepChange);
       if (gameRef.current) {
         gameRef.current.destroy(true);
         gameRef.current = null;
@@ -187,6 +140,15 @@ export default function GameShell() {
       mountedRef.current = false;
     };
   }, [handleWin]);
+
+  // Record daily challenge completion when winning a daily game
+  useEffect(() => {
+    if (isWon && isDailyGame && winDataRef.current) {
+      const todayStr = getTodayStr();
+      recordDailyCompletion(todayStr, winDataRef.current.moves, winDataRef.current.time);
+      setDailyCompleted(true);
+    }
+  }, [isWon, isDailyGame]);
 
   const handleNewGame = () => {
     setIsDailyGame(false);
@@ -201,14 +163,17 @@ export default function GameShell() {
     trackHint();
     gameBridge.emit('hint');
   };
+
   const handlePlayDaily = (seed: number) => {
     setIsDailyGame(true);
     gameBridge.emit('newGame', seed);
   };
+
   const handlePlayNumber = (num: number) => {
     setIsDailyGame(false);
     gameBridge.emit('newGame', num);
   };
+
   const handleToggleMute = () => {
     const muted = soundManager.toggleMute();
     setIsMuted(muted);
@@ -245,7 +210,6 @@ export default function GameShell() {
             New Game
           </button>
           <button
-            ref={dailyButtonRef}
             onClick={() => setShowDaily(true)}
             className="flex items-center gap-1.5 px-3 py-1.5 text-sm bg-yellow-700/80 hover:bg-yellow-600 text-white rounded transition-colors"
             title="Daily Challenge"
@@ -256,32 +220,136 @@ export default function GameShell() {
           <button onClick={handleUndo} className={iconBtnClass} title="Undo (Ctrl+Z)">
             <RotateCcw size={iconSize} />
           </button>
-          {/* --- Omitted for brevity --- */}
+          <button onClick={handleRedo} className={iconBtnClass} title="Redo (Ctrl+Y)">
+            <RotateCw size={iconSize} />
+          </button>
+          <button onClick={handleHint} className={iconBtnClass} title="Hint (H)">
+            <Lightbulb size={iconSize} />
+          </button>
+          <button onClick={() => setShowStats(true)} className={iconBtnClass} title="Statistics">
+            <BarChart3 size={iconSize} />
+          </button>
+          <button onClick={() => setShowFeedback(true)} className={iconBtnClass} title="Feedback">
+            <MessageSquare size={iconSize} />
+          </button>
+          <button onClick={handleToggleMute} className={iconBtnClass} title={isMuted ? "Unmute" : "Mute"}>
+            {isMuted ? <VolumeX size={iconSize} /> : <Volume2 size={iconSize} />}
+          </button>
         </div>
-        {/* --- Omitted for brevity --- */}
+        <div className="flex items-center gap-4 text-sm text-white/70">
+          {gameNumber && (
+            <button
+              onClick={() => setShowGameInput(true)}
+              className="hover:text-white transition-colors cursor-pointer"
+              title="Click to enter a game number"
+            >
+              {isDailyGame && <span className="text-yellow-400 mr-1" title="Daily Challenge">&#9819;</span>}
+              Game #{gameNumber}
+            </button>
+          )}
+          <span>{moveCount} moves</span>
+          {isWon && (
+            <span className="text-yellow-400 font-bold animate-pulse">Win!</span>
+          )}
+        </div>
       </div>
 
-      {/* --- Omitted for brevity --- */}
-      
+      {/* ── Mobile Top Bar (only info, hidden on desktop and landscape) ── */}
+      {!isLandscapeMobile && (
+        <div className="flex md:hidden items-center justify-between px-3 py-1.5 bg-[#072907] border-b border-[#1a5c1a]/30">
+          <div className="flex items-center gap-3 text-xs text-white/70">
+            {gameNumber && (
+              <button
+                onClick={() => setShowGameInput(true)}
+                className="font-medium hover:text-white transition-colors"
+                title="Enter game number"
+              >
+                {isDailyGame && <span className="text-yellow-400 mr-1">&#9819;</span>}
+                Game #{gameNumber}
+              </button>
+            )}
+          </div>
+          <div className="flex items-center gap-3 text-xs text-white/70">
+            <span>{moveCount} moves</span>
+            {isWon && (
+              <span className="text-yellow-400 font-bold animate-pulse">Win!</span>
+            )}
+          </div>
+        </div>
+      )}
+
       {/* Game Canvas Container */}
       <div className="relative flex-1">
-        {/* --- Omitted for brevity --- */}
+        <div ref={containerRef} id="game-container" className="absolute inset-0" />
+
+        {/* Daily Challenge Banner */}
+        <DailyBanner onPlayDaily={handlePlayDaily} />
+
+        {/* Auto-Finish Button */}
+        {autoCompletable && !isWon && (
+          <div className="absolute top-4 left-1/2 -translate-x-1/2 z-10">
+            <button
+              onClick={() => {
+                setAutoCompletable(false);
+                gameBridge.emit('autoFinish');
+              }}
+              className="px-6 py-3 bg-yellow-500 hover:bg-yellow-400 text-black font-bold text-lg rounded-lg shadow-lg animate-bounce transition-colors"
+            >
+              Auto-Finish
+            </button>
+          </div>
+        )}
+
+        {/* Win Screen (appears 5s after win, overlays celebration) */}
+        {isWon && winDataRef.current && (
+          <WinScreen
+            gameNumber={gameNumber || 0}
+            time={winDataRef.current.time}
+            moves={winDataRef.current.moves}
+            hintsUsed={gameSession.hintsUsed}
+            onPlayAgain={handleNewGame}
+            onDailyChallenge={() => {
+              handlePlayDaily(getTodaysSeed());
+            }}
+          />
+        )}
+
+        {/* Floating landscape overlay: undo/redo when toolbars are hidden */}
+        {isLandscapeMobile && (
+          <div className="absolute bottom-2 right-2 z-20 flex gap-1.5 md:hidden">
+            <button onClick={handleUndo} className="p-2 bg-black/40 active:bg-black/60 rounded-lg text-white/70" title="Undo">
+              <RotateCcw size={18} />
+            </button>
+            <button onClick={handleRedo} className="p-2 bg-black/40 active:bg-black/60 rounded-lg text-white/70" title="Redo">
+              <RotateCw size={18} />
+            </button>
+          </div>
+        )}
       </div>
 
       {/* ── Mobile Bottom Bar — 5 icons: Home, New, Undo, Redo, Hint ── */}
       {!isLandscapeMobile && <div className="flex md:hidden items-center justify-around px-2 py-2 bg-[#072907] border-t border-[#1a5c1a]/30 safe-area-bottom">
-        <button ref={mobileHomeButtonRef} onClick={() => setShowHome(true)} className="flex flex-col items-center gap-0.5 p-2 text-[#D4AF37]/80 active:text-[#D4AF37]" title="Home">
+        <button onClick={() => setShowHome(true)} className="flex flex-col items-center gap-0.5 p-2 text-[#D4AF37]/80 active:text-[#D4AF37]" title="Home">
           <Home size={22} />
           <span className="text-[10px]">Home</span>
         </button>
-        {/* --- Omitted for brevity --- */}
+        <button onClick={handleNewGame} className="flex flex-col items-center gap-0.5 p-2 text-white/70 active:text-white" title="New Game">
+          <Shuffle size={22} />
+          <span className="text-[10px]">New</span>
+        </button>
+        <button onClick={handleUndo} className="flex flex-col items-center gap-0.5 p-2 text-white/70 active:text-white" title="Undo">
+          <RotateCcw size={22} />
+          <span className="text-[10px]">Undo</span>
+        </button>
+        <button onClick={handleRedo} className="flex flex-col items-center gap-0.5 p-2 text-white/70 active:text-white" title="Redo">
+          <RotateCw size={22} />
+          <span className="text-[10px]">Redo</span>
+        </button>
+        <button onClick={handleHint} className="flex flex-col items-center gap-0.5 p-2 text-white/70 active:text-white" title="Hint">
+          <Lightbulb size={22} />
+          <span className="text-[10px]">Hint</span>
+        </button>
       </div>}
-
-      <Tutorial 
-        isOpen={showTutorial}
-        onDismiss={() => setShowTutorial(false)}
-        highlightRect={tutorialHighlightRect}
-      />
 
       {/* Home Overlay */}
       <HomeOverlay
@@ -295,7 +363,36 @@ export default function GameShell() {
         onShowShortcuts={() => { setShowShortcuts(true); setShowHome(false); }}
         onAchievements={() => { setShowAchievements(true); setShowHome(false); }}
       />
-      
+
+      {/* Stats Modal */}
+      <StatsPanel
+        stats={stats}
+        isOpen={showStats}
+        onClose={() => setShowStats(false)}
+      />
+
+      {/* Feedback Modal */}
+      <FeedbackModal
+        isOpen={showFeedback}
+        onClose={() => setShowFeedback(false)}
+        gameNumber={gameNumber}
+        moveCount={moveCount}
+      />
+
+      {/* Daily Challenge Modal */}
+      <DailyChallengePanel
+        isOpen={showDaily}
+        onClose={() => setShowDaily(false)}
+        onPlayDaily={handlePlayDaily}
+      />
+
+      {/* Game Number Input Modal */}
+      <GameNumberInput
+        isOpen={showGameInput}
+        onClose={() => setShowGameInput(false)}
+        onPlay={handlePlayNumber}
+      />
+
       {/* Keyboard Shortcuts */}
       <KeyboardShortcuts
         isOpen={showShortcuts}

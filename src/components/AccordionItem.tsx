@@ -12,20 +12,20 @@ export function AccordionItem({
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="border-b border-[#D4C9A8]/50 last:border-b-0">
+    <div className="border-b border-[#d4c5a0]/40 last:border-b-0">
       <button
         onClick={() => setOpen(!open)}
-        className="py-5 px-8 sm:px-10 flex justify-between items-center w-full text-left transition-colors duration-200 hover:bg-[#F5F0E0]/50"
+        className="py-5 px-8 sm:px-10 flex justify-between items-center w-full text-left transition-colors duration-200 hover:bg-[#f4edd8]/50"
       >
         <span
           className={`font-medium text-lg tracking-wide transition-colors duration-200 ${
-            open ? "text-[#B8860B]" : "text-[#2C2C2C]"
+            open ? "text-[#B8860B]" : "text-[#2a2522]"
           }`}
         >
           {question}
         </span>
         <svg
-          className={`w-5 h-5 text-[#B8860B] shrink-0 ml-4 transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] ${
+          className={`w-5 h-5 text-[#c9a84c] shrink-0 ml-4 transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] ${
             open ? "rotate-180" : ""
           }`}
           fill="none"

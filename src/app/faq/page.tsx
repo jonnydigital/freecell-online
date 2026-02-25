@@ -151,13 +151,6 @@ const faqCategories: FaqCategory[] = [
   },
 ];
 
-/* ── Glass panel style ── */
-
-const CARD = "card-panel";
-const CARD_TOP: React.CSSProperties = {
-  borderTop: "1px solid rgba(184, 134, 11, 0.08)",
-};
-
 /* ══════════════════════════════════════════════════════════════
    Main Page
    ══════════════════════════════════════════════════════════════ */
@@ -211,7 +204,7 @@ export default function FAQPage() {
 
         {/* Breadcrumbs */}
         <nav
-          className="max-w-4xl mx-auto mb-8 text-sm text-[#6B7280]"
+          className="max-w-3xl mx-auto mb-8 text-sm text-[#6B7280]"
           aria-label="Breadcrumb"
         >
           <ol className="flex items-center justify-center gap-2">
@@ -230,7 +223,7 @@ export default function FAQPage() {
 
         {/* Title */}
         <h1
-          className="text-4xl sm:text-5xl lg:text-6xl font-semibold text-[#D4AF37] mb-4 max-w-3xl mx-auto leading-tight"
+          className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#D4AF37] mb-4 max-w-3xl mx-auto leading-tight"
           style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
         >
           Frequently Asked Questions
@@ -251,7 +244,7 @@ export default function FAQPage() {
       </header>
 
       {/* ── Category Nav ── */}
-      <nav className="max-w-4xl mx-auto px-6 sm:px-10 lg:px-12 mb-12">
+      <nav className="max-w-3xl mx-auto px-6 sm:px-10 lg:px-12 mb-12">
         <div className="flex md:flex-wrap md:justify-center gap-3 overflow-x-auto no-scrollbar pb-1">
           {faqCategories.map((cat) => {
             const isRedSuit = cat.icon === "\u2665" || cat.icon === "\u2666";
@@ -274,7 +267,7 @@ export default function FAQPage() {
       </nav>
 
       {/* ── Content ── */}
-      <main className="max-w-4xl mx-auto px-6 sm:px-10 lg:px-12 pb-20 flex flex-col gap-12">
+      <main className="max-w-3xl mx-auto px-6 sm:px-10 lg:px-12 pb-20 flex flex-col gap-12">
         {faqCategories.map((category) => {
           const categoryId = category.title
             .toLowerCase()
@@ -288,26 +281,27 @@ export default function FAQPage() {
               id={categoryId}
               className="scroll-mt-6"
             >
-              <div className={CARD} style={CARD_TOP}>
-                {/* Category heading — green band at top of card */}
-                <div className="bg-gradient-to-r from-[#0a3d1e] to-[#1a5c35] px-8 sm:px-10 py-4 ">
-                  <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#D4AF37]/80 mb-1 block">
+              <div className="card-panel">
+                {/* Category heading — integrated into card body */}
+                <div className="px-8 sm:px-10 pt-8 sm:pt-10 pb-0">
+                  <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#B8860B]/60 mb-1.5 block">
                     {category.title}
                   </span>
                   <h2
                     id={`${categoryId}-heading`}
-                    className="text-2xl sm:text-3xl font-semibold text-white"
+                    className="text-2xl sm:text-3xl font-bold text-[#2a2522]"
                     style={{
                       fontFamily: "var(--font-playfair), Georgia, serif",
                     }}
                   >
                     <span
-                      className={`mr-2 ${isRedSuit ? "text-red-400" : "text-white/60"}`}
+                      className={`mr-2 ${isRedSuit ? "text-red-500" : "text-[#c9a84c]"}`}
                     >
                       {category.icon}
                     </span>
                     {category.title}
                   </h2>
+                  <div className="card-title-separator mt-5" />
                 </div>
 
                 {/* Accordion items */}
@@ -325,15 +319,16 @@ export default function FAQPage() {
 
         {/* ── Still have questions? ── */}
         <section>
-          <div className={CARD} style={CARD_TOP}>
+          <div className="card-panel">
             <div className="px-8 sm:px-10 py-8 sm:py-10 text-center">
               <h2
-                className="text-2xl font-semibold text-[#2D2D2D] mb-3"
+                className="text-2xl font-bold text-[#2a2522] mb-3"
                 style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
               >
                 Still Have Questions?
               </h2>
-              <p className="text-[#6B7280] mb-5 max-w-lg mx-auto leading-relaxed">
+              <div className="card-title-separator mx-auto max-w-[120px] mb-5" />
+              <p className="text-[#5a5a5a] mb-5 max-w-lg mx-auto leading-relaxed">
                 The best way to learn FreeCell is to play. Start a game and
                 experiment — use undo freely, try different approaches, and
                 you&apos;ll develop intuition faster than any guide can teach.
@@ -341,13 +336,13 @@ export default function FAQPage() {
               <div className="flex flex-wrap justify-center gap-3 text-sm">
                 <Link
                   href="/how-to-play"
-                  className="px-5 py-2 rounded-full border border-[#D4AF37]/30 text-[#D4AF37] font-medium hover:bg-[#D4AF37]/10 hover:border-[#D4AF37]/50 transition-all"
+                  className="px-5 py-2 rounded-full border border-[#D4AF37]/30 text-[#B8860B] font-medium hover:bg-[#D4AF37]/10 hover:border-[#D4AF37]/50 transition-all"
                 >
                   Read the Full Rules
                 </Link>
                 <Link
                   href="/strategy"
-                  className="px-5 py-2 rounded-full border border-[#D4AF37]/30 text-[#D4AF37] font-medium hover:bg-[#D4AF37]/10 hover:border-[#D4AF37]/50 transition-all"
+                  className="px-5 py-2 rounded-full border border-[#D4AF37]/30 text-[#B8860B] font-medium hover:bg-[#D4AF37]/10 hover:border-[#D4AF37]/50 transition-all"
                 >
                   Strategy Guide
                 </Link>
@@ -359,9 +354,8 @@ export default function FAQPage() {
         {/* ── CTA ── */}
         <section>
           <div
-            className={CARD}
+            className="card-panel"
             style={{
-              ...CARD_TOP,
               background:
                 "linear-gradient(135deg, rgba(10,74,42,0.6) 0%, rgba(6,37,22,0.8) 100%)",
             }}
@@ -381,12 +375,12 @@ export default function FAQPage() {
               </div>
 
               <h2
-                className="text-2xl sm:text-3xl font-semibold text-[#2D2D2D] mb-3"
+                className="text-2xl sm:text-3xl font-bold text-white mb-3"
                 style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
               >
                 Ready to Play?
               </h2>
-              <p className="text-[#6B7280] mb-6 max-w-md mx-auto">
+              <p className="text-white/60 mb-6 max-w-md mx-auto">
                 Now that you know everything about FreeCell, put your knowledge
                 to the test. Every deal is waiting to be solved.
               </p>

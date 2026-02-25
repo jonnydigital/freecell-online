@@ -144,7 +144,7 @@ body {
 
 /* Felt texture background for content pages */
 .felt-bg {
-  background: #062516;
+  background: #1a4a2e;
   position: relative;
 }
 
@@ -153,8 +153,8 @@ body {
   position: fixed;
   inset: 0;
   background:
-    radial-gradient(ellipse at 50% 30%, rgba(26, 92, 52, 0.35) 0%, rgba(6, 37, 22, 0) 70%),
-    radial-gradient(ellipse at 50% 50%, transparent 40%, rgba(0, 0, 0, 0.4) 100%);
+    radial-gradient(ellipse at 50% 30%, rgba(40, 130, 75, 0.45) 0%, transparent 55%),
+    radial-gradient(ellipse at 50% 50%, transparent 20%, rgba(0, 0, 0, 0.55) 100%);
   pointer-events: none;
   z-index: 0;
 }
@@ -166,22 +166,40 @@ body {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
   background-repeat: repeat;
   background-size: 256px 256px;
-  opacity: 0.5;
+  opacity: 0.55;
   pointer-events: none;
   z-index: 0;
 }
 
 /* Card container — looks like a playing card resting on felt */
 .card-panel {
-  background: linear-gradient(175deg, #FDFCF8 0%, #F5F0E8 100%);
+  background: #faf6f0;
   border-radius: 1rem;
-  border: 1px solid #E8E0CC;
+  border: 1px solid rgba(212, 197, 160, 0.6);
   box-shadow:
-    0 2px 8px rgba(0, 0, 0, 0.15),
-    0 8px 24px rgba(0, 0, 0, 0.12),
-    0 20px 48px rgba(0, 0, 0, 0.1);
+    0 4px 8px rgba(0, 0, 0, 0.25),
+    0 14px 36px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
   position: relative;
   overflow: hidden;
+  z-index: 1;
+}
+
+/* Inner decorative border — mimics the printed border on real playing cards */
+.card-panel::after {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border: 1px solid rgba(201, 185, 122, 0.25);
+  border-radius: 0.75rem;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Gold separator for card section titles */
+.card-title-separator {
+  height: 1px;
+  background: linear-gradient(90deg, rgba(212, 175, 55, 0.5) 0%, rgba(212, 175, 55, 0.15) 100%);
 }
 
 /* Gold foil-stamp text shadow for headings */
@@ -192,7 +210,23 @@ body {
 
 /* Inner accent panels (diagrams, examples, etc.) on card containers */
 .card-inset {
-  background: linear-gradient(175deg, #F0EDE5 0%, #E8E3D8 100%);
+  background: linear-gradient(175deg, #f0ede5 0%, #e8e3d8 100%);
   border: 1px solid rgba(184, 134, 11, 0.12);
   border-radius: 0.75rem;
+}
+
+/* Decorative suit divider between sections */
+.suit-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+}
+.suit-divider::before,
+.suit-divider::after {
+  content: '';
+  height: 1px;
+  width: 3rem;
+  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.3), transparent);
 }

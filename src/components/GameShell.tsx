@@ -132,6 +132,7 @@ export default function GameShell() {
         if (d.key && d.rect) {
             elementPositions.current[d.key] = d.rect;
             // If this is the currently requested highlight, apply it
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             if ((window as any)._geminiTutorialHighlight === d.key) {
                 setTutorialHighlightRect(d.rect);
             }
@@ -139,6 +140,7 @@ export default function GameShell() {
     });
 
     const handleTutorialStepChange = () => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const key = (window as any)._geminiTutorialHighlight;
         if (!key) {
             setTutorialHighlightRect(null);

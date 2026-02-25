@@ -20,8 +20,10 @@ export default function DailyBanner({ onPlayDaily }: DailyBannerProps) {
       if (dismissed) return;
 
       if (!isTodayCompleted()) {
-        setIsVisible(true);
-        setStreak(getCurrentStreak());
+        requestAnimationFrame(() => {
+          setIsVisible(true);
+          setStreak(getCurrentStreak());
+        });
       }
     } catch {
       // sessionStorage blocked

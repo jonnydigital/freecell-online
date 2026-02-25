@@ -11,7 +11,7 @@ export default function CookieConsent() {
     try {
       const consent = localStorage.getItem(CONSENT_KEY);
       if (!consent) {
-        setVisible(true);
+        requestAnimationFrame(() => setVisible(true));
       } else if (consent === 'accepted') {
         loadAdSense();
       }

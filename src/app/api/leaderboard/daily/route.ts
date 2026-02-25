@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let kv: any = null;
 async function getKV() {
   if (!process.env.KV_REST_API_URL) return null;
@@ -29,7 +30,7 @@ export async function GET(request: NextRequest) {
     const raw = await db.zrange(key, 0, 49, { withScores: true });
 
     // Parse results: raw is [member, score, member, score, ...]
-    const entries: any[] = [];
+    const entries: { rank: number; playerName: string; moves: number; time: number; gameNumber: number }[] = [];
     for (let i = 0; i < raw.length; i += 2) {
       try {
         const data = typeof raw[i] === 'string' ? JSON.parse(raw[i]) : raw[i];

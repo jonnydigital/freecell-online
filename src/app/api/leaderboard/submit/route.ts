@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 // Vercel KV - lazy import to avoid crash if not configured
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let kv: any = null;
 async function getKV() {
   if (!process.env.KV_REST_API_URL) return null;

@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Trophy } from 'lucide-react';
-import { loadAchievements, Achievement } from '../lib/achievements';
+import { loadAchievements } from '../lib/achievements';
 
 interface AchievementsPanelProps {
   isOpen: boolean;

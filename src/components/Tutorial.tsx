@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X } from 'lucide-react';
+// X icon unused — close handled by Skip/Done buttons
 
 const tutorialSteps = [
   {
@@ -75,6 +75,7 @@ export default function Tutorial({ isOpen, onDismiss, highlightRect }: TutorialP
       const key = tutorialSteps[step].highlight;
       // This is a bit of a hack. A more robust solution might use a callback.
       // We're notifying GameShell which element we need a rect for.
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (window as any)._geminiTutorialHighlight = key;
       window.dispatchEvent(new CustomEvent('gemini-tutorial-step-change'));
     }

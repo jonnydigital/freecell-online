@@ -1,29 +1,32 @@
 // src/components/ThemeSelector.tsx
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { themes, cardBacks, applyTheme, applyCardBack, Theme } from '../lib/themes';
 import { Check } from 'lucide-react';
 
 const ThemeSelector: React.FC = () => {
-  const [selectedTheme, setSelectedTheme] = useState<Theme | null>(null);
-  const [selectedCardBack, setSelectedCardBack] = useState<string | null>(null);
+  const [selectedThemeName, setSelectedThemeName] = useState<string>('Classic Green');
+  const [selectedCardBack, setSelectedCardBack] = useState<string>("url('/cards/back.png')");
+
+  const selectedTheme = useMemo(() => themes.find(t => t.name === selectedThemeName) || themes[0], [selectedThemeName]);
 
   useEffect(() => {
     const storedThemeName = localStorage.getItem('theme-name') || 'Classic Green';
     const storedCardBack = localStorage.getItem('card-back') || "url('/cards/back.png')";
 
-    const currentTheme = themes.find(t => t.name === storedThemeName) || themes[0];
-    setSelectedTheme(currentTheme);
-    applyTheme(currentTheme);
-
-    setSelectedCardBack(storedCardBack);
+    applyTheme(themes.find(t => t.name === storedThemeName) || themes[0]);
     applyCardBack(storedCardBack);
 
+    // Use requestAnimationFrame to avoid synchronous setState in effect
+    requestAnimationFrame(() => {
+      setSelectedThemeName(storedThemeName);
+      setSelectedCardBack(storedCardBack);
+    });
   }, []);
 
   const handleThemeChange = (theme: Theme) => {
-    setSelectedTheme(theme);
+    setSelectedThemeName(theme.name);
     applyTheme(theme);
     localStorage.setItem('theme-name', theme.name);
   };

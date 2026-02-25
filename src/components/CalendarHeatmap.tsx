@@ -4,7 +4,7 @@
 import React from 'react';
 
 interface CalendarHeatmapProps {
-  completedDays: Record<string, any>;
+  completedDays: Record<string, { moves: number; time: number }>;
 }
 
 const CalendarHeatmap: React.FC<CalendarHeatmapProps> = ({ completedDays }) => {

@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   title:
     "FreeCell Strategy Guide | Proven Tips to Win 90%+ of Games",
   description:
-    "Master FreeCell Solitaire with our comprehensive strategy guide. From beginner fundamentals to advanced techniques, learn the strategies that separate casual players from experts with 90%+ win rates.",
+    "Get better at FreeCell fast. Beginner tips, intermediate tactics, and advanced techniques that'll take your win rate from average to 90%+.",
   keywords: [
     "freecell strategy",
     "freecell tips",
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "FreeCell Strategy Guide | Win 90%+ of Games",
     description:
-      "Proven FreeCell strategies from beginner to expert. Improve your win rate with our comprehensive guide.",
+      "FreeCell strategies from beginner to expert. Tips and techniques to push your win rate past 90%.",
     url: "https://playfreecellonline.com/strategy",
     siteName: "PlayFreeCellOnline.com",
     type: "article",
@@ -105,7 +105,7 @@ export default function StrategyPage() {
     "@type": "Article",
     headline: "FreeCell Strategy Guide: Proven Tips to Win 90%+ of Games",
     description:
-      "Comprehensive FreeCell strategy guide covering beginner, intermediate, and advanced techniques.",
+      "FreeCell strategy guide covering beginner, intermediate, and advanced techniques to boost your win rate.",
     author: {
       "@type": "Organization",
       name: "PlayFreeCellOnline.com",
@@ -170,8 +170,8 @@ export default function StrategyPage() {
           FreeCell Strategy Guide
         </h1>
         <p className="text-[#6B7280] text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
-          The difference between a 50% win rate and a 90%+ win rate is
-          strategy. Master these techniques and you&apos;ll win nearly every
+          The difference between a 50% win rate and 90%+ comes down to
+          strategy. Learn these techniques and you&apos;ll win nearly every
           game you play.
         </p>
 
@@ -218,14 +218,13 @@ export default function StrategyPage() {
         <section id="fundamentals" className="scroll-mt-6">
           <div className={CARD} style={CARD_TOP}>
             <SectionHeading sub="Core Philosophy" id="fundamentals-heading" icon={"\u2660"}>
-              The Three Pillars of FreeCell Strategy
+              Three Rules That Win FreeCell Games
             </SectionHeading>
 
             <div className="px-10 sm:px-12 py-8">
               <p className="text-[#444444] leading-relaxed mb-5">
-                Before diving into specific tips, understand the three principles
-                that underpin every good FreeCell decision. Every strategy in this
-                guide flows from these foundational ideas.
+                Every strategy in this guide comes back to three ideas. Get
+                these right and everything else clicks.
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -233,17 +232,17 @@ export default function StrategyPage() {
                   {
                     icon: "\u265A",
                     title: "Preserve Flexibility",
-                    desc: "Every move that fills a free cell or empty column reduces your options. The player with more empty spaces has more power. Guard your flexibility like a chess player guards their king.",
+                    desc: "Every move that fills a free cell or empty column cuts your options. More empty spaces means more power. Protect that flexibility.",
                   },
                   {
                     icon: "\u265B",
                     title: "Think in Chains",
-                    desc: 'Never evaluate a move in isolation. Ask: "What does this move enable? And what does that enable?" The best players see cascading sequences of 5\u201310 moves before they act.',
+                    desc: 'Don\'t look at moves one at a time. Ask: "What does this unlock? And then what?" Good players see chains of 5\u201310 moves before they touch a card.',
                   },
                   {
                     icon: "\u265C",
                     title: "Prioritize Low Cards",
-                    desc: "Aces and 2s buried deep in the cascades are emergencies. Every plan should ultimately serve the goal of freeing low cards and building foundations upward as quickly as possible.",
+                    desc: "Aces and 2s buried deep in the columns are emergencies. Everything you do should work toward freeing low cards and building foundations up.",
                   },
                 ].map(({ icon, title, desc }) => (
                   <div
@@ -272,8 +271,8 @@ export default function StrategyPage() {
             <div className="px-10 sm:px-12 py-8">
               <p className="text-[#444444] leading-relaxed mb-5">
                 If you&apos;re new to FreeCell or winning less than 60% of your
-                games, focus on mastering these four fundamental habits. They
-                will immediately improve your results.
+                games, start here. These four habits will improve your results
+                right away.
               </p>
 
               <div className="space-y-8">
@@ -283,14 +282,13 @@ export default function StrategyPage() {
                   level="beginner"
                 >
                   <p>
-                    Before making any other moves, scan the entire board for Aces
-                    and 2s. Where are they? How deeply buried? If an Ace is stuck
-                    under five other cards, that column is your top priority. Every
-                    move in the early game should work toward uncovering these
-                    critical low cards. Getting Aces to the foundations early
-                    creates a cascading effect — once the Ace is placed, the 2
-                    becomes playable, then the 3, and so on. This chain reaction
-                    clears space faster than any other approach.
+                    Before you do anything else, scan the whole board for Aces
+                    and 2s. Where are they? How deep are they buried? If an Ace
+                    is stuck under five cards, that column is your top priority.
+                    Every early move should work toward uncovering these low
+                    cards. Getting Aces to the foundations early starts a chain
+                    reaction. Once the Ace is placed, the 2 becomes playable,
+                    then the 3, and so on. Nothing clears space faster.
                   </p>
                 </StrategyCard>
 
@@ -302,14 +300,13 @@ export default function StrategyPage() {
                   <p>
                     Free cells are your most important resource, and the #1
                     beginner mistake is filling them too early. Every occupied
-                    free cell directly reduces the number of cards you can move at
-                    once. With all four free cells occupied, you can only move one
-                    card at a time — which often means you&apos;re stuck. Treat
-                    free cells like an emergency reserve. Use them only when
-                    necessary, and prioritize emptying them again immediately. A
-                    good rule of thumb: if you have three or more free cells
-                    occupied, stop and find ways to empty them before making any
-                    other moves.
+                    free cell reduces how many cards you can move at once. With
+                    all four filled, you can only move one card at a time, which
+                    usually means you&apos;re stuck. Think of free cells as an
+                    emergency reserve. Only use them when you have to, and
+                    prioritize emptying them again right away. Good rule of
+                    thumb: if three or more free cells are full, stop and clear
+                    them before doing anything else.
                   </p>
                 </StrategyCard>
 
@@ -319,15 +316,14 @@ export default function StrategyPage() {
                   level="beginner"
                 >
                   <p>
-                    An empty cascade column is even more powerful than a free cell.
-                    Why? Because it can hold an entire sequence of cards, not just
-                    a single card. The supermove formula doubles with each empty
-                    column you have. Creating an empty column early in the game
-                    dramatically increases your move capacity and opens up
-                    strategic options that simply don&apos;t exist when all columns
-                    are occupied. Once you clear a column, think very carefully
-                    before filling it again. Only fill an empty column if the move
-                    clearly advances your overall strategy.
+                    An empty column is even more powerful than a free cell. It
+                    can hold an entire sequence of cards, not just one. The
+                    supermove formula doubles with each empty column you have.
+                    Clearing a column early gives you way more move capacity and
+                    opens up options that just don&apos;t exist when all columns
+                    are full. Once you clear a column, think hard before filling
+                    it again. Only do it if the move clearly pushes your game
+                    forward.
                   </p>
                 </StrategyCard>
 
@@ -337,14 +333,14 @@ export default function StrategyPage() {
                   level="beginner"
                 >
                   <p>
-                    The undo button is the single best learning tool available to
-                    you. Try a sequence of moves — if it leads to a dead end, undo
-                    and try a completely different approach. Over time, you&apos;ll
-                    develop the ability to recognize dead ends before you reach
-                    them. This is how every expert player learned. Many winning
-                    strategies only become visible after you&apos;ve explored
-                    (and undone) several alternative paths. Never feel bad about
-                    using undo — it&apos;s how you build intuition.
+                    Undo is the single best learning tool you have. Try a
+                    sequence of moves. If it leads nowhere, undo and try
+                    something completely different. Over time, you&apos;ll start
+                    recognizing dead ends before you reach them. That&apos;s how
+                    every expert learned. Lots of winning strategies only show
+                    up after you&apos;ve explored (and undone) several different
+                    paths. Don&apos;t feel bad about using undo. It&apos;s how
+                    you build intuition.
                   </p>
                 </StrategyCard>
               </div>
@@ -361,10 +357,9 @@ export default function StrategyPage() {
 
             <div className="px-10 sm:px-12 py-8">
               <p className="text-[#444444] leading-relaxed mb-5">
-                Once you&apos;re consistently winning 60%+ of your games, these
-                intermediate techniques will push your win rate toward the 80%
-                mark. These strategies require more planning but yield
-                significantly better results.
+                Once you&apos;re consistently winning 60%+ of games, these
+                techniques will push you toward 80%. They take more planning
+                but the payoff is real.
               </p>
 
               <div className="space-y-8">
@@ -374,15 +369,14 @@ export default function StrategyPage() {
                   level="intermediate"
                 >
                   <p>
-                    When you have a choice between building a sequence with
-                    alternating suits or keeping cards in the same suit, prefer
-                    same-suit whenever practical. Same-suit sequences (for example,
-                    7{"\u2660"} on 8{"\u2660"}) can be moved directly to the
-                    foundation without being broken apart, while mixed-suit
-                    sequences need to be disassembled card by card. This
-                    doesn&apos;t mean you should avoid mixed sequences — they&apos;re
-                    still useful — but when you have the option, same-suit is almost
-                    always better for your long-term plan.
+                    When you can choose between building with alternating suits
+                    or keeping cards in the same suit, go same-suit whenever
+                    practical. Same-suit sequences (like 7{"\u2660"} on
+                    8{"\u2660"}) move directly to the foundation without breaking
+                    apart. Mixed-suit sequences have to be taken apart card by
+                    card. That doesn&apos;t mean mixed sequences are bad.
+                    They&apos;re still useful. But when you have the choice,
+                    same-suit is almost always better long-term.
                   </p>
                 </StrategyCard>
 
@@ -393,14 +387,14 @@ export default function StrategyPage() {
                 >
                   <p>
                     Before every move, think about where it leads. Ask yourself:
-                    &quot;After this move, what move does it enable? And what does
-                    that enable?&quot; The best players see chains of moves, not
-                    individual actions. A single move that accomplishes nothing on
-                    its own might be brilliant if it&apos;s the first step in a
-                    10-move chain that clears an entire column. Conversely, a move
-                    that looks attractive in isolation might be terrible if it
-                    blocks a critical card three moves from now. Develop the habit
-                    of tracing move consequences at least 5 steps into the future.
+                    &quot;After this move, what does it open up? And then
+                    what?&quot; Good players see chains of moves, not individual
+                    actions. A move that does nothing on its own might be
+                    brilliant if it&apos;s step one of a 10-move chain that
+                    clears an entire column. On the flip side, a move that looks
+                    great right now might be terrible if it blocks a key card
+                    three moves later. Get in the habit of tracing consequences
+                    at least 5 steps out.
                   </p>
                 </StrategyCard>
 
@@ -410,16 +404,15 @@ export default function StrategyPage() {
                   level="intermediate"
                 >
                   <p>
-                    A long, perfectly ordered sequence of cards looks satisfying,
-                    but it locks up an entire column. You can&apos;t access any
-                    cards beneath the sequence, and moving the sequence elsewhere
-                    requires a lot of empty space. Build sequences only when they
-                    serve your overall plan — when the cards you&apos;re stacking
-                    actually need to be in that order for foundation building.
-                    Building sequences just because the move is available is a
-                    common intermediate-level trap. Ask yourself: &quot;Does this
-                    sequence help me reach an Ace or build a foundation?&quot; If
-                    not, the move might be a waste.
+                    A long, perfectly ordered sequence looks satisfying, but it
+                    locks up an entire column. You can&apos;t reach any cards
+                    underneath, and moving it somewhere else takes a lot of
+                    empty space. Only build sequences when they actually serve
+                    your plan, when those cards need to be stacked for
+                    foundation building. Stacking just because you can is a
+                    classic intermediate trap. Ask yourself: &quot;Does this
+                    sequence help me reach an Ace or build a foundation?&quot;
+                    If not, skip it.
                   </p>
                 </StrategyCard>
 
@@ -429,15 +422,15 @@ export default function StrategyPage() {
                   level="intermediate"
                 >
                   <p>
-                    Try to keep your four foundation piles roughly equal in height.
-                    If one suit gets far ahead of the others, you may find
-                    yourself unable to auto-move cards because the cards they
-                    depend on haven&apos;t reached their foundations yet. For
-                    example, if your spades foundation is at 9{"\u2660"} but hearts
-                    is still at 3{"\u2665"}, you won&apos;t be able to auto-move
-                    any black cards beyond the 4 level — the game needs both red
-                    foundations to be caught up first. Balanced foundations keep the
-                    auto-move system flowing smoothly and prevent bottlenecks.
+                    Try to keep your four foundation piles roughly even. If one
+                    suit gets way ahead of the others, you&apos;ll hit a wall
+                    where you can&apos;t auto-move cards because their
+                    dependencies haven&apos;t reached the foundations yet. Say
+                    your spades are at 9{"\u2660"} but hearts are still at
+                    3{"\u2665"}. You won&apos;t be able to auto-move any black
+                    cards past 4, because the game needs both red foundations
+                    caught up first. Keeping foundations balanced keeps
+                    auto-move flowing and prevents bottlenecks.
                   </p>
                 </StrategyCard>
               </div>
@@ -454,9 +447,9 @@ export default function StrategyPage() {
 
             <div className="px-10 sm:px-12 py-8">
               <p className="text-[#444444] leading-relaxed mb-5">
-                These are the techniques that separate 80% win rates from 90%+.
-                They require deep board reading and careful calculation, but
-                mastering them will make you nearly unbeatable.
+                This is what takes you from 80% to 90%+. These techniques need
+                careful board reading and precise calculation, but they&apos;ll
+                make you nearly unbeatable.
               </p>
 
               <div className="space-y-8">
@@ -466,16 +459,14 @@ export default function StrategyPage() {
                   level="advanced"
                 >
                   <p>
-                    Before making your first move, invest 30 seconds in a
-                    comprehensive board analysis. Identify: Where are all four
-                    Aces? Which Aces are most accessible? Which cards are deeply
-                    buried and will be hardest to free? Are any columns close to
-                    being emptied? Are there natural in-suit sequences already
-                    forming? Which columns have the most disorder? This initial
-                    investment of time prevents the most common cause of losses:
-                    committing to a plan before understanding the full landscape.
-                    Expert players often spend more time on this opening analysis
-                    than on the first 10 moves combined.
+                    Before your first move, spend 30 seconds reading the board.
+                    Find all four Aces. Which ones are easiest to reach?
+                    What&apos;s buried deep? Are any columns close to empty? Do
+                    you see in-suit sequences already forming? Which columns are
+                    the messiest? This quick scan prevents the most common cause
+                    of losses: jumping into a plan before you understand what
+                    you&apos;re working with. Experts often spend more time on
+                    this opening read than on the first 10 moves combined.
                   </p>
                 </StrategyCard>
 
@@ -485,16 +476,14 @@ export default function StrategyPage() {
                   level="advanced"
                 >
                   <p>
-                    When choosing between two moves of seemingly equal value,
-                    always prefer the one that is more easily reversed. Moving a
-                    card to a free cell is highly reversible — you can move it
-                    back anytime. Moving a King to an empty column is essentially
-                    permanent — that column is now occupied for a long time since
-                    nothing can be placed on top of a King in cascade ordering.
-                    Reversible moves keep your options open for future decisions.
-                    Irreversible moves lock you into a specific path. The more
-                    reversible your early moves are, the more information you
-                    gather before committing to irreversible choices.
+                    When two moves look equally good, always pick the one
+                    that&apos;s easier to reverse. Moving a card to a free cell?
+                    Highly reversible. You can move it back anytime. Dropping a
+                    King into an empty column? Basically permanent, since
+                    nothing stacks on top of a King in cascade ordering.
+                    Reversible moves keep your options open. Irreversible moves
+                    lock you into one path. The more reversible your early moves
+                    are, the more you learn before you have to commit.
                   </p>
                 </StrategyCard>
 
@@ -504,17 +493,16 @@ export default function StrategyPage() {
                   level="advanced"
                 >
                   <p>
-                    Sometimes the only way forward is to temporarily disassemble
-                    an entire cascade — moving its cards into free cells and empty
-                    columns, performing a critical operation underneath, then
-                    reassembling everything. This is the most complex technique in
-                    FreeCell and requires precise counting of available spaces.
-                    Before attempting a shuffle, calculate: do you have enough
-                    empty free cells and columns to hold all the cards you need to
-                    move? Use the supermove formula: (1 + free cells) ×
-                    2^(empty columns). If the number of cards you need to move
-                    exceeds this, the shuffle is impossible and you need a
-                    different approach.
+                    Sometimes the only way forward is to temporarily take apart
+                    an entire column. Move its cards into free cells and empty
+                    columns, do what you need to underneath, then put everything
+                    back. This is the hardest technique in FreeCell and requires
+                    precise counting. Before you try it, calculate: do you have
+                    enough empty free cells and columns to hold all the cards?
+                    Use the supermove formula: (1 + free cells) ×
+                    2^(empty columns). If you need to move more cards than that
+                    number, the shuffle won&apos;t work and you need a different
+                    approach.
                   </p>
                 </StrategyCard>
 
@@ -524,16 +512,16 @@ export default function StrategyPage() {
                   level="advanced"
                 >
                   <p>
-                    If you have filled all 4 free cells and have no empty columns,
-                    you are often (but not always) stuck. Before giving up,
-                    carefully check every possible move — sometimes a single
-                    foundation move or an unexpected cascade placement opens things
-                    up. But if after exhaustive checking there truly are no
-                    productive moves available, the best strategy is recognizing
-                    the lost position early and starting a new game rather than
-                    wasting time. Expert players know when to cut their losses.
-                    Spending 10 minutes on a lost position is time you could spend
-                    winning the next game.
+                    If all 4 free cells are full and you have no empty columns,
+                    you&apos;re usually (but not always) stuck. Before you give
+                    up, check every possible move carefully. Sometimes one
+                    foundation move or an unexpected cascade placement opens
+                    everything up. But if you&apos;ve checked everything and
+                    there&apos;s truly nothing left, the smart play is to
+                    recognize the loss and start a new game. Don&apos;t waste
+                    time. Experts know when to cut their losses. Ten minutes on
+                    a lost position is time you could spend winning the next
+                    game.
                   </p>
                 </StrategyCard>
               </div>
@@ -550,20 +538,19 @@ export default function StrategyPage() {
 
             <div className="px-10 sm:px-12 py-8">
               <p className="text-[#444444] leading-relaxed mb-5">
-                Even experienced players fall into these traps. Recognizing these
-                patterns in your own play is the fastest way to improve your
-                win rate.
+                Even experienced players fall into these traps. Spotting them
+                in your own play is the fastest way to get better.
               </p>
 
               <div className="space-y-3">
                 {[
                   {
                     title: "Filling free cells too early",
-                    desc: "This is the #1 beginner mistake. Every filled free cell reduces your flexibility and move capacity. Never fill a free cell without a clear plan to empty it again soon.",
+                    desc: "The #1 beginner mistake. Every filled free cell cuts your flexibility and move capacity. Don\u2019t fill one without a clear plan to empty it again soon.",
                   },
                   {
                     title: "Moving cards without a plan",
-                    desc: "If you can\u2019t explain why you\u2019re making a move and what it enables, don\u2019t make it. Random moves feel productive but usually create more problems than they solve.",
+                    desc: "If you can\u2019t explain why you\u2019re making a move and what it opens up, don\u2019t make it. Random moves feel productive but usually create more problems than they solve.",
                   },
                   {
                     title: "Ignoring deeply buried low cards",
@@ -571,15 +558,15 @@ export default function StrategyPage() {
                   },
                   {
                     title: "Moving Kings to empty columns too eagerly",
-                    desc: "A King in an empty column is essentially permanent \u2014 nothing can be placed on top of a King in cascade ordering. Make sure you actually need that specific arrangement before committing an empty column to a King.",
+                    desc: "A King in an empty column is basically permanent. Nothing stacks on top of a King in cascade ordering. Make sure you actually need that arrangement before committing a column to a King.",
                   },
                   {
                     title: "Building long sequences prematurely",
-                    desc: "A perfectly ordered 8-card sequence looks impressive but locks up an entire column and requires massive move capacity to relocate. Only build long sequences when they directly serve your foundation-building plan.",
+                    desc: "A perfectly ordered 8-card sequence looks impressive but locks up an entire column and takes massive move capacity to relocate. Only build long sequences when they directly serve your foundation-building plan.",
                   },
                   {
                     title: "Refusing to use undo",
-                    desc: "Undo is not cheating \u2014 it\u2019s learning. Players who never undo learn slower and win less. The fastest path to improvement is exploring multiple approaches for each board position.",
+                    desc: "Undo isn\u2019t cheating. It\u2019s learning. Players who never undo learn slower and win less. The fastest way to improve is exploring multiple approaches for each board position.",
                   },
                 ].map(({ title, desc }, i) => (
                   <div
@@ -612,8 +599,8 @@ export default function StrategyPage() {
             <div className="px-10 sm:px-12 py-8">
               <p className="text-[#444444] leading-relaxed mb-5">
                 Since nearly every FreeCell deal is solvable, your win rate is
-                a direct measure of your skill. Here&apos;s how to gauge your
-                progress and set realistic improvement goals.
+                a direct measure of skill. Here&apos;s how to track your
+                progress.
               </p>
 
               <div className="space-y-4">
@@ -711,8 +698,8 @@ export default function StrategyPage() {
                 Put These Strategies to Work
               </h2>
               <p className="text-[#6B7280] mb-6 max-w-md mx-auto">
-                The best way to improve is practice. Apply these techniques in
-                your next game and watch your win rate climb.
+                The best way to get better is practice. Try these techniques
+                in your next game and watch your win rate climb.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-3 justify-center">

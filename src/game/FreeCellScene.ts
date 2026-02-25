@@ -17,10 +17,10 @@ import { soundManager } from '../lib/sounds';
 
 // Layout constants
 const CARD_RATIO = 1.4; // height/width ratio
-const MIN_CASCADE_OVERLAP_PX = 22; // minimum pixels visible per card (ensures rank+suit corner is readable)
-const MAX_CASCADE_OVERLAP_FRAC = 0.65; // max fraction of card height visible per buried card
-const SIDE_MARGIN = 0.02;
-const GAP = 0.01;
+const MIN_CASCADE_OVERLAP_PX = 24; // minimum pixels visible per card (ensures rank+suit corner is readable)
+const MAX_CASCADE_OVERLAP_FRAC = 0.75; // max fraction of card height visible per buried card
+const SIDE_MARGIN = 0.015;
+const GAP = 0.008;
 
 interface CardSprite extends Phaser.GameObjects.Container {
   cardData: Card;
@@ -355,9 +355,9 @@ export class FreeCellScene extends Phaser.Scene {
     const topRow = this.boardOffsetY + this.topRowHeight + this.cascadeGap;
     const availableHeight = this.scale.height - topRow - 4;
 
-    // Target: fill 85% of available cascade area for a comfortable spread
+    // Target: fill 95% of available cascade area for a full spread
     const targetOverlap = maxCascadeLength > 1
-      ? Math.floor((availableHeight * 0.85 - this.cardHeight) / (maxCascadeLength - 1))
+      ? Math.floor((availableHeight * 0.95 - this.cardHeight) / (maxCascadeLength - 1))
       : this.cardHeight;
 
     // Cap: don't spread cards more than 65% of card height apart

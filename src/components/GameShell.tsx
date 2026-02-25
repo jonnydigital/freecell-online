@@ -87,10 +87,22 @@ export default function GameShell() {
     const initPhaser = async () => {
       if (!containerRef.current || gameRef.current) return;
 
+      // Wait for container to have dimensions (mobile can be slow to layout)
+      const container = containerRef.current;
+      let attempts = 0;
+      while ((container.clientWidth === 0 || container.clientHeight === 0) && attempts < 20) {
+        await new Promise(r => setTimeout(r, 100));
+        attempts++;
+      }
+      if (container.clientWidth === 0 || container.clientHeight === 0) {
+        console.error('Game container has zero dimensions after waiting');
+        return;
+      }
+
       const Phaser = await import('phaser');
       const { createPhaserConfig } = await import('../game/PhaserConfig');
 
-      const config = createPhaserConfig(containerRef.current);
+      const config = createPhaserConfig(container);
       gameRef.current = new Phaser.Game(config);
     };
 

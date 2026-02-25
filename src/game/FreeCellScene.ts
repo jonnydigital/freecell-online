@@ -273,23 +273,20 @@ export class FreeCellScene extends Phaser.Scene {
     const cardHeightFromWidth = Math.floor(cardWidthFromWidth * CARD_RATIO);
 
     if (this.isPortrait) {
-      // Portrait: 2 rows of 4 at top (free cells row, then foundations row)
-      const topMargin = Math.floor(h * 0.01);
-      const rowGap = Math.floor(h * 0.008);
-      this.cascadeGap = Math.floor(h * 0.015);
+      // Portrait: single row of 8 at top (4 free cells + 4 foundations)
+      // This matches competitor layout and maximizes cascade space
+      const topMargin = Math.floor(h * 0.005);
+      this.cascadeGap = Math.floor(h * 0.01);
 
-      // Cap card size for portrait (rarely needed — width is usually the constraint)
-      const maxCardHeight = h * 0.12;
-      this.cardHeight = Math.min(cardHeightFromWidth, Math.floor(maxCardHeight));
-      this.cardWidth = this.cardHeight === cardHeightFromWidth
-        ? cardWidthFromWidth
-        : Math.floor(this.cardHeight / CARD_RATIO);
+      // No artificial card height cap — let width be the constraint
+      this.cardHeight = cardHeightFromWidth;
+      this.cardWidth = cardWidthFromWidth;
 
       this.boardOffsetX = Math.floor(
         (w - (8 * this.cardWidth + 7 * gapPx)) / 2
       );
       this.boardOffsetY = topMargin;
-      this.topRowHeight = this.cardHeight * 2 + rowGap;
+      this.topRowHeight = this.cardHeight;
     } else {
       // Landscape: maximize card size within both width and height constraints
       // Single row with 4 free cells + 4 foundations, then 8 cascade columns below
@@ -325,15 +322,7 @@ export class FreeCellScene extends Phaser.Scene {
   }
 
   private getFreeCellPosition(index: number): { x: number; y: number } {
-    if (this.isPortrait) {
-      // Portrait: free cells centered in first row, columns 0-3 offset to center
-      const totalWidth = 4 * this.cardWidth + 3 * (this.scale.width * GAP);
-      const startX = Math.floor((this.scale.width - totalWidth) / 2);
-      return {
-        x: startX + index * (this.cardWidth + this.scale.width * GAP),
-        y: this.boardOffsetY,
-      };
-    }
+    // Single row: free cells are columns 0-3
     return {
       x: this.getColumnX(index),
       y: this.boardOffsetY,
@@ -341,16 +330,7 @@ export class FreeCellScene extends Phaser.Scene {
   }
 
   private getFoundationPosition(index: number): { x: number; y: number } {
-    if (this.isPortrait) {
-      // Portrait: foundations centered in second row
-      const rowGap = Math.floor(this.scale.height * 0.008);
-      const totalWidth = 4 * this.cardWidth + 3 * (this.scale.width * GAP);
-      const startX = Math.floor((this.scale.width - totalWidth) / 2);
-      return {
-        x: startX + index * (this.cardWidth + this.scale.width * GAP),
-        y: this.boardOffsetY + this.cardHeight + rowGap,
-      };
-    }
+    // Single row: foundations are columns 4-7
     return {
       x: this.getColumnX(index + 4),
       y: this.boardOffsetY,
@@ -461,7 +441,7 @@ export class FreeCellScene extends Phaser.Scene {
 
     // Add subtle drop shadow
     const shadow = this.add.graphics();
-    shadow.fillStyle(0x000000, 0.15);
+    shadow.fillStyle(0x000000, 0.3);
     shadow.fillRoundedRect(2, 2, this.cardWidth, this.cardHeight, 6);
     container.addAt(shadow, 0); // Behind the card
 
@@ -1847,7 +1827,7 @@ export class FreeCellScene extends Phaser.Scene {
 
       // Re-add shadow behind the card
       const shadow = this.add.graphics();
-      shadow.fillStyle(0x000000, 0.15);
+      shadow.fillStyle(0x000000, 0.3);
       shadow.fillRoundedRect(2, 2, this.cardWidth, this.cardHeight, 6);
       sprite.addAt(shadow, 0);
 

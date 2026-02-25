@@ -1,54 +1,48 @@
 # FreeCell Online — Feature Backlog
-*Ranked by impact × effort. Updated daily.*
+*Ranked by impact × effort. Updated 2026-02-25.*
 
 ## 🔴 High Priority (Ship This Week)
-1. **Sound effects** — card flip, place, slide, win fanfare. Huge for game feel.
-2. **Windows nostalgia win screen** — classic bouncing card cascade with trails
-3. **SEO content overhaul** — beef up how-to-play, strategy, FAQ for organic traffic
-4. **Undo animation** — card visually flies back to previous position
-5. **Sequence drag** — drag a valid run of cards, not just singles
+1. **Theme system** — felt color picker + card back designs
+2. **Share button** — "I solved today's FreeCell in X moves!" with Web Share API
+3. **Keyboard shortcuts overlay** — modal showing all hotkeys
+4. **Statistics page enhancement** — charts, streaks visualization, detailed history
 
 ## 🟡 Medium Priority (Ship This Month)
-6. **Theme system** — felt color picker + card back designs
-7. **Leaderboard** — daily challenge times/moves (needs backend)
-8. **Share button** — "I solved today's FreeCell in X moves!" social sharing
-9. **Keyboard shortcuts help** — overlay showing all shortcuts
-10. **Game seed input** — enter a specific game number to play (partially done)
-11. **Statistics page** — detailed win/loss history, charts, streaks
-12. **Cookie consent** — needed before AdSense
-13. **AdSense integration** — revenue!
+5. **Leaderboard** — daily challenge times/moves (needs backend — Vercel KV?)
+6. **Achievements/badges** — "Won 10 games", "5-day streak", etc.
+7. **Tutorial/onboarding** — first-time player walkthrough
+8. **Ghost mode** — watch the solver play after you win/lose
 
-## 🟢 Nice to Have (Backlog)
-14. **Ghost mode** — watch the solver play after you win/lose
-15. **Multiplayer daily challenge** — compete on same seed, see others' times
-16. **Achievements/badges** — "Won 10 games", "5-day streak", etc.
-17. **Tutorial/onboarding** — first-time player walkthrough
-18. **Offline mode** — PWA works offline (partially done)
-19. **i18n** — multi-language support
-20. **Accessibility** — screen reader support, high contrast mode
+## 🟢 Nice to Have
+9. **Multiplayer daily challenge** — compete on same seed
+10. **Offline mode polish** — better offline UX
+11. **i18n** — multi-language
+12. **Accessibility** — screen reader, high contrast
+
+## ⏳ Blocked (Needs Jonathan)
+- **Custom domain** — playfreecellonline.com → Vercel DNS
+- **AdSense publisher ID** — code ready, needs ca-pub-XXXXXXXXXX
+- **Sentry DSN** — error tracking env var
 
 ## ✅ Completed
-- [x] Core game engine
-- [x] Mobile responsive layout
-- [x] Touch precision + tap-to-select
-- [x] Canvas-generated card textures
-- [x] Daily challenge system
+- [x] Core game engine + solvable deals
+- [x] Mobile responsive + touch precision + column zones
+- [x] Daily challenge system + streaks
 - [x] Auto-complete detection
-- [x] Bottom nav bar (mobile)
-- [x] Smart double-tap
-- [x] PWA support
-- [x] Solvable deals + game numbers
-- [x] Lucide icons
+- [x] Smart double-tap + sequence drag
+- [x] Sound effects (Web Audio API)
+- [x] Windows nostalgia win celebration
+- [x] PWA + auto-update system
 - [x] GA4 analytics
 - [x] Feedback system
-- [x] Visual polish (vignette, felt texture, animations)
+- [x] Hint system (heuristic solver)
+- [x] Game seed input
+- [x] SEO content pages (card-on-felt design, humanized text)
+- [x] Home overlay hub (council-designed)
+- [x] Daily Challenge banner + notification
+- [x] 5-icon mobile nav
+- [x] Full AI-generated card deck (52 + back)
+- [x] Cookie consent + AdSense loader
+- [x] Undo/redo animation
 - [x] CI pipeline
-- [x] SEO content pages (basic)
 - [x] Orientation change fix
-- [x] Hint system
-
-## OpenClaw Recommendations (2026-02-24)
-- Sound effects are the #1 "game feel" upgrade — ship ASAP
-- Win celebration is critical for dopamine loop / retention
-- SEO pages need 2000+ words each for ranking potential
-- Get a custom domain before pushing for organic traffic

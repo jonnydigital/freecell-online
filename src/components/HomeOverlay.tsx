@@ -5,6 +5,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, HelpCircle, Swords, MessageSquare, VolumeX, Volume2, Trophy, Target, Clock } from 'lucide-react';
 import { getTodaysSeed, getTodayStr, loadDailyData, getCurrentStreak, isTodayCompleted } from '../lib/dailyChallenge';
 import { loadStats } from '../lib/storage';
+import { getAverageMoves, getAverageTime } from '../lib/stats';
+import ThemeSelector from './ThemeSelector';
+import CalendarHeatmap from './CalendarHeatmap';
 
 interface HomeOverlayProps {
   isOpen: boolean;
@@ -14,6 +17,7 @@ interface HomeOverlayProps {
   isMuted: boolean;
   onToggleMute: () => void;
   onFeedback: () => void;
+  onShowShortcuts: () => void;
 }
 
 export default function HomeOverlay({
@@ -24,6 +28,7 @@ export default function HomeOverlay({
   isMuted,
   onToggleMute,
   onFeedback,
+  onShowShortcuts,
 }: HomeOverlayProps) {
   const todaySeed = getTodaysSeed();
   const todayStr = getTodayStr();
@@ -39,10 +44,13 @@ export default function HomeOverlay({
     ? ((stats.gamesWon / stats.gamesPlayed) * 100).toFixed(0)
     : '0';
 
-  const formatTime = (seconds: number) => {
-    if (!seconds || seconds === 0 || isNaN(seconds) || seconds === Infinity) return 'N/A';
+  const avgMoves = stats ? getAverageMoves(stats) : 0;
+  const avgTime = stats ? getAverageTime(stats) : 0;
+
+  const formatTime = (seconds: number | null) => {
+    if (seconds === null || !seconds || seconds === 0 || isNaN(seconds) || seconds === Infinity) return 'N/A';
     const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
+    const secs = Math.floor(seconds % 60);
     return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
   };
 
@@ -88,7 +96,7 @@ export default function HomeOverlay({
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
             className="fixed bottom-0 left-0 right-0 h-[92vh] max-h-[800px] text-white rounded-t-2xl shadow-2xl z-50 flex flex-col"
             style={{
-              background: '#0a3d0a',
+              background: 'var(--felt-color)',
               backgroundImage: 'radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.08), transparent 70%)',
             }}
             role="dialog"
@@ -138,22 +146,26 @@ export default function HomeOverlay({
                   </button>
                 )}
 
-                {/* Streaks */}
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="bg-black/20 border border-white/5 rounded-xl p-3 text-center">
-                    <div className="text-3xl font-bold text-white">
-                      {streak > 0 ? `${streak}` : '0'}
-                      {streak > 0 && <span className="ml-1">🔥</span>}
+                {/* Streaks & Heatmap */}
+                <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4">
+                  <div className="grid grid-cols-2 gap-3 mb-4">
+                    <div className="bg-black/20 border border-white/5 rounded-xl p-3 text-center">
+                      <div className="text-3xl font-bold text-white">
+                        {streak > 0 ? `${streak}` : '0'}
+                        {streak > 0 && <span className="ml-1">🔥</span>}
+                      </div>
+                      <div className="text-xs text-white/50 mt-1">Current Daily Streak</div>
                     </div>
-                    <div className="text-xs text-white/50 mt-1">Current Streak</div>
-                  </div>
-                  <div className="bg-black/20 border border-white/5 rounded-xl p-3 text-center">
-                    <div className="text-3xl font-bold text-white">
-                      {dailyData?.longestStreak ?? 0}
+                    <div className="bg-black/20 border border-white/5 rounded-xl p-3 text-center">
+                      <div className="text-3xl font-bold text-white">
+                        {dailyData?.longestStreak ?? 0}
+                      </div>
+                      <div className="text-xs text-white/50 mt-1">Longest Daily Streak</div>
                     </div>
-                    <div className="text-xs text-white/50 mt-1">Longest Streak</div>
                   </div>
+                  {dailyData && <CalendarHeatmap completedDays={dailyData.completedDays} />}
                 </div>
+
 
                 {/* New Game */}
                 <button
@@ -171,7 +183,11 @@ export default function HomeOverlay({
                   >
                     Statistics
                   </h2>
-                  <div className="grid grid-cols-3 gap-2 text-center">
+                  <div className="grid grid-cols-3 gap-2 text-center mb-4">
+                    <div>
+                      <div className="text-2xl font-bold text-[#D4AF37]">{stats?.gamesPlayed ?? 0}</div>
+                      <div className="text-[10px] text-white/40 uppercase tracking-wider mt-0.5">Played</div>
+                    </div>
                     <div>
                       <div className="text-2xl font-bold text-[#D4AF37]">{stats?.gamesWon ?? 0}</div>
                       <div className="text-[10px] text-white/40 uppercase tracking-wider mt-0.5">Won</div>
@@ -180,12 +196,25 @@ export default function HomeOverlay({
                       <div className="text-2xl font-bold text-[#D4AF37]">{winRate}%</div>
                       <div className="text-[10px] text-white/40 uppercase tracking-wider mt-0.5">Win Rate</div>
                     </div>
+                  </div>
+                  <div className="grid grid-cols-3 gap-2 text-center">
+                    <div>
+                      <div className="text-2xl font-bold text-[#D4AF37]">{avgMoves ?? 'N/A'}</div>
+                      <div className="text-[10px] text-white/40 uppercase tracking-wider mt-0.5">Avg. Moves</div>
+                    </div>
+                    <div>
+                      <div className="text-2xl font-bold text-[#D4AF37]">{formatTime(avgTime)}</div>
+                      <div className="text-[10px] text-white/40 uppercase tracking-wider mt-0.5">Avg. Time</div>
+                    </div>
                     <div>
                       <div className="text-2xl font-bold text-[#D4AF37]">{formatTime(stats?.bestTime ?? 0)}</div>
                       <div className="text-[10px] text-white/40 uppercase tracking-wider mt-0.5">Best Time</div>
                     </div>
                   </div>
                 </div>
+
+                {/* Theme Selector */}
+                <ThemeSelector />
 
                 {/* Content Links */}
                 <div className="grid grid-cols-3 gap-2 text-center">
@@ -218,6 +247,13 @@ export default function HomeOverlay({
                   >
                     <MessageSquare size={18} />
                     <span>Feedback</span>
+                  </button>
+                  <button
+                    onClick={() => { onShowShortcuts(); onClose(); }}
+                    className="flex items-center gap-2 text-white/50 hover:text-white px-4 py-2 rounded-lg hover:bg-black/20 transition-colors text-sm"
+                  >
+                    <span className="font-bold text-lg">?</span>
+                    <span>Shortcuts</span>
                   </button>
                 </div>
               </div>

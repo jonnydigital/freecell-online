@@ -10,6 +10,7 @@ export interface GameStats {
   bestTime: number | null;     // seconds, null if no wins
   totalTime: number;           // total seconds across all wins
   leastMoves: number | null;   // null if no wins
+  totalMoves: number;          // total moves across all wins
 }
 
 export function createEmptyStats(): GameStats {
@@ -21,6 +22,7 @@ export function createEmptyStats(): GameStats {
     bestTime: null,
     totalTime: 0,
     leastMoves: null,
+    totalMoves: 0,
   };
 }
 
@@ -32,6 +34,11 @@ export function getWinPercent(stats: GameStats): number {
 export function getAverageTime(stats: GameStats): number | null {
   if (stats.gamesWon === 0) return null;
   return Math.round(stats.totalTime / stats.gamesWon);
+}
+
+export function getAverageMoves(stats: GameStats): number | null {
+  if (stats.gamesWon === 0) return null;
+  return Math.round(stats.totalMoves / stats.gamesWon);
 }
 
 export function recordWin(
@@ -54,6 +61,7 @@ export function recordWin(
       stats.leastMoves === null
         ? moves
         : Math.min(stats.leastMoves, moves),
+    totalMoves: stats.totalMoves + moves,
   };
 }
 

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Shuffle, Calendar, Trophy } from 'lucide-react';
 
 interface WinScreenProps {
+  gameNumber: number;
   time: number;
   moves: number;
   hintsUsed: number;
@@ -17,13 +18,41 @@ function formatTime(seconds: number): string {
   return `${m}:${s.toString().padStart(2, '0')}`;
 }
 
-export default function WinScreen({ time, moves, hintsUsed, onPlayAgain, onDailyChallenge }: WinScreenProps) {
+export default function WinScreen({ gameNumber, time, moves, hintsUsed, onPlayAgain, onDailyChallenge }: WinScreenProps) {
   const [visible, setVisible] = useState(false);
+  const [shareStatus, setShareStatus] = useState<'idle' | 'copying' | 'copied'>('idle');
 
   useEffect(() => {
-    const timer = setTimeout(() => setVisible(true), 5000);
+    const timer = setTimeout(() => setVisible(true), 1500); // Faster appearance
     return () => clearTimeout(timer);
   }, []);
+
+  const handleShare = async () => {
+    const shareText = `I solved FreeCell Game #${gameNumber} in ${moves} moves (${formatTime(time)})! 🃏\nhttps://playfreecellonline.com`;
+    
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: 'FreeCell Online',
+          text: shareText,
+        });
+        return;
+      } catch (error) {
+        // Fallback to clipboard if share fails
+        console.error('Web Share API failed, falling back to clipboard:', error);
+      }
+    }
+
+    // Clipboard fallback
+    try {
+      await navigator.clipboard.writeText(shareText);
+      setShareStatus('copied');
+      setTimeout(() => setShareStatus('idle'), 2000);
+    } catch (err) {
+      console.error('Failed to copy text: ', err);
+      alert('Failed to copy results to clipboard.');
+    }
+  };
 
   if (!visible) return null;
 
@@ -56,6 +85,12 @@ export default function WinScreen({ time, moves, hintsUsed, onPlayAgain, onDaily
           >
             <Shuffle size={18} />
             Play Again
+          </button>
+          <button
+            onClick={handleShare}
+            className="flex items-center justify-center gap-2 w-full py-3 bg-[#D4AF37] hover:bg-[#c9a84c] text-black font-bold rounded-lg transition-colors"
+          >
+            {shareStatus === 'copied' ? 'Copied!' : 'Share Results'}
           </button>
           <button
             onClick={onDailyChallenge}

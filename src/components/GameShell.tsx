@@ -16,6 +16,7 @@ import WinScreen from './WinScreen';
 import HomeOverlay from './HomeOverlay';
 import DailyBanner from './DailyBanner';
 import { soundManager } from '../lib/sounds';
+import KeyboardShortcuts from './KeyboardShortcuts';
 
 export default function GameShell() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -34,6 +35,7 @@ export default function GameShell() {
   const [isMuted, setIsMuted] = useState(() => soundManager.muted);
   const [showMoreMenu, setShowMoreMenu] = useState(false);
   const [showHome, setShowHome] = useState(false);
+  const [showShortcuts, setShowShortcuts] = useState(false);
   const [isLandscapeMobile, setIsLandscapeMobile] = useState(false);
   const [dailyCompleted, setDailyCompleted] = useState(true); // assume completed until checked
 
@@ -184,6 +186,10 @@ export default function GameShell() {
       }
       if (e.key === 'n' && !e.ctrlKey && !e.metaKey) handleNewGame();
       if (e.key === 'h' && !e.ctrlKey && !e.metaKey) handleHint();
+      if (e.key === '?') {
+        e.preventDefault();
+        setShowShortcuts(true);
+      }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
@@ -296,8 +302,9 @@ export default function GameShell() {
         )}
 
         {/* Win Screen (appears 5s after win, overlays celebration) */}
-        {isWon && winDataRef.current && (
+        {isWon && winDataRef.current && gameNumber && (
           <WinScreen
+            gameNumber={gameNumber}
             time={winDataRef.current.time}
             moves={winDataRef.current.moves}
             hintsUsed={gameSession.hintsUsed}
@@ -354,6 +361,7 @@ export default function GameShell() {
         isMuted={isMuted}
         onToggleMute={handleToggleMute}
         onFeedback={() => { setShowFeedback(true); setShowHome(false); }}
+        onShowShortcuts={() => { setShowShortcuts(true); setShowHome(false); }}
       />
 
       {/* Stats Modal */}
@@ -383,6 +391,12 @@ export default function GameShell() {
         isOpen={showGameInput}
         onClose={() => setShowGameInput(false)}
         onPlay={handlePlayNumber}
+      />
+
+      {/* Keyboard Shortcuts Modal */}
+      <KeyboardShortcuts 
+        isOpen={showShortcuts}
+        onClose={() => setShowShortcuts(false)}
       />
     </div>
   );

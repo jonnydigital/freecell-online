@@ -622,35 +622,249 @@ export class FreeCellScene extends Phaser.Scene {
     this.updateHitAreas();
   }
 
-  // ── Touch Zone System (Mobile) ───────────────────────────
+  // ── Touch System (Mobile) — Raw touch events for zero-lag drag ───────
+
+  // Touch drag state
+  private touchDragging: boolean = false;
+  private touchDragCards: CardSprite[] = [];
+  private touchDragFrom: Location | null = null;
+  private touchDragOffsetX: number = 0;
+  private touchDragOffsetY: number = 0;
+  private touchStartX: number = 0;
+  private touchStartY: number = 0;
+  private touchStartTime: number = 0;
+  private touchMoved: boolean = false;
 
   private setupTouchInput(): void {
-    this.input.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
-      this.dismissTooltip();
-      this.longPressTriggered = false;
-      this.longPressPointer = { x: pointer.x, y: pointer.y };
-      // Long-press disabled — not needed in FreeCell (can only move bottom cards)
-      // Keeping the timer infrastructure in case we want it for something else later
-    });
+    const canvas = this.game.canvas;
 
-    this.input.on('pointermove', (pointer: Phaser.Input.Pointer) => {
-      if (this.longPressPointer) {
-        const dx = pointer.x - this.longPressPointer.x;
-        const dy = pointer.y - this.longPressPointer.y;
-        if (Math.sqrt(dx * dx + dy * dy) > 10) {
-          this.cancelLongPress();
+    // Use raw touch events on the canvas for zero-lag response
+    // Phaser's input adds processing overhead — bypassing it for drag gives
+    // us direct finger-to-card tracking every frame
+    canvas.addEventListener('touchstart', (e: TouchEvent) => {
+      e.preventDefault(); // Kill scroll, zoom, and 300ms tap delay
+      const touch = e.touches[0];
+      const rect = canvas.getBoundingClientRect();
+      const scaleX = canvas.width / rect.width;
+      const scaleY = canvas.height / rect.height;
+      const x = (touch.clientX - rect.left) * scaleX;
+      const y = (touch.clientY - rect.top) * scaleY;
+
+      this.dismissTooltip();
+      this.touchStartX = x;
+      this.touchStartY = y;
+      this.touchStartTime = Date.now();
+      this.touchMoved = false;
+
+      // Try to pick up a card immediately
+      this.tryTouchPickup(x, y);
+    }, { passive: false });
+
+    canvas.addEventListener('touchmove', (e: TouchEvent) => {
+      e.preventDefault();
+      if (!this.touchDragging || this.touchDragCards.length === 0) return;
+
+      const touch = e.touches[0];
+      const rect = canvas.getBoundingClientRect();
+      const scaleX = canvas.width / rect.width;
+      const scaleY = canvas.height / rect.height;
+      const x = (touch.clientX - rect.left) * scaleX;
+      const y = (touch.clientY - rect.top) * scaleY;
+
+      this.touchMoved = true;
+
+      // Direct position set — NO tweens, NO interpolation
+      // Card follows finger exactly, every frame
+      const overlap = this.getCurrentOverlap();
+      for (let i = 0; i < this.touchDragCards.length; i++) {
+        this.touchDragCards[i].x = x - this.touchDragOffsetX;
+        this.touchDragCards[i].y = y - this.touchDragOffsetY + i * overlap;
+      }
+    }, { passive: false });
+
+    canvas.addEventListener('touchend', (e: TouchEvent) => {
+      e.preventDefault();
+      const touch = e.changedTouches[0];
+      const rect = canvas.getBoundingClientRect();
+      const scaleX = canvas.width / rect.width;
+      const scaleY = canvas.height / rect.height;
+      const x = (touch.clientX - rect.left) * scaleX;
+      const y = (touch.clientY - rect.top) * scaleY;
+
+      if (this.touchDragging && this.touchMoved) {
+        // Was dragging — try to drop
+        this.touchDrop(x, y);
+      } else if (!this.touchMoved) {
+        // Was a tap (no movement) — use tap logic
+        this.touchDragCleanup();
+        this.handleTouchTap({ x, y } as Phaser.Input.Pointer);
+      } else {
+        this.touchDragCleanup();
+      }
+    }, { passive: false });
+
+    canvas.addEventListener('touchcancel', (e: TouchEvent) => {
+      e.preventDefault();
+      this.touchDragSnapBack();
+    }, { passive: false });
+  }
+
+  /** Try to pick up a card at the touch point for dragging */
+  private tryTouchPickup(x: number, y: number): void {
+    // Check cascades first (most common interaction)
+    const col = this.getCascadeColumnAtPoint(x, y);
+    if (col !== -1) {
+      const state = this.engine.getState();
+      const cascade = state.cascades[col];
+      if (cascade.length === 0) return;
+
+      // Find which card was touched based on Y
+      const cascadeTop = this.boardOffsetY + this.topRowHeight + this.cascadeGap;
+      const overlap = this.getCurrentOverlap();
+      const relativeY = y - cascadeTop;
+      let cardIndex = Math.floor(relativeY / Math.max(overlap, 1));
+      cardIndex = Math.min(Math.max(cardIndex, 0), cascade.length - 1);
+
+      // If touch is below last card bottom, select last card
+      const lastCardTop = cascadeTop + (cascade.length - 1) * overlap;
+      if (y > lastCardTop && y < lastCardTop + this.cardHeight) {
+        cardIndex = cascade.length - 1;
+      }
+
+      // Snap to valid run start
+      const run = this.engine.getValidRun(col);
+      const runStart = cascade.length - run.length;
+      if (cardIndex < runStart) cardIndex = runStart;
+
+      // Gather the run cards
+      this.touchDragCards = [];
+      for (let i = cardIndex; i < cascade.length; i++) {
+        const sprite = this.cardSprites.get(cascade[i].id);
+        if (sprite) {
+          this.touchDragCards.push(sprite);
+          sprite.setDepth(1000 + (i - cardIndex));
+          sprite.setScale(1.08); // Lift effect
         }
       }
-    });
 
-    this.input.on('pointerup', (pointer: Phaser.Input.Pointer) => {
-      this.cancelLongPress();
-      if (this.longPressTriggered) {
-        this.longPressTriggered = false;
-        return;
+      if (this.touchDragCards.length > 0) {
+        const topSprite = this.touchDragCards[0];
+        this.touchDragOffsetX = x - topSprite.x;
+        this.touchDragOffsetY = y - topSprite.y;
+        this.touchDragFrom = { type: 'cascade', index: col, cardIndex };
+        this.touchDragging = true;
+
+        // Clear any existing selection
+        this.clearSelection();
+
+        // Show valid drop targets
+        this.showDragTargetGlow(topSprite);
+
+        // Start timer on first interaction
+        if (!this.timer.isRunning) this.timer.start();
+
+        // Haptic feedback on pickup
+        this.vibrate();
+
+        // Juice: reset idle
+        this.lastMoveTime = Date.now();
+        this.clearHintGlow();
+        this.clearHintText();
+        this.clearIdleWiggles();
+
+        soundManager.cardSelect();
       }
-      this.handleTouchTap(pointer);
-    });
+      return;
+    }
+
+    // Check free cells
+    const topSlot = this.getTopRowSlotAtPoint(x, y);
+    if (topSlot && topSlot.type === 'freecell') {
+      const state = this.engine.getState();
+      const card = state.freeCells[topSlot.index];
+      if (card) {
+        const sprite = this.cardSprites.get(card.id);
+        if (sprite) {
+          this.touchDragCards = [sprite];
+          sprite.setDepth(1000);
+          sprite.setScale(1.08);
+          this.touchDragOffsetX = x - sprite.x;
+          this.touchDragOffsetY = y - sprite.y;
+          this.touchDragFrom = { type: 'freecell', index: topSlot.index };
+          this.touchDragging = true;
+          this.clearSelection();
+          this.showDragTargetGlow(sprite);
+          if (!this.timer.isRunning) this.timer.start();
+          this.vibrate();
+          this.lastMoveTime = Date.now();
+          this.clearHintGlow();
+          this.clearHintText();
+          this.clearIdleWiggles();
+          soundManager.cardSelect();
+        }
+      }
+    }
+  }
+
+  /** Drop dragged cards at the touch-up position */
+  private touchDrop(x: number, y: number): void {
+    if (!this.touchDragFrom || this.touchDragCards.length === 0) {
+      this.touchDragCleanup();
+      return;
+    }
+
+    // Find drop target
+    const target = this.findDropTarget(x, y);
+    if (target && this.engine.isLegalMove(this.touchDragFrom, target)) {
+      // Legal move — execute with animation
+      this.clearDragTargetGlow();
+      this.touchDragCards.forEach(c => c.setScale(1));
+      this.dragCards = this.touchDragCards; // For executeMoveAndAnimate compatibility
+      this.executeMoveAndAnimate(this.touchDragFrom, target);
+      this.dragCards = [];
+      this.vibrate();
+      this.touchDragCards = [];
+      this.touchDragFrom = null;
+      this.touchDragging = false;
+    } else {
+      // Invalid — snap back with haptic
+      soundManager.invalidMove();
+      this.vibrate();
+      this.touchDragSnapBack();
+    }
+  }
+
+  /** Snap dragged cards back to their original positions */
+  private touchDragSnapBack(): void {
+    this.clearDragTargetGlow();
+    for (const card of this.touchDragCards) {
+      card.setScale(1);
+      const location = this.findCardLocation(card.cardData);
+      if (location) {
+        const pos = this.getLocationPosition(location);
+        this.tweens.add({
+          targets: card,
+          x: pos.x,
+          y: pos.y,
+          duration: 120,
+          ease: 'Power3.easeOut',
+        });
+      }
+    }
+    this.touchDragCards = [];
+    this.touchDragFrom = null;
+    this.touchDragging = false;
+  }
+
+  /** Clean up drag state without animation */
+  private touchDragCleanup(): void {
+    this.clearDragTargetGlow();
+    for (const card of this.touchDragCards) {
+      card.setScale(1);
+    }
+    this.touchDragCards = [];
+    this.touchDragFrom = null;
+    this.touchDragging = false;
   }
 
   private cancelLongPress(): void {

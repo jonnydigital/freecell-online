@@ -306,8 +306,9 @@ export class FreeCellScene extends Phaser.Scene {
     // Notify UI that game is ready
     gameBridge.emit('gameReady', { gameNumber: this.gameNumber });
 
-    // Run auto-moves after deal
-    this.time.delayedCall(500, () => {
+    // Run auto-moves after deal animation completes
+    // Deal: 52 cards × 45ms stagger + 450ms longest tween ≈ 2800ms
+    this.time.delayedCall(3000, () => {
       this.performAutoMoves();
     });
 
@@ -3028,6 +3029,11 @@ export class FreeCellScene extends Phaser.Scene {
     this.dealCards(true);
     this.lastMoveTime = Date.now();
     gameBridge.emit('gameReady', { gameNumber: this.gameNumber });
+
+    // Auto-move after deal animation completes
+    this.time.delayedCall(3000, () => {
+      this.performAutoMoves();
+    });
   }
 
   // ── Juice: Inactivity Effects ────────────────────────────────

@@ -2602,10 +2602,10 @@ export class FreeCellScene extends Phaser.Scene {
     const state = this.engine.getState();
     this.invalidateOverlapCache();
 
-    // Kill any active tweens and reset drag transforms on ALL cards first
-    // This prevents tween conflicts where an old animation blocks repositioning
+    // Reset drag transforms on all cards (but don't kill tweens globally —
+    // that would kill deal animations). Tweens are killed per-card below
+    // only when that card needs to move to a new position.
     this.cardSprites.forEach((sprite) => {
-      this.tweens.killTweensOf(sprite);
       sprite.angle = 0;
       sprite.setScale(1);
     });
@@ -2619,6 +2619,7 @@ export class FreeCellScene extends Phaser.Scene {
           const pos = this.getCascadeCardPosition(col, row);
           const isMoving = Math.abs(sprite.x - pos.x) > 3 || Math.abs(sprite.y - pos.y) > 3;
           if (animate) {
+            if (isMoving) this.tweens.killTweensOf(sprite); // Kill conflicting tweens only on cards that need to move
             this.tweens.add({
               targets: sprite,
               x: pos.x,
@@ -2626,7 +2627,7 @@ export class FreeCellScene extends Phaser.Scene {
               duration: isMoving
                 ? Math.min(200, Math.max(80, this.getMoveDuration(sprite, pos.x, pos.y)))
                 : this.getMoveDuration(sprite, pos.x, pos.y),
-              delay: isMoving ? 0 : row * 12, // Staggered settling for cascade cards
+              delay: isMoving ? 0 : row * 12,
               ease: isMoving ? 'Power3.easeOut' : 'Power2',
             });
           } else {
@@ -2652,6 +2653,7 @@ export class FreeCellScene extends Phaser.Scene {
           const pos = this.getFreeCellPosition(i);
           const isMoving = Math.abs(sprite.x - pos.x) > 3 || Math.abs(sprite.y - pos.y) > 3;
           if (animate) {
+            if (isMoving) this.tweens.killTweensOf(sprite);
             this.tweens.add({
               targets: sprite,
               x: pos.x,
@@ -2685,6 +2687,7 @@ export class FreeCellScene extends Phaser.Scene {
             Math.abs(sprite.x - pos.x) > 5 || Math.abs(sprite.y - pos.y) > 5
           );
           if (animate && isMovingToFoundation) {
+            this.tweens.killTweensOf(sprite); // Kill any conflicting tween so card actually moves
             this.tweens.add({
               targets: sprite,
               x: pos.x,

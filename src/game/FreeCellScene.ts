@@ -654,12 +654,21 @@ export class FreeCellScene extends Phaser.Scene {
 
       this.touchMoved = true;
 
-      // Direct position set — NO tweens, NO interpolation
-      // Card follows finger exactly, every frame
+      // Lerp-smoothed position tracking — eliminates touch sensor jitter
+      // while feeling near-instant (0.7 = very responsive, 1.0 = raw)
+      const targetX = x - this.touchDragOffsetX;
+      const targetY = y - this.touchDragOffsetY;
       const overlap = this.getCurrentOverlap();
+      const LERP = 0.7;
       for (let i = 0; i < this.touchDragCards.length; i++) {
-        this.touchDragCards[i].x = x - this.touchDragOffsetX;
-        this.touchDragCards[i].y = y - this.touchDragOffsetY + i * overlap;
+        const card = this.touchDragCards[i];
+        const prevX = card.x;
+        card.x = card.x + (targetX - card.x) * LERP;
+        card.y = card.y + (targetY + i * overlap - card.y) * LERP;
+        // Velocity-based trailing rotation — gives cards physical "weight"
+        const velocityX = card.x - prevX;
+        const targetRotation = Math.max(-8, Math.min(8, velocityX * 0.3));
+        card.angle = card.angle + (targetRotation - card.angle) * 0.3;
       }
     }, { passive: false });
 
@@ -799,7 +808,7 @@ export class FreeCellScene extends Phaser.Scene {
     if (target && this.engine.isLegalMove(this.touchDragFrom, target)) {
       // Legal move — execute with animation
       this.clearDragTargetGlow();
-      this.touchDragCards.forEach(c => c.setScale(1));
+      this.touchDragCards.forEach(c => { c.setScale(1); c.angle = 0; });
       this.dragCards = this.touchDragCards; // For executeMoveAndAnimate compatibility
       this.executeMoveAndAnimate(this.touchDragFrom, target);
       this.dragCards = [];
@@ -819,7 +828,7 @@ export class FreeCellScene extends Phaser.Scene {
   private touchDragSnapBack(): void {
     this.clearDragTargetGlow();
     for (const card of this.touchDragCards) {
-      card.setScale(1);
+      card.setScale(1); card.angle = 0;
       const location = this.findCardLocation(card.cardData);
       if (location) {
         const pos = this.getLocationPosition(location);
@@ -841,7 +850,7 @@ export class FreeCellScene extends Phaser.Scene {
   private touchDragCleanup(): void {
     this.clearDragTargetGlow();
     for (const card of this.touchDragCards) {
-      card.setScale(1);
+      card.setScale(1); card.angle = 0;
     }
     this.touchDragCards = [];
     this.touchDragFrom = null;
@@ -910,11 +919,20 @@ export class FreeCellScene extends Phaser.Scene {
 
       if (!this.mouseDragging || this.mouseDragCards.length === 0) return;
 
-      // Direct position — zero-lag mouse tracking
+      // Lerp-smoothed mouse tracking + velocity-based rotation
+      const targetX = x - this.mouseDragOffsetX;
+      const targetY = y - this.mouseDragOffsetY;
       const overlap = this.getCurrentOverlap();
+      const LERP = 0.75; // Mouse is less jittery than touch, so higher lerp
       for (let i = 0; i < this.mouseDragCards.length; i++) {
-        this.mouseDragCards[i].x = x - this.mouseDragOffsetX;
-        this.mouseDragCards[i].y = y - this.mouseDragOffsetY + i * overlap;
+        const card = this.mouseDragCards[i];
+        const prevX = card.x;
+        card.x = card.x + (targetX - card.x) * LERP;
+        card.y = card.y + (targetY + i * overlap - card.y) * LERP;
+        // Trailing rotation — subtle weight feel
+        const velocityX = card.x - prevX;
+        const targetRotation = Math.max(-6, Math.min(6, velocityX * 0.25));
+        card.angle = card.angle + (targetRotation - card.angle) * 0.3;
       }
     });
 
@@ -1024,7 +1042,7 @@ export class FreeCellScene extends Phaser.Scene {
     const target = this.findDropTarget(x, y);
     if (target && this.engine.isLegalMove(this.mouseDragFrom, target)) {
       this.clearDragTargetGlow();
-      this.mouseDragCards.forEach(c => c.setScale(1));
+      this.mouseDragCards.forEach(c => { c.setScale(1); c.angle = 0; });
       this.dragCards = this.mouseDragCards;
       this.executeMoveAndAnimate(this.mouseDragFrom, target);
       this.dragCards = [];
@@ -1041,7 +1059,7 @@ export class FreeCellScene extends Phaser.Scene {
   private mouseDragSnapBack(): void {
     this.clearDragTargetGlow();
     for (const card of this.mouseDragCards) {
-      card.setScale(1);
+      card.setScale(1); card.angle = 0;
       const location = this.findCardLocation(card.cardData);
       if (location) {
         const pos = this.getLocationPosition(location);
@@ -1062,7 +1080,7 @@ export class FreeCellScene extends Phaser.Scene {
   private mouseDragCleanup(): void {
     this.clearDragTargetGlow();
     for (const card of this.mouseDragCards) {
-      card.setScale(1);
+      card.setScale(1); card.angle = 0;
     }
     this.mouseDragCards = [];
     this.mouseDragFrom = null;
@@ -2243,7 +2261,7 @@ export class FreeCellScene extends Phaser.Scene {
 
   private snapCardsBack(): void {
     this.dragCards.forEach((card) => {
-      card.setScale(1); // Reset lift effect
+      card.setScale(1); card.angle = 0; // Reset lift effect
       const location = this.findCardLocation(card.cardData);
       if (location) {
         const pos = this.getLocationPosition(location);

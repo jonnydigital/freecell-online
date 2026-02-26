@@ -2600,6 +2600,12 @@ export class FreeCellScene extends Phaser.Scene {
 
   private repositionAllCards(animate: boolean = true): void {
     const state = this.engine.getState();
+    this.invalidateOverlapCache();
+
+    // Reset any lingering drag transforms on ALL cards first
+    this.cardSprites.forEach((sprite) => {
+      sprite.angle = 0;
+    });
 
     // Position cascade cards with snappy settle + staggered delay for physical feel
     for (let col = 0; col < 8; col++) {

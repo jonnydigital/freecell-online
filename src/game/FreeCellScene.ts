@@ -47,6 +47,37 @@ export class FreeCellScene extends Phaser.Scene {
   private dragCards: CardSprite[] = [];
   private dragStartX: number = 0;
   private dragStartY: number = 0;
+  private activeDragCards: CardSprite[] = [];
+  private activeDragFrom: Location | null = null;
+  private activeDragTarget: { x: number; y: number } | null = null;
+  private activeDragOffsets: { x: number; y: number } = { x: 0, y: 0 };
+  private isDragging: boolean = false;
+  private dragSource: 'touch' | 'mouse' | null = null;
+  private activeDragVelocities: { x: number; y: number }[] = [];
+  private activeDragAngleVelocities: number[] = [];
+  private settleTargets: { x: number; y: number }[] = [];
+  private isSettlingDrag: boolean = false;
+  private pendingSettledMove: { from: Location; to: Location } | null = null;
+
+  // Cached layout/input measurements
+  private cachedOverlap: number | null = null;
+  private cachedCanvasRect: DOMRect | null = null;
+  private cachedScaleX: number = 1;
+  private cachedScaleY: number = 1;
+
+  // Tracked listeners (cleaned up in shutdown)
+  private trackedDomListeners: Array<{
+    target: EventTarget;
+    type: string;
+    listener: EventListenerOrEventListenerObject;
+    options?: AddEventListenerOptions | boolean;
+  }> = [];
+  private bridgeUnsubscribers: Array<() => void> = [];
+  private scaleResizeHandler: ((gameSize: Phaser.Structs.Size) => void) | null = null;
+  private phaserPointerUpHandler: ((pointer: Phaser.Input.Pointer) => void) | null = null;
+  private orientationChangeHandler: (() => void) | null = null;
+  private windowResizeHandler: (() => void) | null = null;
+  private resizeTimeout: ReturnType<typeof setTimeout> | null = null;
 
   // Click-to-move state
   private selectedCard: CardSprite | null = null;
@@ -135,6 +166,7 @@ export class FreeCellScene extends Phaser.Scene {
     this.engine = new FreeCellEngine(this.gameNumber);
     this.history = new MoveHistory();
     this.timer = new GameTimer();
+    this.events.once(Phaser.Scenes.Events.SHUTDOWN, this.shutdown, this);
 
     // Detect touch device
     this.isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
@@ -146,21 +178,25 @@ export class FreeCellScene extends Phaser.Scene {
 
     this.drawBackgroundEffects();
     this.calculateLayout();
+    this.refreshCanvasMetrics();
     this.createBoard();
     this.dealCards(true); // staggered deal on first load
 
     // Listen for resize
-    this.scale.on('resize', () => {
+    this.scaleResizeHandler = () => {
       this.clearSelection();
       this.calculateLayout();
+      this.invalidateOverlapCache();
+      this.refreshCanvasMetrics();
       this.drawBackgroundEffects();
       this.rebuildBoard();
       this.recreateAllCardSprites();
       this.repositionAllCards(false);
-    });
+    };
+    this.scale.on('resize', this.scaleResizeHandler, this);
 
     // Force resize on orientation change (Phaser doesn't always catch it)
-    const handleOrientationChange = () => {
+    this.orientationChangeHandler = () => {
       // Delay to let browser finish viewport animation (address bar, etc.)
       setTimeout(() => {
         const parent = this.scale.parent as HTMLElement;
@@ -176,26 +212,30 @@ export class FreeCellScene extends Phaser.Scene {
         }
       }, 500);
     };
-    window.addEventListener('orientationchange', handleOrientationChange);
+    this.trackDomListener(window, 'orientationchange', this.orientationChangeHandler);
     // Also listen to resize as backup (some browsers fire resize instead)
-    let resizeTimeout: ReturnType<typeof setTimeout>;
-    window.addEventListener('resize', () => {
-      clearTimeout(resizeTimeout);
-      resizeTimeout = setTimeout(handleOrientationChange, 150);
-    });
+    this.windowResizeHandler = () => {
+      if (this.resizeTimeout) {
+        clearTimeout(this.resizeTimeout);
+      }
+      this.resizeTimeout = setTimeout(() => {
+        this.orientationChangeHandler?.();
+      }, 150);
+    };
+    this.trackDomListener(window, 'resize', this.windowResizeHandler);
 
     // Listen for bridge events
-    gameBridge.on('newGame', (gameNum?: unknown) => {
+    this.bridgeUnsubscribers.push(gameBridge.on('newGame', (gameNum?: unknown) => {
       this.gameNumber = typeof gameNum === 'number' ? gameNum : getRandomSolvableGame();
       this.startNewGame();
-    });
+    }));
 
-    gameBridge.on('undo', () => this.undoLastMove());
-    gameBridge.on('redo', () => this.redoMove());
-    gameBridge.on('hint', () => this.showHint());
-    gameBridge.on('autoFinish', () => this.performAutoFinish());
+    this.bridgeUnsubscribers.push(gameBridge.on('undo', () => this.undoLastMove()));
+    this.bridgeUnsubscribers.push(gameBridge.on('redo', () => this.redoMove()));
+    this.bridgeUnsubscribers.push(gameBridge.on('hint', () => this.showHint()));
+    this.bridgeUnsubscribers.push(gameBridge.on('autoFinish', () => this.performAutoFinish()));
 
-    gameBridge.on('requestElementPosition', (elementKey: unknown) => {
+    this.bridgeUnsubscribers.push(gameBridge.on('requestElementPosition', (elementKey: unknown) => {
       if (typeof elementKey !== 'string') return;
 
       let rect = { x: 0, y: 0, width: 0, height: 0 };
@@ -237,13 +277,13 @@ export class FreeCellScene extends Phaser.Scene {
       }
       
       // Adjust for canvas offset if the canvas is not at 0,0 of the page
-      const canvas = this.game.canvas;
-      const canvasRect = canvas.getBoundingClientRect();
-      rect.x += canvasRect.left;
-      rect.y += canvasRect.top;
+      if (this.cachedCanvasRect) {
+        rect.x += this.cachedCanvasRect.left;
+        rect.y += this.cachedCanvasRect.top;
+      }
 
       gameBridge.emit('elementPositionResponse', { key: elementKey, rect });
-    });
+    }));
 
     if (this.isTouchDevice) {
       // Mobile: raw touch events for zero-lag drag
@@ -251,15 +291,16 @@ export class FreeCellScene extends Phaser.Scene {
     } else {
       // Desktop: raw mouse drag + Phaser click-to-move
       this.setupMouseDrag();
-      this.input.on('pointerup', (pointer: Phaser.Input.Pointer) => {
+      this.phaserPointerUpHandler = (pointer: Phaser.Input.Pointer) => {
         if (this.cardTappedThisFrame) {
           this.cardTappedThisFrame = false;
           return;
         }
-        if (this.selectedCard && this.dragCards.length === 0) {
+        if (this.selectedCard && !this.isDragging && this.activeDragCards.length === 0) {
           this.handleBoardTap(pointer.x, pointer.y);
         }
-      });
+      };
+      this.input.on('pointerup', this.phaserPointerUpHandler);
     }
 
     // Notify UI that game is ready
@@ -273,6 +314,241 @@ export class FreeCellScene extends Phaser.Scene {
     // Juice: start inactivity checker (hint glow at 8s, idle wiggle at 12s)
     this.lastMoveTime = Date.now();
     this.startIdleChecker();
+  }
+
+  update(_time: number, delta: number): void {
+    if (this.activeDragCards.length === 0) return;
+    const dt = Math.min(delta / 1000, 0.05);
+    if (dt <= 0) return;
+
+    if (this.isDragging && this.activeDragTarget) {
+      this.updateDraggedCards(this.activeDragTarget, 300, 28, dt, true);
+      return;
+    }
+
+    if (this.isSettlingDrag && this.settleTargets.length === this.activeDragCards.length) {
+      const settled = this.updateDraggedCardsToTargets(this.settleTargets, 180, 22, dt);
+      if (settled) {
+        this.finishSettledDrag();
+      }
+    }
+  }
+
+  private shutdown(): void {
+    if (this.scaleResizeHandler) {
+      this.scale.off('resize', this.scaleResizeHandler, this);
+      this.scaleResizeHandler = null;
+    }
+
+    if (this.phaserPointerUpHandler) {
+      this.input.off('pointerup', this.phaserPointerUpHandler);
+      this.phaserPointerUpHandler = null;
+    }
+
+    for (const unsubscribe of this.bridgeUnsubscribers) {
+      unsubscribe();
+    }
+    this.bridgeUnsubscribers = [];
+
+    if (this.resizeTimeout) {
+      clearTimeout(this.resizeTimeout);
+      this.resizeTimeout = null;
+    }
+
+    for (const { target, type, listener, options } of this.trackedDomListeners) {
+      target.removeEventListener(type, listener, options as EventListenerOptions | boolean | undefined);
+    }
+    this.trackedDomListeners = [];
+
+    this.orientationChangeHandler = null;
+    this.windowResizeHandler = null;
+    this.clearActiveDragState(true);
+  }
+
+  private trackDomListener(
+    target: EventTarget,
+    type: string,
+    listener: EventListenerOrEventListenerObject,
+    options?: AddEventListenerOptions | boolean
+  ): void {
+    target.addEventListener(type, listener, options);
+    this.trackedDomListeners.push({ target, type, listener, options });
+  }
+
+  private refreshCanvasMetrics(): void {
+    const canvas = this.game.canvas;
+    const rect = canvas.getBoundingClientRect();
+    this.cachedCanvasRect = rect;
+    this.cachedScaleX = rect.width > 0 ? canvas.width / rect.width : 1;
+    this.cachedScaleY = rect.height > 0 ? canvas.height / rect.height : 1;
+  }
+
+  private toCanvasPoint(clientX: number, clientY: number): { x: number; y: number } {
+    if (!this.cachedCanvasRect) {
+      this.refreshCanvasMetrics();
+    }
+
+    if (!this.cachedCanvasRect) {
+      return { x: clientX, y: clientY };
+    }
+
+    return {
+      x: (clientX - this.cachedCanvasRect.left) * this.cachedScaleX,
+      y: (clientY - this.cachedCanvasRect.top) * this.cachedScaleY,
+    };
+  }
+
+  private springUpdate(
+    current: number,
+    target: number,
+    velocity: number,
+    stiffness: number,
+    damping: number,
+    mass: number,
+    dt: number
+  ): { position: number; velocity: number } {
+    const springForce = -stiffness * (current - target);
+    const dampingForce = -damping * velocity;
+    const acceleration = (springForce + dampingForce) / mass;
+    const newVelocity = velocity + acceleration * dt;
+    const newPosition = current + newVelocity * dt;
+    return { position: newPosition, velocity: newVelocity };
+  }
+
+  private updateDraggedCards(
+    rawTarget: { x: number; y: number },
+    stiffness: number,
+    damping: number,
+    dt: number,
+    trackRotation: boolean
+  ): void {
+    const overlap = this.getCurrentOverlap();
+    const targetX = rawTarget.x - this.activeDragOffsets.x;
+    const targetY = rawTarget.y - this.activeDragOffsets.y;
+    const targets = this.activeDragCards.map((_, i) => ({
+      x: targetX,
+      y: targetY + i * overlap,
+    }));
+    this.updateDraggedCardsToTargets(targets, stiffness, damping, dt, trackRotation);
+  }
+
+  private updateDraggedCardsToTargets(
+    targets: Array<{ x: number; y: number }>,
+    stiffness: number,
+    damping: number,
+    dt: number,
+    trackRotation: boolean = false
+  ): boolean {
+    let allSettled = true;
+
+    for (let i = 0; i < this.activeDragCards.length; i++) {
+      const card = this.activeDragCards[i];
+      const target = targets[i] ?? targets[targets.length - 1];
+      if (!target) continue;
+
+      if (!this.activeDragVelocities[i]) {
+        this.activeDragVelocities[i] = { x: 0, y: 0 };
+      }
+
+      const velocity = this.activeDragVelocities[i];
+      const xUpdate = this.springUpdate(card.x, target.x, velocity.x, stiffness, damping, 1, dt);
+      const yUpdate = this.springUpdate(card.y, target.y, velocity.y, stiffness, damping, 1, dt);
+      card.x = xUpdate.position;
+      card.y = yUpdate.position;
+      velocity.x = xUpdate.velocity;
+      velocity.y = yUpdate.velocity;
+
+      const angleTarget = trackRotation
+        ? Phaser.Math.Clamp(xUpdate.velocity * 0.04, -8, 8)
+        : 0;
+      const angleVelocity = this.activeDragAngleVelocities[i] ?? 0;
+      const angleUpdate = this.springUpdate(card.angle, angleTarget, angleVelocity, stiffness, damping, 1, dt);
+      card.angle = angleUpdate.position;
+      this.activeDragAngleVelocities[i] = angleUpdate.velocity;
+
+      if (
+        Math.abs(card.x - target.x) > 0.6 ||
+        Math.abs(card.y - target.y) > 0.6 ||
+        Math.abs(velocity.x) > 8 ||
+        Math.abs(velocity.y) > 8 ||
+        Math.abs(card.angle - angleTarget) > 0.4 ||
+        Math.abs(this.activeDragAngleVelocities[i]) > 6
+      ) {
+        allSettled = false;
+      }
+    }
+
+    return allSettled;
+  }
+
+  private beginSettlingDrag(
+    targets: Array<{ x: number; y: number }>,
+    pendingMove: { from: Location; to: Location } | null
+  ): void {
+    this.isDragging = false;
+    this.dragSource = null;
+    this.activeDragTarget = null;
+    this.isSettlingDrag = true;
+    this.pendingSettledMove = pendingMove;
+    this.settleTargets = targets;
+    for (const card of this.activeDragCards) {
+      card.setScale(1);
+    }
+  }
+
+  private finishSettledDrag(): void {
+    if (this.pendingSettledMove) {
+      this.dragCards = [...this.activeDragCards];
+      this.executeMoveAndAnimate(this.pendingSettledMove.from, this.pendingSettledMove.to);
+      this.dragCards = [];
+      this.vibrate();
+    }
+    this.clearActiveDragState(false);
+  }
+
+  private clearActiveDragState(resetTransforms: boolean): void {
+    if (resetTransforms) {
+      for (const card of this.activeDragCards) {
+        card.setScale(1);
+        card.angle = 0;
+      }
+    }
+    this.activeDragCards = [];
+    this.activeDragFrom = null;
+    this.activeDragTarget = null;
+    this.activeDragOffsets = { x: 0, y: 0 };
+    this.activeDragVelocities = [];
+    this.activeDragAngleVelocities = [];
+    this.settleTargets = [];
+    this.pendingSettledMove = null;
+    this.isDragging = false;
+    this.isSettlingDrag = false;
+    this.dragSource = null;
+    this.clearDragTargetGlow();
+  }
+
+  private getPlacementTargets(target: Location): Array<{ x: number; y: number }> {
+    const state = this.engine.getState();
+    if (target.type === 'cascade') {
+      const startRow = state.cascades[target.index].length;
+      return this.activeDragCards.map((_, i) => this.getCascadeCardPosition(target.index, startRow + i));
+    }
+    const position = this.getDestinationPosition(target);
+    return this.activeDragCards.map((_, i) => ({ x: position.x, y: position.y + i * this.getCurrentOverlap() }));
+  }
+
+  private getSnapBackTargets(): Array<{ x: number; y: number }> {
+    return this.activeDragCards.map((card) => {
+      const location = this.findCardLocation(card.cardData);
+      if (location) {
+        return this.getLocationPosition(location);
+      }
+      return { x: card.x, y: card.y };
+    });
+  }
+
+  private invalidateOverlapCache(): void {
+    this.cachedOverlap = null;
   }
 
   private calculateLayout(): void {
@@ -326,6 +602,8 @@ export class FreeCellScene extends Phaser.Scene {
       this.boardOffsetY = topPad;
       this.topRowHeight = this.cardHeight;
     }
+
+    this.invalidateOverlapCache();
   }
 
   private getColumnX(col: number): number {
@@ -352,6 +630,10 @@ export class FreeCellScene extends Phaser.Scene {
   }
 
   private getCurrentOverlap(): number {
+    if (this.cachedOverlap !== null) {
+      return this.cachedOverlap;
+    }
+
     const state = this.engine.getState();
     const maxCascadeLength = Math.max(...state.cascades.map(c => c.length), 1);
     const topRow = this.boardOffsetY + this.topRowHeight + this.cascadeGap;
@@ -370,10 +652,11 @@ export class FreeCellScene extends Phaser.Scene {
       ? Math.floor((availableHeight - this.cardHeight) / (maxCascadeLength - 1))
       : this.cardHeight;
 
-    return Math.max(
+    this.cachedOverlap = Math.max(
       MIN_CASCADE_OVERLAP_PX,
       Math.min(targetOverlap, maxDesiredOverlap, maxFittingOverlap)
     );
+    return this.cachedOverlap;
   }
 
   private getCascadeCardPosition(

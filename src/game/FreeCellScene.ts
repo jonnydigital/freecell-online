@@ -2602,9 +2602,12 @@ export class FreeCellScene extends Phaser.Scene {
     const state = this.engine.getState();
     this.invalidateOverlapCache();
 
-    // Reset any lingering drag transforms on ALL cards first
+    // Kill any active tweens and reset drag transforms on ALL cards first
+    // This prevents tween conflicts where an old animation blocks repositioning
     this.cardSprites.forEach((sprite) => {
+      this.tweens.killTweensOf(sprite);
       sprite.angle = 0;
+      sprite.setScale(1);
     });
 
     // Position cascade cards with snappy settle + staggered delay for physical feel
@@ -2668,37 +2671,38 @@ export class FreeCellScene extends Phaser.Scene {
       }
     }
 
-    // Position foundation cards (only top visible) with bloom + particle burst
+    // Position ALL foundation cards (not just top) to prevent orphaned sprites
+    const suits = [Suit.Clubs, Suit.Diamonds, Suit.Hearts, Suit.Spades];
     for (const [suit, pile] of state.foundations) {
-      if (pile.length > 0) {
-        const topCard = pile[pile.length - 1];
-        const sprite = this.cardSprites.get(topCard.id);
-        const suits = [Suit.Clubs, Suit.Diamonds, Suit.Hearts, Suit.Spades];
-        const idx = suits.indexOf(suit);
+      const idx = suits.indexOf(suit);
+      const pos = this.getFoundationPosition(idx);
+      for (let cardIdx = 0; cardIdx < pile.length; cardIdx++) {
+        const card = pile[cardIdx];
+        const sprite = this.cardSprites.get(card.id);
         if (sprite) {
-          const pos = this.getFoundationPosition(idx);
+          const isTopCard = cardIdx === pile.length - 1;
           const isMovingToFoundation = animate && (
             Math.abs(sprite.x - pos.x) > 5 || Math.abs(sprite.y - pos.y) > 5
           );
-          if (animate) {
+          if (animate && isMovingToFoundation) {
             this.tweens.add({
               targets: sprite,
               x: pos.x,
               y: pos.y,
-              duration: isMovingToFoundation
-                ? Math.min(180, Math.max(80, this.getMoveDuration(sprite, pos.x, pos.y)))
-                : this.getMoveDuration(sprite, pos.x, pos.y),
-              ease: isMovingToFoundation ? 'Back.easeOut' : 'Power2', // Keep Back.easeOut for foundation — satisfying landing
-              onComplete: isMovingToFoundation ? () => {
+              duration: Math.min(180, Math.max(80, this.getMoveDuration(sprite, pos.x, pos.y))),
+              ease: 'Back.easeOut',
+              onComplete: isTopCard ? () => {
                 this.foundationBloom(sprite);
                 this.foundationParticleBurst(pos.x, pos.y);
               } : undefined,
             });
+          } else if (animate) {
+            // Already at position, no animation needed
           } else {
             sprite.x = pos.x;
             sprite.y = pos.y;
           }
-          sprite.setDepth(5 + pile.length);
+          sprite.setDepth(5 + cardIdx);
           sprite.sourceLocation = { type: 'foundation', suit };
         }
       }

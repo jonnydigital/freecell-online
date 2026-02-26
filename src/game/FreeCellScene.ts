@@ -1678,7 +1678,7 @@ export class FreeCellScene extends Phaser.Scene {
           this.timer.stop();
           this.time.delayedCall(400, () => this.winCelebration());
         } else {
-          this.time.delayedCall(50, moveCards);
+          this.time.delayedCall(25, moveCards);
         }
       }
     };
@@ -1844,7 +1844,7 @@ export class FreeCellScene extends Phaser.Scene {
     const dy = targetY - sprite.y;
     const distance = Math.sqrt(dx * dx + dy * dy);
     // Variable speed: 100ms base + scaled by distance, capped at 300ms
-    return Math.min(300, Math.max(100, distance * 0.4));
+    return Math.min(180, Math.max(60, distance * 0.25));
   }
 
   /**
@@ -1878,7 +1878,7 @@ export class FreeCellScene extends Phaser.Scene {
   private repositionAllCards(animate: boolean = true): void {
     const state = this.engine.getState();
 
-    // Position cascade cards with spring snap (Back.easeOut = overshoot + settle)
+    // Position cascade cards with snappy settle + staggered delay for physical feel
     for (let col = 0; col < 8; col++) {
       const cascade = state.cascades[col];
       for (let row = 0; row < cascade.length; row++) {
@@ -1892,9 +1892,10 @@ export class FreeCellScene extends Phaser.Scene {
               x: pos.x,
               y: pos.y,
               duration: isMoving
-                ? Math.min(350, Math.max(120, this.getMoveDuration(sprite, pos.x, pos.y)))
+                ? Math.min(200, Math.max(80, this.getMoveDuration(sprite, pos.x, pos.y)))
                 : this.getMoveDuration(sprite, pos.x, pos.y),
-              ease: isMoving ? 'Back.easeOut' : 'Power2',
+              delay: isMoving ? 0 : row * 12, // Staggered settling for cascade cards
+              ease: isMoving ? 'Power3.easeOut' : 'Power2',
             });
           } else {
             sprite.x = pos.x;
@@ -1910,7 +1911,7 @@ export class FreeCellScene extends Phaser.Scene {
       }
     }
 
-    // Position free cell cards with spring snap
+    // Position free cell cards with snappy move
     for (let i = 0; i < 4; i++) {
       const card = state.freeCells[i];
       if (card) {
@@ -1924,9 +1925,9 @@ export class FreeCellScene extends Phaser.Scene {
               x: pos.x,
               y: pos.y,
               duration: isMoving
-                ? Math.min(350, Math.max(120, this.getMoveDuration(sprite, pos.x, pos.y)))
+                ? Math.min(200, Math.max(80, this.getMoveDuration(sprite, pos.x, pos.y)))
                 : this.getMoveDuration(sprite, pos.x, pos.y),
-              ease: isMoving ? 'Back.easeOut' : 'Power2',
+              ease: isMoving ? 'Power3.easeOut' : 'Power2',
             });
           } else {
             sprite.x = pos.x;
@@ -1956,9 +1957,9 @@ export class FreeCellScene extends Phaser.Scene {
               x: pos.x,
               y: pos.y,
               duration: isMovingToFoundation
-                ? Math.min(350, Math.max(120, this.getMoveDuration(sprite, pos.x, pos.y)))
+                ? Math.min(180, Math.max(80, this.getMoveDuration(sprite, pos.x, pos.y)))
                 : this.getMoveDuration(sprite, pos.x, pos.y),
-              ease: isMovingToFoundation ? 'Back.easeOut' : 'Power2',
+              ease: isMovingToFoundation ? 'Back.easeOut' : 'Power2', // Keep Back.easeOut for foundation — satisfying landing
               onComplete: isMovingToFoundation ? () => {
                 this.foundationBloom(sprite);
                 this.foundationParticleBurst(pos.x, pos.y);

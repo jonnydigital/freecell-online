@@ -926,7 +926,7 @@ export class FreeCellScene extends Phaser.Scene {
 
     canvas.addEventListener('touchmove', (e: TouchEvent) => {
       e.preventDefault();
-      if (!this.touchDragging || this.touchDragCards.length === 0) return;
+      if (!this.isDragging || this.activeDragCards.length === 0) return;
 
       const touch = e.touches[0];
       const rect = canvas.getBoundingClientRect();
@@ -937,22 +937,8 @@ export class FreeCellScene extends Phaser.Scene {
 
       this.touchMoved = true;
 
-      // Lerp-smoothed position tracking — eliminates touch sensor jitter
-      // while feeling near-instant (0.7 = very responsive, 1.0 = raw)
-      const targetX = x - this.touchDragOffsetX;
-      const targetY = y - this.touchDragOffsetY;
-      const overlap = this.getCurrentOverlap();
-      const LERP = 0.7;
-      for (let i = 0; i < this.touchDragCards.length; i++) {
-        const card = this.touchDragCards[i];
-        const prevX = card.x;
-        card.x = card.x + (targetX - card.x) * LERP;
-        card.y = card.y + (targetY + i * overlap - card.y) * LERP;
-        // Velocity-based trailing rotation — gives cards physical "weight"
-        const velocityX = card.x - prevX;
-        const targetRotation = Math.max(-8, Math.min(8, velocityX * 0.3));
-        card.angle = card.angle + (targetRotation - card.angle) * 0.3;
-      }
+      // Just store target — spring physics in update() loop handles the rest
+      this.activeDragTarget = { x, y };
     }, { passive: false });
 
     canvas.addEventListener('touchend', (e: TouchEvent) => {
@@ -964,15 +950,15 @@ export class FreeCellScene extends Phaser.Scene {
       const x = (touch.clientX - rect.left) * scaleX;
       const y = (touch.clientY - rect.top) * scaleY;
 
-      if (this.touchDragging && this.touchMoved) {
+      if (this.isDragging && this.touchMoved) {
         // Was dragging — try to drop
         this.touchDrop(x, y);
       } else if (!this.touchMoved) {
         // Was a tap (no movement) — use tap logic
-        this.touchDragCleanup();
+        this.clearActiveDragState(true);
         this.handleTouchTap({ x, y } as Phaser.Input.Pointer);
       } else {
-        this.touchDragCleanup();
+        this.clearActiveDragState(true);
       }
     }, { passive: false });
 
@@ -1009,23 +995,26 @@ export class FreeCellScene extends Phaser.Scene {
       const runStart = cascade.length - run.length;
       if (cardIndex < runStart) cardIndex = runStart;
 
-      // Gather the run cards
-      this.touchDragCards = [];
+      // Gather the run cards into unified drag state
+      this.clearActiveDragState(true);
       for (let i = cardIndex; i < cascade.length; i++) {
         const sprite = this.cardSprites.get(cascade[i].id);
         if (sprite) {
-          this.touchDragCards.push(sprite);
+          this.activeDragCards.push(sprite);
+          this.activeDragVelocities.push({ x: 0, y: 0 });
+          this.activeDragAngleVelocities.push(0);
           sprite.setDepth(1000 + (i - cardIndex));
           sprite.setScale(1.08); // Lift effect
         }
       }
 
-      if (this.touchDragCards.length > 0) {
-        const topSprite = this.touchDragCards[0];
-        this.touchDragOffsetX = x - topSprite.x;
-        this.touchDragOffsetY = y - topSprite.y;
-        this.touchDragFrom = { type: 'cascade', index: col, cardIndex };
-        this.touchDragging = true;
+      if (this.activeDragCards.length > 0) {
+        const topSprite = this.activeDragCards[0];
+        this.activeDragOffsets = { x: x - topSprite.x, y: y - topSprite.y };
+        this.activeDragFrom = { type: 'cascade', index: col, cardIndex };
+        this.activeDragTarget = { x, y };
+        this.isDragging = true;
+        this.dragSource = 'touch';
 
         // Clear any existing selection
         this.clearSelection();
@@ -1058,13 +1047,17 @@ export class FreeCellScene extends Phaser.Scene {
       if (card) {
         const sprite = this.cardSprites.get(card.id);
         if (sprite) {
-          this.touchDragCards = [sprite];
+          this.clearActiveDragState(true);
+          this.activeDragCards = [sprite];
+          this.activeDragVelocities = [{ x: 0, y: 0 }];
+          this.activeDragAngleVelocities = [0];
           sprite.setDepth(1000);
           sprite.setScale(1.08);
-          this.touchDragOffsetX = x - sprite.x;
-          this.touchDragOffsetY = y - sprite.y;
-          this.touchDragFrom = { type: 'freecell', index: topSlot.index };
-          this.touchDragging = true;
+          this.activeDragOffsets = { x: x - sprite.x, y: y - sprite.y };
+          this.activeDragFrom = { type: 'freecell', index: topSlot.index };
+          this.activeDragTarget = { x, y };
+          this.isDragging = true;
+          this.dragSource = 'touch';
           this.clearSelection();
           this.showDragTargetGlow(sprite);
           if (!this.timer.isRunning) this.timer.start();
@@ -1081,29 +1074,24 @@ export class FreeCellScene extends Phaser.Scene {
 
   /** Drop dragged cards at the touch-up position */
   private touchDrop(x: number, y: number): void {
-    if (!this.touchDragFrom || this.touchDragCards.length === 0) {
-      this.touchDragCleanup();
+    if (!this.activeDragFrom || this.activeDragCards.length === 0) {
+      this.clearActiveDragState(true);
       return;
     }
 
     // Find drop target
     const target = this.findDropTarget(x, y);
-    if (target && this.engine.isLegalMove(this.touchDragFrom, target)) {
-      // Legal move — execute with animation
-      this.clearDragTargetGlow();
-      this.touchDragCards.forEach(c => { c.setScale(1); c.angle = 0; });
-      this.dragCards = this.touchDragCards; // For executeMoveAndAnimate compatibility
-      this.executeMoveAndAnimate(this.touchDragFrom, target);
-      this.dragCards = [];
+    if (target && this.engine.isLegalMove(this.activeDragFrom, target)) {
+      // Legal move — spring-settle to target then execute
+      const placementTargets = this.getPlacementTargets(target);
+      this.beginSettlingDrag(placementTargets, { from: this.activeDragFrom, to: target });
       this.vibrate();
-      this.touchDragCards = [];
-      this.touchDragFrom = null;
-      this.touchDragging = false;
     } else {
-      // Invalid — snap back with haptic
+      // Invalid — spring back with haptic
       soundManager.invalidMove();
       this.vibrate();
-      this.touchDragSnapBack();
+      const snapTargets = this.getSnapBackTargets();
+      this.beginSettlingDrag(snapTargets, null);
     }
   }
 
@@ -1184,39 +1172,25 @@ export class FreeCellScene extends Phaser.Scene {
       const y = (e.clientY - rect.top) * scaleY;
 
       // Only start dragging after a small movement threshold (prevents accidental drags on click)
-      if (!this.mouseDragging && !this.mouseMoved) {
+      if (!this.isDragging && !this.mouseMoved) {
         const dx = x - this.mouseStartX;
         const dy = y - this.mouseStartY;
         if (Math.sqrt(dx * dx + dy * dy) < 5) return;
         this.mouseMoved = true;
-        if (this.mouseDragCards.length > 0) {
-          this.mouseDragging = true;
-          // Clear any click-based selection when starting a drag
+        if (this.activeDragCards.length > 0) {
+          this.isDragging = true;
+          this.dragSource = 'mouse';
           this.clearSelection();
-          // Lift effect + drag target glow
-          this.mouseDragCards.forEach(c => c.setScale(1.08));
-          this.showDragTargetGlow(this.mouseDragCards[0]);
+          this.activeDragCards.forEach(c => c.setScale(1.08));
+          this.showDragTargetGlow(this.activeDragCards[0]);
           soundManager.cardSelect();
         }
       }
 
-      if (!this.mouseDragging || this.mouseDragCards.length === 0) return;
+      if (!this.isDragging || this.activeDragCards.length === 0) return;
 
-      // Lerp-smoothed mouse tracking + velocity-based rotation
-      const targetX = x - this.mouseDragOffsetX;
-      const targetY = y - this.mouseDragOffsetY;
-      const overlap = this.getCurrentOverlap();
-      const LERP = 0.75; // Mouse is less jittery than touch, so higher lerp
-      for (let i = 0; i < this.mouseDragCards.length; i++) {
-        const card = this.mouseDragCards[i];
-        const prevX = card.x;
-        card.x = card.x + (targetX - card.x) * LERP;
-        card.y = card.y + (targetY + i * overlap - card.y) * LERP;
-        // Trailing rotation — subtle weight feel
-        const velocityX = card.x - prevX;
-        const targetRotation = Math.max(-6, Math.min(6, velocityX * 0.25));
-        card.angle = card.angle + (targetRotation - card.angle) * 0.3;
-      }
+      // Just store target — spring physics in update() loop handles the rest
+      this.activeDragTarget = { x, y };
     });
 
     canvas.addEventListener('mouseup', (e: MouseEvent) => {
@@ -1228,19 +1202,20 @@ export class FreeCellScene extends Phaser.Scene {
       const x = (e.clientX - rect.left) * scaleX;
       const y = (e.clientY - rect.top) * scaleY;
 
-      if (this.mouseDragging && this.mouseMoved) {
+      if (this.isDragging && this.mouseMoved) {
         this.mouseDrop(x, y);
       } else {
         // Was a click, not a drag — let Phaser's click system handle it
-        this.mouseDragCleanup();
+        this.clearActiveDragState(true);
       }
       this.mouseIsDown = false;
     });
 
     // Handle mouse leaving the canvas during drag
     canvas.addEventListener('mouseleave', () => {
-      if (this.mouseDragging) {
-        this.mouseDragSnapBack();
+      if (this.isDragging) {
+        const snapTargets = this.getSnapBackTargets();
+        this.beginSettlingDrag(snapTargets, null);
       }
       this.mouseIsDown = false;
     });
@@ -1269,20 +1244,22 @@ export class FreeCellScene extends Phaser.Scene {
       const runStart = cascade.length - run.length;
       if (cardIndex < runStart) cardIndex = runStart;
 
-      this.mouseDragCards = [];
+      this.clearActiveDragState(true);
       for (let i = cardIndex; i < cascade.length; i++) {
         const sprite = this.cardSprites.get(cascade[i].id);
         if (sprite) {
-          this.mouseDragCards.push(sprite);
+          this.activeDragCards.push(sprite);
+          this.activeDragVelocities.push({ x: 0, y: 0 });
+          this.activeDragAngleVelocities.push(0);
           sprite.setDepth(1000 + (i - cardIndex));
         }
       }
 
-      if (this.mouseDragCards.length > 0) {
-        const topSprite = this.mouseDragCards[0];
-        this.mouseDragOffsetX = x - topSprite.x;
-        this.mouseDragOffsetY = y - topSprite.y;
-        this.mouseDragFrom = { type: 'cascade', index: col, cardIndex };
+      if (this.activeDragCards.length > 0) {
+        const topSprite = this.activeDragCards[0];
+        this.activeDragOffsets = { x: x - topSprite.x, y: y - topSprite.y };
+        this.activeDragFrom = { type: 'cascade', index: col, cardIndex };
+        this.activeDragTarget = { x, y };
 
         if (!this.timer.isRunning) this.timer.start();
         this.lastMoveTime = Date.now();
@@ -1301,11 +1278,14 @@ export class FreeCellScene extends Phaser.Scene {
       if (card) {
         const sprite = this.cardSprites.get(card.id);
         if (sprite) {
-          this.mouseDragCards = [sprite];
+          this.clearActiveDragState(true);
+          this.activeDragCards = [sprite];
+          this.activeDragVelocities = [{ x: 0, y: 0 }];
+          this.activeDragAngleVelocities = [0];
           sprite.setDepth(1000);
-          this.mouseDragOffsetX = x - sprite.x;
-          this.mouseDragOffsetY = y - sprite.y;
-          this.mouseDragFrom = { type: 'freecell', index: topSlot.index };
+          this.activeDragOffsets = { x: x - sprite.x, y: y - sprite.y };
+          this.activeDragFrom = { type: 'freecell', index: topSlot.index };
+          this.activeDragTarget = { x, y };
           if (!this.timer.isRunning) this.timer.start();
           this.lastMoveTime = Date.now();
           this.clearHintGlow();
@@ -1317,25 +1297,20 @@ export class FreeCellScene extends Phaser.Scene {
   }
 
   private mouseDrop(x: number, y: number): void {
-    if (!this.mouseDragFrom || this.mouseDragCards.length === 0) {
-      this.mouseDragCleanup();
+    if (!this.activeDragFrom || this.activeDragCards.length === 0) {
+      this.clearActiveDragState(true);
       return;
     }
 
     const target = this.findDropTarget(x, y);
-    if (target && this.engine.isLegalMove(this.mouseDragFrom, target)) {
-      this.clearDragTargetGlow();
-      this.mouseDragCards.forEach(c => { c.setScale(1); c.angle = 0; });
-      this.dragCards = this.mouseDragCards;
-      this.executeMoveAndAnimate(this.mouseDragFrom, target);
-      this.dragCards = [];
+    if (target && this.engine.isLegalMove(this.activeDragFrom, target)) {
+      const placementTargets = this.getPlacementTargets(target);
+      this.beginSettlingDrag(placementTargets, { from: this.activeDragFrom, to: target });
       this.vibrate();
-      this.mouseDragCards = [];
-      this.mouseDragFrom = null;
-      this.mouseDragging = false;
     } else {
       soundManager.invalidMove();
-      this.mouseDragSnapBack();
+      const snapTargets = this.getSnapBackTargets();
+      this.beginSettlingDrag(snapTargets, null);
     }
   }
 

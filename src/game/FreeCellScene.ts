@@ -246,10 +246,11 @@ export class FreeCellScene extends Phaser.Scene {
     });
 
     if (this.isTouchDevice) {
-      // Mobile: zone-based tap input (no per-card hit detection)
+      // Mobile: raw touch events for zero-lag drag
       this.setupTouchInput();
     } else {
-      // Desktop: per-card click-to-move with frame flag to prevent board tap stealing
+      // Desktop: raw mouse drag + Phaser click-to-move
+      this.setupMouseDrag();
       this.input.on('pointerup', (pointer: Phaser.Input.Pointer) => {
         if (this.cardTappedThisFrame) {
           this.cardTappedThisFrame = false;
@@ -458,15 +459,15 @@ export class FreeCellScene extends Phaser.Scene {
     shadow.fillRoundedRect(2, 2, this.cardWidth, this.cardHeight, 6);
     container.addAt(shadow, 0); // Behind the card
 
-    // Desktop: per-card interactivity for click-to-move and drag
-    // Touch devices use zone-based input instead
+    // Desktop: per-card interactivity for click-to-move (select + place)
+    // Drag is handled by raw mouse events (setupMouseDrag), not Phaser's drag system
+    // Touch devices use raw touch events (setupTouchInput)
     if (!this.isTouchDevice) {
       container.setInteractive(
         new Phaser.Geom.Rectangle(0, 0, this.cardWidth, this.cardHeight),
         Phaser.Geom.Rectangle.Contains
       );
 
-      this.input.setDraggable(container);
       container.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
         this.cardTappedThisFrame = true;
         this.onCardClick(container, pointer);
@@ -595,28 +596,8 @@ export class FreeCellScene extends Phaser.Scene {
       }
     }
 
-    // Set up drag handlers (desktop only — touch uses zone-based tapping)
-    if (!this.isTouchDevice) {
-      this.input.on('drag', (_pointer: Phaser.Input.Pointer, _gameObject: CardSprite, dragX: number, dragY: number) => {
-        if (this.dragCards.length === 0) return;
-        const offsetX = dragX - this.dragStartX;
-        const offsetY = dragY - this.dragStartY;
-
-        this.dragCards.forEach((card, i) => {
-          card.x = this.dragStartX + offsetX;
-          card.y = this.dragStartY + offsetY + i * this.getCurrentOverlap();
-        });
-      });
-
-      this.input.on('dragstart', (_pointer: Phaser.Input.Pointer, gameObject: CardSprite) => {
-        this.clearSelection();
-        this.startDrag(gameObject);
-      });
-
-      this.input.on('dragend', (_pointer: Phaser.Input.Pointer, gameObject: CardSprite) => {
-        this.endDrag(gameObject);
-      });
-    }
+    // Note: drag is handled by raw mouse/touch events (setupMouseDrag/setupTouchInput)
+    // Phaser's built-in drag system is NOT used — raw events give us zero-lag tracking
 
     // Initial hit area setup after all cards are placed
     this.updateHitAreas();
@@ -865,6 +846,227 @@ export class FreeCellScene extends Phaser.Scene {
     this.touchDragCards = [];
     this.touchDragFrom = null;
     this.touchDragging = false;
+  }
+
+  // ── Mouse Drag System (Desktop) — Raw mouse events for zero-lag drag ───────
+
+  // Reuses touch drag state variables for shared logic
+  private mouseDragging: boolean = false;
+  private mouseDragCards: CardSprite[] = [];
+  private mouseDragFrom: Location | null = null;
+  private mouseDragOffsetX: number = 0;
+  private mouseDragOffsetY: number = 0;
+  private mouseStartX: number = 0;
+  private mouseStartY: number = 0;
+  private mouseMoved: boolean = false;
+  private mouseIsDown: boolean = false;
+
+  private setupMouseDrag(): void {
+    const canvas = this.game.canvas;
+
+    canvas.addEventListener('mousedown', (e: MouseEvent) => {
+      if (e.button !== 0) return; // Left click only
+      const rect = canvas.getBoundingClientRect();
+      const scaleX = canvas.width / rect.width;
+      const scaleY = canvas.height / rect.height;
+      const x = (e.clientX - rect.left) * scaleX;
+      const y = (e.clientY - rect.top) * scaleY;
+
+      this.mouseIsDown = true;
+      this.mouseStartX = x;
+      this.mouseStartY = y;
+      this.mouseMoved = false;
+
+      // Pre-identify which card would be dragged (but don't lift yet)
+      // Actual drag starts on first movement past threshold
+      this.tryMousePickup(x, y);
+    });
+
+    canvas.addEventListener('mousemove', (e: MouseEvent) => {
+      if (!this.mouseIsDown) return;
+
+      const rect = canvas.getBoundingClientRect();
+      const scaleX = canvas.width / rect.width;
+      const scaleY = canvas.height / rect.height;
+      const x = (e.clientX - rect.left) * scaleX;
+      const y = (e.clientY - rect.top) * scaleY;
+
+      // Only start dragging after a small movement threshold (prevents accidental drags on click)
+      if (!this.mouseDragging && !this.mouseMoved) {
+        const dx = x - this.mouseStartX;
+        const dy = y - this.mouseStartY;
+        if (Math.sqrt(dx * dx + dy * dy) < 5) return;
+        this.mouseMoved = true;
+        if (this.mouseDragCards.length > 0) {
+          this.mouseDragging = true;
+          // Clear any click-based selection when starting a drag
+          this.clearSelection();
+          // Lift effect + drag target glow
+          this.mouseDragCards.forEach(c => c.setScale(1.08));
+          this.showDragTargetGlow(this.mouseDragCards[0]);
+          soundManager.cardSelect();
+        }
+      }
+
+      if (!this.mouseDragging || this.mouseDragCards.length === 0) return;
+
+      // Direct position — zero-lag mouse tracking
+      const overlap = this.getCurrentOverlap();
+      for (let i = 0; i < this.mouseDragCards.length; i++) {
+        this.mouseDragCards[i].x = x - this.mouseDragOffsetX;
+        this.mouseDragCards[i].y = y - this.mouseDragOffsetY + i * overlap;
+      }
+    });
+
+    canvas.addEventListener('mouseup', (e: MouseEvent) => {
+      if (e.button !== 0) return;
+
+      const rect = canvas.getBoundingClientRect();
+      const scaleX = canvas.width / rect.width;
+      const scaleY = canvas.height / rect.height;
+      const x = (e.clientX - rect.left) * scaleX;
+      const y = (e.clientY - rect.top) * scaleY;
+
+      if (this.mouseDragging && this.mouseMoved) {
+        this.mouseDrop(x, y);
+      } else {
+        // Was a click, not a drag — let Phaser's click system handle it
+        this.mouseDragCleanup();
+      }
+      this.mouseIsDown = false;
+    });
+
+    // Handle mouse leaving the canvas during drag
+    canvas.addEventListener('mouseleave', () => {
+      if (this.mouseDragging) {
+        this.mouseDragSnapBack();
+      }
+      this.mouseIsDown = false;
+    });
+  }
+
+  private tryMousePickup(x: number, y: number): void {
+    // Check cascades
+    const col = this.getCascadeColumnAtPoint(x, y);
+    if (col !== -1) {
+      const state = this.engine.getState();
+      const cascade = state.cascades[col];
+      if (cascade.length === 0) return;
+
+      const cascadeTop = this.boardOffsetY + this.topRowHeight + this.cascadeGap;
+      const overlap = this.getCurrentOverlap();
+      const relativeY = y - cascadeTop;
+      let cardIndex = Math.floor(relativeY / Math.max(overlap, 1));
+      cardIndex = Math.min(Math.max(cardIndex, 0), cascade.length - 1);
+
+      const lastCardTop = cascadeTop + (cascade.length - 1) * overlap;
+      if (y > lastCardTop && y < lastCardTop + this.cardHeight) {
+        cardIndex = cascade.length - 1;
+      }
+
+      const run = this.engine.getValidRun(col);
+      const runStart = cascade.length - run.length;
+      if (cardIndex < runStart) cardIndex = runStart;
+
+      this.mouseDragCards = [];
+      for (let i = cardIndex; i < cascade.length; i++) {
+        const sprite = this.cardSprites.get(cascade[i].id);
+        if (sprite) {
+          this.mouseDragCards.push(sprite);
+          sprite.setDepth(1000 + (i - cardIndex));
+        }
+      }
+
+      if (this.mouseDragCards.length > 0) {
+        const topSprite = this.mouseDragCards[0];
+        this.mouseDragOffsetX = x - topSprite.x;
+        this.mouseDragOffsetY = y - topSprite.y;
+        this.mouseDragFrom = { type: 'cascade', index: col, cardIndex };
+
+        if (!this.timer.isRunning) this.timer.start();
+        this.lastMoveTime = Date.now();
+        this.clearHintGlow();
+        this.clearHintText();
+        this.clearIdleWiggles();
+      }
+      return;
+    }
+
+    // Check free cells
+    const topSlot = this.getTopRowSlotAtPoint(x, y);
+    if (topSlot && topSlot.type === 'freecell') {
+      const state = this.engine.getState();
+      const card = state.freeCells[topSlot.index];
+      if (card) {
+        const sprite = this.cardSprites.get(card.id);
+        if (sprite) {
+          this.mouseDragCards = [sprite];
+          sprite.setDepth(1000);
+          this.mouseDragOffsetX = x - sprite.x;
+          this.mouseDragOffsetY = y - sprite.y;
+          this.mouseDragFrom = { type: 'freecell', index: topSlot.index };
+          if (!this.timer.isRunning) this.timer.start();
+          this.lastMoveTime = Date.now();
+          this.clearHintGlow();
+          this.clearHintText();
+          this.clearIdleWiggles();
+        }
+      }
+    }
+  }
+
+  private mouseDrop(x: number, y: number): void {
+    if (!this.mouseDragFrom || this.mouseDragCards.length === 0) {
+      this.mouseDragCleanup();
+      return;
+    }
+
+    const target = this.findDropTarget(x, y);
+    if (target && this.engine.isLegalMove(this.mouseDragFrom, target)) {
+      this.clearDragTargetGlow();
+      this.mouseDragCards.forEach(c => c.setScale(1));
+      this.dragCards = this.mouseDragCards;
+      this.executeMoveAndAnimate(this.mouseDragFrom, target);
+      this.dragCards = [];
+      this.vibrate();
+      this.mouseDragCards = [];
+      this.mouseDragFrom = null;
+      this.mouseDragging = false;
+    } else {
+      soundManager.invalidMove();
+      this.mouseDragSnapBack();
+    }
+  }
+
+  private mouseDragSnapBack(): void {
+    this.clearDragTargetGlow();
+    for (const card of this.mouseDragCards) {
+      card.setScale(1);
+      const location = this.findCardLocation(card.cardData);
+      if (location) {
+        const pos = this.getLocationPosition(location);
+        this.tweens.add({
+          targets: card,
+          x: pos.x,
+          y: pos.y,
+          duration: 120,
+          ease: 'Power3.easeOut',
+        });
+      }
+    }
+    this.mouseDragCards = [];
+    this.mouseDragFrom = null;
+    this.mouseDragging = false;
+  }
+
+  private mouseDragCleanup(): void {
+    this.clearDragTargetGlow();
+    for (const card of this.mouseDragCards) {
+      card.setScale(1);
+    }
+    this.mouseDragCards = [];
+    this.mouseDragFrom = null;
+    this.mouseDragging = false;
   }
 
   private cancelLongPress(): void {

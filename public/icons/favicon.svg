@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="8" fill="#0a3d0a"/>
+  <rect x="8" y="8" width="22" height="32" rx="3" fill="white"/>
+  <rect x="34" y="24" width="22" height="32" rx="3" fill="white"/>
+  <!-- Red diamond on first card -->
+  <polygon points="19,16 24,24 19,32 14,24" fill="#cc0000"/>
+  <!-- Black spade on second card -->
+  <path d="M45,32 C45,32 40,38 40,42 C40,44 42,46 45,44 L45,48 L45,44 C48,46 50,44 50,42 C50,38 45,32 45,32Z" fill="#000"/>
+</svg>

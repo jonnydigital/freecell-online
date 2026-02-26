@@ -1475,6 +1475,13 @@ export class FreeCellScene extends Phaser.Scene {
     let cardIndex = Math.floor(relativeY / Math.max(overlap, 1));
     cardIndex = Math.min(Math.max(cardIndex, 0), cascade.length - 1);
 
+    // The last card shows its full height, not just the overlap strip.
+    // If tap is within the last card's full rect, select it.
+    const lastCardTop = cascadeTop + (cascade.length - 1) * overlap;
+    if (tapY >= lastCardTop && tapY <= lastCardTop + this.cardHeight) {
+      cardIndex = cascade.length - 1;
+    }
+
     // Snap to valid run start (can't select cards that don't form a valid run)
     const run = this.engine.getValidRun(col);
     const runStart = cascade.length - run.length;

@@ -74,6 +74,7 @@ export class FreeCellScene extends Phaser.Scene {
   private idleWiggleTweens: Phaser.Tweens.Tween[] = [];
   private idleCheckTimer: Phaser.Time.TimerEvent | null = null;
   private dragGlowGraphics: Phaser.GameObjects.Graphics[] = [];
+  private hintTextObj: Phaser.GameObjects.Container | null = null;
 
   // Touch device detection and zone-based input
   private isTouchDevice: boolean = false;
@@ -695,13 +696,21 @@ export class FreeCellScene extends Phaser.Scene {
     const cascadeTop = this.boardOffsetY + this.topRowHeight + this.cascadeGap;
     if (y < cascadeTop - 5) return -1;
 
-    const w = this.scale.width;
-    const sideMargin = w * SIDE_MARGIN;
-    if (x < sideMargin || x > w - sideMargin) return -1;
-
-    const usableWidth = w - 2 * sideMargin;
-    const col = Math.floor((x - sideMargin) / (usableWidth / 8));
-    return Math.min(Math.max(col, 0), 7);
+    // Find closest column by actual card X positions (not equal zone division)
+    // This prevents misalignment between zone boundaries and card positions
+    let bestCol = -1;
+    let bestDist = Infinity;
+    for (let col = 0; col < 8; col++) {
+      const colX = this.getColumnX(col);
+      const colCenter = colX + this.cardWidth / 2;
+      const dist = Math.abs(x - colCenter);
+      // Only match if tap is within the column's card width + small margin
+      if (dist < this.cardWidth * 0.65 && dist < bestDist) {
+        bestDist = dist;
+        bestCol = col;
+      }
+    }
+    return bestCol;
   }
 
   private getTopRowSlotAtPoint(x: number, y: number): { type: 'freecell' | 'foundation'; index: number } | null {
@@ -1036,6 +1045,7 @@ export class FreeCellScene extends Phaser.Scene {
     // Juice: reset idle effects on any interaction
     this.lastMoveTime = Date.now();
     this.clearHintGlow();
+    this.clearHintText();
     this.clearIdleWiggles();
 
     const location = this.findCardLocation(sprite.cardData);
@@ -1247,6 +1257,7 @@ export class FreeCellScene extends Phaser.Scene {
 
   private flashInvalid(sprite: CardSprite): void {
     soundManager.invalidMove();
+    // Red flash overlay
     const gfx = this.add.graphics();
     gfx.fillStyle(0xff0000, 0.3);
     gfx.fillRoundedRect(sprite.x, sprite.y, this.cardWidth, this.cardHeight, 6);
@@ -1258,6 +1269,18 @@ export class FreeCellScene extends Phaser.Scene {
       ease: 'Power2',
       onComplete: () => gfx.destroy(),
     });
+    // Horizontal shake for tactile feedback
+    const origX = sprite.x;
+    this.tweens.add({
+      targets: sprite,
+      x: origX + 4,
+      duration: 40,
+      yoyo: true,
+      repeat: 2,
+      ease: 'Sine.easeInOut',
+      onComplete: () => { sprite.x = origX; },
+    });
+    this.vibrate();
   }
 
   private handleBoardTap(x: number, y: number): void {
@@ -1403,8 +1426,8 @@ export class FreeCellScene extends Phaser.Scene {
         if (cs) {
           this.dragCards.push(cs);
           cs.setDepth(1000 + i);
-          // Lift effect — slight scale up for dragged cards
-          cs.setScale(1.05);
+          // Lift effect — scale up + slight y offset for "picking up" feel
+          cs.setScale(1.08);
         }
       }
     } else if (location.type === 'freecell') {
@@ -1514,6 +1537,7 @@ export class FreeCellScene extends Phaser.Scene {
     // Juice: reset inactivity timer and clear idle effects
     this.lastMoveTime = Date.now();
     this.clearHintGlow();
+    this.clearHintText();
     this.clearIdleWiggles();
 
     // Play sound based on destination type
@@ -2275,6 +2299,7 @@ export class FreeCellScene extends Phaser.Scene {
 
     // Juice: clean up idle effects
     this.clearHintGlow();
+    this.clearHintText();
     this.clearIdleWiggles();
     this.clearDragTargetGlow();
 
@@ -2323,11 +2348,17 @@ export class FreeCellScene extends Phaser.Scene {
     if (idle >= 12 && this.idleWiggleTweens.length === 0) {
       this.showIdleWiggle();
     }
+
+    // Text hint after 20 seconds of idle — describes the recommended move
+    if (idle >= 20 && !this.hintTextObj) {
+      this.showAutoHintText();
+    }
   }
 
   /** Gently pulse a gold border around the best hint card after 8s idle */
   private showAutoHintGlow(): void {
     this.clearHintGlow();
+    this.clearHintText();
     const hint = getHint(this.engine);
     if (!hint) return;
 
@@ -2369,6 +2400,79 @@ export class FreeCellScene extends Phaser.Scene {
     if (this.hintGlowGraphics) {
       this.hintGlowGraphics.destroy();
       this.hintGlowGraphics = null;
+    }
+  }
+
+  /** Show a text hint describing the recommended move after extended idle */
+  private showAutoHintText(): void {
+    this.clearHintText();
+    const hint = getHint(this.engine);
+    if (!hint) return;
+
+    const rankNames = ['', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+    const card = hint.cards[0];
+    const cardName = `${rankNames[card.rank]}${SUIT_SYMBOLS[card.suit]}`;
+
+    let destName = '';
+    if (hint.to.type === 'foundation') {
+      destName = 'foundation';
+    } else if (hint.to.type === 'freecell') {
+      destName = 'a free cell';
+    } else if (hint.to.type === 'cascade') {
+      const state = this.engine.getState();
+      const cascade = state.cascades[hint.to.index];
+      if (cascade.length > 0) {
+        const topCard = cascade[cascade.length - 1];
+        destName = `the ${rankNames[topCard.rank]}${SUIT_SYMBOLS[topCard.suit]}`;
+      } else {
+        destName = 'empty column';
+      }
+    }
+
+    const hintStr = `Try: ${cardName} → ${destName}`;
+
+    // Create container with background
+    const w = this.scale.width;
+    const fontSize = Math.max(14, Math.floor(w * 0.032));
+    const text = this.add.text(0, 0, hintStr, {
+      fontSize: `${fontSize}px`,
+      color: '#ffd700',
+      fontFamily: 'system-ui, -apple-system, sans-serif',
+      fontStyle: 'bold',
+    });
+    text.setOrigin(0.5, 0.5);
+
+    const padX = 16;
+    const padY = 8;
+    const bg = this.add.graphics();
+    bg.fillStyle(0x000000, 0.7);
+    bg.fillRoundedRect(
+      -text.width / 2 - padX,
+      -text.height / 2 - padY,
+      text.width + padX * 2,
+      text.height + padY * 2,
+      8
+    );
+
+    this.hintTextObj = this.add.container(w / 2, this.scale.height - 40);
+    this.hintTextObj.add(bg);
+    this.hintTextObj.add(text);
+    this.hintTextObj.setDepth(2000);
+    this.hintTextObj.setAlpha(0);
+
+    // Fade in
+    this.tweens.add({
+      targets: this.hintTextObj,
+      alpha: 1,
+      duration: 400,
+      ease: 'Power2',
+    });
+  }
+
+  private clearHintText(): void {
+    if (this.hintTextObj) {
+      this.hintTextObj.destroy(true);
+      this.hintTextObj = null;
     }
   }
 

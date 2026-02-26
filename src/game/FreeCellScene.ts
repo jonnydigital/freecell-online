@@ -2602,13 +2602,9 @@ export class FreeCellScene extends Phaser.Scene {
     const state = this.engine.getState();
     this.invalidateOverlapCache();
 
-    // Reset drag transforms on all cards (but don't kill tweens globally —
-    // that would kill deal animations). Tweens are killed per-card below
-    // only when that card needs to move to a new position.
-    this.cardSprites.forEach((sprite) => {
-      sprite.angle = 0;
-      sprite.setScale(1);
-    });
+    // Note: do NOT reset scale/angle globally here — it breaks deal animations
+    // that are still in progress (cards start at scale 0.85, alpha 0).
+    // Drag transforms are reset in clearActiveDragState() instead.
 
     // Position cascade cards with snappy settle + staggered delay for physical feel
     for (let col = 0; col < 8; col++) {

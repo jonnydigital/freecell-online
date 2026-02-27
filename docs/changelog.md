@@ -1,5 +1,14 @@
 # FreeCell Online — Changelog
 
+## 2026-02-27 (Overnight — Fluidity Sprint)
+### Shipped
+- **Single-tap auto-move** — Bottom card of cascade auto-moves on single tap (foundation > cascade > empty > freecell). Mid-run taps still show selection UI.
+- **Faster animations** — Move duration tightened to 60-180ms (was 100-300ms), Power3.easeOut default (Back.easeOut reserved for foundation/win)
+- **Auto-complete acceleration** — Starts at 40ms between cards, accelerates to 15ms as it goes
+- **Cascade settling stagger** — 12ms per-card delay for physical settling feel after card removal
+
+---
+
 ## 2026-02-24 (Day 1 — Launch Day)
 ### Shipped
 - **Core game** — Full FreeCell engine, Phaser rendering, drag-and-drop

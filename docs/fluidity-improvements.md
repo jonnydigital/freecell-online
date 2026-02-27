@@ -1,9 +1,9 @@
 # Fluidity Improvements — Prioritized Code Changes
 *Date: 2026-02-26 | Based on competitive analysis + code review of FreeCellScene.ts*
 
-## 🔴 Critical (Ship Today/Tomorrow)
+## 🔴 Critical (Ship Today/Tomorrow) — ✅ ALL SHIPPED 2026-02-27
 
-### 1. Single-Tap Auto-Move (Effort: M)
+### 1. Single-Tap Auto-Move (Effort: M) ✅
 **Problem**: Users must tap to select, then tap destination — 2 interactions where competitors need 1.
 **Fix**: Make single tap trigger `smartAutoMove()` directly instead of `selectCard()`. Keep selection as fallback only when tap is on a card that's part of a multi-card run (where user might want to choose how many cards to move).
 **File**: `FreeCellScene.ts` → `handleCascadeSelection()` and `onCardClick()`

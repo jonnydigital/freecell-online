@@ -1505,6 +1505,18 @@ export class FreeCellScene extends Phaser.Scene {
     this.lastTapCol = col;
     this.lastTapColTime = now;
 
+    // Single-tap on bottom card → auto-move directly (skip selection)
+    if (cardIndex === cascade.length - 1) {
+      const bottomCard = cascade[cascade.length - 1];
+      const sprite = this.cardSprites.get(bottomCard.id);
+      if (sprite) {
+        this.clearSelection();
+        this.smartAutoMove(sprite);
+      }
+      return;
+    }
+
+    // Mid-run card → select for manual placement
     const card = cascade[cardIndex];
     const sprite = this.cardSprites.get(card.id);
     if (sprite) {
@@ -1608,18 +1620,9 @@ export class FreeCellScene extends Phaser.Scene {
 
     const sprite = this.cardSprites.get(card.id);
     if (sprite) {
-      // Double-tap detection on free cell card
-      const now = Date.now();
-      if (this.lastTapCard === sprite && (now - this.lastTapTime) < 400) {
-        this.lastTapCard = null;
-        this.clearSelection();
-        this.smartAutoMove(sprite);
-        return;
-      }
-      this.lastTapCard = sprite;
-      this.lastTapTime = now;
-
-      this.selectCard(sprite);
+      // Single-tap on freecell card → auto-move directly
+      this.clearSelection();
+      this.smartAutoMove(sprite);
     }
   }
 
@@ -1737,7 +1740,24 @@ export class FreeCellScene extends Phaser.Scene {
       return;
     }
 
-    // No card selected - select this one and show destinations
+    // No card selected: single-tap auto-move for bottom cascade card or freecell card
+    const location = this.findCardLocation(sprite.cardData);
+    if (location) {
+      if (location.type === 'freecell') {
+        this.smartAutoMove(sprite);
+        return;
+      }
+      if (location.type === 'cascade') {
+        const state = this.engine.getState();
+        const cascade = state.cascades[location.index];
+        if (cascade.length > 0 && cascade[cascade.length - 1].equals(sprite.cardData)) {
+          this.smartAutoMove(sprite);
+          return;
+        }
+      }
+    }
+
+    // Mid-run card or other - select and show destinations
     this.selectCard(sprite);
   }
 
@@ -2365,6 +2385,8 @@ export class FreeCellScene extends Phaser.Scene {
   private performAutoFinish(): void {
     if (!this.engine.isAutoCompletable()) return;
 
+    let launchCount = 0;
+
     const moveCards = () => {
       // Find the lowest-rank card that can go to a foundation
       let bestCard: { from: Location; suit: Suit } | null = null;
@@ -2402,7 +2424,10 @@ export class FreeCellScene extends Phaser.Scene {
           this.timer.stop();
           this.time.delayedCall(400, () => this.winCelebration());
         } else {
-          this.time.delayedCall(25, moveCards);
+          // Accelerate: start at 40ms, decrease by 2ms per card, min 15ms
+          const delay = Math.max(15, 40 - launchCount * 2);
+          launchCount++;
+          this.time.delayedCall(delay, moveCards);
         }
       }
     };
@@ -2624,7 +2649,7 @@ export class FreeCellScene extends Phaser.Scene {
               duration: isMoving
                 ? Math.min(200, Math.max(80, this.getMoveDuration(sprite, pos.x, pos.y)))
                 : this.getMoveDuration(sprite, pos.x, pos.y),
-              delay: isMoving ? 0 : row * 12,
+              delay: row * 12,  // per-card stagger for physical settling feel
               ease: isMoving ? 'Power3.easeOut' : 'Power2',
             });
           } else {

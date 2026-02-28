@@ -33,6 +33,8 @@ export type BridgeEvent = UIToGameEvent | GameToUIEvent;
 
 class GameBridge {
   private listeners: Map<string, Set<EventCallback>> = new Map();
+  /** Set before Phaser init to start with a specific game number */
+  initialGameNumber: number | null = null;
 
   on(event: BridgeEvent, callback: EventCallback): () => void {
     if (!this.listeners.has(event)) {

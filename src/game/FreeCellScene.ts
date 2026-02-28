@@ -166,6 +166,13 @@ export class FreeCellScene extends Phaser.Scene {
   }
 
   create(): void {
+    // Use initial game number from bridge (URL-based), or random solvable
+    if (gameBridge.initialGameNumber !== null) {
+      this.gameNumber = gameBridge.initialGameNumber;
+      gameBridge.initialGameNumber = null; // consume it
+    } else {
+      this.gameNumber = getRandomSolvableGame();
+    }
     this.engine = new FreeCellEngine(this.gameNumber);
     this.history = new MoveHistory();
     this.timer = new GameTimer();

@@ -19,7 +19,11 @@ import AchievementsPanel from './AchievementsPanel';
 import KeyboardShortcuts from './KeyboardShortcuts';
 import { soundManager } from '../lib/sounds';
 
-export default function GameShell() {
+interface GameShellProps {
+  initialGameNumber?: number;
+}
+
+export default function GameShell({ initialGameNumber }: GameShellProps = {}) {
   const containerRef = useRef<HTMLDivElement>(null);
   const gameRef = useRef<Phaser.Game | null>(null);
   const mountedRef = useRef(false);
@@ -87,6 +91,11 @@ export default function GameShell() {
     const initPhaser = async () => {
       if (!containerRef.current || gameRef.current) return;
 
+      // Set initial game number before Phaser creates the scene
+      if (initialGameNumber) {
+        gameBridge.initialGameNumber = initialGameNumber;
+      }
+
       // Wait for container to have dimensions (mobile can be slow to layout)
       const container = containerRef.current;
       let attempts = 0;
@@ -121,6 +130,10 @@ export default function GameShell() {
       setAutoCompletable(false);
       trackGameStart(d.gameNumber);
       setIsDailyGame(d.gameNumber === getTodaysSeed());
+      // Update URL to reflect current game number (shareable)
+      if (d.gameNumber >= 1 && d.gameNumber <= 1000000) {
+        window.history.replaceState(null, '', `/game/${d.gameNumber}`);
+      }
     });
 
     const unsubMove = gameBridge.on('moveExecuted', (data: unknown) => {

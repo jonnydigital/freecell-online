@@ -28,7 +28,7 @@ export default function WinScreen({ gameNumber, time, moves, hintsUsed, onPlayAg
   }, []);
 
   const handleShare = async () => {
-    const shareText = `I solved FreeCell Game #${gameNumber} in ${moves} moves (${formatTime(time)})! 🃏\nhttps://playfreecellonline.com`;
+    const shareText = `I solved FreeCell Game #${gameNumber} in ${moves} moves (${formatTime(time)})! 🃏\nCan you beat it? https://playfreecellonline.com/game/${gameNumber}`;
     
     if (navigator.share) {
       try {

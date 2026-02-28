@@ -8,6 +8,8 @@ export default function Footer() {
           <a href="/strategy" className="hover:text-white/60">Strategy</a>
           <a href="/faq" className="hover:text-white/60">FAQ</a>
           <a href="/glossary" className="hover:text-white/60">Glossary</a>
+          <a href="/history" className="hover:text-white/60">History</a>
+          <a href="/tips" className="hover:text-white/60">Tips</a>
           <a href="/privacy" className="hover:text-white/60">Privacy</a>
           <a href="/terms" className="hover:text-white/60">Terms</a>
         </nav>

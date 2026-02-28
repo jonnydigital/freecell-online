@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Shuffle, Calendar, Trophy } from 'lucide-react';
+import { Shuffle, Calendar, Trophy, Share2 } from 'lucide-react';
 
 interface WinScreenProps {
   gameNumber: number;
@@ -28,8 +28,9 @@ export default function WinScreen({ gameNumber, time, moves, hintsUsed, onPlayAg
   }, []);
 
   const handleShare = async () => {
-    const shareText = `I solved FreeCell Game #${gameNumber} in ${moves} moves (${formatTime(time)})! 🃏\nhttps://playfreecellonline.com`;
-    
+    const shareUrl = `${window.location.origin}/?game=${gameNumber}`;
+    const shareText = `I just solved FreeCell #${gameNumber} in ${moves} moves! Can you beat that? 🃏 ${shareUrl}`;
+
     if (navigator.share) {
       try {
         await navigator.share({
@@ -37,20 +38,17 @@ export default function WinScreen({ gameNumber, time, moves, hintsUsed, onPlayAg
           text: shareText,
         });
         return;
-      } catch (error) {
-        // Fallback to clipboard if share fails
-        console.error('Web Share API failed, falling back to clipboard:', error);
+      } catch {
+        // Fallback to clipboard if share cancelled/fails
       }
     }
 
-    // Clipboard fallback
     try {
       await navigator.clipboard.writeText(shareText);
       setShareStatus('copied');
       setTimeout(() => setShareStatus('idle'), 2000);
-    } catch (err) {
-      console.error('Failed to copy text: ', err);
-      alert('Failed to copy results to clipboard.');
+    } catch {
+      // Silent fail
     }
   };
 
@@ -90,6 +88,7 @@ export default function WinScreen({ gameNumber, time, moves, hintsUsed, onPlayAg
             onClick={handleShare}
             className="flex items-center justify-center gap-2 w-full py-3 bg-[#D4AF37] hover:bg-[#c9a84c] text-black font-bold rounded-lg transition-colors"
           >
+            <Share2 size={18} />
             {shareStatus === 'copied' ? 'Copied!' : 'Share Results'}
           </button>
           <button

@@ -7,7 +7,7 @@ import { loadStats, saveStats } from '../lib/storage';
 import { trackGameStart, trackWin, trackAbandoned, trackHint, trackUndo, trackMove, trackDeadlock, gameSession } from '../lib/analytics';
 import { initErrorTracking, setGameContext } from '../lib/errorTracking';
 import { getTodaysSeed, getTodayStr, recordDailyCompletion, isTodayCompleted } from '../lib/dailyChallenge';
-import { RotateCcw, RotateCw, Lightbulb, BarChart3, MessageSquare, Shuffle, Calendar, Volume2, VolumeX, Home } from 'lucide-react';
+import { RotateCcw, RotateCw, Lightbulb, BarChart3, MessageSquare, Shuffle, Calendar, Volume2, VolumeX, Home, Share2 } from 'lucide-react';
 import StatsPanel from './StatsPanel';
 import FeedbackModal from './FeedbackModal';
 import DailyChallengePanel from './DailyChallengePanel';
@@ -40,6 +40,7 @@ export default function GameShell() {
   const [showShortcuts, setShowShortcuts] = useState(false);
   const [isLandscapeMobile, setIsLandscapeMobile] = useState(false);
   const [dailyCompleted, setDailyCompleted] = useState(true); // assume completed until checked
+  const [shareStatus, setShareStatus] = useState<'idle' | 'copied'>('idle');
 
   // Load stats on mount
   useEffect(() => {
@@ -84,6 +85,18 @@ export default function GameShell() {
     if (mountedRef.current) return;
     mountedRef.current = true;
 
+    // Parse URL ?game= parameter for shared links
+    let initialGame: number | null = null;
+    let initialGameUsed = false;
+    const params = new URLSearchParams(window.location.search);
+    const gameParam = params.get('game');
+    if (gameParam) {
+      const num = parseInt(gameParam, 10);
+      if (!isNaN(num) && num >= 1 && num <= 9999999) {
+        initialGame = num;
+      }
+    }
+
     const initPhaser = async () => {
       if (!containerRef.current || gameRef.current) return;
 
@@ -112,6 +125,14 @@ export default function GameShell() {
 
     const unsubReady = gameBridge.on('gameReady', (data: unknown) => {
       const d = data as { gameNumber: number };
+
+      // If URL has ?game= param, override the first random game
+      if (initialGame !== null && !initialGameUsed) {
+        initialGameUsed = true;
+        gameBridge.emit('newGame', initialGame);
+        return;
+      }
+
       if (gameSession.gameNumber > 0 && gameSession.moveCount > 0) {
         trackAbandoned();
       }
@@ -193,6 +214,25 @@ export default function GameShell() {
     setIsMuted(muted);
   };
 
+  const handleShareGame = async () => {
+    if (!gameNumber) return;
+    const shareUrl = `${window.location.origin}/?game=${gameNumber}`;
+    const shareText = `Can you solve FreeCell #${gameNumber}? 🃏 ${shareUrl}`;
+
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: 'FreeCell Online', text: shareText });
+        return;
+      } catch { /* fall through to clipboard */ }
+    }
+
+    try {
+      await navigator.clipboard.writeText(shareText);
+      setShareStatus('copied');
+      setTimeout(() => setShareStatus('idle'), 2000);
+    } catch { /* silent fail */ }
+  };
+
   // Keyboard shortcuts
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -251,6 +291,13 @@ export default function GameShell() {
           </button>
         </div>
         <div className="flex items-center gap-4 text-sm text-white/70">
+          <button
+            onClick={handleShareGame}
+            className="p-1.5 text-white/50 hover:text-[#D4AF37] transition-colors"
+            title={shareStatus === 'copied' ? 'Copied!' : 'Share this game'}
+          >
+            <Share2 size={15} />
+          </button>
           {gameNumber && (
             <button
               onClick={() => setShowGameInput(true)}
@@ -288,6 +335,13 @@ export default function GameShell() {
             {isWon && (
               <span className="text-yellow-400 font-bold animate-pulse">Win!</span>
             )}
+            <button
+              onClick={handleShareGame}
+              className="p-1 text-white/40 active:text-[#D4AF37] transition-colors"
+              title="Share"
+            >
+              <Share2 size={14} />
+            </button>
           </div>
         </div>
       )}

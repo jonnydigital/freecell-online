@@ -28,6 +28,11 @@ export default function Home() {
     } catch {
       skip = true;
     }
+    // Skip splash for shared links (?game= parameter)
+    if (!skip) {
+      const params = new URLSearchParams(window.location.search);
+      if (params.has('game')) skip = true;
+    }
     // Use requestAnimationFrame to avoid synchronous setState in effect
     requestAnimationFrame(() => {
       setShowSplash(!skip);

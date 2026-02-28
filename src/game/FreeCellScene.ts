@@ -494,6 +494,7 @@ export class FreeCellScene extends Phaser.Scene {
     this.settleTargets = targets;
     for (const card of this.activeDragCards) {
       card.setScale(1);
+      this.removeCardLift(card);
     }
   }
 
@@ -512,6 +513,7 @@ export class FreeCellScene extends Phaser.Scene {
       for (const card of this.activeDragCards) {
         card.setScale(1);
         card.angle = 0;
+        this.removeCardLift(card);
       }
     }
     this.activeDragCards = [];
@@ -923,6 +925,12 @@ export class FreeCellScene extends Phaser.Scene {
 
       // Try to pick up a card immediately
       this.tryTouchPickup(x, y);
+
+      // #8 Touch responsiveness: show selection glow immediately on pointerdown
+      // Gives instant visual feedback; the full action confirms on touchend (pointerup)
+      if (!this.selectedCard && this.activeDragCards.length > 0) {
+        this.showSelectionGlow(this.activeDragCards[0]);
+      }
     }, { passive: false });
 
     canvas.addEventListener('touchmove', (e: TouchEvent) => {
@@ -937,6 +945,9 @@ export class FreeCellScene extends Phaser.Scene {
       const y = (touch.clientY - rect.top) * scaleY;
 
       this.touchMoved = true;
+
+      // #8: Clear anticipatory selection glow when touch becomes a drag
+      if (!this.selectedCard && this.selectionGlow) this.clearSelectionGlow();
 
       // Just store target — spring physics in update() loop handles the rest
       this.activeDragTarget = { x, y };
@@ -1006,6 +1017,7 @@ export class FreeCellScene extends Phaser.Scene {
           this.activeDragAngleVelocities.push(0);
           sprite.setDepth(1000 + (i - cardIndex));
           sprite.setScale(1.08); // Lift effect
+          this.applyCardLift(sprite);
         }
       }
 
@@ -1054,6 +1066,7 @@ export class FreeCellScene extends Phaser.Scene {
           this.activeDragAngleVelocities = [0];
           sprite.setDepth(1000);
           sprite.setScale(1.08);
+          this.applyCardLift(sprite);
           this.activeDragOffsets = { x: x - sprite.x, y: y - sprite.y };
           this.activeDragFrom = { type: 'freecell', index: topSlot.index };
           this.activeDragTarget = { x, y };
@@ -1100,7 +1113,7 @@ export class FreeCellScene extends Phaser.Scene {
   private touchDragSnapBack(): void {
     this.clearDragTargetGlow();
     for (const card of this.touchDragCards) {
-      card.setScale(1); card.angle = 0;
+      card.setScale(1); card.angle = 0; this.removeCardLift(card);
       const location = this.findCardLocation(card.cardData);
       if (location) {
         const pos = this.getLocationPosition(location);
@@ -1122,7 +1135,7 @@ export class FreeCellScene extends Phaser.Scene {
   private touchDragCleanup(): void {
     this.clearDragTargetGlow();
     for (const card of this.touchDragCards) {
-      card.setScale(1); card.angle = 0;
+      card.setScale(1); card.angle = 0; this.removeCardLift(card);
     }
     this.touchDragCards = [];
     this.touchDragFrom = null;
@@ -1182,7 +1195,7 @@ export class FreeCellScene extends Phaser.Scene {
           this.isDragging = true;
           this.dragSource = 'mouse';
           this.clearSelection();
-          this.activeDragCards.forEach(c => c.setScale(1.08));
+          this.activeDragCards.forEach(c => { c.setScale(1.08); this.applyCardLift(c); });
           this.showDragTargetGlow(this.activeDragCards[0]);
           soundManager.cardSelect();
         }
@@ -1318,7 +1331,7 @@ export class FreeCellScene extends Phaser.Scene {
   private mouseDragSnapBack(): void {
     this.clearDragTargetGlow();
     for (const card of this.mouseDragCards) {
-      card.setScale(1); card.angle = 0;
+      card.setScale(1); card.angle = 0; this.removeCardLift(card);
       const location = this.findCardLocation(card.cardData);
       if (location) {
         const pos = this.getLocationPosition(location);
@@ -1339,7 +1352,7 @@ export class FreeCellScene extends Phaser.Scene {
   private mouseDragCleanup(): void {
     this.clearDragTargetGlow();
     for (const card of this.mouseDragCards) {
-      card.setScale(1); card.angle = 0;
+      card.setScale(1); card.angle = 0; this.removeCardLift(card);
     }
     this.mouseDragCards = [];
     this.mouseDragFrom = null;
@@ -2119,6 +2132,31 @@ export class FreeCellScene extends Phaser.Scene {
     }
   }
 
+  // ── Card Lift Effect (Fluidity #5) ─────────────────────────
+
+  /** Enhance shadow and lift card slightly on drag start */
+  private applyCardLift(sprite: CardSprite): void {
+    // Deepen shadow: offset 4,6 with alpha 0.5 (from default 2,2 / 0.3)
+    const shadow = sprite.getAt(0) as Phaser.GameObjects.Graphics;
+    if (shadow && shadow instanceof Phaser.GameObjects.Graphics) {
+      shadow.clear();
+      shadow.fillStyle(0x000000, 0.5);
+      shadow.fillRoundedRect(4, 6, this.cardWidth, this.cardHeight, 6);
+    }
+    // Subtle y-offset to lift above the board
+    sprite.y -= 3;
+  }
+
+  /** Reset shadow and y-offset back to normal */
+  private removeCardLift(sprite: CardSprite): void {
+    const shadow = sprite.getAt(0) as Phaser.GameObjects.Graphics;
+    if (shadow && shadow instanceof Phaser.GameObjects.Graphics) {
+      shadow.clear();
+      shadow.fillStyle(0x000000, 0.3);
+      shadow.fillRoundedRect(2, 2, this.cardWidth, this.cardHeight, 6);
+    }
+  }
+
   // ── Drag and Drop ─────────────────────────────────────────
 
   private startDrag(sprite: CardSprite): void {
@@ -2146,13 +2184,16 @@ export class FreeCellScene extends Phaser.Scene {
         if (cs) {
           this.dragCards.push(cs);
           cs.setDepth(1000 + i);
-          // Lift effect — scale up + slight y offset for "picking up" feel
+          // Lift effect — scale up + shadow deepen + slight y offset
           cs.setScale(1.08);
+          this.applyCardLift(cs);
         }
       }
     } else if (location.type === 'freecell') {
       this.dragCards = [sprite];
       sprite.setDepth(1000);
+      sprite.setScale(1.08);
+      this.applyCardLift(sprite);
     } else {
       return; // Can't drag from foundation
     }
@@ -2184,7 +2225,7 @@ export class FreeCellScene extends Phaser.Scene {
     // Find drop target based on position
     const target = this.findDropTarget(dropCard.x, dropCard.y);
     if (target && this.engine.isLegalMove(from, target)) {
-      this.dragCards.forEach((c) => c.setScale(1)); // Reset lift effect
+      this.dragCards.forEach((c) => { c.setScale(1); this.removeCardLift(c); }); // Reset lift effect
       this.executeMoveAndAnimate(from, target);
       this.vibrate();
     } else {
@@ -2552,7 +2593,7 @@ export class FreeCellScene extends Phaser.Scene {
 
   private snapCardsBack(): void {
     this.dragCards.forEach((card) => {
-      card.setScale(1); card.angle = 0; // Reset lift effect
+      card.setScale(1); card.angle = 0; this.removeCardLift(card); // Reset lift effect
       const location = this.findCardLocation(card.cardData);
       if (location) {
         const pos = this.getLocationPosition(location);

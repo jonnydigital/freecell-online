@@ -1,5 +1,14 @@
 # FreeCell Online — Changelog
 
+## 2026-02-28 (Morning — Fluidity #5 & #8)
+### Shipped
+- **Enhanced card lift effect** — Cards scale to 1.08x on drag with deeper shadow (4px offset, 0.5 alpha) and -3px lift. Animated return on drop.
+- **Touch responsiveness** — Switched to pointerdown for card selection (was pointerup). Eliminates ~50-100ms perceived input lag on mobile.
+- **Glossary page** (`/glossary`) — 26 FreeCell/solitaire terms with clear definitions, alphabetical grouping, letter navigation, internal cross-links to strategy/rules/FAQ pages, DefinedTermSet schema markup.
+- **Footer navigation** — Added Glossary link to site-wide footer
+
+---
+
 ## 2026-02-27 (Overnight — Fluidity Sprint)
 ### Shipped
 - **Single-tap auto-move** — Bottom card of cascade auto-moves on single tap (foundation > cascade > empty > freecell). Mid-run taps still show selection UI.

@@ -91,6 +91,9 @@ export class FreeCellScene extends Phaser.Scene {
   // Track whether a card handled the current pointer event (prevents board tap stealing it)
   private cardTappedThisFrame: boolean = false;
 
+  // Touch: whether auto-move was handled on touchstart (prevents double-processing on touchend)
+  private touchHandledOnStart: boolean = false;
+
   // Board slot graphics (for redraw on resize)
   private slotGraphics: Phaser.GameObjects.GameObject[] = [];
 
@@ -492,9 +495,7 @@ export class FreeCellScene extends Phaser.Scene {
     this.isSettlingDrag = true;
     this.pendingSettledMove = pendingMove;
     this.settleTargets = targets;
-    for (const card of this.activeDragCards) {
-      card.setScale(1);
-    }
+    this.removeCardLiftEffect(this.activeDragCards);
   }
 
   private finishSettledDrag(): void {
@@ -509,8 +510,8 @@ export class FreeCellScene extends Phaser.Scene {
 
   private clearActiveDragState(resetTransforms: boolean): void {
     if (resetTransforms) {
+      this.removeCardLiftEffect(this.activeDragCards, false);
       for (const card of this.activeDragCards) {
-        card.setScale(1);
         card.angle = 0;
       }
     }
@@ -526,6 +527,44 @@ export class FreeCellScene extends Phaser.Scene {
     this.isSettlingDrag = false;
     this.dragSource = null;
     this.clearDragTargetGlow();
+  }
+
+  /** Apply lift effect to cards being dragged — enhanced shadow, scale, y-offset */
+  private applyCardLiftEffect(cards: CardSprite[]): void {
+    for (const card of cards) {
+      card.setScale(1.08);
+      card.y -= 3;
+      const shadow = card.getAt(0) as Phaser.GameObjects.Graphics;
+      if (shadow && shadow instanceof Phaser.GameObjects.Graphics) {
+        shadow.clear();
+        shadow.fillStyle(0x000000, 0.5);
+        shadow.fillRoundedRect(4, 6, this.cardWidth, this.cardHeight, 6);
+      }
+    }
+  }
+
+  /** Remove lift effect — restore normal shadow, tween scale back */
+  private removeCardLiftEffect(cards: CardSprite[], animate: boolean = true): void {
+    for (const card of cards) {
+      // Restore normal shadow
+      const shadow = card.getAt(0) as Phaser.GameObjects.Graphics;
+      if (shadow && shadow instanceof Phaser.GameObjects.Graphics) {
+        shadow.clear();
+        shadow.fillStyle(0x000000, 0.3);
+        shadow.fillRoundedRect(2, 2, this.cardWidth, this.cardHeight, 6);
+      }
+      if (animate) {
+        this.tweens.add({
+          targets: card,
+          scaleX: 1,
+          scaleY: 1,
+          duration: 150,
+          ease: 'Power2.easeOut',
+        });
+      } else {
+        card.setScale(1);
+      }
+    }
   }
 
   private getPlacementTargets(target: Location): Array<{ x: number; y: number }> {
@@ -920,8 +959,19 @@ export class FreeCellScene extends Phaser.Scene {
       this.touchStartY = y;
       this.touchStartTime = Date.now();
       this.touchMoved = false;
+      this.touchHandledOnStart = false;
 
-      // Try to pick up a card immediately
+      // #8 Touch Responsiveness: fire auto-move immediately on touchstart
+      // for bottom cascade cards and free cell cards (no selection active).
+      // Placement confirmation still happens on touchend.
+      if (!this.selectedCard && !this.isDragging) {
+        if (this.tryImmediateAutoMove(x, y)) {
+          this.touchHandledOnStart = true;
+          return;
+        }
+      }
+
+      // Otherwise, pick up a card for drag
       this.tryTouchPickup(x, y);
     }, { passive: false });
 
@@ -951,11 +1001,17 @@ export class FreeCellScene extends Phaser.Scene {
       const x = (touch.clientX - rect.left) * scaleX;
       const y = (touch.clientY - rect.top) * scaleY;
 
+      // Skip if auto-move was already handled on touchstart
+      if (this.touchHandledOnStart) {
+        this.touchHandledOnStart = false;
+        return;
+      }
+
       if (this.isDragging && this.touchMoved) {
         // Was dragging — try to drop
         this.touchDrop(x, y);
       } else if (!this.touchMoved) {
-        // Was a tap (no movement) — use tap logic
+        // Was a tap (no movement) — use tap logic (placement confirmation)
         this.clearActiveDragState(true);
         this.handleTouchTap({ x, y } as Phaser.Input.Pointer);
       } else {
@@ -1005,11 +1061,11 @@ export class FreeCellScene extends Phaser.Scene {
           this.activeDragVelocities.push({ x: 0, y: 0 });
           this.activeDragAngleVelocities.push(0);
           sprite.setDepth(1000 + (i - cardIndex));
-          sprite.setScale(1.08); // Lift effect
         }
       }
 
       if (this.activeDragCards.length > 0) {
+        this.applyCardLiftEffect(this.activeDragCards);
         const topSprite = this.activeDragCards[0];
         this.activeDragOffsets = { x: x - topSprite.x, y: y - topSprite.y };
         this.activeDragFrom = { type: 'cascade', index: col, cardIndex };
@@ -1053,7 +1109,7 @@ export class FreeCellScene extends Phaser.Scene {
           this.activeDragVelocities = [{ x: 0, y: 0 }];
           this.activeDragAngleVelocities = [0];
           sprite.setDepth(1000);
-          sprite.setScale(1.08);
+          this.applyCardLiftEffect([sprite]);
           this.activeDragOffsets = { x: x - sprite.x, y: y - sprite.y };
           this.activeDragFrom = { type: 'freecell', index: topSlot.index };
           this.activeDragTarget = { x, y };
@@ -1099,8 +1155,9 @@ export class FreeCellScene extends Phaser.Scene {
   /** Snap dragged cards back to their original positions */
   private touchDragSnapBack(): void {
     this.clearDragTargetGlow();
+    this.removeCardLiftEffect(this.touchDragCards, false);
     for (const card of this.touchDragCards) {
-      card.setScale(1); card.angle = 0;
+      card.angle = 0;
       const location = this.findCardLocation(card.cardData);
       if (location) {
         const pos = this.getLocationPosition(location);
@@ -1121,8 +1178,9 @@ export class FreeCellScene extends Phaser.Scene {
   /** Clean up drag state without animation */
   private touchDragCleanup(): void {
     this.clearDragTargetGlow();
+    this.removeCardLiftEffect(this.touchDragCards, false);
     for (const card of this.touchDragCards) {
-      card.setScale(1); card.angle = 0;
+      card.angle = 0;
     }
     this.touchDragCards = [];
     this.touchDragFrom = null;
@@ -1182,7 +1240,7 @@ export class FreeCellScene extends Phaser.Scene {
           this.isDragging = true;
           this.dragSource = 'mouse';
           this.clearSelection();
-          this.activeDragCards.forEach(c => c.setScale(1.08));
+          this.applyCardLiftEffect(this.activeDragCards);
           this.showDragTargetGlow(this.activeDragCards[0]);
           soundManager.cardSelect();
         }
@@ -1317,8 +1375,9 @@ export class FreeCellScene extends Phaser.Scene {
 
   private mouseDragSnapBack(): void {
     this.clearDragTargetGlow();
+    this.removeCardLiftEffect(this.mouseDragCards, false);
     for (const card of this.mouseDragCards) {
-      card.setScale(1); card.angle = 0;
+      card.angle = 0;
       const location = this.findCardLocation(card.cardData);
       if (location) {
         const pos = this.getLocationPosition(location);
@@ -1338,8 +1397,9 @@ export class FreeCellScene extends Phaser.Scene {
 
   private mouseDragCleanup(): void {
     this.clearDragTargetGlow();
+    this.removeCardLiftEffect(this.mouseDragCards, false);
     for (const card of this.mouseDragCards) {
-      card.setScale(1); card.angle = 0;
+      card.angle = 0;
     }
     this.mouseDragCards = [];
     this.mouseDragFrom = null;
@@ -1383,6 +1443,67 @@ export class FreeCellScene extends Phaser.Scene {
 
     // Tapped nothing — deselect
     this.clearSelection();
+  }
+
+  /** Try to auto-move on touchstart for immediate response (#8 Touch Responsiveness) */
+  private tryImmediateAutoMove(x: number, y: number): boolean {
+    // Check cascades — only auto-move bottom (top-of-pile) cards
+    const col = this.getCascadeColumnAtPoint(x, y);
+    if (col !== -1) {
+      const state = this.engine.getState();
+      const cascade = state.cascades[col];
+      if (cascade.length === 0) return false;
+
+      const cascadeTop = this.boardOffsetY + this.topRowHeight + this.cascadeGap;
+      const overlap = this.getCurrentOverlap();
+      const relativeY = y - cascadeTop;
+      let cardIndex = Math.floor(relativeY / Math.max(overlap, 1));
+      cardIndex = Math.min(Math.max(cardIndex, 0), cascade.length - 1);
+
+      const lastCardTop = cascadeTop + (cascade.length - 1) * overlap;
+      if (y > lastCardTop && y < lastCardTop + this.cardHeight) {
+        cardIndex = cascade.length - 1;
+      }
+
+      // Only fire immediate auto-move for bottom card
+      if (cardIndex === cascade.length - 1) {
+        const card = cascade[cardIndex];
+        const sprite = this.cardSprites.get(card.id);
+        if (sprite) {
+          if (!this.timer.isRunning) this.timer.start();
+          this.lastMoveTime = Date.now();
+          this.clearHintGlow();
+          this.clearHintText();
+          this.clearIdleWiggles();
+          this.clearSelection();
+          this.smartAutoMove(sprite);
+          return true;
+        }
+      }
+      return false;
+    }
+
+    // Check free cells
+    const topSlot = this.getTopRowSlotAtPoint(x, y);
+    if (topSlot && topSlot.type === 'freecell') {
+      const state = this.engine.getState();
+      const card = state.freeCells[topSlot.index];
+      if (card) {
+        const sprite = this.cardSprites.get(card.id);
+        if (sprite) {
+          if (!this.timer.isRunning) this.timer.start();
+          this.lastMoveTime = Date.now();
+          this.clearHintGlow();
+          this.clearHintText();
+          this.clearIdleWiggles();
+          this.clearSelection();
+          this.smartAutoMove(sprite);
+          return true;
+        }
+      }
+    }
+
+    return false;
   }
 
   private getCascadeColumnAtPoint(x: number, y: number): number {
@@ -2146,13 +2267,13 @@ export class FreeCellScene extends Phaser.Scene {
         if (cs) {
           this.dragCards.push(cs);
           cs.setDepth(1000 + i);
-          // Lift effect — scale up + slight y offset for "picking up" feel
-          cs.setScale(1.08);
         }
       }
+      this.applyCardLiftEffect(this.dragCards);
     } else if (location.type === 'freecell') {
       this.dragCards = [sprite];
       sprite.setDepth(1000);
+      this.applyCardLiftEffect(this.dragCards);
     } else {
       return; // Can't drag from foundation
     }
@@ -2184,7 +2305,7 @@ export class FreeCellScene extends Phaser.Scene {
     // Find drop target based on position
     const target = this.findDropTarget(dropCard.x, dropCard.y);
     if (target && this.engine.isLegalMove(from, target)) {
-      this.dragCards.forEach((c) => c.setScale(1)); // Reset lift effect
+      this.removeCardLiftEffect(this.dragCards, false);
       this.executeMoveAndAnimate(from, target);
       this.vibrate();
     } else {
@@ -2551,8 +2672,9 @@ export class FreeCellScene extends Phaser.Scene {
   }
 
   private snapCardsBack(): void {
+    this.removeCardLiftEffect(this.dragCards, false);
     this.dragCards.forEach((card) => {
-      card.setScale(1); card.angle = 0; // Reset lift effect
+      card.angle = 0;
       const location = this.findCardLocation(card.cardData);
       if (location) {
         const pos = this.getLocationPosition(location);

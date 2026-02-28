@@ -7,6 +7,7 @@ export default function Footer() {
           <a href="/how-to-play" className="hover:text-white/60">Rules</a>
           <a href="/strategy" className="hover:text-white/60">Strategy</a>
           <a href="/faq" className="hover:text-white/60">FAQ</a>
+          <a href="/glossary" className="hover:text-white/60">Glossary</a>
           <a href="/privacy" className="hover:text-white/60">Privacy</a>
           <a href="/terms" className="hover:text-white/60">Terms</a>
         </nav>

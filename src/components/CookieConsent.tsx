@@ -78,7 +78,7 @@ function loadAdSense() {
   if (document.querySelector('script[src*="adsbygoogle"]')) return;
 
   const script = document.createElement('script');
-  script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXX';
+  script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3083538874906149';
   script.async = true;
   script.crossOrigin = 'anonymous';
   document.head.appendChild(script);

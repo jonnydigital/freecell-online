@@ -1,5 +1,9 @@
 # FreeCell Online — Changelog
 
+## 2026-03-01 (Sunday Build)
+### Shipped
+- **Theme system** — 5 built-in felt themes (Classic Green, Royal Blue, Wine Red, Dark Mode, Slate). Theme picker in toolbar with color swatches. CSS variables bridge React↔Phaser. Persists to localStorage. Smooth transitions.
+
 ## 2026-03-01 (Overnight Build Cycle)
 ### Shipped
 - **Streak milestone celebrations** — Animated toast notifications at win streak milestones (3, 5, 7, 10, 15, 20, 25, 30, 50, 75, 100, 150, 200, 365). Each milestone has unique emoji, title, and motivational message. Spring animations with flame icons, auto-dismisses after 5s. Duolingo-inspired engagement mechanic.

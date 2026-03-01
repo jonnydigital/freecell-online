@@ -5,8 +5,8 @@
 1. **Puzzle modes: Streak + Storm** — Repackage FreeCell engine as Streak (consecutive wins) and Storm (timed speed-solving). 3-4x engagement surface from same core engine. *(Lichess spark — their puzzle variants are massive retention drivers)*
 2. **Post-game optimal solution** — Show solver's solution after each game (win or lose). Educational + dwell time. *(Lichess spark — leverages existing solver, low effort)*
 3. ~~**Star rating per game**~~ ✅ ALREADY SHIPPED — WinScreen shows 1-3 stars based on moves (≤60=3★, ≤90=2★), with animated reveal, "New Best!" tracking, and star count in share text
-4. **Theme system** — felt color picker + card back designs *(Solitaire Bliss has this, gamification gap)*
-5. **Share button** — "I solved today's FreeCell in X moves!" with Web Share API *(competitor gap, viral growth)*
+4. ~~**Theme system**~~ ✅ SHIPPED 03-01 — 5 felt themes (Classic Green, Royal Blue, Wine Red, Dark Mode, Slate) with CSS variables, localStorage persistence, theme picker in toolbar
+5. ~~**Share button**~~ ✅ ALREADY SHIPPED — Web Share API + clipboard fallback on WinScreen, DailyChallenge, Streak, GameShell
 6. **SEO: Expand strategy page** — 2000+ words, actionable tips, internal links *(Solitaire Bliss model — they rank for "freecell strategy")*
 7. ~~**SEO: Glossary/terminology page**~~ ✅ SHIPPED 02-28 — `/glossary` with 26 terms, letter nav, DefinedTermSet schema, cross-links
 

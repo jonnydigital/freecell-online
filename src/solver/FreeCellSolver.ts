@@ -574,3 +574,20 @@ export function solverMoveToLocations(
 
   return { from, to };
 }
+
+/**
+ * Replay a solution and return human-readable descriptions for each move.
+ * Used by the solution replay UI.
+ */
+export function describeSolution(gameNumber: number, moves: SolverMove[]): string[] {
+  const state = createInitialState(gameNumber);
+  autoMoveToFoundations(state);
+
+  const descriptions: string[] = [];
+  for (const move of moves) {
+    descriptions.push(describeSolverMove(move, state));
+    applyMove(state, move);
+    autoMoveToFoundations(state);
+  }
+  return descriptions;
+}

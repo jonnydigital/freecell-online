@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { Shuffle, Calendar, Trophy, Share2 } from 'lucide-react';
+import { Shuffle, Calendar, Trophy, Share2, Eye } from 'lucide-react';
 import { saveStarRating } from '@/lib/storage';
 
 interface WinScreenProps {
@@ -12,6 +12,9 @@ interface WinScreenProps {
   hintsUsed: number;
   onPlayAgain: () => void;
   onDailyChallenge: () => void;
+  solverStatus?: 'idle' | 'solving' | 'solved' | 'failed';
+  optimalMoves?: number;
+  onViewSolution?: () => void;
 }
 
 function getStarCount(moves: number): number {
@@ -26,7 +29,7 @@ function formatTime(seconds: number): string {
   return `${m}:${s.toString().padStart(2, '0')}`;
 }
 
-export default function WinScreen({ gameNumber, time, moves, hintsUsed, onPlayAgain, onDailyChallenge }: WinScreenProps) {
+export default function WinScreen({ gameNumber, time, moves, hintsUsed, onPlayAgain, onDailyChallenge, solverStatus, optimalMoves, onViewSolution }: WinScreenProps) {
   const [visible, setVisible] = useState(false);
   const [shareStatus, setShareStatus] = useState<'idle' | 'copying' | 'copied'>('idle');
 
@@ -107,7 +110,7 @@ export default function WinScreen({ gameNumber, time, moves, hintsUsed, onPlayAg
         )}
         {!isNewBest && <div className="mb-4" />}
 
-        <div className="grid grid-cols-3 gap-4 mb-8">
+        <div className="grid grid-cols-3 gap-4 mb-4">
           <div>
             <div className="text-2xl font-bold text-white">{formatTime(time)}</div>
             <div className="text-xs text-white/50 mt-1">Time</div>
@@ -121,6 +124,22 @@ export default function WinScreen({ gameNumber, time, moves, hintsUsed, onPlayAg
             <div className="text-xs text-white/50 mt-1">Hints</div>
           </div>
         </div>
+
+        {/* Solver Analysis */}
+        {solverStatus === 'solving' && (
+          <div className="text-sm text-white/40 mb-6 animate-pulse">Analyzing optimal solution...</div>
+        )}
+        {solverStatus === 'solved' && optimalMoves !== undefined && (
+          <div className="text-sm text-white/60 mb-6">
+            Optimal: <span className="text-emerald-400 font-bold">{optimalMoves}</span> moves
+            {moves <= optimalMoves ? (
+              <span className="text-yellow-400 ml-1 font-semibold">Perfect!</span>
+            ) : (
+              <span className="text-white/40 ml-1">(+{moves - optimalMoves} extra)</span>
+            )}
+          </div>
+        )}
+        {(solverStatus !== 'solving' && solverStatus !== 'solved') && <div className="mb-4" />}
 
         <div className="flex flex-col gap-3">
           <button
@@ -144,6 +163,15 @@ export default function WinScreen({ gameNumber, time, moves, hintsUsed, onPlayAg
             <Calendar size={18} />
             Daily Challenge
           </button>
+          {solverStatus === 'solved' && onViewSolution && (
+            <button
+              onClick={onViewSolution}
+              className="flex items-center justify-center gap-2 w-full py-3 bg-emerald-800/80 hover:bg-emerald-700 text-white font-semibold rounded-lg transition-colors"
+            >
+              <Eye size={18} />
+              View Optimal Solution
+            </button>
+          )}
         </div>
       </div>
     </div>

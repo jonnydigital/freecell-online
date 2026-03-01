@@ -14,6 +14,8 @@ import FeedbackModal from './FeedbackModal';
 import DailyChallengePanel from './DailyChallengePanel';
 import GameNumberInput from './GameNumberInput';
 import WinScreen from './WinScreen';
+import SolutionReplay from './SolutionReplay';
+import { useSolver } from '@/hooks/useSolver';
 import HomeOverlay from './HomeOverlay';
 import DailyBanner from './DailyBanner';
 import AchievementsPanel from './AchievementsPanel';
@@ -53,6 +55,8 @@ export default function GameShell({ initialGameNumber }: GameShellProps = {}) {
   const [showSettings, setShowSettings] = useState(false);
   const [settings, setSettings] = useState<GameSettings>(loadSettings);
   const [isLandscapeMobile, setIsLandscapeMobile] = useState(false);
+  const [showReplay, setShowReplay] = useState(false);
+  const { status: solverStatus, moves: solverMoves, totalMoveCount: solverTotalMoves, solve: startSolver, reset: resetSolver } = useSolver();
   const [dailyCompleted, setDailyCompleted] = useState(true); // assume completed until checked
   const [shareStatus, setShareStatus] = useState<'idle' | 'copied'>('idle');
   const [timeElapsed, setTimeElapsed] = useState(0);
@@ -234,11 +238,20 @@ export default function GameShell({ initialGameNumber }: GameShellProps = {}) {
     }
   }, [isWon, isDailyGame]);
 
+  // Start solver analysis when game is won
+  useEffect(() => {
+    if (isWon && gameNumber) {
+      startSolver(gameNumber);
+    }
+  }, [isWon, gameNumber, startSolver]);
+
   const handleNewGame = () => {
     setIsDailyGame(false);
     setIsWon(false);
     setIsDeadlocked(false);
     setStreakMilestone(null);
+    setShowReplay(false);
+    resetSolver();
     gameBridge.emit('newGame');
   };
   const handleUndo = () => {
@@ -483,6 +496,20 @@ export default function GameShell({ initialGameNumber }: GameShellProps = {}) {
                 onDailyChallenge={() => {
                   handlePlayDaily(getTodaysSeed());
                 }}
+                solverStatus={solverStatus}
+                optimalMoves={solverMoves.length}
+                onViewSolution={() => setShowReplay(true)}
+              />
+            )}
+
+            {/* Solution Replay Overlay */}
+            {showReplay && solverStatus === 'solved' && (
+              <SolutionReplay
+                gameNumber={gameNumber || 0}
+                moves={solverMoves}
+                totalMoveCount={solverTotalMoves}
+                playerMoves={winDataRef.current?.moves ?? 0}
+                onClose={() => setShowReplay(false)}
               />
             )}
 

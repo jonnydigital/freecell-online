@@ -212,7 +212,7 @@ export class FreeCellScene extends Phaser.Scene {
     } else {
       this.gameNumber = getRandomSolvableGame();
     }
-    this.engine = new FreeCellEngine(this.gameNumber);
+    this.engine = new FreeCellEngine(this.gameNumber, gameBridge.variant);
     this.history = new MoveHistory();
     this.timer = new GameTimer();
     this.settings = loadSettings();
@@ -3424,7 +3424,7 @@ export class FreeCellScene extends Phaser.Scene {
     this.cancelLongPress();
 
     // Reset engine
-    this.engine = new FreeCellEngine(this.gameNumber);
+    this.engine = new FreeCellEngine(this.gameNumber, gameBridge.variant);
     this.history.clear();
     this.timer.reset();
 

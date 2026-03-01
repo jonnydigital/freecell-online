@@ -29,10 +29,14 @@ export interface Move {
   isAutoMove?: boolean;
 }
 
+export type GameVariant = 'freecell' | 'bakers-game';
+
 export class FreeCellEngine {
   private state: GameState;
+  readonly variant: GameVariant;
 
-  constructor(gameNumber: number) {
+  constructor(gameNumber: number, variant: GameVariant = 'freecell') {
+    this.variant = variant;
     const cascades = dealGame(gameNumber);
     this.state = {
       cascades,
@@ -99,8 +103,20 @@ export class FreeCellEngine {
   }
 
   /**
+   * Check if `card` can be stacked on `target` in a cascade.
+   * FreeCell: alternating colors, descending rank.
+   * Baker's Game: same suit, descending rank.
+   */
+  canStack(card: Card, target: Card): boolean {
+    if (this.variant === 'bakers-game') {
+      return card.suit === target.suit && card.rank === target.rank - 1;
+    }
+    return card.canStackOnCascade(target);
+  }
+
+  /**
    * Get a valid descending run from the bottom of a cascade
-   * Returns the cards that form a valid sequence (alternating colors, descending ranks)
+   * Returns the cards that form a valid sequence (variant-appropriate stacking, descending ranks)
    */
   getValidRun(cascadeIndex: number): Card[] {
     const cascade = this.state.cascades[cascadeIndex];
@@ -110,7 +126,7 @@ export class FreeCellEngine {
     for (let i = cascade.length - 2; i >= 0; i--) {
       const upper = cascade[i];
       const lower = run[run.length - 1];
-      if (lower.canStackOnCascade(upper)) {
+      if (this.canStack(lower, upper)) {
         run.push(upper);
       } else {
         break;
@@ -156,17 +172,17 @@ export class FreeCellEngine {
         if (from.type === 'freecell' || (from.type === 'cascade' && (from.cardIndex === undefined || from.cardIndex === this.state.cascades[from.index].length - 1))) {
           // Single card move
           if (targetCascade.length === 0) return true; // Any card on empty cascade
-          return card.canStackOnCascade(targetCascade[targetCascade.length - 1]);
+          return this.canStack(card, targetCascade[targetCascade.length - 1]);
         }
 
         // Sequence move from cascade
         if (from.type === 'cascade' && from.cardIndex !== undefined) {
           const sourceCascade = this.state.cascades[from.index];
           const runSize = sourceCascade.length - from.cardIndex;
-          
+
           // Verify it's a valid run
           for (let i = from.cardIndex; i < sourceCascade.length - 1; i++) {
-            if (!sourceCascade[i + 1].canStackOnCascade(sourceCascade[i])) {
+            if (!this.canStack(sourceCascade[i + 1], sourceCascade[i])) {
               return false;
             }
           }
@@ -176,7 +192,7 @@ export class FreeCellEngine {
           if (runSize > maxMovable) return false;
 
           if (toEmpty) return true;
-          return sourceCascade[from.cardIndex].canStackOnCascade(targetCascade[targetCascade.length - 1]);
+          return this.canStack(sourceCascade[from.cardIndex], targetCascade[targetCascade.length - 1]);
         }
 
         return false;
@@ -301,7 +317,8 @@ export class FreeCellEngine {
       // Check free cells
       for (let i = 0; i < 4; i++) {
         const card = this.state.freeCells[i];
-        if (card && card.isSafeToAutoMove(foundationRanks) && card.canMoveToFoundation(this.getFoundationTop(card.suit))) {
+        const safe = this.variant === 'bakers-game' || card?.isSafeToAutoMove(foundationRanks);
+        if (card && safe && card.canMoveToFoundation(this.getFoundationTop(card.suit))) {
           const move = this.executeMove(
             { type: 'freecell', index: i },
             { type: 'foundation', suit: card.suit }
@@ -319,7 +336,8 @@ export class FreeCellEngine {
         const cascade = this.state.cascades[i];
         if (cascade.length === 0) continue;
         const card = cascade[cascade.length - 1];
-        if (card.isSafeToAutoMove(foundationRanks) && card.canMoveToFoundation(this.getFoundationTop(card.suit))) {
+        const safeCasc = this.variant === 'bakers-game' || card.isSafeToAutoMove(foundationRanks);
+        if (safeCasc && card.canMoveToFoundation(this.getFoundationTop(card.suit))) {
           const move = this.executeMove(
             { type: 'cascade', index: i },
             { type: 'foundation', suit: card.suit }

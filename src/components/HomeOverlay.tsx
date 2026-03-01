@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, HelpCircle, Swords, MessageSquare, VolumeX, Volume2, Trophy, Target, Clock, Flame, Zap, BarChart3 } from 'lucide-react';
+import { X, HelpCircle, Swords, MessageSquare, VolumeX, Volume2, Trophy, Target, Clock, Flame, Zap, BarChart3, Layers } from 'lucide-react';
 import { getTodaysSeed, getTodayStr, loadDailyData, getCurrentStreak, isTodayCompleted } from '../lib/dailyChallenge';
 import { loadStats } from '../lib/storage';
 import { getAverageMoves, getAverageTime } from '../lib/stats';
@@ -208,6 +208,20 @@ export default function HomeOverlay({
                       <div className="text-[10px] text-white/40">Best</div>
                     </div>
                   )}
+                </a>
+
+                {/* Baker's Game Variant */}
+                <a
+                  href="/bakers-game"
+                  className="flex items-center justify-between w-full py-3 px-4 rounded-xl bg-gradient-to-r from-purple-900/40 to-indigo-900/40 border border-purple-500/30 hover:border-purple-500/50 active:scale-[0.97] transition-all"
+                >
+                  <div className="flex items-center gap-3">
+                    <Layers size={22} className="text-purple-400" />
+                    <div className="text-left">
+                      <div className="text-base font-bold text-purple-300">Baker&apos;s Game</div>
+                      <div className="text-[11px] text-white/40">Same-suit stacking</div>
+                    </div>
+                  </div>
                 </a>
 
                 {/* Stats Summary + Link */}

@@ -37,9 +37,10 @@ import { getPlayerId } from '../lib/playerIdentity';
 
 interface GameShellProps {
   initialGameNumber?: number;
+  variant?: 'freecell' | 'bakers-game';
 }
 
-export default function GameShell({ initialGameNumber }: GameShellProps = {}) {
+export default function GameShell({ initialGameNumber, variant = 'freecell' }: GameShellProps = {}) {
   const containerRef = useRef<HTMLDivElement>(null);
   const gameRef = useRef<Phaser.Game | null>(null);
   const mountedRef = useRef(false);
@@ -187,10 +188,11 @@ export default function GameShell({ initialGameNumber }: GameShellProps = {}) {
     const initPhaser = async () => {
       if (!containerRef.current || gameRef.current) return;
 
-      // Set initial game number before Phaser creates the scene
+      // Set initial game number and variant before Phaser creates the scene
       if (initialGameNumber) {
         gameBridge.initialGameNumber = initialGameNumber;
       }
+      gameBridge.variant = variant;
 
       // Wait for container to have dimensions (mobile can be slow to layout)
       const container = containerRef.current;
@@ -486,6 +488,9 @@ export default function GameShell({ initialGameNumber }: GameShellProps = {}) {
                 <a href="/storm" className="flex items-center gap-1.5 text-cyan-400/80 hover:text-cyan-300 transition-colors">
                   <Zap size={14} />
                   Puzzle Storm
+                </a>
+                <a href="/bakers-game" className="text-purple-400/80 hover:text-purple-300 transition-colors">
+                  Baker&apos;s Game
                 </a>
               </nav>
             </div>
@@ -861,6 +866,7 @@ export default function GameShell({ initialGameNumber }: GameShellProps = {}) {
                   <li><button onClick={() => setShowDaily(true)} className="hover:text-white transition-colors">Daily Challenge</button></li>
                   <li><Link href="/streak" className="hover:text-white transition-colors">Puzzle Streak</Link></li>
                   <li><Link href="/storm" className="hover:text-white transition-colors">Puzzle Storm</Link></li>
+                  <li><Link href="/bakers-game" className="hover:text-white transition-colors">Baker&apos;s Game</Link></li>
                   <li><button onClick={() => setShowLeaderboard(true)} className="hover:text-white transition-colors">World Rankings</button></li>
                 </ul>
               </div>

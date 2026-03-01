@@ -110,11 +110,16 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
       if (id) recordThemeUsed(id);
     };
     const unsub = gameBridge.on('themeChanged', handleThemeChange);
-    // Show tutorial on first visit
+    // Show tutorial on first visit (skip if user has any play history)
     try {
-      if (!localStorage.getItem('tutorialSeen')) {
+      const seen = localStorage.getItem('tutorialSeen');
+      const hasStats = localStorage.getItem('freecell-stats');
+      if (!seen && !hasStats) {
         const timer = setTimeout(() => setShowTutorial(true), 1200);
         return () => { unsub(); clearTimeout(timer); };
+      } else if (!seen) {
+        // Existing user, mark as seen so we never check again
+        localStorage.setItem('tutorialSeen', '1');
       }
     } catch {
       // localStorage blocked
@@ -401,6 +406,7 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
   const handleDismissTutorial = useCallback(() => {
     setShowTutorial(false);
     setTutorialRect(null);
+    try { localStorage.setItem('tutorialSeen', '1'); } catch {}
   }, []);
 
   const handleShowTutorial = useCallback(() => {

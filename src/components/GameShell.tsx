@@ -45,7 +45,25 @@ export default function GameShell({ initialGameNumber }: GameShellProps = {}) {
   const [isLandscapeMobile, setIsLandscapeMobile] = useState(false);
   const [dailyCompleted, setDailyCompleted] = useState(true); // assume completed until checked
   const [shareStatus, setShareStatus] = useState<'idle' | 'copied'>('idle');
+  const [timeElapsed, setTimeElapsed] = useState(0);
+  const [isTimerRunning, setIsTimerRunning] = useState(false);
 
+  // Timer effect
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (isTimerRunning && !isWon) {
+      interval = setInterval(() => {
+        setTimeElapsed(prev => prev + 1);
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [isTimerRunning, isWon]);
+
+  const formatTime = (seconds: number) => {
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+  };
   // Load stats on mount
   useEffect(() => {
     setStats(loadStats());
@@ -147,6 +165,8 @@ export default function GameShell({ initialGameNumber }: GameShellProps = {}) {
       }
       setGameNumber(d.gameNumber);
       setMoveCount(0);
+      setTimeElapsed(0);
+      setIsTimerRunning(false);
       setIsWon(false);
       setAutoCompletable(false);
       trackGameStart(d.gameNumber);
@@ -160,6 +180,8 @@ export default function GameShell({ initialGameNumber }: GameShellProps = {}) {
     const unsubMove = gameBridge.on('moveExecuted', (data: unknown) => {
       const d = data as { moveCount: number; gameNumber: number };
       setMoveCount(d.moveCount);
+      if (d.moveCount > 0) setIsTimerRunning(true);
+      if (d.moveCount === 0) setIsTimerRunning(false);
       trackMove('tap');
       setGameContext(d.gameNumber, d.moveCount);
     });
@@ -265,226 +287,252 @@ export default function GameShell({ initialGameNumber }: GameShellProps = {}) {
   const iconSize = 16;
 
   return (
-    <div className="flex flex-col h-dvh bg-[#0a3d0a]">
-      {/* ── Desktop Top Bar (hidden on mobile) ── */}
-      <div className="hidden md:flex items-center justify-between px-4 py-2 bg-[#072907] border-b border-[#1a5c1a]/30">
-        <div className="flex items-center gap-3">
-          <button
-            onClick={handleNewGame}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-sm bg-[#1a5c1a] hover:bg-[#2a7c2a] text-white rounded transition-colors"
-          >
-            <Shuffle size={14} />
-            New Game
-          </button>
-          <button
-            onClick={() => setShowDaily(true)}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-sm bg-yellow-700/80 hover:bg-yellow-600 text-white rounded transition-colors"
-            title="Daily Challenge"
-          >
-            <Calendar size={14} />
-            Daily
-          </button>
-          <button onClick={handleUndo} className={iconBtnClass} title="Undo (Ctrl+Z)">
-            <RotateCcw size={iconSize} />
-          </button>
-          <button onClick={handleRedo} className={iconBtnClass} title="Redo (Ctrl+Y)">
-            <RotateCw size={iconSize} />
-          </button>
-          <button onClick={handleHint} className={iconBtnClass} title="Hint (H)">
-            <Lightbulb size={iconSize} />
-          </button>
-          <button onClick={() => setShowStats(true)} className={iconBtnClass} title="Statistics">
-            <BarChart3 size={iconSize} />
-          </button>
-          <button onClick={() => setShowFeedback(true)} className={iconBtnClass} title="Feedback">
-            <MessageSquare size={iconSize} />
-          </button>
-          <button onClick={handleToggleMute} className={iconBtnClass} title={isMuted ? "Unmute" : "Mute"}>
-            {isMuted ? <VolumeX size={iconSize} /> : <Volume2 size={iconSize} />}
-          </button>
-        </div>
-        <div className="flex items-center gap-4 text-sm text-white/70">
-          <button
-            onClick={handleShareGame}
-            className="p-1.5 text-white/50 hover:text-[#D4AF37] transition-colors"
-            title={shareStatus === 'copied' ? 'Copied!' : 'Share this game'}
-          >
-            <Share2 size={15} />
-          </button>
-          {gameNumber && (
-            <button
-              onClick={() => setShowGameInput(true)}
-              className="hover:text-white transition-colors cursor-pointer"
-              title="Click to enter a game number"
-            >
-              {isDailyGame && <span className="text-yellow-400 mr-1" title="Daily Challenge">&#9819;</span>}
-              Game #{gameNumber}
-            </button>
-          )}
-          <span>{moveCount} moves</span>
-          {isWon && (
-            <span className="text-yellow-400 font-bold animate-pulse">Win!</span>
-          )}
-        </div>
-      </div>
+    <div className="flex w-full h-dvh bg-[#0a351a]">
+      {/* Structural Wrapper for the Game Area + Ad Sidebars */}
+      <div className="flex w-full h-full max-w-[1400px] mx-auto relative overflow-hidden">
 
-      {/* ── Mobile Top Bar (only info, hidden on desktop and landscape) ── */}
-      {!isLandscapeMobile && (
-        <div className="flex md:hidden items-center justify-between px-3 py-1.5 bg-[#072907] border-b border-[#1a5c1a]/30">
-          <div className="flex items-center gap-3 text-xs text-white/70">
-            {gameNumber && (
+        {/* Left Ad Gutter (Hidden on mobile/tablet) */}
+        <div className="hidden lg:flex flex-col flex-1 items-center py-4 px-2 border-r border-white/10 bg-black/10">
+          <div className="w-[160px] h-[600px] border-2 border-dashed border-white/20 rounded-lg flex items-center justify-center bg-black/20 text-white/30 text-sm font-semibold tracking-widest uppercase">
+            Advertisement
+          </div>
+        </div>
+
+        {/* Center Game Container (1000px max) */}
+        <div className="flex flex-col w-full max-w-[1000px] h-full bg-[#0d4a22] shadow-[0_0_50px_rgba(0,0,0,0.5)] relative z-10 shrink-0">
+
+          {/* ── Desktop Top Bar (hidden on mobile) ── */}
+          <div className="hidden md:flex items-center justify-between px-4 py-3 bg-[#115a2a] border-b border-[#2a7c2a]/50 shadow-md z-20">
+            <div className="flex items-center gap-3">
               <button
-                onClick={() => setShowGameInput(true)}
-                className="font-medium hover:text-white transition-colors"
-                title="Enter game number"
+                onClick={handleNewGame}
+                className="flex items-center gap-1.5 px-3 py-1.5 text-sm bg-[#1a5c1a] hover:bg-[#2a7c2a] text-white rounded transition-colors"
               >
-                {isDailyGame && <span className="text-yellow-400 mr-1">&#9819;</span>}
-                Game #{gameNumber}
+                <Shuffle size={14} />
+                New Game
               </button>
+              <button
+                onClick={() => setShowDaily(true)}
+                className="flex items-center gap-1.5 px-3 py-1.5 text-sm bg-yellow-700/80 hover:bg-yellow-600 text-white rounded transition-colors"
+                title="Daily Challenge"
+              >
+                <Calendar size={14} />
+                Daily
+              </button>
+              <button onClick={handleUndo} className={iconBtnClass} title="Undo (Ctrl+Z)">
+                <RotateCcw size={iconSize} />
+              </button>
+              <button onClick={handleRedo} className={iconBtnClass} title="Redo (Ctrl+Y)">
+                <RotateCw size={iconSize} />
+              </button>
+              <button onClick={handleHint} className={iconBtnClass} title="Hint (H)">
+                <Lightbulb size={iconSize} />
+              </button>
+              <button onClick={() => setShowStats(true)} className={iconBtnClass} title="Statistics">
+                <BarChart3 size={iconSize} />
+              </button>
+              <button onClick={() => setShowFeedback(true)} className={iconBtnClass} title="Feedback">
+                <MessageSquare size={iconSize} />
+              </button>
+              <button onClick={handleToggleMute} className={iconBtnClass} title={isMuted ? "Unmute" : "Mute"}>
+                {isMuted ? <VolumeX size={iconSize} /> : <Volume2 size={iconSize} />}
+              </button>
+            </div>
+            <div className="flex items-center gap-4 text-sm text-white/70">
+              <button
+                onClick={handleShareGame}
+                className="p-1.5 text-white/50 hover:text-[#D4AF37] transition-colors"
+                title={shareStatus === 'copied' ? 'Copied!' : 'Share this game'}
+              >
+                <Share2 size={15} />
+              </button>
+              {gameNumber && (
+                <button
+                  onClick={() => setShowGameInput(true)}
+                  className="hover:text-white transition-colors cursor-pointer"
+                  title="Click to enter a game number"
+                >
+                  {isDailyGame && <span className="text-yellow-400 mr-1" title="Daily Challenge">&#9819;</span>}
+                  Game #{gameNumber}
+                </button>
+              )}
+              <span className="tabular-nums font-mono">{formatTime(timeElapsed)}</span>
+              <span>{moveCount} moves</span>
+              {isWon && (
+                <span className="text-yellow-400 font-bold animate-pulse">Win!</span>
+              )}
+            </div>
+          </div>
+
+          {/* ── Mobile Top Bar (only info, hidden on desktop and landscape) ── */}
+          {!isLandscapeMobile && (
+            <div className="flex md:hidden items-center justify-between px-3 py-1.5 bg-[#072907] border-b border-[#1a5c1a]/30">
+              <div className="flex items-center gap-3 text-xs text-white/70">
+                {gameNumber && (
+                  <button
+                    onClick={() => setShowGameInput(true)}
+                    className="font-medium hover:text-white transition-colors"
+                    title="Enter game number"
+                  >
+                    {isDailyGame && <span className="text-yellow-400 mr-1">&#9819;</span>}
+                    Game #{gameNumber}
+                  </button>
+                )}
+              </div>
+              <div className="flex items-center gap-3 text-xs text-white/70">
+                <span className="tabular-nums font-mono">{formatTime(timeElapsed)}</span>
+                <span>{moveCount} moves</span>
+                {isWon && (
+                  <span className="text-yellow-400 font-bold animate-pulse">Win!</span>
+                )}
+                <button
+                  onClick={handleShareGame}
+                  className="p-1 text-white/40 active:text-[#D4AF37] transition-colors"
+                  title="Share"
+                >
+                  <Share2 size={14} />
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Game Canvas Container */}
+          <div className="relative flex-1">
+            <div ref={containerRef} id="game-container" className="absolute inset-0" />
+
+            {/* Daily Challenge Banner */}
+            {/* Daily Challenge moved to Home overlay — no banner during gameplay */}
+
+            {/* Auto-Finish Button */}
+            {autoCompletable && !isWon && (
+              <div className="absolute top-4 left-1/2 -translate-x-1/2 z-10">
+                <button
+                  onClick={() => {
+                    setAutoCompletable(false);
+                    gameBridge.emit('autoFinish');
+                  }}
+                  className="px-6 py-3 bg-yellow-500 hover:bg-yellow-400 text-black font-bold text-lg rounded-lg shadow-lg animate-bounce transition-colors"
+                >
+                  Auto-Finish
+                </button>
+              </div>
+            )}
+
+            {/* Win Screen (appears 5s after win, overlays celebration) */}
+            {isWon && winDataRef.current && (
+              <WinScreen
+                gameNumber={gameNumber || 0}
+                time={winDataRef.current.time}
+                moves={winDataRef.current.moves}
+                hintsUsed={gameSession.hintsUsed}
+                onPlayAgain={handleNewGame}
+                onDailyChallenge={() => {
+                  handlePlayDaily(getTodaysSeed());
+                }}
+              />
+            )}
+
+            {/* Floating landscape overlay: undo/redo when toolbars are hidden */}
+            {isLandscapeMobile && (
+              <div className="absolute bottom-2 right-2 z-20 flex gap-1.5 md:hidden">
+                <button onClick={handleUndo} className="p-2 bg-black/40 active:bg-black/60 rounded-lg text-white/70" title="Undo">
+                  <RotateCcw size={18} />
+                </button>
+                <button onClick={handleRedo} className="p-2 bg-black/40 active:bg-black/60 rounded-lg text-white/70" title="Redo">
+                  <RotateCw size={18} />
+                </button>
+              </div>
             )}
           </div>
-          <div className="flex items-center gap-3 text-xs text-white/70">
-            <span>{moveCount} moves</span>
-            {isWon && (
-              <span className="text-yellow-400 font-bold animate-pulse">Win!</span>
-            )}
-            <button
-              onClick={handleShareGame}
-              className="p-1 text-white/40 active:text-[#D4AF37] transition-colors"
-              title="Share"
-            >
-              <Share2 size={14} />
+
+          {/* ── Mobile Bottom Bar — 5 icons: Home, New, Undo, Redo, Hint ── */}
+          {!isLandscapeMobile && <div className="flex md:hidden items-center justify-around px-2 py-2 bg-[#072907] border-t border-[#1a5c1a]/30 safe-area-bottom">
+            <button onClick={() => setShowHome(true)} className="flex flex-col items-center gap-0.5 p-2 text-[#D4AF37]/80 active:text-[#D4AF37]" title="Home">
+              <Home size={22} />
+              <span className="text-[10px]">Home</span>
             </button>
+            <button onClick={handleNewGame} className="flex flex-col items-center gap-0.5 p-2 text-white/70 active:text-white" title="New Game">
+              <Shuffle size={22} />
+              <span className="text-[10px]">New</span>
+            </button>
+            <button onClick={handleUndo} className="flex flex-col items-center gap-0.5 p-2 text-white/70 active:text-white" title="Undo">
+              <RotateCcw size={22} />
+              <span className="text-[10px]">Undo</span>
+            </button>
+            <button onClick={handleRedo} className="flex flex-col items-center gap-0.5 p-2 text-white/70 active:text-white" title="Redo">
+              <RotateCw size={22} />
+              <span className="text-[10px]">Redo</span>
+            </button>
+            <button onClick={handleHint} className="flex flex-col items-center gap-0.5 p-2 text-white/70 active:text-white" title="Hint">
+              <Lightbulb size={22} />
+              <span className="text-[10px]">Hint</span>
+            </button>
+          </div>}
+
+          {/* Home Overlay */}
+          <HomeOverlay
+            isOpen={showHome}
+            onClose={() => setShowHome(false)}
+            onPlayDaily={(seed) => { handlePlayDaily(seed); setShowHome(false); }}
+            onNewGame={() => { handleNewGame(); setShowHome(false); }}
+            isMuted={isMuted}
+            onToggleMute={handleToggleMute}
+            onFeedback={() => { setShowFeedback(true); setShowHome(false); }}
+            onShowShortcuts={() => { setShowShortcuts(true); setShowHome(false); }}
+            onAchievements={() => { setShowAchievements(true); setShowHome(false); }}
+          />
+
+          {/* Stats Modal */}
+          <StatsPanel
+            stats={stats}
+            isOpen={showStats}
+            onClose={() => setShowStats(false)}
+          />
+
+          {/* Feedback Modal */}
+          <FeedbackModal
+            isOpen={showFeedback}
+            onClose={() => setShowFeedback(false)}
+            gameNumber={gameNumber}
+            moveCount={moveCount}
+          />
+
+          {/* Daily Challenge Modal */}
+          <DailyChallengePanel
+            isOpen={showDaily}
+            onClose={() => setShowDaily(false)}
+            onPlayDaily={handlePlayDaily}
+          />
+
+          {/* Game Number Input Modal */}
+          <GameNumberInput
+            isOpen={showGameInput}
+            onClose={() => setShowGameInput(false)}
+            onPlay={handlePlayNumber}
+          />
+
+          {/* Keyboard Shortcuts */}
+          <KeyboardShortcuts
+            isOpen={showShortcuts}
+            onClose={() => setShowShortcuts(false)}
+          />
+
+          {/* Achievements */}
+          <AchievementsPanel
+            isOpen={showAchievements}
+            onClose={() => setShowAchievements(false)}
+          />
+
+        </div> {/* End Center Game Container */}
+
+        {/* Right Ad Gutter (Hidden on mobile/tablet) */}
+        <div className="hidden lg:flex flex-col flex-1 items-center py-4 px-2 border-l border-white/10 bg-black/10">
+          <div className="w-[160px] h-[600px] border-2 border-dashed border-white/20 rounded-lg flex items-center justify-center bg-black/20 text-white/30 text-sm font-semibold tracking-widest uppercase">
+            Advertisement
           </div>
         </div>
-      )}
 
-      {/* Game Canvas Container */}
-      <div className="relative flex-1">
-        <div ref={containerRef} id="game-container" className="absolute inset-0" />
-
-        {/* Daily Challenge Banner */}
-        {/* Daily Challenge moved to Home overlay — no banner during gameplay */}
-
-        {/* Auto-Finish Button */}
-        {autoCompletable && !isWon && (
-          <div className="absolute top-4 left-1/2 -translate-x-1/2 z-10">
-            <button
-              onClick={() => {
-                setAutoCompletable(false);
-                gameBridge.emit('autoFinish');
-              }}
-              className="px-6 py-3 bg-yellow-500 hover:bg-yellow-400 text-black font-bold text-lg rounded-lg shadow-lg animate-bounce transition-colors"
-            >
-              Auto-Finish
-            </button>
-          </div>
-        )}
-
-        {/* Win Screen (appears 5s after win, overlays celebration) */}
-        {isWon && winDataRef.current && (
-          <WinScreen
-            gameNumber={gameNumber || 0}
-            time={winDataRef.current.time}
-            moves={winDataRef.current.moves}
-            hintsUsed={gameSession.hintsUsed}
-            onPlayAgain={handleNewGame}
-            onDailyChallenge={() => {
-              handlePlayDaily(getTodaysSeed());
-            }}
-          />
-        )}
-
-        {/* Floating landscape overlay: undo/redo when toolbars are hidden */}
-        {isLandscapeMobile && (
-          <div className="absolute bottom-2 right-2 z-20 flex gap-1.5 md:hidden">
-            <button onClick={handleUndo} className="p-2 bg-black/40 active:bg-black/60 rounded-lg text-white/70" title="Undo">
-              <RotateCcw size={18} />
-            </button>
-            <button onClick={handleRedo} className="p-2 bg-black/40 active:bg-black/60 rounded-lg text-white/70" title="Redo">
-              <RotateCw size={18} />
-            </button>
-          </div>
-        )}
       </div>
-
-      {/* ── Mobile Bottom Bar — 5 icons: Home, New, Undo, Redo, Hint ── */}
-      {!isLandscapeMobile && <div className="flex md:hidden items-center justify-around px-2 py-2 bg-[#072907] border-t border-[#1a5c1a]/30 safe-area-bottom">
-        <button onClick={() => setShowHome(true)} className="flex flex-col items-center gap-0.5 p-2 text-[#D4AF37]/80 active:text-[#D4AF37]" title="Home">
-          <Home size={22} />
-          <span className="text-[10px]">Home</span>
-        </button>
-        <button onClick={handleNewGame} className="flex flex-col items-center gap-0.5 p-2 text-white/70 active:text-white" title="New Game">
-          <Shuffle size={22} />
-          <span className="text-[10px]">New</span>
-        </button>
-        <button onClick={handleUndo} className="flex flex-col items-center gap-0.5 p-2 text-white/70 active:text-white" title="Undo">
-          <RotateCcw size={22} />
-          <span className="text-[10px]">Undo</span>
-        </button>
-        <button onClick={handleRedo} className="flex flex-col items-center gap-0.5 p-2 text-white/70 active:text-white" title="Redo">
-          <RotateCw size={22} />
-          <span className="text-[10px]">Redo</span>
-        </button>
-        <button onClick={handleHint} className="flex flex-col items-center gap-0.5 p-2 text-white/70 active:text-white" title="Hint">
-          <Lightbulb size={22} />
-          <span className="text-[10px]">Hint</span>
-        </button>
-      </div>}
-
-      {/* Home Overlay */}
-      <HomeOverlay
-        isOpen={showHome}
-        onClose={() => setShowHome(false)}
-        onPlayDaily={(seed) => { handlePlayDaily(seed); setShowHome(false); }}
-        onNewGame={() => { handleNewGame(); setShowHome(false); }}
-        isMuted={isMuted}
-        onToggleMute={handleToggleMute}
-        onFeedback={() => { setShowFeedback(true); setShowHome(false); }}
-        onShowShortcuts={() => { setShowShortcuts(true); setShowHome(false); }}
-        onAchievements={() => { setShowAchievements(true); setShowHome(false); }}
-      />
-
-      {/* Stats Modal */}
-      <StatsPanel
-        stats={stats}
-        isOpen={showStats}
-        onClose={() => setShowStats(false)}
-      />
-
-      {/* Feedback Modal */}
-      <FeedbackModal
-        isOpen={showFeedback}
-        onClose={() => setShowFeedback(false)}
-        gameNumber={gameNumber}
-        moveCount={moveCount}
-      />
-
-      {/* Daily Challenge Modal */}
-      <DailyChallengePanel
-        isOpen={showDaily}
-        onClose={() => setShowDaily(false)}
-        onPlayDaily={handlePlayDaily}
-      />
-
-      {/* Game Number Input Modal */}
-      <GameNumberInput
-        isOpen={showGameInput}
-        onClose={() => setShowGameInput(false)}
-        onPlay={handlePlayNumber}
-      />
-
-      {/* Keyboard Shortcuts */}
-      <KeyboardShortcuts
-        isOpen={showShortcuts}
-        onClose={() => setShowShortcuts(false)}
-      />
-
-      {/* Achievements */}
-      <AchievementsPanel
-        isOpen={showAchievements}
-        onClose={() => setShowAchievements(false)}
-      />
     </div>
   );
 }

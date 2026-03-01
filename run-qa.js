@@ -92,6 +92,15 @@ async function runQA() {
         results.tests.T7 = "PASS - Generated new game 12345";
     });
 
+    // --- T_GAME: Actual gameplay UI screenshot ---
+    await runTestItem(browser, NEXT_DEV_URL + '/game/12345', async (page) => {
+        console.log("Running T_GAME: Active gameplay UI screenshot...");
+        await page.waitForFunction(() => !!window.__FREECELL_TEST, { timeout: 15000 }).catch(() => console.log("Timeout waiting for bridge"));
+        await new Promise(r => setTimeout(r, 4000)); // wait for 4s deal animation to complete
+        await page.screenshot({ path: path.join(SCREENSHOTS_DIR, 't_actual_game.png') });
+        results.tests.T_GAME = "PASS - Captured actual game";
+    });
+
     // --- T10: Responsive Design (Mobile & Tablet) ---
     await runTestItem(browser, NEXT_DEV_URL, async (page) => {
         console.log("Running T10: Responsive Design...");

@@ -69,7 +69,7 @@ export function registerTestBridge(scene: FreeCellScene): void {
       const rect = canvas.getBoundingClientRect();
       const scaleX = rect.width / canvas.width;
       const scaleY = rect.height / canvas.height;
-      
+
       const results: object[] = [];
       if (sprites instanceof Map) {
         sprites.forEach((sprite: any, key: string) => {
@@ -102,7 +102,7 @@ export function registerTestBridge(scene: FreeCellScene): void {
       const rect = canvas.getBoundingClientRect();
       const scaleX = rect.width / canvas.width;
       const scaleY = rect.height / canvas.height;
-      
+
       const clickable: object[] = [];
       const sprites = (sceneRef as any).cardSprites;
       if (!sprites) return [];
@@ -111,7 +111,7 @@ export function registerTestBridge(scene: FreeCellScene): void {
       state.cascades.forEach((col: any[], colIdx: number) => {
         if (col.length > 0) {
           const card = col[col.length - 1];
-          const spriteKey = `${card.suit}_${card.rank}`;
+          const spriteKey = card.id || `${card.suit}${card.rank}`;
           const sprite = sprites instanceof Map ? sprites.get(spriteKey) : null;
           if (sprite) {
             clickable.push({
@@ -120,6 +120,8 @@ export function registerTestBridge(scene: FreeCellScene): void {
               location: { type: 'cascade', index: colIdx },
               pageX: rect.left + sprite.x * scaleX,
               pageY: rect.top + sprite.y * scaleY,
+              x: rect.left + sprite.x * scaleX, // for puppeteer click alias
+              y: rect.top + sprite.y * scaleY,
             });
           }
         }
@@ -128,7 +130,7 @@ export function registerTestBridge(scene: FreeCellScene): void {
       // Free cell cards
       state.freeCells.forEach((card: any, idx: number) => {
         if (card) {
-          const spriteKey = `${card.suit}_${card.rank}`;
+          const spriteKey = card.id || `${card.suit}${card.rank}`;
           const sprite = sprites instanceof Map ? sprites.get(spriteKey) : null;
           if (sprite) {
             clickable.push({
@@ -137,6 +139,8 @@ export function registerTestBridge(scene: FreeCellScene): void {
               location: { type: 'freecell', index: idx },
               pageX: rect.left + sprite.x * scaleX,
               pageY: rect.top + sprite.y * scaleY,
+              x: rect.left + sprite.x * scaleX, // for puppeteer click alias
+              y: rect.top + sprite.y * scaleY,
             });
           }
         }

@@ -41,24 +41,18 @@ export function getCardAssetPath(suit: Suit, rank: Rank): string {
   return `/cards/${SUIT_FILE_NAMES[suit]}${RANK_FILE_NAMES[rank]}.png`;
 }
 
-/**
- * Get all card asset entries for preloading
- */
 export function getAllCardAssets(): Array<{ key: string; path: string }> {
   const assets: Array<{ key: string; path: string }> = [];
-  
-  const suits = [Suit.Clubs, Suit.Diamonds, Suit.Hearts, Suit.Spades];
-  for (const suit of suits) {
-    for (let rank = 1; rank <= 13; rank++) {
-      assets.push({
-        key: getCardAssetKey(suit, rank as Rank),
-        path: getCardAssetPath(suit, rank as Rank),
-      });
-    }
-  }
-  
+
+  // Procedural assets
+  assets.push({ key: 'card_base', path: '/cards/procedural/base.png' });
+  assets.push({ key: 'suit_heart', path: '/cards/procedural/heart.png' });
+  assets.push({ key: 'suit_spade', path: '/cards/procedural/spade.png' });
+  assets.push({ key: 'suit_diamond', path: '/cards/procedural/diamond.png' });
+  assets.push({ key: 'suit_club', path: '/cards/procedural/club.png' });
+
   // Card back
   assets.push({ key: 'card_back', path: '/cards/back.png' });
-  
+
   return assets;
 }

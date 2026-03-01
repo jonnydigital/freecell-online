@@ -160,6 +160,37 @@ export class FreeCellScene extends Phaser.Scene {
     }
   }
 
+  private createParticleTexture(): void {
+    if (!this.textures.exists('gold_sparkle')) {
+      const g = this.add.graphics();
+      g.fillStyle(0xffd700, 1);
+      g.fillCircle(4, 4, 4);
+      g.generateTexture('gold_sparkle', 8, 8);
+      g.destroy();
+    }
+  }
+
+  private emitFoundationParticles(suit: Suit): void {
+    const suits = [Suit.Clubs, Suit.Diamonds, Suit.Hearts, Suit.Spades];
+    const idx = suits.indexOf(suit);
+    const pos = this.getFoundationPosition(idx);
+
+    const emitter = this.add.particles(pos.x + this.cardWidth / 2, pos.y + this.cardHeight / 2, 'gold_sparkle', {
+      speed: { min: 50, max: 200 },
+      angle: { min: 0, max: 360 },
+      scale: { start: 1, end: 0 },
+      alpha: { start: 1, end: 0 },
+      lifespan: 600,
+      gravityY: 400,
+      quantity: 15,
+      emitting: false,
+      blendMode: 'ADD'
+    });
+    emitter.setDepth(10000);
+    emitter.explode(15);
+    this.time.delayedCall(700, () => emitter.destroy());
+  }
+
   preload(): void {
     for (const { key, path } of getAllCardAssets()) {
       this.load.image(key, path);
@@ -188,6 +219,7 @@ export class FreeCellScene extends Phaser.Scene {
     }
 
     this.drawBackgroundEffects();
+    this.createParticleTexture();
     this.calculateLayout();
     this.refreshCanvasMetrics();
     this.createBoard();
@@ -286,7 +318,7 @@ export class FreeCellScene extends Phaser.Scene {
           break;
         }
       }
-      
+
       // Adjust for canvas offset if the canvas is not at 0,0 of the page
       if (this.cachedCanvasRect) {
         rect.x += this.cachedCanvasRect.left;
@@ -518,6 +550,53 @@ export class FreeCellScene extends Phaser.Scene {
       this.vibrate();
     }
     this.clearActiveDragState(false);
+  }
+
+  private shakeAndSnapBack(): void {
+    this.isDragging = false;
+    this.dragSource = null;
+    this.activeDragTarget = null;
+    this.isSettlingDrag = false;
+
+    // We only want to clean up state once, after the longest tween
+    let tweensFinished = 0;
+    const totalCards = this.activeDragCards.length;
+
+    for (const card of this.activeDragCards) {
+      // Gentle shake (2 quick nudges)
+      this.tweens.add({
+        targets: card,
+        x: '+=5',
+        angle: { from: -1.5, to: 1.5 },
+        yoyo: true,
+        repeat: 1,
+        duration: 60,
+        onComplete: () => {
+          // Snap back
+          const location = this.findCardLocation(card.cardData);
+          if (location) {
+            const pos = this.getLocationPosition(location);
+            this.tweens.add({
+              targets: card,
+              x: pos.x,
+              y: pos.y,
+              angle: 0,
+              duration: 150,
+              ease: 'Power3.easeOut',
+              onComplete: () => {
+                tweensFinished++;
+                if (tweensFinished === totalCards) {
+                  this.clearActiveDragState(true);
+                }
+              }
+            });
+          } else {
+            tweensFinished++;
+            if (tweensFinished === totalCards) this.clearActiveDragState(true);
+          }
+        }
+      });
+    }
   }
 
   private clearActiveDragState(resetTransforms: boolean): void {
@@ -783,12 +862,51 @@ export class FreeCellScene extends Phaser.Scene {
     container.setSize(this.cardWidth, this.cardHeight);
     container.cardData = card;
 
-    const assetKey = getCardAssetKey(card.suit, card.rank);
-    const img = this.add.image(this.cardWidth / 2, this.cardHeight / 2, assetKey);
-    img.setDisplaySize(this.cardWidth, this.cardHeight);
-    container.add(img);
+    // 1. Hand-drawn textured base
+    const baseImg = this.add.image(this.cardWidth / 2, this.cardHeight / 2, 'card_base');
+    baseImg.setDisplaySize(this.cardWidth, this.cardHeight);
+    container.add(baseImg);
 
-    // Add subtle drop shadow
+    // 2. Rank Text Overlay
+    const colorStr = (card.suit === Suit.Hearts || card.suit === Suit.Diamonds) ? '#dd0000' : '#111111';
+
+    const rankMap: Record<number, string> = { 1: 'A', 11: 'J', 12: 'Q', 13: 'K' };
+    const rankStr = rankMap[card.rank] || card.rank.toString();
+
+    const fontSize = Math.floor(this.cardWidth * 0.35);
+    const text = this.add.text(this.cardWidth * 0.2, this.cardHeight * 0.02, rankStr, {
+      fontSize: `${fontSize}px`,
+      color: colorStr,
+      fontFamily: 'Georgia, serif',
+      fontStyle: 'bold'
+    });
+    text.setOrigin(0.5, 0);
+    container.add(text);
+
+    // 3. Hand-inked Suit Icons
+    const suitMap: Record<string, string> = {
+      [Suit.Hearts as string]: 'suit_heart',
+      [Suit.Spades as string]: 'suit_spade',
+      [Suit.Diamonds as string]: 'suit_diamond',
+      [Suit.Clubs as string]: 'suit_club',
+    };
+
+    // Small suit icon directly under text
+    const smallSuitSz = this.cardWidth * 0.22;
+    const suitY = this.cardHeight * 0.02 + fontSize * 1.05 + (smallSuitSz / 2);
+    const smallSuit = this.add.image(this.cardWidth * 0.2, suitY, suitMap[card.suit]);
+    smallSuit.setDisplaySize(smallSuitSz, smallSuitSz);
+    smallSuit.setBlendMode(Phaser.BlendModes.MULTIPLY);
+    container.add(smallSuit);
+
+    // Large center minimalist suit
+    const bigSuitSz = this.cardWidth * 0.55;
+    const suitImg = this.add.image(this.cardWidth / 2, this.cardHeight * 0.58, suitMap[card.suit]);
+    suitImg.setDisplaySize(bigSuitSz, bigSuitSz);
+    suitImg.setBlendMode(Phaser.BlendModes.MULTIPLY);
+    container.add(suitImg);
+
+    // Subtle drop shadow matching the texture
     const shadow = this.add.graphics();
     shadow.fillStyle(0x000000, 0.3);
     shadow.fillRoundedRect(2, 2, this.cardWidth, this.cardHeight, 6);
@@ -802,6 +920,34 @@ export class FreeCellScene extends Phaser.Scene {
         new Phaser.Geom.Rectangle(0, 0, this.cardWidth, this.cardHeight),
         Phaser.Geom.Rectangle.Contains
       );
+
+      container.on('pointerover', () => {
+        if (!this.isDragging && !this.isSettlingDrag && this.activeDragCards.length === 0) {
+          this.tweens.add({
+            targets: container,
+            scaleX: 1.03,
+            scaleY: 1.03,
+            duration: 100,
+            ease: 'Power1.easeOut'
+          });
+          this.game.canvas.style.cursor = 'pointer';
+        }
+      });
+
+      container.on('pointerout', () => {
+        if (!this.activeDragCards.includes(container)) {
+          this.tweens.add({
+            targets: container,
+            scaleX: 1,
+            scaleY: 1,
+            duration: 150,
+            ease: 'Power1.easeOut'
+          });
+        }
+        if (this.game.canvas.style.cursor === 'pointer') {
+          this.game.canvas.style.cursor = 'default';
+        }
+      });
 
       container.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
         this.cardTappedThisFrame = true;
@@ -887,9 +1033,15 @@ export class FreeCellScene extends Phaser.Scene {
         if (staggered) {
           // Start cards off-screen at top-center, animate with bounce into place
           const sprite = this.createCardSprite(card, w / 2 - this.cardWidth / 2, -this.cardHeight);
+
+          // Add premium card back for flip effect
+          const backImg = this.add.image(this.cardWidth / 2, this.cardHeight / 2, 'card_back');
+          backImg.setDisplaySize(this.cardWidth, this.cardHeight);
+          sprite.add(backImg);
+
           sprite.sourceLocation = { type: 'cascade', index: col, cardIndex: row };
           sprite.setDepth(500 + dealIndex);
-          sprite.setScale(0.85);
+          sprite.setScale(0.85); // Container scale overrides child scales, so backImg is handled
           sprite.alpha = 0;
 
           const delay = dealIndex * 45;
@@ -909,19 +1061,38 @@ export class FreeCellScene extends Phaser.Scene {
             delay,
             ease: 'Bounce.easeOut',
           });
-          // Scale and alpha pop in
+          // Fade in initial state
           this.tweens.add({
             targets: sprite,
-            scaleX: 1,
-            scaleY: 1,
             alpha: 1,
-            duration: 250,
+            duration: 100,
             delay,
-            ease: 'Back.easeOut',
-            onComplete: () => {
-              sprite.setDepth(row + 10);
-            },
           });
+
+          // 3D Flip flip effect at the apex of the curve
+          this.time.delayedCall(delay + 150, () => {
+            this.tweens.add({
+              targets: sprite,
+              scaleX: 0,
+              duration: 150,
+              ease: 'Sine.easeIn',
+              onComplete: () => {
+                backImg.destroy();
+                soundManager.cardSelect(); // subtle flutter sound for flip
+                this.tweens.add({
+                  targets: sprite,
+                  scaleX: 1,
+                  scaleY: 1, // Ensure it restores to full size at the end
+                  duration: 150,
+                  ease: 'Back.easeOut',
+                  onComplete: () => {
+                    sprite.setDepth(row + 10);
+                  }
+                });
+              }
+            });
+          });
+
           dealIndex++;
         } else {
           const sprite = this.createCardSprite(card, pos.x, pos.y);
@@ -1156,11 +1327,10 @@ export class FreeCellScene extends Phaser.Scene {
       this.beginSettlingDrag(placementTargets, { from: this.activeDragFrom, to: target });
       this.vibrate();
     } else {
-      // Invalid — spring back with haptic
+      // Invalid — shake and snap back with haptic
       soundManager.invalidMove();
       this.vibrate();
-      const snapTargets = this.getSnapBackTargets();
-      this.beginSettlingDrag(snapTargets, null);
+      this.shakeAndSnapBack();
     }
   }
 
@@ -1380,8 +1550,7 @@ export class FreeCellScene extends Phaser.Scene {
       this.vibrate();
     } else {
       soundManager.invalidMove();
-      const snapTargets = this.getSnapBackTargets();
-      this.beginSettlingDrag(snapTargets, null);
+      this.shakeAndSnapBack();
     }
   }
 
@@ -2126,10 +2295,10 @@ export class FreeCellScene extends Phaser.Scene {
     const origX = sprite.x;
     this.tweens.add({
       targets: sprite,
-      x: origX + 4,
-      duration: 40,
+      x: origX + 3,
+      duration: 50,
       yoyo: true,
-      repeat: 2,
+      repeat: 1,
       ease: 'Sine.easeInOut',
       onComplete: () => { sprite.x = origX; },
     });
@@ -2396,6 +2565,7 @@ export class FreeCellScene extends Phaser.Scene {
     // Play sound based on destination type
     if (to.type === 'foundation') {
       soundManager.cardToFoundation();
+      this.emitFoundationParticles(to.suit);
     } else {
       soundManager.cardPlace();
     }
@@ -2434,7 +2604,7 @@ export class FreeCellScene extends Phaser.Scene {
     while (moved) {
       moved = false;
       const state = this.engine.getState();
-      
+
       // Check cascades
       for (let col = 0; col < 8; col++) {
         const cascade = state.cascades[col];
@@ -2447,6 +2617,7 @@ export class FreeCellScene extends Phaser.Scene {
             const move = this.engine.executeMove(from, to);
             this.history.push(move, []);
             soundManager.cardToFoundation();
+            this.emitFoundationParticles(to.suit);
             gameBridge.emit('moveExecuted', {
               moveCount: this.engine.getState().moveCount,
               gameNumber: this.gameNumber,
@@ -2457,7 +2628,7 @@ export class FreeCellScene extends Phaser.Scene {
         }
       }
       if (moved) continue;
-      
+
       // Check free cells
       for (let i = 0; i < 4; i++) {
         const card = state.freeCells[i];
@@ -2469,6 +2640,7 @@ export class FreeCellScene extends Phaser.Scene {
             const move = this.engine.executeMove(from, to);
             this.history.push(move, []);
             soundManager.cardToFoundation();
+            this.emitFoundationParticles(to.suit);
             gameBridge.emit('moveExecuted', {
               moveCount: this.engine.getState().moveCount,
               gameNumber: this.gameNumber,
@@ -2479,9 +2651,9 @@ export class FreeCellScene extends Phaser.Scene {
         }
       }
     }
-    
+
     this.repositionAllCards();
-    
+
     // Check win
     if (this.engine.getState().isWon) {
       soundManager.winFanfare();
@@ -2492,13 +2664,13 @@ export class FreeCellScene extends Phaser.Scene {
       this.timer.stop();
       this.time.delayedCall(400, () => this.winCelebration());
     }
-    
+
     // Check auto-completable
     if (this.engine.isAutoCompletable()) {
       gameBridge.emit('autoCompletable', { completable: true });
     }
   }
-  
+
   /**
    * A card is safe to auto-move using the Card's built-in isSafeToAutoMove method.
    */
@@ -2540,6 +2712,7 @@ export class FreeCellScene extends Phaser.Scene {
         const move = this.engine.executeMove(bestCard.from, { type: 'foundation', suit: bestCard.suit });
         this.history.push(move, []);
         soundManager.cardToFoundation();
+        this.emitFoundationParticles(bestCard.suit);
         this.repositionAllCards();
 
         gameBridge.emit('moveExecuted', {
@@ -2694,8 +2867,8 @@ export class FreeCellScene extends Phaser.Scene {
           targets: card,
           x: pos.x,
           y: pos.y,
-          duration: 150,
-          ease: 'Power2',
+          duration: 250,
+          ease: 'Sine.out',
         });
       }
     });
@@ -2726,8 +2899,8 @@ export class FreeCellScene extends Phaser.Scene {
     const dx = targetX - sprite.x;
     const dy = targetY - sprite.y;
     const distance = Math.sqrt(dx * dx + dy * dy);
-    // Variable speed: 100ms base + scaled by distance, capped at 300ms
-    return Math.min(180, Math.max(60, distance * 0.25));
+    // Variable speed: 180ms base + scaled by distance, capped at 400ms. Slower = smoother glides.
+    return Math.min(400, Math.max(180, distance * 0.4));
   }
 
   /**
@@ -2781,10 +2954,11 @@ export class FreeCellScene extends Phaser.Scene {
               x: pos.x,
               y: pos.y,
               duration: isMoving
-                ? Math.min(200, Math.max(80, this.getMoveDuration(sprite, pos.x, pos.y)))
+                ? Math.min(300, Math.max(120, this.getMoveDuration(sprite, pos.x, pos.y)))
                 : this.getMoveDuration(sprite, pos.x, pos.y),
-              delay: row * 12,  // per-card stagger for physical settling feel
-              ease: isMoving ? 'Power3.easeOut' : 'Power2',
+              delay: row * 15,  // slightly longer per-card stagger for physical settling feel
+              ease: isMoving ? 'Back.out' : 'Sine.out',
+              easeParams: [0.8], // slight overshoot
             });
           } else {
             sprite.x = pos.x;
@@ -2815,9 +2989,10 @@ export class FreeCellScene extends Phaser.Scene {
               x: pos.x,
               y: pos.y,
               duration: isMoving
-                ? Math.min(200, Math.max(80, this.getMoveDuration(sprite, pos.x, pos.y)))
+                ? Math.min(300, Math.max(120, this.getMoveDuration(sprite, pos.x, pos.y)))
                 : this.getMoveDuration(sprite, pos.x, pos.y),
-              ease: isMoving ? 'Power3.easeOut' : 'Power2',
+              ease: isMoving ? 'Back.out' : 'Sine.out',
+              easeParams: [0.8],
             });
           } else {
             sprite.x = pos.x;
@@ -3105,8 +3280,42 @@ export class FreeCellScene extends Phaser.Scene {
     });
     this.winCelebrationObjects.push(updateEvent as unknown as Phaser.GameObjects.GameObject);
 
-    // Confetti overlay
+    // Confetti overlay + Particle Explosions
     this.spawnConfetti();
+
+    // Massive gold sparkle bursts from bottom corners
+    const leftEmitter = this.add.particles(w * 0.2, h, 'gold_sparkle', {
+      speed: { min: 400, max: 800 },
+      angle: { min: 240, max: 300 },
+      scale: { start: 2, end: 0 },
+      alpha: { start: 1, end: 0 },
+      lifespan: 2500,
+      gravityY: 600,
+      quantity: 100,
+      emitting: false,
+      blendMode: 'ADD'
+    });
+    leftEmitter.setDepth(3100);
+    leftEmitter.explode(100);
+
+    const rightEmitter = this.add.particles(w * 0.8, h, 'gold_sparkle', {
+      speed: { min: 400, max: 800 },
+      angle: { min: 240, max: 300 },
+      scale: { start: 2, end: 0 },
+      alpha: { start: 1, end: 0 },
+      lifespan: 2500,
+      gravityY: 600,
+      quantity: 100,
+      emitting: false,
+      blendMode: 'ADD'
+    });
+    rightEmitter.setDepth(3100);
+    rightEmitter.explode(100);
+
+    this.time.delayedCall(3000, () => {
+      leftEmitter.destroy();
+      rightEmitter.destroy();
+    });
   }
 
   private spawnConfetti(): void {

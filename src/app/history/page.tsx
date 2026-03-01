@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import AdUnit from "../../components/AdUnit";
 
 export const metadata: Metadata = {
   title: "History of FreeCell | Who Invented FreeCell Solitaire?",
@@ -536,6 +537,8 @@ export default function HistoryPage() {
             </div>
           </div>
         </section>
+
+        <AdUnit className="my-8" />
 
         {/* Section: Baker's Game */}
         <section id="bakers-game" className="scroll-mt-6">

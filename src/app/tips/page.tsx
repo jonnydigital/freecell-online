@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import AdUnit from "../../components/AdUnit";
 
 export const metadata: Metadata = {
   title: "25 FreeCell Tips & Tricks | Quick Ways to Win More Games",

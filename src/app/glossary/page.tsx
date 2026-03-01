@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import AdUnit from "../../components/AdUnit";
 
 export const metadata: Metadata = {
   title: "FreeCell Glossary | Card Game Terms & Definitions",

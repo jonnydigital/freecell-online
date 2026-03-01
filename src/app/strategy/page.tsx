@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import AdUnit from "../../components/AdUnit";
 
 export const metadata: Metadata = {
   title: "FreeCell Strategy Guide | How to Win FreeCell — Beginner to Expert Tips",
@@ -48,6 +49,8 @@ export default function StrategyPage() {
               </div>
             </div>
           </section>
+
+          <AdUnit className="my-8" />
 
           <section className="mb-24">
             <h2 className="text-4xl font-black mb-8 text-[#072907]">Beginner Tactics</h2>

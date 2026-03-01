@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import AdUnit from "../../components/AdUnit";
 
 export const metadata: Metadata = {
   title: "How to Play FreeCell Solitaire | Complete Rules & Tutorial Guide",
@@ -180,6 +181,8 @@ export default function HowToPlayPage() {
               </p>
             </div>
           </section>
+
+          <AdUnit className="my-8" />
 
           <section id="the-board" className="mb-32 scroll-mt-32">
             <h2 className="text-4xl font-black mb-8 text-[#072907] tracking-tight">Understanding the Board</h2>

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import AdUnit from "../../components/AdUnit";
 import { AccordionItem } from "@/components/AccordionItem";
 
 export const metadata: Metadata = {

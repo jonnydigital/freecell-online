@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState, useCallback } from 'react';
+import Link from 'next/link';
 import { gameBridge } from '../game/GameBridge';
 import { GameStats, createEmptyStats, recordWin, recordLoss } from '../lib/stats';
 import { loadStats, saveStats } from '../lib/storage';
@@ -324,18 +325,17 @@ export default function GameShell({ initialGameNumber }: GameShellProps = {}) {
         {/* Center Game Container (1000px max) */}
         <div className="flex flex-col w-full max-w-[1000px] h-full bg-[#0d4a22] shadow-[0_0_50px_rgba(0,0,0,0.5)] relative z-10 shrink-0">
 
-          {/* ── Desktop Top Bar (hidden on mobile) ── */}
-          <div className="hidden md:flex items-center justify-between px-6 py-3 bg-gradient-to-b from-[#115a2a]/90 to-[#0a351a]/95 backdrop-blur-md border-b border-white/10 shadow-xl z-20 sticky top-0 header-shine">
+          {/* ── Desktop Top Bar (Clean & Professional) ── */}
+          <div className="hidden md:flex items-center justify-between px-6 py-3 bg-[#072907] border-b border-white/10 z-20 sticky top-0">
             <div className="flex items-center gap-8">
               {/* Logo / Home Trigger */}
               <button
                 onClick={() => setShowHome(true)}
-                className="group flex flex-col items-start transition-transform active:scale-95"
+                className="group flex flex-col items-start transition-transform hover:opacity-80 active:scale-95"
               >
-                <h1 className="text-2xl font-serif font-bold text-[#D4AF37] leading-none tracking-tight group-hover:text-[#F3E5AB] transition-colors" style={{ fontFamily: 'var(--font-playfair)' }}>
-                  FreeCell <span className="font-light italic opacity-80 text-white">Online</span>
+                <h1 className="text-xl font-black text-white leading-none uppercase tracking-tighter">
+                  Freecell<span className="text-[#D4AF37]">.</span>
                 </h1>
-                <div className="h-0.5 w-0 group-hover:w-full bg-[#D4AF37] transition-all duration-300 rounded-full mt-0.5" />
               </button>
 
               {/* Direct Navigation Links */}
@@ -647,6 +647,53 @@ export default function GameShell({ initialGameNumber }: GameShellProps = {}) {
             onUpdateSettings={handleUpdateSettings}
           />
 
+          {/* New Professional Footer Section */}
+          <div className="w-full bg-[#072907] border-t border-white/10 py-8 px-6 mt-auto">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+              <div>
+                <h4 className="text-[#D4AF37] text-xs font-bold uppercase tracking-widest mb-4">Gameplay</h4>
+                <ul className="space-y-2 text-sm text-white/50">
+                  <li><Link href="/how-to-play" className="hover:text-white transition-colors">How to Play</Link></li>
+                  <li><Link href="/strategy" className="hover:text-white transition-colors">Winning Strategy</Link></li>
+                  <li><Link href="/rules" className="hover:text-white transition-colors">Game Rules</Link></li>
+                  <li><Link href="/tips" className="hover:text-white transition-colors">Tips & Tricks</Link></li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="text-[#D4AF37] text-xs font-bold uppercase tracking-widest mb-4">Reference</h4>
+                <ul className="space-y-2 text-sm text-white/50">
+                  <li><Link href="/faq" className="hover:text-white transition-colors">FAQ</Link></li>
+                  <li><Link href="/glossary" className="hover:text-white transition-colors">Glossary</Link></li>
+                  <li><Link href="/history" className="hover:text-white transition-colors">Game History</Link></li>
+                  <li><Link href="/solitaire-types" className="hover:text-white transition-colors">Solitaire Types</Link></li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="text-[#D4AF37] text-xs font-bold uppercase tracking-widest mb-4">Special</h4>
+                <ul className="space-y-2 text-sm text-white/50">
+                  <li><Link href="/winning-deals" className="hover:text-white transition-colors">Winning Deals</Link></li>
+                  <li><button onClick={() => setShowDaily(true)} className="hover:text-white transition-colors">Daily Challenge</button></li>
+                  <li><button onClick={() => setShowLeaderboard(true)} className="hover:text-white transition-colors">World Rankings</button></li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="text-[#D4AF37] text-xs font-bold uppercase tracking-widest mb-4">PlayFreeCellOnline</h4>
+                <p className="text-[10px] text-white/30 leading-relaxed mb-4">
+                  The ultimate destination for FreeCell Solitaire. Built for enthusiasts who appreciate skill-based play and clean design.
+                </p>
+                <ul className="space-y-2 text-[11px] text-white/40 flex gap-4">
+                  <li><Link href="/terms" className="hover:text-white">Terms</Link></li>
+                  <li><Link href="/privacy" className="hover:text-white">Privacy</Link></li>
+                  <li><Link href="/about" className="hover:text-white">About</Link></li>
+                </ul>
+              </div>
+            </div>
+            <div className="mt-8 pt-6 border-t border-white/5 text-center">
+              <p className="text-[10px] text-white/20 uppercase tracking-[0.2em]">
+                © 2026 PlayFreeCellOnline.com • All Rights Reserved
+              </p>
+            </div>
+          </div>
         </div> {/* End Center Game Container */}
 
         {/* Right Ad Gutter (Hidden on mobile/tablet) */}

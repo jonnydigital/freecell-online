@@ -910,22 +910,22 @@ export class FreeCellScene extends Phaser.Scene {
     };
 
     // Small suit icon directly under corner rank
-    const smallSuitSz = this.cardWidth * 0.2;
-    const suitY = this.cardHeight * 0.05 + Math.floor(this.cardWidth * 0.28) * 1.05;
+    const smallSuitSz = this.cardWidth * 0.18; // Slightly smaller
+    const suitY = this.cardHeight * 0.05 + Math.floor(this.cardWidth * 0.28) * 1.0;
     const smallSuit = this.add.image(this.cardWidth * 0.15, suitY + (smallSuitSz / 2), suitMap[card.suit as string]);
     smallSuit.setDisplaySize(smallSuitSz, smallSuitSz);
     container.add(smallSuit);
 
     // Large center minimalist suit
-    const bigSuitSz = this.cardWidth * 0.5;
+    const bigSuitSz = this.cardWidth * 0.45; // Slightly smaller for more professional breathing room
     const suitImg = this.add.image(this.cardWidth / 2, this.cardHeight * 0.52, suitMap[card.suit as string]);
     suitImg.setDisplaySize(bigSuitSz, bigSuitSz);
     container.add(suitImg);
 
-    // Drop shadow
+    // Drop shadow - Softer, more professional
     const shadow = this.add.graphics();
-    shadow.fillStyle(0x000000, 0.2);
-    shadow.fillRoundedRect(3, 3, this.cardWidth, this.cardHeight, 8);
+    shadow.fillStyle(0x000000, 0.12); // Lighter
+    shadow.fillRoundedRect(2, 2, this.cardWidth, this.cardHeight, 8); // Less offset
     container.addAt(shadow, 0); // Behind the card
 
     // Desktop: per-card interactivity for click-to-move (select + place)
@@ -2916,9 +2916,8 @@ export class FreeCellScene extends Phaser.Scene {
     const dx = targetX - sprite.x;
     const dy = targetY - sprite.y;
     const distance = Math.sqrt(dx * dx + dy * dy);
-    // Variable speed: 300ms minimum to allow tracking, scaled by distance, capped at 800ms.
-    // This provides a satisfying "glide" that feels intentional and rewarding.
-    return Math.min(800, Math.max(300, distance * 0.7));
+    // Snappy speed: 180ms min, 400ms max. Fast but trackable.
+    return Math.min(400, Math.max(180, distance * 0.4));
   }
 
   /**
@@ -2975,7 +2974,7 @@ export class FreeCellScene extends Phaser.Scene {
                 ? Math.min(600, Math.max(250, this.getMoveDuration(sprite, pos.x, pos.y)))
                 : this.getMoveDuration(sprite, pos.x, pos.y),
               delay: row * 20,  // slightly longer per-card stagger for physical settling feel
-              ease: isMoving ? 'Cubic.out' : 'Sine.out',
+              ease: 'Cubic.easeOut',
             });
           } else {
             sprite.x = pos.x;
@@ -3008,7 +3007,7 @@ export class FreeCellScene extends Phaser.Scene {
               duration: isMoving
                 ? Math.min(600, Math.max(250, this.getMoveDuration(sprite, pos.x, pos.y)))
                 : this.getMoveDuration(sprite, pos.x, pos.y),
-              ease: isMoving ? 'Cubic.out' : 'Sine.out',
+              ease: 'Cubic.easeOut',
             });
           } else {
             sprite.x = pos.x;
@@ -3040,7 +3039,7 @@ export class FreeCellScene extends Phaser.Scene {
               x: pos.x,
               y: pos.y,
               duration: Math.min(600, Math.max(250, this.getMoveDuration(sprite, pos.x, pos.y))),
-              ease: 'Cubic.out',
+              ease: 'Cubic.easeOut',
               onComplete: isTopCard ? () => {
                 this.foundationBloom(sprite);
                 this.foundationParticleBurst(pos.x, pos.y);

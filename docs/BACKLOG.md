@@ -7,7 +7,7 @@
 3. ~~**Star rating per game**~~ ✅ ALREADY SHIPPED — WinScreen shows 1-3 stars based on moves (≤60=3★, ≤90=2★), with animated reveal, "New Best!" tracking, and star count in share text
 4. ~~**Theme system**~~ ✅ SHIPPED 03-01 — 5 felt themes (Classic Green, Royal Blue, Wine Red, Dark Mode, Slate) with CSS variables, localStorage persistence, theme picker in toolbar
 5. ~~**Share button**~~ ✅ ALREADY SHIPPED — Web Share API + clipboard fallback on WinScreen, DailyChallenge, Streak, GameShell
-6. **SEO: Expand strategy page** — 2000+ words, actionable tips, internal links *(Solitaire Bliss model — they rank for "freecell strategy")*
+6. ~~**SEO: Expand strategy page**~~ ✅ SHIPPED 03-01 — 2500+ words, 7 sections, FAQ schema, practice drills, internal links, Article JSON-LD
 7. ~~**SEO: Glossary/terminology page**~~ ✅ SHIPPED 02-28 — `/glossary` with 26 terms, letter nav, DefinedTermSet schema, cross-links
 
 ## 🟡 Medium Priority (Ship This Month)

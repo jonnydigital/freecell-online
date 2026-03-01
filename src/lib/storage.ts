@@ -12,6 +12,8 @@ export interface GameSettings {
   soundEnabled: boolean;
   animationSpeed: 'slow' | 'normal' | 'fast';
   autoMove: boolean;
+  autoHint: boolean;
+  autoFinish: boolean;
   viewMode: 'normal' | 'wide' | 'compact';
 }
 
@@ -28,6 +30,8 @@ const DEFAULT_SETTINGS: GameSettings = {
   soundEnabled: true,
   animationSpeed: 'normal',
   autoMove: true,
+  autoHint: true,
+  autoFinish: true,
   viewMode: 'normal',
 };
 

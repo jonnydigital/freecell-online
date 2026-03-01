@@ -14,6 +14,7 @@ import { getCardAssetKey, getAllCardAssets } from './CardAssets';
 import { getHint } from '../solver/solver';
 import { getRandomSolvableGame } from '../lib/solvableDeals';
 import { soundManager } from '../lib/sounds';
+import { GameSettings, loadSettings } from '../lib/storage';
 import { registerTestBridge, unregisterTestBridge } from './TestBridge';
 
 // Layout constants
@@ -34,6 +35,7 @@ export class FreeCellScene extends Phaser.Scene {
   private timer!: GameTimer;
   private cardSprites: Map<string, CardSprite> = new Map();
   private gameNumber: number = 1;
+  private settings!: GameSettings;
 
   // Layout measurements (recalculated on resize)
   private cardWidth: number = 0;
@@ -208,6 +210,7 @@ export class FreeCellScene extends Phaser.Scene {
     this.engine = new FreeCellEngine(this.gameNumber);
     this.history = new MoveHistory();
     this.timer = new GameTimer();
+    this.settings = loadSettings();
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, this.shutdown, this);
 
     // Detect touch device
@@ -277,6 +280,15 @@ export class FreeCellScene extends Phaser.Scene {
     this.bridgeUnsubscribers.push(gameBridge.on('redo', () => this.redoMove()));
     this.bridgeUnsubscribers.push(gameBridge.on('hint', () => this.showHint()));
     this.bridgeUnsubscribers.push(gameBridge.on('autoFinish', () => this.performAutoFinish()));
+
+    this.bridgeUnsubscribers.push(gameBridge.on('updateSettings', (newSettings: unknown) => {
+      this.settings = newSettings as GameSettings;
+      // You could trigger immediate effects here if needed (e.g. show/hide hints)
+      if (!this.settings.autoHint) {
+        this.clearHintGlow();
+        this.clearHintText();
+      }
+    }));
 
     this.bridgeUnsubscribers.push(gameBridge.on('requestElementPosition', (elementKey: unknown) => {
       if (typeof elementKey !== 'string') return;
@@ -862,28 +874,34 @@ export class FreeCellScene extends Phaser.Scene {
     container.setSize(this.cardWidth, this.cardHeight);
     container.cardData = card;
 
-    // 1. Hand-drawn textured base
-    const baseImg = this.add.image(this.cardWidth / 2, this.cardHeight / 2, 'card_base');
-    baseImg.setDisplaySize(this.cardWidth, this.cardHeight);
-    container.add(baseImg);
+    // 1. Procedural Vector Base (100% Clean)
+    const base = this.add.graphics();
+    base.fillStyle(0xffffff, 1);
+    base.fillRoundedRect(0, 0, this.cardWidth, this.cardHeight, 8);
+    // Subtle border for high-end definition
+    base.lineStyle(2, 0x000000, 0.08);
+    base.strokeRoundedRect(0, 0, this.cardWidth, this.cardHeight, 8);
+    container.add(base);
 
-    // 2. Rank Text Overlay
-    const colorStr = (card.suit === Suit.Hearts || card.suit === Suit.Diamonds) ? '#dd0000' : '#111111';
+    // 2. Rank Text Overlay (Crisp Typography)
+    const isRed = (card.suit === Suit.Hearts || card.suit === Suit.Diamonds);
+    const colorStr = isRed ? '#cc0000' : '#000000';
 
     const rankMap: Record<number, string> = { 1: 'A', 11: 'J', 12: 'Q', 13: 'K' };
     const rankStr = rankMap[card.rank] || card.rank.toString();
 
-    const fontSize = Math.floor(this.cardWidth * 0.35);
-    const text = this.add.text(this.cardWidth * 0.2, this.cardHeight * 0.02, rankStr, {
+    // Corner Rank - Minimalist and readable
+    const fontSize = Math.floor(this.cardWidth * 0.28);
+    const text = this.add.text(this.cardWidth * 0.15, this.cardHeight * 0.05, rankStr, {
       fontSize: `${fontSize}px`,
       color: colorStr,
-      fontFamily: 'Georgia, serif',
-      fontStyle: 'bold'
+      fontFamily: 'Inter, system-ui, -apple-system, sans-serif',
+      fontStyle: '900'
     });
     text.setOrigin(0.5, 0);
     container.add(text);
 
-    // 3. Hand-inked Suit Icons
+    // 3. Hand-drawn Suit Icons (Cleaned Alpha)
     const suitMap: Record<string, string> = {
       [Suit.Hearts as string]: 'suit_heart',
       [Suit.Spades as string]: 'suit_spade',
@@ -891,25 +909,23 @@ export class FreeCellScene extends Phaser.Scene {
       [Suit.Clubs as string]: 'suit_club',
     };
 
-    // Small suit icon directly under text
-    const smallSuitSz = this.cardWidth * 0.22;
-    const suitY = this.cardHeight * 0.02 + fontSize * 1.05 + (smallSuitSz / 2);
-    const smallSuit = this.add.image(this.cardWidth * 0.2, suitY, suitMap[card.suit]);
+    // Small suit icon directly under corner rank
+    const smallSuitSz = this.cardWidth * 0.2;
+    const suitY = this.cardHeight * 0.05 + Math.floor(this.cardWidth * 0.28) * 1.05;
+    const smallSuit = this.add.image(this.cardWidth * 0.15, suitY + (smallSuitSz / 2), suitMap[card.suit as string]);
     smallSuit.setDisplaySize(smallSuitSz, smallSuitSz);
-    smallSuit.setBlendMode(Phaser.BlendModes.MULTIPLY);
     container.add(smallSuit);
 
     // Large center minimalist suit
-    const bigSuitSz = this.cardWidth * 0.55;
-    const suitImg = this.add.image(this.cardWidth / 2, this.cardHeight * 0.58, suitMap[card.suit]);
+    const bigSuitSz = this.cardWidth * 0.5;
+    const suitImg = this.add.image(this.cardWidth / 2, this.cardHeight * 0.52, suitMap[card.suit as string]);
     suitImg.setDisplaySize(bigSuitSz, bigSuitSz);
-    suitImg.setBlendMode(Phaser.BlendModes.MULTIPLY);
     container.add(suitImg);
 
-    // Subtle drop shadow matching the texture
+    // Drop shadow
     const shadow = this.add.graphics();
-    shadow.fillStyle(0x000000, 0.3);
-    shadow.fillRoundedRect(2, 2, this.cardWidth, this.cardHeight, 6);
+    shadow.fillStyle(0x000000, 0.2);
+    shadow.fillRoundedRect(3, 3, this.cardWidth, this.cardHeight, 8);
     container.addAt(shadow, 0); // Behind the card
 
     // Desktop: per-card interactivity for click-to-move (select + place)
@@ -2517,8 +2533,8 @@ export class FreeCellScene extends Phaser.Scene {
     // Check cascades
     for (let col = 0; col < 8; col++) {
       if (
-        x >= this.getColumnX(col) - this.cardWidth * 0.3 &&
-        x <= this.getColumnX(col) + this.cardWidth * 1.3
+        x >= this.getColumnX(col) - this.cardWidth * 0.6 &&
+        x <= this.getColumnX(col) + this.cardWidth * 1.6
       ) {
         return { type: 'cascade', index: col };
       }
@@ -2533,11 +2549,12 @@ export class FreeCellScene extends Phaser.Scene {
     slotX: number,
     slotY: number
   ): boolean {
+    // Increased leniency: allowed margin expanded from 0.3 to 0.6
     return (
-      x >= slotX - this.cardWidth * 0.3 &&
-      x <= slotX + this.cardWidth * 1.3 &&
-      y >= slotY - this.cardHeight * 0.3 &&
-      y <= slotY + this.cardHeight * 1.3
+      x >= slotX - this.cardWidth * 0.6 &&
+      x <= slotX + this.cardWidth * 1.6 &&
+      y >= slotY - this.cardHeight * 0.6 &&
+      y <= slotY + this.cardHeight * 1.6
     );
   }
 
@@ -2867,8 +2884,8 @@ export class FreeCellScene extends Phaser.Scene {
           targets: card,
           x: pos.x,
           y: pos.y,
-          duration: 250,
-          ease: 'Sine.out',
+          duration: 350,
+          ease: 'Cubic.out',
         });
       }
     });
@@ -2899,8 +2916,9 @@ export class FreeCellScene extends Phaser.Scene {
     const dx = targetX - sprite.x;
     const dy = targetY - sprite.y;
     const distance = Math.sqrt(dx * dx + dy * dy);
-    // Variable speed: 180ms base + scaled by distance, capped at 400ms. Slower = smoother glides.
-    return Math.min(400, Math.max(180, distance * 0.4));
+    // Variable speed: 300ms minimum to allow tracking, scaled by distance, capped at 800ms.
+    // This provides a satisfying "glide" that feels intentional and rewarding.
+    return Math.min(800, Math.max(300, distance * 0.7));
   }
 
   /**
@@ -2954,11 +2972,10 @@ export class FreeCellScene extends Phaser.Scene {
               x: pos.x,
               y: pos.y,
               duration: isMoving
-                ? Math.min(300, Math.max(120, this.getMoveDuration(sprite, pos.x, pos.y)))
+                ? Math.min(600, Math.max(250, this.getMoveDuration(sprite, pos.x, pos.y)))
                 : this.getMoveDuration(sprite, pos.x, pos.y),
-              delay: row * 15,  // slightly longer per-card stagger for physical settling feel
-              ease: isMoving ? 'Back.out' : 'Sine.out',
-              easeParams: [0.8], // slight overshoot
+              delay: row * 20,  // slightly longer per-card stagger for physical settling feel
+              ease: isMoving ? 'Cubic.out' : 'Sine.out',
             });
           } else {
             sprite.x = pos.x;
@@ -2989,10 +3006,9 @@ export class FreeCellScene extends Phaser.Scene {
               x: pos.x,
               y: pos.y,
               duration: isMoving
-                ? Math.min(300, Math.max(120, this.getMoveDuration(sprite, pos.x, pos.y)))
+                ? Math.min(600, Math.max(250, this.getMoveDuration(sprite, pos.x, pos.y)))
                 : this.getMoveDuration(sprite, pos.x, pos.y),
-              ease: isMoving ? 'Back.out' : 'Sine.out',
-              easeParams: [0.8],
+              ease: isMoving ? 'Cubic.out' : 'Sine.out',
             });
           } else {
             sprite.x = pos.x;
@@ -3023,8 +3039,8 @@ export class FreeCellScene extends Phaser.Scene {
               targets: sprite,
               x: pos.x,
               y: pos.y,
-              duration: Math.min(180, Math.max(80, this.getMoveDuration(sprite, pos.x, pos.y))),
-              ease: 'Back.easeOut',
+              duration: Math.min(600, Math.max(250, this.getMoveDuration(sprite, pos.x, pos.y))),
+              ease: 'Cubic.out',
               onComplete: isTopCard ? () => {
                 this.foundationBloom(sprite);
                 this.foundationParticleBurst(pos.x, pos.y);
@@ -3421,19 +3437,22 @@ export class FreeCellScene extends Phaser.Scene {
 
     const idle = (Date.now() - this.lastMoveTime) / 1000;
 
-    // Auto-hint glow after 8 seconds
-    if (idle >= 8 && !this.hintGlowGraphics) {
-      this.showAutoHintGlow();
-    }
+    // Auto-hint effects (only if enabled)
+    if (this.settings.autoHint) {
+      // Auto-hint glow after 8 seconds
+      if (idle >= 8 && !this.hintGlowGraphics) {
+        this.showAutoHintGlow();
+      }
 
-    // Idle card wiggle after 12 seconds
-    if (idle >= 12 && this.idleWiggleTweens.length === 0) {
-      this.showIdleWiggle();
-    }
+      // Idle card wiggle after 12 seconds
+      if (idle >= 12 && this.idleWiggleTweens.length === 0) {
+        this.showIdleWiggle();
+      }
 
-    // Text hint after 20 seconds of idle — describes the recommended move
-    if (idle >= 20 && !this.hintTextObj) {
-      this.showAutoHintText();
+      // Text hint after 20 seconds of idle
+      if (idle >= 20 && !this.hintTextObj) {
+        this.showAutoHintText();
+      }
     }
   }
 

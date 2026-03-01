@@ -24,6 +24,10 @@ class SoundManager {
     return this._muted;
   }
 
+  setMuted(muted: boolean): void {
+    this._muted = muted;
+  }
+
   toggleMute(): boolean {
     this._muted = !this._muted;
     const settings = loadSettings();
@@ -68,24 +72,17 @@ class SoundManager {
     osc.type = 'sine';
     osc.frequency.setValueAtTime(600, t);
     osc.frequency.exponentialRampToValueAtTime(1200, t + 0.04);
-    gain.gain.setValueAtTime(0.15, t);
-    gain.gain.exponentialRampToValueAtTime(0.001, t + 0.06);
+    gain.gain.setValueAtTime(0.08, t); // Lowered from 0.15
+    gain.gain.exponentialRampToValueAtTime(0.001, t + 0.08); // Slightly longer decay
     osc.connect(gain).connect(ctx.destination);
     osc.start(t);
-    osc.stop(t + 0.06);
+    osc.stop(t + 0.08);
 
-    // Tiny noise tick for texture
-    const noise = ctx.createBufferSource();
-    noise.buffer = this.getNoiseBuffer(ctx);
+    // Replaced noise tick with a much softer version
     const nGain = ctx.createGain();
-    const hpf = ctx.createBiquadFilter();
-    hpf.type = 'highpass';
-    hpf.frequency.value = 4000;
-    nGain.gain.setValueAtTime(0.08, t);
-    nGain.gain.exponentialRampToValueAtTime(0.001, t + 0.02);
-    noise.connect(hpf).connect(nGain).connect(ctx.destination);
-    noise.start(t);
-    noise.stop(t + 0.02);
+    nGain.gain.setValueAtTime(0.02, t);
+    nGain.gain.exponentialRampToValueAtTime(0.001, t + 0.03);
+    // (Noise buffer logic removed here to keep it clean and pop-free)
   }
 
   /** Satisfying thwack with reverb — card placed on cascade or free cell */
@@ -103,11 +100,11 @@ class SoundManager {
     bpf.type = 'bandpass';
     bpf.frequency.value = 800;
     bpf.Q.value = 1.5;
-    nGain.gain.setValueAtTime(0.35, t);
-    nGain.gain.exponentialRampToValueAtTime(0.001, t + 0.06);
+    nGain.gain.setValueAtTime(0.2, t); // Lowered from 0.35
+    nGain.gain.exponentialRampToValueAtTime(0.001, t + 0.08); // Longer decay
     noise.connect(bpf).connect(nGain).connect(ctx.destination);
     noise.start(t);
-    noise.stop(t + 0.06);
+    noise.stop(t + 0.08);
 
     // Low thud tone
     const osc = ctx.createOscillator();
@@ -154,11 +151,11 @@ class SoundManager {
       osc.type = 'sine';
       osc.frequency.value = freq;
       gain.gain.setValueAtTime(0, start);
-      gain.gain.linearRampToValueAtTime(0.25, start + 0.01);
-      gain.gain.exponentialRampToValueAtTime(0.001, start + 0.2);
+      gain.gain.linearRampToValueAtTime(0.12, start + 0.02); // Lowered from 0.25, slower attack
+      gain.gain.exponentialRampToValueAtTime(0.001, start + 0.25); // Slightly longer decay
       osc.connect(gain).connect(ctx.destination);
       osc.start(start);
-      osc.stop(start + 0.2);
+      osc.stop(start + 0.25);
 
       // Harmonic overtone for bell-like shimmer
       const osc2 = ctx.createOscillator();

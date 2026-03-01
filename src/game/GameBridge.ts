@@ -14,6 +14,7 @@ export type UIToGameEvent =
   | 'hint'
   | 'restart'
   | 'settings'
+  | 'updateSettings'
   | 'autoFinish'
   | 'requestElementPosition';
 

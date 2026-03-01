@@ -15,19 +15,24 @@ icons = {
 
 def process_icon(img_path, out_path):
     img = Image.open(img_path).convert("RGBA")
+    datas = img.getdata()
     
-    # For making it transparent, let's use the green channel as an inverse alpha mask
-    # This works for black (G=0) and red (G=low), while white is G=255.
-    r, g, b, a = img.split()
+    # Red suit or black suit?
+    # Hearts/Diamonds are roughly (220, 0, 0)
+    # Spades/Clubs are roughly (0, 0, 0)
+    # Background is roughly (255, 255, 255)
     
-    # Invert the green channel to use as alpha
-    new_a = g.point(lambda p: 255 - p)
-    
-    # We want the color to remain what it was but with the new alpha
-    # However, to avoid white halos, we can just force the RGB to the dominant color
-    # Let's see if we can just use the original RGB but premultiplied? No, just the original RGB is fine if we use the inverted G as alpha.
-    
-    img.putalpha(new_a)
+    newData = []
+    for item in datas:
+        r, g, b, a = item
+        # If it's "white-ish", make it transparent
+        if r > 220 and g > 220 and b > 220:
+            newData.append((255, 255, 255, 0))
+        else:
+            # Keep original colors but make sure alpha is full for the graphic
+            newData.append((r, g, b, 255))
+            
+    img.putdata(newData)
     
     bbox = img.getbbox()
     if bbox:
@@ -40,32 +45,4 @@ for name, filename in icons.items():
     out_path = os.path.join(output_dir, f"{name}.png")
     process_icon(in_path, out_path)
     print(f"Processed {name}")
-
-# Process Base Card
-base_filename = 'clean_card_base_1772330919675.png'
-base_in = os.path.join(brain_dir, base_filename)
-base_out = os.path.join(output_dir, 'base.png')
-
-def process_base(img_path, out_path):
-    img = Image.open(img_path).convert("RGBA")
-    
-    # Instead of complex alpha, let's just make pure-ish white transparent
-    datas = img.getdata()
-    newData = []
-    
-    for item in datas:
-        if item[0] > 245 and item[1] > 245 and item[2] > 245:
-            newData.append((255, 255, 255, 0))
-        else:
-            newData.append(item)
-            
-    img.putdata(newData)
-    
-    bbox = img.getbbox()
-    if bbox:
-        img = img.crop(bbox)
-        
-    img.save(out_path, "PNG")
-
-process_base(base_in, base_out)
 print("Processed base")

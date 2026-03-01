@@ -2,21 +2,27 @@
 *Ranked by impact × effort. Updated 2026-02-27 (Friday research cycle).*
 
 ## 🔴 High Priority (Ship This Week)
-1. **Theme system** — felt color picker + card back designs *(Solitaire Bliss has this, gamification gap)*
-2. **Share button** — "I solved today's FreeCell in X moves!" with Web Share API *(competitor gap, viral growth)*
-3. **SEO: Expand strategy page** — 2000+ words, actionable tips, internal links *(Solitaire Bliss model — they rank for "freecell strategy")*
-4. ~~**SEO: Glossary/terminology page**~~ ✅ SHIPPED 02-28 — `/glossary` with 26 terms, letter nav, DefinedTermSet schema, cross-links
-5. **Statistics page enhancement** — charts, streaks visualization, detailed history
+1. **Puzzle modes: Streak + Storm** — Repackage FreeCell engine as Streak (consecutive wins) and Storm (timed speed-solving). 3-4x engagement surface from same core engine. *(Lichess spark — their puzzle variants are massive retention drivers)*
+2. **Post-game optimal solution** — Show solver's solution after each game (win or lose). Educational + dwell time. *(Lichess spark — leverages existing solver, low effort)*
+3. **Star rating per game** — Rate 1-3 stars based on moves vs solver optimal. Creates replay motivation. *(Candy Crush spark)*
+4. **Theme system** — felt color picker + card back designs *(Solitaire Bliss has this, gamification gap)*
+5. **Share button** — "I solved today's FreeCell in X moves!" with Web Share API *(competitor gap, viral growth)*
+6. **SEO: Expand strategy page** — 2000+ words, actionable tips, internal links *(Solitaire Bliss model — they rank for "freecell strategy")*
+7. ~~**SEO: Glossary/terminology page**~~ ✅ SHIPPED 02-28 — `/glossary` with 26 terms, letter nav, DefinedTermSet schema, cross-links
 
 ## 🟡 Medium Priority (Ship This Month)
-6. **Numbered game URLs** — `/game/[number]` routes for shareability + SEO *(competitor standard: cardgames.io has 1-50000)*
-7. **SEO: FreeCell history page** — Paul Alfille, PLATO, Baker's Game origins *(NEW — Green Felt spark. Unique content, educational backlinks)*
-8. **SEO: Solitaire types taxonomy** — classify 10-20 variants, link to our game *(NEW — Solitaire Paradise spark. Hub page for internal linking)*
-9. **Leaderboard** — daily challenge times/moves (Vercel KV) *(competitor gap vs solitaired.com)*
-10. **Achievements/badges** — "Won 10 games", "5-day streak", etc. *(gamification gap vs MobilityWare)*
-11. **Tutorial/onboarding** — first-time player walkthrough *(component exists: Tutorial.tsx — needs activation?)*
-12. **Video tutorial** — screen-recorded walkthrough, embed on game page *(NEW — Solitaire Bliss has YouTube embed. Huge for dwell time + rich snippets)*
-13. **Ghost mode** — watch the solver play after you win/lose
+8. **Statistics page enhancement** — charts, streaks visualization, detailed history
+9. **Multi-modal navigation** — restructure nav into Play / Daily / Learn / Stats sections *(Chess.com spark — each mode serves different user intent)*
+10. **Streak milestone celebrations** — 7/30/100-day animations, streak freeze mechanic *(Duolingo spark — make streaks emotionally consequential)*
+11. **Numbered game URLs** — `/game/[number]` routes for shareability + SEO *(competitor standard: cardgames.io has 1-50000)*
+12. **FreeCell variants** — Baker's Game, Eight Off as separate modes. New daily challenges per variant. *(NYT Games spark — game portfolio as retention moat)*
+13. **SEO: FreeCell history page** — Paul Alfille, PLATO, Baker's Game origins *(Green Felt spark. Unique content, educational backlinks)*
+14. **SEO: Solitaire types taxonomy** — classify 10-20 variants, link to our game *(Solitaire Paradise spark. Hub page for internal linking)*
+15. **Leaderboard** — daily challenge times/moves (Vercel KV) *(competitor gap vs solitaired.com)*
+16. **Achievements/badges** — "Won 10 games", "5-day streak", etc. *(gamification gap vs MobilityWare)*
+17. **Tutorial/onboarding** — first-time player walkthrough *(component exists: Tutorial.tsx — needs activation?)*
+18. **Video tutorial** — screen-recorded walkthrough, embed on game page *(Solitaire Bliss has YouTube embed. Huge for dwell time + rich snippets)*
+19. **Ghost mode** — watch the solver play after you win/lose
 
 ## 🟢 Nice to Have
 14. **Multiplayer daily challenge** — compete on same seed
@@ -62,8 +68,9 @@
 
 ---
 
-## Priority Rationale (2026-02-27)
-- **SEO content pages (glossary, history, types)** — competitors rank for informational queries that funnel into game pages. We have game + basic content pages but lack the hub-and-spoke depth. Low effort, compounding returns.
-- **Theme system** — every major competitor offers customization. It's table-stakes for retention.
-- **Share button** — zero-cost growth channel. Daily challenge + share = viral loop.
-- **GA4 data needed** — can't fully prioritize without user behavior data. Next research cycle MUST get analytics.
+## Priority Rationale (2026-02-28)
+- **Puzzle modes (Streak/Storm)** — Lichess proves repackaging the same core mechanic as multiple modes massively increases engagement surface. We have the engine and solver. This is the single highest-ROI feature we can build.
+- **Post-game analysis + star rating** — leverages existing solver to add educational value and replay motivation. Low implementation cost, high user value.
+- **Theme system + Share** — table-stakes and growth channel. Still critical.
+- **Multi-modal nav** — as we add modes, we need Chess.com-style navigation to surface them.
+- **GA4 data STILL needed** — 2 nights without analytics. Flying blind. Must resolve browser access or build API-based analytics pull.

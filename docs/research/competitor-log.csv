@@ -3,3 +3,9 @@ date,site,spark_found,description,priority,implemented
 2026-02-27,greenfelt.net,yes,Historical FreeCell narrative + community forum model,medium,no
 2026-02-27,solitaireparadise.com,yes,Terminology glossary page + game types taxonomy for SEO,high,no
 2026-02-27,solitr.com,no,Ultra-minimal - fast load but zero content depth,low,n/a
+2026-02-28,lichess.org,yes,Puzzle Streak/Storm/Racer modes — repackage same mechanic as multiple engagement modes,high,no
+2026-02-28,lichess.org,yes,Post-game computer analysis — show optimal solution after game,high,no
+2026-02-28,chess.com,yes,Multi-modal navigation (Play/Puzzles/Learn/Train/Watch/Community) + bot personalities,medium,no
+2026-02-28,nytimes.com/games,yes,Game portfolio as retention moat — 13+ games creating daily habit loops,medium,no
+2026-02-28,duolingo.com,yes,Streak emotional investment — milestone celebrations + streak freeze mechanic,medium,no
+2026-02-28,candy-crush,yes,Star rating per game + juiciness micro-feedback on every action,medium,no

@@ -18,6 +18,7 @@ import HomeOverlay from './HomeOverlay';
 import DailyBanner from './DailyBanner';
 import AchievementsPanel from './AchievementsPanel';
 import KeyboardShortcuts from './KeyboardShortcuts';
+import StreakMilestone, { isMilestone } from './StreakMilestone';
 import Leaderboard from './Leaderboard';
 import SettingsPanel from './SettingsPanel';
 import { soundManager } from '../lib/sounds';
@@ -42,6 +43,7 @@ export default function GameShell({ initialGameNumber }: GameShellProps = {}) {
   const [autoCompletable, setAutoCompletable] = useState(false);
   const [showGameInput, setShowGameInput] = useState(false);
   const [isDeadlocked, setIsDeadlocked] = useState(false);
+  const [streakMilestone, setStreakMilestone] = useState<number | null>(null);
   const [isMuted, setIsMuted] = useState(() => soundManager.muted);
   const [showMoreMenu, setShowMoreMenu] = useState(false);
   const [showHome, setShowHome] = useState(false);
@@ -105,6 +107,9 @@ export default function GameShell({ initialGameNumber }: GameShellProps = {}) {
       setStats((prev) => {
         const updated = recordWin(prev, d.time, d.moves);
         saveStats(updated);
+        if (isMilestone(updated.currentStreak)) {
+          setStreakMilestone(updated.currentStreak);
+        }
         return updated;
       });
     },
@@ -233,6 +238,7 @@ export default function GameShell({ initialGameNumber }: GameShellProps = {}) {
     setIsDailyGame(false);
     setIsWon(false);
     setIsDeadlocked(false);
+    setStreakMilestone(null);
     gameBridge.emit('newGame');
   };
   const handleUndo = () => {
@@ -477,6 +483,15 @@ export default function GameShell({ initialGameNumber }: GameShellProps = {}) {
                 onDailyChallenge={() => {
                   handlePlayDaily(getTodaysSeed());
                 }}
+              />
+            )}
+
+            {/* Streak Milestone Toast */}
+            {streakMilestone !== null && (
+              <StreakMilestone
+                streak={streakMilestone}
+                show={true}
+                onDismiss={() => setStreakMilestone(null)}
               />
             )}
 

@@ -28,6 +28,8 @@ import KeyboardShortcuts from './KeyboardShortcuts';
 import StreakMilestone, { isMilestone } from './StreakMilestone';
 import Leaderboard from './Leaderboard';
 import SettingsPanel from './SettingsPanel';
+import Tutorial from './Tutorial';
+import type { HighlightRect } from './Tutorial';
 import { soundManager } from '../lib/sounds';
 import { GameSettings, loadSettings, saveSettings } from '../lib/storage';
 
@@ -59,6 +61,10 @@ export default function GameShell({ initialGameNumber }: GameShellProps = {}) {
   const [showLeaderboard, setShowLeaderboard] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [settings, setSettings] = useState<GameSettings>(loadSettings);
+  const [showTutorial, setShowTutorial] = useState(false);
+  const [tutorialRect, setTutorialRect] = useState<HighlightRect | null>(null);
+  const undoDesktopRef = useRef<HTMLButtonElement>(null);
+  const undoMobileRef = useRef<HTMLButtonElement>(null);
   const [isLandscapeMobile, setIsLandscapeMobile] = useState(false);
   const [showReplay, setShowReplay] = useState(false);
   const [newAchievements, setNewAchievements] = useState<Achievement[]>([]);
@@ -98,6 +104,15 @@ export default function GameShell({ initialGameNumber }: GameShellProps = {}) {
       if (id) recordThemeUsed(id);
     };
     const unsub = gameBridge.on('themeChanged', handleThemeChange);
+    // Show tutorial on first visit
+    try {
+      if (!localStorage.getItem('tutorialSeen')) {
+        const timer = setTimeout(() => setShowTutorial(true), 1200);
+        return () => { unsub(); clearTimeout(timer); };
+      }
+    } catch {
+      // localStorage blocked
+    }
     return () => { unsub(); };
   }, []);
 
@@ -320,6 +335,49 @@ export default function GameShell({ initialGameNumber }: GameShellProps = {}) {
     gameBridge.emit('updateSettings', newSettings);
   };
 
+  const handleTutorialStepChange = useCallback((highlightKey: string | null) => {
+    if (!highlightKey) {
+      setTutorialRect(null);
+      return;
+    }
+
+    // For the undo button, get DOM rect directly
+    if (highlightKey === 'undo') {
+      const btn = undoDesktopRef.current ?? undoMobileRef.current;
+      if (btn) {
+        const r = btn.getBoundingClientRect();
+        setTutorialRect({ x: r.left, y: r.top, width: r.width, height: r.height });
+      } else {
+        setTutorialRect(null);
+      }
+      return;
+    }
+
+    // For game elements, ask Phaser for position
+    gameBridge.emit('requestElementPosition', highlightKey);
+  }, []);
+
+  // Listen for Phaser element position responses (for tutorial spotlight)
+  useEffect(() => {
+    const unsub = gameBridge.on('elementPositionResponse', (data: unknown) => {
+      const d = data as { key: string; rect: HighlightRect };
+      if (showTutorial) {
+        setTutorialRect(d.rect);
+      }
+    });
+    return unsub;
+  }, [showTutorial]);
+
+  const handleDismissTutorial = useCallback(() => {
+    setShowTutorial(false);
+    setTutorialRect(null);
+  }, []);
+
+  const handleShowTutorial = useCallback(() => {
+    setShowSettings(false);
+    setShowTutorial(true);
+  }, []);
+
   const handleShareGame = async () => {
     if (!gameNumber) return;
     const shareUrl = `${window.location.origin}/?game=${gameNumber}`;
@@ -442,7 +500,7 @@ export default function GameShell({ initialGameNumber }: GameShellProps = {}) {
                   New Deal
                 </button>
                 <div className="w-px h-4 bg-white/10 mx-1" />
-                <button onClick={handleUndo} className={iconBtnClass} title="Undo (Ctrl+Z)">
+                <button ref={undoDesktopRef} onClick={handleUndo} className={iconBtnClass} title="Undo (Ctrl+Z)">
                   <RotateCcw size={18} />
                 </button>
                 <button onClick={handleRedo} className={iconBtnClass} title="Redo (Ctrl+Y)">
@@ -638,6 +696,7 @@ export default function GameShell({ initialGameNumber }: GameShellProps = {}) {
                 <span className="text-[10px]">Streak</span>
               </a>
               <button
+                ref={undoMobileRef}
                 onClick={handleUndo}
                 className="flex flex-col items-center gap-0.5 p-2 text-white/70 active:text-white active:scale-90 transition-all font-medium"
                 title="Undo"
@@ -731,6 +790,15 @@ export default function GameShell({ initialGameNumber }: GameShellProps = {}) {
             onClose={() => setShowSettings(false)}
             settings={settings}
             onUpdateSettings={handleUpdateSettings}
+            onShowTutorial={handleShowTutorial}
+          />
+
+          {/* Tutorial Overlay */}
+          <Tutorial
+            isOpen={showTutorial}
+            onDismiss={handleDismissTutorial}
+            highlightRect={tutorialRect}
+            onStepChange={handleTutorialStepChange}
           />
 
           {/* New Professional Footer Section */}

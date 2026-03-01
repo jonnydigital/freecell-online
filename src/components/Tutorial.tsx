@@ -1,167 +1,294 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-// X icon unused — close handled by Skip/Done buttons
+import { Spade, Hand, ArrowDownUp, RotateCcw, Sparkles } from 'lucide-react';
+import type { ReactNode } from 'react';
 
-const tutorialSteps = [
+export interface TutorialStep {
+  title: string;
+  text: string;
+  icon: ReactNode;
+  highlightKey: string | null;
+}
+
+const TUTORIAL_STEPS: TutorialStep[] = [
   {
     title: 'Welcome to FreeCell!',
-    text: 'This quick tutorial will walk you through the basics of the game.',
-    highlight: null,
+    text: 'A quick walkthrough to get you started. Every deal in FreeCell is solvable with the right strategy.',
+    icon: <Spade size={28} />,
+    highlightKey: null,
   },
   {
-    title: 'The Goal',
-    text: 'The goal is to move all 52 cards to the four foundations in the top right, building up from Ace to King for each suit.',
-    highlight: 'foundations',
+    title: 'Free Cells',
+    text: 'These four cells are temporary storage. Each holds one card. Use them strategically to free up moves in the tableau.',
+    icon: <span className="text-2xl font-bold">4</span>,
+    highlightKey: 'freecells',
   },
   {
-    title: 'The Free Cells',
-    text: 'These four empty cells in the top left are temporary storage spaces. Each can hold only one card.',
-    highlight: 'freecells',
+    title: 'Foundations',
+    text: 'Your goal: build each suit from Ace to King here. Cards are moved automatically when safe, or drag them yourself.',
+    icon: <span className="text-lg">A → K</span>,
+    highlightKey: 'foundations',
   },
   {
     title: 'Moving Cards',
-    text: 'On desktop, drag cards to move them. On mobile, tap a card to select it, then tap its destination to move it.',
-    highlight: 'tableau',
+    text: 'Drag a card to move it, or tap it then tap the destination. On mobile, a single tap auto-moves when there\'s an obvious play.',
+    icon: <Hand size={28} />,
+    highlightKey: 'tableau',
   },
   {
-    title: 'Daily Challenge',
-    text: 'Play a special, solvable game each day to build up your winning streak. Access it from the home screen.',
-    highlight: 'dailyButton',
+    title: 'Valid Moves',
+    text: 'Stack cards in descending order with alternating colors (red on black, black on red). Empty columns can hold any card.',
+    icon: <ArrowDownUp size={28} />,
+    highlightKey: 'tableau',
   },
   {
-    title: "You're Ready!",
-    text: 'You now know everything you need to play. Good luck!',
-    highlight: null,
+    title: 'Undo Anytime',
+    text: 'Made a mistake? Undo is unlimited — experiment freely. Use the undo button or press Ctrl+Z.',
+    icon: <RotateCcw size={28} />,
+    highlightKey: 'undo',
+  },
+  {
+    title: 'You\'re Ready!',
+    text: 'That\'s everything. You can replay this tutorial anytime from Settings.',
+    icon: <Sparkles size={28} />,
+    highlightKey: null,
   },
 ];
+
+export interface HighlightRect {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
 
 interface TutorialProps {
   isOpen: boolean;
   onDismiss: () => void;
-  highlightRect: { x: number; y: number; width: number; height: number; } | null;
+  highlightRect: HighlightRect | null;
+  onStepChange: (highlightKey: string | null) => void;
 }
 
-export default function Tutorial({ isOpen, onDismiss, highlightRect }: TutorialProps) {
+export default function Tutorial({ isOpen, onDismiss, highlightRect, onStepChange }: TutorialProps) {
   const [step, setStep] = useState(0);
+  const [direction, setDirection] = useState(1); // 1 = forward, -1 = backward
 
-  const handleDismiss = () => {
+  // Notify parent of highlight key whenever step changes
+  useEffect(() => {
+    if (isOpen) {
+      onStepChange(TUTORIAL_STEPS[step].highlightKey);
+    }
+  }, [step, isOpen, onStepChange]);
+
+  // Reset step when opened
+  useEffect(() => {
+    if (isOpen) {
+      setStep(0);
+      setDirection(1);
+    }
+  }, [isOpen]);
+
+  const handleDismiss = useCallback(() => {
     try {
       localStorage.setItem('tutorialSeen', 'true');
-    } catch (e) {
-      console.error('Failed to set tutorialSeen in localStorage', e);
+    } catch {
+      // Storage blocked
     }
     onDismiss();
-  };
+  }, [onDismiss]);
 
-  const handleNext = () => {
-    if (step < tutorialSteps.length - 1) {
-      setStep(step + 1);
+  const handleNext = useCallback(() => {
+    if (step < TUTORIAL_STEPS.length - 1) {
+      setDirection(1);
+      setStep(s => s + 1);
     } else {
       handleDismiss();
     }
-  };
+  }, [step, handleDismiss]);
 
-  const handlePrev = () => {
+  const handlePrev = useCallback(() => {
     if (step > 0) {
-      setStep(step - 1);
+      setDirection(-1);
+      setStep(s => s - 1);
     }
-  };
+  }, [step]);
 
-  // Effect to pass the current step's highlight key up to the parent
-  useEffect(() => {
-    if (isOpen) {
-      const key = tutorialSteps[step].highlight;
-      // This is a bit of a hack. A more robust solution might use a callback.
-      // We're notifying GameShell which element we need a rect for.
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (window as any)._geminiTutorialHighlight = key;
-      window.dispatchEvent(new CustomEvent('gemini-tutorial-step-change'));
-    }
-  }, [step, isOpen]);
-  
-  const currentStep = tutorialSteps[step];
+  const isLastStep = step === TUTORIAL_STEPS.length - 1;
+  const currentStep = TUTORIAL_STEPS[step];
+
+  // Determine if the card should appear above or below the spotlight
+  const cardPosition = (() => {
+    if (!highlightRect) return 'center';
+    const viewportMid = window.innerHeight / 2;
+    const spotlightMid = highlightRect.y + highlightRect.height / 2;
+    return spotlightMid < viewportMid ? 'below' : 'above';
+  })();
+
+  const contentVariants = {
+    enter: (dir: number) => ({
+      opacity: 0,
+      x: dir > 0 ? 60 : -60,
+      scale: 0.95,
+    }),
+    center: {
+      opacity: 1,
+      x: 0,
+      scale: 1,
+    },
+    exit: (dir: number) => ({
+      opacity: 0,
+      x: dir > 0 ? -60 : 60,
+      scale: 0.95,
+    }),
+  };
 
   return (
     <AnimatePresence>
       {isOpen && (
-        <>
+        <div className="fixed inset-0 z-[200]" role="dialog" aria-modal="true" aria-label="Tutorial">
+          {/* Dark overlay — always present, click does nothing (must use buttons) */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50"
+            className="absolute inset-0 bg-black/75"
             aria-hidden="true"
           />
-          
-          {/* Spotlight effect */}
-          {highlightRect && (
-             <motion.div
+
+          {/* Spotlight cutout */}
+          <AnimatePresence mode="wait">
+            {highlightRect && (
+              <motion.div
+                key={currentStep.highlightKey}
                 initial={{ opacity: 0 }}
-                animate={{ 
+                animate={{
                   opacity: 1,
-                  x: highlightRect.x,
-                  y: highlightRect.y,
-                  width: highlightRect.width,
-                  height: highlightRect.height,
+                  x: highlightRect.x - 8,
+                  y: highlightRect.y - 8,
+                  width: highlightRect.width + 16,
+                  height: highlightRect.height + 16,
                 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.3, ease: 'easeInOut' }}
-                className="fixed top-0 left-0 rounded-lg"
+                transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                className="absolute top-0 left-0 rounded-xl"
                 style={{
-                    boxShadow: '0 0 0 9999px rgba(0, 0, 0, 0.8)',
-                    pointerEvents: 'none',
+                  boxShadow: '0 0 0 9999px rgba(0, 0, 0, 0.75)',
+                  pointerEvents: 'none',
                 }}
-             />
-          )}
+              />
+            )}
+          </AnimatePresence>
 
-          <div className="fixed inset-0 z-[51] flex flex-col items-center justify-end p-4 md:justify-center">
-            <motion.div
-              key={step}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.3 }}
-              className="relative bg-[#072907] border-2 border-[#D4AF37]/50 rounded-xl shadow-2xl max-w-sm w-full p-6 text-center text-white"
-            >
-              <h2
-                className="text-3xl font-bold text-[#D4AF37] mb-4"
-                style={{ fontFamily: 'var(--font-playfair)' }}
+          {/* Content card */}
+          <div
+            className={`absolute inset-0 flex flex-col px-4 pointer-events-none ${
+              cardPosition === 'above'
+                ? 'justify-start pt-8 md:pt-12'
+                : cardPosition === 'below'
+                  ? 'justify-end pb-24 md:pb-16'
+                  : 'justify-center'
+            }`}
+          >
+            <AnimatePresence mode="wait" custom={direction}>
+              <motion.div
+                key={step}
+                custom={direction}
+                variants={contentVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{ type: 'spring', stiffness: 350, damping: 30 }}
+                className="pointer-events-auto mx-auto w-full max-w-sm"
               >
-                {currentStep.title}
-              </h2>
-              <p className="text-white/80 mb-6">{currentStep.text}</p>
+                <div
+                  className="rounded-2xl border-2 shadow-2xl p-6 backdrop-blur-sm"
+                  style={{
+                    backgroundColor: 'var(--theme-panel)',
+                    borderColor: 'color-mix(in srgb, var(--gold) 40%, transparent)',
+                  }}
+                >
+                  {/* Icon + Title */}
+                  <div className="flex items-center gap-3 mb-3">
+                    <div
+                      className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0"
+                      style={{ backgroundColor: 'var(--theme-accent)', color: 'var(--gold)' }}
+                    >
+                      {currentStep.icon}
+                    </div>
+                    <h2
+                      className="text-xl font-bold"
+                      style={{ color: 'var(--gold)', fontFamily: 'var(--font-playfair)' }}
+                    >
+                      {currentStep.title}
+                    </h2>
+                  </div>
 
-              <div className="flex items-center justify-between">
-                {step > 0 ? (
-                  <button
-                    onClick={handlePrev}
-                    className="px-4 py-2 text-white/50 hover:text-white transition-colors"
-                  >
-                    Previous
-                  </button>
-                ) : <div />}
+                  {/* Description */}
+                  <p className="text-sm leading-relaxed text-white/70 mb-5">
+                    {currentStep.text}
+                  </p>
 
-                <div className="flex items-center gap-2">
-                  <button
-                    onClick={handleDismiss}
-                    className="px-4 py-2 text-white/50 hover:text-white transition-colors"
-                  >
-                    Skip
-                  </button>
-                  <button
-                    onClick={handleNext}
-                    className="px-6 py-2 bg-[#D4AF37] text-black font-bold rounded-lg hover:bg-yellow-400 transition-colors"
-                  >
-                    {step === tutorialSteps.length - 1 ? 'Finish' : 'Next'}
-                  </button>
+                  {/* Step dots */}
+                  <div className="flex items-center justify-center gap-1.5 mb-4">
+                    {TUTORIAL_STEPS.map((_, i) => (
+                      <div
+                        key={i}
+                        className="h-1.5 rounded-full transition-all duration-300"
+                        style={{
+                          width: i === step ? 20 : 6,
+                          backgroundColor: i === step ? 'var(--gold)' : 'rgba(255,255,255,0.15)',
+                        }}
+                      />
+                    ))}
+                  </div>
+
+                  {/* Buttons */}
+                  <div className="flex items-center justify-between gap-2">
+                    {/* Skip — always visible */}
+                    <button
+                      onClick={handleDismiss}
+                      className="px-4 py-2.5 text-xs font-medium text-white/40 hover:text-white/70 active:text-white transition-colors rounded-lg min-h-[44px]"
+                    >
+                      Skip
+                    </button>
+
+                    <div className="flex items-center gap-2">
+                      {/* Previous */}
+                      {step > 0 && (
+                        <button
+                          onClick={handlePrev}
+                          className="px-4 py-2.5 text-xs font-medium text-white/50 hover:text-white/80 active:text-white transition-colors rounded-lg border border-white/10 min-h-[44px]"
+                        >
+                          Back
+                        </button>
+                      )}
+
+                      {/* Next / Got it! */}
+                      <button
+                        onClick={handleNext}
+                        className="px-6 py-2.5 text-sm font-bold rounded-lg transition-all active:scale-95 min-h-[44px]"
+                        style={{
+                          backgroundColor: 'var(--gold)',
+                          color: '#000',
+                        }}
+                      >
+                        {isLastStep ? 'Got it!' : 'Next'}
+                      </button>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </motion.div>
+
+                {/* Step counter */}
+                <p className="text-center text-[11px] text-white/25 mt-2 tabular-nums">
+                  {step + 1} of {TUTORIAL_STEPS.length}
+                </p>
+              </motion.div>
+            </AnimatePresence>
           </div>
-        </>
+        </div>
       )}
     </AnimatePresence>
   );

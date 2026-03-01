@@ -3,8 +3,18 @@
 :root {
   --felt-green: #0a3d0a;
   --felt-green-light: #1a5c1a;
+  --felt-color: #0a3d0a;
+  --felt-color-light: #1a5c1a;
   --card-shadow: rgba(0, 0, 0, 0.3);
   --gold: #d4a843;
+  /* Theme UI variables (overridden by ThemeProvider at runtime) */
+  --theme-base: #0a351a;
+  --theme-dark: #072907;
+  --theme-mid: #0d4a22;
+  --theme-accent: #1a5c1a;
+  --theme-accent-hover: #257a25;
+  --theme-border: #2a7c2a;
+  --theme-panel: #0d2f0d;
 }
 
 * {

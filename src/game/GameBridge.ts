@@ -18,7 +18,8 @@ export type UIToGameEvent =
   | 'autoFinish'
   | 'requestElementPosition'
   | 'replayMove'
-  | 'setReplayMode';
+  | 'setReplayMode'
+  | 'themeChanged';
 
 export type GameToUIEvent =
   | 'moveExecuted'

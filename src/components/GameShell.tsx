@@ -8,7 +8,8 @@ import { loadStats, saveStats } from '../lib/storage';
 import { trackGameStart, trackWin, trackAbandoned, trackHint, trackUndo, trackMove, trackDeadlock, gameSession } from '../lib/analytics';
 import { initErrorTracking, setGameContext } from '../lib/errorTracking';
 import { getTodaysSeed, getTodayStr, recordDailyCompletion, isTodayCompleted } from '../lib/dailyChallenge';
-import { RotateCcw, RotateCw, Lightbulb, BarChart3, MessageSquare, Shuffle, Calendar, Volume2, VolumeX, Home, Share2, AlertTriangle, ChevronLeft, Trophy, Settings as SettingsIcon, Flame } from 'lucide-react';
+import { RotateCcw, RotateCw, Lightbulb, BarChart3, MessageSquare, Shuffle, Calendar, Volume2, VolumeX, Home, Share2, AlertTriangle, ChevronLeft, Trophy, Settings as SettingsIcon, Flame, Palette } from 'lucide-react';
+import ThemeSelector from './ThemeSelector';
 import StatsPanel from './StatsPanel';
 import FeedbackModal from './FeedbackModal';
 import DailyChallengePanel from './DailyChallengePanel';
@@ -330,7 +331,7 @@ export default function GameShell({ initialGameNumber }: GameShellProps = {}) {
   const iconSize = 16;
 
   return (
-    <div className="flex w-full h-dvh bg-[#0a351a]">
+    <div className="flex w-full h-dvh transition-colors duration-500" style={{ backgroundColor: 'var(--theme-base)' }}>
       {/* Structural Wrapper for the Game Area + Ad Sidebars */}
       <div className="flex w-full h-full max-w-[1400px] mx-auto relative overflow-hidden">
 
@@ -342,7 +343,7 @@ export default function GameShell({ initialGameNumber }: GameShellProps = {}) {
         </div>
 
         {/* Center Game Container (1000px max) */}
-        <div className="flex flex-col w-full max-w-[1000px] h-full bg-[#0d4a22] shadow-[0_0_50px_rgba(0,0,0,0.5)] relative z-10 shrink-0">
+        <div className="flex flex-col w-full max-w-[1000px] h-full shadow-[0_0_50px_rgba(0,0,0,0.5)] relative z-10 shrink-0 transition-colors duration-500" style={{ backgroundColor: 'var(--theme-mid)' }}>
 
           {/* ── Desktop Top Bar (Clean & Professional) ── */}
           <div className="hidden md:flex items-center justify-between px-6 py-3 bg-[#072907] border-b border-white/10 z-20 sticky top-0">

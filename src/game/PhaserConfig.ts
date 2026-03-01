@@ -3,16 +3,21 @@
  */
 import * as Phaser from 'phaser';
 import { FreeCellScene } from './FreeCellScene';
+import { getThemeById, themes } from '../lib/themes';
 
 export function createPhaserConfig(
   parent: HTMLElement
 ): Phaser.Types.Core.GameConfig {
+  // Read stored theme for initial background color (avoids flash of wrong color)
+  const storedId = typeof window !== 'undefined' ? localStorage.getItem('theme-id') : null;
+  const theme = storedId ? getThemeById(storedId) : themes[0];
+
   return {
     type: Phaser.AUTO, // WebGL with Canvas fallback
     parent,
     width: parent.clientWidth,
     height: parent.clientHeight,
-    backgroundColor: '#0a3d0a',
+    backgroundColor: theme.feltColor,
     scale: {
       mode: Phaser.Scale.RESIZE,
       autoCenter: Phaser.Scale.NO_CENTER,

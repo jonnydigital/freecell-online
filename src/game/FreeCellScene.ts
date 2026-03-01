@@ -16,6 +16,7 @@ import { getRandomSolvableGame } from '../lib/solvableDeals';
 import { soundManager } from '../lib/sounds';
 import { GameSettings, loadSettings } from '../lib/storage';
 import { registerTestBridge, unregisterTestBridge } from './TestBridge';
+import { ThemeDefinition, themes, getThemeById, hexToInt } from '../lib/themes';
 
 // Layout constants
 const CARD_RATIO = 1.4; // height/width ratio
@@ -36,6 +37,7 @@ export class FreeCellScene extends Phaser.Scene {
   private cardSprites: Map<string, CardSprite> = new Map();
   private gameNumber: number = 1;
   private settings!: GameSettings;
+  private currentTheme: ThemeDefinition = themes[0];
 
   // Layout measurements (recalculated on resize)
   private cardWidth: number = 0;
@@ -129,6 +131,7 @@ export class FreeCellScene extends Phaser.Scene {
   private drawBackgroundEffects(): void {
     const w = this.scale.width;
     const h = this.scale.height;
+    const t = this.currentTheme;
 
     // Clean up old effects
     if (this.vignette) { this.vignette.destroy(); this.vignette = null; }
@@ -140,7 +143,7 @@ export class FreeCellScene extends Phaser.Scene {
     // Draw concentric semi-transparent dark rects from edge inward
     const steps = 8;
     for (let i = 0; i < steps; i++) {
-      const alpha = 0.12 * (1 - i / steps);
+      const alpha = t.vignetteAlpha * (1 - i / steps);
       const inset = (i / steps) * Math.min(w, h) * 0.35;
       this.vignette.fillStyle(0x000000, alpha);
       this.vignette.fillRect(0, 0, w, inset); // top
@@ -152,12 +155,14 @@ export class FreeCellScene extends Phaser.Scene {
     // Felt noise texture: scattered subtle dark/light specks
     this.feltNoise = this.add.graphics();
     this.feltNoise.setDepth(1);
+    const noiseLightColor = hexToInt(t.feltNoiseLight);
+    const noiseDarkColor = hexToInt(t.feltNoiseDark);
     const noiseCount = Math.floor((w * h) / 800); // Density scales with screen
     for (let i = 0; i < noiseCount; i++) {
       const nx = Math.random() * w;
       const ny = Math.random() * h;
       const bright = Math.random() > 0.5;
-      this.feltNoise.fillStyle(bright ? 0x1a5c1a : 0x062e06, Math.random() * 0.15);
+      this.feltNoise.fillStyle(bright ? noiseLightColor : noiseDarkColor, Math.random() * 0.15);
       this.feltNoise.fillRect(nx, ny, 1 + Math.random(), 1 + Math.random());
     }
   }
@@ -212,6 +217,13 @@ export class FreeCellScene extends Phaser.Scene {
     this.timer = new GameTimer();
     this.settings = loadSettings();
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, this.shutdown, this);
+
+    // Load theme from localStorage
+    const storedThemeId = localStorage.getItem('theme-id');
+    if (storedThemeId) {
+      this.currentTheme = getThemeById(storedThemeId);
+    }
+    this.cameras.main.setBackgroundColor(hexToInt(this.currentTheme.feltColor));
 
     // Detect touch device
     this.isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
@@ -288,6 +300,14 @@ export class FreeCellScene extends Phaser.Scene {
         this.clearHintGlow();
         this.clearHintText();
       }
+    }));
+
+    this.bridgeUnsubscribers.push(gameBridge.on('themeChanged', (themeData: unknown) => {
+      const newTheme = themeData as ThemeDefinition;
+      this.currentTheme = newTheme;
+      this.cameras.main.setBackgroundColor(hexToInt(newTheme.feltColor));
+      this.drawBackgroundEffects();
+      this.rebuildBoard();
     }));
 
     this.bridgeUnsubscribers.push(gameBridge.on('requestElementPosition', (elementKey: unknown) => {
@@ -848,8 +868,9 @@ export class FreeCellScene extends Phaser.Scene {
     type: 'free' | 'foundation',
     label?: string
   ): void {
+    const slotColor = hexToInt(this.currentTheme.feltNoiseLight);
     const graphics = this.add.graphics();
-    graphics.lineStyle(2, 0x1a5c1a, 0.8);
+    graphics.lineStyle(2, slotColor, 0.8);
     graphics.strokeRoundedRect(x, y, this.cardWidth, this.cardHeight, 6);
     this.slotGraphics.push(graphics);
 
@@ -860,7 +881,7 @@ export class FreeCellScene extends Phaser.Scene {
         label,
         {
           fontSize: `${Math.floor(this.cardWidth * 0.4)}px`,
-          color: '#1a5c1a',
+          color: this.currentTheme.feltNoiseLight,
           fontFamily: 'serif',
         }
       );

@@ -7,6 +7,8 @@ import { GameStats, createEmptyStats, recordWin, recordLoss } from '../lib/stats
 import { loadStats, saveStats } from '../lib/storage';
 import { trackGameStart, trackWin, trackAbandoned, trackHint, trackUndo, trackMove, trackDeadlock, gameSession } from '../lib/analytics';
 import { initErrorTracking, setGameContext } from '../lib/errorTracking';
+import { checkWinAchievements, recordThemeUsed } from '../lib/achievementTracker';
+import type { Achievement } from '../lib/achievements';
 import { getTodaysSeed, getTodayStr, recordDailyCompletion, isTodayCompleted } from '../lib/dailyChallenge';
 import { RotateCcw, RotateCw, Lightbulb, BarChart3, MessageSquare, Shuffle, Calendar, Volume2, VolumeX, Home, Share2, AlertTriangle, ChevronLeft, Trophy, Settings as SettingsIcon, Flame, Palette } from 'lucide-react';
 import ThemeSelector from './ThemeSelector';
@@ -20,6 +22,7 @@ import { useSolver } from '@/hooks/useSolver';
 import HomeOverlay from './HomeOverlay';
 import DailyBanner from './DailyBanner';
 import AchievementsPanel from './AchievementsPanel';
+import AchievementToast from './AchievementToast';
 import KeyboardShortcuts from './KeyboardShortcuts';
 import StreakMilestone, { isMilestone } from './StreakMilestone';
 import Leaderboard from './Leaderboard';
@@ -57,6 +60,7 @@ export default function GameShell({ initialGameNumber }: GameShellProps = {}) {
   const [settings, setSettings] = useState<GameSettings>(loadSettings);
   const [isLandscapeMobile, setIsLandscapeMobile] = useState(false);
   const [showReplay, setShowReplay] = useState(false);
+  const [newAchievements, setNewAchievements] = useState<Achievement[]>([]);
   const { status: solverStatus, moves: solverMoves, totalMoveCount: solverTotalMoves, solve: startSolver, reset: resetSolver } = useSolver();
   const [dailyCompleted, setDailyCompleted] = useState(true); // assume completed until checked
   const [shareStatus, setShareStatus] = useState<'idle' | 'copied'>('idle');
@@ -79,11 +83,21 @@ export default function GameShell({ initialGameNumber }: GameShellProps = {}) {
     const s = seconds % 60;
     return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
   };
-  // Load stats on mount
+  // Load stats on mount + track current theme
   useEffect(() => {
     setStats(loadStats());
     setDailyCompleted(isTodayCompleted());
     initErrorTracking();
+    // Record current theme for Theme Collector achievement
+    const themeId = localStorage.getItem('theme-id');
+    if (themeId) recordThemeUsed(themeId);
+    // Listen for theme changes
+    const handleThemeChange = () => {
+      const id = localStorage.getItem('theme-id');
+      if (id) recordThemeUsed(id);
+    };
+    const unsub = gameBridge.on('themeChanged', handleThemeChange);
+    return () => { unsub(); };
   }, []);
 
   // Detect landscape on mobile (hide toolbars to maximize game area)
@@ -114,6 +128,17 @@ export default function GameShell({ initialGameNumber }: GameShellProps = {}) {
         saveStats(updated);
         if (isMilestone(updated.currentStreak)) {
           setStreakMilestone(updated.currentStreak);
+        }
+        // Check achievements with updated stats
+        const { newlyUnlocked } = checkWinAchievements(
+          updated,
+          d.time,
+          d.moves,
+          gameSession.hintsUsed,
+          gameSession.undosUsed,
+        );
+        if (newlyUnlocked.length > 0) {
+          setNewAchievements(newlyUnlocked);
         }
         return updated;
       });
@@ -524,6 +549,14 @@ export default function GameShell({ initialGameNumber }: GameShellProps = {}) {
                 streak={streakMilestone}
                 show={true}
                 onDismiss={() => setStreakMilestone(null)}
+              />
+            )}
+
+            {/* Achievement Toast */}
+            {newAchievements.length > 0 && (
+              <AchievementToast
+                achievements={newAchievements}
+                onDone={() => setNewAchievements([])}
               />
             )}
 

@@ -77,7 +77,7 @@ export function saveAchievement(id: string): void {
       saved[id] = Date.now();
       localStorage.setItem(ACHIEVEMENTS_KEY, JSON.stringify(saved));
     }
-  } catch {}
+  } catch { }
 }
 
 export interface AchievementContext {

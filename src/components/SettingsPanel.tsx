@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Settings, Volume2, Sparkles, Wand2, Monitor, HelpCircle } from 'lucide-react';
+import { X, Settings, Volume2, Sparkles, Wand2, Monitor, HandPointer, MousePointer2 } from 'lucide-react';
 import { GameSettings } from '../lib/storage';
 import ThemeSelector from './ThemeSelector';
 
@@ -11,10 +11,9 @@ interface SettingsPanelProps {
     onClose: () => void;
     settings: GameSettings;
     onUpdateSettings: (settings: GameSettings) => void;
-    onShowTutorial?: () => void;
 }
 
-export default function SettingsPanel({ isOpen, onClose, settings, onUpdateSettings, onShowTutorial }: SettingsPanelProps) {
+export default function SettingsPanel({ isOpen, onClose, settings, onUpdateSettings }: SettingsPanelProps) {
     const toggleSetting = (key: keyof GameSettings) => {
         onUpdateSettings({
             ...settings,
@@ -140,27 +139,6 @@ export default function SettingsPanel({ isOpen, onClose, settings, onUpdateSetti
                                     onToggle={() => toggleSetting('soundEnabled')}
                                 />
                             </section>
-
-                            {/* Help Section */}
-                            {onShowTutorial && (
-                                <section className="space-y-4">
-                                    <div className="flex items-center gap-2 mb-2">
-                                        <HelpCircle size={16} className="text-[#D4AF37]/60" />
-                                        <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-white/30">Help</h3>
-                                    </div>
-
-                                    <button
-                                        onClick={onShowTutorial}
-                                        className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-white/5 transition-colors text-left"
-                                    >
-                                        <div>
-                                            <div className="text-sm font-semibold text-white/90">Show Tutorial</div>
-                                            <div className="text-[10px] text-white/40">Replay the walkthrough</div>
-                                        </div>
-                                        <span className="text-white/20 text-xs">→</span>
-                                    </button>
-                                </section>
-                            )}
                         </div>
 
                         {/* Footer */}

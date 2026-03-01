@@ -406,7 +406,7 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
   const handleDismissTutorial = useCallback(() => {
     setShowTutorial(false);
     setTutorialRect(null);
-    try { localStorage.setItem('tutorialSeen', '1'); } catch {}
+    try { localStorage.setItem('tutorialSeen', '1'); } catch { }
   }, []);
 
   const handleShowTutorial = useCallback(() => {

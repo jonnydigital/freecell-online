@@ -1,4 +1,4 @@
-export default function Footer() {
+export default function Footer({ variant }: { variant?: "light" | "dark" } = {}) {
   return (
     <footer className="bg-[#072907] border-t border-[#1a5c1a]/30 py-6 px-4">
       <div className="max-w-3xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-white/40">

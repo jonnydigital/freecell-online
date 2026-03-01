@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { gameBridge } from '../game/GameBridge';
 import { GameStats, createEmptyStats, recordWin, recordLoss } from '../lib/stats';
 import { loadStats, saveStats } from '../lib/storage';
+import { recordGameResult } from '../lib/gameHistory';
 import { trackGameStart, trackWin, trackAbandoned, trackHint, trackUndo, trackMove, trackDeadlock, gameSession } from '../lib/analytics';
 import { initErrorTracking, setGameContext } from '../lib/errorTracking';
 import { checkWinAchievements, recordThemeUsed } from '../lib/achievementTracker';
@@ -123,6 +124,7 @@ export default function GameShell({ initialGameNumber }: GameShellProps = {}) {
       winDataRef.current = d;
       setIsWon(true);
       trackWin(d.time, d.moves);
+      recordGameResult(true, d.moves, d.time, gameNumber ?? undefined);
       setStats((prev) => {
         const updated = recordWin(prev, d.time, d.moves);
         saveStats(updated);
@@ -143,7 +145,7 @@ export default function GameShell({ initialGameNumber }: GameShellProps = {}) {
         return updated;
       });
     },
-    []
+    [gameNumber]
   );
 
   useEffect(() => {

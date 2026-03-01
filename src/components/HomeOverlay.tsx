@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, HelpCircle, Swords, MessageSquare, VolumeX, Volume2, Trophy, Target, Clock, Flame, Zap } from 'lucide-react';
+import { X, HelpCircle, Swords, MessageSquare, VolumeX, Volume2, Trophy, Target, Clock, Flame, Zap, BarChart3 } from 'lucide-react';
 import { getTodaysSeed, getTodayStr, loadDailyData, getCurrentStreak, isTodayCompleted } from '../lib/dailyChallenge';
 import { loadStats } from '../lib/storage';
 import { getAverageMoves, getAverageTime } from '../lib/stats';
@@ -210,8 +210,11 @@ export default function HomeOverlay({
                   )}
                 </a>
 
-                {/* Stats */}
-                <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4">
+                {/* Stats Summary + Link */}
+                <a
+                  href="/stats"
+                  className="block bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 hover:bg-white/8 transition-colors"
+                >
                   <h2
                     className="text-center text-lg font-bold mb-3 text-white/90"
                     style={{ fontFamily: 'var(--font-playfair)' }}
@@ -246,7 +249,11 @@ export default function HomeOverlay({
                       <div className="text-[10px] text-white/40 uppercase tracking-wider mt-0.5">Best Time</div>
                     </div>
                   </div>
-                </div>
+                  <div className="text-center mt-3 text-xs text-[#D4AF37]/70 flex items-center justify-center gap-1">
+                    <BarChart3 size={12} />
+                    View detailed stats &amp; charts →
+                  </div>
+                </a>
 
                 {/* Theme Selector */}
                 <ThemeSelector />

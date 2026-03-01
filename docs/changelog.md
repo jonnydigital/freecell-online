@@ -1,5 +1,11 @@
 # FreeCell Online — Changelog
 
+## 2026-03-01 (Overnight Build Cycle)
+### Shipped
+- **Streak milestone celebrations** — Animated toast notifications at win streak milestones (3, 5, 7, 10, 15, 20, 25, 30, 50, 75, 100, 150, 200, 365). Each milestone has unique emoji, title, and motivational message. Spring animations with flame icons, auto-dismisses after 5s. Duolingo-inspired engagement mechanic.
+
+---
+
 ## 2026-02-28 (Morning — Fluidity #5 & #8)
 ### Shipped
 - **Enhanced card lift effect** — Cards scale to 1.08x on drag with deeper shadow (4px offset, 0.5 alpha) and -3px lift. Animated return on drop.

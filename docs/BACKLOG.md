@@ -4,7 +4,7 @@
 ## 🔴 High Priority (Ship This Week)
 1. **Puzzle modes: Streak + Storm** — Repackage FreeCell engine as Streak (consecutive wins) and Storm (timed speed-solving). 3-4x engagement surface from same core engine. *(Lichess spark — their puzzle variants are massive retention drivers)*
 2. **Post-game optimal solution** — Show solver's solution after each game (win or lose). Educational + dwell time. *(Lichess spark — leverages existing solver, low effort)*
-3. **Star rating per game** — Rate 1-3 stars based on moves vs solver optimal. Creates replay motivation. *(Candy Crush spark)*
+3. ~~**Star rating per game**~~ ✅ ALREADY SHIPPED — WinScreen shows 1-3 stars based on moves (≤60=3★, ≤90=2★), with animated reveal, "New Best!" tracking, and star count in share text
 4. **Theme system** — felt color picker + card back designs *(Solitaire Bliss has this, gamification gap)*
 5. **Share button** — "I solved today's FreeCell in X moves!" with Web Share API *(competitor gap, viral growth)*
 6. **SEO: Expand strategy page** — 2000+ words, actionable tips, internal links *(Solitaire Bliss model — they rank for "freecell strategy")*
@@ -13,7 +13,7 @@
 ## 🟡 Medium Priority (Ship This Month)
 8. **Statistics page enhancement** — charts, streaks visualization, detailed history
 9. **Multi-modal navigation** — restructure nav into Play / Daily / Learn / Stats sections *(Chess.com spark — each mode serves different user intent)*
-10. **Streak milestone celebrations** — 7/30/100-day animations, streak freeze mechanic *(Duolingo spark — make streaks emotionally consequential)*
+10. ~~**Streak milestone celebrations**~~ ✅ SHIPPED 03-01 — Animated toasts at 14 milestone levels (3-365), unique messages, framer-motion animations *(Duolingo spark)*
 11. **Numbered game URLs** — `/game/[number]` routes for shareability + SEO *(competitor standard: cardgames.io has 1-50000)*
 12. **FreeCell variants** — Baker's Game, Eight Off as separate modes. New daily challenges per variant. *(NYT Games spark — game portfolio as retention moat)*
 13. **SEO: FreeCell history page** — Paul Alfille, PLATO, Baker's Game origins *(Green Felt spark. Unique content, educational backlinks)*

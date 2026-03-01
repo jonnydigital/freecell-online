@@ -143,23 +143,22 @@ export default function HowToPlayPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToJsonLd) }} />
 
       {/* ── Header ── */}
-      <header className="bg-[#072907] text-white py-20 px-6">
-        <div className="max-w-4xl mx-auto flex flex-col items-center text-center">
-          <Link href="/" className="text-xl font-black uppercase tracking-tighter mb-12 hover:opacity-80 transition-opacity">
-            Freecell<span className="text-[#D4AF37]">.</span>
-          </Link>
-          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6">
-            How to Play.
-          </h1>
-          <p className="text-white/50 text-xl max-w-2xl leading-relaxed">
-            Master the subtle art of FreeCell with our definitive guide to rules, mechanics, and winning probability.
-          </p>
-        </div>
+      <header className="bg-[#072907] text-white pt-16 pb-24 px-6 flex flex-col items-center text-center">
+        <Link href="/" className="text-sm font-black uppercase tracking-widest mb-8 hover:text-[#D4AF37] transition-colors">
+          Freecell<span className="text-[#D4AF37]">.</span>
+        </Link>
+        <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
+          How to Play
+        </h1>
+        <p className="text-white/60 text-lg max-w-2xl">
+          Master the subtle art of FreeCell with our definitive guide to rules, mechanics, and winning strategy.
+        </p>
       </header>
+
 
       {/* ── Sticky Nav ── */}
       <nav className="border-b border-gray-100 sticky top-0 bg-white/90 backdrop-blur-md z-40">
-        <div className="max-w-4xl mx-auto px-6 py-5 flex gap-8 text-[11px] font-black uppercase tracking-[0.2em] text-gray-400 overflow-x-auto no-scrollbar">
+        <div className="max-w-4xl mx-auto px-6 py-4 flex gap-6 text-[11px] font-bold uppercase tracking-wider text-gray-500 overflow-x-auto no-scrollbar justify-center">
           <a href="#what-is-freecell" className="hover:text-[#072907] transition-colors whitespace-nowrap">Introduction</a>
           <a href="#the-board" className="hover:text-[#072907] transition-colors whitespace-nowrap">The Board</a>
           <a href="#rules" className="hover:text-[#072907] transition-colors whitespace-nowrap">Rules</a>
@@ -167,12 +166,12 @@ export default function HowToPlayPage() {
         </div>
       </nav>
 
-      {/* ── Main Content ── */}
-      <main className="max-w-4xl mx-auto px-6 py-24">
-        <article className="prose prose-xl prose-gray max-w-none">
-          <section id="what-is-freecell" className="mb-32 scroll-mt-32">
-            <h2 className="text-4xl font-black mb-8 text-[#072907] tracking-tight">What is FreeCell?</h2>
-            <div className="space-y-6 text-gray-500 leading-relaxed text-lg">
+      {/* ── Main Content (Article Card) ── */}
+      <main className="max-w-4xl mx-auto bg-white rounded-2xl shadow-sm border border-gray-100 p-8 md:p-16 relative -mt-8 mb-20 z-10">
+        <article className="max-w-none">
+          <section id="what-is-freecell" className="mb-16 scroll-mt-24">
+            <h2 className="text-2xl font-bold text-gray-900 border-b border-gray-100 pb-4 mb-6">What is FreeCell?</h2>
+            <div className="text-gray-600 text-lg leading-relaxed space-y-6">
               <p>
                 FreeCell is a solitaire card game that defines itself through perfect information. Unlike Klondike, where hidden cards introduce an element of chance, FreeCell deals the entire 52-card deck face-up.
               </p>
@@ -184,36 +183,36 @@ export default function HowToPlayPage() {
 
           <AdUnit className="my-8" />
 
-          <section id="the-board" className="mb-32 scroll-mt-32">
-            <h2 className="text-4xl font-black mb-8 text-[#072907] tracking-tight">Understanding the Board</h2>
-            <p className="text-gray-500 mb-12 text-lg">
+          <section id="the-board" className="mb-16 scroll-mt-24">
+            <h2 className="text-2xl font-bold text-gray-900 border-b border-gray-100 pb-4 mb-6">Understanding the Board</h2>
+            <p className="text-gray-600 text-lg leading-relaxed mb-8">
               The layout is designed for efficiency. Mastering the board's zones is the first step toward advanced play.
             </p>
             <BoardDiagram />
           </section>
 
-          <section id="rules" className="mb-32 scroll-mt-32">
-            <h2 className="text-4xl font-black mb-12 text-[#072907] tracking-tight">Rules of Engagement</h2>
-            <div className="space-y-16">
+          <section id="rules" className="mb-16 scroll-mt-24">
+            <h2 className="text-2xl font-bold text-gray-900 border-b border-gray-100 pb-4 mb-6">Rules of Engagement</h2>
+            <div className="space-y-12">
               <div>
-                <h3 className="text-2xl font-bold mb-4 text-gray-800">01. Alternating Sequences</h3>
-                <p className="text-gray-500 mb-8">Move cards between columns in descending rank and alternating colors. A Black 10 must be placed on a Red Jack.</p>
+                <h3 className="text-xl font-bold mb-3 text-gray-800">01. Alternating Sequences</h3>
+                <p className="text-gray-600 text-lg leading-relaxed mb-6">Move cards between columns in descending rank and alternating colors. A Black 10 must be placed on a Red Jack.</p>
                 <ColorAlternationDiagram />
               </div>
               <div>
-                <h3 className="text-2xl font-bold mb-4 text-gray-800">02. Foundation Building</h3>
-                <p className="text-gray-500">Move Aces to the foundation piles. Build each suit upward sequentially: A, 2, 3... K. Once all 52 cards are on foundations, the game is won.</p>
+                <h3 className="text-xl font-bold mb-3 text-gray-800">02. Foundation Building</h3>
+                <p className="text-gray-600 text-lg leading-relaxed">Move Aces to the foundation piles. Build each suit upward sequentially: A, 2, 3... K. Once all 52 cards are on foundations, the game is won.</p>
               </div>
               <div>
-                <h3 className="text-2xl font-bold mb-4 text-gray-800">03. Space Management</h3>
-                <p className="text-gray-500">The four Free Cells serve as temporary holding zones. Every occupied cell reduces your mobility. Keep them clear to enable complex maneuvers.</p>
+                <h3 className="text-xl font-bold mb-3 text-gray-800">03. Space Management</h3>
+                <p className="text-gray-600 text-lg leading-relaxed">The four Free Cells serve as temporary holding zones. Every occupied cell reduces your mobility. Keep them clear to enable complex maneuvers.</p>
               </div>
             </div>
           </section>
 
-          <section id="supermoves" className="mb-32 scroll-mt-32">
-            <h2 className="text-4xl font-black mb-8 text-[#072907] tracking-tight">The Supermove</h2>
-            <p className="text-gray-500 mb-12 text-lg leading-relaxed">
+          <section id="supermoves" className="mb-8 scroll-mt-24">
+            <h2 className="text-2xl font-bold text-gray-900 border-b border-gray-100 pb-4 mb-6">The Supermove</h2>
+            <p className="text-gray-600 text-lg leading-relaxed mb-8">
               Modern FreeCell engines allow you to move entire sequences at once. This isn't a shortcut—it's a calculation of your available empty spaces.
             </p>
             <SupermoveFormula />
@@ -222,19 +221,19 @@ export default function HowToPlayPage() {
       </main>
 
       {/* ── Footer ── */}
-      <footer className="bg-gray-50 border-t border-gray-100 py-24 px-6 text-center">
+      <footer className="bg-gray-50 border-t border-gray-100 py-12 px-6 text-center">
         <div className="max-w-4xl mx-auto">
-          <Link href="/" className="text-2xl font-black uppercase tracking-tighter mb-12 inline-block">
+          <Link href="/" className="text-lg font-black uppercase tracking-widest mb-8 inline-block">
             Freecell<span className="text-[#D4AF37]">.</span>
           </Link>
-          <div className="flex flex-wrap justify-center gap-x-12 gap-y-6 text-[10px] font-black text-gray-400 uppercase tracking-[0.3em] mb-16">
+          <div className="flex flex-wrap justify-center gap-x-8 gap-y-4 text-xs font-bold text-gray-500 uppercase tracking-wider mb-8">
             <Link href="/strategy" className="hover:text-black transition-colors">Strategy</Link>
             <Link href="/rules" className="hover:text-black transition-colors">Rules</Link>
             <Link href="/faq" className="hover:text-black transition-colors">FAQ</Link>
             <Link href="/about" className="hover:text-black transition-colors">About</Link>
             <Link href="/privacy" className="hover:text-black transition-colors">Privacy</Link>
           </div>
-          <p className="text-gray-300 text-[10px] uppercase tracking-[0.2em]">
+          <p className="text-gray-400 text-xs">
             © 2026 PlayFreeCellOnline.com
           </p>
         </div>

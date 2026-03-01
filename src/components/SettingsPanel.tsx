@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Settings, Volume2, Sparkles, Wand2, Monitor, HandPointer, MousePointer2 } from 'lucide-react';
+import { X, Settings, Volume2, Sparkles, Wand2, Monitor, Hand, MousePointer2 } from 'lucide-react';
 import { GameSettings } from '../lib/storage';
 import ThemeSelector from './ThemeSelector';
 
@@ -11,6 +11,7 @@ interface SettingsPanelProps {
     onClose: () => void;
     settings: GameSettings;
     onUpdateSettings: (settings: GameSettings) => void;
+    onShowTutorial?: () => void;
 }
 
 export default function SettingsPanel({ isOpen, onClose, settings, onUpdateSettings }: SettingsPanelProps) {

@@ -44,10 +44,14 @@ export const SUIT_SYMBOLS: Record<Suit, string> = {
 export class Card {
   readonly suit: Suit;
   readonly rank: Rank;
+  readonly deckId: number; // For multi-deck games like Spider
+  public isFaceUp: boolean; // For games with hidden cards like Klondike
 
-  constructor(suit: Suit, rank: Rank) {
+  constructor(suit: Suit, rank: Rank, deckId: number = 0, isFaceUp: boolean = true) {
     this.suit = suit;
     this.rank = rank;
+    this.deckId = deckId;
+    this.isFaceUp = isFaceUp;
   }
 
   get color(): Color {
@@ -57,7 +61,7 @@ export class Card {
   }
 
   get id(): string {
-    return `${RANK_NAMES[this.rank]}${this.suit}`;
+    return `${RANK_NAMES[this.rank]}${this.suit}-${this.deckId}`;
   }
 
   get displayName(): string {

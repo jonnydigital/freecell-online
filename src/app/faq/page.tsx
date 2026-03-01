@@ -61,56 +61,56 @@ export default function FAQPage() {
   return (
     <div className="min-h-screen bg-white text-gray-900 selection:bg-[#D4AF37] selection:text-white scroll-smooth">
       {/* ── Header ── */}
-      <header className="bg-[#072907] text-white py-20 px-6">
-        <div className="max-w-4xl mx-auto flex flex-col items-center text-center">
-          <Link href="/" className="text-xl font-black uppercase tracking-tighter mb-12 hover:opacity-80 transition-opacity">
-            Freecell<span className="text-[#D4AF37]">.</span>
-          </Link>
-          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6">
-            FAQ.
-          </h1>
-          <p className="text-white/50 text-xl max-w-2xl leading-relaxed">
-            Everything you need to know about the mechanics, rules, and history of FreeCell.
-          </p>
-        </div>
+      <header className="bg-[#072907] text-white pt-16 pb-24 px-6 flex flex-col items-center text-center">
+        <Link href="/" className="text-sm font-black uppercase tracking-widest mb-8 hover:text-[#D4AF37] transition-colors">
+          Freecell<span className="text-[#D4AF37]">.</span>
+        </Link>
+        <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
+          FAQ
+        </h1>
+        <p className="text-white/60 text-lg max-w-2xl">
+          Everything you need to know about the mechanics, rules, and history of FreeCell.
+        </p>
       </header>
 
-      {/* ── Main Content ── */}
-      <main className="max-w-3xl mx-auto px-6 py-24">
-        {faqCategories.map((category) => (
-          <section key={category.title} className="mb-24 last:mb-0">
-            <h2 className="text-sm font-black uppercase tracking-[0.3em] text-[#D4AF37] mb-8">
-              {category.title}
-            </h2>
-            <div className="divide-y divide-gray-100 border-t border-gray-100">
-              {category.items.map((faq, i) => (
-                <div key={i} className="py-8">
-                  <h3 className="text-xl font-bold text-[#072907] mb-4">
-                    {faq.question}
-                  </h3>
-                  <p className="text-gray-500 text-lg leading-relaxed">
-                    {faq.answer}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </section>
-        ))}
+      {/* ── Main Content (Article Card) ── */}
+      <main className="max-w-4xl mx-auto bg-white rounded-2xl shadow-sm border border-gray-100 p-8 md:p-16 relative -mt-8 mb-20 z-10">
+        <article className="max-w-none">
+          {faqCategories.map((category) => (
+            <section key={category.title} className="mb-16 last:mb-0">
+              <h2 className="text-2xl font-bold text-gray-900 border-b border-gray-100 pb-4 mb-6">
+                {category.title}
+              </h2>
+              <div className="divide-y divide-gray-100">
+                {category.items.map((faq, i) => (
+                  <div key={i} className="py-8 first:pt-4">
+                    <h3 className="text-xl font-bold text-gray-800 mb-3">
+                      {faq.question}
+                    </h3>
+                    <p className="text-gray-600 text-lg leading-relaxed">
+                      {faq.answer}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </section>
+          ))}
+        </article>
       </main>
 
       {/* ── Footer ── */}
-      <footer className="bg-gray-50 border-t border-gray-100 py-24 px-6 text-center">
+      <footer className="bg-gray-50 border-t border-gray-100 py-12 px-6 text-center">
         <div className="max-w-4xl mx-auto">
-          <Link href="/" className="text-2xl font-black uppercase tracking-tighter mb-12 inline-block">
+          <Link href="/" className="text-lg font-black uppercase tracking-widest mb-8 inline-block">
             Freecell<span className="text-[#D4AF37]">.</span>
           </Link>
-          <div className="flex flex-wrap justify-center gap-x-12 gap-y-6 text-[10px] font-black text-gray-400 uppercase tracking-[0.3em] mb-16">
+          <div className="flex flex-wrap justify-center gap-x-8 gap-y-4 text-xs font-bold text-gray-500 uppercase tracking-wider mb-8">
             <Link href="/how-to-play" className="hover:text-black transition-colors">How to Play</Link>
             <Link href="/strategy" className="hover:text-black transition-colors">Strategy</Link>
             <Link href="/about" className="hover:text-black transition-colors">About</Link>
             <Link href="/privacy" className="hover:text-black transition-colors">Privacy</Link>
           </div>
-          <p className="text-gray-300 text-[10px] uppercase tracking-[0.2em]">
+          <p className="text-gray-400 text-xs">
             © 2026 PlayFreeCellOnline.com
           </p>
         </div>

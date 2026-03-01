@@ -52,6 +52,7 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" href="/icons/favicon.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3083538874906149" crossOrigin="anonymous"></script>
       </head>
       <body className={`${inter.variable} ${playfair.variable} ${inter.className}`}>
         <ThemeInitializer />

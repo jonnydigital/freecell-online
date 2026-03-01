@@ -1,7 +1,7 @@
 # Strategic Plan: Card Game Network
 ## From FreeCell Site → Revenue-Generating Game Network
 
-**North Star:** online-solitaire.com / playonlinesolitaire.com / worldofcardgames.com
+**North Star:** online-solitaire.com / playsolitaireonline.com / worldofcardgames.com
 **Goal:** Build a network of card game properties generating $3,000-10,000/month in passive ad revenue
 **Timeline:** 6 months (March–September 2026)
 **Owner:** Fred (AI) + Jonathan (human oversight + business decisions)

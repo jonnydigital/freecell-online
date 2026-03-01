@@ -9,6 +9,8 @@
  */
 
 import { Card, Suit, Rank } from './Card';
+import { SpiderDifficulty } from './SpiderEngine';
+
 
 const SUITS_MS_ORDER: Suit[] = [Suit.Clubs, Suit.Diamonds, Suit.Hearts, Suit.Spades];
 
@@ -34,11 +36,18 @@ class MSLCG {
  * Create a standard 52-card deck in MS FreeCell order
  * Cards are ordered: AC, AD, AH, AS, 2C, 2D, 2H, 2S, ..., KC, KD, KH, KS
  */
-function createOrderedDeck(): Card[] {
+/**
+ * Create a standard 52-card deck in MS FreeCell order, optionally repeated for multi-deck games.
+ * Cards are ordered: AC, AD, AH, AS, 2C, 2D, 2H, 2S, ..., KC, KD, KH, KS
+ */
+function createOrderedDeck(numDecks: number = 1): Card[] {
   const deck: Card[] = [];
-  for (let rank = 1; rank <= 13; rank++) {
-    for (const suit of SUITS_MS_ORDER) {
-      deck.push(new Card(suit, rank as Rank));
+  for (let d = 0; d < numDecks; d++) {
+    for (let rank = 1; rank <= 13; rank++) {
+      for (const suit of SUITS_MS_ORDER) {
+        // deckId is d, all cards face up by default
+        deck.push(new Card(suit, rank as Rank, d, true));
+      }
     }
   }
   return deck;
@@ -100,4 +109,67 @@ export function verifyDeal(cascades: Card[][]): boolean {
     }
   }
   return seen.size === 52;
+}
+
+/**
+ * Create a Spider Solitaire deck (104 cards) based on difficulty
+ */
+function createSpiderDeck(difficulty: SpiderDifficulty): Card[] {
+  const deck: Card[] = [];
+
+  // Spider uses 104 cards (8 sequences of 13)
+  for (let i = 0; i < 8; i++) {
+    for (let rank = 1; rank <= 13; rank++) {
+      let suit: Suit;
+      if (difficulty === '1-suit') {
+        suit = Suit.Spades;
+      } else if (difficulty === '2-suit') {
+        suit = i % 2 === 0 ? Suit.Spades : Suit.Hearts;
+      } else {
+        suit = SUITS_MS_ORDER[i % 4];
+      }
+      deck.push(new Card(suit, rank as Rank, Math.floor(i / 4), false)); // Initially face down
+    }
+  }
+  return deck;
+}
+
+/**
+ * Deal a Spider Solitaire game
+ */
+export function dealSpiderGame(gameNumber: number, difficulty: SpiderDifficulty) {
+  const deck = createSpiderDeck(difficulty);
+  const rng = new MSLCG(gameNumber);
+
+  // Shuffle using same algorithm
+  const dealt: Card[] = [];
+  let remaining = deck.length;
+  for (let i = 0; i < 104; i++) {
+    const j = rng.next() % remaining;
+    [deck[j], deck[remaining - 1]] = [deck[remaining - 1], deck[j]];
+    dealt.push(deck[remaining - 1]);
+    remaining--;
+  }
+
+  // Deal 54 cards to 10 cascades
+  // First 4 cascades get 6 cards, next 6 get 5
+  const cascades: Card[][] = Array.from({ length: 10 }, () => []);
+  let cardIndex = 0;
+
+  for (let col = 0; col < 10; col++) {
+    const numCards = col < 4 ? 6 : 5;
+    for (let c = 0; c < numCards; c++) {
+      const card = dealt[cardIndex++];
+      // Only the top card is face up
+      if (c === numCards - 1) {
+        card.isFaceUp = true;
+      }
+      cascades[col].push(card);
+    }
+  }
+
+  // Remaining 50 cards go to stock
+  const stock = dealt.slice(cardIndex);
+
+  return { cascades, stock };
 }

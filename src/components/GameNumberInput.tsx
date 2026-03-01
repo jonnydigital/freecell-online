@@ -32,9 +32,9 @@ export default function GameNumberInput({ isOpen, onClose, onPlay }: Props) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4" onClick={onClose}>
+    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4" onClick={onClose}>
       <div
-        className="bg-[#0d2b0d] border border-[#1a5c1a]/50 rounded-xl max-w-xs w-full p-5 text-white"
+        className="bg-[#0d2b0d] border border-white/10 rounded-2xl shadow-2xl max-w-sm w-full p-5 text-white"
         onClick={(e) => e.stopPropagation()}
       >
         <h2 className="text-lg font-bold mb-3">Play Specific Game</h2>

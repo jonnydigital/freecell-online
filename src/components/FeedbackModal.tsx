@@ -63,10 +63,10 @@ export default function FeedbackModal({ isOpen, onClose, gameNumber, moveCount }
 
   return (
     <div
-      className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4"
+      className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4"
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
-      <div className="bg-[#0e2e0e] border border-[#1a5c1a]/50 rounded-lg w-full max-w-md p-6">
+      <div className="bg-[#0e2e0e] border border-white/10 rounded-2xl shadow-2xl w-full max-w-md p-6">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-semibold text-white">Send Feedback</h2>
           <button

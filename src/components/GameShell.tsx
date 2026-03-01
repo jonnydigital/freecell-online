@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useRef, useState, useCallback } from 'react';
-import Link from 'next/link';
 import { gameBridge } from '../game/GameBridge';
 import { GameStats, createEmptyStats, recordWin, recordLoss } from '../lib/stats';
 import { loadStats, saveStats } from '../lib/storage';
@@ -11,8 +10,7 @@ import { initErrorTracking, setGameContext } from '../lib/errorTracking';
 import { checkWinAchievements, recordThemeUsed } from '../lib/achievementTracker';
 import type { Achievement } from '../lib/achievements';
 import { getTodaysSeed, getTodayStr, recordDailyCompletion, isTodayCompleted } from '../lib/dailyChallenge';
-import { RotateCcw, RotateCw, Lightbulb, BarChart3, MessageSquare, Shuffle, Calendar, Volume2, VolumeX, Home, Share2, AlertTriangle, ChevronLeft, Trophy, Settings as SettingsIcon, Flame, Zap, Palette } from 'lucide-react';
-import ThemeSelector from './ThemeSelector';
+import { RotateCcw, RotateCw, Lightbulb, Calendar, Home, Share2, AlertTriangle, ChevronLeft, Flame, Volume2, VolumeX } from 'lucide-react';
 import StatsPanel from './StatsPanel';
 import FeedbackModal from './FeedbackModal';
 import DailyChallengePanel from './DailyChallengePanel';
@@ -28,6 +26,7 @@ import KeyboardShortcuts from './KeyboardShortcuts';
 import StreakMilestone, { isMilestone } from './StreakMilestone';
 import Leaderboard from './Leaderboard';
 import SettingsPanel from './SettingsPanel';
+import AdUnit from './AdUnit';
 import Tutorial from './Tutorial';
 import type { HighlightRect } from './Tutorial';
 import { soundManager } from '../lib/sounds';
@@ -37,7 +36,7 @@ import { getPlayerId } from '../lib/playerIdentity';
 
 interface GameShellProps {
   initialGameNumber?: number;
-  variant?: 'freecell' | 'bakers-game';
+  variant?: 'freecell' | 'bakers-game' | 'spider';
 }
 
 export default function GameShell({ initialGameNumber, variant = 'freecell' }: GameShellProps = {}) {
@@ -175,12 +174,10 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
   );
 
   useEffect(() => {
-    if (mountedRef.current) return;
-    mountedRef.current = true;
+    let isCancelled = false;
 
     // Parse URL ?game= parameter for shared links
     let initialGame: number | null = null;
-    let initialGameUsed = false;
     const params = new URLSearchParams(window.location.search);
     const gameParam = params.get('game');
     if (gameParam) {
@@ -197,15 +194,21 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
       if (initialGameNumber) {
         gameBridge.initialGameNumber = initialGameNumber;
       }
+      if (initialGame) {
+        gameBridge.initialGameNumber = initialGame;
+      }
       gameBridge.variant = variant;
 
       // Wait for container to have dimensions (mobile can be slow to layout)
       const container = containerRef.current;
       let attempts = 0;
       while ((container.clientWidth === 0 || container.clientHeight === 0) && attempts < 50) {
+        if (isCancelled) return;
         await new Promise(r => setTimeout(r, 100));
         attempts++;
       }
+
+      if (isCancelled) return;
 
       if (container.clientWidth === 0 || container.clientHeight === 0) {
         container.style.width = '100vw';
@@ -213,14 +216,47 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
         await new Promise(r => setTimeout(r, 200));
       }
 
+      if (isCancelled) return;
+
       const Phaser = await import('phaser');
       const { createPhaserConfig } = await import('../game/PhaserConfig');
 
-      const config = createPhaserConfig(container);
-      gameRef.current = new Phaser.Game(config);
+      if (isCancelled) return;
+
+      // Scrub any orphaned canvas elements that might have survived a Next.js Fast Refresh
+      if (container) {
+        container.innerHTML = '';
+      }
+
+      const config = createPhaserConfig(container, variant);
+      if (!gameRef.current) {
+        gameRef.current = new Phaser.Game(config);
+      }
     };
 
     initPhaser();
+
+    return () => {
+      isCancelled = true;
+      if (gameRef.current) {
+        gameRef.current.destroy(true);
+        gameRef.current = null;
+      }
+    };
+  }, [variant, initialGameNumber]);
+
+  useEffect(() => {
+    // We handle initialGame override again for the event listener here
+    let initialGame: number | null = null;
+    let initialGameUsed = false;
+    const params = new URLSearchParams(window.location.search);
+    const gameParam = params.get('game');
+    if (gameParam) {
+      const num = parseInt(gameParam, 10);
+      if (!isNaN(num) && num >= 1 && num <= 9999999) {
+        initialGame = num;
+      }
+    }
 
     const unsubReady = gameBridge.on('gameReady', (data: unknown) => {
       const d = data as { gameNumber: number };
@@ -276,11 +312,6 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
       unsubWin();
       unsubDeadlock();
       unsubAutoComplete();
-      if (gameRef.current) {
-        gameRef.current.destroy(true);
-        gameRef.current = null;
-      }
-      mountedRef.current = false;
     };
   }, [handleWin]);
 
@@ -453,18 +484,11 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
 
   return (
     <div className="flex w-full h-dvh transition-colors duration-500" style={{ backgroundColor: 'var(--theme-base)' }}>
-      {/* Structural Wrapper for the Game Area + Ad Sidebars */}
-      <div className="flex w-full h-full max-w-[1400px] mx-auto relative overflow-hidden">
+      {/* Structural Wrapper: Game + Right Ad Sidebar */}
+      <div className="flex w-full h-full max-w-[1320px] mx-auto relative overflow-hidden">
 
-        {/* Left Ad Gutter (Hidden on mobile/tablet) */}
-        <div className="hidden lg:flex flex-col flex-1 items-center py-4 px-2 border-r border-white/10 bg-black/10">
-          <div className="w-[160px] h-[600px] border-2 border-dashed border-white/20 rounded-lg flex items-center justify-center bg-black/20 text-white/30 text-sm font-semibold tracking-widest uppercase">
-            Advertisement
-          </div>
-        </div>
-
-        {/* Center Game Container (1000px max) */}
-        <div className="flex flex-col w-full max-w-[1000px] h-full shadow-[0_0_50px_rgba(0,0,0,0.5)] relative z-10 shrink-0 transition-colors duration-500" style={{ backgroundColor: 'var(--theme-mid)' }}>
+        {/* Game Container (flex-1, max ~900px on desktop) */}
+        <div className="flex flex-col flex-1 max-w-[900px] h-full shadow-[0_0_50px_rgba(0,0,0,0.5)] relative z-10 transition-colors duration-500" style={{ backgroundColor: 'var(--theme-mid)' }}>
 
           {/* ── Desktop Top Bar (Clean & Professional) ── */}
           <div className="hidden md:flex items-center justify-between px-6 py-3 bg-[#072907] border-b border-white/10 z-20 sticky top-0">
@@ -479,25 +503,12 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
                 </h1>
               </button>
 
-              {/* Direct Navigation Links */}
+              {/* Daily Challenge Link */}
               <nav className="flex items-center gap-5 text-sm font-medium text-white/60">
-                <a href="/how-to-play" className="hover:text-white transition-colors">How to Play</a>
-                <a href="/strategy" className="hover:text-white transition-colors">Strategy</a>
                 <button onClick={() => setShowDaily(true)} className="flex items-center gap-1.5 text-yellow-500/80 hover:text-yellow-400 transition-colors">
                   <Calendar size={14} />
                   Daily Challenge
                 </button>
-                <a href="/streak" className="flex items-center gap-1.5 text-orange-400/80 hover:text-orange-300 transition-colors">
-                  <Flame size={14} />
-                  Puzzle Streak
-                </a>
-                <a href="/storm" className="flex items-center gap-1.5 text-cyan-400/80 hover:text-cyan-300 transition-colors">
-                  <Zap size={14} />
-                  Puzzle Storm
-                </a>
-                <a href="/bakers-game" className="text-purple-400/80 hover:text-purple-300 transition-colors">
-                  Baker&apos;s Game
-                </a>
               </nav>
             </div>
 
@@ -548,17 +559,11 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
                 <button onClick={handleHint} className={iconBtnClass} title="Hint (H)">
                   <Lightbulb size={18} />
                 </button>
-                <button onClick={() => setShowLeaderboard(true)} className={iconBtnClass} title="Leaderboard">
-                  <Trophy size={18} />
-                </button>
-                <button onClick={() => setShowSettings(true)} className={iconBtnClass} title="Settings">
-                  <SettingsIcon size={18} />
-                </button>
-                <button onClick={() => setShowStats(true)} className={iconBtnClass} title="Statistics">
-                  <BarChart3 size={18} />
-                </button>
                 <button onClick={handleToggleMute} className={iconBtnClass} title={isMuted ? "Unmute" : "Mute"}>
                   {isMuted ? <VolumeX size={18} /> : <Volume2 size={18} />}
+                </button>
+                <button onClick={() => setShowHome(true)} className={iconBtnClass} title="Menu">
+                  <Home size={18} />
                 </button>
               </div>
             </div>
@@ -778,6 +783,7 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
             onFeedback={() => { setShowFeedback(true); setShowHome(false); }}
             onShowShortcuts={() => { setShowShortcuts(true); setShowHome(false); }}
             onAchievements={() => { setShowAchievements(true); setShowHome(false); }}
+            onLeaderboard={() => { setShowLeaderboard(true); setShowHome(false); }}
           />
 
           {/* Stats Modal */}
@@ -844,64 +850,19 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
             onStepChange={handleTutorialStepChange}
           />
 
-          {/* New Professional Footer Section */}
-          <div className="w-full bg-[#072907] border-t border-white/10 py-8 px-6 mt-auto">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-              <div>
-                <h4 className="text-[#D4AF37] text-xs font-bold uppercase tracking-widest mb-4">Gameplay</h4>
-                <ul className="space-y-2 text-sm text-white/50">
-                  <li><Link href="/how-to-play" className="hover:text-white transition-colors">How to Play</Link></li>
-                  <li><Link href="/strategy" className="hover:text-white transition-colors">Winning Strategy</Link></li>
-                  <li><Link href="/rules" className="hover:text-white transition-colors">Game Rules</Link></li>
-                  <li><Link href="/tips" className="hover:text-white transition-colors">Tips & Tricks</Link></li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="text-[#D4AF37] text-xs font-bold uppercase tracking-widest mb-4">Reference</h4>
-                <ul className="space-y-2 text-sm text-white/50">
-                  <li><Link href="/faq" className="hover:text-white transition-colors">FAQ</Link></li>
-                  <li><Link href="/glossary" className="hover:text-white transition-colors">Glossary</Link></li>
-                  <li><Link href="/history" className="hover:text-white transition-colors">Game History</Link></li>
-                  <li><Link href="/solitaire-types" className="hover:text-white transition-colors">Solitaire Types</Link></li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="text-[#D4AF37] text-xs font-bold uppercase tracking-widest mb-4">Special</h4>
-                <ul className="space-y-2 text-sm text-white/50">
-                  <li><Link href="/winning-deals" className="hover:text-white transition-colors">Winning Deals</Link></li>
-                  <li><button onClick={() => setShowDaily(true)} className="hover:text-white transition-colors">Daily Challenge</button></li>
-                  <li><Link href="/streak" className="hover:text-white transition-colors">Puzzle Streak</Link></li>
-                  <li><Link href="/storm" className="hover:text-white transition-colors">Puzzle Storm</Link></li>
-                  <li><Link href="/bakers-game" className="hover:text-white transition-colors">Baker&apos;s Game</Link></li>
-                  <li><button onClick={() => setShowLeaderboard(true)} className="hover:text-white transition-colors">World Rankings</button></li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="text-[#D4AF37] text-xs font-bold uppercase tracking-widest mb-4">PlayFreeCellOnline</h4>
-                <p className="text-[10px] text-white/30 leading-relaxed mb-4">
-                  The ultimate destination for FreeCell Solitaire. Built for enthusiasts who appreciate skill-based play and clean design.
-                </p>
-                <ul className="space-y-2 text-[11px] text-white/40 flex gap-4">
-                  <li><Link href="/terms" className="hover:text-white">Terms</Link></li>
-                  <li><Link href="/privacy" className="hover:text-white">Privacy</Link></li>
-                  <li><Link href="/about" className="hover:text-white">About</Link></li>
-                </ul>
-              </div>
-            </div>
-            <div className="mt-8 pt-6 border-t border-white/5 text-center">
-              <p className="text-[10px] text-white/20 uppercase tracking-[0.2em]">
-                © 2026 PlayFreeCellOnline.com • All Rights Reserved
-              </p>
-            </div>
-          </div>
         </div> {/* End Center Game Container */}
 
-        {/* Right Ad Gutter (Hidden on mobile/tablet) */}
-        <div className="hidden lg:flex flex-col flex-1 items-center py-4 px-2 border-l border-white/10 bg-black/10">
-          <div className="w-[160px] h-[600px] border-2 border-dashed border-white/20 rounded-lg flex items-center justify-center bg-black/20 text-white/30 text-sm font-semibold tracking-widest uppercase">
-            Advertisement
+        {/* Right Ad Sidebar (desktop only, after 2+ games played) */}
+        {stats.gamesPlayed >= 2 && (
+          <div className="hidden lg:flex flex-col w-[300px] shrink-0 items-center gap-4 py-4 px-2 border-l border-white/10 bg-black/10">
+            <div className="w-[300px] h-[250px]">
+              <AdUnit slot="" width={300} height={250} format="rectangle" />
+            </div>
+            <div className="w-[300px] h-[600px]">
+              <AdUnit slot="" width={300} height={600} format="vertical" />
+            </div>
           </div>
-        </div>
+        )}
 
       </div>
     </div>

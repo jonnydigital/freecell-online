@@ -3,14 +3,18 @@
  */
 import * as Phaser from 'phaser';
 import { FreeCellScene } from './FreeCellScene';
+import { SpiderScene } from './SpiderScene';
 import { getThemeById, themes } from '../lib/themes';
 
 export function createPhaserConfig(
-  parent: HTMLElement
+  parent: HTMLElement,
+  variant: 'freecell' | 'bakers-game' | 'spider' = 'freecell'
 ): Phaser.Types.Core.GameConfig {
   // Read stored theme for initial background color (avoids flash of wrong color)
   const storedId = typeof window !== 'undefined' ? localStorage.getItem('theme-id') : null;
   const theme = storedId ? getThemeById(storedId) : themes[0];
+
+  const initialScene = variant === 'spider' ? SpiderScene : FreeCellScene;
 
   return {
     type: Phaser.AUTO, // WebGL with Canvas fallback
@@ -23,7 +27,7 @@ export function createPhaserConfig(
       autoCenter: Phaser.Scale.NO_CENTER,
       expandParent: false,
     },
-    scene: [FreeCellScene],
+    scene: [initialScene],
     render: {
       antialias: true,
       pixelArt: false,

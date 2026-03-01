@@ -1,15 +1,11 @@
 'use client';
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, HelpCircle, Swords, MessageSquare, VolumeX, Volume2, Trophy, Target, Clock, Flame, Zap, BarChart3, Layers } from 'lucide-react';
-import { getTodaysSeed, getTodayStr, loadDailyData, getCurrentStreak, isTodayCompleted } from '../lib/dailyChallenge';
+import { X, HelpCircle, Swords, MessageSquare, VolumeX, Volume2, Trophy, Flame, Zap, Layers, Shuffle } from 'lucide-react';
+import { getTodaysSeed, getTodayStr, loadDailyData, getCurrentStreak } from '../lib/dailyChallenge';
 import { loadStats } from '../lib/storage';
-import { getAverageMoves, getAverageTime } from '../lib/stats';
-import { loadStreakData } from '../lib/streakStorage';
-import { loadStormData } from '../lib/stormStorage';
-import ThemeSelector from './ThemeSelector';
-import CalendarHeatmap from './CalendarHeatmap';
+import { getAverageTime } from '../lib/stats';
 
 interface HomeOverlayProps {
   isOpen: boolean;
@@ -21,6 +17,7 @@ interface HomeOverlayProps {
   onFeedback: () => void;
   onShowShortcuts: () => void;
   onAchievements?: () => void;
+  onLeaderboard?: () => void;
 }
 
 export default function HomeOverlay({
@@ -32,7 +29,7 @@ export default function HomeOverlay({
   onToggleMute,
   onFeedback,
   onShowShortcuts,
-  onAchievements,
+  onLeaderboard,
 }: HomeOverlayProps) {
   const todaySeed = getTodaysSeed();
   const todayStr = getTodayStr();
@@ -40,8 +37,6 @@ export default function HomeOverlay({
   const dailyData = useMemo(() => (isOpen ? loadDailyData() : null), [isOpen]);
   const stats = useMemo(() => (isOpen ? loadStats() : null), [isOpen]);
   const streak = useMemo(() => (isOpen ? getCurrentStreak() : 0), [isOpen]);
-  const puzzleStreakBest = useMemo(() => (isOpen ? loadStreakData().bestStreak : 0), [isOpen]);
-  const puzzleStormBest = useMemo(() => (isOpen ? loadStormData().bestScore : 0), [isOpen]);
 
   const todayCompleted = dailyData ? !!dailyData.completedDays[todayStr] : false;
   const todayResult = dailyData?.completedDays[todayStr];
@@ -50,7 +45,6 @@ export default function HomeOverlay({
     ? ((stats.gamesWon / stats.gamesPlayed) * 100).toFixed(0)
     : '0';
 
-  const avgMoves = stats ? getAverageMoves(stats) : 0;
   const avgTime = stats ? getAverageTime(stats) : 0;
 
   const formatTime = (seconds: number | null) => {
@@ -81,15 +75,13 @@ export default function HomeOverlay({
             aria-hidden="true"
           />
 
-          {/* Shimmer styles defined in globals.css */}
-
           {/* Overlay Panel */}
           <motion.div
             initial={{ y: '100%' }}
             animate={{ y: 0 }}
             exit={{ y: '100%' }}
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-            className="fixed bottom-0 left-0 right-0 h-[92vh] max-h-[800px] text-white rounded-t-2xl shadow-2xl z-50 flex flex-col"
+            className="fixed bottom-0 left-0 right-0 max-h-[92vh] text-white rounded-t-2xl shadow-2xl z-50 flex flex-col"
             style={{
               background: 'var(--felt-color)',
               backgroundImage: 'radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.08), transparent 70%)',
@@ -118,201 +110,136 @@ export default function HomeOverlay({
             </header>
 
             {/* Scrollable Content */}
-            <div className="overflow-y-auto flex-1 px-4 pb-6">
-              <div className="max-w-md mx-auto space-y-4">
+            <div className="overflow-y-auto flex-1 px-5 pb-8">
+              <div className="max-w-lg mx-auto space-y-5">
 
-                {/* Daily Challenge CTA */}
+                {/* 1. Daily Challenge CTA */}
                 {todayCompleted ? (
-                  <div className="text-center bg-black/20 border border-[#c9a84c]/40 rounded-xl p-4">
-                    <div className="text-sm text-white/50 mb-1">Today&apos;s Challenge</div>
-                    <div className="text-[#D4AF37] font-bold text-lg mb-1">✓ Completed</div>
-                    <div className="flex justify-center items-center gap-4 text-white/70 text-sm">
+                  <div className="text-center bg-black/20 border border-[#c9a84c]/40 rounded-xl p-5">
+                    <div className="text-base text-white/50 mb-1">Today&apos;s Challenge</div>
+                    <div className="text-[#D4AF37] font-bold text-xl mb-2">Completed</div>
+                    <div className="flex justify-center items-center gap-4 text-white/70 text-base">
                       <span>{todayResult?.moves} moves</span>
-                      <span>·</span>
+                      <span>&middot;</span>
                       <span>{formatTime(todayResult?.time || 0)}</span>
                     </div>
+                    {onLeaderboard && (
+                      <button
+                        onClick={() => { onLeaderboard(); onClose(); }}
+                        className="mt-3 text-sm text-[#D4AF37]/70 hover:text-[#D4AF37] transition-colors flex items-center justify-center gap-1.5"
+                      >
+                        <Trophy size={14} />
+                        View Rankings
+                      </button>
+                    )}
                   </div>
                 ) : (
-                  <button
-                    onClick={() => { onPlayDaily(todaySeed); onClose(); }}
-                    className="w-full text-lg font-bold py-4 px-6 rounded-xl text-[#0a3d0a] shimmer-button transition-transform active:scale-[0.97]"
-                  >
-                    Play Today&apos;s Challenge
-                  </button>
+                  <div>
+                    <button
+                      onClick={() => { onPlayDaily(todaySeed); onClose(); }}
+                      className="w-full text-xl font-bold py-5 px-6 rounded-xl text-[#0a3d0a] shimmer-button transition-transform active:scale-[0.97]"
+                    >
+                      Play Today&apos;s Challenge
+                    </button>
+                    {onLeaderboard && (
+                      <button
+                        onClick={() => { onLeaderboard(); onClose(); }}
+                        className="w-full mt-2 text-sm text-[#D4AF37]/70 hover:text-[#D4AF37] transition-colors flex items-center justify-center gap-1.5 py-1"
+                      >
+                        <Trophy size={14} />
+                        View Rankings
+                      </button>
+                    )}
+                  </div>
                 )}
 
-                {/* Streaks & Heatmap */}
-                <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4">
-                  <div className="grid grid-cols-2 gap-3 mb-4">
-                    <div className="bg-black/20 border border-white/5 rounded-xl p-3 text-center">
-                      <div className="text-3xl font-bold text-white">
-                        {streak > 0 ? `${streak}` : '0'}
-                        {streak > 0 && <span className="ml-1">🔥</span>}
-                      </div>
-                      <div className="text-xs text-white/50 mt-1">Current Daily Streak</div>
-                    </div>
-                    <div className="bg-black/20 border border-white/5 rounded-xl p-3 text-center">
-                      <div className="text-3xl font-bold text-white">
-                        {dailyData?.longestStreak ?? 0}
-                      </div>
-                      <div className="text-xs text-white/50 mt-1">Longest Daily Streak</div>
-                    </div>
-                  </div>
-                  {dailyData && <CalendarHeatmap completedDays={dailyData.completedDays} />}
+                {/* 2. Game Modes — 2x2 grid */}
+                <div className="grid grid-cols-2 gap-3">
+                  <button
+                    onClick={() => { onNewGame(); onClose(); }}
+                    className="flex items-center gap-3 py-4 px-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 active:scale-[0.97] transition-all"
+                  >
+                    <Shuffle size={22} className="text-[#D4AF37] shrink-0" />
+                    <span className="text-base font-semibold text-white/80">New Game</span>
+                  </button>
+                  <a
+                    href="/streak"
+                    className="flex items-center gap-3 py-4 px-4 rounded-xl bg-white/5 border border-orange-500/20 hover:bg-orange-500/10 active:scale-[0.97] transition-all"
+                  >
+                    <Flame size={22} className="text-orange-400 shrink-0" />
+                    <span className="text-base font-semibold text-orange-300">Streak</span>
+                  </a>
+                  <a
+                    href="/storm"
+                    className="flex items-center gap-3 py-4 px-4 rounded-xl bg-white/5 border border-cyan-500/20 hover:bg-cyan-500/10 active:scale-[0.97] transition-all"
+                  >
+                    <Zap size={22} className="text-cyan-400 shrink-0" />
+                    <span className="text-base font-semibold text-cyan-300">Storm</span>
+                  </a>
+                  <a
+                    href="/bakers-game"
+                    className="flex items-center gap-3 py-4 px-4 rounded-xl bg-white/5 border border-purple-500/20 hover:bg-purple-500/10 active:scale-[0.97] transition-all"
+                  >
+                    <Layers size={22} className="text-purple-400 shrink-0" />
+                    <span className="text-base font-semibold text-purple-300">Baker&apos;s</span>
+                  </a>
                 </div>
 
-
-                {/* New Game */}
-                <button
-                  onClick={() => { onNewGame(); onClose(); }}
-                  className="w-full text-base font-semibold py-3 rounded-xl bg-transparent border-2 border-[#c9a84c]/50 text-[#c9a84c] hover:bg-[#c9a84c]/10 active:scale-[0.97] transition-all"
-                >
-                  Play a Random Game
-                </button>
-
-                {/* Puzzle Streak Mode */}
-                <a
-                  href="/streak"
-                  className="flex items-center justify-between w-full py-3 px-4 rounded-xl bg-gradient-to-r from-orange-900/40 to-amber-900/40 border border-orange-500/30 hover:border-orange-500/50 active:scale-[0.97] transition-all"
-                >
-                  <div className="flex items-center gap-3">
-                    <Flame size={22} className="text-orange-400" />
-                    <div className="text-left">
-                      <div className="text-base font-bold text-orange-300">Puzzle Streak</div>
-                      <div className="text-[11px] text-white/40">Win consecutive games</div>
-                    </div>
-                  </div>
-                  {puzzleStreakBest > 0 && (
-                    <div className="text-right">
-                      <div className="text-lg font-black text-orange-300">{puzzleStreakBest}</div>
-                      <div className="text-[10px] text-white/40">Best</div>
-                    </div>
-                  )}
-                </a>
-
-                {/* Puzzle Storm Mode */}
-                <a
-                  href="/storm"
-                  className="flex items-center justify-between w-full py-3 px-4 rounded-xl bg-gradient-to-r from-cyan-900/40 to-blue-900/40 border border-cyan-500/30 hover:border-cyan-500/50 active:scale-[0.97] transition-all"
-                >
-                  <div className="flex items-center gap-3">
-                    <Zap size={22} className="text-cyan-400" />
-                    <div className="text-left">
-                      <div className="text-base font-bold text-cyan-300">Puzzle Storm</div>
-                      <div className="text-[11px] text-white/40">Beat the clock</div>
-                    </div>
-                  </div>
-                  {puzzleStormBest > 0 && (
-                    <div className="text-right">
-                      <div className="text-lg font-black text-cyan-300">{puzzleStormBest}</div>
-                      <div className="text-[10px] text-white/40">Best</div>
-                    </div>
-                  )}
-                </a>
-
-                {/* Baker's Game Variant */}
-                <a
-                  href="/bakers-game"
-                  className="flex items-center justify-between w-full py-3 px-4 rounded-xl bg-gradient-to-r from-purple-900/40 to-indigo-900/40 border border-purple-500/30 hover:border-purple-500/50 active:scale-[0.97] transition-all"
-                >
-                  <div className="flex items-center gap-3">
-                    <Layers size={22} className="text-purple-400" />
-                    <div className="text-left">
-                      <div className="text-base font-bold text-purple-300">Baker&apos;s Game</div>
-                      <div className="text-[11px] text-white/40">Same-suit stacking</div>
-                    </div>
-                  </div>
-                </a>
-
-                {/* Stats Summary + Link */}
+                {/* 3. Stats row */}
                 <a
                   href="/stats"
-                  className="block bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 hover:bg-white/8 transition-colors"
+                  className="flex items-center justify-between px-5 py-4 bg-white/5 border border-white/10 rounded-xl hover:bg-white/8 transition-colors"
                 >
-                  <h2
-                    className="text-center text-lg font-bold mb-3 text-white/90"
-                    style={{ fontFamily: 'var(--font-playfair)' }}
-                  >
-                    Statistics
-                  </h2>
-                  <div className="grid grid-cols-3 gap-2 text-center mb-4">
-                    <div>
-                      <div className="text-2xl font-bold text-[#D4AF37]">{stats?.gamesPlayed ?? 0}</div>
-                      <div className="text-[10px] text-white/40 uppercase tracking-wider mt-0.5">Played</div>
-                    </div>
-                    <div>
-                      <div className="text-2xl font-bold text-[#D4AF37]">{stats?.gamesWon ?? 0}</div>
-                      <div className="text-[10px] text-white/40 uppercase tracking-wider mt-0.5">Won</div>
-                    </div>
-                    <div>
-                      <div className="text-2xl font-bold text-[#D4AF37]">{winRate}%</div>
-                      <div className="text-[10px] text-white/40 uppercase tracking-wider mt-0.5">Win Rate</div>
-                    </div>
+                  <div className="flex items-center gap-5 text-base text-white/70">
+                    <span><strong className="text-[#D4AF37]">{stats?.gamesPlayed ?? 0}</strong> Played</span>
+                    <span><strong className="text-[#D4AF37]">{winRate}%</strong> Win</span>
+                    <span><strong className="text-[#D4AF37]">{formatTime(avgTime)}</strong> Avg</span>
+                    {streak > 0 && <span><strong className="text-[#D4AF37]">{streak}</strong> Streak</span>}
                   </div>
-                  <div className="grid grid-cols-3 gap-2 text-center">
-                    <div>
-                      <div className="text-2xl font-bold text-[#D4AF37]">{avgMoves ?? 'N/A'}</div>
-                      <div className="text-[10px] text-white/40 uppercase tracking-wider mt-0.5">Avg. Moves</div>
-                    </div>
-                    <div>
-                      <div className="text-2xl font-bold text-[#D4AF37]">{formatTime(avgTime)}</div>
-                      <div className="text-[10px] text-white/40 uppercase tracking-wider mt-0.5">Avg. Time</div>
-                    </div>
-                    <div>
-                      <div className="text-2xl font-bold text-[#D4AF37]">{formatTime(stats?.bestTime ?? 0)}</div>
-                      <div className="text-[10px] text-white/40 uppercase tracking-wider mt-0.5">Best Time</div>
-                    </div>
-                  </div>
-                  <div className="text-center mt-3 text-xs text-[#D4AF37]/70 flex items-center justify-center gap-1">
-                    <BarChart3 size={12} />
-                    View detailed stats &amp; charts →
-                  </div>
+                  <span className="text-sm text-white/30">&rarr;</span>
                 </a>
 
-                {/* Theme Selector */}
-                <ThemeSelector />
-
-                {/* Content Links + Achievements */}
-                <div className="grid grid-cols-4 gap-2 text-center">
-                  <a href="/how-to-play" className="flex flex-col items-center gap-1.5 p-3 rounded-xl hover:bg-black/20 transition-colors">
-                    <HelpCircle size={22} className="text-[#D4AF37]" />
-                    <span className="text-xs text-white/70">How to Play</span>
+                {/* 4. Quick links */}
+                <div className="grid grid-cols-4 gap-3 text-center">
+                  <a href="/how-to-play" className="flex flex-col items-center gap-2 p-4 rounded-xl hover:bg-black/20 transition-colors">
+                    <HelpCircle size={28} className="text-[#D4AF37]" />
+                    <span className="text-sm text-white/70">How to Play</span>
                   </a>
-                  <a href="/strategy" className="flex flex-col items-center gap-1.5 p-3 rounded-xl hover:bg-black/20 transition-colors">
-                    <Swords size={22} className="text-[#D4AF37]" />
-                    <span className="text-xs text-white/70">Strategy</span>
+                  <a href="/strategy" className="flex flex-col items-center gap-2 p-4 rounded-xl hover:bg-black/20 transition-colors">
+                    <Swords size={28} className="text-[#D4AF37]" />
+                    <span className="text-sm text-white/70">Strategy</span>
                   </a>
-                  <a href="/faq" className="flex flex-col items-center gap-1.5 p-3 rounded-xl hover:bg-black/20 transition-colors">
-                    <MessageSquare size={22} className="text-[#D4AF37]" />
-                    <span className="text-xs text-white/70">FAQ</span>
+                  <a href="/faq" className="flex flex-col items-center gap-2 p-4 rounded-xl hover:bg-black/20 transition-colors">
+                    <MessageSquare size={28} className="text-[#D4AF37]" />
+                    <span className="text-sm text-white/70">FAQ</span>
                   </a>
-                  <a href="/achievements" className="flex flex-col items-center gap-1.5 p-3 rounded-xl hover:bg-black/20 transition-colors">
-                    <Trophy size={22} className="text-[#D4AF37]" />
-                    <span className="text-xs text-white/70">Badges</span>
+                  <a href="/achievements" className="flex flex-col items-center gap-2 p-4 rounded-xl hover:bg-black/20 transition-colors">
+                    <Trophy size={28} className="text-[#D4AF37]" />
+                    <span className="text-sm text-white/70">Badges</span>
                   </a>
                 </div>
 
-                {/* Settings */}
-                <div className="flex justify-center items-center gap-4 pt-2 border-t border-white/10">
+                {/* 5. Settings row */}
+                <div className="flex justify-center items-center gap-5 pt-4 border-t border-white/10">
                   <button
                     onClick={onToggleMute}
-                    className="flex items-center gap-2 text-white/50 hover:text-white px-4 py-2 rounded-lg hover:bg-black/20 transition-colors text-sm"
+                    className="flex items-center gap-2 text-white/50 hover:text-white px-4 py-2.5 rounded-lg hover:bg-black/20 transition-colors text-base"
                   >
-                    {isMuted ? <VolumeX size={18} /> : <Volume2 size={18} />}
+                    {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
                     <span>{isMuted ? 'Unmute' : 'Mute'}</span>
                   </button>
                   <button
                     onClick={() => { onFeedback(); onClose(); }}
-                    className="flex items-center gap-2 text-white/50 hover:text-white px-4 py-2 rounded-lg hover:bg-black/20 transition-colors text-sm"
+                    className="flex items-center gap-2 text-white/50 hover:text-white px-4 py-2.5 rounded-lg hover:bg-black/20 transition-colors text-base"
                   >
-                    <MessageSquare size={18} />
+                    <MessageSquare size={20} />
                     <span>Feedback</span>
                   </button>
                   <button
                     onClick={() => { onShowShortcuts(); onClose(); }}
-                    className="flex items-center gap-2 text-white/50 hover:text-white px-4 py-2 rounded-lg hover:bg-black/20 transition-colors text-sm"
+                    className="flex items-center gap-2 text-white/50 hover:text-white px-4 py-2.5 rounded-lg hover:bg-black/20 transition-colors text-base"
                   >
-                    <span className="font-bold text-lg">?</span>
+                    <span className="font-bold text-xl">?</span>
                     <span>Shortcuts</span>
                   </button>
                 </div>

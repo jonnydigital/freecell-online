@@ -95,7 +95,7 @@ export default function WinScreen({
   if (!visible) return null;
 
   return (
-    <div className="absolute inset-0 z-50 flex items-center justify-center animate-in fade-in duration-500 overflow-y-auto py-4">
+    <div className="absolute inset-0 z-50 flex items-center justify-center animate-in fade-in duration-500 overflow-y-auto py-4 backdrop-blur-sm">
       <div className="bg-[#0d2f0d]/95 border border-[#2a7c2a]/60 rounded-2xl shadow-2xl p-6 sm:p-8 max-w-sm w-[90%] text-center backdrop-blur-sm my-auto">
         <Trophy size={48} className="mx-auto text-yellow-400 mb-3" />
         <h2 className="text-2xl font-bold text-yellow-400 mb-1">You Win!</h2>

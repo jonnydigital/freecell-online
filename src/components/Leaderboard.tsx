@@ -94,7 +94,7 @@ export default function Leaderboard({ isOpen, onClose }: LeaderboardProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100]"
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50"
             onClick={onClose}
           />
           <motion.div
@@ -102,7 +102,7 @@ export default function Leaderboard({ isOpen, onClose }: LeaderboardProps) {
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.9, opacity: 0, y: 20 }}
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-            className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg bg-[#0a351a] border border-white/10 rounded-2xl shadow-2xl z-[101] overflow-hidden max-h-[90vh] flex flex-col"
+            className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg bg-[#0a351a] border border-white/10 rounded-2xl shadow-2xl z-50 overflow-hidden max-h-[90vh] flex flex-col"
           >
             {/* Header */}
             <div className="relative p-5 text-center border-b border-white/5 bg-gradient-to-b from-white/5 to-transparent shrink-0">

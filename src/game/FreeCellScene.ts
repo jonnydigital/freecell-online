@@ -208,11 +208,11 @@ export class FreeCellScene extends Phaser.Scene {
     // Use initial game number from bridge (URL-based), or random solvable
     if (gameBridge.initialGameNumber !== null) {
       this.gameNumber = gameBridge.initialGameNumber;
-      gameBridge.initialGameNumber = null; // consume it
+      gameBridge.initialGameNumber = null; // consume
     } else {
       this.gameNumber = getRandomSolvableGame();
     }
-    this.engine = new FreeCellEngine(this.gameNumber, gameBridge.variant);
+    this.engine = new FreeCellEngine(this.gameNumber, gameBridge.variant as 'freecell' | 'bakers-game');
     this.history = new MoveHistory();
     this.timer = new GameTimer();
     this.settings = loadSettings();
@@ -386,7 +386,7 @@ export class FreeCellScene extends Phaser.Scene {
 
     // Run auto-moves after deal animation completes
     // Deal: 52 cards × 45ms stagger + 450ms longest tween ≈ 2800ms
-    this.time.delayedCall(3000, () => {
+    this.time.delayedCall(3000 * this.getSpeedMultiplier(), () => {
       this.performAutoMoves();
     });
 
@@ -401,12 +401,12 @@ export class FreeCellScene extends Phaser.Scene {
     if (dt <= 0) return;
 
     if (this.isDragging && this.activeDragTarget) {
-      this.updateDraggedCards(this.activeDragTarget, 300, 28, dt, true);
+      this.updateDraggedCards(this.activeDragTarget, 350, 28, dt, true);
       return;
     }
 
     if (this.isSettlingDrag && this.settleTargets.length === this.activeDragCards.length) {
-      const settled = this.updateDraggedCardsToTargets(this.settleTargets, 180, 22, dt);
+      const settled = this.updateDraggedCardsToTargets(this.settleTargets, 250, 24, dt);
       if (settled) {
         this.finishSettledDrag();
       }
@@ -547,10 +547,10 @@ export class FreeCellScene extends Phaser.Scene {
       this.activeDragAngleVelocities[i] = angleUpdate.velocity;
 
       if (
-        Math.abs(card.x - target.x) > 0.6 ||
-        Math.abs(card.y - target.y) > 0.6 ||
-        Math.abs(velocity.x) > 8 ||
-        Math.abs(velocity.y) > 8 ||
+        Math.abs(card.x - target.x) > 0.5 ||
+        Math.abs(card.y - target.y) > 0.5 ||
+        Math.abs(velocity.x) > 5 ||
+        Math.abs(velocity.y) > 5 ||
         Math.abs(card.angle - angleTarget) > 0.4 ||
         Math.abs(this.activeDragAngleVelocities[i]) > 6
       ) {
@@ -1081,7 +1081,7 @@ export class FreeCellScene extends Phaser.Scene {
           sprite.setScale(0.85); // Container scale overrides child scales, so backImg is handled
           sprite.alpha = 0;
 
-          const delay = dealIndex * 45;
+          const delay = dealIndex * 45 * this.getSpeedMultiplier();
           // X slides into column
           this.tweens.add({
             targets: sprite,
@@ -2769,7 +2769,7 @@ export class FreeCellScene extends Phaser.Scene {
           this.time.delayedCall(400, () => this.winCelebration());
         } else {
           // Accelerate: start at 40ms, decrease by 2ms per card, min 15ms
-          const delay = Math.max(15, 40 - launchCount * 2);
+          const delay = Math.max(15, 40 - launchCount * 2) * this.getSpeedMultiplier();
           launchCount++;
           this.time.delayedCall(delay, moveCards);
         }
@@ -2933,12 +2933,17 @@ export class FreeCellScene extends Phaser.Scene {
 
   // ── Reposition / Animate ──────────────────────────────────
 
+  private getSpeedMultiplier(): number {
+    const multipliers: Record<string, number> = { slow: 1.6, normal: 1.0, fast: 0.6 };
+    return multipliers[this.settings.animationSpeed] ?? 1.0;
+  }
+
   private getMoveDuration(sprite: CardSprite, targetX: number, targetY: number): number {
     const dx = targetX - sprite.x;
     const dy = targetY - sprite.y;
     const distance = Math.sqrt(dx * dx + dy * dy);
     // Snappy speed: 180ms min, 400ms max. Fast but trackable.
-    return Math.min(400, Math.max(180, distance * 0.4));
+    return Math.min(400, Math.max(180, distance * 0.4)) * this.getSpeedMultiplier();
   }
 
   /**
@@ -2994,7 +2999,7 @@ export class FreeCellScene extends Phaser.Scene {
               duration: isMoving
                 ? Math.min(600, Math.max(250, this.getMoveDuration(sprite, pos.x, pos.y)))
                 : this.getMoveDuration(sprite, pos.x, pos.y),
-              delay: row * 20,  // slightly longer per-card stagger for physical settling feel
+              delay: row * 20 * this.getSpeedMultiplier(),  // slightly longer per-card stagger for physical settling feel
               ease: 'Cubic.easeOut',
             });
           } else {
@@ -3060,7 +3065,7 @@ export class FreeCellScene extends Phaser.Scene {
               x: pos.x,
               y: pos.y,
               duration: Math.min(600, Math.max(250, this.getMoveDuration(sprite, pos.x, pos.y))),
-              ease: 'Cubic.easeOut',
+              ease: 'Back.easeOut',
               onComplete: isTopCard ? () => {
                 this.foundationBloom(sprite);
                 this.foundationParticleBurst(pos.x, pos.y);
@@ -3424,7 +3429,7 @@ export class FreeCellScene extends Phaser.Scene {
     this.cancelLongPress();
 
     // Reset engine
-    this.engine = new FreeCellEngine(this.gameNumber, gameBridge.variant);
+    this.engine = new FreeCellEngine(this.gameNumber, gameBridge.variant as 'freecell' | 'bakers-game');
     this.history.clear();
     this.timer.reset();
 
@@ -3435,7 +3440,7 @@ export class FreeCellScene extends Phaser.Scene {
     gameBridge.emit('gameReady', { gameNumber: this.gameNumber });
 
     // Auto-move after deal animation completes
-    this.time.delayedCall(3000, () => {
+    this.time.delayedCall(3000 * this.getSpeedMultiplier(), () => {
       this.performAutoMoves();
     });
   }

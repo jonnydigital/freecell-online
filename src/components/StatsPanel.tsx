@@ -19,8 +19,8 @@ export default function StatsPanel({ stats, isOpen, onClose }: StatsPanelProps) 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-      <div className="bg-[#0d2e0d] border border-[#1a5c1a]/50 rounded-xl p-6 w-80 max-w-[90vw]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
+      <div className="bg-[#0d2e0d] border border-white/10 rounded-2xl shadow-2xl p-6 w-full max-w-sm max-w-[90vw]">
         <div className="flex items-center justify-between mb-5">
           <h2 className="text-xl font-bold text-white">Statistics</h2>
           <button

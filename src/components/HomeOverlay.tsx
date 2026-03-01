@@ -265,10 +265,10 @@ export default function HomeOverlay({
                     <MessageSquare size={22} className="text-[#D4AF37]" />
                     <span className="text-xs text-white/70">FAQ</span>
                   </a>
-                  <button onClick={() => { if (onAchievements) onAchievements(); onClose(); }} className="flex flex-col items-center gap-1.5 p-3 rounded-xl hover:bg-black/20 transition-colors">
+                  <a href="/achievements" className="flex flex-col items-center gap-1.5 p-3 rounded-xl hover:bg-black/20 transition-colors">
                     <Trophy size={22} className="text-[#D4AF37]" />
                     <span className="text-xs text-white/70">Badges</span>
-                  </button>
+                  </a>
                 </div>
 
                 {/* Settings */}

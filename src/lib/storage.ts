@@ -7,6 +7,7 @@ import { GameStats, createEmptyStats } from './stats';
 const STATS_KEY = 'freecell_stats';
 const SETTINGS_KEY = 'freecell_settings';
 const GAME_STATE_KEY = 'freecell_game_state';
+const STARS_KEY = 'freecell_stars';
 
 export interface GameSettings {
   soundEnabled: boolean;
@@ -105,5 +106,38 @@ export function clearGameState(): void {
     localStorage.removeItem(GAME_STATE_KEY);
   } catch {
     // Ignore
+  }
+}
+
+// Star ratings per game number
+type StarMap = Record<string, number>;
+
+export function loadStarRating(gameNumber: number): number {
+  if (!isBrowser()) return 0;
+  try {
+    const data = localStorage.getItem(STARS_KEY);
+    const map: StarMap = data ? JSON.parse(data) : {};
+    return map[String(gameNumber)] ?? 0;
+  } catch {
+    return 0;
+  }
+}
+
+/** Save star rating if it's better than existing. Returns true if it was a new best. */
+export function saveStarRating(gameNumber: number, stars: number): boolean {
+  if (!isBrowser()) return false;
+  try {
+    const data = localStorage.getItem(STARS_KEY);
+    const map: StarMap = data ? JSON.parse(data) : {};
+    const key = String(gameNumber);
+    const prev = map[key] ?? 0;
+    if (stars > prev) {
+      map[key] = stars;
+      localStorage.setItem(STARS_KEY, JSON.stringify(map));
+      return prev > 0; // only "new best" if they had a previous rating
+    }
+    return false;
+  } catch {
+    return false;
   }
 }

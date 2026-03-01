@@ -13,7 +13,6 @@ import { gameBridge } from './GameBridge';
 import { getCardAssetKey, getAllCardAssets } from './CardAssets';
 import { getHint } from '../solver/solver';
 import { getRandomSolvableGame } from '../lib/solvableDeals';
-import { registerTestBridge, unregisterTestBridge } from './TestBridge';
 import { soundManager } from '../lib/sounds';
 
 // Layout constants
@@ -317,9 +316,6 @@ export class FreeCellScene extends Phaser.Scene {
     // Notify UI that game is ready
     gameBridge.emit('gameReady', { gameNumber: this.gameNumber });
 
-    // Register test bridge for Antigravity QA
-    registerTestBridge(this);
-
     // Run auto-moves after deal animation completes
     // Deal: 52 cards × 45ms stagger + 450ms longest tween ≈ 2800ms
     this.time.delayedCall(3000, () => {
@@ -350,7 +346,6 @@ export class FreeCellScene extends Phaser.Scene {
   }
 
   private shutdown(): void {
-    unregisterTestBridge();
     if (this.scaleResizeHandler) {
       this.scale.off('resize', this.scaleResizeHandler, this);
       this.scaleResizeHandler = null;

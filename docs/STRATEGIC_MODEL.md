@@ -2,38 +2,58 @@
 
 **This is our north star. Everything we build works toward this model.**
 
-*Documented 2026-03-01 per Jonathan's direction.*
+*Documented 2026-03-01 per Jonathan's direction. Deep research completed.*
 
 ---
 
-## The Model
+## The Model — Deep Research
 
-The operator behind online-solitaire.com runs a **network of solitaire game sites**, not just one. This is the key insight:
+The operator behind online-solitaire.com runs a **network of card game sites**. This is the key insight — it's not one site, it's an ecosystem.
 
-### How They Make Money
-1. **Multiple domains** — playonlinesolitaire.com, online-solitaire.com, likely others
-2. **Each domain** targets different keyword clusters (play online solitaire, online solitaire, etc.)
-3. **Ad revenue** from display ads (privacy-mgmt consent → ad serving)
-4. **Desktop app** (todesktop.com download) — premium upsell
-5. **Mobile apps** (Google Play listing)
-6. **Embed/white-label** (/embed route — lets other sites embed their game, expanding reach)
-7. **Multi-language** — EN, DE, ES, FR, IT, PT — 6x the addressable market
-8. **Blog** for SEO content marketing
-9. **Cross-linking** between their own properties for domain authority
+### Their Tech Stack
+- **Vue.js / Nuxt.js** front-end (old-school Bootstrap 4 CSS)
+- **Sourcepoint** for consent management (privacy-mgmt.com)
+- **TCF v2, USP API, GPP** — full compliance framework (GDPR + US state privacy)
+- **ToDesktop** for desktop app distribution
+- **Custom game engine** (canvas-based, not Phaser)
+- **i18n**: EN, DE, ES, FR, IT, PT (6 languages minimum)
+- **Lazy loading** images for performance
 
-### Their Game Portfolio
-From online-solitaire.com:
-- Klondike Solitaire (classic)
+### Their Full Network
+1. **online-solitaire.com** — main hub, all solitaire variants
+2. **playonlinesolitaire.com** — landing page funnel, redirects to main site
+3. **worldofcardgames.com** — MULTIPLAYER card games (Bridge, Canasta, Cribbage, Crazy Eights, Euchre, Gin Rummy, Go Fish, Hand and Foot, Hearts, Pinochle, Rummy, Spades, Whist)
+   - This is a SEPARATE property they own — multiplayer social card games
+4. Likely more domains targeting specific keywords
+
+### Their Blog Strategy (SEO Play)
+From online-solitaire.com/blog/:
+- "7 Card Games to Enhance Kids' Cognitive Skills" (parent audience)
+- "America's Digital Detox Struggle" (trending/viral)
+- "Americas Most Unmotivated Workers" (office worker audience)
+- "Family Fun: Introducing Solitaire and Sudoku for Kids"
+- "Play 313 New Solitaire Variations" (internal linking)
+- "Solitaire vs the World" (brand awareness)
+- "States with the Most Sleep-Deprived Online Gamers" (data journalism)
+- "Transform Customer Experience" (B2B angle)
+- Samsung/tech leak articles (pure SEO traffic play)
+- They write about ANYTHING that drives traffic, not just solitaire
+
+### Revenue Channels
+1. **Display ads** (primary) — Sourcepoint consent → ad serving, multiple placements per page
+2. **Desktop app** via ToDesktop — likely premium/ad-free version
+3. **Mobile apps** — Google Play listing
+4. **Embed/white-label** (/embed route — lets other sites embed their game)
+5. **Blog traffic** → ad revenue from content marketing
+6. **WorldOfCardGames.com** — separate multiplayer property, same revenue model
+7. **Multi-language** — 6x the addressable market from same codebase
+
+### Their Game Portfolio (online-solitaire.com)
+- Klondike Solitaire (classic, draw 1, draw 3)
 - Spider Solitaire (1, 2, 4 suits)
 - FreeCell
-- More via /games
-
-### Revenue Channels (estimated)
-1. **Display ads** (primary) — multiple ad placements per page
-2. **Desktop app downloads** — likely premium/ad-free version
-3. **Mobile app** — in-app purchases + ads
-4. **Embed licensing** — other sites use their game engine
-5. **Affiliate links** — linked to card game sites, poker sites
+- 313+ solitaire variations total
+- Features: achievements, leaderboards, daily challenges, bookmarks, star ratings
 
 ---
 
@@ -69,17 +89,34 @@ From online-solitaire.com:
 
 ---
 
-## Key Differences From Our Current Approach
+## Competitor Landscape (for context)
 
-| They Do | We Currently Do |
-|---------|----------------|
-| Multiple game types | FreeCell only |
-| Multiple domains | Single domain |
-| Multi-language | English only |
-| Desktop app | PWA only |
-| Mobile app | PWA only |
-| Embed/white-label | Not available |
-| Blog | SEO pages only |
+| Site | Model | Strengths |
+|------|-------|-----------|
+| **online-solitaire.com** | Network + apps + embed + blog + i18n | OUR TARGET — full ecosystem play |
+| **solitaired.com** | Single site, challenges, badges, blog | Good gamification, Google DFP ads |
+| **cardgames.io** | Multi-game hub (solitaire + board games) | Clean UI, avatars, social features |
+| **worldofcardgames.com** | Multiplayer card games | Same owner as online-solitaire, social play |
+| **freecell.net** | Simple single-game | Ranks well for "freecell" |
+
+### What We Already Have That They Don't
+- **A* solver with post-game optimal analysis** — NO competitor has this
+- **Phaser 3.87 game engine** — higher quality rendering than canvas
+- **Next.js 14** — superior SEO, ISR, performance vs their Vue/Nuxt
+- **AI-powered development** — we can ship features 10x faster
+
+## Key Gaps to Close
+
+| They Do | We Currently Do | Priority |
+|---------|----------------|----------|
+| 313+ solitaire variants | FreeCell + Baker's Game | 🔴 HIGH — Add Klondike + Spider next |
+| Multiple domains | Single domain | 🟡 MEDIUM — after Klondike ships |
+| Multi-language (6 langs) | English only | 🟡 MEDIUM — huge multiplier |
+| Desktop app (ToDesktop) | PWA only | 🟢 LOW — PWA is fine for now |
+| Mobile app (Play Store) | PWA only | 🟢 LOW — TWA can wrap PWA |
+| Embed/white-label | Not available | 🟡 MEDIUM — viral growth channel |
+| Blog (general content) | SEO pages only | 🟡 MEDIUM — they write about ANYTHING |
+| Multiplayer card games | Single player only | 🟢 LOW — separate property later |
 
 ---
 

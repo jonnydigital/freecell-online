@@ -14,10 +14,11 @@ async function getKV() {
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
+    const isAllTime = searchParams.get('alltime') === '1';
     const date = searchParams.get('date') || new Date().toISOString().split('T')[0];
 
     // Validate date format
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+    if (!isAllTime && !/^\d{4}-\d{2}-\d{2}$/.test(date)) {
       return NextResponse.json({ error: 'Invalid date format' }, { status: 400 });
     }
 
@@ -26,29 +27,43 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ date, entries: [] });
     }
 
-    const key = `leaderboard:daily:${date}`;
+    const key = isAllTime ? 'leaderboard:alltime' : `leaderboard:daily:${date}`;
     const raw = await db.zrange(key, 0, 49, { withScores: true });
 
     // Parse results: raw is [member, score, member, score, ...]
-    const entries: { rank: number; playerName: string; moves: number; time: number; gameNumber: number }[] = [];
+    const entries: {
+      rank: number;
+      playerName: string;
+      playerId: string;
+      moves: number;
+      time: number;
+      gameNumber: number;
+      date: string;
+    }[] = [];
+
     for (let i = 0; i < raw.length; i += 2) {
       try {
         const data = typeof raw[i] === 'string' ? JSON.parse(raw[i]) : raw[i];
         entries.push({
           rank: Math.floor(i / 2) + 1,
-          playerName: data.playerName,
+          playerName: data.playerName || 'Anonymous',
+          playerId: data.playerId || '',
           moves: data.moves,
           time: data.time,
           gameNumber: data.gameNumber,
+          date: data.date || date,
         });
       } catch {
         // Skip malformed entries
       }
     }
 
-    return NextResponse.json({ date, entries }, {
-      headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' },
-    });
+    return NextResponse.json(
+      { date: isAllTime ? 'all-time' : date, entries },
+      {
+        headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' },
+      },
+    );
   } catch (error) {
     console.error('Leaderboard daily error:', error);
     return NextResponse.json({ error: 'Internal error' }, { status: 500 });

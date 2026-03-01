@@ -32,6 +32,8 @@ import Tutorial from './Tutorial';
 import type { HighlightRect } from './Tutorial';
 import { soundManager } from '../lib/sounds';
 import { GameSettings, loadSettings, saveSettings } from '../lib/storage';
+import { submitScore, fetchDailyLeaderboard, LeaderboardEntry } from '../lib/leaderboardClient';
+import { getPlayerId } from '../lib/playerIdentity';
 
 interface GameShellProps {
   initialGameNumber?: number;
@@ -73,6 +75,9 @@ export default function GameShell({ initialGameNumber }: GameShellProps = {}) {
   const [shareStatus, setShareStatus] = useState<'idle' | 'copied'>('idle');
   const [timeElapsed, setTimeElapsed] = useState(0);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
+  const [leaderboardEntries, setLeaderboardEntries] = useState<LeaderboardEntry[]>([]);
+  const [leaderboardRank, setLeaderboardRank] = useState<number | undefined>();
+  const [leaderboardLoading, setLeaderboardLoading] = useState(false);
 
   // Timer effect
   useEffect(() => {
@@ -281,6 +286,27 @@ export default function GameShell({ initialGameNumber }: GameShellProps = {}) {
     }
   }, [isWon, isDailyGame]);
 
+  // Auto-submit score to leaderboard on daily challenge win
+  useEffect(() => {
+    if (!isWon || !isDailyGame || !winDataRef.current || !gameNumber) return;
+
+    const submit = async () => {
+      setLeaderboardLoading(true);
+      try {
+        const result = await submitScore(gameNumber, winDataRef.current!.moves, winDataRef.current!.time);
+        setLeaderboardRank(result.rank);
+
+        // Fetch updated leaderboard
+        const entries = await fetchDailyLeaderboard();
+        setLeaderboardEntries(entries);
+      } catch {
+        // Silent fail — leaderboard is non-critical
+      }
+      setLeaderboardLoading(false);
+    };
+    submit();
+  }, [isWon, isDailyGame, gameNumber]);
+
   // Start solver analysis when game is won
   useEffect(() => {
     if (isWon && gameNumber) {
@@ -294,6 +320,8 @@ export default function GameShell({ initialGameNumber }: GameShellProps = {}) {
     setIsDeadlocked(false);
     setStreakMilestone(null);
     setShowReplay(false);
+    setLeaderboardEntries([]);
+    setLeaderboardRank(undefined);
     resetSolver();
     gameBridge.emit('newGame');
   };
@@ -593,6 +621,11 @@ export default function GameShell({ initialGameNumber }: GameShellProps = {}) {
                 solverStatus={solverStatus}
                 optimalMoves={solverMoves.length}
                 onViewSolution={() => setShowReplay(true)}
+                isDailyGame={isDailyGame}
+                leaderboardEntries={leaderboardEntries}
+                leaderboardRank={leaderboardRank}
+                leaderboardLoading={leaderboardLoading}
+                playerId={getPlayerId()}
               />
             )}
 
@@ -781,7 +814,6 @@ export default function GameShell({ initialGameNumber }: GameShellProps = {}) {
           <Leaderboard
             isOpen={showLeaderboard}
             onClose={() => setShowLeaderboard(false)}
-            stats={stats}
           />
 
           {/* Settings Panel */}

@@ -4,6 +4,8 @@ import { useEffect, useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Shuffle, Calendar, Trophy, Share2, Eye } from 'lucide-react';
 import { saveStarRating } from '@/lib/storage';
+import { CompactLeaderboard } from './Leaderboard';
+import { LeaderboardEntry } from '@/lib/leaderboardClient';
 
 interface WinScreenProps {
   gameNumber: number;
@@ -15,6 +17,11 @@ interface WinScreenProps {
   solverStatus?: 'idle' | 'solving' | 'solved' | 'failed';
   optimalMoves?: number;
   onViewSolution?: () => void;
+  isDailyGame?: boolean;
+  leaderboardEntries?: LeaderboardEntry[];
+  leaderboardRank?: number;
+  leaderboardLoading?: boolean;
+  playerId?: string;
 }
 
 function getStarCount(moves: number): number {
@@ -29,7 +36,22 @@ function formatTime(seconds: number): string {
   return `${m}:${s.toString().padStart(2, '0')}`;
 }
 
-export default function WinScreen({ gameNumber, time, moves, hintsUsed, onPlayAgain, onDailyChallenge, solverStatus, optimalMoves, onViewSolution }: WinScreenProps) {
+export default function WinScreen({
+  gameNumber,
+  time,
+  moves,
+  hintsUsed,
+  onPlayAgain,
+  onDailyChallenge,
+  solverStatus,
+  optimalMoves,
+  onViewSolution,
+  isDailyGame,
+  leaderboardEntries,
+  leaderboardRank,
+  leaderboardLoading,
+  playerId,
+}: WinScreenProps) {
   const [visible, setVisible] = useState(false);
   const [shareStatus, setShareStatus] = useState<'idle' | 'copying' | 'copied'>('idle');
 
@@ -48,7 +70,7 @@ export default function WinScreen({ gameNumber, time, moves, hintsUsed, onPlayAg
   const handleShare = async () => {
     const starEmoji = '⭐'.repeat(starCount);
     const shareText = `I solved FreeCell Game #${gameNumber} in ${moves} moves (${formatTime(time)})! ${starEmoji}\nCan you beat it? https://playfreecellonline.com/game/${gameNumber}`;
-    
+
     if (navigator.share) {
       try {
         await navigator.share({
@@ -73,8 +95,8 @@ export default function WinScreen({ gameNumber, time, moves, hintsUsed, onPlayAg
   if (!visible) return null;
 
   return (
-    <div className="absolute inset-0 z-50 flex items-center justify-center animate-in fade-in duration-500">
-      <div className="bg-[#0d2f0d]/95 border border-[#2a7c2a]/60 rounded-2xl shadow-2xl p-8 max-w-sm w-[90%] text-center backdrop-blur-sm">
+    <div className="absolute inset-0 z-50 flex items-center justify-center animate-in fade-in duration-500 overflow-y-auto py-4">
+      <div className="bg-[#0d2f0d]/95 border border-[#2a7c2a]/60 rounded-2xl shadow-2xl p-6 sm:p-8 max-w-sm w-[90%] text-center backdrop-blur-sm my-auto">
         <Trophy size={48} className="mx-auto text-yellow-400 mb-3" />
         <h2 className="text-2xl font-bold text-yellow-400 mb-1">You Win!</h2>
         <p className="text-white/50 text-sm mb-4">Congratulations!</p>
@@ -127,10 +149,10 @@ export default function WinScreen({ gameNumber, time, moves, hintsUsed, onPlayAg
 
         {/* Solver Analysis */}
         {solverStatus === 'solving' && (
-          <div className="text-sm text-white/40 mb-6 animate-pulse">Analyzing optimal solution...</div>
+          <div className="text-sm text-white/40 mb-4 animate-pulse">Analyzing optimal solution...</div>
         )}
         {solverStatus === 'solved' && optimalMoves !== undefined && (
-          <div className="text-sm text-white/60 mb-6">
+          <div className="text-sm text-white/60 mb-4">
             Optimal: <span className="text-emerald-400 font-bold">{optimalMoves}</span> moves
             {moves <= optimalMoves ? (
               <span className="text-yellow-400 ml-1 font-semibold">Perfect!</span>
@@ -139,7 +161,38 @@ export default function WinScreen({ gameNumber, time, moves, hintsUsed, onPlayAg
             )}
           </div>
         )}
-        {(solverStatus !== 'solving' && solverStatus !== 'solved') && <div className="mb-4" />}
+        {(solverStatus !== 'solving' && solverStatus !== 'solved') && <div className="mb-2" />}
+
+        {/* Leaderboard Rank */}
+        {isDailyGame && leaderboardRank && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.5 }}
+            className="mb-4 py-2 px-3 bg-yellow-500/10 border border-yellow-500/20 rounded-lg"
+          >
+            <p className="text-xs text-yellow-400 font-bold">
+              Ranked #{leaderboardRank} on today&apos;s leaderboard
+            </p>
+          </motion.div>
+        )}
+
+        {/* Compact Leaderboard Widget */}
+        {isDailyGame && leaderboardEntries && leaderboardEntries.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.7 }}
+            className="mb-4"
+          >
+            <CompactLeaderboard
+              entries={leaderboardEntries}
+              yourRank={leaderboardRank}
+              playerId={playerId || ''}
+              loading={leaderboardLoading}
+            />
+          </motion.div>
+        )}
 
         <div className="flex flex-col gap-3">
           <button

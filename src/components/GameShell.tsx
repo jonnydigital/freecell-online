@@ -8,7 +8,7 @@ import { loadStats, saveStats } from '../lib/storage';
 import { trackGameStart, trackWin, trackAbandoned, trackHint, trackUndo, trackMove, trackDeadlock, gameSession } from '../lib/analytics';
 import { initErrorTracking, setGameContext } from '../lib/errorTracking';
 import { getTodaysSeed, getTodayStr, recordDailyCompletion, isTodayCompleted } from '../lib/dailyChallenge';
-import { RotateCcw, RotateCw, Lightbulb, BarChart3, MessageSquare, Shuffle, Calendar, Volume2, VolumeX, Home, Share2, AlertTriangle, ChevronLeft, Trophy, Settings as SettingsIcon, Flame, Palette } from 'lucide-react';
+import { RotateCcw, RotateCw, Lightbulb, BarChart3, MessageSquare, Shuffle, Calendar, Volume2, VolumeX, Home, Share2, AlertTriangle, ChevronLeft, Trophy, Settings as SettingsIcon, Flame, Zap, Palette } from 'lucide-react';
 import ThemeSelector from './ThemeSelector';
 import StatsPanel from './StatsPanel';
 import FeedbackModal from './FeedbackModal';
@@ -370,6 +370,10 @@ export default function GameShell({ initialGameNumber }: GameShellProps = {}) {
                   <Flame size={14} />
                   Puzzle Streak
                 </a>
+                <a href="/storm" className="flex items-center gap-1.5 text-cyan-400/80 hover:text-cyan-300 transition-colors">
+                  <Zap size={14} />
+                  Puzzle Storm
+                </a>
               </nav>
             </div>
 
@@ -721,6 +725,7 @@ export default function GameShell({ initialGameNumber }: GameShellProps = {}) {
                   <li><Link href="/winning-deals" className="hover:text-white transition-colors">Winning Deals</Link></li>
                   <li><button onClick={() => setShowDaily(true)} className="hover:text-white transition-colors">Daily Challenge</button></li>
                   <li><Link href="/streak" className="hover:text-white transition-colors">Puzzle Streak</Link></li>
+                  <li><Link href="/storm" className="hover:text-white transition-colors">Puzzle Storm</Link></li>
                   <li><button onClick={() => setShowLeaderboard(true)} className="hover:text-white transition-colors">World Rankings</button></li>
                 </ul>
               </div>

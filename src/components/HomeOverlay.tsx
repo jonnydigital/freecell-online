@@ -2,11 +2,12 @@
 
 import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, HelpCircle, Swords, MessageSquare, VolumeX, Volume2, Trophy, Target, Clock, Flame } from 'lucide-react';
+import { X, HelpCircle, Swords, MessageSquare, VolumeX, Volume2, Trophy, Target, Clock, Flame, Zap } from 'lucide-react';
 import { getTodaysSeed, getTodayStr, loadDailyData, getCurrentStreak, isTodayCompleted } from '../lib/dailyChallenge';
 import { loadStats } from '../lib/storage';
 import { getAverageMoves, getAverageTime } from '../lib/stats';
 import { loadStreakData } from '../lib/streakStorage';
+import { loadStormData } from '../lib/stormStorage';
 import ThemeSelector from './ThemeSelector';
 import CalendarHeatmap from './CalendarHeatmap';
 
@@ -40,6 +41,7 @@ export default function HomeOverlay({
   const stats = useMemo(() => (isOpen ? loadStats() : null), [isOpen]);
   const streak = useMemo(() => (isOpen ? getCurrentStreak() : 0), [isOpen]);
   const puzzleStreakBest = useMemo(() => (isOpen ? loadStreakData().bestStreak : 0), [isOpen]);
+  const puzzleStormBest = useMemo(() => (isOpen ? loadStormData().bestScore : 0), [isOpen]);
 
   const todayCompleted = dailyData ? !!dailyData.completedDays[todayStr] : false;
   const todayResult = dailyData?.completedDays[todayStr];
@@ -183,6 +185,26 @@ export default function HomeOverlay({
                   {puzzleStreakBest > 0 && (
                     <div className="text-right">
                       <div className="text-lg font-black text-orange-300">{puzzleStreakBest}</div>
+                      <div className="text-[10px] text-white/40">Best</div>
+                    </div>
+                  )}
+                </a>
+
+                {/* Puzzle Storm Mode */}
+                <a
+                  href="/storm"
+                  className="flex items-center justify-between w-full py-3 px-4 rounded-xl bg-gradient-to-r from-cyan-900/40 to-blue-900/40 border border-cyan-500/30 hover:border-cyan-500/50 active:scale-[0.97] transition-all"
+                >
+                  <div className="flex items-center gap-3">
+                    <Zap size={22} className="text-cyan-400" />
+                    <div className="text-left">
+                      <div className="text-base font-bold text-cyan-300">Puzzle Storm</div>
+                      <div className="text-[11px] text-white/40">Beat the clock</div>
+                    </div>
+                  </div>
+                  {puzzleStormBest > 0 && (
+                    <div className="text-right">
+                      <div className="text-lg font-black text-cyan-300">{puzzleStormBest}</div>
                       <div className="text-[10px] text-white/40">Best</div>
                     </div>
                   )}

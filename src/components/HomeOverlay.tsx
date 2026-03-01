@@ -2,10 +2,11 @@
 
 import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, HelpCircle, Swords, MessageSquare, VolumeX, Volume2, Trophy, Target, Clock } from 'lucide-react';
+import { X, HelpCircle, Swords, MessageSquare, VolumeX, Volume2, Trophy, Target, Clock, Flame } from 'lucide-react';
 import { getTodaysSeed, getTodayStr, loadDailyData, getCurrentStreak, isTodayCompleted } from '../lib/dailyChallenge';
 import { loadStats } from '../lib/storage';
 import { getAverageMoves, getAverageTime } from '../lib/stats';
+import { loadStreakData } from '../lib/streakStorage';
 import ThemeSelector from './ThemeSelector';
 import CalendarHeatmap from './CalendarHeatmap';
 
@@ -38,6 +39,7 @@ export default function HomeOverlay({
   const dailyData = useMemo(() => (isOpen ? loadDailyData() : null), [isOpen]);
   const stats = useMemo(() => (isOpen ? loadStats() : null), [isOpen]);
   const streak = useMemo(() => (isOpen ? getCurrentStreak() : 0), [isOpen]);
+  const puzzleStreakBest = useMemo(() => (isOpen ? loadStreakData().bestStreak : 0), [isOpen]);
 
   const todayCompleted = dailyData ? !!dailyData.completedDays[todayStr] : false;
   const todayResult = dailyData?.completedDays[todayStr];
@@ -165,6 +167,26 @@ export default function HomeOverlay({
                 >
                   Play a Random Game
                 </button>
+
+                {/* Puzzle Streak Mode */}
+                <a
+                  href="/streak"
+                  className="flex items-center justify-between w-full py-3 px-4 rounded-xl bg-gradient-to-r from-orange-900/40 to-amber-900/40 border border-orange-500/30 hover:border-orange-500/50 active:scale-[0.97] transition-all"
+                >
+                  <div className="flex items-center gap-3">
+                    <Flame size={22} className="text-orange-400" />
+                    <div className="text-left">
+                      <div className="text-base font-bold text-orange-300">Puzzle Streak</div>
+                      <div className="text-[11px] text-white/40">Win consecutive games</div>
+                    </div>
+                  </div>
+                  {puzzleStreakBest > 0 && (
+                    <div className="text-right">
+                      <div className="text-lg font-black text-orange-300">{puzzleStreakBest}</div>
+                      <div className="text-[10px] text-white/40">Best</div>
+                    </div>
+                  )}
+                </a>
 
                 {/* Stats */}
                 <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4">

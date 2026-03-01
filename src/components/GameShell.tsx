@@ -8,7 +8,7 @@ import { loadStats, saveStats } from '../lib/storage';
 import { trackGameStart, trackWin, trackAbandoned, trackHint, trackUndo, trackMove, trackDeadlock, gameSession } from '../lib/analytics';
 import { initErrorTracking, setGameContext } from '../lib/errorTracking';
 import { getTodaysSeed, getTodayStr, recordDailyCompletion, isTodayCompleted } from '../lib/dailyChallenge';
-import { RotateCcw, RotateCw, Lightbulb, BarChart3, MessageSquare, Shuffle, Calendar, Volume2, VolumeX, Home, Share2, AlertTriangle, ChevronLeft, Trophy, Settings as SettingsIcon } from 'lucide-react';
+import { RotateCcw, RotateCw, Lightbulb, BarChart3, MessageSquare, Shuffle, Calendar, Volume2, VolumeX, Home, Share2, AlertTriangle, ChevronLeft, Trophy, Settings as SettingsIcon, Flame } from 'lucide-react';
 import StatsPanel from './StatsPanel';
 import FeedbackModal from './FeedbackModal';
 import DailyChallengePanel from './DailyChallengePanel';
@@ -365,6 +365,10 @@ export default function GameShell({ initialGameNumber }: GameShellProps = {}) {
                   <Calendar size={14} />
                   Daily Challenge
                 </button>
+                <a href="/streak" className="flex items-center gap-1.5 text-orange-400/80 hover:text-orange-300 transition-colors">
+                  <Flame size={14} />
+                  Puzzle Streak
+                </a>
               </nav>
             </div>
 
@@ -574,7 +578,7 @@ export default function GameShell({ initialGameNumber }: GameShellProps = {}) {
             )}
           </div>
 
-          {/* ── Mobile Bottom Bar — 5 icons: Home, New, Undo, Redo, Hint ── */}
+          {/* ── Mobile Bottom Bar — 5 icons: Home, Streak, Undo, Redo, Hint ── */}
           {!isLandscapeMobile && (
             <div className="flex md:hidden items-center justify-around px-2 py-2 bg-gradient-to-t from-black/80 to-[#072907]/90 backdrop-blur-lg border-t border-white/10 shadow-[0_-4px_20px_rgba(0,0,0,0.5)] safe-area-bottom z-20">
               <button
@@ -585,14 +589,14 @@ export default function GameShell({ initialGameNumber }: GameShellProps = {}) {
                 <Home size={22} />
                 <span className="text-[10px] font-medium">Home</span>
               </button>
-              <button
-                onClick={handleNewGame}
-                className="flex flex-col items-center gap-0.5 p-2 text-white/70 active:text-white active:scale-90 transition-all font-medium"
-                title="New Game"
+              <a
+                href="/streak"
+                className="flex flex-col items-center gap-0.5 p-2 text-orange-400/80 active:text-orange-300 active:scale-90 transition-all font-medium"
+                title="Puzzle Streak"
               >
-                <Shuffle size={20} />
-                <span className="text-[10px]">New</span>
-              </button>
+                <Flame size={20} />
+                <span className="text-[10px]">Streak</span>
+              </a>
               <button
                 onClick={handleUndo}
                 className="flex flex-col items-center gap-0.5 p-2 text-white/70 active:text-white active:scale-90 transition-all font-medium"
@@ -715,6 +719,7 @@ export default function GameShell({ initialGameNumber }: GameShellProps = {}) {
                 <ul className="space-y-2 text-sm text-white/50">
                   <li><Link href="/winning-deals" className="hover:text-white transition-colors">Winning Deals</Link></li>
                   <li><button onClick={() => setShowDaily(true)} className="hover:text-white transition-colors">Daily Challenge</button></li>
+                  <li><Link href="/streak" className="hover:text-white transition-colors">Puzzle Streak</Link></li>
                   <li><button onClick={() => setShowLeaderboard(true)} className="hover:text-white transition-colors">World Rankings</button></li>
                 </ul>
               </div>

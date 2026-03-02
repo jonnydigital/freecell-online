@@ -479,7 +479,7 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  const iconBtnClass = "p-2 hover:bg-white/10 text-white/80 rounded-full transition-all active:scale-95";
+  const iconBtnClass = "p-3 hover:bg-white/10 text-white/80 rounded-full transition-all active:scale-95";
   const iconSize = 16;
 
   return (
@@ -487,46 +487,46 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
       {/* Structural Wrapper: Game + Right Ad Sidebar */}
       <div className="flex w-full h-full max-w-[1320px] mx-auto relative overflow-hidden">
 
-        {/* Game Container (flex-1, max ~900px on desktop) */}
-        <div className="flex flex-col flex-1 max-w-[900px] h-full shadow-[0_0_50px_rgba(0,0,0,0.5)] relative z-10 transition-colors duration-500" style={{ backgroundColor: 'var(--theme-mid)' }}>
+        {/* Game Container (flex-1, fills available space beside ad sidebar) */}
+        <div className="flex flex-col flex-1 h-full shadow-[0_0_50px_rgba(0,0,0,0.5)] relative z-10 transition-colors duration-500" style={{ backgroundColor: 'var(--theme-mid)' }}>
 
-          {/* ── Desktop Top Bar (Clean & Professional) ── */}
-          <div className="hidden md:flex items-center justify-between px-6 py-3 bg-[#072907] border-b border-white/10 z-20 sticky top-0">
+          {/* ── Desktop Top Bar ── */}
+          <div className="hidden md:flex items-center justify-between px-8 py-5 bg-[#072907] border-b border-white/10 z-20 sticky top-0">
             <div className="flex items-center gap-8">
               {/* Logo / Home Trigger */}
               <button
                 onClick={() => setShowHome(true)}
                 className="group flex flex-col items-start transition-transform hover:opacity-80 active:scale-95"
               >
-                <h1 className="text-xl font-black text-white leading-none uppercase tracking-tighter">
+                <h1 className="text-4xl font-black text-white leading-none uppercase tracking-tighter">
                   Freecell<span className="text-[#D4AF37]">.</span>
                 </h1>
               </button>
 
               {/* Daily Challenge Link */}
-              <nav className="flex items-center gap-5 text-sm font-medium text-white/60">
-                <button onClick={() => setShowDaily(true)} className="flex items-center gap-1.5 text-yellow-500/80 hover:text-yellow-400 transition-colors">
-                  <Calendar size={14} />
+              <nav className="flex items-center gap-5 font-medium text-white/60">
+                <button onClick={() => setShowDaily(true)} className="flex items-center gap-2 text-yellow-500/80 hover:text-yellow-400 transition-colors text-base">
+                  <Calendar size={18} />
                   Daily Challenge
                 </button>
               </nav>
             </div>
 
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-6">
               {/* Game Stats Pill */}
-              <div className="flex items-center gap-3 px-4 py-1.5 bg-black/30 border border-white/5 rounded-full text-xs font-medium text-white/80 shadow-inner">
-                <div className="flex items-center gap-1.5 border-r border-white/10 pr-3">
-                  <span className="text-white/40 uppercase tracking-widest text-[10px]">Time</span>
-                  <span className="tabular-nums font-mono text-[13px]">{formatTime(timeElapsed)}</span>
+              <div className="flex items-center gap-5 px-6 py-3 bg-black/30 border border-white/5 rounded-full text-sm font-medium text-white/80 shadow-inner">
+                <div className="flex items-center gap-2.5 border-r border-white/10 pr-5">
+                  <span className="text-white/40 uppercase tracking-widest text-xs">Time</span>
+                  <span className="tabular-nums font-mono text-[17px]">{formatTime(timeElapsed)}</span>
                 </div>
-                <div className="flex items-center gap-1.5 border-r border-white/10 pr-3">
-                  <span className="text-white/40 uppercase tracking-widest text-[10px]">Moves</span>
-                  <span className="tabular-nums font-mono text-[13px] text-yellow-400/90">{moveCount}</span>
+                <div className="flex items-center gap-2.5 border-r border-white/10 pr-5">
+                  <span className="text-white/40 uppercase tracking-widest text-xs">Moves</span>
+                  <span className="tabular-nums font-mono text-[17px] text-yellow-400/90">{moveCount}</span>
                 </div>
                 {gameNumber && (
                   <button
                     onClick={() => setShowGameInput(true)}
-                    className="hover:text-white transition-colors cursor-pointer text-white/60 border-r border-white/10 pr-3"
+                    className="hover:text-white transition-colors cursor-pointer text-white/60 border-r border-white/10 pr-5 text-[17px]"
                     title="Click to enter a game number"
                   >
                     #{gameNumber}
@@ -537,33 +537,33 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
                   className="p-1 -mr-2 text-white/30 hover:text-[#D4AF37] transition-colors"
                   title={shareStatus === 'copied' ? 'Copied!' : 'Share this game'}
                 >
-                  <Share2 size={14} />
+                  <Share2 size={18} />
                 </button>
               </div>
 
               {/* Action Buttons */}
-              <div className="flex items-center gap-1 ml-2">
+              <div className="flex items-center gap-2 ml-1">
                 <button
                   onClick={handleNewGame}
-                  className="px-4 py-1.5 bg-[#1a5c1a] hover:bg-[#257a25] text-white text-xs font-bold rounded-full transition-all shadow-lg active:scale-95 border border-white/10"
+                  className="px-7 py-3 bg-[#1a5c1a] hover:bg-[#257a25] text-white text-[15px] font-bold rounded-full transition-all shadow-lg active:scale-95 border border-white/10"
                 >
                   New Deal
                 </button>
-                <div className="w-px h-4 bg-white/10 mx-1" />
+                <div className="w-px h-7 bg-white/10 mx-2.5" />
                 <button ref={undoDesktopRef} onClick={handleUndo} className={iconBtnClass} title="Undo (Ctrl+Z)">
-                  <RotateCcw size={18} />
+                  <RotateCcw size={20} />
                 </button>
                 <button onClick={handleRedo} className={iconBtnClass} title="Redo (Ctrl+Y)">
-                  <RotateCw size={18} />
+                  <RotateCw size={20} />
                 </button>
                 <button onClick={handleHint} className={iconBtnClass} title="Hint (H)">
-                  <Lightbulb size={18} />
+                  <Lightbulb size={20} />
                 </button>
                 <button onClick={handleToggleMute} className={iconBtnClass} title={isMuted ? "Unmute" : "Mute"}>
-                  {isMuted ? <VolumeX size={18} /> : <Volume2 size={18} />}
+                  {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
                 </button>
                 <button onClick={() => setShowHome(true)} className={iconBtnClass} title="Menu">
-                  <Home size={18} />
+                  <Home size={20} />
                 </button>
               </div>
             </div>

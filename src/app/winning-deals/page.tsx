@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import ContentLayout from "../../components/ContentLayout";
 
 export const metadata: Metadata = {
   title:
@@ -295,7 +296,7 @@ function SectionHeading({
   icon?: string;
 }) {
   return (
-    <div className="px-8 sm:px-10 md:px-12 pt-8 sm:pt-10 pb-0">
+    <div className="px-6 sm:px-8 md:px-10 pt-8 sm:pt-10 pb-0">
       {sub && (
         <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#B8860B]/60 mb-1.5 block">
           {sub}
@@ -396,7 +397,7 @@ export default function WinningDealsPage() {
   ];
 
   return (
-    <div className="h-screen overflow-y-auto scroll-smooth felt-bg">
+    <ContentLayout variant="dark">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -422,24 +423,6 @@ export default function WinningDealsPage() {
         >
           {"\u2660"}
         </div>
-
-        <nav
-          className="max-w-4xl mx-auto mb-8 text-sm text-[#6B7280]"
-          aria-label="Breadcrumb"
-        >
-          <ol className="flex items-center justify-center gap-2">
-            <li>
-              <Link
-                href="/"
-                className="hover:text-white/80 transition-colors"
-              >
-                Home
-              </Link>
-            </li>
-            <li className="text-[#D4AF37]">/</li>
-            <li className="text-white/80">Winning Deals & Statistics</li>
-          </ol>
-        </nav>
 
         <h1
           className="text-4xl sm:text-5xl lg:text-6xl font-semibold text-[#D4AF37] mb-4 max-w-3xl mx-auto leading-tight"
@@ -502,7 +485,7 @@ export default function WinningDealsPage() {
               FreeCell Statistics at a Glance
             </SectionHeading>
 
-            <div className="px-8 sm:px-10 md:px-12 py-8">
+            <div className="px-6 sm:px-8 md:px-10 py-8">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {statistics.map((stat, i) => {
                   const suits = ["\u2660", "\u2665", "\u2666", "\u2663"];
@@ -569,7 +552,7 @@ export default function WinningDealsPage() {
               Easiest FreeCell Deals
             </SectionHeading>
 
-            <div className="px-8 sm:px-10 md:px-12 py-8">
+            <div className="px-6 sm:px-8 md:px-10 py-8">
               <p className="text-[#444444] leading-relaxed mb-6">
                 These deals are excellent starting points for new players or
                 for warming up before tackling harder games. They feature
@@ -615,7 +598,7 @@ export default function WinningDealsPage() {
               Hardest FreeCell Deals
             </SectionHeading>
 
-            <div className="px-8 sm:px-10 md:px-12 py-8">
+            <div className="px-6 sm:px-8 md:px-10 py-8">
               <p className="text-[#444444] leading-relaxed mb-6">
                 These deals will test even experienced players. Several were
                 thought to be impossible for years before advanced solvers
@@ -661,7 +644,7 @@ export default function WinningDealsPage() {
               Practice Deals for Specific Skills
             </SectionHeading>
 
-            <div className="px-8 sm:px-10 md:px-12 py-8">
+            <div className="px-6 sm:px-8 md:px-10 py-8">
               <p className="text-[#444444] leading-relaxed mb-6">
                 These medium-difficulty deals are chosen because each one
                 emphasizes a specific skill. Use them as training exercises
@@ -699,7 +682,7 @@ export default function WinningDealsPage() {
               FreeCell Solvability Explained
             </SectionHeading>
 
-            <div className="px-8 sm:px-10 md:px-12 py-8 space-y-5 text-[#444444] leading-relaxed">
+            <div className="px-6 sm:px-8 md:px-10 py-8 space-y-5 text-[#444444] leading-relaxed">
               <p>
                 One of FreeCell&apos;s most remarkable properties is its
                 extraordinarily high solvability rate. Unlike{" "}
@@ -864,7 +847,7 @@ export default function WinningDealsPage() {
               Winning Deals FAQ
             </SectionHeading>
 
-            <div className="px-8 sm:px-10 md:px-12 py-8 space-y-6">
+            <div className="px-6 sm:px-8 md:px-10 py-8 space-y-6">
               {dealsFaqs.map((faq, i) => (
                 <div key={i}>
                   <h3 className="font-medium text-[#2a2522] text-lg mb-2">
@@ -939,46 +922,7 @@ export default function WinningDealsPage() {
           </div>
         </section>
 
-        {/* Cross-links */}
-        <footer className="text-center text-sm text-[#6B7280]/60 pb-10">
-          <div className="flex flex-wrap justify-center gap-4">
-            <Link
-              href="/how-to-play"
-              className="hover:text-[#6B7280] transition-colors"
-            >
-              How to Play
-            </Link>
-            <span className="text-white/20">|</span>
-            <Link
-              href="/strategy"
-              className="hover:text-[#6B7280] transition-colors"
-            >
-              Strategy Guide
-            </Link>
-            <span className="text-white/20">|</span>
-            <Link
-              href="/tips"
-              className="hover:text-[#6B7280] transition-colors"
-            >
-              Tips & Tricks
-            </Link>
-            <span className="text-white/20">|</span>
-            <Link
-              href="/history"
-              className="hover:text-[#6B7280] transition-colors"
-            >
-              FreeCell History
-            </Link>
-            <span className="text-white/20">|</span>
-            <Link href="/" className="hover:text-[#6B7280] transition-colors">
-              Play Free
-            </Link>
-          </div>
-          <p className="mt-3 text-white/25">
-            &copy; {new Date().getFullYear()} PlayFreeCellOnline.com
-          </p>
-        </footer>
       </main>
-    </div>
+    </ContentLayout>
   );
 }

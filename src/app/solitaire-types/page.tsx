@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import ContentLayout from "../../components/ContentLayout";
 
 export const metadata: Metadata = {
   title: "Types of Solitaire Card Games | 20 Solitaire Variants Explained",
@@ -354,7 +355,7 @@ function SectionHeading({
   icon?: string;
 }) {
   return (
-    <div className="px-8 sm:px-10 md:px-12 pt-8 sm:pt-10 pb-0">
+    <div className="px-6 sm:px-8 md:px-10 pt-8 sm:pt-10 pb-0">
       {sub && (
         <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#B8860B]/60 mb-1.5 block">
           {sub}
@@ -491,7 +492,7 @@ export default function SolitaireTypesPage() {
   ];
 
   return (
-    <div className="h-screen overflow-y-auto scroll-smooth felt-bg">
+    <ContentLayout variant="dark">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -517,24 +518,6 @@ export default function SolitaireTypesPage() {
         >
           {"\u2660"}
         </div>
-
-        <nav
-          className="max-w-4xl mx-auto mb-8 text-sm text-[#6B7280]"
-          aria-label="Breadcrumb"
-        >
-          <ol className="flex items-center justify-center gap-2">
-            <li>
-              <Link
-                href="/"
-                className="hover:text-white/80 transition-colors"
-              >
-                Home
-              </Link>
-            </li>
-            <li className="text-[#D4AF37]">/</li>
-            <li className="text-white/80">Types of Solitaire</li>
-          </ol>
-        </nav>
 
         <h1
           className="text-4xl sm:text-5xl lg:text-6xl font-semibold text-[#D4AF37] mb-4 max-w-3xl mx-auto leading-tight"
@@ -598,7 +581,7 @@ export default function SolitaireTypesPage() {
               What Is Solitaire?
             </SectionHeading>
 
-            <div className="px-8 sm:px-10 md:px-12 py-8 space-y-5 text-[#444444] leading-relaxed">
+            <div className="px-6 sm:px-8 md:px-10 py-8 space-y-5 text-[#444444] leading-relaxed">
               <p>
                 Solitaire isn&apos;t a single game — it&apos;s a family of
                 hundreds of card games designed for one player. The term comes
@@ -665,7 +648,7 @@ export default function SolitaireTypesPage() {
                   {category.name}
                 </SectionHeading>
 
-                <div className="px-8 sm:px-10 md:px-12 py-6">
+                <div className="px-6 sm:px-8 md:px-10 py-6">
                   <p className="text-[#444444] leading-relaxed mb-6">
                     {category.description}
                   </p>
@@ -759,7 +742,7 @@ export default function SolitaireTypesPage() {
               Solitaire Types FAQ
             </SectionHeading>
 
-            <div className="px-8 sm:px-10 md:px-12 py-8 space-y-6">
+            <div className="px-6 sm:px-8 md:px-10 py-8 space-y-6">
               {solitaireFaqs.map((faq, i) => (
                 <div key={i}>
                   <h3 className="font-medium text-[#2a2522] text-lg mb-2">
@@ -835,46 +818,7 @@ export default function SolitaireTypesPage() {
           </div>
         </section>
 
-        {/* Cross-links */}
-        <footer className="text-center text-sm text-[#6B7280]/60 pb-10">
-          <div className="flex flex-wrap justify-center gap-4">
-            <Link
-              href="/how-to-play"
-              className="hover:text-[#6B7280] transition-colors"
-            >
-              How to Play
-            </Link>
-            <span className="text-white/20">|</span>
-            <Link
-              href="/strategy"
-              className="hover:text-[#6B7280] transition-colors"
-            >
-              Strategy Guide
-            </Link>
-            <span className="text-white/20">|</span>
-            <Link
-              href="/history"
-              className="hover:text-[#6B7280] transition-colors"
-            >
-              FreeCell History
-            </Link>
-            <span className="text-white/20">|</span>
-            <Link
-              href="/glossary"
-              className="hover:text-[#6B7280] transition-colors"
-            >
-              Glossary
-            </Link>
-            <span className="text-white/20">|</span>
-            <Link href="/" className="hover:text-[#6B7280] transition-colors">
-              Play Free
-            </Link>
-          </div>
-          <p className="mt-3 text-white/25">
-            &copy; {new Date().getFullYear()} PlayFreeCellOnline.com
-          </p>
-        </footer>
       </main>
-    </div>
+    </ContentLayout>
   );
 }

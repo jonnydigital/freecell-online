@@ -9,3 +9,8 @@ date,site,spark_found,description,priority,implemented
 2026-02-28,nytimes.com/games,yes,Game portfolio as retention moat — 13+ games creating daily habit loops,medium,no
 2026-02-28,duolingo.com,yes,Streak emotional investment — milestone celebrations + streak freeze mechanic,medium,no
 2026-02-28,candy-crush,yes,Star rating per game + juiciness micro-feedback on every action,medium,no
+2026-03-01,solitaired.com,yes,Leaderboards + Vimeo instructional video on game page,medium,no
+2026-03-01,cardgames.io,yes,1-50000 numbered game library for shareability,medium,no
+2026-03-01,247freecell.com,no,Basic content — glossary definitions but no unique features,low,n/a
+2026-03-01,reddit/r/solitaire,yes,Win rate statistics content opportunity + quality frustration signal,medium,no
+2026-03-01,playfreecellonline.com,yes,CRITICAL: Mobile card rendering broken — cards show as blank rectangles,critical,no

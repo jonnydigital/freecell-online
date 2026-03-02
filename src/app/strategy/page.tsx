@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import AdUnit from "../../components/AdUnit";
+import ContentLayout from "../../components/ContentLayout";
 
 export const metadata: Metadata = {
   title: "FreeCell Strategy Guide | How to Win FreeCell — Beginner to Expert Tips",
@@ -15,6 +16,11 @@ export const metadata: Metadata = {
     "freecell guide",
     "freecell winning strategy",
   ],
+};
+
+const CARD = "card-panel";
+const CARD_TOP: React.CSSProperties = {
+  borderTop: "1px solid rgba(184, 134, 11, 0.08)",
 };
 
 const jsonLd = {
@@ -46,7 +52,7 @@ const faqJsonLd = {
       name: "What is a supermove in FreeCell?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "A supermove is the ability to move multiple cards at once between columns. The number of cards you can move equals (1 + number of empty free cells) × 2^(number of empty columns). For example, with 2 empty free cells and 1 empty column, you can move (1+2)×2 = 6 cards at once.",
+        text: "A supermove is the ability to move multiple cards at once between columns. The number of cards you can move equals (1 + number of empty free cells) \u00d7 2^(number of empty columns). For example, with 2 empty free cells and 1 empty column, you can move (1+2)\u00d72 = 6 cards at once.",
       },
     },
     {
@@ -70,15 +76,56 @@ const faqJsonLd = {
       name: "When should I start moving cards to foundations?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Move aces and twos to foundations immediately — there is never a reason to keep them in play. For threes and above, only move them to foundations when both cards of the opposite color and one rank lower are already on foundations. For example, move the 5 of hearts to the foundation only when both the 4 of spades and 4 of clubs are already there.",
+        text: "Move aces and twos to foundations immediately \u2014 there is never a reason to keep them in play. For threes and above, only move them to foundations when both cards of the opposite color and one rank lower are already on foundations. For example, move the 5 of hearts to the foundation only when both the 4 of spades and 4 of clubs are already there.",
       },
     },
   ],
 };
 
+const tocItems = [
+  { href: "#three-laws", icon: "\u2660", label: "The Three Laws" },
+  { href: "#beginner", icon: "\u2665", label: "Beginner Tactics" },
+  { href: "#intermediate", icon: "\u2666", label: "Intermediate" },
+  { href: "#advanced", icon: "\u2663", label: "Expert Play" },
+  { href: "#mistakes", icon: "\u2660", label: "Common Mistakes" },
+  { href: "#practice", icon: "\u2665", label: "Practice Drills" },
+  { href: "#faq", icon: "\u2666", label: "FAQ" },
+];
+
+function SectionHeading({
+  children,
+  id,
+  sub,
+  icon,
+}: {
+  children: React.ReactNode;
+  id?: string;
+  sub?: string;
+  icon?: string;
+}) {
+  return (
+    <div className="px-6 sm:px-8 md:px-10 pt-8 sm:pt-10 pb-0">
+      {sub && (
+        <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#B8860B]/60 mb-1.5 block">
+          {sub}
+        </span>
+      )}
+      <h2
+        id={id}
+        className="text-2xl sm:text-3xl font-bold text-[#2a2522] scroll-mt-6"
+        style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
+      >
+        {icon && <span className="mr-2 text-[#c9a84c]">{icon}</span>}
+        {children}
+      </h2>
+      <div className="card-title-separator mt-5" />
+    </div>
+  );
+}
+
 export default function StrategyPage() {
   return (
-    <div className="min-h-screen bg-white text-gray-900 selection:bg-[#D4AF37] selection:text-white scroll-smooth">
+    <ContentLayout variant="dark">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -88,247 +135,276 @@ export default function StrategyPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
 
-      {/* ── Header ── */}
-      <header className="bg-[#072907] text-white pt-16 pb-24 px-6 flex flex-col items-center text-center">
-        <Link
-          href="/"
-          className="text-sm font-black uppercase tracking-widest mb-8 hover:text-[#D4AF37] transition-colors"
+      {/* ── Hero ── */}
+      <header className="relative pt-6 pb-12 sm:pt-8 sm:pb-16 px-6 text-center overflow-hidden">
+        <div
+          className="absolute top-10 left-[10%] text-6xl sm:text-8xl text-white/[0.03] select-none pointer-events-none"
+          aria-hidden="true"
         >
-          Freecell<span className="text-[#D4AF37]">.</span>
-        </Link>
-        <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
+          {"\u2663"}
+        </div>
+        <div
+          className="absolute top-16 right-[8%] text-5xl sm:text-7xl text-red-500/[0.04] select-none pointer-events-none"
+          aria-hidden="true"
+        >
+          {"\u2666"}
+        </div>
+        <div
+          className="absolute bottom-4 left-[18%] text-5xl sm:text-6xl text-white/[0.03] select-none pointer-events-none"
+          aria-hidden="true"
+        >
+          {"\u2660"}
+        </div>
+
+        <h1
+          className="text-4xl sm:text-5xl lg:text-6xl font-semibold text-[#D4AF37] mb-4 max-w-3xl mx-auto leading-tight"
+          style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
+        >
           FreeCell Strategy Guide
         </h1>
-        <p className="text-white/60 text-lg max-w-2xl">
+        <p className="text-[#6B7280] text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
           The difference between a 50% win rate and 90%+ is pure strategy. This
           guide covers everything from first principles to expert-level endgame
           technique.
         </p>
+
+        <div className="mt-8 flex items-center justify-center gap-3">
+          <div className="h-px w-12 bg-gradient-to-r from-transparent to-[#D4AF37]/50" />
+          <span className="text-[#D4AF37] text-sm">
+            {"\u2660"} {"\u2665"} {"\u2666"} {"\u2663"}
+          </span>
+          <div className="h-px w-12 bg-gradient-to-l from-transparent to-[#D4AF37]/50" />
+        </div>
       </header>
 
-      {/* ── Main Content ── */}
-      <main className="max-w-4xl mx-auto bg-white rounded-2xl shadow-sm border border-gray-100 p-8 md:p-16 relative -mt-8 mb-20 z-10">
-        <article className="max-w-none">
-          {/* ── Table of Contents ── */}
-          <nav className="mb-16 p-6 bg-gray-50 rounded-xl border border-gray-100">
-            <h2 className="text-sm font-black uppercase tracking-widest text-gray-500 mb-4">
-              In This Guide
-            </h2>
-            <ol className="grid md:grid-cols-2 gap-2 text-sm text-gray-600">
-              <li>
-                <a href="#three-laws" className="hover:text-[#072907] transition-colors">
-                  1. The Three Laws of FreeCell
-                </a>
-              </li>
-              <li>
-                <a href="#beginner" className="hover:text-[#072907] transition-colors">
-                  2. Beginner Fundamentals
-                </a>
-              </li>
-              <li>
-                <a href="#intermediate" className="hover:text-[#072907] transition-colors">
-                  3. Intermediate Tactics
-                </a>
-              </li>
-              <li>
-                <a href="#advanced" className="hover:text-[#072907] transition-colors">
-                  4. Advanced Techniques
-                </a>
-              </li>
-              <li>
-                <a href="#mistakes" className="hover:text-[#072907] transition-colors">
-                  5. Common Mistakes
-                </a>
-              </li>
-              <li>
-                <a href="#practice" className="hover:text-[#072907] transition-colors">
-                  6. Practice Drills
-                </a>
-              </li>
-              <li>
-                <a href="#faq" className="hover:text-[#072907] transition-colors">
-                  7. Frequently Asked Questions
-                </a>
-              </li>
-            </ol>
-          </nav>
+      {/* ── TOC Pills ── */}
+      <nav className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-10 mb-12">
+        <div className="flex md:flex-wrap md:justify-center gap-3 overflow-x-auto no-scrollbar pb-1">
+          {tocItems.map((item) => (
+            <a
+              key={item.href}
+              href={item.href}
+              className="rounded-full px-5 py-2 border border-[#D4AF37]/30 bg-transparent text-sm tracking-wide text-[#D4AF37] flex items-center gap-2 transition-all hover:bg-[#D4AF37]/10 hover:border-[#D4AF37]/50 whitespace-nowrap shrink-0"
+            >
+              <span
+                className={`text-sm ${item.icon === "\u2665" || item.icon === "\u2666" ? "text-red-400" : ""}`}
+              >
+                {item.icon}
+              </span>
+              {item.label}
+            </a>
+          ))}
+        </div>
+      </nav>
 
-          {/* ── Section 1: Three Laws ── */}
-          <section id="three-laws" className="mb-16">
-            <h2 className="text-2xl font-bold text-gray-900 border-b border-gray-100 pb-4 mb-8">
-              1. The Three Laws of FreeCell
-            </h2>
-            <p className="text-gray-600 text-lg leading-relaxed mb-8">
-              Every winning FreeCell strategy flows from three core principles.
-              Internalize these and you&apos;ll win 80% of your games before
-              learning anything else.
-            </p>
-            <div className="grid md:grid-cols-3 gap-8 not-prose mb-8">
-              <div className="space-y-4">
-                <div className="w-12 h-1 bg-[#D4AF37]" />
-                <h3 className="text-lg font-bold text-gray-800">
-                  Preserve Space
-                </h3>
-                <p className="text-gray-600 text-sm leading-relaxed">
-                  Every filled{" "}
-                  <Link href="/glossary" className="text-[#072907] underline decoration-dotted hover:text-[#D4AF37]">
-                    free cell
-                  </Link>{" "}
-                  halves your movement capacity. With 4 empty free cells and 1
-                  empty column, you can move 10 cards at once. Fill 3 free cells
-                  and that drops to 4. Keep your workspace open at all costs.
-                </p>
+      {/* ── Content ── */}
+      <main className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-10 pb-20 flex flex-col gap-12">
+
+        {/* ── Card 1: The Three Laws ── */}
+        <section id="three-laws" className="scroll-mt-6">
+          <div className={CARD} style={CARD_TOP}>
+            <SectionHeading sub="Core Principles" id="three-laws-heading" icon={"\u2660"}>
+              The Three Laws of FreeCell
+            </SectionHeading>
+
+            <div className="px-6 sm:px-8 md:px-10 py-8">
+              <p className="text-[#444444] text-lg leading-relaxed mb-8">
+                Every winning FreeCell strategy flows from three core principles.
+                Internalize these and you&apos;ll win 80% of your games before
+                learning anything else.
+              </p>
+
+              <div className="grid md:grid-cols-3 gap-4">
+                {[
+                  {
+                    title: "Preserve Space",
+                    body: (
+                      <>
+                        Every filled{" "}
+                        <Link href="/glossary#free-cell" className="text-[#D4AF37] hover:underline">
+                          free cell
+                        </Link>{" "}
+                        halves your movement capacity. With 4 empty free cells and 1
+                        empty column, you can move 10 cards at once. Fill 3 free cells
+                        and that drops to 4. Keep your workspace open at all costs.
+                      </>
+                    ),
+                  },
+                  {
+                    title: "Think in Chains",
+                    body: "Never move a card without knowing the next 3 moves it enables. Ask yourself: \u201CIf I move this 7 of hearts, what does that uncover? Can I then access the 6 of spades underneath? Does that free the Ace?\u201D Foresight is your only tool.",
+                  },
+                  {
+                    title: "Exhume Low Cards",
+                    body: "Aces and twos buried deep in a column are emergencies. Your foundations can\u2019t start building until aces are free, and every card sitting on top of an ace is blocking your entire game. Map their locations immediately.",
+                  },
+                ].map((law) => (
+                  <div key={law.title} className="card-inset rounded-lg p-5">
+                    <div className="w-10 h-1 bg-[#D4AF37] mb-4 rounded-full" />
+                    <h3
+                      className="text-lg font-semibold text-[#2a2522] mb-3"
+                      style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
+                    >
+                      {law.title}
+                    </h3>
+                    <p className="text-[#444444] text-sm leading-relaxed">{law.body}</p>
+                  </div>
+                ))}
               </div>
-              <div className="space-y-4">
-                <div className="w-12 h-1 bg-[#D4AF37]" />
-                <h3 className="text-lg font-bold text-gray-800">
-                  Think in Chains
-                </h3>
-                <p className="text-gray-600 text-sm leading-relaxed">
-                  Never move a card without knowing the next 3 moves it enables.
-                  Ask yourself: &ldquo;If I move this 7 of hearts, what does
-                  that uncover? Can I then access the 6 of spades underneath?
-                  Does that free the Ace?&rdquo; Foresight is your only tool.
-                </p>
-              </div>
-              <div className="space-y-4">
-                <div className="w-12 h-1 bg-[#D4AF37]" />
-                <h3 className="text-lg font-bold text-gray-800">
-                  Exhume Low Cards
-                </h3>
-                <p className="text-gray-600 text-sm leading-relaxed">
-                  Aces and twos buried deep in a column are emergencies. Your
-                  foundations can&apos;t start building until aces are free, and
-                  every card sitting on top of an ace is blocking your entire
-                  game. Map their locations immediately.
+
+              <div className="card-inset rounded-lg p-5 mt-6">
+                <p className="text-sm text-[#444444]">
+                  <strong className="text-[#2a2522]">Pro tip:</strong> Before your first move, count how many
+                  aces are visible (on top of columns) vs. buried. If 3+ aces are
+                  buried, the game will require careful planning. If all 4 are
+                  accessible, you&apos;re likely looking at a quick win.
                 </p>
               </div>
             </div>
-            <div className="bg-[#072907]/5 rounded-xl p-6 text-sm text-gray-700">
-              <strong>Pro tip:</strong> Before your first move, count how many
-              aces are visible (on top of columns) vs. buried. If 3+ aces are
-              buried, the game will require careful planning. If all 4 are
-              accessible, you&apos;re likely looking at a quick win.
-            </div>
-          </section>
+          </div>
+        </section>
 
-          <AdUnit className="my-8" />
+        <AdUnit className="my-2" />
 
-          {/* ── Section 2: Beginner Fundamentals ── */}
-          <section id="beginner" className="mb-16">
-            <h2 className="text-2xl font-bold text-gray-900 border-b border-gray-100 pb-4 mb-6">
-              2. Beginner Fundamentals
-            </h2>
-            <div className="space-y-8 text-gray-600 text-lg leading-relaxed">
-              <div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">
-                  The Opening Scan
-                </h3>
-                <p>
-                  Spend 30 seconds studying the board before touching a card.
-                  This is the single most impactful habit you can develop.
-                  Identify:
-                </p>
-                <ul className="list-disc list-inside mt-3 space-y-2 text-base">
-                  <li>
-                    <strong>Where are the aces?</strong> Visible on top of
-                    columns, or buried? How deep?
-                  </li>
-                  <li>
-                    <strong>Which columns are cleanest?</strong> Short columns
-                    or columns already partially sorted are your best friends.
-                  </li>
-                  <li>
-                    <strong>Are any columns already in order?</strong> A run of
-                    K-Q-J in alternating colors is free real estate.
-                  </li>
-                  <li>
-                    <strong>Where are the kings?</strong> Kings can only go in
-                    empty columns. Their position dictates your late-game
-                    options.
-                  </li>
-                </ul>
-              </div>
+        {/* ── Card 2: Beginner Fundamentals ── */}
+        <section id="beginner" className="scroll-mt-6">
+          <div className={CARD} style={CARD_TOP}>
+            <SectionHeading sub="Getting Started" id="beginner-heading" icon={"\u2665"}>
+              Beginner Fundamentals
+            </SectionHeading>
 
-              <div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">
-                  Prioritize Aces and Twos
-                </h3>
-                <p>
-                  Move aces to the{" "}
-                  <Link href="/glossary" className="text-[#072907] underline decoration-dotted hover:text-[#D4AF37]">
-                    foundation
-                  </Link>{" "}
-                  the instant they&apos;re available — there is never a strategic
-                  reason to keep an ace in play. The same applies to twos. Every
-                  ace on the foundation means one fewer card cluttering your
-                  tableau, and it opens the path for building sequences above it.
-                </p>
-              </div>
-
-              <div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">
-                  Empty Columns &gt; Free Cells
-                </h3>
-                <p>
-                  New players instinctively dump cards into free cells. Resist
-                  this urge. An empty column is exponentially more powerful
-                  because it can hold an entire sequence, not just one card. Use
-                  free cells only as a last resort, and free them up as quickly
-                  as possible.
-                </p>
-                <div className="bg-gray-50 rounded-lg p-4 mt-3 text-base border border-gray-100">
-                  <strong>The math:</strong> Your maximum{" "}
-                  <Link href="/glossary" className="text-[#072907] underline decoration-dotted hover:text-[#D4AF37]">
-                    supermove
-                  </Link>{" "}
-                  size = (1 + empty free cells) × 2<sup>empty columns</sup>.
-                  With 4 free cells and 0 empty columns, you move 5 cards. With
-                  3 free cells and 1 empty column, you move 8. The column is
-                  worth more.
+            <div className="px-6 sm:px-8 md:px-10 py-8 space-y-8">
+              {[
+                {
+                  num: "01",
+                  title: "The Opening Scan",
+                  body: (
+                    <>
+                      <p>
+                        Spend 30 seconds studying the board before touching a card.
+                        This is the single most impactful habit you can develop.
+                        Identify:
+                      </p>
+                      <ul className="mt-3 space-y-2 text-base">
+                        <li className="flex items-start gap-2">
+                          <span className="text-[#B8860B] mt-1 shrink-0">&#x2022;</span>
+                          <span><strong className="text-[#2a2522]">Where are the aces?</strong> Visible on top of columns, or buried? How deep?</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="text-[#B8860B] mt-1 shrink-0">&#x2022;</span>
+                          <span><strong className="text-[#2a2522]">Which columns are cleanest?</strong> Short columns or partially sorted ones are your best friends.</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="text-[#B8860B] mt-1 shrink-0">&#x2022;</span>
+                          <span><strong className="text-[#2a2522]">Are any columns already in order?</strong> A run of K-Q-J in alternating colors is free real estate.</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="text-[#B8860B] mt-1 shrink-0">&#x2022;</span>
+                          <span><strong className="text-[#2a2522]">Where are the kings?</strong> Kings can only go in empty columns. Their position dictates your late-game options.</span>
+                        </li>
+                      </ul>
+                    </>
+                  ),
+                },
+                {
+                  num: "02",
+                  title: "Prioritize Aces and Twos",
+                  body: (
+                    <p>
+                      Move aces to the{" "}
+                      <Link href="/glossary#foundation" className="text-[#D4AF37] hover:underline">
+                        foundation
+                      </Link>{" "}
+                      the instant they&apos;re available — there is never a strategic
+                      reason to keep an ace in play. The same applies to twos. Every
+                      ace on the foundation means one fewer card cluttering your
+                      tableau, and it opens the path for building sequences above it.
+                    </p>
+                  ),
+                },
+                {
+                  num: "03",
+                  title: "Empty Columns > Free Cells",
+                  body: (
+                    <>
+                      <p>
+                        New players instinctively dump cards into free cells. Resist
+                        this urge. An empty column is exponentially more powerful
+                        because it can hold an entire sequence, not just one card. Use
+                        free cells only as a last resort, and free them up as quickly
+                        as possible.
+                      </p>
+                      <div className="card-inset rounded-lg p-4 mt-3 text-sm">
+                        <strong className="text-[#2a2522]">The math:</strong> Your maximum{" "}
+                        <Link href="/glossary#supermove" className="text-[#D4AF37] hover:underline">
+                          supermove
+                        </Link>{" "}
+                        size = (1 + empty free cells) &times; 2<sup>empty columns</sup>.
+                        With 4 free cells and 0 empty columns, you move 5 cards. With
+                        3 free cells and 1 empty column, you move 8. The column is
+                        worth more.
+                      </div>
+                    </>
+                  ),
+                },
+                {
+                  num: "04",
+                  title: "Use Undo Liberally",
+                  body: (
+                    <p>
+                      FreeCell is a game of perfect information — there&apos;s no
+                      hidden deck. The undo button isn&apos;t cheating, it&apos;s
+                      exploring. If a sequence of moves leads to a dead end, undo
+                      and try a different path. Expert players routinely undo 10-20
+                      moves to find a better line. Think of it as reading ahead in
+                      chess.
+                    </p>
+                  ),
+                },
+                {
+                  num: "05",
+                  title: "Don\u2019t Build Long Sequences Too Early",
+                  body: (
+                    <p>
+                      A perfectly sorted 8-card sequence looks satisfying but
+                      it&apos;s often a trap. That sequence occupies an entire column
+                      and can&apos;t be easily moved without multiple free cells and
+                      empty columns. Only build long sequences when you have a clear
+                      path to the foundation or when the cards would be worse off
+                      scattered.
+                    </p>
+                  ),
+                },
+              ].map((item) => (
+                <div key={item.num} className="flex gap-4">
+                  <div className="flex-shrink-0 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#1b5e30] text-[#c9a84c] border border-[#c9a84c]/30 flex items-center justify-center font-bold text-base sm:text-lg shadow-md">
+                    {item.num}
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="font-medium text-[#2a2522] text-lg mb-2">{item.title}</h3>
+                    <div className="text-[#444444] leading-relaxed">{item.body}</div>
+                  </div>
                 </div>
-              </div>
-
-              <div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">
-                  Use Undo Liberally
-                </h3>
-                <p>
-                  FreeCell is a game of perfect information — there&apos;s no
-                  hidden deck. The undo button isn&apos;t cheating, it&apos;s
-                  exploring. If a sequence of moves leads to a dead end, undo
-                  and try a different path. Expert players routinely undo 10-20
-                  moves to find a better line. Think of it as reading ahead in
-                  chess.
-                </p>
-              </div>
-
-              <div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">
-                  Don&apos;t Build Long Sequences Too Early
-                </h3>
-                <p>
-                  A perfectly sorted 8-card sequence looks satisfying but
-                  it&apos;s often a trap. That sequence occupies an entire column
-                  and can&apos;t be easily moved without multiple free cells and
-                  empty columns. Only build long sequences when you have a clear
-                  path to the foundation or when the cards would be worse off
-                  scattered.
-                </p>
-              </div>
+              ))}
             </div>
-          </section>
+          </div>
+        </section>
 
-          <AdUnit className="my-8" />
+        <AdUnit className="my-2" />
 
-          {/* ── Section 3: Intermediate Tactics ── */}
-          <section id="intermediate" className="mb-16">
-            <h2 className="text-2xl font-bold text-gray-900 border-b border-gray-100 pb-4 mb-6">
-              3. Intermediate Tactics
-            </h2>
-            <div className="space-y-8 text-gray-600 text-lg leading-relaxed">
+        {/* ── Card 3: Intermediate Tactics ── */}
+        <section id="intermediate" className="scroll-mt-6">
+          <div className={CARD} style={CARD_TOP}>
+            <SectionHeading sub="Level Up" id="intermediate-heading" icon={"\u2666"}>
+              Intermediate Tactics
+            </SectionHeading>
+
+            <div className="px-6 sm:px-8 md:px-10 py-8 space-y-8 text-[#444444] leading-relaxed">
               <div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">
+                <h3
+                  className="text-lg font-semibold text-[#2a2522] mb-3"
+                  style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
+                >
                   Mastering the Supermove
                 </h3>
                 <p>
@@ -348,7 +424,10 @@ export default function StrategyPage() {
               </div>
 
               <div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">
+                <h3
+                  className="text-lg font-semibold text-[#2a2522] mb-3"
+                  style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
+                >
                   Column Management
                 </h3>
                 <p>
@@ -358,27 +437,27 @@ export default function StrategyPage() {
                   holding cards you can&apos;t use yet. And ideally, 1-2 are
                   empty &ldquo;buffer columns.&rdquo;
                 </p>
-                <ul className="list-disc list-inside mt-3 space-y-2 text-base">
-                  <li>
-                    <strong>Never fill your last empty column</strong> unless
-                    it&apos;s for a game-winning sequence. Losing your last
-                    buffer is often fatal.
+                <ul className="mt-3 space-y-2 text-base">
+                  <li className="flex items-start gap-2">
+                    <span className="text-[#B8860B] mt-1 shrink-0">&#x2022;</span>
+                    <span><strong className="text-[#2a2522]">Never fill your last empty column</strong> unless it&apos;s for a game-winning sequence.</span>
                   </li>
-                  <li>
-                    <strong>Consolidate short columns.</strong> Two columns with
-                    2 cards each are weaker than one column with 4 cards and one
-                    empty column.
+                  <li className="flex items-start gap-2">
+                    <span className="text-[#B8860B] mt-1 shrink-0">&#x2022;</span>
+                    <span><strong className="text-[#2a2522]">Consolidate short columns.</strong> Two columns with 2 cards each are weaker than one column with 4 and one empty.</span>
                   </li>
-                  <li>
-                    <strong>Place kings strategically.</strong> A king in an
-                    empty column is permanent — nothing goes on top of a king in
-                    FreeCell except queens. Make sure you want that king there.
+                  <li className="flex items-start gap-2">
+                    <span className="text-[#B8860B] mt-1 shrink-0">&#x2022;</span>
+                    <span><strong className="text-[#2a2522]">Place kings strategically.</strong> A king in an empty column is permanent — nothing goes on top except queens.</span>
                   </li>
                 </ul>
               </div>
 
               <div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">
+                <h3
+                  className="text-lg font-semibold text-[#2a2522] mb-3"
+                  style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
+                >
                   When to Use Free Cells
                 </h3>
                 <p>
@@ -389,8 +468,8 @@ export default function StrategyPage() {
                   sits in a free cell for more than 5 moves, you may have made a
                   strategic error.
                 </p>
-                <div className="bg-[#072907]/5 rounded-xl p-4 mt-3 text-base">
-                  <strong>Rule of thumb:</strong> Never fill more than 2 free
+                <div className="card-inset rounded-lg p-4 mt-3 text-sm">
+                  <strong className="text-[#2a2522]">Rule of thumb:</strong> Never fill more than 2 free
                   cells simultaneously in the early game. In the mid-game, 3 is
                   acceptable if you have a clear plan to empty them. Filling all
                   4 is almost always a losing position.
@@ -398,7 +477,10 @@ export default function StrategyPage() {
               </div>
 
               <div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">
+                <h3
+                  className="text-lg font-semibold text-[#2a2522] mb-3"
+                  style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
+                >
                   The Foundation Timing Rule
                 </h3>
                 <p>
@@ -406,24 +488,30 @@ export default function StrategyPage() {
                   lock you out of plays. The safe rule: move a card to the
                   foundation only when both cards of the <em>opposite color</em>{" "}
                   and one rank lower are already on the foundation. For example,
-                  the 7♥ is safe to move up only when both the 6♠ and 6♣ are
+                  the 7{"\u2665"} is safe to move up only when both the 6{"\u2660"} and 6{"\u2663"} are
                   already on their foundations. This ensures you never need the
                   card back in the tableau.
                 </p>
               </div>
             </div>
-          </section>
+          </div>
+        </section>
 
-          <AdUnit className="my-8" />
+        <AdUnit className="my-2" />
 
-          {/* ── Section 4: Advanced Techniques ── */}
-          <section id="advanced" className="mb-16">
-            <h2 className="text-2xl font-bold text-gray-900 border-b border-gray-100 pb-4 mb-6">
-              4. Advanced Techniques
-            </h2>
-            <div className="space-y-8 text-gray-600 text-lg leading-relaxed">
+        {/* ── Card 4: Advanced Techniques ── */}
+        <section id="advanced" className="scroll-mt-6">
+          <div className={CARD} style={CARD_TOP}>
+            <SectionHeading sub="Advanced Technique" id="advanced-heading" icon={"\u2663"}>
+              Expert Play
+            </SectionHeading>
+
+            <div className="px-6 sm:px-8 md:px-10 py-8 space-y-8 text-[#444444] leading-relaxed">
               <div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">
+                <h3
+                  className="text-lg font-semibold text-[#2a2522] mb-3"
+                  style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
+                >
                   Reading the Board Backwards
                 </h3>
                 <p>
@@ -443,7 +531,10 @@ export default function StrategyPage() {
               </div>
 
               <div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">
+                <h3
+                  className="text-lg font-semibold text-[#2a2522] mb-3"
+                  style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
+                >
                   Sacrifice Plays
                 </h3>
                 <p>
@@ -462,7 +553,10 @@ export default function StrategyPage() {
               </div>
 
               <div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">
+                <h3
+                  className="text-lg font-semibold text-[#2a2522] mb-3"
+                  style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
+                >
                   The Cascade Technique
                 </h3>
                 <p>
@@ -476,7 +570,7 @@ export default function StrategyPage() {
                 <p className="mt-3">
                   Master this technique and you&apos;ll find solutions to boards
                   that seem impossible. Our{" "}
-                  <Link href="/tips" className="text-[#072907] underline decoration-dotted hover:text-[#D4AF37]">
+                  <Link href="/tips" className="text-[#D4AF37] hover:underline">
                     tips page
                   </Link>{" "}
                   has more examples of cascade sequences.
@@ -484,66 +578,65 @@ export default function StrategyPage() {
               </div>
 
               <div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">
+                <h3
+                  className="text-lg font-semibold text-[#2a2522] mb-3"
+                  style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
+                >
                   Endgame Patterns
                 </h3>
                 <p>
                   The endgame begins when you can see a clear path to auto-complete.
                   Recognize these patterns:
                 </p>
-                <ul className="list-disc list-inside mt-3 space-y-2 text-base">
-                  <li>
-                    <strong>All cards exposed:</strong> If every card is either
-                    on a foundation, at the bottom of a column, or in a free
-                    cell, the game auto-completes. Your goal is to reach this
-                    state.
+                <ul className="mt-3 space-y-2 text-base">
+                  <li className="flex items-start gap-2">
+                    <span className="text-[#B8860B] mt-1 shrink-0">&#x2022;</span>
+                    <span><strong className="text-[#2a2522]">All cards exposed:</strong> If every card is at the bottom of a column, on a foundation, or in a free cell, auto-complete triggers.</span>
                   </li>
-                  <li>
-                    <strong>Single-suit lockout:</strong> If one suit&apos;s
-                    cards are scattered across every column while the other three
-                    suits are nearly complete, focus everything on consolidating
-                    that troublesome suit.
+                  <li className="flex items-start gap-2">
+                    <span className="text-[#B8860B] mt-1 shrink-0">&#x2022;</span>
+                    <span><strong className="text-[#2a2522]">Single-suit lockout:</strong> If one suit is scattered while the other three are nearly done, focus everything on consolidating that suit.</span>
                   </li>
-                  <li>
-                    <strong>The parking problem:</strong> When you need to move a
-                    king to an empty column to access cards behind it, but every
-                    empty column is needed for supermoves. This is the hardest
-                    endgame pattern — sometimes the answer is to finish one suit
-                    completely first to free up space.
+                  <li className="flex items-start gap-2">
+                    <span className="text-[#B8860B] mt-1 shrink-0">&#x2022;</span>
+                    <span><strong className="text-[#2a2522]">The parking problem:</strong> When you need a King in an empty column but every column is needed for supermoves — sometimes finish one suit completely first to free space.</span>
                   </li>
                 </ul>
               </div>
             </div>
-          </section>
+          </div>
+        </section>
 
-          <AdUnit className="my-8" />
+        <AdUnit className="my-2" />
 
-          {/* ── Section 5: Common Mistakes ── */}
-          <section id="mistakes" className="mb-16">
-            <h2 className="text-2xl font-bold text-gray-900 border-b border-gray-100 pb-4 mb-6">
-              5. Common Mistakes
-            </h2>
-            <div className="space-y-6">
+        {/* ── Card 5: Common Mistakes ── */}
+        <section id="mistakes" className="scroll-mt-6">
+          <div className={CARD} style={CARD_TOP}>
+            <SectionHeading sub="What to Avoid" id="mistakes-heading" icon={"\u2660"}>
+              Common Mistakes
+            </SectionHeading>
+
+            <div className="px-6 sm:px-8 md:px-10 py-8 space-y-4">
               {[
                 {
                   title: "Moving without a plan",
-                  desc: 'The biggest mistake is making "obvious" moves without thinking about consequences. Every card you move changes the board state. Before each move, ask: "What does this enable?" If the answer is "nothing," don\'t move it.',
+                  desc: "The biggest mistake is making \u201Cobvious\u201D moves without thinking about consequences. Every card you move changes the board state. Before each move, ask: \u201CWhat does this enable?\u201D If the answer is \u201Cnothing,\u201D don\u2019t move it.",
                 },
                 {
                   title: "Filling all free cells early",
-                  desc: "With all 4 free cells occupied, your supermove capacity drops to 1 (or 2 with an empty column). You're essentially paralyzed. If you find yourself with 3+ filled free cells in the first 20 moves, consider undoing.",
+                  desc: "With all 4 free cells occupied, your supermove capacity drops to 1 (or 2 with an empty column). You\u2019re essentially paralyzed. If you find yourself with 3+ filled free cells in the first 20 moves, consider undoing.",
                 },
                 {
                   title: "Ignoring buried aces",
-                  desc: "It's tempting to build sequences with visible cards while ignoring the ace buried 6 cards deep. But that ace needs to come out eventually, and the longer you wait, the more constrained your board becomes. Address buried aces within your first 10 moves.",
+                  desc: "It\u2019s tempting to build sequences with visible cards while ignoring the ace buried 6 cards deep. But that ace needs to come out eventually, and the longer you wait, the more constrained your board becomes. Address buried aces within your first 10 moves.",
                 },
                 {
-                  title: "Building sequences you can't move",
-                  desc: "A beautiful 7-card alternating-color sequence is worthless if you don't have the supermove capacity to relocate it. Before building, calculate whether you'll be able to move the sequence when you need to.",
+                  title: "Building sequences you can\u2019t move",
+                  desc: "A beautiful 7-card alternating-color sequence is worthless if you don\u2019t have the supermove capacity to relocate it. Before building, calculate whether you\u2019ll be able to move the sequence when you need to.",
                 },
                 {
                   title: "Putting kings in empty columns too early",
-                  desc: "A king in an empty column is semi-permanent. If it's not the right king (the one you need to build a full suit sequence on), you've wasted your most valuable resource. Leave columns empty until you're certain which king belongs there.",
+                  desc: "A king in an empty column is semi-permanent. If it\u2019s not the right king (the one you need to build a full suit sequence on), you\u2019ve wasted your most valuable resource. Leave columns empty until you\u2019re certain.",
                 },
                 {
                   title: "Moving cards to foundations too aggressively",
@@ -551,244 +644,209 @@ export default function StrategyPage() {
                 },
                 {
                   title: "Giving up too early",
-                  desc: "FreeCell has a 99.999% solvability rate. If you think you're stuck, you probably haven't explored all lines. Use undo aggressively, try different opening sequences, and remember that the solution often requires unintuitive moves.",
+                  desc: "FreeCell has a 99.999% solvability rate. If you think you\u2019re stuck, you probably haven\u2019t explored all lines. Use undo aggressively, try different opening sequences, and remember that the solution often requires unintuitive moves.",
                 },
               ].map((mistake, i) => (
                 <div
                   key={i}
-                  className="flex gap-4 p-5 bg-gray-50 rounded-xl border border-gray-100"
+                  className="card-inset rounded-lg p-5 flex gap-4"
                 >
                   <span className="text-red-400 font-black text-lg shrink-0">
-                    ✗
+                    {"\u2717"}
                   </span>
                   <div>
-                    <h3 className="font-bold text-gray-900 mb-1">
-                      {mistake.title}
-                    </h3>
-                    <p className="text-gray-600 text-sm leading-relaxed">
-                      {mistake.desc}
-                    </p>
+                    <h3 className="font-semibold text-[#2a2522] mb-1">{mistake.title}</h3>
+                    <p className="text-[#444444] text-sm leading-relaxed">{mistake.desc}</p>
                   </div>
                 </div>
               ))}
             </div>
-          </section>
+          </div>
+        </section>
 
-          <AdUnit className="my-8" />
+        <AdUnit className="my-2" />
 
-          {/* ── Section 6: Practice Drills ── */}
-          <section id="practice" className="mb-16">
-            <h2 className="text-2xl font-bold text-gray-900 border-b border-gray-100 pb-4 mb-6">
-              6. Practice Drills
-            </h2>
-            <p className="text-gray-600 text-lg leading-relaxed mb-8">
-              Reading about strategy only gets you so far. These exercises build
-              the pattern recognition that separates beginners from experts.
-            </p>
-            <div className="grid md:grid-cols-2 gap-6">
-              <div className="bg-gray-50 rounded-xl p-6 border border-gray-100">
-                <h3 className="font-bold text-gray-900 mb-2">
-                  🔍 The 30-Second Scan
-                </h3>
-                <p className="text-gray-600 text-sm mb-3">
-                  Start{" "}
-                  <Link href="/game/1" className="text-[#072907] underline hover:text-[#D4AF37]">
-                    Game #1
-                  </Link>
-                  . Before making any move, locate all 4 aces and write down
-                  their column positions. Identify the 3 best opening moves.
-                  Then play. Repeat with{" "}
-                  <Link href="/game/2" className="text-[#072907] underline hover:text-[#D4AF37]">
-                    Game #2
-                  </Link>{" "}
-                  and{" "}
-                  <Link href="/game/3" className="text-[#072907] underline hover:text-[#D4AF37]">
-                    Game #3
-                  </Link>
-                  .
-                </p>
-              </div>
+        {/* ── Card 6: Practice Drills ── */}
+        <section id="practice" className="scroll-mt-6">
+          <div className={CARD} style={CARD_TOP}>
+            <SectionHeading sub="Build Your Skills" id="practice-heading" icon={"\u2665"}>
+              Practice Drills
+            </SectionHeading>
 
-              <div className="bg-gray-50 rounded-xl p-6 border border-gray-100">
-                <h3 className="font-bold text-gray-900 mb-2">
-                  🎯 The Zero Free Cell Challenge
-                </h3>
-                <p className="text-gray-600 text-sm mb-3">
-                  Play any game and try to win using free cells as little as
-                  possible. Track how many times you used them. Expert benchmark:
-                  win a game using free cells 5 or fewer times total.
-                </p>
-              </div>
+            <div className="px-6 sm:px-8 md:px-10 py-8">
+              <p className="text-[#444444] leading-relaxed mb-8">
+                Reading about strategy only gets you so far. These exercises build
+                the pattern recognition that separates beginners from experts.
+              </p>
+              <div className="grid md:grid-cols-2 gap-4">
+                <div className="card-inset rounded-lg p-5">
+                  <h3
+                    className="font-medium text-[#2a2522] mb-2"
+                    style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
+                  >
+                    The 30-Second Scan
+                  </h3>
+                  <p className="text-[#444444] text-sm mb-3">
+                    Start{" "}
+                    <Link href="/game/1" className="text-[#D4AF37] hover:underline">
+                      Game #1
+                    </Link>
+                    . Before making any move, locate all 4 aces and identify the 3
+                    best opening moves. Then play. Repeat with{" "}
+                    <Link href="/game/2" className="text-[#D4AF37] hover:underline">
+                      Game #2
+                    </Link>{" "}
+                    and{" "}
+                    <Link href="/game/3" className="text-[#D4AF37] hover:underline">
+                      Game #3
+                    </Link>
+                    .
+                  </p>
+                </div>
 
-              <div className="bg-gray-50 rounded-xl p-6 border border-gray-100">
-                <h3 className="font-bold text-gray-900 mb-2">
-                  🔥 Streak Training
-                </h3>
-                <p className="text-gray-600 text-sm mb-3">
-                  Our{" "}
-                  <Link href="/streak" className="text-[#072907] underline hover:text-[#D4AF37]">
-                    Streak mode
-                  </Link>{" "}
-                  challenges you to win consecutive games. Start with a goal of
-                  3, then 5, then 10. Streaks force consistent play — you
-                  can&apos;t rely on luck across multiple games.
-                </p>
-              </div>
+                <div className="card-inset rounded-lg p-5">
+                  <h3
+                    className="font-medium text-[#2a2522] mb-2"
+                    style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
+                  >
+                    The Zero Free Cell Challenge
+                  </h3>
+                  <p className="text-[#444444] text-sm mb-3">
+                    Play any game and try to win using free cells as little as
+                    possible. Track how many times you used them. Expert benchmark:
+                    win using free cells 5 or fewer times total.
+                  </p>
+                </div>
 
-              <div className="bg-gray-50 rounded-xl p-6 border border-gray-100">
-                <h3 className="font-bold text-gray-900 mb-2">
-                  ⏱️ Speed Run
-                </h3>
-                <p className="text-gray-600 text-sm mb-3">
-                  Once you&apos;re winning consistently, optimize for speed. Try
-                  to solve{" "}
-                  <Link href="/game/5" className="text-[#072907] underline hover:text-[#D4AF37]">
-                    Game #5
-                  </Link>{" "}
-                  under 3 minutes. Speed forces intuitive decision-making rather
-                  than deliberate analysis — the mark of true mastery.
-                </p>
+                <div className="card-inset rounded-lg p-5">
+                  <h3
+                    className="font-medium text-[#2a2522] mb-2"
+                    style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
+                  >
+                    Streak Training
+                  </h3>
+                  <p className="text-[#444444] text-sm mb-3">
+                    Our{" "}
+                    <Link href="/streak" className="text-[#D4AF37] hover:underline">
+                      Streak mode
+                    </Link>{" "}
+                    challenges you to win consecutive games. Start with a goal of
+                    3, then 5, then 10. Streaks force consistent play — you
+                    can&apos;t rely on luck across multiple games.
+                  </p>
+                </div>
+
+                <div className="card-inset rounded-lg p-5">
+                  <h3
+                    className="font-medium text-[#2a2522] mb-2"
+                    style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
+                  >
+                    Speed Run
+                  </h3>
+                  <p className="text-[#444444] text-sm mb-3">
+                    Once you&apos;re winning consistently, optimize for speed. Try
+                    to solve{" "}
+                    <Link href="/game/5" className="text-[#D4AF37] hover:underline">
+                      Game #5
+                    </Link>{" "}
+                    under 3 minutes. Speed forces intuitive decision-making — the
+                    mark of true mastery.
+                  </p>
+                </div>
               </div>
             </div>
-          </section>
+          </div>
+        </section>
 
-          <AdUnit className="my-8" />
+        <AdUnit className="my-2" />
 
-          {/* ── Section 7: FAQ ── */}
-          <section id="faq" className="mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 border-b border-gray-100 pb-4 mb-6">
-              7. Frequently Asked Questions
-            </h2>
-            <div className="space-y-6">
+        {/* ── Card 7: FAQ ── */}
+        <section id="faq" className="scroll-mt-6">
+          <div className={CARD} style={CARD_TOP}>
+            <SectionHeading sub="Common Questions" id="faq-heading" icon={"\u2666"}>
+              Frequently Asked Questions
+            </SectionHeading>
+
+            <div className="px-6 sm:px-8 md:px-10 py-8 space-y-6">
               {faqJsonLd.mainEntity.map((item, i) => (
-                <details
-                  key={i}
-                  className="group bg-gray-50 rounded-xl border border-gray-100 overflow-hidden"
-                >
-                  <summary className="p-5 cursor-pointer font-bold text-gray-900 hover:text-[#072907] transition-colors list-none flex items-center justify-between">
+                <div key={i}>
+                  <h3
+                    className="font-medium text-[#2a2522] text-lg mb-2"
+                    style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
+                  >
                     {item.name}
-                    <span className="text-gray-400 group-open:rotate-45 transition-transform text-xl">
-                      +
-                    </span>
-                  </summary>
-                  <div className="px-5 pb-5 text-gray-600 text-sm leading-relaxed">
+                  </h3>
+                  <p className="text-[#444444] leading-relaxed">
                     {item.acceptedAnswer.text}
-                  </div>
-                </details>
+                  </p>
+                  {i < faqJsonLd.mainEntity.length - 1 && (
+                    <div className="mt-6 border-b border-[#e5e0d8]" />
+                  )}
+                </div>
               ))}
             </div>
-          </section>
-
-          {/* ── CTA ── */}
-          <div className="bg-[#072907] text-white rounded-2xl p-8 text-center mt-12">
-            <h2 className="text-2xl font-bold mb-3">Ready to Practice?</h2>
-            <p className="text-white/60 mb-6">
-              Apply these strategies in a real game. Start with an easy deal or
-              jump into today&apos;s Daily Challenge.
-            </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <Link
-                href="/game/1"
-                className="bg-[#D4AF37] text-[#072907] font-bold px-6 py-3 rounded-lg hover:bg-[#e5c349] transition-colors"
-              >
-                Play Game #1
-              </Link>
-              <Link
-                href="/"
-                className="bg-white/10 text-white font-bold px-6 py-3 rounded-lg hover:bg-white/20 transition-colors"
-              >
-                Daily Challenge
-              </Link>
-              <Link
-                href="/streak"
-                className="bg-white/10 text-white font-bold px-6 py-3 rounded-lg hover:bg-white/20 transition-colors"
-              >
-                Streak Mode
-              </Link>
-            </div>
           </div>
+        </section>
 
-          {/* ── Related Pages ── */}
-          <nav className="mt-12 pt-8 border-t border-gray-100">
-            <h2 className="text-sm font-black uppercase tracking-widest text-gray-400 mb-4">
-              Continue Learning
-            </h2>
-            <div className="grid md:grid-cols-2 gap-4 text-sm">
-              <Link
-                href="/how-to-play"
-                className="p-4 bg-gray-50 rounded-lg border border-gray-100 hover:border-[#D4AF37] transition-colors"
-              >
-                <strong className="text-gray-900">How to Play →</strong>
-                <p className="text-gray-500 mt-1">
-                  Complete rules and mechanics for new players
-                </p>
-              </Link>
-              <Link
-                href="/glossary"
-                className="p-4 bg-gray-50 rounded-lg border border-gray-100 hover:border-[#D4AF37] transition-colors"
-              >
-                <strong className="text-gray-900">Glossary →</strong>
-                <p className="text-gray-500 mt-1">
-                  26 FreeCell terms defined and explained
-                </p>
-              </Link>
-              <Link
-                href="/tips"
-                className="p-4 bg-gray-50 rounded-lg border border-gray-100 hover:border-[#D4AF37] transition-colors"
-              >
-                <strong className="text-gray-900">Quick Tips →</strong>
-                <p className="text-gray-500 mt-1">
-                  Bite-sized advice for your next game
-                </p>
-              </Link>
-              <Link
-                href="/history"
-                className="p-4 bg-gray-50 rounded-lg border border-gray-100 hover:border-[#D4AF37] transition-colors"
-              >
-                <strong className="text-gray-900">FreeCell History →</strong>
-                <p className="text-gray-500 mt-1">
-                  From PLATO mainframes to your browser
-                </p>
-              </Link>
-            </div>
-          </nav>
-        </article>
-      </main>
-
-      {/* ── Footer ── */}
-      <footer className="bg-gray-50 border-t border-gray-100 py-12 px-6 text-center">
-        <div className="max-w-4xl mx-auto">
-          <Link
-            href="/"
-            className="text-lg font-black uppercase tracking-widest mb-8 inline-block"
+        {/* ── CTA ── */}
+        <section>
+          <div
+            className={CARD}
+            style={{
+              ...CARD_TOP,
+              background:
+                "linear-gradient(135deg, rgba(10,74,42,0.6) 0%, rgba(6,37,22,0.8) 100%)",
+            }}
           >
-            Freecell<span className="text-[#D4AF37]">.</span>
-          </Link>
-          <div className="flex flex-wrap justify-center gap-x-8 gap-y-4 text-xs font-bold text-gray-500 uppercase tracking-wider mb-8">
-            <Link href="/how-to-play" className="hover:text-black transition-colors">
-              How to Play
-            </Link>
-            <Link href="/strategy" className="hover:text-black transition-colors">
-              Strategy
-            </Link>
-            <Link href="/glossary" className="hover:text-black transition-colors">
-              Glossary
-            </Link>
-            <Link href="/faq" className="hover:text-black transition-colors">
-              FAQ
-            </Link>
-            <Link href="/privacy" className="hover:text-black transition-colors">
-              Privacy
-            </Link>
-            <Link href="/terms" className="hover:text-black transition-colors">
-              Terms
-            </Link>
+            <div className="p-8 sm:p-10 text-center relative">
+              <div
+                className="absolute top-4 left-6 text-4xl text-white/[0.04] select-none"
+                aria-hidden="true"
+              >
+                {"\u2663"}
+              </div>
+              <div
+                className="absolute bottom-4 right-6 text-4xl text-white/[0.04] select-none"
+                aria-hidden="true"
+              >
+                {"\u2660"}
+              </div>
+
+              <h2
+                className="text-2xl sm:text-3xl font-semibold text-white mb-3"
+                style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
+              >
+                Put Strategy to the Test
+              </h2>
+              <p className="text-[#6B7280] mb-6 max-w-md mx-auto">
+                Apply these strategies in a real game. Start with an easy deal or
+                jump into today&apos;s Daily Challenge.
+              </p>
+
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                <Link
+                  href="/"
+                  className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl text-lg font-semibold transition-all duration-200 hover:scale-[1.03] active:scale-[0.98]"
+                  style={{
+                    background:
+                      "linear-gradient(110deg, #B8860B, #D4AF37, #F3E5AB, #D4AF37, #B8860B)",
+                    backgroundSize: "200% 100%",
+                    color: "#1a1a0a",
+                  }}
+                >
+                  Play FreeCell Now
+                </Link>
+                <Link
+                  href="/tips"
+                  className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl text-lg font-semibold border border-white/20 text-white/90 hover:bg-white/[0.08] transition-colors"
+                >
+                  Quick Tips
+                </Link>
+              </div>
+            </div>
           </div>
-          <p className="text-gray-400 text-xs">
-            © 2026 PlayFreeCellOnline.com
-          </p>
-        </div>
-      </footer>
-    </div>
+        </section>
+      </main>
+    </ContentLayout>
   );
 }

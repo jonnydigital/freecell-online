@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import AdUnit from "../../components/AdUnit";
+import ContentLayout from "../../components/ContentLayout";
 
 export const metadata: Metadata = {
   title: "FreeCell Glossary | Card Game Terms & Definitions",
@@ -327,7 +328,7 @@ export default function GlossaryPage() {
   };
 
   return (
-    <div className="h-screen overflow-y-auto scroll-smooth felt-bg">
+    <ContentLayout variant="dark">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -354,22 +355,6 @@ export default function GlossaryPage() {
         >
           {"\u2660"}
         </div>
-
-        {/* Breadcrumbs */}
-        <nav
-          className="max-w-4xl mx-auto mb-8 text-sm text-[#6B7280]"
-          aria-label="Breadcrumb"
-        >
-          <ol className="flex items-center justify-center gap-2">
-            <li>
-              <Link href="/" className="hover:text-white/80 transition-colors">
-                Home
-              </Link>
-            </li>
-            <li className="text-[#D4AF37]">/</li>
-            <li className="text-white/80">Glossary</li>
-          </ol>
-        </nav>
 
         {/* Title */}
         <h1
@@ -414,7 +399,7 @@ export default function GlossaryPage() {
           <section key={letter} id={`letter-${letter}`} className="scroll-mt-6">
             <div className={CARD} style={CARD_TOP}>
               {/* Letter heading */}
-              <div className="px-8 sm:px-10 md:px-12 pt-8 pb-0">
+              <div className="px-6 sm:px-8 md:px-10 pt-8 pb-0">
                 <h2
                   className="text-3xl sm:text-4xl font-bold text-[#D4AF37]"
                   style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
@@ -424,7 +409,7 @@ export default function GlossaryPage() {
                 <div className="card-title-separator mt-4" />
               </div>
 
-              <div className="px-8 sm:px-10 md:px-12 py-6 space-y-6">
+              <div className="px-6 sm:px-8 md:px-10 py-6 space-y-6">
                 {grouped.get(letter)!.map((t) => (
                   <div key={t.id} id={t.id} className="scroll-mt-20">
                     <h3
@@ -500,30 +485,7 @@ export default function GlossaryPage() {
           </div>
         </section>
 
-        {/* ── Cross-links ── */}
-        <footer className="text-center text-sm text-[#6B7280]/60 pb-10">
-          <div className="flex flex-wrap justify-center gap-4">
-            <Link href="/how-to-play" className="hover:text-[#6B7280] transition-colors">
-              How to Play
-            </Link>
-            <span className="text-white/20">|</span>
-            <Link href="/strategy" className="hover:text-[#6B7280] transition-colors">
-              Strategy
-            </Link>
-            <span className="text-white/20">|</span>
-            <Link href="/faq" className="hover:text-[#6B7280] transition-colors">
-              FAQ
-            </Link>
-            <span className="text-white/20">|</span>
-            <Link href="/" className="hover:text-[#6B7280] transition-colors">
-              Play Free
-            </Link>
-          </div>
-          <p className="mt-3 text-white/25">
-            &copy; {new Date().getFullYear()} PlayFreeCellOnline.com
-          </p>
-        </footer>
       </main>
-    </div>
+    </ContentLayout>
   );
 }

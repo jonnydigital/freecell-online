@@ -2955,22 +2955,67 @@ export class FreeCellScene extends Phaser.Scene {
       // Remove all children (image, shadow, text objects)
       sprite.removeAll(true);
 
-      // Re-add card image
-      const assetKey = getCardAssetKey(sprite.cardData.suit, sprite.cardData.rank);
-      if (this.textures.exists(assetKey)) {
-        const img = this.add.image(this.cardWidth / 2, this.cardHeight / 2, assetKey);
-        img.setDisplaySize(this.cardWidth, this.cardHeight);
-        sprite.add(img);
-      }
+      const card = sprite.cardData;
 
-      // Re-add shadow behind the card
+      // 1. Procedural Vector Base (matches createCardSprite)
+      const base = this.add.graphics();
+      base.fillStyle(0xffffff, 1);
+      base.fillRoundedRect(0, 0, this.cardWidth, this.cardHeight, 8);
+      base.lineStyle(2, 0x000000, 0.08);
+      base.strokeRoundedRect(0, 0, this.cardWidth, this.cardHeight, 8);
+      sprite.add(base);
+
+      // 2. Rank Text
+      const isRed = (card.suit === Suit.Hearts || card.suit === Suit.Diamonds);
+      const colorStr = isRed ? '#cc0000' : '#000000';
+      const rankMap: Record<number, string> = { 1: 'A', 11: 'J', 12: 'Q', 13: 'K' };
+      const rankStr = rankMap[card.rank] || card.rank.toString();
+      const fontSize = Math.floor(this.cardWidth * 0.28);
+      const text = this.add.text(this.cardWidth * 0.15, this.cardHeight * 0.05, rankStr, {
+        fontSize: `${fontSize}px`,
+        color: colorStr,
+        fontFamily: 'Inter, system-ui, -apple-system, sans-serif',
+        fontStyle: '900'
+      });
+      text.setOrigin(0.5, 0);
+      sprite.add(text);
+
+      // 3. Suit Icons
+      const suitMap: Record<string, string> = {
+        [Suit.Hearts as string]: 'suit_heart',
+        [Suit.Spades as string]: 'suit_spade',
+        [Suit.Diamonds as string]: 'suit_diamond',
+        [Suit.Clubs as string]: 'suit_club',
+      };
+
+      // Small suit icon under corner rank
+      const smallSuitSz = this.cardWidth * 0.18;
+      const suitY = this.cardHeight * 0.05 + Math.floor(this.cardWidth * 0.28) * 1.0;
+      const smallSuit = this.add.image(this.cardWidth * 0.15, suitY + (smallSuitSz / 2), suitMap[card.suit as string]);
+      smallSuit.setDisplaySize(smallSuitSz, smallSuitSz);
+      sprite.add(smallSuit);
+
+      // Large center suit
+      const bigSuitSz = this.cardWidth * 0.45;
+      const suitImg = this.add.image(this.cardWidth / 2, this.cardHeight * 0.52, suitMap[card.suit as string]);
+      suitImg.setDisplaySize(bigSuitSz, bigSuitSz);
+      sprite.add(suitImg);
+
+      // 4. Shadow behind everything
       const shadow = this.add.graphics();
-      shadow.fillStyle(0x000000, 0.3);
-      shadow.fillRoundedRect(2, 2, this.cardWidth, this.cardHeight, 6);
+      shadow.fillStyle(0x000000, 0.12);
+      shadow.fillRoundedRect(2, 2, this.cardWidth, this.cardHeight, 8);
       sprite.addAt(shadow, 0);
 
-      // Update container size
+      // Update container size and re-add interactivity for desktop
       sprite.setSize(this.cardWidth, this.cardHeight);
+
+      if (!this.isTouchDevice) {
+        sprite.setInteractive(
+          new Phaser.Geom.Rectangle(0, 0, this.cardWidth, this.cardHeight),
+          Phaser.Geom.Rectangle.Contains
+        );
+      }
     }
   }
 

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import AdUnit from "../../components/AdUnit";
+import ContentLayout from "../../components/ContentLayout";
 
 export const metadata: Metadata = {
   title: "History of FreeCell | Who Invented FreeCell Solitaire?",
@@ -228,7 +229,7 @@ function SectionHeading({
   icon?: string;
 }) {
   return (
-    <div className="px-8 sm:px-10 md:px-12 pt-8 sm:pt-10 pb-0">
+    <div className="px-6 sm:px-8 md:px-10 pt-8 sm:pt-10 pb-0">
       {sub && (
         <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#B8860B]/60 mb-1.5 block">
           {sub}
@@ -288,7 +289,7 @@ export default function HistoryPage() {
   ];
 
   return (
-    <div className="h-screen overflow-y-auto scroll-smooth felt-bg">
+    <ContentLayout variant="dark">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -314,24 +315,6 @@ export default function HistoryPage() {
         >
           {"\u2660"}
         </div>
-
-        <nav
-          className="max-w-4xl mx-auto mb-8 text-sm text-[#6B7280]"
-          aria-label="Breadcrumb"
-        >
-          <ol className="flex items-center justify-center gap-2">
-            <li>
-              <Link
-                href="/"
-                className="hover:text-white/80 transition-colors"
-              >
-                Home
-              </Link>
-            </li>
-            <li className="text-[#D4AF37]">/</li>
-            <li className="text-white/80">History of FreeCell</li>
-          </ol>
-        </nav>
 
         <h1
           className="text-4xl sm:text-5xl lg:text-6xl font-semibold text-[#D4AF37] mb-4 max-w-3xl mx-auto leading-tight"
@@ -399,7 +382,7 @@ export default function HistoryPage() {
               Paul Alfille and the Invention of FreeCell
             </SectionHeading>
 
-            <div className="px-8 sm:px-10 md:px-12 py-8 space-y-5 text-[#444444] leading-relaxed">
+            <div className="px-6 sm:px-8 md:px-10 py-8 space-y-5 text-[#444444] leading-relaxed">
               <p>
                 In 1978, Paul Alfille was a medical student at the University of
                 Illinois at Urbana-Champaign. Like many students of the era, he
@@ -551,7 +534,7 @@ export default function HistoryPage() {
               Baker&apos;s Game: The Foundation FreeCell Built Upon
             </SectionHeading>
 
-            <div className="px-8 sm:px-10 md:px-12 py-8 space-y-5 text-[#444444] leading-relaxed">
+            <div className="px-6 sm:px-8 md:px-10 py-8 space-y-5 text-[#444444] leading-relaxed">
               <p>
                 To understand FreeCell, you need to understand the game it
                 evolved from. Baker&apos;s Game, created by C.L. Baker in the
@@ -677,7 +660,7 @@ export default function HistoryPage() {
               Microsoft FreeCell: Windows 3.1 to Windows 10
             </SectionHeading>
 
-            <div className="px-8 sm:px-10 md:px-12 py-8 space-y-5 text-[#444444] leading-relaxed">
+            <div className="px-6 sm:px-8 md:px-10 py-8 space-y-5 text-[#444444] leading-relaxed">
               <p>
                 FreeCell might have remained a footnote in computing history if
                 not for one person: Jim Horne. A programmer at Microsoft,
@@ -836,7 +819,7 @@ export default function HistoryPage() {
               FreeCell Through the Decades
             </SectionHeading>
 
-            <div className="px-8 sm:px-10 md:px-12 py-8 space-y-0">
+            <div className="px-6 sm:px-8 md:px-10 py-8 space-y-0">
               {timeline.map((entry, i) => (
                 <div key={entry.year} className="flex gap-4 sm:gap-6 group">
                   {/* Timeline line + dot */}
@@ -881,7 +864,7 @@ export default function HistoryPage() {
               Game #11982: FreeCell&apos;s Only Unsolvable Deal
             </SectionHeading>
 
-            <div className="px-8 sm:px-10 md:px-12 py-8 space-y-5 text-[#444444] leading-relaxed">
+            <div className="px-6 sm:px-8 md:px-10 py-8 space-y-5 text-[#444444] leading-relaxed">
               <p>
                 Among the original 32,000 numbered deals in Microsoft FreeCell,
                 game #11982 holds a unique distinction: it is the only deal that
@@ -1048,7 +1031,7 @@ export default function HistoryPage() {
               FreeCell Mathematics: Why 99.999% of Deals Are Solvable
             </SectionHeading>
 
-            <div className="px-8 sm:px-10 md:px-12 py-8 space-y-5 text-[#444444] leading-relaxed">
+            <div className="px-6 sm:px-8 md:px-10 py-8 space-y-5 text-[#444444] leading-relaxed">
               <p>
                 FreeCell occupies a fascinating position in the intersection
                 of recreational mathematics and computer science. Unlike most
@@ -1233,7 +1216,7 @@ export default function HistoryPage() {
               FreeCell&apos;s Cultural Impact
             </SectionHeading>
 
-            <div className="px-8 sm:px-10 md:px-12 py-8 space-y-5 text-[#444444] leading-relaxed">
+            <div className="px-6 sm:px-8 md:px-10 py-8 space-y-5 text-[#444444] leading-relaxed">
               <p>
                 FreeCell&apos;s impact extends far beyond the game itself.
                 As one of the three card games bundled with Windows (alongside{" "}
@@ -1315,7 +1298,7 @@ export default function HistoryPage() {
               The Speedrunning and Competitive Community
             </SectionHeading>
 
-            <div className="px-8 sm:px-10 md:px-12 py-8 space-y-5 text-[#444444] leading-relaxed">
+            <div className="px-6 sm:px-8 md:px-10 py-8 space-y-5 text-[#444444] leading-relaxed">
               <p>
                 While most people play FreeCell casually, a dedicated
                 competitive community has emerged around the game, pushing
@@ -1410,7 +1393,7 @@ export default function HistoryPage() {
               FreeCell&apos;s Evolution to Mobile and Web
             </SectionHeading>
 
-            <div className="px-8 sm:px-10 md:px-12 py-8 space-y-5 text-[#444444] leading-relaxed">
+            <div className="px-6 sm:px-8 md:px-10 py-8 space-y-5 text-[#444444] leading-relaxed">
               <p>
                 The launch of Apple&apos;s iPhone in 2007 and the subsequent
                 explosion of smartphone apps created an entirely new chapter
@@ -1488,7 +1471,7 @@ export default function HistoryPage() {
               FreeCell Fun Facts
             </SectionHeading>
 
-            <div className="px-8 sm:px-10 md:px-12 py-8">
+            <div className="px-6 sm:px-8 md:px-10 py-8">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {funFacts.map((item, i) => {
                   const suits = ["\u2660", "\u2665", "\u2666", "\u2663"];
@@ -1533,7 +1516,7 @@ export default function HistoryPage() {
               FreeCell History FAQ
             </SectionHeading>
 
-            <div className="px-8 sm:px-10 md:px-12 py-8 space-y-6">
+            <div className="px-6 sm:px-8 md:px-10 py-8 space-y-6">
               {historyFaqs.map((faq, i) => (
                 <div key={i}>
                   <h3 className="font-medium text-[#2a2522] text-lg mb-2">
@@ -1610,53 +1593,7 @@ export default function HistoryPage() {
           </div>
         </section>
 
-        {/* ── Cross-links ── */}
-        <footer className="text-center text-sm text-[#6B7280]/60 pb-10">
-          <div className="flex flex-wrap justify-center gap-4">
-            <Link
-              href="/how-to-play"
-              className="hover:text-[#6B7280] transition-colors"
-            >
-              How to Play
-            </Link>
-            <span className="text-white/20">|</span>
-            <Link
-              href="/strategy"
-              className="hover:text-[#6B7280] transition-colors"
-            >
-              Strategy Guide
-            </Link>
-            <span className="text-white/20">|</span>
-            <Link
-              href="/tips"
-              className="hover:text-[#6B7280] transition-colors"
-            >
-              Tips &amp; Tricks
-            </Link>
-            <span className="text-white/20">|</span>
-            <Link
-              href="/solitaire-types"
-              className="hover:text-[#6B7280] transition-colors"
-            >
-              Solitaire Types
-            </Link>
-            <span className="text-white/20">|</span>
-            <Link
-              href="/glossary"
-              className="hover:text-[#6B7280] transition-colors"
-            >
-              Glossary
-            </Link>
-            <span className="text-white/20">|</span>
-            <Link href="/" className="hover:text-[#6B7280] transition-colors">
-              Play Free
-            </Link>
-          </div>
-          <p className="mt-3 text-white/25">
-            &copy; {new Date().getFullYear()} PlayFreeCellOnline.com
-          </p>
-        </footer>
       </main>
-    </div>
+    </ContentLayout>
   );
 }

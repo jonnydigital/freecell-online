@@ -1,14 +1,17 @@
 # FreeCell Online — Feature Backlog
-*Ranked by impact × effort. Updated 2026-02-27 (Friday research cycle).*
+*Ranked by impact × effort. Updated 2026-03-01 (Sunday synthesis).*
+
+## 🚨 P0: Critical Bug
+1. **🔴 Mobile card rendering broken** — Cards display as blank dark green rectangles on mobile viewport (tested 390×844). Game is completely unplayable on mobile. Possible CSS/SVG/theme regression. **Must fix before any feature work.** *(Play-test 03-01)*
 
 ## 🔴 High Priority (Ship This Week)
-1. **Puzzle modes: Streak + Storm** — Repackage FreeCell engine as Streak (consecutive wins) and Storm (timed speed-solving). 3-4x engagement surface from same core engine. *(Lichess spark — their puzzle variants are massive retention drivers)*
+1. ~~**Puzzle modes: Streak + Storm**~~ ✅ SHIPPED — visible in home overlay menu
 2. **Post-game optimal solution** — Show solver's solution after each game (win or lose). Educational + dwell time. *(Lichess spark — leverages existing solver, low effort)*
-3. ~~**Star rating per game**~~ ✅ ALREADY SHIPPED — WinScreen shows 1-3 stars based on moves (≤60=3★, ≤90=2★), with animated reveal, "New Best!" tracking, and star count in share text
-4. ~~**Theme system**~~ ✅ SHIPPED 03-01 — 5 felt themes (Classic Green, Royal Blue, Wine Red, Dark Mode, Slate) with CSS variables, localStorage persistence, theme picker in toolbar
-5. ~~**Share button**~~ ✅ ALREADY SHIPPED — Web Share API + clipboard fallback on WinScreen, DailyChallenge, Streak, GameShell
-6. ~~**SEO: Expand strategy page**~~ ✅ SHIPPED 03-01 — 2500+ words, 7 sections, FAQ schema, practice drills, internal links, Article JSON-LD
-7. ~~**SEO: Glossary/terminology page**~~ ✅ SHIPPED 02-28 — `/glossary` with 26 terms, letter nav, DefinedTermSet schema, cross-links
+3. ~~**Star rating per game**~~ ✅ SHIPPED
+4. ~~**Theme system**~~ ✅ SHIPPED 03-01
+5. ~~**Share button**~~ ✅ SHIPPED
+6. ~~**SEO: Expand strategy page**~~ ✅ SHIPPED 03-01
+7. ~~**SEO: Glossary/terminology page**~~ ✅ SHIPPED 02-28
 
 ## 🟡 Medium Priority (Ship This Month)
 8. **Statistics page enhancement** — charts, streaks visualization, detailed history
@@ -68,9 +71,11 @@
 
 ---
 
-## Priority Rationale (2026-02-28)
-- **Puzzle modes (Streak/Storm)** — Lichess proves repackaging the same core mechanic as multiple modes massively increases engagement surface. We have the engine and solver. This is the single highest-ROI feature we can build.
-- **Post-game analysis + star rating** — leverages existing solver to add educational value and replay motivation. Low implementation cost, high user value.
-- **Theme system + Share** — table-stakes and growth channel. Still critical.
-- **Multi-modal nav** — as we add modes, we need Chess.com-style navigation to surface them.
-- **GA4 data STILL needed** — 2 nights without analytics. Flying blind. Must resolve browser access or build API-based analytics pull.
+## Priority Rationale (2026-03-01 — Sunday Synthesis)
+- **🚨 Mobile rendering bug is P0** — If cards are invisible on mobile, nothing else matters. Fix first.
+- **Post-game analysis** — Still highest-ROI feature. Leverages existing solver, adds educational value + replay motivation.
+- **Numbered game URLs** — Standard competitor feature (cardgames.io has 1-50000). SEO + shareability.
+- **Video content** — Competitors (Solitaired, Solitaire Bliss) have video tutorials. We have zero. Affects dwell time + rich snippets.
+- **FreeCell history page** — Unique content opportunity. Green Felt owns this narrative but we can do it better.
+- **GA4 data STILL needed** — 3 nights without analytics. **Critical gap.** Consider GA4 API integration as alternative to browser-based access.
+- **Monetization roadmap** — Freestar header bidding delivers +2000% over AdSense. Plan for this once traffic justifies (need domain + AdSense first).

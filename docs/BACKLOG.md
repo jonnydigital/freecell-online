@@ -2,7 +2,7 @@
 *Ranked by impact × effort. Updated 2026-03-01 (Sunday synthesis).*
 
 ## 🚨 P0: Critical Bug
-1. **🔴 Mobile card rendering broken** — Cards display as blank dark green rectangles on mobile viewport (tested 390×844). Game is completely unplayable on mobile. Possible CSS/SVG/theme regression. **Must fix before any feature work.** *(Play-test 03-01)*
+1. ~~**🔴 Mobile card rendering broken**~~ ✅ FIXED 03-02 — Root cause: `recreateAllCardSprites()` used PNG asset keys that were never loaded. On resize (common on mobile), cards became empty containers. Fixed with procedural rendering matching `createCardSprite()`.
 
 ## 🔴 High Priority (Ship This Week)
 1. ~~**Puzzle modes: Streak + Storm**~~ ✅ SHIPPED — visible in home overlay menu

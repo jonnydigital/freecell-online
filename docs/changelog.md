@@ -1,5 +1,11 @@
 # FreeCell Online — Changelog
 
+## 2026-03-02 (Monday Overnight Build)
+### Shipped
+- **🔴 P0 Fix: Mobile card rendering** — Cards were showing as blank dark green rectangles on mobile after any viewport resize (address bar toggle, orientation change). Root cause: `recreateAllCardSprites()` tried to use pre-loaded PNG card images that were never loaded, resulting in empty containers. Fixed by using the same procedural rendering (white base + rank text + suit icons + shadow) as the initial card creation. Game is now playable on mobile again.
+
+---
+
 ## 2026-03-01 (Sunday Build)
 ### Shipped
 - **SEO: Strategy page expansion** — Expanded from 103 lines to 800+ lines (~2500 words). 7 comprehensive sections: Three Laws, Beginner Fundamentals, Intermediate Tactics, Advanced Techniques, Common Mistakes, Practice Drills, FAQ. Article + FAQPage schema.org JSON-LD for rich snippets. Internal links to glossary, tips, streak, how-to-play, history, and numbered games. Table of contents navigation. AdUnit placements between sections.

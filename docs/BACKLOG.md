@@ -19,10 +19,10 @@
 10. ~~**Streak milestone celebrations**~~ ✅ SHIPPED 03-01 — Animated toasts at 14 milestone levels (3-365), unique messages, framer-motion animations *(Duolingo spark)*
 11. ~~**Numbered game URLs**~~ ✅ SHIPPED 03-02 — `/game/[number]` routes with SEO meta tags + share integration
 12. **FreeCell variants** — Baker's Game, Eight Off as separate modes. New daily challenges per variant. *(NYT Games spark — game portfolio as retention moat)*
-13. **SEO: FreeCell history page** — Paul Alfille, PLATO, Baker's Game origins *(Green Felt spark. Unique content, educational backlinks)*
+13. ~~**SEO: FreeCell history page**~~ ✅ SHIPPED 03-02 — 1600-line rich content page covering Alfille, PLATO, Windows, Game #11982, structured data
 14. **SEO: Solitaire types taxonomy** — classify 10-20 variants, link to our game *(Solitaire Paradise spark. Hub page for internal linking)*
 15. **Leaderboard** — daily challenge times/moves (Vercel KV) *(competitor gap vs solitaired.com)*
-16. **Achievements/badges** — "Won 10 games", "5-day streak", etc. *(gamification gap vs MobilityWare)*
+16. ~~**Achievements/badges**~~ ✅ SHIPPED 03-02 — 20 badges across 6 categories with unlock animations
 17. **Tutorial/onboarding** — first-time player walkthrough *(component exists: Tutorial.tsx — needs activation?)*
 18. **Video tutorial** — screen-recorded walkthrough, embed on game page *(Solitaire Bliss has YouTube embed. Huge for dwell time + rich snippets)*
 19. **Ghost mode** — watch the solver play after you win/lose

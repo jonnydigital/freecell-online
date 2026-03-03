@@ -42,6 +42,8 @@ export default function StormGameShell() {
     setBestScore(loadStormData().bestScore);
     const settings = loadSettings();
     soundManager.setMuted(!settings.soundEnabled);
+    // Track mode for Explorer achievement
+    import('../lib/achievementTracker').then(m => m.recordModePlayed('storm'));
   }, []);
 
   // Main countdown timer

@@ -3,7 +3,7 @@
 import { useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Trophy } from 'lucide-react';
-import { loadAchievements, CATEGORY_LABELS, AchievementCategory } from '../lib/achievements';
+import { loadAchievements, CATEGORY_LABELS, ALL_CATEGORIES } from '../lib/achievements';
 import { buildContext } from '../lib/achievementTracker';
 import { loadStats } from '../lib/storage';
 import AchievementBadge from './AchievementBadge';
@@ -22,7 +22,6 @@ export default function AchievementsPanel({ isOpen, onClose }: AchievementsPanel
   }, [isOpen]);
 
   const unlocked = achievements.filter(a => a.unlockedAt);
-  const categories = ['milestones', 'skill', 'dedication', 'special'] as AchievementCategory[];
 
   return (
     <AnimatePresence>
@@ -66,7 +65,7 @@ export default function AchievementsPanel({ isOpen, onClose }: AchievementsPanel
 
             {/* Achievement Grid by Category */}
             <div className="flex-1 overflow-y-auto px-4 pb-4 space-y-4">
-              {categories.map(cat => {
+              {ALL_CATEGORIES.map(cat => {
                 const catAchievements = achievements.filter(a => a.category === cat);
                 if (catAchievements.length === 0) return null;
                 return (

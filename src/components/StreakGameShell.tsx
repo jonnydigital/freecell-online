@@ -37,6 +37,8 @@ export default function StreakGameShell() {
     // Apply sound settings
     const settings = loadSettings();
     soundManager.setMuted(!settings.soundEnabled);
+    // Track mode for Explorer achievement
+    import('../lib/achievementTracker').then(m => m.recordModePlayed('streak'));
   }, []);
 
   // Timer

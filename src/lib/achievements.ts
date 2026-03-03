@@ -3,7 +3,13 @@
  * Client-side achievements stored in localStorage
  */
 
-export type AchievementCategory = 'milestones' | 'skill' | 'dedication' | 'special';
+export type AchievementCategory =
+  | 'milestones'
+  | 'streak'
+  | 'speed'
+  | 'skill'
+  | 'daily'
+  | 'explorer';
 
 export interface AchievementDef {
   id: string;
@@ -24,39 +30,56 @@ export interface Achievement extends AchievementDef {
 const ACHIEVEMENTS_KEY = 'freecell_achievements';
 
 export const ACHIEVEMENT_DEFS: AchievementDef[] = [
-  // ── Milestones ──
-  { id: 'first_win', name: 'First Win', description: 'Win your first game', icon: '🏆', category: 'milestones', target: 1 },
-  { id: 'ten_wins', name: 'Getting Started', description: 'Win 10 games', icon: '⭐', category: 'milestones', target: 10 },
-  { id: 'half_century', name: 'Half Century', description: 'Win 50 games', icon: '🌟', category: 'milestones', target: 50 },
-  { id: 'centurion', name: 'Centurion', description: 'Win 100 games', icon: '💯', category: 'milestones', target: 100 },
+  // ── Win Milestones (5) ──
+  { id: 'first_win', name: 'First Victory', description: 'Win your very first game of FreeCell', icon: '🏆', category: 'milestones', target: 1 },
+  { id: 'ten_wins', name: 'Getting Warmed Up', description: 'Win 10 games — you\'re hooked!', icon: '⭐', category: 'milestones', target: 10 },
+  { id: 'fifty_wins', name: 'Half Century', description: 'Win 50 games like a seasoned pro', icon: '🌟', category: 'milestones', target: 50 },
+  { id: 'hundred_wins', name: 'Centurion', description: 'Join the 100-win club', icon: '💯', category: 'milestones', target: 100 },
+  { id: 'five_hundred_wins', name: 'Card Master', description: 'An incredible 500 wins. Bow down!', icon: '👑', category: 'milestones', target: 500 },
 
-  // ── Skill ──
-  { id: 'speed_demon', name: 'Speed Demon', description: 'Win in under 2 minutes', icon: '⚡', category: 'skill' },
-  { id: 'lightning', name: 'Lightning Fast', description: 'Win in under 90 seconds', icon: '🔥', category: 'skill' },
-  { id: 'efficient', name: 'Efficient', description: 'Win with under 80 moves', icon: '🎯', category: 'skill' },
-  { id: 'perfectionist', name: 'Perfectionist', description: 'Win with under 60 moves', icon: '✨', category: 'skill' },
-  { id: 'no_hints', name: 'Pure Skill', description: 'Win without using any hints', icon: '🧠', category: 'skill' },
-  { id: 'comeback_kid', name: 'Comeback Kid', description: 'Win after 5+ undos', icon: '🔄', category: 'skill' },
+  // ── Streak (5) ──
+  { id: 'streak_3', name: 'Hat Trick', description: 'Play 3 days in a row', icon: '🔥', category: 'streak', target: 3 },
+  { id: 'streak_7', name: 'On a Roll', description: '7-day daily challenge streak', icon: '⚡', category: 'streak', target: 7 },
+  { id: 'streak_14', name: 'Dedicated', description: '14-day daily challenge streak', icon: '💪', category: 'streak', target: 14 },
+  { id: 'streak_30', name: 'Unstoppable', description: '30-day daily challenge streak', icon: '💎', category: 'streak', target: 30 },
+  { id: 'streak_100', name: 'Legendary', description: '100-day streak — absolute legend', icon: '🏅', category: 'streak', target: 100 },
 
-  // ── Dedication ──
-  { id: 'daily_devotee', name: 'Daily Devotee', description: 'Complete 7 daily challenges', icon: '📅', category: 'dedication', target: 7 },
-  { id: 'streak_5', name: 'Streak Master', description: '5-day daily challenge streak', icon: '🔥', category: 'dedication', target: 5 },
-  { id: 'streak_10', name: 'On Fire', description: '10-day daily challenge streak', icon: '🌟', category: 'dedication', target: 10 },
-  { id: 'streak_25', name: 'Unstoppable', description: '25-day daily challenge streak', icon: '💎', category: 'dedication', target: 25 },
-  { id: 'hat_trick', name: 'Hat Trick', description: 'Win 3 games in a row', icon: '🎩', category: 'dedication', target: 3 },
+  // ── Speed (3) ──
+  { id: 'speed_5', name: 'Quick Thinker', description: 'Win a game in under 5 minutes', icon: '⏱️', category: 'speed' },
+  { id: 'speed_3', name: 'Speed Demon', description: 'Win a game in under 3 minutes', icon: '⚡', category: 'speed' },
+  { id: 'speed_2', name: 'Lightning Fast', description: 'Win a game in under 2 minutes', icon: '🔥', category: 'speed' },
 
-  // ── Special ──
-  { id: 'night_owl', name: 'Night Owl', description: 'Win a game after midnight', icon: '🦉', category: 'special' },
-  { id: 'theme_collector', name: 'Theme Collector', description: 'Try all 5 themes', icon: '🎨', category: 'special', target: 5 },
-  { id: 'puzzle_streak_10', name: 'Storm Chaser', description: '10+ win puzzle streak', icon: '⛈️', category: 'special', target: 10 },
+  // ── Efficiency / Skill (2) ──
+  { id: 'no_undos', name: 'Flawless', description: 'Win without pressing undo once', icon: '🎯', category: 'skill' },
+  { id: 'perfect_stars', name: 'Perfectionist', description: 'Earn a perfect 3-star rating', icon: '✨', category: 'skill' },
+
+  // ── Daily Challenge (3) ──
+  { id: 'first_daily', name: 'Daily Debut', description: 'Complete your first daily challenge', icon: '📅', category: 'daily', target: 1 },
+  { id: 'daily_streak_7', name: 'Week Warrior', description: '7 daily challenges in a row', icon: '🗓️', category: 'daily', target: 7 },
+  { id: 'daily_total_30', name: 'Monthly Devotee', description: 'Complete 30 daily challenges total', icon: '📆', category: 'daily', target: 30 },
+
+  // ── Explorer (2) ──
+  { id: 'hundred_games', name: 'Explorer', description: 'Play 100 different game numbers', icon: '🗺️', category: 'explorer', target: 100 },
+  { id: 'all_modes', name: 'Versatile', description: 'Try every game mode', icon: '🃏', category: 'explorer', target: 4 },
 ];
 
 export const CATEGORY_LABELS: Record<AchievementCategory, string> = {
-  milestones: 'Milestones',
-  skill: 'Skill',
-  dedication: 'Dedication',
-  special: 'Special',
+  milestones: 'Win Milestones',
+  streak: 'Streak',
+  speed: 'Speed',
+  skill: 'Efficiency',
+  daily: 'Daily Challenge',
+  explorer: 'Explorer',
 };
+
+export const ALL_CATEGORIES: AchievementCategory[] = [
+  'milestones',
+  'streak',
+  'speed',
+  'skill',
+  'daily',
+  'explorer',
+];
 
 export function loadUnlockedMap(): Record<string, number> {
   if (typeof window === 'undefined') return {};
@@ -84,13 +107,11 @@ export interface AchievementContext {
   stats: { gamesWon: number; currentStreak: number };
   winTime?: number;
   winMoves?: number;
-  hintsUsed?: number;
   undosUsed?: number;
   dailyStreak?: number;
   totalDailyCompleted?: number;
-  themesUsed?: number;
-  puzzleStreakBest?: number;
-  winHour?: number;
+  uniqueGamesPlayed?: number;
+  modesPlayed?: number;
 }
 
 export interface CheckResult {
@@ -120,23 +141,35 @@ export function loadAchievements(ctx?: AchievementContext): Achievement[] {
 
 function getProgress(id: string, ctx: AchievementContext): number {
   switch (id) {
+    // Win milestones
     case 'first_win':
     case 'ten_wins':
-    case 'half_century':
-    case 'centurion':
+    case 'fifty_wins':
+    case 'hundred_wins':
+    case 'five_hundred_wins':
       return ctx.stats.gamesWon;
-    case 'daily_devotee':
-      return ctx.totalDailyCompleted ?? 0;
-    case 'streak_5':
-    case 'streak_10':
-    case 'streak_25':
+
+    // Streak
+    case 'streak_3':
+    case 'streak_7':
+    case 'streak_14':
+    case 'streak_30':
+    case 'streak_100':
       return ctx.dailyStreak ?? 0;
-    case 'hat_trick':
-      return ctx.stats.currentStreak;
-    case 'theme_collector':
-      return ctx.themesUsed ?? 0;
-    case 'puzzle_streak_10':
-      return ctx.puzzleStreakBest ?? 0;
+
+    // Daily
+    case 'first_daily':
+    case 'daily_total_30':
+      return ctx.totalDailyCompleted ?? 0;
+    case 'daily_streak_7':
+      return ctx.dailyStreak ?? 0;
+
+    // Explorer
+    case 'hundred_games':
+      return ctx.uniqueGamesPlayed ?? 0;
+    case 'all_modes':
+      return ctx.modesPlayed ?? 0;
+
     default:
       return 0;
   }
@@ -158,43 +191,37 @@ export function checkAchievements(ctx: AchievementContext): CheckResult {
     }
   };
 
-  // Win milestones
+  // ── Win milestones ──
   if (ctx.stats.gamesWon >= 1) tryUnlock('first_win');
   if (ctx.stats.gamesWon >= 10) tryUnlock('ten_wins');
-  if (ctx.stats.gamesWon >= 50) tryUnlock('half_century');
-  if (ctx.stats.gamesWon >= 100) tryUnlock('centurion');
+  if (ctx.stats.gamesWon >= 50) tryUnlock('fifty_wins');
+  if (ctx.stats.gamesWon >= 100) tryUnlock('hundred_wins');
+  if (ctx.stats.gamesWon >= 500) tryUnlock('five_hundred_wins');
 
-  // Speed
-  if (ctx.winTime != null && ctx.winTime < 120) tryUnlock('speed_demon');
-  if (ctx.winTime != null && ctx.winTime < 90) tryUnlock('lightning');
+  // ── Streak (daily challenge streaks) ──
+  if (ctx.dailyStreak != null && ctx.dailyStreak >= 3) tryUnlock('streak_3');
+  if (ctx.dailyStreak != null && ctx.dailyStreak >= 7) tryUnlock('streak_7');
+  if (ctx.dailyStreak != null && ctx.dailyStreak >= 14) tryUnlock('streak_14');
+  if (ctx.dailyStreak != null && ctx.dailyStreak >= 30) tryUnlock('streak_30');
+  if (ctx.dailyStreak != null && ctx.dailyStreak >= 100) tryUnlock('streak_100');
 
-  // Moves
-  if (ctx.winMoves != null && ctx.winMoves < 80) tryUnlock('efficient');
-  if (ctx.winMoves != null && ctx.winMoves < 60) tryUnlock('perfectionist');
+  // ── Speed ──
+  if (ctx.winTime != null && ctx.winTime < 300) tryUnlock('speed_5');
+  if (ctx.winTime != null && ctx.winTime < 180) tryUnlock('speed_3');
+  if (ctx.winTime != null && ctx.winTime < 120) tryUnlock('speed_2');
 
-  // Hints & undos
-  if (ctx.hintsUsed != null && ctx.hintsUsed === 0 && ctx.winTime != null) tryUnlock('no_hints');
-  if (ctx.undosUsed != null && ctx.undosUsed >= 5 && ctx.winTime != null) tryUnlock('comeback_kid');
+  // ── Efficiency ──
+  if (ctx.undosUsed != null && ctx.undosUsed === 0 && ctx.winTime != null) tryUnlock('no_undos');
+  if (ctx.winMoves != null && ctx.winMoves <= 60) tryUnlock('perfect_stars');
 
-  // Daily streaks
-  if (ctx.dailyStreak != null && ctx.dailyStreak >= 5) tryUnlock('streak_5');
-  if (ctx.dailyStreak != null && ctx.dailyStreak >= 10) tryUnlock('streak_10');
-  if (ctx.dailyStreak != null && ctx.dailyStreak >= 25) tryUnlock('streak_25');
+  // ── Daily Challenge ──
+  if (ctx.totalDailyCompleted != null && ctx.totalDailyCompleted >= 1) tryUnlock('first_daily');
+  if (ctx.dailyStreak != null && ctx.dailyStreak >= 7) tryUnlock('daily_streak_7');
+  if (ctx.totalDailyCompleted != null && ctx.totalDailyCompleted >= 30) tryUnlock('daily_total_30');
 
-  // Daily completion count
-  if (ctx.totalDailyCompleted != null && ctx.totalDailyCompleted >= 7) tryUnlock('daily_devotee');
-
-  // Win streak
-  if (ctx.stats.currentStreak >= 3) tryUnlock('hat_trick');
-
-  // Night owl (midnight to 4am)
-  if (ctx.winHour != null && ctx.winHour >= 0 && ctx.winHour < 5) tryUnlock('night_owl');
-
-  // Theme collector
-  if (ctx.themesUsed != null && ctx.themesUsed >= 5) tryUnlock('theme_collector');
-
-  // Puzzle streak
-  if (ctx.puzzleStreakBest != null && ctx.puzzleStreakBest >= 10) tryUnlock('puzzle_streak_10');
+  // ── Explorer ──
+  if (ctx.uniqueGamesPlayed != null && ctx.uniqueGamesPlayed >= 100) tryUnlock('hundred_games');
+  if (ctx.modesPlayed != null && ctx.modesPlayed >= 4) tryUnlock('all_modes');
 
   return { newlyUnlocked };
 }

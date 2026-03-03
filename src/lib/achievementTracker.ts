@@ -6,30 +6,55 @@
 import { AchievementContext, CheckResult, checkAchievements } from './achievements';
 import { GameStats } from './stats';
 import { loadDailyData, getCurrentStreak } from './dailyChallenge';
-import { loadStreakData } from './streakStorage';
 
-const THEMES_USED_KEY = 'freecell_themes_used';
+const MODES_PLAYED_KEY = 'freecell_modes_played';
+const UNIQUE_GAMES_KEY = 'freecell_unique_games';
 
-/** Record that a theme was used */
-export function recordThemeUsed(themeId: string): void {
+/** Record that a game mode was played */
+export function recordModePlayed(mode: string): void {
   if (typeof window === 'undefined') return;
   try {
-    const raw = localStorage.getItem(THEMES_USED_KEY);
+    const raw = localStorage.getItem(MODES_PLAYED_KEY);
     const used: string[] = raw ? JSON.parse(raw) : [];
-    if (!used.includes(themeId)) {
-      used.push(themeId);
-      localStorage.setItem(THEMES_USED_KEY, JSON.stringify(used));
+    if (!used.includes(mode)) {
+      used.push(mode);
+      localStorage.setItem(MODES_PLAYED_KEY, JSON.stringify(used));
     }
   } catch {}
 }
 
-/** Get number of unique themes used */
-export function getThemesUsedCount(): number {
+/** Get number of unique game modes played */
+export function getModesPlayedCount(): number {
   if (typeof window === 'undefined') return 0;
   try {
-    const raw = localStorage.getItem(THEMES_USED_KEY);
+    const raw = localStorage.getItem(MODES_PLAYED_KEY);
     const used: string[] = raw ? JSON.parse(raw) : [];
     return used.length;
+  } catch {
+    return 0;
+  }
+}
+
+/** Record a unique game number played */
+export function recordUniqueGame(gameNumber: number): void {
+  if (typeof window === 'undefined') return;
+  try {
+    const raw = localStorage.getItem(UNIQUE_GAMES_KEY);
+    const games: number[] = raw ? JSON.parse(raw) : [];
+    if (!games.includes(gameNumber)) {
+      games.push(gameNumber);
+      localStorage.setItem(UNIQUE_GAMES_KEY, JSON.stringify(games));
+    }
+  } catch {}
+}
+
+/** Get count of unique game numbers played */
+export function getUniqueGamesCount(): number {
+  if (typeof window === 'undefined') return 0;
+  try {
+    const raw = localStorage.getItem(UNIQUE_GAMES_KEY);
+    const games: number[] = raw ? JSON.parse(raw) : [];
+    return games.length;
   } catch {
     return 0;
   }
@@ -49,7 +74,6 @@ export function buildContext(
   stats: GameStats,
   winTime?: number,
   winMoves?: number,
-  hintsUsed?: number,
   undosUsed?: number,
 ): AchievementContext {
   return {
@@ -59,13 +83,11 @@ export function buildContext(
     },
     winTime,
     winMoves,
-    hintsUsed,
     undosUsed,
     dailyStreak: getCurrentStreak(),
     totalDailyCompleted: getTotalDailyCompleted(),
-    themesUsed: getThemesUsedCount(),
-    puzzleStreakBest: loadStreakData().bestStreak,
-    winHour: new Date().getHours(),
+    uniqueGamesPlayed: getUniqueGamesCount(),
+    modesPlayed: getModesPlayedCount(),
   };
 }
 
@@ -76,9 +98,8 @@ export function checkWinAchievements(
   stats: GameStats,
   winTime: number,
   winMoves: number,
-  hintsUsed: number,
   undosUsed: number,
 ): CheckResult {
-  const ctx = buildContext(stats, winTime, winMoves, hintsUsed, undosUsed);
+  const ctx = buildContext(stats, winTime, winMoves, undosUsed);
   return checkAchievements(ctx);
 }

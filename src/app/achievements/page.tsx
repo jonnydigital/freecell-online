@@ -3,12 +3,10 @@
 import { useMemo } from 'react';
 import Link from 'next/link';
 import { Trophy, ArrowLeft } from 'lucide-react';
-import { loadAchievements, CATEGORY_LABELS, AchievementCategory } from '../../lib/achievements';
+import { loadAchievements, CATEGORY_LABELS, ALL_CATEGORIES } from '../../lib/achievements';
 import { buildContext } from '../../lib/achievementTracker';
 import { loadStats } from '../../lib/storage';
 import AchievementBadge from '../../components/AchievementBadge';
-
-const CATEGORIES: AchievementCategory[] = ['milestones', 'skill', 'dedication', 'special'];
 
 export default function AchievementsPage() {
   const achievements = useMemo(() => {
@@ -63,7 +61,7 @@ export default function AchievementsPage() {
 
         {/* Categories */}
         <div className="space-y-6">
-          {CATEGORIES.map(cat => {
+          {ALL_CATEGORIES.map(cat => {
             const catAchievements = achievements.filter(a => a.category === cat);
             if (catAchievements.length === 0) return null;
             const catUnlocked = catAchievements.filter(a => a.unlockedAt).length;

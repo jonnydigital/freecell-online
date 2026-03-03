@@ -10,6 +10,7 @@ export default function Footer({ variant }: { variant?: "light" | "dark" } = {})
           <a href="/strategy" className={isDark ? "hover:text-white/60" : "hover:text-gray-600"}>Strategy</a>
           <a href="/faq" className={isDark ? "hover:text-white/60" : "hover:text-gray-600"}>FAQ</a>
           <a href="/glossary" className={isDark ? "hover:text-white/60" : "hover:text-gray-600"}>Glossary</a>
+          <a href="/achievements" className={isDark ? "hover:text-white/60" : "hover:text-gray-600"}>Achievements</a>
           <a href="/history" className={isDark ? "hover:text-white/60" : "hover:text-gray-600"}>History</a>
           <a href="/tips" className={isDark ? "hover:text-white/60" : "hover:text-gray-600"}>Tips</a>
           <a href="/privacy" className={isDark ? "hover:text-white/60" : "hover:text-gray-600"}>Privacy</a>

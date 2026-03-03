@@ -7,7 +7,7 @@ import { loadStats, saveStats } from '../lib/storage';
 import { recordGameResult } from '../lib/gameHistory';
 import { trackGameStart, trackWin, trackAbandoned, trackHint, trackUndo, trackMove, trackDeadlock, gameSession } from '../lib/analytics';
 import { initErrorTracking, setGameContext } from '../lib/errorTracking';
-import { checkWinAchievements, recordThemeUsed } from '../lib/achievementTracker';
+import { checkWinAchievements, recordModePlayed, recordUniqueGame } from '../lib/achievementTracker';
 import type { Achievement } from '../lib/achievements';
 import { getTodaysSeed, getTodayStr, recordDailyCompletion, isTodayCompleted } from '../lib/dailyChallenge';
 import { RotateCcw, RotateCw, Lightbulb, Calendar, Home, Share2, AlertTriangle, ChevronLeft, Flame, Volume2, VolumeX, Eye } from 'lucide-react';
@@ -100,22 +100,15 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
     setStats(loadStats());
     setDailyCompleted(isTodayCompleted());
     initErrorTracking();
-    // Record current theme for Theme Collector achievement
-    const themeId = localStorage.getItem('theme-id');
-    if (themeId) recordThemeUsed(themeId);
-    // Listen for theme changes
-    const handleThemeChange = () => {
-      const id = localStorage.getItem('theme-id');
-      if (id) recordThemeUsed(id);
-    };
-    const unsub = gameBridge.on('themeChanged', handleThemeChange);
+    // Record game mode for Explorer achievement
+    recordModePlayed(variant);
     // Show tutorial on first visit (skip if user has any play history)
     try {
       const seen = localStorage.getItem('tutorialSeen');
       const hasStats = localStorage.getItem('freecell-stats');
       if (!seen && !hasStats) {
         const timer = setTimeout(() => setShowTutorial(true), 1200);
-        return () => { unsub(); clearTimeout(timer); };
+        return () => clearTimeout(timer);
       } else if (!seen) {
         // Existing user, mark as seen so we never check again
         localStorage.setItem('tutorialSeen', '1');
@@ -123,8 +116,7 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
     } catch {
       // localStorage blocked
     }
-    return () => { unsub(); };
-  }, []);
+  }, [variant]);
 
   // Detect landscape on mobile (hide toolbars to maximize game area)
   useEffect(() => {
@@ -150,6 +142,7 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
       setIsWon(true);
       trackWin(d.time, d.moves);
       recordGameResult(true, d.moves, d.time, gameNumber ?? undefined);
+      if (gameNumber) recordUniqueGame(gameNumber);
       setStats((prev) => {
         const updated = recordWin(prev, d.time, d.moves);
         saveStats(updated);
@@ -161,7 +154,6 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
           updated,
           d.time,
           d.moves,
-          gameSession.hintsUsed,
           gameSession.undosUsed,
         );
         if (newlyUnlocked.length > 0) {

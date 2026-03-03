@@ -447,7 +447,7 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
 
   const handleShareGame = async () => {
     if (!gameNumber) return;
-    const shareUrl = `${window.location.origin}/?game=${gameNumber}`;
+    const shareUrl = `${window.location.origin}/game/${gameNumber}`;
     const shareText = `Can you solve FreeCell #${gameNumber}? 🃏 ${shareUrl}`;
 
     if (navigator.share) {

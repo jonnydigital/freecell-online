@@ -6,7 +6,7 @@
 
 ## 🔴 High Priority (Ship This Week)
 1. ~~**Puzzle modes: Streak + Storm**~~ ✅ SHIPPED — visible in home overlay menu
-2. **Post-game optimal solution** — Show solver's solution after each game (win or lose). Educational + dwell time. *(Lichess spark — leverages existing solver, low effort)*
+2. ~~**Post-game optimal solution**~~ ✅ SHIPPED 03-02 — Animated solution replay with 1x/2x/3x speed controls, Phaser integration, mobile-friendly
 3. ~~**Star rating per game**~~ ✅ SHIPPED
 4. ~~**Theme system**~~ ✅ SHIPPED 03-01
 5. ~~**Share button**~~ ✅ SHIPPED

@@ -269,6 +269,8 @@ export default function HistoryPage() {
         "@type": "Organization",
         name: "PlayFreeCellOnline.com",
       },
+      datePublished: "2026-02-20",
+      dateModified: "2026-03-02",
       mainEntityOfPage: {
         "@type": "WebPage",
         "@id": "https://playfreecellonline.com/history",
@@ -521,7 +523,7 @@ export default function HistoryPage() {
           </div>
         </section>
 
-        <AdUnit className="my-8" />
+        <AdUnit className="my-2" />
 
         {/* Section: Baker's Game */}
         <section id="bakers-game" className="scroll-mt-6">
@@ -648,6 +650,8 @@ export default function HistoryPage() {
             </div>
           </div>
         </section>
+
+        <AdUnit className="my-2" />
 
         {/* Section: Microsoft FreeCell */}
         <section id="microsoft" className="scroll-mt-6">
@@ -808,6 +812,8 @@ export default function HistoryPage() {
           </div>
         </section>
 
+        <AdUnit className="my-2" />
+
         {/* Section: Timeline */}
         <section id="timeline" className="scroll-mt-6">
           <div className={CARD} style={CARD_TOP}>
@@ -852,6 +858,8 @@ export default function HistoryPage() {
             </div>
           </div>
         </section>
+
+        <AdUnit className="my-2" />
 
         {/* Section: Game #11982 */}
         <section id="11982" className="scroll-mt-6">

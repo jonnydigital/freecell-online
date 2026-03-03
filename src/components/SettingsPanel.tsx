@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Settings, Volume2, Sparkles, Wand2, Monitor, Hand, MousePointer2 } from 'lucide-react';
+import { X, Settings, Volume2, Sparkles, Wand2, Monitor, Hand, MousePointer2, Ghost } from 'lucide-react';
 import { GameSettings } from '../lib/storage';
 import ThemeSelector from './ThemeSelector';
 
@@ -12,9 +12,11 @@ interface SettingsPanelProps {
     settings: GameSettings;
     onUpdateSettings: (settings: GameSettings) => void;
     onShowTutorial?: () => void;
+    onGhostMode?: () => void;
+    ghostSolving?: boolean;
 }
 
-export default function SettingsPanel({ isOpen, onClose, settings, onUpdateSettings }: SettingsPanelProps) {
+export default function SettingsPanel({ isOpen, onClose, settings, onUpdateSettings, onGhostMode, ghostSolving }: SettingsPanelProps) {
     const toggleSetting = (key: keyof GameSettings) => {
         onUpdateSettings({
             ...settings,
@@ -140,6 +142,31 @@ export default function SettingsPanel({ isOpen, onClose, settings, onUpdateSetti
                                     onToggle={() => toggleSetting('soundEnabled')}
                                 />
                             </section>
+
+                            {/* Ghost Mode Section */}
+                            {onGhostMode && (
+                                <section className="space-y-4">
+                                    <div className="flex items-center gap-2 mb-2">
+                                        <Ghost size={16} className="text-[#D4AF37]/60" />
+                                        <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-white/30">Ghost Mode</h3>
+                                    </div>
+                                    <button
+                                        onClick={() => { onGhostMode(); onClose(); }}
+                                        disabled={ghostSolving}
+                                        className="w-full flex items-center gap-3 p-4 rounded-xl bg-gradient-to-r from-purple-900/30 to-indigo-900/30 border border-purple-500/20 hover:border-purple-500/40 transition-all active:scale-[0.98] disabled:opacity-50"
+                                    >
+                                        <span className="text-2xl">👻</span>
+                                        <div className="text-left">
+                                            <div className="text-sm font-semibold text-white/90">
+                                                {ghostSolving ? 'Solver Running...' : 'Watch the Solver Play'}
+                                            </div>
+                                            <div className="text-[10px] text-white/40">
+                                                See how the AI solves this deal from the start
+                                            </div>
+                                        </div>
+                                    </button>
+                                </section>
+                            )}
                         </div>
 
                         {/* Footer */}

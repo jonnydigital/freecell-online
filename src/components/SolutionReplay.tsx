@@ -13,13 +13,14 @@ interface SolutionReplayProps {
   totalMoveCount: number;
   playerMoves: number;
   onClose: () => void;
+  isGhostMode?: boolean;
 }
 
 const SPEED_OPTIONS = [1, 2, 3] as const;
 type Speed = typeof SPEED_OPTIONS[number];
 const SPEED_DELAYS: Record<Speed, number> = { 1: 300, 2: 150, 3: 80 };
 
-export default function SolutionReplay({ gameNumber, moves, totalMoveCount, playerMoves, onClose }: SolutionReplayProps) {
+export default function SolutionReplay({ gameNumber, moves, totalMoveCount, playerMoves, onClose, isGhostMode = false }: SolutionReplayProps) {
   const [currentStep, setCurrentStep] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [waitingForAnimation, setWaitingForAnimation] = useState(false);
@@ -163,10 +164,13 @@ export default function SolutionReplay({ gameNumber, moves, totalMoveCount, play
       >
         {/* Header */}
         <div className="flex items-center justify-between mb-3">
-          <h3 className="text-base font-bold text-white">Optimal Solution</h3>
+          <h3 className="text-base font-bold text-white flex items-center gap-2">
+            {isGhostMode && <span className="text-lg">👻</span>}
+            {isGhostMode ? 'Ghost Mode' : 'Optimal Solution'}
+          </h3>
           <div className="flex items-center gap-3 text-sm">
-            <span className="text-white/50">You: <span className="text-white font-bold">{playerMoves}</span></span>
-            <span className="text-white/50">Best: <span className="text-emerald-400 font-bold">{totalMoveCount}</span></span>
+            {!isGhostMode && <span className="text-white/50">You: <span className="text-white font-bold">{playerMoves}</span></span>}
+            <span className="text-white/50">{isGhostMode ? 'Moves' : 'Best'}: <span className="text-emerald-400 font-bold">{totalMoveCount}</span></span>
             <button onClick={handleClose} className="text-white/50 hover:text-white transition-colors ml-1 p-1">
               <X size={18} />
             </button>

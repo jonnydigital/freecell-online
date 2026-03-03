@@ -10,7 +10,7 @@ import { initErrorTracking, setGameContext } from '../lib/errorTracking';
 import { checkWinAchievements, recordModePlayed, recordUniqueGame } from '../lib/achievementTracker';
 import type { Achievement } from '../lib/achievements';
 import { getTodaysSeed, getTodayStr, recordDailyCompletion, isTodayCompleted } from '../lib/dailyChallenge';
-import { RotateCcw, RotateCw, Lightbulb, Calendar, Home, Share2, AlertTriangle, ChevronLeft, Flame, Volume2, VolumeX, Eye } from 'lucide-react';
+import { RotateCcw, RotateCw, Lightbulb, Calendar, Home, Share2, AlertTriangle, ChevronLeft, Flame, Volume2, VolumeX, Eye, Ghost } from 'lucide-react';
 import StatsPanel from './StatsPanel';
 import FeedbackModal from './FeedbackModal';
 import DailyChallengePanel from './DailyChallengePanel';
@@ -71,6 +71,9 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
   const [showReplay, setShowReplay] = useState(false);
   const [newAchievements, setNewAchievements] = useState<Achievement[]>([]);
   const { status: solverStatus, moves: solverMoves, totalMoveCount: solverTotalMoves, solve: startSolver, reset: resetSolver } = useSolver();
+  const { status: ghostSolverStatus, moves: ghostSolverMoves, totalMoveCount: ghostSolverTotalMoves, solve: startGhostSolver, reset: resetGhostSolver } = useSolver();
+  const [ghostMode, setGhostMode] = useState(false);
+  const [ghostSolving, setGhostSolving] = useState(false);
   const [dailyCompleted, setDailyCompleted] = useState(true); // assume completed until checked
   const [shareStatus, setShareStatus] = useState<'idle' | 'copied'>('idle');
   const [timeElapsed, setTimeElapsed] = useState(0);
@@ -350,6 +353,9 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
     setIsDeadlocked(false);
     setStreakMilestone(null);
     setShowReplay(false);
+    setGhostMode(false);
+    setGhostSolving(false);
+    resetGhostSolver();
     setLeaderboardEntries([]);
     setLeaderboardRank(undefined);
     resetSolver();
@@ -364,6 +370,31 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
   const handleHint = () => {
     trackHint();
     gameBridge.emit('hint');
+  };
+
+  // Ghost Mode: watch the solver play the current game
+  const handleGhostMode = () => {
+    if (!gameNumber || isWon || ghostMode || ghostSolving) return;
+    setGhostSolving(true);
+    startGhostSolver(gameNumber);
+  };
+
+  // When ghost solver finishes, enter replay mode
+  useEffect(() => {
+    if (ghostSolving && ghostSolverStatus === 'solved' && ghostSolverMoves.length > 0) {
+      setGhostSolving(false);
+      setGhostMode(true);
+      setShowReplay(true);
+    } else if (ghostSolving && ghostSolverStatus === 'failed') {
+      setGhostSolving(false);
+      // Could show a toast here
+    }
+  }, [ghostSolving, ghostSolverStatus, ghostSolverMoves]);
+
+  const handleCloseGhostMode = () => {
+    setGhostMode(false);
+    setShowReplay(false);
+    resetGhostSolver();
   };
 
   const handlePlayDaily = (seed: number) => {
@@ -551,6 +582,14 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
                 <button onClick={handleHint} className={iconBtnClass} title="Hint (H)">
                   <Lightbulb size={20} />
                 </button>
+                <button
+                  onClick={handleGhostMode}
+                  className={`${iconBtnClass} ${ghostSolving ? 'animate-pulse' : ''}`}
+                  title="Ghost Mode — Watch the solver play"
+                  disabled={!gameNumber || isWon || ghostMode || ghostSolving}
+                >
+                  <Ghost size={20} />
+                </button>
                 <button onClick={handleToggleMute} className={iconBtnClass} title={isMuted ? "Unmute" : "Mute"}>
                   {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
                 </button>
@@ -638,13 +677,25 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
             )}
 
             {/* Solution Replay Overlay */}
-            {showReplay && solverStatus === 'solved' && (
+            {showReplay && solverStatus === 'solved' && !ghostMode && (
               <SolutionReplay
                 gameNumber={gameNumber || 0}
                 moves={solverMoves}
                 totalMoveCount={solverTotalMoves}
                 playerMoves={winDataRef.current?.moves ?? moveCount}
                 onClose={() => setShowReplay(false)}
+              />
+            )}
+
+            {/* Ghost Mode Replay */}
+            {showReplay && ghostMode && ghostSolverStatus === 'solved' && (
+              <SolutionReplay
+                gameNumber={gameNumber || 0}
+                moves={ghostSolverMoves}
+                totalMoveCount={ghostSolverTotalMoves}
+                playerMoves={moveCount}
+                onClose={handleCloseGhostMode}
+                isGhostMode
               />
             )}
 
@@ -848,6 +899,8 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
             settings={settings}
             onUpdateSettings={handleUpdateSettings}
             onShowTutorial={handleShowTutorial}
+            onGhostMode={!isWon && !ghostMode ? handleGhostMode : undefined}
+            ghostSolving={ghostSolving}
           />
 
           {/* Tutorial Overlay */}

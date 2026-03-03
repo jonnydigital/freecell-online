@@ -15,10 +15,15 @@ interface SolutionReplayProps {
   onClose: () => void;
 }
 
+const SPEED_OPTIONS = [1, 2, 3] as const;
+type Speed = typeof SPEED_OPTIONS[number];
+const SPEED_DELAYS: Record<Speed, number> = { 1: 300, 2: 150, 3: 80 };
+
 export default function SolutionReplay({ gameNumber, moves, totalMoveCount, playerMoves, onClose }: SolutionReplayProps) {
   const [currentStep, setCurrentStep] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [waitingForAnimation, setWaitingForAnimation] = useState(false);
+  const [speed, setSpeed] = useState<Speed>(1);
   const mountedRef = useRef(true);
   const isPlayingRef = useRef(false);
 
@@ -60,14 +65,14 @@ export default function SolutionReplay({ gameNumber, moves, totalMoveCount, play
       return;
     }
 
-    // Small delay between moves for readability
+    // Delay between moves based on speed setting
     const timer = setTimeout(() => {
       if (!mountedRef.current || !isPlayingRef.current) return;
       sendMoveToPhaser(currentStep);
-    }, 200);
+    }, SPEED_DELAYS[speed]);
 
     return () => clearTimeout(timer);
-  }, [isPlaying, waitingForAnimation, currentStep, totalSteps]);
+  }, [isPlaying, waitingForAnimation, currentStep, totalSteps, speed]);
 
   const sendMoveToPhaser = useCallback((step: number) => {
     if (step >= totalSteps) return;
@@ -114,6 +119,13 @@ export default function SolutionReplay({ gameNumber, moves, totalMoveCount, play
       setIsPlaying(prev => !prev);
     }
   }, [currentStep, totalSteps, gameNumber]);
+
+  const handleCycleSpeed = useCallback(() => {
+    setSpeed(prev => {
+      const idx = SPEED_OPTIONS.indexOf(prev);
+      return SPEED_OPTIONS[(idx + 1) % SPEED_OPTIONS.length];
+    });
+  }, []);
 
   const handleClose = useCallback(() => {
     setIsPlaying(false);
@@ -232,6 +244,13 @@ export default function SolutionReplay({ gameNumber, moves, totalMoveCount, play
             title="Next (Right Arrow)"
           >
             <ChevronRight size={22} />
+          </button>
+          <button
+            onClick={handleCycleSpeed}
+            className="ml-1 px-2 py-1 text-xs font-bold tabular-nums rounded bg-white/10 hover:bg-white/20 text-white/60 hover:text-white transition-colors active:scale-90 min-w-[3ch]"
+            title="Playback speed"
+          >
+            {speed}x
           </button>
           <div className="text-xs text-white/40 tabular-nums ml-1 min-w-[4ch] text-right">
             {currentStep}/{totalSteps}

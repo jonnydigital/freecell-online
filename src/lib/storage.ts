@@ -123,6 +123,17 @@ export function loadStarRating(gameNumber: number): number {
   }
 }
 
+/** Load all star ratings as a map of gameNumber → stars */
+export function loadAllStarRatings(): Record<string, number> {
+  if (!isBrowser()) return {};
+  try {
+    const data = localStorage.getItem(STARS_KEY);
+    return data ? JSON.parse(data) : {};
+  } catch {
+    return {};
+  }
+}
+
 /** Save star rating if it's better than existing. Returns true if it was a new best. */
 export function saveStarRating(gameNumber: number, stars: number): boolean {
   if (!isBrowser()) return false;

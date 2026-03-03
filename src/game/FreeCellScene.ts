@@ -12,6 +12,7 @@ import { GameTimer } from '../engine/GameTimer';
 import { gameBridge } from './GameBridge';
 import { getCardAssetKey, getAllCardAssets } from './CardAssets';
 import { getHint } from '../solver/solver';
+import type { SolverMove } from '../solver/FreeCellSolver';
 import { getRandomSolvableGame } from '../lib/solvableDeals';
 import { soundManager } from '../lib/sounds';
 import { GameSettings, loadSettings } from '../lib/storage';
@@ -114,6 +115,11 @@ export class FreeCellScene extends Phaser.Scene {
   private idleCheckTimer: Phaser.Time.TimerEvent | null = null;
   private dragGlowGraphics: Phaser.GameObjects.Graphics[] = [];
   private hintTextObj: Phaser.GameObjects.Container | null = null;
+
+  // Replay mode: disables user input while solver solution plays back
+  private isReplayMode: boolean = false;
+  private preReplayEngine: FreeCellEngine | null = null;
+  private preReplayHistory: MoveHistory | null = null;
 
   // Touch device detection and zone-based input
   private isTouchDevice: boolean = false;
@@ -308,6 +314,21 @@ export class FreeCellScene extends Phaser.Scene {
       this.cameras.main.setBackgroundColor(hexToInt(newTheme.feltColor));
       this.drawBackgroundEffects();
       this.rebuildBoard();
+    }));
+
+    // Replay mode: solver solution playback
+    this.bridgeUnsubscribers.push(gameBridge.on('setReplayMode', (data: unknown) => {
+      const d = data as { enabled: boolean; gameNumber?: number; preplayMoves?: SolverMove[] };
+      if (d.enabled && d.gameNumber) {
+        this.enterReplayMode(d.gameNumber, d.preplayMoves);
+      } else {
+        this.exitReplayMode();
+      }
+    }));
+
+    this.bridgeUnsubscribers.push(gameBridge.on('replayMove', (data: unknown) => {
+      if (!this.isReplayMode) return;
+      this.executeReplayMove(data as SolverMove);
     }));
 
     this.bridgeUnsubscribers.push(gameBridge.on('requestElementPosition', (elementKey: unknown) => {
@@ -1167,6 +1188,7 @@ export class FreeCellScene extends Phaser.Scene {
     // us direct finger-to-card tracking every frame
     canvas.addEventListener('touchstart', (e: TouchEvent) => {
       e.preventDefault(); // Kill scroll, zoom, and 300ms tap delay
+      if (this.isReplayMode) return;
       const touch = e.touches[0];
       const rect = canvas.getBoundingClientRect();
       const scaleX = canvas.width / rect.width;
@@ -1424,6 +1446,7 @@ export class FreeCellScene extends Phaser.Scene {
 
     canvas.addEventListener('mousedown', (e: MouseEvent) => {
       if (e.button !== 0) return; // Left click only
+      if (this.isReplayMode) return;
       const rect = canvas.getBoundingClientRect();
       const scaleX = canvas.width / rect.width;
       const scaleY = canvas.height / rect.height;
@@ -3457,6 +3480,11 @@ export class FreeCellScene extends Phaser.Scene {
   // ── New Game ──────────────────────────────────────────────
 
   private startNewGame(): void {
+    // Exit replay mode if active (discard saved state)
+    this.isReplayMode = false;
+    this.preReplayEngine = null;
+    this.preReplayHistory = null;
+
     // Clean up any active celebration
     this.cleanupWinCelebration();
 
@@ -3772,5 +3800,169 @@ export class FreeCellScene extends Phaser.Scene {
       gfx.destroy();
     }
     this.dragGlowGraphics = [];
+  }
+
+  // ── Replay Mode ──────────────────────────────────────────────
+
+  private readonly SOLVER_SUIT_MAP = [Suit.Clubs, Suit.Diamonds, Suit.Hearts, Suit.Spades];
+
+  private enterReplayMode(gameNumber: number, preplayMoves?: SolverMove[]): void {
+    this.isReplayMode = true;
+
+    // Save current engine/history so we can restore on exit
+    if (!this.preReplayEngine) {
+      this.preReplayEngine = this.engine;
+      this.preReplayHistory = this.history;
+    }
+
+    // Clean up current game state
+    this.cleanupWinCelebration();
+    this.clearHintGlow();
+    this.clearHintText();
+    this.clearIdleWiggles();
+    this.clearDragTargetGlow();
+    this.clearSelection();
+
+    // Reset engine to initial deal (all 52 cards in cascades)
+    this.cardSprites.forEach((sprite) => sprite.destroy());
+    this.cardSprites.clear();
+    this.engine = new FreeCellEngine(gameNumber, gameBridge.variant as 'freecell' | 'bakers-game');
+    this.history = new MoveHistory();
+
+    // Create all card sprites at their initial cascade positions
+    this.rebuildBoard();
+    this.dealCards(false);
+
+    // Fast-forward through pre-moves (for seeking to a specific step)
+    if (preplayMoves && preplayMoves.length > 0) {
+      for (const move of preplayMoves) {
+        this.applyReplayMoveInstant(move);
+      }
+      this.repositionAllCards(true); // animate to show the seek
+    }
+
+    gameBridge.emit('replayMoveExecuted', { ready: true });
+  }
+
+  private exitReplayMode(): void {
+    this.isReplayMode = false;
+
+    // Restore the pre-replay engine and rebuild the board
+    if (this.preReplayEngine) {
+      this.cardSprites.forEach((sprite) => sprite.destroy());
+      this.cardSprites.clear();
+      this.engine = this.preReplayEngine;
+      this.history = this.preReplayHistory || new MoveHistory();
+      this.preReplayEngine = null;
+      this.preReplayHistory = null;
+      this.rebuildBoard();
+      this.createAllCardSprites();
+      this.repositionAllCards(false);
+    }
+  }
+
+  /** Create sprites for all 52 cards wherever they are in the current game state */
+  private createAllCardSprites(): void {
+    const state = this.engine.getState();
+
+    // Cascade cards
+    for (let col = 0; col < 8; col++) {
+      for (let row = 0; row < state.cascades[col].length; row++) {
+        const card = state.cascades[col][row];
+        const pos = this.getCascadeCardPosition(col, row);
+        const sprite = this.createCardSprite(card, pos.x, pos.y);
+        sprite.sourceLocation = { type: 'cascade', index: col, cardIndex: row };
+        sprite.setDepth(row + 10);
+      }
+    }
+
+    // Free cell cards
+    for (let i = 0; i < 4; i++) {
+      const card = state.freeCells[i];
+      if (card) {
+        const pos = this.getFreeCellPosition(i);
+        const sprite = this.createCardSprite(card, pos.x, pos.y);
+        sprite.sourceLocation = { type: 'freecell', index: i };
+        sprite.setDepth(5);
+      }
+    }
+
+    // Foundation cards
+    const suits = [Suit.Clubs, Suit.Diamonds, Suit.Hearts, Suit.Spades];
+    for (const [suit, pile] of state.foundations) {
+      const idx = suits.indexOf(suit);
+      const pos = this.getFoundationPosition(idx);
+      for (let cardIdx = 0; cardIdx < pile.length; cardIdx++) {
+        const card = pile[cardIdx];
+        const sprite = this.createCardSprite(card, pos.x, pos.y);
+        sprite.sourceLocation = { type: 'foundation', suit };
+        sprite.setDepth(cardIdx + 1);
+      }
+    }
+  }
+
+  /** Convert a SolverMove's source to an engine Location */
+  private solverMoveFrom(solverMove: SolverMove): Location {
+    if (solverMove.fromType === 'cascade') {
+      const cascade = this.engine.getState().cascades[solverMove.fromIndex];
+      return {
+        type: 'cascade',
+        index: solverMove.fromIndex,
+        cardIndex: solverMove.cardCount > 1 ? cascade.length - solverMove.cardCount : undefined,
+      };
+    }
+    return { type: 'freecell', index: solverMove.fromIndex };
+  }
+
+  /** Convert a SolverMove's destination to an engine Location */
+  private solverMoveTo(solverMove: SolverMove): Location {
+    if (solverMove.toType === 'foundation') {
+      return { type: 'foundation', suit: this.SOLVER_SUIT_MAP[solverMove.toIndex] };
+    }
+    if (solverMove.toType === 'freecell') {
+      return { type: 'freecell', index: solverMove.toIndex };
+    }
+    return { type: 'cascade', index: solverMove.toIndex };
+  }
+
+  /** Execute a solver move with animation and sound, then signal completion */
+  private executeReplayMove(solverMove: SolverMove): void {
+    const from = this.solverMoveFrom(solverMove);
+    const to = this.solverMoveTo(solverMove);
+
+    this.engine.executeMove(from, to);
+    this.repositionAllCards();
+
+    if (to.type === 'foundation') {
+      soundManager.cardToFoundation();
+      this.emitFoundationParticles(to.suit);
+    } else {
+      soundManager.cardPlace();
+    }
+
+    // After move animation settles, perform auto-moves then signal ready
+    const settleDelay = 350 * this.getSpeedMultiplier();
+    this.time.delayedCall(settleDelay, () => {
+      if (!this.isReplayMode) return;
+
+      const autoMoves = this.engine.autoMoveToFoundations();
+      if (autoMoves.length > 0) {
+        this.repositionAllCards();
+        const autoDelay = Math.min(autoMoves.length * 150, 600) * this.getSpeedMultiplier();
+        this.time.delayedCall(autoDelay, () => {
+          gameBridge.emit('replayMoveExecuted');
+        });
+      } else {
+        gameBridge.emit('replayMoveExecuted');
+      }
+    });
+  }
+
+  /** Execute a solver move instantly (no animation/sound) — used for seeking */
+  private applyReplayMoveInstant(solverMove: SolverMove): void {
+    const from = this.solverMoveFrom(solverMove);
+    const to = this.solverMoveTo(solverMove);
+    this.engine.executeMove(from, to);
+    this.engine.autoMoveToFoundations();
   }
 }

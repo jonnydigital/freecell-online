@@ -10,7 +10,7 @@ import { initErrorTracking, setGameContext } from '../lib/errorTracking';
 import { checkWinAchievements, recordThemeUsed } from '../lib/achievementTracker';
 import type { Achievement } from '../lib/achievements';
 import { getTodaysSeed, getTodayStr, recordDailyCompletion, isTodayCompleted } from '../lib/dailyChallenge';
-import { RotateCcw, RotateCw, Lightbulb, Calendar, Home, Share2, AlertTriangle, ChevronLeft, Flame, Volume2, VolumeX } from 'lucide-react';
+import { RotateCcw, RotateCw, Lightbulb, Calendar, Home, Share2, AlertTriangle, ChevronLeft, Flame, Volume2, VolumeX, Eye } from 'lucide-react';
 import StatsPanel from './StatsPanel';
 import FeedbackModal from './FeedbackModal';
 import DailyChallengePanel from './DailyChallengePanel';
@@ -345,12 +345,12 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
     submit();
   }, [isWon, isDailyGame, gameNumber]);
 
-  // Start solver analysis when game is won
+  // Start solver analysis when game is won or deadlocked
   useEffect(() => {
-    if (isWon && gameNumber) {
+    if ((isWon || isDeadlocked) && gameNumber) {
       startSolver(gameNumber);
     }
-  }, [isWon, gameNumber, startSolver]);
+  }, [isWon, isDeadlocked, gameNumber, startSolver]);
 
   const handleNewGame = () => {
     setIsDailyGame(false);
@@ -623,8 +623,8 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
               </div>
             )}
 
-            {/* Win Screen (appears 5s after win, overlays celebration) */}
-            {isWon && winDataRef.current && (
+            {/* Win Screen (appears after win, hidden during replay) */}
+            {isWon && winDataRef.current && !showReplay && (
               <WinScreen
                 gameNumber={gameNumber || 0}
                 time={winDataRef.current.time}
@@ -651,7 +651,7 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
                 gameNumber={gameNumber || 0}
                 moves={solverMoves}
                 totalMoveCount={solverTotalMoves}
-                playerMoves={winDataRef.current?.moves ?? 0}
+                playerMoves={winDataRef.current?.moves ?? moveCount}
                 onClose={() => setShowReplay(false)}
               />
             )}
@@ -674,7 +674,7 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
             )}
 
             {/* Deadlock Overlay */}
-            {isDeadlocked && !isWon && (
+            {isDeadlocked && !isWon && !showReplay && (
               <div className="absolute inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-[2px]">
                 <div className="bg-white rounded-2xl p-8 max-w-sm w-full shadow-2xl text-center flex flex-col items-center gap-6 animate-in fade-in zoom-in duration-300">
                   <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center text-amber-600">
@@ -686,6 +686,13 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
                       The game has reached a state with no legal moves remaining.
                     </p>
                   </div>
+                  {/* Solver status */}
+                  {solverStatus === 'solving' && (
+                    <div className="text-sm text-gray-400 animate-pulse">Analyzing optimal solution...</div>
+                  )}
+                  {solverStatus === 'failed' && (
+                    <div className="text-sm text-gray-400">This deal may be unsolvable.</div>
+                  )}
                   <div className="flex flex-col w-full gap-3">
                     <button
                       onClick={handleUndo}
@@ -694,6 +701,15 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
                       <ChevronLeft size={20} />
                       Undo Last Move
                     </button>
+                    {solverStatus === 'solved' && (
+                      <button
+                        onClick={() => setShowReplay(true)}
+                        className="w-full py-3 px-6 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-bold flex items-center justify-center gap-2 transition-all active:scale-95 shadow-md"
+                      >
+                        <Eye size={18} />
+                        Watch Solution
+                      </button>
+                    )}
                     <button
                       onClick={() => { setIsDeadlocked(false); gameBridge.emit('restart'); }}
                       className="w-full py-3 px-6 bg-white border-2 border-gray-100 hover:border-gray-200 text-gray-700 rounded-xl font-bold flex items-center justify-center gap-2 transition-all active:scale-95"
@@ -726,7 +742,7 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
           </div>
 
           {/* ── Mobile Bottom Bar — 5 icons: Home, Streak, Undo, Redo, Hint ── */}
-          {!isLandscapeMobile && (
+          {!isLandscapeMobile && !showReplay && (
             <div className="flex md:hidden items-center justify-around px-2 py-2 bg-gradient-to-t from-black/80 to-[#072907]/90 backdrop-blur-lg border-t border-white/10 shadow-[0_-4px_20px_rgba(0,0,0,0.5)] safe-area-bottom z-20">
               <button
                 onClick={() => setShowHome(true)}

@@ -65,6 +65,9 @@ export class FreeCellScene extends Phaser.Scene {
   private isSettlingDrag: boolean = false;
   private pendingSettledMove: { from: Location; to: Location } | null = null;
 
+  // Auto-move animation state (for fast foundation auto-moves)
+  private pendingAutoMoveCards: Array<{ cardId: string; suit: Suit; rank: Rank; index: number }> = [];
+
   // Cached layout/input measurements
   private cachedOverlap: number | null = null;
   private cachedCanvasRect: DOMRect | null = null;
@@ -2351,12 +2354,12 @@ export class FreeCellScene extends Phaser.Scene {
       ease: 'Power2',
       onComplete: () => gfx.destroy(),
     });
-    // Horizontal shake for tactile feedback
+    // Horizontal shake for tactile feedback (2 oscillations, ~150ms total)
     const origX = sprite.x;
     this.tweens.add({
       targets: sprite,
       x: origX + 3,
-      duration: 50,
+      duration: 38,
       yoyo: true,
       repeat: 1,
       ease: 'Sine.easeInOut',
@@ -2631,7 +2634,28 @@ export class FreeCellScene extends Phaser.Scene {
       soundManager.cardPlace();
     }
 
+    // Set up fast auto-move animation for engine auto-moves
+    if (autoMoves.length > 0) {
+      this.pendingAutoMoveCards = autoMoves.map((am, i) => ({
+        cardId: am.cards[0].id,
+        suit: am.cards[0].suit,
+        rank: am.cards[0].rank,
+        index: i,
+      }));
+
+      // Staggered sounds/particles for auto-moves (start after brief pause for player move)
+      const stagger = 40 * this.getSpeedMultiplier();
+      const initialDelay = 60 * this.getSpeedMultiplier();
+      autoMoves.forEach((am, i) => {
+        this.time.delayedCall(initialDelay + i * stagger, () => {
+          soundManager.cardToFoundation(am.cards[0].rank);
+          this.emitFoundationParticles(am.cards[0].suit);
+        });
+      });
+    }
+
     this.repositionAllCards();
+    this.pendingAutoMoveCards = [];
     this.performAutoMoves();
 
     gameBridge.emit('moveExecuted', {
@@ -2660,7 +2684,8 @@ export class FreeCellScene extends Phaser.Scene {
   }
 
   private performAutoMoves(): void {
-    // Auto-move Aces and safe low cards to foundations
+    // Collect all auto-moves first, then animate with fast stagger
+    const autoMoves: Array<{ cardId: string; suit: Suit; rank: Rank }> = [];
     let moved = true;
     while (moved) {
       moved = false;
@@ -2677,8 +2702,7 @@ export class FreeCellScene extends Phaser.Scene {
           if (this.engine.isLegalMove(from, to)) {
             const move = this.engine.executeMove(from, to);
             this.history.push(move, []);
-            soundManager.cardToFoundation();
-            this.emitFoundationParticles(to.suit);
+            autoMoves.push({ cardId: card.id, suit: card.suit, rank: card.rank });
             gameBridge.emit('moveExecuted', {
               moveCount: this.engine.getState().moveCount,
               gameNumber: this.gameNumber,
@@ -2700,8 +2724,7 @@ export class FreeCellScene extends Phaser.Scene {
           if (this.engine.isLegalMove(from, to)) {
             const move = this.engine.executeMove(from, to);
             this.history.push(move, []);
-            soundManager.cardToFoundation();
-            this.emitFoundationParticles(to.suit);
+            autoMoves.push({ cardId: card.id, suit: card.suit, rank: card.rank });
             gameBridge.emit('moveExecuted', {
               moveCount: this.engine.getState().moveCount,
               gameNumber: this.gameNumber,
@@ -2713,17 +2736,38 @@ export class FreeCellScene extends Phaser.Scene {
       }
     }
 
+    // Store auto-move card info so repositionAllCards uses fast animation
+    this.pendingAutoMoveCards = autoMoves.map((am, i) => ({ ...am, index: i }));
+
+    // Schedule staggered sounds and particles for auto-moves
+    const stagger = 40 * this.getSpeedMultiplier();
+    autoMoves.forEach((am, i) => {
+      this.time.delayedCall(i * stagger, () => {
+        soundManager.cardToFoundation(am.rank);
+        this.emitFoundationParticles(am.suit);
+      });
+    });
+
     this.repositionAllCards();
 
-    // Check win
+    // Clear after repositioning has picked up the values
+    this.pendingAutoMoveCards = [];
+
+    // Check win after all auto-move animations complete
+    const totalDuration = autoMoves.length > 0
+      ? (autoMoves.length - 1) * stagger + 80 * this.getSpeedMultiplier()
+      : 0;
+
     if (this.engine.getState().isWon) {
-      soundManager.winFanfare();
-      gameBridge.emit('gameWon', {
-        time: this.timer.seconds,
-        moves: this.engine.getState().moveCount,
+      this.time.delayedCall(totalDuration, () => {
+        soundManager.winFanfare();
+        gameBridge.emit('gameWon', {
+          time: this.timer.seconds,
+          moves: this.engine.getState().moveCount,
+        });
+        this.timer.stop();
+        this.time.delayedCall(400, () => this.winCelebration());
       });
-      this.timer.stop();
-      this.time.delayedCall(400, () => this.winCelebration());
     }
 
     // Check auto-completable
@@ -2772,7 +2816,7 @@ export class FreeCellScene extends Phaser.Scene {
       if (bestCard) {
         const move = this.engine.executeMove(bestCard.from, { type: 'foundation', suit: bestCard.suit });
         this.history.push(move, []);
-        soundManager.cardToFoundation();
+        soundManager.cardToFoundation(bestRank);
         this.emitFoundationParticles(bestCard.suit);
         this.repositionAllCards();
 
@@ -3128,11 +3172,19 @@ export class FreeCellScene extends Phaser.Scene {
           );
           if (animate && isMovingToFoundation) {
             this.tweens.killTweensOf(sprite); // Kill any conflicting tween so card actually moves
+            // Check if this card is a pending auto-move (use fast 80ms + stagger)
+            const autoMove = this.pendingAutoMoveCards.find(am => am.cardId === card.id);
+            const autoStagger = 40 * this.getSpeedMultiplier();
+            const duration = autoMove
+              ? 80 * this.getSpeedMultiplier()
+              : Math.min(600, Math.max(250, this.getMoveDuration(sprite, pos.x, pos.y)));
+            const delay = autoMove ? autoMove.index * autoStagger : 0;
             this.tweens.add({
               targets: sprite,
               x: pos.x,
               y: pos.y,
-              duration: Math.min(600, Math.max(250, this.getMoveDuration(sprite, pos.x, pos.y))),
+              duration,
+              delay,
               ease: 'Back.easeOut',
               onComplete: isTopCard ? () => {
                 this.foundationBloom(sprite);

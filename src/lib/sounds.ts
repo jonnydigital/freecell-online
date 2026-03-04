@@ -133,15 +133,19 @@ class SoundManager {
     revNoise.stop(t + 0.15);
   }
 
-  /** Ascending rewarding chime — card moved to foundation */
-  cardToFoundation(): void {
+  /** Ascending rewarding chime — card moved to foundation.
+   *  Optional rank (1=Ace..13=King) shifts pitch for ascending melody during auto-complete. */
+  cardToFoundation(rank?: number): void {
     if (this._muted) return;
     const ctx = this.getContext();
     if (!ctx) return;
     const t = ctx.currentTime;
 
+    // Pitch multiplier: Ace (rank 1) = 0.7x, King (rank 13) = 1.3x
+    const pitchMul = rank != null ? 0.7 + ((rank - 1) / 12) * 0.6 : 1.0;
+
     // Three-note ascending sparkle (A major triad: A5, C#6, E6)
-    const notes = [880, 1108.7, 1318.5];
+    const notes = [880 * pitchMul, 1108.7 * pitchMul, 1318.5 * pitchMul];
     notes.forEach((freq, i) => {
       const start = t + i * 0.06;
 
@@ -151,8 +155,8 @@ class SoundManager {
       osc.type = 'sine';
       osc.frequency.value = freq;
       gain.gain.setValueAtTime(0, start);
-      gain.gain.linearRampToValueAtTime(0.12, start + 0.02); // Lowered from 0.25, slower attack
-      gain.gain.exponentialRampToValueAtTime(0.001, start + 0.25); // Slightly longer decay
+      gain.gain.linearRampToValueAtTime(0.12, start + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.001, start + 0.25);
       osc.connect(gain).connect(ctx.destination);
       osc.start(start);
       osc.stop(start + 0.25);

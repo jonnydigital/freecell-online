@@ -3,6 +3,9 @@
 ## 2026-03-03 (Tuesday Overnight Build)
 ### Shipped
 - **👻 Ghost Mode** — Watch the AI solver play any deal from start to finish, mid-game. Ghost button (👻) added to desktop toolbar + Settings panel for mobile access. Uses separate solver instance running in a web worker so it doesn't block gameplay. Player's game state is saved and restored when exiting ghost mode. Ghost Mode replay shows a distinct 👻 header and simplified stats (just solver moves, no "Your moves" comparison). No competitor has this feature.
+- **⚡ Instant Foundation Auto-Moves** — Foundation auto-moves now 80ms with 40ms stagger between cards (was 250-600ms). Creates a satisfying overlapping cascade effect during auto-moves and auto-finish.
+- **🎵 Sound Pitch Variation** — Cards placed on foundation now play at varying pitch based on rank. Ace = 0.7x (low), King = 1.3x (high). Creates an ascending melody during auto-complete sequences.
+- **🫨 Micro-Bounce on Invalid** — Invalid moves now trigger a horizontal shake (4 half-cycles, 152ms) in addition to the existing red flash and haptic feedback. More satisfying rejection feedback.
 
 ---
 

@@ -65,9 +65,9 @@ this.tweens.add({
 - Add slight y-offset (-3px) to "lift" above the board
 - On drag end, animate all back
 
-### 6. Instant Foundation Auto-Move (Effort: S)
+### 6. Instant Foundation Auto-Move (Effort: S) ✅ SHIPPED 2026-03-03
 **Problem**: `performAutoMoves()` runs synchronously but visual repositioning still takes 100-300ms per card. Safe auto-moves should feel instant.
-**Fix**: For auto-moves to foundation, use shorter duration (80ms) and overlap animations (don't wait for each to complete before starting next).
+**Fix**: Foundation auto-moves now 80ms with 40ms stagger between cards.
 
 ### 7. Animation Speed Setting (Effort: M)
 **Problem**: No user control over animation speed. Power users want everything instant.

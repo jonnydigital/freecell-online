@@ -81,11 +81,11 @@ this.tweens.add({
 
 ## 🟢 Polish (This Month)
 
-### 9. Sound Pitch Variation (Effort: S)
-Use Web Audio API to shift pitch based on card rank when placing on foundation. Ace = low, King = high. Creates an ascending "melody" during auto-complete.
+### 9. Sound Pitch Variation (Effort: S) ✅ SHIPPED 2026-03-03
+Rank-based pitch: Ace=0.7x → King=1.3x on foundation placement. Ascending melody during auto-complete.
 
-### 10. Micro-Bounce on Invalid (Effort: S)
-Instead of just a red flash, add a 3px horizontal shake (2 oscillations, 150ms). More satisfying feedback.
+### 10. Micro-Bounce on Invalid (Effort: S) ✅ SHIPPED 2026-03-03
+Horizontal shake (4 half-cycles, 152ms) on invalid moves. Complements existing red flash + haptic.
 
 ### 11. Card Shadow Depth Layering (Effort: M)
 Cards deeper in cascades should have less shadow. Top cards have more. Creates visual depth.

@@ -14,18 +14,20 @@
 7. ~~**SEO: Glossary/terminology page**~~ ✅ SHIPPED 02-28
 
 ## 🟡 Medium Priority (Ship This Month)
-8. **Statistics page enhancement** — charts, streaks visualization, detailed history
+8. ~~**Statistics page enhancement**~~ ✅ SHIPPED 03-03 — tabs, game history, daily stats, mode breakdown
 9. **Multi-modal navigation** — restructure nav into Play / Daily / Learn / Stats sections *(Chess.com spark — each mode serves different user intent)*
 10. ~~**Streak milestone celebrations**~~ ✅ SHIPPED 03-01 — Animated toasts at 14 milestone levels (3-365), unique messages, framer-motion animations *(Duolingo spark)*
 11. ~~**Numbered game URLs**~~ ✅ SHIPPED 03-02 — `/game/[number]` routes with SEO meta tags + share integration
-12. **FreeCell variants** — Baker's Game, Eight Off as separate modes. New daily challenges per variant. *(NYT Games spark — game portfolio as retention moat)*
+12. **FreeCell variants** — Eight Off as additional mode. New daily challenges per variant. *(NYT Games spark — game portfolio as retention moat)*
 13. ~~**SEO: FreeCell history page**~~ ✅ SHIPPED 03-02 — 1600-line rich content page covering Alfille, PLATO, Windows, Game #11982, structured data
-14. **SEO: Solitaire types taxonomy** — classify 10-20 variants, link to our game *(Solitaire Paradise spark. Hub page for internal linking)*
-15. **Leaderboard** — daily challenge times/moves (Vercel KV) *(competitor gap vs solitaired.com)*
+14. ~~**SEO: Solitaire types taxonomy**~~ ✅ SHIPPED — `/solitaire-types` page with 20 variants classified, difficulty ratings, internal links
+15. **Leaderboard backend** — Vercel KV for persistent daily challenge times/moves *(API routes exist, needs KV integration)*
 16. ~~**Achievements/badges**~~ ✅ SHIPPED 03-02 — 20 badges across 6 categories with unlock animations
-17. **Tutorial/onboarding** — first-time player walkthrough *(component exists: Tutorial.tsx — needs activation?)*
+17. ~~**Tutorial/onboarding**~~ ✅ SHIPPED — First-visit walkthrough with spotlight highlights, triggered automatically on first play, replayable from Settings
 18. **Video tutorial** — screen-recorded walkthrough, embed on game page *(Solitaire Bliss has YouTube embed. Huge for dwell time + rich snippets)*
 19. ~~**Ghost mode**~~ ✅ SHIPPED 03-03 — watch the solver play mid-game (👻 button in toolbar + settings)
+20. ~~**SEO: FreeCell vs Spider comparison**~~ ✅ SHIPPED 03-04 — 1000+ line comparison page, FAQPage schema, side-by-side table
+21. ~~**Dynamic sitemap.xml**~~ ✅ SHIPPED 03-04 — Next.js sitemap covering 19 content pages + 24 game routes
 
 ## 🟢 Nice to Have
 14. **Multiplayer daily challenge** — compete on same seed

@@ -1,5 +1,12 @@
 # FreeCell Online — Changelog
 
+## 2026-03-04 (Wednesday Overnight Build)
+### Shipped
+- **🗺️ Dynamic Sitemap.xml** — Next.js App Router sitemap generation covering all 19 content pages + 24 notable game number routes (including famous deals like #11982). The `robots.txt` already referenced `/sitemap.xml` but it didn't exist — Google can now properly discover and index all our pages.
+- **⚔️ FreeCell vs Spider Solitaire comparison page** (`/freecell-vs-spider`) — 1000+ line SEO content page targeting "freecell vs spider solitaire" and related comparison keywords. Includes side-by-side comparison table (10 attributes), detailed strategy analysis, difficulty breakdown with win rate stats, player-type recommendation panels, FAQPage schema JSON-LD (6 questions), and internal cross-links to 8 other pages. AdUnit placements between sections.
+
+---
+
 ## 2026-03-03 (Tuesday Overnight Build)
 ### Shipped
 - **👻 Ghost Mode** — Watch the AI solver play any deal from start to finish, mid-game. Ghost button (👻) added to desktop toolbar + Settings panel for mobile access. Uses separate solver instance running in a web worker so it doesn't block gameplay. Player's game state is saved and restored when exiting ghost mode. Ghost Mode replay shows a distinct 👻 header and simplified stats (just solver moves, no "Your moves" comparison). No competitor has this feature.

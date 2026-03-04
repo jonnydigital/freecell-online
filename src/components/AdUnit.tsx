@@ -21,6 +21,7 @@ export default function AdUnit({ slot, format = 'auto', className = '', width, h
   useEffect(() => {
     if (pushed.current) return;
     try {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const adsbygoogle = (window as any).adsbygoogle;
       if (adsbygoogle && adRef.current) {
         adsbygoogle.push({});

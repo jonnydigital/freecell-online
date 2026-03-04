@@ -165,7 +165,7 @@ export class SpiderEngine {
 
         // Look for A, 2, 3... K of same suit from bottom up
         let runCompleted = true;
-        let suit = cascade[cascade.length - 1].suit;
+        const suit = cascade[cascade.length - 1].suit;
 
         for (let i = 0; i < 13; i++) {
             const card = cascade[cascade.length - 1 - i];

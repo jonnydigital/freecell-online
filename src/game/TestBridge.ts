@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * TestBridge — Exposes game state and actions for automated testing.
  * Antigravity's browser agent can call these via execute_browser_javascript.

@@ -58,6 +58,13 @@ export default function SolutionReplay({ gameNumber, moves, totalMoveCount, play
     return unsub;
   }, []);
 
+  const sendMoveToPhaser = useCallback((step: number) => {
+    if (step >= totalSteps) return;
+    setWaitingForAnimation(true);
+    gameBridge.emit('replayMove', moves[step]);
+    setCurrentStep(step + 1);
+  }, [moves, totalSteps]);
+
   // Auto-play: when animation completes and isPlaying, send next move
   useEffect(() => {
     if (!isPlaying || waitingForAnimation) return;
@@ -73,14 +80,7 @@ export default function SolutionReplay({ gameNumber, moves, totalMoveCount, play
     }, SPEED_DELAYS[speed]);
 
     return () => clearTimeout(timer);
-  }, [isPlaying, waitingForAnimation, currentStep, totalSteps, speed]);
-
-  const sendMoveToPhaser = useCallback((step: number) => {
-    if (step >= totalSteps) return;
-    setWaitingForAnimation(true);
-    gameBridge.emit('replayMove', moves[step]);
-    setCurrentStep(step + 1);
-  }, [moves, totalSteps]);
+  }, [isPlaying, waitingForAnimation, currentStep, totalSteps, speed, sendMoveToPhaser]);
 
   const handleNext = useCallback(() => {
     if (waitingForAnimation || currentStep >= totalSteps) return;

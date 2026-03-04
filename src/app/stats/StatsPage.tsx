@@ -374,6 +374,7 @@ function ActivityHeatmap({
 
 function StreakCalendar({ history }: { history: GameResult[] }) {
   const today = new Date();
+  const todayKey = dayKey(today.getTime());
   const days: { date: string; won: boolean; played: boolean }[] = [];
 
   const dayResults: Record<string, { played: boolean; won: boolean }> = {};
@@ -397,7 +398,7 @@ function StreakCalendar({ history }: { history: GameResult[] }) {
       {days.map((day) => {
         const d = new Date(day.date + 'T12:00:00');
         const dayNum = d.getDate();
-        const isToday = day.date === dayKey(Date.now());
+        const isToday = day.date === todayKey;
         return (
           <div
             key={day.date}
@@ -574,6 +575,7 @@ function DailyStatsSection({
 
   // Last 30 days completion calendar
   const today = new Date();
+  const todayKey = dayKey(today.getTime());
   const last30: { date: string; completed: boolean }[] = [];
   for (let i = 29; i >= 0; i--) {
     const d = new Date(today);
@@ -622,7 +624,7 @@ function DailyStatsSection({
           {last30.map((day) => {
             const d = new Date(day.date + 'T12:00:00');
             const dayNum = d.getDate();
-            const isToday = day.date === dayKey(Date.now());
+            const isToday = day.date === todayKey;
             return (
               <div
                 key={day.date}

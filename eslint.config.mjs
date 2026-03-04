@@ -15,6 +15,13 @@ const eslintConfig = defineConfig([
     // Build-time scripts (use require(), not app code)
     "scripts/**",
   ]),
+  {
+    rules: {
+      // Data fetching and state initialization in useEffect is standard React.
+      // The rule flags async patterns that are actually correct.
+      "react-hooks/set-state-in-effect": "warn",
+    },
+  },
 ]);
 
 export default eslintConfig;

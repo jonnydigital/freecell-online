@@ -5,6 +5,7 @@
 - **🗺️ Dynamic Sitemap.xml** — Next.js App Router sitemap generation covering all 19 content pages + 24 notable game number routes (including famous deals like #11982). The `robots.txt` already referenced `/sitemap.xml` but it didn't exist — Google can now properly discover and index all our pages.
 - **⚔️ FreeCell vs Spider Solitaire comparison page** (`/freecell-vs-spider`) — 1000+ line SEO content page targeting "freecell vs spider solitaire" and related comparison keywords. Includes side-by-side comparison table (10 attributes), detailed strategy analysis, difficulty breakdown with win rate stats, player-type recommendation panels, FAQPage schema JSON-LD (6 questions), and internal cross-links to 8 other pages. AdUnit placements between sections.
 - **🎨 Card Shadow Depth Layering** — Cards deeper in cascades now have subtler shadows (0.04 alpha, 1px offset) while top cards get more pronounced shadows (0.18 alpha, 3px offset). Free cell and foundation cards use a flat minimal shadow. Creates a visual depth effect that makes card stacks feel like real overlapping cards rather than flat sprites.
+- **🐛 Fix GA4 Analytics (zero data for 8+ days!)** — The Analytics component was using Next.js Script children syntax which caused a timing issue with gtag.js initialization. Data was pushed to dataLayer but never sent to Google's servers. Fixed by switching to `dangerouslySetInnerHTML`, removing deprecated `page_path`, and adding explicit `send_page_view: true`. We've been flying blind since launch.
 
 ---
 

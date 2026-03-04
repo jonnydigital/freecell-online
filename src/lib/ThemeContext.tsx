@@ -11,32 +11,29 @@ interface ThemeContextValue {
 
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 
-export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<ThemeDefinition>(themes[0]);
-
-  // Initialize from localStorage on mount
-  useEffect(() => {
-    let resolved: ThemeDefinition = themes[0];
-
-    const storedId = localStorage.getItem('theme-id');
-    if (storedId) {
-      resolved = getThemeById(storedId);
-    } else {
-      // Migrate from old theme-name key
-      const oldName = localStorage.getItem('theme-name');
-      if (oldName) {
-        const found = themes.find(t => t.name === oldName);
-        if (found) {
-          resolved = found;
-          localStorage.setItem('theme-id', found.id);
-        }
-      }
+function getInitialTheme(): ThemeDefinition {
+  if (typeof window === 'undefined') return themes[0];
+  const storedId = localStorage.getItem('theme-id');
+  if (storedId) return getThemeById(storedId);
+  const oldName = localStorage.getItem('theme-name');
+  if (oldName) {
+    const found = themes.find(t => t.name === oldName);
+    if (found) {
+      localStorage.setItem('theme-id', found.id);
+      return found;
     }
+  }
+  return themes[0];
+}
 
-    setThemeState(resolved);
-    applyThemeCssVars(resolved);
-    gameBridge.emit('themeChanged', resolved);
-  }, []);
+export function ThemeProvider({ children }: { children: React.ReactNode }) {
+  const [theme, setThemeState] = useState<ThemeDefinition>(getInitialTheme);
+
+  // Apply CSS vars and notify game on mount
+  useEffect(() => {
+    applyThemeCssVars(theme);
+    gameBridge.emit('themeChanged', theme);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const setTheme = useCallback((newTheme: ThemeDefinition) => {
     setThemeState(newTheme);

@@ -2998,6 +2998,56 @@ export class FreeCellScene extends Phaser.Scene {
     }
   }
 
+  // ── Shadow Depth Layering ──────────────────────────────────
+
+  /**
+   * Update a card's drop shadow based on its depth in a cascade.
+   * Cards deeper in the stack get a subtler shadow; top cards get more
+   * pronounced shadows — creating visual depth like a real card stack.
+   * @param sprite The card container
+   * @param row Card position in cascade (0 = bottom/deepest)
+   * @param cascadeLength Total cards in the cascade
+   */
+  private updateCardShadowDepth(
+    sprite: CardSprite,
+    row: number,
+    cascadeLength: number,
+  ): void {
+    const shadow = sprite.getAt(0) as Phaser.GameObjects.Graphics;
+    if (!shadow || !(shadow instanceof Phaser.GameObjects.Graphics)) return;
+
+    // Normalized position: 0.0 (bottom of stack) → 1.0 (top card)
+    const t = cascadeLength <= 1 ? 1.0 : row / (cascadeLength - 1);
+
+    // Alpha: 0.04 (buried) → 0.18 (top card)
+    const alpha = 0.04 + t * 0.14;
+    // Offset: 1px (buried) → 3px (top card)
+    const offset = 1 + t * 2;
+    // Blur radius approximation via rect expansion: 0 (buried) → 2px (top)
+    const blur = t * 2;
+
+    shadow.clear();
+    shadow.fillStyle(0x000000, alpha);
+    shadow.fillRoundedRect(
+      offset,
+      offset,
+      this.cardWidth + blur,
+      this.cardHeight + blur,
+      8,
+    );
+  }
+
+  /**
+   * Set a flat, minimal shadow for cards in free cells or foundations.
+   */
+  private setFlatCardShadow(sprite: CardSprite): void {
+    const shadow = sprite.getAt(0) as Phaser.GameObjects.Graphics;
+    if (!shadow || !(shadow instanceof Phaser.GameObjects.Graphics)) return;
+    shadow.clear();
+    shadow.fillStyle(0x000000, 0.08);
+    shadow.fillRoundedRect(1, 1, this.cardWidth, this.cardHeight, 8);
+  }
+
   // ── Reposition / Animate ──────────────────────────────────
 
   private getSpeedMultiplier(): number {
@@ -3119,6 +3169,7 @@ export class FreeCellScene extends Phaser.Scene {
             sprite.y = pos.y;
           }
           sprite.setDepth(row + 10);
+          this.updateCardShadowDepth(sprite, row, cascade.length);
           sprite.sourceLocation = {
             type: 'cascade',
             index: col,
@@ -3152,6 +3203,7 @@ export class FreeCellScene extends Phaser.Scene {
             sprite.y = pos.y;
           }
           sprite.setDepth(5);
+          this.setFlatCardShadow(sprite);
           sprite.sourceLocation = { type: 'freecell', index: i };
         }
       }
@@ -3198,6 +3250,7 @@ export class FreeCellScene extends Phaser.Scene {
             sprite.y = pos.y;
           }
           sprite.setDepth(5 + cardIdx);
+          this.setFlatCardShadow(sprite);
           sprite.sourceLocation = { type: 'foundation', suit };
         }
       }

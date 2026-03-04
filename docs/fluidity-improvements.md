@@ -69,7 +69,7 @@ this.tweens.add({
 **Problem**: `performAutoMoves()` runs synchronously but visual repositioning still takes 100-300ms per card. Safe auto-moves should feel instant.
 **Fix**: Foundation auto-moves now 80ms with 40ms stagger between cards.
 
-### 7. Animation Speed Setting (Effort: M)
+### 7. Animation Speed Setting (Effort: M) ✅ SHIPPED 2026-03-04
 **Problem**: No user control over animation speed. Power users want everything instant.
 **Fix**: Add `animationSpeed` multiplier (0.5x = fast, 1x = normal, 2x = slow). Apply to all `duration` values. Store in localStorage. Expose in settings UI.
 
@@ -87,7 +87,7 @@ Rank-based pitch: Ace=0.7x → King=1.3x on foundation placement. Ascending melo
 ### 10. Micro-Bounce on Invalid (Effort: S) ✅ SHIPPED 2026-03-03
 Horizontal shake (4 half-cycles, 152ms) on invalid moves. Complements existing red flash + haptic.
 
-### 11. Card Shadow Depth Layering (Effort: M)
+### 11. Card Shadow Depth Layering (Effort: M) ✅ SHIPPED 2026-03-04
 Cards deeper in cascades should have less shadow. Top cards have more. Creates visual depth.
 
 ### 12. Smooth Resize Transitions (Effort: M)

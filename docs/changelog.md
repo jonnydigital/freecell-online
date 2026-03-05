@@ -1,5 +1,11 @@
 # FreeCell Online — Changelog
 
+## 2026-03-05 (Thursday Overnight Build)
+### Shipped
+- **🖼️ Dynamic OG Images + Twitter Cards** — Every page now generates rich social preview images when shared on social media, Discord, Reddit, Telegram, etc. Default OG image (1200x630) features dark green felt gradient, 4 playing card icons, "FreeCell Online" title, gold accents, and domain branding. Dynamic per-game OG images for `/game/[number]` routes show "FreeCell Game #[number] — Can you solve this deal?" Added `summary_large_image` Twitter card metadata to root layout + 6 content pages. Added `metadataBase` for proper URL resolution. Previously, sharing any page showed no image preview — a major gap for social acquisition.
+
+---
+
 ## 2026-03-04 (Wednesday Overnight Build)
 ### Shipped
 - **🗺️ Dynamic Sitemap.xml** — Next.js App Router sitemap generation covering all 19 content pages + 24 notable game number routes (including famous deals like #11982). The `robots.txt` already referenced `/sitemap.xml` but it didn't exist — Google can now properly discover and index all our pages.

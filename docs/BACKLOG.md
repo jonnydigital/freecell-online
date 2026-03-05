@@ -35,8 +35,9 @@
 16. **i18n** — multi-language
 17. **Accessibility** — screen reader, high contrast
 18. **Community/forum** — user feedback channel *(Green Felt model, builds loyalty)*
-19. **Animation speed setting** — let users choose fast/medium/slow *(cardgames.io feature)*
-20. **Sound pitch variation** — higher rank = higher pitch on foundation *(polish item from 02-26 analysis)*
+19. ~~**Animation speed setting**~~ ✅ SHIPPED — slow/normal/fast toggle in Settings panel, wired to game engine multiplier *(cardgames.io feature)*
+20. ~~**Sound pitch variation**~~ ✅ SHIPPED 03-03 — higher rank = higher pitch on foundation *(polish item from 02-26 analysis)*
+21. ~~**Dynamic OG Images + Twitter Cards**~~ ✅ SHIPPED 03-05 — Rich social preview images for all pages + per-game dynamic OG for /game/[number] routes. Twitter summary_large_image cards site-wide.
 
 ## ⏳ Blocked (Needs Jonathan)
 - **Custom domain** — playfreecellonline.com → Vercel DNS

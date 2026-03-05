@@ -33,7 +33,7 @@
 14. **Multiplayer daily challenge** — compete on same seed
 15. **Offline mode polish** — better offline UX
 16. **i18n** — multi-language
-17. **Accessibility** — screen reader, high contrast
+17. ~~**Accessibility** — screen reader, high contrast~~ ✅ SHIPPED 03-05 — High contrast mode, screen reader announcements (aria-live), reduced motion toggle, skip-to-game link, focus indicators
 18. **Community/forum** — user feedback channel *(Green Felt model, builds loyalty)*
 19. ~~**Animation speed setting**~~ ✅ SHIPPED — slow/normal/fast toggle in Settings panel, wired to game engine multiplier *(cardgames.io feature)*
 20. ~~**Sound pitch variation**~~ ✅ SHIPPED 03-03 — higher rank = higher pitch on foundation *(polish item from 02-26 analysis)*

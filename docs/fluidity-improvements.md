@@ -57,7 +57,7 @@ this.tweens.add({
 
 ## 🟡 Important (Ship This Week)
 
-### 5. Enhanced Card Lift Effect (Effort: S)
+### 5. Enhanced Card Lift Effect (Effort: S) ✅ SHIPPED
 **Problem**: Drag only scales to 1.05x. No shadow depth change.
 **Fix**: On drag start:
 - Scale to 1.08x
@@ -73,7 +73,7 @@ this.tweens.add({
 **Problem**: No user control over animation speed. Power users want everything instant.
 **Fix**: Add `animationSpeed` multiplier (0.5x = fast, 1x = normal, 2x = slow). Apply to all `duration` values. Store in localStorage. Expose in settings UI.
 
-### 8. Touch Responsiveness (Effort: S)
+### 8. Touch Responsiveness (Effort: S) ✅ SHIPPED
 **Problem**: `pointerup` event handling means there's a natural delay. Cards don't respond until finger lifts.
 **Fix**: Switch to `pointerdown` for selection (immediate response). Keep `pointerup` for placement confirmation. This eliminates ~50-100ms of perceived input lag on mobile.
 

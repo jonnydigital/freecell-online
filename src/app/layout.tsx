@@ -3,6 +3,7 @@ import { Inter, Playfair_Display } from "next/font/google";
 import Analytics from "../components/Analytics";
 import CookieConsent from "../components/CookieConsent";
 import ThemeInitializer from "../components/ThemeInitializer";
+import SiteFooter from "../components/SiteFooter";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
@@ -58,6 +59,7 @@ export default function RootLayout({
         <ThemeInitializer />
         <Analytics />
         {children}
+        <SiteFooter />
         <CookieConsent />
         <script
           dangerouslySetInnerHTML={{

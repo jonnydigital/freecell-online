@@ -2,7 +2,7 @@
 
 import React, { useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, HelpCircle, Swords, MessageSquare, VolumeX, Volume2, Trophy, Flame, Zap, Layers, Shuffle } from 'lucide-react';
+import { X, HelpCircle, Swords, MessageSquare, VolumeX, Volume2, Trophy, Flame, Zap, Layers, Shuffle, Bug } from 'lucide-react';
 import { getTodaysSeed, getTodayStr, loadDailyData, getCurrentStreak } from '../lib/dailyChallenge';
 import { loadStats } from '../lib/storage';
 import { getAverageTime } from '../lib/stats';
@@ -183,6 +183,13 @@ export default function HomeOverlay({
                     <Layers size={22} className="text-purple-400 shrink-0" />
                     <span className="text-base font-semibold text-purple-300">Baker&apos;s</span>
                   </a>
+                  <a
+                    href="/spider"
+                    className="flex items-center gap-3 py-4 px-4 rounded-xl bg-white/5 border border-rose-500/20 hover:bg-rose-500/10 active:scale-[0.97] transition-all"
+                  >
+                    <Bug size={22} className="text-rose-400 shrink-0" />
+                    <span className="text-base font-semibold text-rose-300">Spider</span>
+                  </a>
                 </div>
 
                 {/* 3. Stats row */}
@@ -217,6 +224,21 @@ export default function HomeOverlay({
                     <Trophy size={28} className="text-[#D4AF37]" />
                     <span className="text-sm text-white/70">Badges</span>
                   </a>
+                </div>
+
+                {/* 4b. Explore links */}
+                <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-sm text-white/40">
+                  <a href="/leaderboard" className="hover:text-[#D4AF37] transition-colors">Leaderboard</a>
+                  <span>·</span>
+                  <a href="/history" className="hover:text-[#D4AF37] transition-colors">History</a>
+                  <span>·</span>
+                  <a href="/glossary" className="hover:text-[#D4AF37] transition-colors">Glossary</a>
+                  <span>·</span>
+                  <a href="/tips" className="hover:text-[#D4AF37] transition-colors">Tips</a>
+                  <span>·</span>
+                  <a href="/solitaire-types" className="hover:text-[#D4AF37] transition-colors">Solitaire Types</a>
+                  <span>·</span>
+                  <a href="/winning-deals" className="hover:text-[#D4AF37] transition-colors">Winning Deals</a>
                 </div>
 
                 {/* 5. Settings row */}

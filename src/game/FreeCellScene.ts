@@ -16,6 +16,7 @@ import type { SolverMove } from '../solver/FreeCellSolver';
 import { getRandomSolvableGame } from '../lib/solvableDeals';
 import { soundManager } from '../lib/sounds';
 import { GameSettings, loadSettings } from '../lib/storage';
+import { announceToScreenReader } from '../lib/accessibility';
 import { registerTestBridge, unregisterTestBridge } from './TestBridge';
 import { ThemeDefinition, themes, getThemeById, hexToInt } from '../lib/themes';
 
@@ -2506,6 +2507,7 @@ export class FreeCellScene extends Phaser.Scene {
 
   private flashInvalid(sprite: CardSprite): void {
     soundManager.invalidMove();
+    announceToScreenReader('Invalid move', 'assertive');
     // Red flash overlay
     const gfx = this.add.graphics();
     gfx.fillStyle(0xff0000, 0.3);
@@ -2794,8 +2796,10 @@ export class FreeCellScene extends Phaser.Scene {
     if (to.type === 'foundation') {
       soundManager.cardToFoundation();
       this.emitFoundationParticles(to.suit);
+      announceToScreenReader('Card moved to foundation');
     } else {
       soundManager.cardPlace();
+      announceToScreenReader('Card moved');
     }
 
     // Set up fast auto-move animation for engine auto-moves

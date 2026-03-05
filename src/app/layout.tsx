@@ -3,6 +3,7 @@ import { Inter, Playfair_Display } from "next/font/google";
 import Analytics from "../components/Analytics";
 import CookieConsent from "../components/CookieConsent";
 import ThemeInitializer from "../components/ThemeInitializer";
+import AccessibilityInitializer from "../components/AccessibilityInitializer";
 import SiteFooter from "../components/SiteFooter";
 import "./globals.css";
 
@@ -63,7 +64,11 @@ export default function RootLayout({
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3083538874906149" crossOrigin="anonymous"></script>
       </head>
       <body className={`${inter.variable} ${playfair.variable} ${inter.className}`}>
+        <a href="#game-container" className="skip-to-game">
+          Skip to game
+        </a>
         <ThemeInitializer />
+        <AccessibilityInitializer />
         <Analytics />
         {children}
         <SiteFooter />

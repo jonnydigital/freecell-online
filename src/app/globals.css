@@ -280,3 +280,97 @@ body {
   animation: header-shine 8s infinite linear;
   pointer-events: none;
 }
+
+/* ── Accessibility ── */
+
+/* Screen reader only — visually hidden but accessible */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Skip to game link — visible on focus */
+.skip-to-game {
+  position: absolute;
+  top: -100%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  padding: 0.75rem 1.5rem;
+  background: #D4AF37;
+  color: #000;
+  font-weight: 700;
+  font-size: 1rem;
+  border-radius: 0 0 0.5rem 0.5rem;
+  text-decoration: none;
+  transition: top 0.15s ease;
+}
+
+.skip-to-game:focus {
+  top: 0;
+  outline: 3px solid #fff;
+  outline-offset: 2px;
+}
+
+/* Focus indicators for keyboard navigation */
+*:focus-visible {
+  outline: 2px solid #D4AF37;
+  outline-offset: 2px;
+}
+
+/* ── High Contrast Mode ── */
+
+.high-contrast button {
+  border: 2px solid rgba(255, 255, 255, 0.5) !important;
+}
+
+.high-contrast .bg-black\/30,
+.high-contrast .bg-black\/20,
+.high-contrast .bg-black\/10 {
+  background-color: rgba(0, 0, 0, 0.6) !important;
+}
+
+.high-contrast .text-white\/30,
+.high-contrast .text-white\/40,
+.high-contrast .text-white\/50,
+.high-contrast .text-white\/60,
+.high-contrast .text-white\/70 {
+  color: rgba(255, 255, 255, 0.95) !important;
+}
+
+.high-contrast .border-white\/5,
+.high-contrast .border-white\/10 {
+  border-color: rgba(255, 255, 255, 0.4) !important;
+}
+
+.high-contrast #game-container canvas {
+  filter: contrast(1.25) saturate(1.3);
+}
+
+/* ── Reduced Motion ── */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.reduced-motion *, .reduced-motion *::before, .reduced-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}
+
+.reduced-motion .animate-bounce,
+.reduced-motion .animate-pulse {
+  animation: none !important;
+}

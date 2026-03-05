@@ -33,6 +33,7 @@ import { soundManager } from '../lib/sounds';
 import { GameSettings, loadSettings, saveSettings } from '../lib/storage';
 import { submitScore, fetchDailyLeaderboard, LeaderboardEntry } from '../lib/leaderboardClient';
 import { getPlayerId } from '../lib/playerIdentity';
+import { announceToScreenReader } from '../lib/accessibility';
 
 interface GameShellProps {
   initialGameNumber?: number;
@@ -144,6 +145,7 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
       winDataRef.current = d;
       setIsWon(true);
       trackWin(d.time, d.moves);
+      announceToScreenReader(`Congratulations! You won in ${d.moves} moves.`, 'assertive');
       recordGameResult(true, d.moves, d.time, gameNumber ?? undefined);
       if (gameNumber) recordUniqueGame(gameNumber);
       setStats((prev) => {
@@ -274,6 +276,7 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
       setAutoCompletable(false);
       trackGameStart(d.gameNumber);
       setIsDailyGame(d.gameNumber === getTodaysSeed());
+      announceToScreenReader(`New game started. Game number ${d.gameNumber}.`);
       // Update URL to reflect current game number (shareable)
       if (d.gameNumber >= 1 && d.gameNumber <= 1000000) {
         window.history.replaceState(null, '', `/game/${d.gameNumber}`);
@@ -287,6 +290,7 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
       if (d.moveCount === 0) setIsTimerRunning(false);
       trackMove('tap');
       setGameContext(d.gameNumber, d.moveCount);
+      announceToScreenReader(`Move ${d.moveCount}`);
     });
 
     const unsubWin = gameBridge.on('gameWon', handleWin);
@@ -294,6 +298,7 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
     const unsubDeadlock = gameBridge.on('deadlock', () => {
       setIsDeadlocked(true);
       trackDeadlock();
+      announceToScreenReader('No legal moves remaining. Game is deadlocked.', 'assertive');
     });
 
     const unsubAutoComplete = gameBridge.on('autoCompletable', (data: unknown) => {
@@ -507,6 +512,9 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
 
   return (
     <div className="flex w-full h-dvh transition-colors duration-500" style={{ backgroundColor: 'var(--theme-base)' }}>
+      {/* Screen reader live region */}
+      <div id="sr-announcements" role="status" aria-live="polite" aria-atomic="true" className="sr-only" />
+
       {/* Structural Wrapper: Game + Right Ad Sidebar */}
       <div className="flex w-full h-full max-w-[1320px] mx-auto relative overflow-hidden">
 
@@ -633,8 +641,8 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
           )}
 
           {/* Game Canvas Container */}
-          <div className="relative flex-1">
-            <div ref={containerRef} id="game-container" className="absolute inset-0" />
+          <div className="relative flex-1" role="main" aria-label="FreeCell game board">
+            <div ref={containerRef} id="game-container" className="absolute inset-0" tabIndex={-1} aria-label="Game canvas" />
 
             {/* Daily Challenge Banner */}
             {/* Daily Challenge moved to Home overlay — no banner during gameplay */}

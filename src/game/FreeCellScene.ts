@@ -86,6 +86,7 @@ export class FreeCellScene extends Phaser.Scene {
   private phaserPointerUpHandler: ((pointer: Phaser.Input.Pointer) => void) | null = null;
   private orientationChangeHandler: (() => void) | null = null;
   private windowResizeHandler: (() => void) | null = null;
+  private keyboardHandler: ((e: KeyboardEvent) => void) | null = null;
   private resizeTimeout: ReturnType<typeof setTimeout> | null = null;
 
   // Click-to-move state
@@ -400,6 +401,140 @@ export class FreeCellScene extends Phaser.Scene {
         }
       };
       this.input.on('pointerup', this.phaserPointerUpHandler);
+    }
+
+    // ── Keyboard Shortcuts (desktop) ──
+    if (!this.isTouchDevice) {
+      this.keyboardHandler = (e: KeyboardEvent) => {
+        // Don't capture when typing in an input/textarea or in replay mode
+        const tag = (e.target as HTMLElement)?.tagName;
+        if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+        if (this.isReplayMode) return;
+        if (this.engine.getState().isWon) return;
+
+        const key = e.key.toLowerCase();
+        const ctrl = e.ctrlKey || e.metaKey;
+
+        // Ctrl+Z / Cmd+Z: Undo
+        if (ctrl && key === 'z' && !e.shiftKey) {
+          e.preventDefault();
+          this.undoLastMove();
+          return;
+        }
+        // Ctrl+Shift+Z / Ctrl+Y: Redo
+        if ((ctrl && key === 'z' && e.shiftKey) || (ctrl && key === 'y')) {
+          e.preventDefault();
+          this.redoMove();
+          return;
+        }
+
+        // Don't process other shortcuts with ctrl/meta held
+        if (ctrl) return;
+
+        // Escape: deselect
+        if (key === 'escape') {
+          this.clearSelection();
+          return;
+        }
+
+        // H: hint
+        if (key === 'h') {
+          this.showHint();
+          return;
+        }
+
+        // N: new game
+        if (key === 'n') {
+          gameBridge.emit('newGame');
+          return;
+        }
+
+        // 1-8: interact with cascade column
+        const colNum = parseInt(key);
+        if (colNum >= 1 && colNum <= 8) {
+          const col = colNum - 1;
+          const state = this.engine.getState();
+          const cascade = state.cascades[col];
+
+          if (this.selectedCard) {
+            // If a card is selected, try to move it to this cascade
+            const from = this.findCardLocation(this.selectedCard.cardData);
+            if (from) {
+              const to: Location = { type: 'cascade', index: col };
+              if (this.engine.isLegalMove(from, to)) {
+                this.executeMoveAndAnimate(from, to);
+                this.clearSelection();
+                return;
+              }
+              // If target cascade has cards, try placing on top card
+              if (cascade.length > 0) {
+                const topCard = cascade[cascade.length - 1];
+                const topSprite = this.cardSprites.get(topCard.id);
+                if (topSprite) {
+                  this.tryMoveSelectedTo(topSprite);
+                  return;
+                }
+              }
+            }
+            this.clearSelection();
+          } else {
+            // No selection: auto-move the bottom card of this cascade
+            if (cascade.length > 0) {
+              const bottomCard = cascade[cascade.length - 1];
+              const sprite = this.cardSprites.get(bottomCard.id);
+              if (sprite) {
+                this.smartAutoMove(sprite);
+              }
+            }
+          }
+          return;
+        }
+
+        // Q, W, E, R: interact with free cells 1-4
+        const freeCellMap: Record<string, number> = { q: 0, w: 1, e: 2, r: 3 };
+        if (key in freeCellMap) {
+          const fcIdx = freeCellMap[key];
+          const state = this.engine.getState();
+
+          if (this.selectedCard) {
+            // Try to move selected card to this free cell
+            const from = this.findCardLocation(this.selectedCard.cardData);
+            if (from && state.freeCells[fcIdx] === null) {
+              const to: Location = { type: 'freecell', index: fcIdx };
+              if (this.engine.isLegalMove(from, to)) {
+                this.executeMoveAndAnimate(from, to);
+                this.clearSelection();
+                return;
+              }
+            }
+            this.clearSelection();
+          } else {
+            // No selection: auto-move the card in this free cell
+            const card = state.freeCells[fcIdx];
+            if (card) {
+              const sprite = this.cardSprites.get(card.id);
+              if (sprite) {
+                this.smartAutoMove(sprite);
+              }
+            }
+          }
+          return;
+        }
+
+        // Space: auto-move selected card, or trigger auto-finish
+        if (key === ' ') {
+          e.preventDefault();
+          if (this.selectedCard) {
+            const sprite = this.selectedCard;
+            this.clearSelection();
+            this.smartAutoMove(sprite);
+          } else {
+            this.performAutoFinish();
+          }
+          return;
+        }
+      };
+      this.trackDomListener(window, 'keydown', this.keyboardHandler as EventListener);
     }
 
     // Notify UI that game is ready

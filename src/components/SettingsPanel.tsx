@@ -167,6 +167,33 @@ export default function SettingsPanel({ isOpen, onClose, settings, onUpdateSetti
                                     </button>
                                 </section>
                             )}
+
+                            {/* Keyboard Shortcuts — desktop only */}
+                            {typeof window !== 'undefined' && !('ontouchstart' in window) && (
+                                <section className="space-y-3">
+                                    <div className="flex items-center gap-2 mb-2">
+                                        <span className="text-[#D4AF37]/60 text-sm">⌨️</span>
+                                        <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-white/30">Keyboard Shortcuts</h3>
+                                    </div>
+                                    <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 text-[11px]">
+                                        {[
+                                            ['1-8', 'Select/move to column'],
+                                            ['Q W E R', 'Free cells 1-4'],
+                                            ['H', 'Hint'],
+                                            ['N', 'New game'],
+                                            ['Space', 'Auto-move / finish'],
+                                            ['Esc', 'Deselect'],
+                                            ['Ctrl+Z', 'Undo'],
+                                            ['Ctrl+Shift+Z', 'Redo'],
+                                        ].map(([key, desc]) => (
+                                            <div key={key} className="contents">
+                                                <span className="text-white/50 font-mono text-right">{key}</span>
+                                                <span className="text-white/30">{desc}</span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </section>
+                            )}
                         </div>
 
                         {/* Footer */}

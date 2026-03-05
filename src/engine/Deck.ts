@@ -137,6 +137,42 @@ function createSpiderDeck(difficulty: SpiderDifficulty): Card[] {
 /**
  * Deal a Spider Solitaire game
  */
+/**
+ * Deal an Eight Off game using the MS-compatible PRNG
+ *
+ * 48 cards are dealt to 8 cascades (6 cards each).
+ * The remaining 4 cards go face-up to the first 4 free cells.
+ */
+export function dealEightOff(gameNumber: number): { cascades: Card[][]; freeCellCards: Card[] } {
+  if (gameNumber < 1 || gameNumber > 9999999 || !Number.isInteger(gameNumber)) {
+    throw new Error(`Invalid game number: ${gameNumber}. Must be integer 1-9999999.`);
+  }
+
+  const deck = createOrderedDeck();
+  const rng = new MSLCG(gameNumber);
+
+  const dealt: Card[] = [];
+  let remaining = deck.length;
+
+  for (let i = 0; i < 52; i++) {
+    const j = rng.next() % remaining;
+    [deck[j], deck[remaining - 1]] = [deck[remaining - 1], deck[j]];
+    dealt.push(deck[remaining - 1]);
+    remaining--;
+  }
+
+  // Deal 48 cards into 8 cascades (6 each)
+  const cascades: Card[][] = Array.from({ length: 8 }, () => []);
+  for (let i = 0; i < 48; i++) {
+    cascades[i % 8].push(dealt[i]);
+  }
+
+  // Remaining 4 cards go to free cells
+  const freeCellCards = dealt.slice(48);
+
+  return { cascades, freeCellCards };
+}
+
 export function dealSpiderGame(gameNumber: number, difficulty: SpiderDifficulty) {
   const deck = createSpiderDeck(difficulty);
   const rng = new MSLCG(gameNumber);

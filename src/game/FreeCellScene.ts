@@ -5,7 +5,7 @@
  * Handles drag-and-drop and smart click-to-move interaction
  */
 import * as Phaser from 'phaser';
-import { FreeCellEngine, Location } from '../engine/FreeCellEngine';
+import { FreeCellEngine, GameVariant, Location } from '../engine/FreeCellEngine';
 import { Card, Suit, Rank, SUIT_SYMBOLS } from '../engine/Card';
 import { MoveHistory } from '../engine/MoveHistory';
 import { GameTimer } from '../engine/GameTimer';
@@ -222,7 +222,7 @@ export class FreeCellScene extends Phaser.Scene {
     } else {
       this.gameNumber = getRandomSolvableGame();
     }
-    this.engine = new FreeCellEngine(this.gameNumber, gameBridge.variant as 'freecell' | 'bakers-game');
+    this.engine = new FreeCellEngine(this.gameNumber, gameBridge.variant as GameVariant);
     this.history = new MoveHistory();
     this.timer = new GameTimer();
     this.settings = loadSettings();
@@ -343,11 +343,11 @@ export class FreeCellScene extends Phaser.Scene {
       switch (elementKey) {
         case 'freecells': {
           const pos0 = this.getFreeCellPosition(0);
-          const pos3 = this.getFreeCellPosition(3);
+          const posLast = this.getFreeCellPosition(this.numFreeCells - 1);
           rect = {
             x: pos0.x,
             y: pos0.y,
-            width: (pos3.x + this.cardWidth) - pos0.x,
+            width: (posLast.x + this.cardWidth) - pos0.x,
             height: this.cardHeight,
           };
           break;
@@ -490,11 +490,12 @@ export class FreeCellScene extends Phaser.Scene {
           return;
         }
 
-        // Q, W, E, R: interact with free cells 1-4
-        const freeCellMap: Record<string, number> = { q: 0, w: 1, e: 2, r: 3 };
+        // Q, W, E, R (+ T, Y, U, I for eight-off): interact with free cells
+        const freeCellMap: Record<string, number> = { q: 0, w: 1, e: 2, r: 3, t: 4, y: 5, u: 6, i: 7 };
         if (key in freeCellMap) {
           const fcIdx = freeCellMap[key];
           const state = this.engine.getState();
+          if (fcIdx >= state.freeCells.length) return;
 
           if (this.selectedCard) {
             // Try to move selected card to this free cell
@@ -878,15 +879,15 @@ export class FreeCellScene extends Phaser.Scene {
     const h = this.scale.height;
     this.isPortrait = h > w * 1.1; // Portrait if significantly taller than wide
 
-    // Card width from fitting 8 columns across the screen
+    // Card width: must fit both 8 cascade columns AND top row (8 or 12 slots)
     const usableWidth = w * (1 - 2 * SIDE_MARGIN);
     const gapPx = w * GAP;
-    const cardWidthFromWidth = Math.floor((usableWidth - 7 * gapPx) / 8);
+    const cols = Math.max(8, this.topRowSlots);
+    const cardWidthFromWidth = Math.floor((usableWidth - (cols - 1) * gapPx) / cols);
     const cardHeightFromWidth = Math.floor(cardWidthFromWidth * CARD_RATIO);
 
     if (this.isPortrait) {
-      // Portrait: single row of 8 at top (4 free cells + 4 foundations)
-      // This matches competitor layout and maximizes cascade space
+      // Portrait: single row at top (free cells + foundations)
       const topMargin = Math.floor(h * 0.005);
       this.cascadeGap = Math.floor(h * 0.01);
 
@@ -894,6 +895,7 @@ export class FreeCellScene extends Phaser.Scene {
       this.cardHeight = cardHeightFromWidth;
       this.cardWidth = cardWidthFromWidth;
 
+      // Center based on 8 cascade columns (top row may be wider but centers itself independently)
       this.boardOffsetX = Math.floor(
         (w - (8 * this.cardWidth + 7 * gapPx)) / 2
       );
@@ -901,11 +903,10 @@ export class FreeCellScene extends Phaser.Scene {
       this.topRowHeight = this.cardHeight;
     } else {
       // Landscape: maximize card size within both width and height constraints
-      // Single row with 4 free cells + 4 foundations, then 8 cascade columns below
       const topPad = Math.max(Math.floor(h * 0.005), 2);
       this.cascadeGap = Math.floor(h * 0.01);
       const bottomPad = 4;
-      const minOverlapsNeeded = 6; // initial deal has max 7-card cascades
+      const minOverlapsNeeded = 6;
 
       // Max card height that fits: topRow + cascade(1 card + 6 min overlaps)
       const vertBudget = h - topPad - this.cascadeGap - bottomPad;
@@ -918,6 +919,7 @@ export class FreeCellScene extends Phaser.Scene {
         ? cardWidthFromWidth
         : Math.floor(this.cardHeight / CARD_RATIO);
 
+      // Center based on 8 cascade columns
       this.boardOffsetX = Math.floor(
         (w - (8 * this.cardWidth + 7 * gapPx)) / 2
       );
@@ -928,6 +930,18 @@ export class FreeCellScene extends Phaser.Scene {
     this.invalidateOverlapCache();
   }
 
+  private get currentVariant(): GameVariant {
+    return (gameBridge.variant as GameVariant) || 'freecell';
+  }
+
+  private get numFreeCells(): number {
+    return this.currentVariant === 'eight-off' ? 8 : 4;
+  }
+
+  private get topRowSlots(): number {
+    return this.numFreeCells + 4; // free cells + 4 foundations
+  }
+
   private getColumnX(col: number): number {
     return (
       this.boardOffsetX +
@@ -935,18 +949,30 @@ export class FreeCellScene extends Phaser.Scene {
     );
   }
 
+  /** Get the X position of a top-row slot (0..topRowSlots-1) */
+  private getTopRowSlotX(slot: number): number {
+    if (this.topRowSlots <= 8) {
+      return this.getColumnX(slot);
+    }
+    // For eight-off (12 slots): compute position independently of 8-col cascade grid
+    const w = this.scale.width;
+    const gapPx = w * GAP;
+    const slotCount = this.topRowSlots;
+    const totalSlotWidth = slotCount * this.cardWidth + (slotCount - 1) * gapPx;
+    const startX = Math.floor((w - totalSlotWidth) / 2);
+    return startX + slot * (this.cardWidth + gapPx);
+  }
+
   private getFreeCellPosition(index: number): { x: number; y: number } {
-    // Single row: free cells are columns 0-3
     return {
-      x: this.getColumnX(index),
+      x: this.getTopRowSlotX(index),
       y: this.boardOffsetY,
     };
   }
 
   private getFoundationPosition(index: number): { x: number; y: number } {
-    // Single row: foundations are columns 4-7
     return {
-      x: this.getColumnX(index + 4),
+      x: this.getTopRowSlotX(index + this.numFreeCells),
       y: this.boardOffsetY,
     };
   }
@@ -1004,7 +1030,7 @@ export class FreeCellScene extends Phaser.Scene {
     this.slotGraphics = [];
 
     // Free cell slots
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < this.numFreeCells; i++) {
       const pos = this.getFreeCellPosition(i);
       this.createSlot(pos.x, pos.y, 'free');
     }
@@ -1190,7 +1216,7 @@ export class FreeCellScene extends Phaser.Scene {
     }
 
     // Free cell and foundation cards: full hit area, high priority
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < state.freeCells.length; i++) {
       const card = state.freeCells[i];
       if (card) {
         const sprite = this.cardSprites.get(card.id);
@@ -1907,6 +1933,9 @@ export class FreeCellScene extends Phaser.Scene {
   }
 
   private getTopRowSlotAtPoint(x: number, y: number): { type: 'freecell' | 'foundation'; index: number } | null {
+    const nfc = this.numFreeCells;
+    const totalSlots = this.topRowSlots;
+
     if (this.isPortrait) {
       const rowGap = Math.floor(this.scale.height * 0.008);
       const freeCellRowTop = this.boardOffsetY;
@@ -1916,12 +1945,12 @@ export class FreeCellScene extends Phaser.Scene {
 
       if (y >= freeCellRowTop - 5 && y <= freeCellRowBottom + 5) {
         const pos0 = this.getFreeCellPosition(0);
-        const pos3 = this.getFreeCellPosition(3);
+        const posLast = this.getFreeCellPosition(nfc - 1);
         const rowLeft = pos0.x - this.cardWidth * 0.15;
-        const rowRight = pos3.x + this.cardWidth * 1.15;
+        const rowRight = posLast.x + this.cardWidth * 1.15;
         if (x >= rowLeft && x <= rowRight) {
-          const zone = Math.floor((x - rowLeft) / ((rowRight - rowLeft) / 4));
-          return { type: 'freecell', index: Math.min(Math.max(zone, 0), 3) };
+          const zone = Math.floor((x - rowLeft) / ((rowRight - rowLeft) / nfc));
+          return { type: 'freecell', index: Math.min(Math.max(zone, 0), nfc - 1) };
         }
       }
 
@@ -1936,21 +1965,20 @@ export class FreeCellScene extends Phaser.Scene {
         }
       }
     } else {
-      // Landscape: single row, zones 0-3 = free cells, 4-7 = foundations
+      // Landscape: single row with nfc free cells + 4 foundations
       const topRowTop = this.boardOffsetY;
       const topRowBottom = this.boardOffsetY + this.cardHeight;
 
       if (y >= topRowTop - 5 && y <= topRowBottom + 10) {
-        const w = this.scale.width;
-        const sideMargin = w * SIDE_MARGIN;
-        if (x >= sideMargin && x <= w - sideMargin) {
-          const usableWidth = w - 2 * sideMargin;
-          const zone = Math.floor((x - sideMargin) / (usableWidth / 8));
-          const idx = Math.min(Math.max(zone, 0), 7);
-          if (idx < 4) {
-            return { type: 'freecell', index: idx };
-          } else {
-            return { type: 'foundation', index: idx - 4 };
+        // Use the actual slot positions for hit detection
+        for (let i = 0; i < totalSlots; i++) {
+          const slotX = this.getTopRowSlotX(i);
+          if (x >= slotX - this.cardWidth * 0.15 && x <= slotX + this.cardWidth * 1.15) {
+            if (i < nfc) {
+              return { type: 'freecell', index: i };
+            } else {
+              return { type: 'foundation', index: i - nfc };
+            }
           }
         }
       }
@@ -2350,7 +2378,8 @@ export class FreeCellScene extends Phaser.Scene {
     }
 
     // Check free cells
-    for (let j = 0; j < 4; j++) {
+    const fcCount = this.engine.getState().freeCells.length;
+    for (let j = 0; j < fcCount; j++) {
       const to: Location = { type: 'freecell', index: j };
       if (this.engine.isLegalMove(moveFrom, to)) {
         destinations.push(to);
@@ -2696,7 +2725,7 @@ export class FreeCellScene extends Phaser.Scene {
 
   private findDropTarget(x: number, y: number): Location | null {
     // Check free cells
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < this.numFreeCells; i++) {
       const pos = this.getFreeCellPosition(i);
       if (this.isInBounds(x, y, pos.x, pos.y)) {
         return { type: 'freecell', index: i };
@@ -2850,7 +2879,7 @@ export class FreeCellScene extends Phaser.Scene {
       if (moved) continue;
 
       // Check free cells
-      for (let i = 0; i < 4; i++) {
+      for (let i = 0; i < state.freeCells.length; i++) {
         const card = state.freeCells[i];
         if (!card) continue;
         if (this.isSafeAutoMove(card)) {
@@ -3081,7 +3110,7 @@ export class FreeCellScene extends Phaser.Scene {
       }
     }
 
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < state.freeCells.length; i++) {
       if (state.freeCells[i]?.equals(card)) {
         return { type: 'freecell', index: i };
       }
@@ -3315,7 +3344,7 @@ export class FreeCellScene extends Phaser.Scene {
     }
 
     // Position free cell cards with snappy move
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < state.freeCells.length; i++) {
       const card = state.freeCells[i];
       if (card) {
         const sprite = this.cardSprites.get(card.id);
@@ -3742,7 +3771,7 @@ export class FreeCellScene extends Phaser.Scene {
     this.cancelLongPress();
 
     // Reset engine
-    this.engine = new FreeCellEngine(this.gameNumber, gameBridge.variant as 'freecell' | 'bakers-game');
+    this.engine = new FreeCellEngine(this.gameNumber, gameBridge.variant as GameVariant);
     this.history.clear();
     this.timer.reset();
 
@@ -3931,7 +3960,7 @@ export class FreeCellScene extends Phaser.Scene {
       const dests = this.getValidDestinations(sprite);
       if (dests.length > 0) playableIds.push(bottomCard.id);
     }
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < state.freeCells.length; i++) {
       const card = state.freeCells[i];
       if (!card) continue;
       const sprite = this.cardSprites.get(card.id);
@@ -4066,7 +4095,7 @@ export class FreeCellScene extends Phaser.Scene {
     // Reset engine to initial deal (all 52 cards in cascades)
     this.cardSprites.forEach((sprite) => sprite.destroy());
     this.cardSprites.clear();
-    this.engine = new FreeCellEngine(gameNumber, gameBridge.variant as 'freecell' | 'bakers-game');
+    this.engine = new FreeCellEngine(gameNumber, gameBridge.variant as GameVariant);
     this.history = new MoveHistory();
 
     // Create all card sprites at their initial cascade positions
@@ -4117,7 +4146,7 @@ export class FreeCellScene extends Phaser.Scene {
     }
 
     // Free cell cards
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < state.freeCells.length; i++) {
       const card = state.freeCells[i];
       if (card) {
         const pos = this.getFreeCellPosition(i);

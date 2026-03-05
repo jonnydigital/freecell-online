@@ -21,6 +21,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/solitaire-types', changeFrequency: 'monthly' as const, priority: 0.7 },
     { path: '/winning-deals', changeFrequency: 'monthly' as const, priority: 0.7 },
     { path: '/bakers-game', changeFrequency: 'monthly' as const, priority: 0.8 },
+    { path: '/eight-off', changeFrequency: 'monthly' as const, priority: 0.8 },
     { path: '/spider', changeFrequency: 'monthly' as const, priority: 0.8 },
     { path: '/freecell-vs-spider', changeFrequency: 'monthly' as const, priority: 0.7 },
     { path: '/streak', changeFrequency: 'daily' as const, priority: 0.6 },

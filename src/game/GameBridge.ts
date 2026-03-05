@@ -40,8 +40,8 @@ class GameBridge {
   private listeners: Map<string, Set<EventCallback>> = new Map();
   /** Set before Phaser init to start with a specific game number */
   initialGameNumber: number | null = null;
-  /** Game variant: 'freecell' (default), 'bakers-game' (same-suit stacking), or 'spider' */
-  variant: 'freecell' | 'bakers-game' | 'spider' = 'freecell';
+  /** Game variant: 'freecell' (default), 'bakers-game'/'eight-off' (same-suit stacking), or 'spider' */
+  variant: 'freecell' | 'bakers-game' | 'eight-off' | 'spider' = 'freecell';
 
   on(event: BridgeEvent, callback: EventCallback): () => void {
     if (!this.listeners.has(event)) {

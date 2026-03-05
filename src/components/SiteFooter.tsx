@@ -22,6 +22,11 @@ export default function SiteFooter() {
                 </Link>
               </li>
               <li>
+                <Link href="/eight-off" className="text-sm text-white/50 hover:text-white transition-colors">
+                  Eight Off
+                </Link>
+              </li>
+              <li>
                 <Link href="/spider" className="text-sm text-white/50 hover:text-white transition-colors">
                   Spider Solitaire
                 </Link>

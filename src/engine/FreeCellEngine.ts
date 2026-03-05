@@ -6,7 +6,7 @@
  */
 
 import { Card, Suit, Rank, Color } from './Card';
-import { dealGame } from './Deck';
+import { dealGame, dealEightOff } from './Deck';
 
 export interface GameState {
   cascades: Card[][];      // 8 columns
@@ -29,7 +29,7 @@ export interface Move {
   isAutoMove?: boolean;
 }
 
-export type GameVariant = 'freecell' | 'bakers-game';
+export type GameVariant = 'freecell' | 'bakers-game' | 'eight-off';
 
 export class FreeCellEngine {
   private state: GameState;
@@ -37,10 +37,26 @@ export class FreeCellEngine {
 
   constructor(gameNumber: number, variant: GameVariant = 'freecell') {
     this.variant = variant;
-    const cascades = dealGame(gameNumber);
+
+    let cascades: Card[][];
+    let freeCells: (Card | null)[];
+
+    if (variant === 'eight-off') {
+      const deal = dealEightOff(gameNumber);
+      cascades = deal.cascades;
+      // 8 free cells: first 4 pre-filled, last 4 empty
+      freeCells = [
+        ...deal.freeCellCards,
+        null, null, null, null,
+      ];
+    } else {
+      cascades = dealGame(gameNumber);
+      freeCells = [null, null, null, null];
+    }
+
     this.state = {
       cascades,
-      freeCells: [null, null, null, null],
+      freeCells,
       foundations: new Map([
         [Suit.Spades, []],
         [Suit.Hearts, []],
@@ -108,7 +124,7 @@ export class FreeCellEngine {
    * Baker's Game: same suit, descending rank.
    */
   canStack(card: Card, target: Card): boolean {
-    if (this.variant === 'bakers-game') {
+    if (this.variant === 'bakers-game' || this.variant === 'eight-off') {
       return card.suit === target.suit && card.rank === target.rank - 1;
     }
     return card.canStackOnCascade(target);
@@ -315,9 +331,9 @@ export class FreeCellEngine {
       const foundationRanks = this.getFoundationRanks();
 
       // Check free cells
-      for (let i = 0; i < 4; i++) {
+      for (let i = 0; i < this.state.freeCells.length; i++) {
         const card = this.state.freeCells[i];
-        const safe = this.variant === 'bakers-game' || card?.isSafeToAutoMove(foundationRanks);
+        const safe = this.variant === 'bakers-game' || this.variant === 'eight-off' || card?.isSafeToAutoMove(foundationRanks);
         if (card && safe && card.canMoveToFoundation(this.getFoundationTop(card.suit))) {
           const move = this.executeMove(
             { type: 'freecell', index: i },
@@ -336,7 +352,7 @@ export class FreeCellEngine {
         const cascade = this.state.cascades[i];
         if (cascade.length === 0) continue;
         const card = cascade[cascade.length - 1];
-        const safeCasc = this.variant === 'bakers-game' || card.isSafeToAutoMove(foundationRanks);
+        const safeCasc = this.variant === 'bakers-game' || this.variant === 'eight-off' || card.isSafeToAutoMove(foundationRanks);
         if (safeCasc && card.canMoveToFoundation(this.getFoundationTop(card.suit))) {
           const move = this.executeMove(
             { type: 'cascade', index: i },
@@ -370,7 +386,7 @@ export class FreeCellEngine {
    */
   isAutoCompletable(): boolean {
     // Free cells must be empty
-    if (this.emptyFreeCells < 4) return false;
+    if (this.emptyFreeCells < this.state.freeCells.length) return false;
 
     // Every cascade must be in descending order by rank (same suit isn't required,
     // but each card must be stackable on its foundation given current foundation state)
@@ -389,7 +405,7 @@ export class FreeCellEngine {
    */
   hasLegalMoves(): boolean {
     // Check moves from free cells
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < this.state.freeCells.length; i++) {
       if (!this.state.freeCells[i]) continue;
       const from: Location = { type: 'freecell', index: i };
 
@@ -414,7 +430,7 @@ export class FreeCellEngine {
       if (this.isLegalMove(from, { type: 'foundation', suit: topCard.suit })) return true;
 
       // Top card to free cell
-      for (let j = 0; j < 4; j++) {
+      for (let j = 0; j < this.state.freeCells.length; j++) {
         if (this.isLegalMove(from, { type: 'freecell', index: j })) return true;
       }
 
@@ -435,7 +451,7 @@ export class FreeCellEngine {
     const moves: Move[] = [];
 
     // From free cells
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < this.state.freeCells.length; i++) {
       const card = this.state.freeCells[i];
       if (!card) continue;
       const from: Location = { type: 'freecell', index: i };
@@ -470,7 +486,7 @@ export class FreeCellEngine {
       }
 
       // Top card to free cell
-      for (let j = 0; j < 4; j++) {
+      for (let j = 0; j < this.state.freeCells.length; j++) {
         const to: Location = { type: 'freecell', index: j };
         if (this.isLegalMove(from, to)) {
           moves.push({ from, to, cards: [topCard] });

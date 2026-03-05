@@ -2,7 +2,7 @@
 
 import React, { useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, HelpCircle, Swords, MessageSquare, VolumeX, Volume2, Trophy, Flame, Zap, Layers, Shuffle, Bug } from 'lucide-react';
+import { X, HelpCircle, Swords, MessageSquare, VolumeX, Volume2, Trophy, Flame, Zap, Layers, Shuffle, Bug, Grid3X3 } from 'lucide-react';
 import { getTodaysSeed, getTodayStr, loadDailyData, getCurrentStreak } from '../lib/dailyChallenge';
 import { loadStats } from '../lib/storage';
 import { getAverageTime } from '../lib/stats';
@@ -182,6 +182,13 @@ export default function HomeOverlay({
                   >
                     <Layers size={22} className="text-purple-400 shrink-0" />
                     <span className="text-base font-semibold text-purple-300">Baker&apos;s</span>
+                  </a>
+                  <a
+                    href="/eight-off"
+                    className="flex items-center gap-3 py-4 px-4 rounded-xl bg-white/5 border border-teal-500/20 hover:bg-teal-500/10 active:scale-[0.97] transition-all"
+                  >
+                    <Grid3X3 size={22} className="text-teal-400 shrink-0" />
+                    <span className="text-base font-semibold text-teal-300">Eight Off</span>
                   </a>
                   <a
                     href="/spider"

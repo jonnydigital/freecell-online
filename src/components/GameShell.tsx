@@ -36,7 +36,7 @@ import { getPlayerId } from '../lib/playerIdentity';
 
 interface GameShellProps {
   initialGameNumber?: number;
-  variant?: 'freecell' | 'bakers-game' | 'spider';
+  variant?: 'freecell' | 'bakers-game' | 'eight-off' | 'spider';
 }
 
 export default function GameShell({ initialGameNumber, variant = 'freecell' }: GameShellProps = {}) {

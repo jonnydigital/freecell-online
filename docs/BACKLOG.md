@@ -15,10 +15,10 @@
 
 ## 🟡 Medium Priority (Ship This Month)
 8. ~~**Statistics page enhancement**~~ ✅ SHIPPED 03-03 — tabs, game history, daily stats, mode breakdown
-9. **Multi-modal navigation** — restructure nav into Play / Daily / Learn / Stats sections *(Chess.com spark — each mode serves different user intent)*
+9. ~~**Multi-modal navigation**~~ ✅ SHIPPED 03-04 — Spider added to game menu, explore links row, site-wide footer with Play/Learn/Explore/More columns. Content pages now cross-linked.
 10. ~~**Streak milestone celebrations**~~ ✅ SHIPPED 03-01 — Animated toasts at 14 milestone levels (3-365), unique messages, framer-motion animations *(Duolingo spark)*
 11. ~~**Numbered game URLs**~~ ✅ SHIPPED 03-02 — `/game/[number]` routes with SEO meta tags + share integration
-12. **FreeCell variants** — Eight Off as additional mode. New daily challenges per variant. *(NYT Games spark — game portfolio as retention moat)*
+12. ~~**FreeCell variants** — Eight Off as additional mode.~~ ✅ SHIPPED 03-04 — Eight Off with 8 free cells, same-suit stacking, dynamic engine + scene layout *(NYT Games spark — game portfolio as retention moat)*
 13. ~~**SEO: FreeCell history page**~~ ✅ SHIPPED 03-02 — 1600-line rich content page covering Alfille, PLATO, Windows, Game #11982, structured data
 14. ~~**SEO: Solitaire types taxonomy**~~ ✅ SHIPPED — `/solitaire-types` page with 20 variants classified, difficulty ratings, internal links
 15. **Leaderboard backend** — Vercel KV for persistent daily challenge times/moves *(API routes exist, needs KV integration)*

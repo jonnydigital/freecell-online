@@ -90,7 +90,7 @@ Horizontal shake (4 half-cycles, 152ms) on invalid moves. Complements existing r
 ### 11. Card Shadow Depth Layering (Effort: M) ✅ SHIPPED 2026-03-04
 Cards deeper in cascades should have less shadow. Top cards have more. Creates visual depth.
 
-### 12. Smooth Resize Transitions (Effort: M)
+### 12. Smooth Resize Transitions (Effort: M) ✅ SHIPPED 2026-03-04
 Current resize snaps everything instantly. Animate card positions during resize for a polished feel.
 
 ---

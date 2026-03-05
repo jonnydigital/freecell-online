@@ -258,7 +258,7 @@ export class FreeCellScene extends Phaser.Scene {
       this.drawBackgroundEffects();
       this.rebuildBoard();
       this.recreateAllCardSprites();
-      this.repositionAllCards(false);
+      this.repositionAllCards(true); // Smooth resize: animate cards to new positions
     };
     this.scale.on('resize', this.scaleResizeHandler, this);
 

@@ -29,6 +29,9 @@ export const metadata: Metadata = {
     siteName: "PlayFreeCellOnline.com",
     type: "article",
   },
+  twitter: {
+    card: "summary_large_image",
+  },
 };
 
 const CARD = "card-panel";

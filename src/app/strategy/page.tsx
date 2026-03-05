@@ -16,6 +16,9 @@ export const metadata: Metadata = {
     "freecell guide",
     "freecell winning strategy",
   ],
+  twitter: {
+    card: "summary_large_image",
+  },
 };
 
 const CARD = "card-panel";

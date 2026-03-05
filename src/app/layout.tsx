@@ -10,6 +10,7 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfair" });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://playfreecellonline.com"),
   title: "Play FreeCell Online for Free | No Download Required",
   description:
     "Play FreeCell Solitaire online for free. No download, no signup. Classic Microsoft FreeCell deals, hints, undo, and more. Works on desktop and mobile.",
@@ -29,6 +30,12 @@ export const metadata: Metadata = {
     url: "https://playfreecellonline.com",
     siteName: "PlayFreeCellOnline.com",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Play FreeCell Online for Free",
+    description:
+      "The best free FreeCell Solitaire game on the web. Classic deals, smooth gameplay, no signup required.",
   },
   robots: {
     index: true,

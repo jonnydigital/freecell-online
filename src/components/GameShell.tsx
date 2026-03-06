@@ -547,11 +547,11 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
               {/* Game Stats Pill */}
               <div className="flex items-center gap-5 px-6 py-3 bg-black/30 border border-white/5 rounded-full text-sm font-medium text-white/80 shadow-inner">
                 <div className="flex items-center gap-2.5 border-r border-white/10 pr-5">
-                  <span className="text-white/40 uppercase tracking-widest text-xs">Time</span>
+                  <span className="text-white/60 uppercase tracking-widest text-xs">Time</span>
                   <span className="tabular-nums font-mono text-[17px]">{formatTime(timeElapsed)}</span>
                 </div>
                 <div className="flex items-center gap-2.5 border-r border-white/10 pr-5">
-                  <span className="text-white/40 uppercase tracking-widest text-xs">Moves</span>
+                  <span className="text-white/60 uppercase tracking-widest text-xs">Moves</span>
                   <span className="tabular-nums font-mono text-[17px] text-yellow-400/90">{moveCount}</span>
                 </div>
                 {gameNumber && (
@@ -565,7 +565,7 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
                 )}
                 <button
                   onClick={handleShareGame}
-                  className="p-1 -mr-2 text-white/30 hover:text-[#D4AF37] transition-colors"
+                  className="p-1 -mr-2 text-white/50 hover:text-[#D4AF37] transition-colors"
                   title={shareStatus === 'copied' ? 'Copied!' : 'Share this game'}
                 >
                   <Share2 size={18} />
@@ -631,7 +631,7 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
                 )}
                 <button
                   onClick={handleShareGame}
-                  className="p-1 text-white/40 active:text-[#D4AF37] transition-colors"
+                  className="p-1 text-white/60 active:text-[#D4AF37] transition-colors"
                   title="Share"
                 >
                   <Share2 size={14} />

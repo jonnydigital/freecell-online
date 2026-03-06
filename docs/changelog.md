@@ -1,5 +1,11 @@
 # FreeCell Online — Changelog
 
+## 2026-03-06 (Friday Overnight Build)
+### Shipped
+- **📊 FreeCell Statistics & Win Rates page** (`/statistics`) — Comprehensive 2000+ word SEO content page targeting high-value keywords ("freecell win rate", "freecell statistics", "freecell solvability"). 8 content sections: solvability statistics (99.999% rate, all 8 known unsolvable deals with game links), average game statistics with win rate tiers and progress bars, difficulty tier breakdowns, solitaire comparison table (FreeCell vs Klondike vs Spider vs Baker's Game), mathematical analysis (deal permutations, supermove formula), famous game numbers (#11982, #1, #617), improving your win rate tips, and 8-question FAQ. Article + FAQPage schema.org JSON-LD for rich snippets. AdUnit placements between sections. Cross-links to 8+ internal pages. Added to sitemap and SiteFooter Learn column. Directly addresses keyword gaps identified in 03-01 research synthesis.
+
+---
+
 ## 2026-03-05 (Thursday Overnight Build)
 ### Shipped
 - **🖼️ Dynamic OG Images + Twitter Cards** — Every page now generates rich social preview images when shared on social media, Discord, Reddit, Telegram, etc. Default OG image (1200x630) features dark green felt gradient, 4 playing card icons, "FreeCell Online" title, gold accents, and domain branding. Dynamic per-game OG images for `/game/[number]` routes show "FreeCell Game #[number] — Can you solve this deal?" Added `summary_large_image` Twitter card metadata to root layout + 6 content pages. Added `metadataBase` for proper URL resolution. Previously, sharing any page showed no image preview — a major gap for social acquisition.

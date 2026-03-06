@@ -1,5 +1,5 @@
 # FreeCell Online — Feature Backlog
-*Ranked by impact × effort. Updated 2026-03-01 (Sunday synthesis).*
+*Ranked by impact × effort. Updated 2026-03-06.*
 
 ## 🚨 P0: Critical Bug
 1. ~~**🔴 Mobile card rendering broken**~~ ✅ FIXED 03-02 — Root cause: `recreateAllCardSprites()` used PNG asset keys that were never loaded. On resize (common on mobile), cards became empty containers. Fixed with procedural rendering matching `createCardSprite()`.
@@ -28,6 +28,7 @@
 19. ~~**Ghost mode**~~ ✅ SHIPPED 03-03 — watch the solver play mid-game (👻 button in toolbar + settings)
 20. ~~**SEO: FreeCell vs Spider comparison**~~ ✅ SHIPPED 03-04 — 1000+ line comparison page, FAQPage schema, side-by-side table
 21. ~~**Dynamic sitemap.xml**~~ ✅ SHIPPED 03-04 — Next.js sitemap covering 19 content pages + 24 game routes
+22. ~~**SEO: Statistics & Win Rates page**~~ ✅ SHIPPED 03-06 — 2000+ word content page targeting "freecell win rate", "freecell statistics", "freecell solvability". 8 sections, FAQPage schema, cross-linked to 8+ internal pages.
 
 ## 🟢 Nice to Have
 14. **Multiplayer daily challenge** — compete on same seed

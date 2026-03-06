@@ -80,6 +80,11 @@ export default function SiteFooter() {
                   FAQ
                 </Link>
               </li>
+              <li>
+                <Link href="/statistics" className="text-sm text-white/50 hover:text-white transition-colors">
+                  Statistics &amp; Win Rates
+                </Link>
+              </li>
             </ul>
           </div>
 

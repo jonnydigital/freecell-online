@@ -12,37 +12,37 @@ export default function SiteFooter() {
             </h3>
             <ul className="space-y-2.5">
               <li>
-                <Link href="/" className="text-sm text-white/50 hover:text-white transition-colors">
+                <Link href="/" className="text-sm text-white/60 hover:text-white transition-colors">
                   FreeCell
                 </Link>
               </li>
               <li>
-                <Link href="/bakers-game" className="text-sm text-white/50 hover:text-white transition-colors">
+                <Link href="/bakers-game" className="text-sm text-white/60 hover:text-white transition-colors">
                   Baker&apos;s Game
                 </Link>
               </li>
               <li>
-                <Link href="/eight-off" className="text-sm text-white/50 hover:text-white transition-colors">
+                <Link href="/eight-off" className="text-sm text-white/60 hover:text-white transition-colors">
                   Eight Off
                 </Link>
               </li>
               <li>
-                <Link href="/spider" className="text-sm text-white/50 hover:text-white transition-colors">
+                <Link href="/spider" className="text-sm text-white/60 hover:text-white transition-colors">
                   Spider Solitaire
                 </Link>
               </li>
               <li>
-                <Link href="/streak" className="text-sm text-white/50 hover:text-white transition-colors">
+                <Link href="/streak" className="text-sm text-white/60 hover:text-white transition-colors">
                   Streak Mode
                 </Link>
               </li>
               <li>
-                <Link href="/storm" className="text-sm text-white/50 hover:text-white transition-colors">
+                <Link href="/storm" className="text-sm text-white/60 hover:text-white transition-colors">
                   Storm Mode
                 </Link>
               </li>
               <li>
-                <Link href="/winning-deals" className="text-sm text-white/50 hover:text-white transition-colors">
+                <Link href="/winning-deals" className="text-sm text-white/60 hover:text-white transition-colors">
                   Winning Deals
                 </Link>
               </li>
@@ -56,27 +56,27 @@ export default function SiteFooter() {
             </h3>
             <ul className="space-y-2.5">
               <li>
-                <Link href="/how-to-play" className="text-sm text-white/50 hover:text-white transition-colors">
+                <Link href="/how-to-play" className="text-sm text-white/60 hover:text-white transition-colors">
                   How to Play
                 </Link>
               </li>
               <li>
-                <Link href="/strategy" className="text-sm text-white/50 hover:text-white transition-colors">
+                <Link href="/strategy" className="text-sm text-white/60 hover:text-white transition-colors">
                   Strategy Guide
                 </Link>
               </li>
               <li>
-                <Link href="/tips" className="text-sm text-white/50 hover:text-white transition-colors">
+                <Link href="/tips" className="text-sm text-white/60 hover:text-white transition-colors">
                   Tips &amp; Tricks
                 </Link>
               </li>
               <li>
-                <Link href="/glossary" className="text-sm text-white/50 hover:text-white transition-colors">
+                <Link href="/glossary" className="text-sm text-white/60 hover:text-white transition-colors">
                   Glossary
                 </Link>
               </li>
               <li>
-                <Link href="/faq" className="text-sm text-white/50 hover:text-white transition-colors">
+                <Link href="/faq" className="text-sm text-white/60 hover:text-white transition-colors">
                   FAQ
                 </Link>
               </li>
@@ -90,27 +90,27 @@ export default function SiteFooter() {
             </h3>
             <ul className="space-y-2.5">
               <li>
-                <Link href="/history" className="text-sm text-white/50 hover:text-white transition-colors">
+                <Link href="/history" className="text-sm text-white/60 hover:text-white transition-colors">
                   FreeCell History
                 </Link>
               </li>
               <li>
-                <Link href="/solitaire-types" className="text-sm text-white/50 hover:text-white transition-colors">
+                <Link href="/solitaire-types" className="text-sm text-white/60 hover:text-white transition-colors">
                   Solitaire Types
                 </Link>
               </li>
               <li>
-                <Link href="/freecell-vs-spider" className="text-sm text-white/50 hover:text-white transition-colors">
+                <Link href="/freecell-vs-spider" className="text-sm text-white/60 hover:text-white transition-colors">
                   FreeCell vs Spider
                 </Link>
               </li>
               <li>
-                <Link href="/leaderboard" className="text-sm text-white/50 hover:text-white transition-colors">
+                <Link href="/leaderboard" className="text-sm text-white/60 hover:text-white transition-colors">
                   Leaderboard
                 </Link>
               </li>
               <li>
-                <Link href="/achievements" className="text-sm text-white/50 hover:text-white transition-colors">
+                <Link href="/achievements" className="text-sm text-white/60 hover:text-white transition-colors">
                   Achievements
                 </Link>
               </li>
@@ -124,17 +124,17 @@ export default function SiteFooter() {
             </h3>
             <ul className="space-y-2.5">
               <li>
-                <Link href="/stats" className="text-sm text-white/50 hover:text-white transition-colors">
+                <Link href="/stats" className="text-sm text-white/60 hover:text-white transition-colors">
                   Your Stats
                 </Link>
               </li>
               <li>
-                <Link href="/privacy" className="text-sm text-white/50 hover:text-white transition-colors">
+                <Link href="/privacy" className="text-sm text-white/60 hover:text-white transition-colors">
                   Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link href="/terms" className="text-sm text-white/50 hover:text-white transition-colors">
+                <Link href="/terms" className="text-sm text-white/60 hover:text-white transition-colors">
                   Terms of Use
                 </Link>
               </li>
@@ -147,7 +147,7 @@ export default function SiteFooter() {
           <Link href="/" className="text-lg font-black uppercase tracking-tighter text-white/60 hover:text-white transition-colors">
             Freecell<span className="text-[#D4AF37]">.</span>
           </Link>
-          <p className="text-xs text-white/25">
+          <p className="text-xs text-white/50">
             © {new Date().getFullYear()} FreeCell Online. Free to play, no download required.
           </p>
         </div>

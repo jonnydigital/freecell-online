@@ -20,7 +20,8 @@ export async function initErrorTracking(): Promise<void> {
   const dsn = process.env.NEXT_PUBLIC_SENTRY_DSN;
   if (dsn) {
     try {
-      SentryModule = await import('@sentry/nextjs' as string);
+      const sentryPath = '@sentry/nextjs';
+      SentryModule = await import(/* webpackIgnore: true */ sentryPath);
       SentryModule.init({
         dsn,
         tracesSampleRate: 0.1,

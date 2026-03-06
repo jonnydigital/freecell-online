@@ -26,7 +26,7 @@ export default function ContentHeader({ variant = "dark" }: ContentHeaderProps) 
 
       <div
         className={`hidden md:flex gap-6 text-[11px] font-bold uppercase tracking-wider ${
-          isDark ? "text-white/40" : "text-gray-400"
+          isDark ? "text-white/60" : "text-gray-500"
         }`}
       >
         <Link href="/how-to-play" className={isDark ? "hover:text-white/80 transition-colors" : "hover:text-gray-700 transition-colors"}>Rules</Link>

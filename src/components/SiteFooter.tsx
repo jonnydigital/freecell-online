@@ -119,6 +119,11 @@ export default function SiteFooter() {
                   Achievements
                 </Link>
               </li>
+              <li>
+                <Link href="/deals" className="text-sm text-white/60 hover:text-white transition-colors">
+                  Deal Explorer
+                </Link>
+              </li>
             </ul>
           </div>
 

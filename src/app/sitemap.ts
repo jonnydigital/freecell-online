@@ -25,6 +25,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/spider', changeFrequency: 'monthly' as const, priority: 0.8 },
     { path: '/freecell-vs-spider', changeFrequency: 'monthly' as const, priority: 0.7 },
     { path: '/statistics', changeFrequency: 'monthly' as const, priority: 0.7 },
+    { path: '/deals', changeFrequency: 'weekly' as const, priority: 0.7 },
     { path: '/streak', changeFrequency: 'daily' as const, priority: 0.6 },
     { path: '/storm', changeFrequency: 'daily' as const, priority: 0.6 },
     { path: '/stats', changeFrequency: 'weekly' as const, priority: 0.5 },

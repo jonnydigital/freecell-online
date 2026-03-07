@@ -62,6 +62,32 @@ export default function RootLayout({
         <link rel="icon" href="/icons/favicon.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3083538874906149" crossOrigin="anonymous"></script>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebApplication",
+              "name": "FreeCell Online",
+              "url": "https://playfreecellonline.com",
+              "description": "Play FreeCell Solitaire online for free. No download, no signup. Classic deals, hints, undo, daily challenges, and more.",
+              "applicationCategory": "GameApplication",
+              "operatingSystem": "Any",
+              "browserRequirements": "Requires JavaScript",
+              "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+              },
+              "author": {
+                "@type": "Organization",
+                "name": "PlayFreeCellOnline.com"
+              },
+              "genre": "Card Game",
+              "gamePlatform": ["Web Browser", "Mobile Browser"]
+            }),
+          }}
+        />
       </head>
       <body className={`${inter.variable} ${playfair.variable} ${inter.className}`}>
         <a href="#game-container" className="skip-to-game">

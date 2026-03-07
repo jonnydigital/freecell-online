@@ -29,6 +29,8 @@
 20. ~~**SEO: FreeCell vs Spider comparison**~~ ✅ SHIPPED 03-04 — 1000+ line comparison page, FAQPage schema, side-by-side table
 21. ~~**Dynamic sitemap.xml**~~ ✅ SHIPPED 03-04 — Next.js sitemap covering 19 content pages + 24 game routes
 22. ~~**SEO: Statistics & Win Rates page**~~ ✅ SHIPPED 03-06 — 2000+ word content page targeting "freecell win rate", "freecell statistics", "freecell solvability". 8 sections, FAQPage schema, cross-linked to 8+ internal pages.
+23. ~~**Deal Explorer page**~~ ✅ SHIPPED 03-07 — Browsable game discovery (/deals) with curated collections, range browsing, search, random deal. FAQPage schema. Targets "freecell game numbers" keywords.
+24. ~~**WebApplication JSON-LD**~~ ✅ SHIPPED 03-07 — Schema.org structured data on root layout for rich search results.
 
 ## 🟢 Nice to Have
 14. **Multiplayer daily challenge** — compete on same seed

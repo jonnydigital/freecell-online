@@ -1,5 +1,12 @@
 # FreeCell Online — Changelog
 
+## 2026-03-07 (Saturday Overnight Build)
+### Shipped
+- **🔍 Deal Explorer page** (`/deals`) — Browsable interface for discovering FreeCell game numbers. Search/jump-to-game input (1-1,000,000), 4 curated collections (Famous Deals with impossibles, Beginner Friendly, Expert Challenge, Community Favorites), Browse by Range with expandable grids (7 ranges covering 1-100k), Random Deal button, 5-question FAQ section. FAQPage schema JSON-LD. AdUnit placements between sections. Cross-links to /winning-deals, /statistics, /strategy. Targets "freecell game numbers", "freecell deals" keywords. Added to SiteFooter Explore column and sitemap.
+- **🏷️ WebApplication JSON-LD structured data** — Added Schema.org WebApplication markup to root layout for rich search results. Includes GameApplication category, free pricing offer, platform info, and organization author. Applies site-wide for improved search appearance.
+
+---
+
 ## 2026-03-06 (Friday Overnight Build)
 ### Shipped
 - **📊 FreeCell Statistics & Win Rates page** (`/statistics`) — Comprehensive 2000+ word SEO content page targeting high-value keywords ("freecell win rate", "freecell statistics", "freecell solvability"). 8 content sections: solvability statistics (99.999% rate, all 8 known unsolvable deals with game links), average game statistics with win rate tiers and progress bars, difficulty tier breakdowns, solitaire comparison table (FreeCell vs Klondike vs Spider vs Baker's Game), mathematical analysis (deal permutations, supermove formula), famous game numbers (#11982, #1, #617), improving your win rate tips, and 8-question FAQ. Article + FAQPage schema.org JSON-LD for rich snippets. AdUnit placements between sections. Cross-links to 8+ internal pages. Added to sitemap and SiteFooter Learn column. Directly addresses keyword gaps identified in 03-01 research synthesis.

@@ -124,6 +124,11 @@ export default function SiteFooter() {
                   Deal Explorer
                 </Link>
               </li>
+              <li>
+                <Link href="/solver" className="text-sm text-white/60 hover:text-white transition-colors">
+                  Solver
+                </Link>
+              </li>
             </ul>
           </div>
 

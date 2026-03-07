@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { absoluteUrl, siteConfig } from '@/lib/siteConfig';
@@ -52,6 +53,21 @@ const learnLinks = [
 ];
 
 export default function SolitaireHubHome() {
+  // Override the global overflow:hidden on html/body so the page can scroll
+  // past the game to reach SEO content below. Cleanup restores original behavior.
+  useEffect(() => {
+    document.documentElement.style.overflow = 'auto';
+    document.body.style.overflow = 'auto';
+    document.documentElement.style.height = 'auto';
+    document.body.style.height = 'auto';
+    return () => {
+      document.documentElement.style.overflow = '';
+      document.body.style.overflow = '';
+      document.documentElement.style.height = '';
+      document.body.style.height = '';
+    };
+  }, []);
+
   const websiteJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
@@ -83,13 +99,17 @@ export default function SolitaireHubHome() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionJsonLd) }}
       />
 
-      {/* Game above the fold — mirrors competitor pattern */}
-      <GameErrorBoundary>
-        <GameShell />
-      </GameErrorBoundary>
+      {/* Game above the fold — mirrors competitor pattern.
+          The wrapper clips GameShell (which is h-dvh internally) so
+          the page body scroll can reach the SEO content below. */}
+      <div className="h-dvh overflow-hidden relative">
+        <GameErrorBoundary>
+          <GameShell />
+        </GameErrorBoundary>
+      </div>
 
       {/* SEO content below the fold */}
-      <div className="felt-bg">
+      <div className="felt-bg relative z-10">
         <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6 sm:py-16">
           <h1
             className="text-center text-3xl font-bold text-white sm:text-4xl"

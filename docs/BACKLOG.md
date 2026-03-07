@@ -31,6 +31,7 @@
 22. ~~**SEO: Statistics & Win Rates page**~~ ✅ SHIPPED 03-06 — 2000+ word content page targeting "freecell win rate", "freecell statistics", "freecell solvability". 8 sections, FAQPage schema, cross-linked to 8+ internal pages.
 23. ~~**Deal Explorer page**~~ ✅ SHIPPED 03-07 — Browsable game discovery (/deals) with curated collections, range browsing, search, random deal. FAQPage schema. Targets "freecell game numbers" keywords.
 24. ~~**WebApplication JSON-LD**~~ ✅ SHIPPED 03-07 — Schema.org structured data on root layout for rich search results.
+25. ~~**FreeCell Solver page**~~ ✅ SHIPPED 03-07 — Interactive solver widget + 2000+ word SEO content. Web worker solver, step-by-step solutions, algorithm explainer, famous unsolvable deals, FAQPage schema.
 
 ## 🟢 Nice to Have
 14. **Multiplayer daily challenge** — compete on same seed

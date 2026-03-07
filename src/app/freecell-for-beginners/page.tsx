@@ -732,12 +732,28 @@ export default function FreecellForBeginnersPage() {
                   games.
                 </p>
                 <p>
+                  <strong className="text-[#2a2522]">Practice on easier deals first.</strong>{" "}
+                  If you want a smoother learning curve, read{" "}
+                  <Link href="/easy-freecell-games" className="text-[#D4AF37] hover:underline">
+                    Easy FreeCell Games
+                  </Link>{" "}
+                  so you know what a forgiving board looks like before you jump into harder positions.
+                </p>
+                <p>
                   <strong className="text-[#2a2522]">Learn the{" "}
                   <Link href="/how-to-play" className="text-[#D4AF37] hover:underline">
                     complete rules
                   </Link>.</strong>{" "}
                   Our detailed rules page covers advanced mechanics like supermoves
                   that become important as you improve.
+                </p>
+                <p>
+                  <strong className="text-[#2a2522]">Understand why the game is so solvable.</strong>{" "}
+                  Our{" "}
+                  <Link href="/is-every-freecell-game-winnable" className="text-[#D4AF37] hover:underline">
+                    winnability guide
+                  </Link>{" "}
+                  explains why most FreeCell losses are decision problems, not bad luck.
                 </p>
                 <p>
                   <strong className="text-[#2a2522]">Study the{" "}

@@ -839,6 +839,17 @@ export default function StrategyPage() {
                 Apply these strategies in a real game. Start with an easy deal or
                 jump into today&apos;s Daily Challenge.
               </p>
+              <p className="text-sm text-white/60 mb-6 max-w-2xl mx-auto leading-7">
+                For a more focused study path, read{" "}
+                <Link href="/is-every-freecell-game-winnable" className="text-[#D4AF37] hover:underline">
+                  why almost every FreeCell game is solvable
+                </Link>{" "}
+                and what separates{" "}
+                <Link href="/hard-freecell-games" className="text-[#D4AF37] hover:underline">
+                  hard deals
+                </Link>{" "}
+                from merely messy ones.
+              </p>
 
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Link

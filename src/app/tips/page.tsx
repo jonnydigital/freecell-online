@@ -778,6 +778,17 @@ export default function TipsPage() {
                 Pick 2-3 tips from this page and focus on them in your next
                 game. Small, deliberate changes lead to big improvements.
               </p>
+              <p className="text-sm text-white/60 mb-6 max-w-2xl mx-auto leading-7">
+                If you want a gentler practice loop first, use our{" "}
+                <Link href="/easy-freecell-games" className="text-[#D4AF37] hover:underline">
+                  easy-games guide
+                </Link>
+                . If you want to understand why some boards collapse, read{" "}
+                <Link href="/hard-freecell-games" className="text-[#D4AF37] hover:underline">
+                  what makes a FreeCell deal hard
+                </Link>
+                .
+              </p>
 
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Link

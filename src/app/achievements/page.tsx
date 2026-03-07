@@ -3,6 +3,7 @@
 import { useMemo } from 'react';
 import Link from 'next/link';
 import { Trophy, ArrowLeft } from 'lucide-react';
+import { absoluteUrl } from '@/lib/siteConfig';
 import { loadAchievements, CATEGORY_LABELS, ALL_CATEGORIES } from '../../lib/achievements';
 import { buildContext } from '../../lib/achievementTracker';
 import { loadStats } from '../../lib/storage';
@@ -22,6 +23,19 @@ export default function AchievementsPage() {
       className="min-h-dvh transition-colors duration-500"
       style={{ backgroundColor: 'var(--felt-color, #0a3d0a)' }}
     >
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              { '@type': 'ListItem', position: 1, name: 'Home', item: absoluteUrl('/') },
+              { '@type': 'ListItem', position: 2, name: 'Achievements', item: absoluteUrl('/achievements') },
+            ],
+          }),
+        }}
+      />
       <div className="max-w-lg mx-auto px-4 py-6 pb-12">
         {/* Header */}
         <div className="flex items-center gap-3 mb-6">

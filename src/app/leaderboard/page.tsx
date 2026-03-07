@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { absoluteUrl } from '@/lib/siteConfig';
 import LeaderboardFullView from './LeaderboardFullView';
 
 export const metadata: Metadata = {
@@ -12,6 +13,19 @@ export const metadata: Metadata = {
 export default function LeaderboardPage() {
   return (
     <div className="min-h-screen bg-[#072907] text-white selection:bg-[#D4AF37] selection:text-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              { '@type': 'ListItem', position: 1, name: 'Home', item: absoluteUrl('/') },
+              { '@type': 'ListItem', position: 2, name: 'Leaderboard', item: absoluteUrl('/leaderboard') },
+            ],
+          }),
+        }}
+      />
       {/* Header */}
       <header className="py-16 px-6 border-b border-white/5">
         <div className="max-w-3xl mx-auto flex flex-col items-center text-center">

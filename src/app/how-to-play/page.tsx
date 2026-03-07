@@ -700,6 +700,50 @@ export default function HowToPlayPage() {
           </div>
         </section>
 
+        {/* ── Related Guides ── */}
+        <section>
+          <div className={CARD} style={CARD_TOP}>
+            <SectionHeading sub="Continue Learning" icon={"\u2666"}>
+              Related Guides
+            </SectionHeading>
+
+            <div className="px-6 sm:px-8 md:px-10 py-8">
+              <ul className="space-y-4">
+                <li>
+                  <Link href="/freecell-for-beginners" className="text-[#D4AF37] hover:underline font-medium">
+                    FreeCell for Beginners
+                  </Link>
+                  <span className="text-[#444444]"> — A gentler introduction for first-time players, covering the basics step by step.</span>
+                </li>
+                <li>
+                  <Link href="/easy-freecell-games" className="text-[#D4AF37] hover:underline font-medium">
+                    Easy FreeCell Games
+                  </Link>
+                  <span className="text-[#444444]"> — Start with deals that are easier to solve and build your confidence.</span>
+                </li>
+                <li>
+                  <Link href="/strategy" className="text-[#D4AF37] hover:underline font-medium">
+                    FreeCell Strategy Guide
+                  </Link>
+                  <span className="text-[#444444]"> — Advanced tactics for improving your win rate beyond the basics.</span>
+                </li>
+                <li>
+                  <Link href="/tips" className="text-[#D4AF37] hover:underline font-medium">
+                    25 FreeCell Tips & Tricks
+                  </Link>
+                  <span className="text-[#444444]"> — Quick, actionable advice to sharpen your game immediately.</span>
+                </li>
+                <li>
+                  <Link href="/glossary" className="text-[#D4AF37] hover:underline font-medium">
+                    FreeCell Glossary
+                  </Link>
+                  <span className="text-[#444444]"> — Definitions for every FreeCell term, from cascade to supermove.</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
         {/* ── CTA ── */}
         <section>
           <div

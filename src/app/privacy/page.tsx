@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { siteConfig } from "@/lib/siteConfig";
+import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import ContentLayout from "../../components/ContentLayout";
 
 export const metadata: Metadata = {
@@ -43,6 +43,20 @@ export default function PrivacyPage() {
 
   return (
     <ContentLayout variant="dark">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              { '@type': 'ListItem', position: 1, name: 'Home', item: absoluteUrl('/') },
+              { '@type': 'ListItem', position: 2, name: 'Privacy Policy', item: absoluteUrl('/privacy') },
+            ],
+          }),
+        }}
+      />
+
       {/* ── Hero ── */}
       <header className="relative pt-6 pb-12 sm:pt-8 sm:pb-16 px-6 text-center overflow-hidden">
         <div

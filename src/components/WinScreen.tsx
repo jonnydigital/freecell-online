@@ -4,6 +4,7 @@ import { useEffect, useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Shuffle, Calendar, Trophy, Share2, Eye } from 'lucide-react';
 import { saveStarRating } from '@/lib/storage';
+import { absoluteUrl, siteConfig } from '@/lib/siteConfig';
 import { CompactLeaderboard } from './Leaderboard';
 import { LeaderboardEntry } from '@/lib/leaderboardClient';
 
@@ -69,12 +70,12 @@ export default function WinScreen({
 
   const handleShare = async () => {
     const starEmoji = '⭐'.repeat(starCount);
-    const shareText = `I solved FreeCell Game #${gameNumber} in ${moves} moves (${formatTime(time)})! ${starEmoji}\nCan you beat it? https://playfreecellonline.com/game/${gameNumber}`;
+    const shareText = `I solved FreeCell Game #${gameNumber} in ${moves} moves (${formatTime(time)})! ${starEmoji}\nCan you beat it? ${absoluteUrl(`/game/${gameNumber}`)}`;
 
     if (navigator.share) {
       try {
         await navigator.share({
-          title: 'FreeCell Online',
+          title: siteConfig.brandName,
           text: shareText,
         });
         return;

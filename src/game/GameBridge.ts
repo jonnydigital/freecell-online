@@ -42,6 +42,8 @@ class GameBridge {
   initialGameNumber: number | null = null;
   /** Game variant: 'freecell' (default), 'bakers-game'/'eight-off' (same-suit stacking), or 'spider' */
   variant: 'freecell' | 'bakers-game' | 'eight-off' | 'spider' = 'freecell';
+  /** Spider difficulty level */
+  spiderDifficulty: '1-suit' | '2-suit' | '4-suit' = '1-suit';
 
   on(event: BridgeEvent, callback: EventCallback): () => void {
     if (!this.listeners.has(event)) {

@@ -7,6 +7,12 @@
 ## Current Domain
 - **playfreecellonline.com** — great for FreeCell SEO, too specific for multi-game hub
 
+## Current Owned Portfolio
+- **playfreecellonline.com** — FreeCell specialist
+- **solitairestack.com** — hub domain
+- **playklondikeonline.com** — Klondike spoke / defensive
+- **playspidersolitaireonline.com** — Spider Solitaire spoke / defensive
+
 ## The Problem
 As we add Klondike, Spider, and other games, "playfreecellonline.com/klondike" feels wrong. We need a hub domain that works for ALL card games.
 
@@ -31,7 +37,7 @@ These are the dream domains — exact keyword match .coms. All registered but po
 
 | Domain | Available? | Pros | Cons |
 |--------|-----------|------|------|
-| **solitairestack.com** | 🟢 Yes | Memorable, brandable, .com | Not a keyword match |
+| **solitairestack.com** | Purchased | Memorable, brandable, .com | Not a keyword match |
 | **playsolitairefree.com** | 🟢 Likely | Keywords in domain | Long, feels spammy |
 | **playcardsolitaire.com** | 🟢 Likely | Keywords in domain | Long |
 
@@ -80,7 +86,7 @@ Use what we have:
 
 ## My Recommendation
 
-**Register "solitairestack.com" NOW ($10) as the hub domain.** It's brandable, memorable, .com, and available. 
+**"solitairestack.com" has been purchased as the hub domain.** It's brandable, memorable, and flexible enough for the full network.
 
 Keep playfreecellonline.com as a dedicated FreeCell property that links to the hub.
 
@@ -91,12 +97,14 @@ Later, if revenue supports it, pursue a premium domain like playsolitaire.com or
 ---
 
 ## Action Items
-1. ☐ Jonathan: Decide on domain strategy (Option A, B, C, or other)
-2. ☐ Register chosen domain(s) on Namecheap
-3. ☐ Point to Vercel
-4. ☐ Set up as hub for multi-game site
-5. ☐ Keep playfreecellonline.com as FreeCell-specific property
+1. ☑ Jonathan: Chose `solitairestack.com` as the hub domain
+2. ☑ Registered `solitairestack.com`
+3. ☑ Registered `playklondikeonline.com`
+4. ☑ Registered `playspidersolitaireonline.com`
+5. ☐ Point `solitairestack.com` to Vercel
+6. ☐ Set up as hub for multi-game site
+7. ☐ Keep playfreecellonline.com as FreeCell-specific property
 
 ---
 
-*Decision needed from Jonathan to proceed.*
+*Hub domain decided: `solitairestack.com`.*

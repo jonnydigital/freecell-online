@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import ContentLayout from "../../components/ContentLayout";
 
 export const metadata: Metadata = {
@@ -23,8 +24,8 @@ export const metadata: Metadata = {
     title: "FreeCell Winning Deals & Statistics | Easiest & Hardest Games",
     description:
       "Which FreeCell deals are easiest? Which are hardest? Comprehensive statistics on solvability, win rates, and the famous 32,000 Microsoft deals.",
-    url: "https://playfreecellonline.com/winning-deals",
-    siteName: "PlayFreeCellOnline.com",
+    url: absoluteUrl('/winning-deals'),
+    siteName: siteConfig.siteName,
     type: "article",
   },
   twitter: {
@@ -364,6 +365,15 @@ function DealCard({ deal }: { deal: Deal }) {
    ══════════════════════════════════════════════════════════════ */
 
 export default function WinningDealsPage() {
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl('/') },
+      { "@type": "ListItem", position: 2, name: "Winning Deals", item: absoluteUrl('/winning-deals') },
+    ],
+  };
+
   const jsonLd = [
     {
       "@context": "https://schema.org",
@@ -374,15 +384,15 @@ export default function WinningDealsPage() {
         "Comprehensive FreeCell deal analysis. Which game numbers are easiest, which are hardest, solvability statistics, and the story behind the famous unsolvable deals.",
       author: {
         "@type": "Organization",
-        name: "PlayFreeCellOnline.com",
+        name: siteConfig.siteName,
       },
       publisher: {
         "@type": "Organization",
-        name: "PlayFreeCellOnline.com",
+        name: siteConfig.siteName,
       },
       mainEntityOfPage: {
         "@type": "WebPage",
-        "@id": "https://playfreecellonline.com/winning-deals",
+        "@id": absoluteUrl('/winning-deals'),
       },
     },
     {
@@ -404,6 +414,10 @@ export default function WinningDealsPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
 
       {/* ── Hero ── */}

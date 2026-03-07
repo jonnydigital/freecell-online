@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { absoluteUrl, siteConfig } from '@/lib/siteConfig';
 import StatsPage from './StatsPage';
 
 export const metadata: Metadata = {
@@ -16,8 +17,8 @@ export const metadata: Metadata = {
     title: 'Statistics — FreeCell Online',
     description:
       'Track your FreeCell performance with charts, streaks, and detailed statistics.',
-    url: 'https://playfreecellonline.com/stats',
-    siteName: 'PlayFreeCellOnline.com',
+    url: absoluteUrl('/stats'),
+    siteName: siteConfig.siteName,
     type: 'website',
   },
   robots: {

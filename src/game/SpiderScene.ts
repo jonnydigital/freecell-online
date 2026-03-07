@@ -121,7 +121,7 @@ export class SpiderScene extends Phaser.Scene {
 
   create(): void {
     this.gameNumber = gameBridge.initialGameNumber || 1;
-    this.engine = new SpiderEngine(this.gameNumber, '1-suit');
+    this.engine = new SpiderEngine(this.gameNumber, gameBridge.spiderDifficulty || '1-suit');
     this.settings = loadSettings();
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, this.shutdown, this);
 
@@ -153,6 +153,13 @@ export class SpiderScene extends Phaser.Scene {
 
     gameBridge.emit('gameReady', { gameNumber: this.gameNumber });
 
+    // Listen for new game / difficulty change requests
+    const unsubNewGame = gameBridge.on('newGame', (data: unknown) => {
+      const num = typeof data === 'number' ? data : Math.floor(Math.random() * 9999999) + 1;
+      this.restartWithNewGame(num);
+    });
+    this.bridgeUnsubscribers.push(unsubNewGame);
+
     if (this.isTouchDevice) {
       this.setupTouchInput();
     } else {
@@ -160,8 +167,36 @@ export class SpiderScene extends Phaser.Scene {
     }
   }
 
+  private restartWithNewGame(gameNumber: number): void {
+    // Clear all existing card sprites
+    for (const sprite of this.cardSprites.values()) {
+      sprite.destroy();
+    }
+    this.cardSprites.clear();
+    this.activeDragCards = [];
+    this.activeDragFrom = null;
+    this.isDragging = false;
+    this.isSettlingDrag = false;
+    this.pendingSettledMove = null;
+    this.invalidateOverlapCache();
+
+    // Create new engine with current difficulty
+    this.gameNumber = gameNumber;
+    this.engine = new SpiderEngine(this.gameNumber, gameBridge.spiderDifficulty || '1-suit');
+
+    // Rebuild and deal
+    this.rebuildBoard();
+    this.dealCards(true);
+
+    gameBridge.emit('gameReady', { gameNumber: this.gameNumber });
+  }
+
   private shutdown(): void {
     if (this.scaleResizeHandler) this.scale.off('resize', this.scaleResizeHandler, this);
+    for (const unsub of this.bridgeUnsubscribers) {
+      unsub();
+    }
+    this.bridgeUnsubscribers = [];
     for (const { target, type, listener, options } of this.trackedDomListeners) {
       target.removeEventListener(type, listener, options);
     }

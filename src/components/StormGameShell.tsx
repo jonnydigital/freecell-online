@@ -9,6 +9,7 @@ import { getRandomSolvableGame } from '../lib/solvableDeals';
 import { loadStormData, updateBestScore } from '../lib/stormStorage';
 import { soundManager } from '../lib/sounds';
 import { loadSettings } from '../lib/storage';
+import { absoluteUrl } from '@/lib/siteConfig';
 
 const STORM_DURATION = 180; // 3 minutes in seconds
 const BONUS_FAST = 15;  // < 60s solve
@@ -270,7 +271,7 @@ export default function StormGameShell() {
   };
 
   const handleShare = async () => {
-    const shareText = `I solved ${gamesSolved} FreeCell game${gamesSolved !== 1 ? 's' : ''} in Puzzle Storm! ⚡\nCan you beat my score? https://playfreecellonline.com/storm`;
+    const shareText = `I solved ${gamesSolved} FreeCell game${gamesSolved !== 1 ? 's' : ''} in Puzzle Storm! ⚡\nCan you beat my score? ${absoluteUrl('/storm')}`;
 
     if (navigator.share) {
       try {

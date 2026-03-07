@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { absoluteUrl } from "@/lib/siteConfig";
 import AdUnit from "../../components/AdUnit";
 import ContentLayout from "../../components/ContentLayout";
 
@@ -232,6 +233,15 @@ const htpFaqs = [
 ];
 
 export default function HowToPlayPage() {
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl('/') },
+      { "@type": "ListItem", position: 2, name: "How to Play", item: absoluteUrl('/how-to-play') },
+    ],
+  };
+
   const howToJsonLd = {
     "@context": "https://schema.org",
     "@type": "HowTo",
@@ -267,6 +277,10 @@ export default function HowToPlayPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(howToJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
 
       {/* ── Hero ── */}

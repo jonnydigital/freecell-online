@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import AdUnit from "../../components/AdUnit";
 import ContentLayout from "../../components/ContentLayout";
 
@@ -25,8 +26,8 @@ export const metadata: Metadata = {
     title: "FreeCell Statistics & Win Rates | Solvability, Difficulty & Math",
     description:
       "99.999% of FreeCell deals are solvable. Explore win rates, difficulty tiers, famous game numbers, and the mathematics behind FreeCell solitaire.",
-    url: "https://playfreecellonline.com/statistics",
-    siteName: "PlayFreeCellOnline.com",
+    url: absoluteUrl('/statistics'),
+    siteName: siteConfig.siteName,
     type: "article",
   },
   twitter: {
@@ -152,6 +153,15 @@ function SectionHeading({
 }
 
 export default function StatisticsPage() {
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl('/') },
+      { "@type": "ListItem", position: 2, name: "Statistics", item: absoluteUrl('/statistics') },
+    ],
+  };
+
   return (
     <ContentLayout variant="dark">
       <script
@@ -161,6 +171,10 @@ export default function StatisticsPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
 
       {/* ── Hero ── */}

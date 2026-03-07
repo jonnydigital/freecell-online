@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { absoluteUrl, siteConfig } from '@/lib/siteConfig';
 import EightOffPage from './EightOffPage';
 
 export const metadata: Metadata = {
@@ -21,8 +22,8 @@ export const metadata: Metadata = {
     title: 'Eight Off Solitaire — Play Online Free',
     description:
       'Eight Off is a challenging FreeCell variant with 8 free cells and same-suit stacking. Play free online.',
-    url: 'https://playfreecellonline.com/eight-off',
-    siteName: 'PlayFreeCellOnline.com',
+    url: absoluteUrl('/eight-off'),
+    siteName: siteConfig.siteName,
     type: 'website',
   },
   robots: {
@@ -32,8 +33,21 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl('/') },
+      { "@type": "ListItem", position: 2, name: "Eight Off", item: absoluteUrl('/eight-off') },
+    ],
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <EightOffPage />
       <article className="max-w-3xl mx-auto px-6 py-12 text-white/80 bg-[#072907]">
         <h2 className="text-3xl font-bold text-[#D4AF37] mb-6">

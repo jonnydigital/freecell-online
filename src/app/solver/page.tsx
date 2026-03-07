@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import ContentLayout from "../../components/ContentLayout";
 import AdUnit from "../../components/AdUnit";
 import SolverWidget from "./SolverWidget";
@@ -24,8 +25,8 @@ export const metadata: Metadata = {
     title: "FreeCell Solver | Solve Any Deal Instantly",
     description:
       "Enter any FreeCell game number and get a complete step-by-step solution. Our A* solver finds optimal paths through 300,000+ game states.",
-    url: "https://playfreecellonline.com/solver",
-    siteName: "PlayFreeCellOnline.com",
+    url: absoluteUrl('/solver'),
+    siteName: siteConfig.siteName,
     type: "website",
   },
   twitter: {
@@ -80,6 +81,15 @@ const faqs = [
 ];
 
 export default function SolverPage() {
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl('/') },
+      { "@type": "ListItem", position: 2, name: "Solver", item: absoluteUrl('/solver') },
+    ],
+  };
+
   const faqJsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -106,7 +116,7 @@ export default function SolverPage() {
       price: "0",
       priceCurrency: "USD",
     },
-    url: "https://playfreecellonline.com/solver",
+    url: absoluteUrl('/solver'),
   };
 
   return (
@@ -118,6 +128,10 @@ export default function SolverPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(appJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
 
       {/* Hero */}

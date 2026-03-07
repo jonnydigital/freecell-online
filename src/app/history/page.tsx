@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import AdUnit from "../../components/AdUnit";
 import ContentLayout from "../../components/ContentLayout";
 
@@ -27,8 +28,8 @@ export const metadata: Metadata = {
     title: "History of FreeCell | Who Invented FreeCell Solitaire?",
     description:
       "From a 1978 university mainframe to every Windows PC on Earth — the full story of FreeCell solitaire, its inventor Paul Alfille, Baker's Game, and the legendary unsolvable deal #11982.",
-    url: "https://playfreecellonline.com/history",
-    siteName: "PlayFreeCellOnline.com",
+    url: absoluteUrl('/history'),
+    siteName: siteConfig.siteName,
     type: "article",
   },
   twitter: {
@@ -256,6 +257,15 @@ function SectionHeading({
    ══════════════════════════════════════════════════════════════ */
 
 export default function HistoryPage() {
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl('/') },
+      { "@type": "ListItem", position: 2, name: "History", item: absoluteUrl('/history') },
+    ],
+  };
+
   const jsonLd = [
     {
       "@context": "https://schema.org",
@@ -266,17 +276,17 @@ export default function HistoryPage() {
         "The complete history of FreeCell solitaire — Paul Alfille's invention, Baker's Game origins, Microsoft's adoption, the Internet FreeCell Project, Game #11982, FreeCell mathematics, and the game's cultural legacy.",
       author: {
         "@type": "Organization",
-        name: "PlayFreeCellOnline.com",
+        name: siteConfig.siteName,
       },
       publisher: {
         "@type": "Organization",
-        name: "PlayFreeCellOnline.com",
+        name: siteConfig.siteName,
       },
       datePublished: "2026-02-20",
       dateModified: "2026-03-02",
       mainEntityOfPage: {
         "@type": "WebPage",
-        "@id": "https://playfreecellonline.com/history",
+        "@id": absoluteUrl('/history'),
       },
     },
     {
@@ -298,6 +308,10 @@ export default function HistoryPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
 
       {/* ── Hero ── */}

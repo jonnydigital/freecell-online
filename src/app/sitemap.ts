@@ -1,6 +1,5 @@
 import type { MetadataRoute } from 'next';
-
-const BASE_URL = 'https://playfreecellonline.com';
+import { absoluteUrl, isHubSite } from '@/lib/siteConfig';
 
 /**
  * Dynamic sitemap for all content pages + notable game number routes.
@@ -12,6 +11,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   /* ── Static content pages ── */
   const contentPages = [
     { path: '/', changeFrequency: 'daily' as const, priority: 1.0 },
+    ...(isHubSite ? [{ path: '/freecell', changeFrequency: 'daily' as const, priority: 0.9 }] : []),
     { path: '/how-to-play', changeFrequency: 'monthly' as const, priority: 0.8 },
     { path: '/strategy', changeFrequency: 'monthly' as const, priority: 0.8 },
     { path: '/tips', changeFrequency: 'monthly' as const, priority: 0.7 },
@@ -24,6 +24,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/eight-off', changeFrequency: 'monthly' as const, priority: 0.8 },
     { path: '/spider', changeFrequency: 'monthly' as const, priority: 0.8 },
     { path: '/freecell-vs-spider', changeFrequency: 'monthly' as const, priority: 0.7 },
+    { path: '/freecell-vs-klondike', changeFrequency: 'monthly' as const, priority: 0.7 },
     { path: '/statistics', changeFrequency: 'monthly' as const, priority: 0.7 },
     { path: '/deals', changeFrequency: 'weekly' as const, priority: 0.7 },
     { path: '/solver', changeFrequency: 'monthly' as const, priority: 0.8 },
@@ -32,12 +33,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/stats', changeFrequency: 'weekly' as const, priority: 0.5 },
     { path: '/achievements', changeFrequency: 'weekly' as const, priority: 0.5 },
     { path: '/leaderboard', changeFrequency: 'daily' as const, priority: 0.6 },
+    { path: '/about', changeFrequency: 'yearly' as const, priority: 0.5 },
+    { path: '/daily-freecell', changeFrequency: 'daily' as const, priority: 0.7 },
+    { path: '/freecell-for-beginners', changeFrequency: 'monthly' as const, priority: 0.7 },
+    { path: '/spider/how-to-play', changeFrequency: 'monthly' as const, priority: 0.7 },
+    { path: '/spider/strategy', changeFrequency: 'monthly' as const, priority: 0.7 },
     { path: '/privacy', changeFrequency: 'yearly' as const, priority: 0.2 },
     { path: '/terms', changeFrequency: 'yearly' as const, priority: 0.2 },
   ];
 
   const staticEntries: MetadataRoute.Sitemap = contentPages.map((p) => ({
-    url: `${BASE_URL}${p.path}`,
+    url: absoluteUrl(p.path),
     lastModified: now,
     changeFrequency: p.changeFrequency,
     priority: p.priority,
@@ -53,7 +59,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   const gameEntries: MetadataRoute.Sitemap = notableGames.map((num) => ({
-    url: `${BASE_URL}/game/${num}`,
+    url: absoluteUrl(`/game/${num}`),
     lastModified: now,
     changeFrequency: 'yearly' as const,
     priority: num === 11982 ? 0.6 : 0.4,

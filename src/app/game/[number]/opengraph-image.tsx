@@ -1,4 +1,5 @@
 import { ImageResponse } from 'next/og';
+import { siteConfig } from '@/lib/siteConfig';
 
 export const runtime = 'edge';
 export const alt = 'FreeCell Game';
@@ -171,7 +172,7 @@ export default async function OGImage({ params }: { params: Promise<{ number: st
             display: 'flex',
           }}
         >
-          playfreecellonline.com
+          {siteConfig.domain}
         </div>
       </div>
     ),

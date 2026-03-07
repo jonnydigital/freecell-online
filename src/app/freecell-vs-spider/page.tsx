@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import AdUnit from "../../components/AdUnit";
 import ContentLayout from "../../components/ContentLayout";
 
@@ -25,8 +26,8 @@ export const metadata: Metadata = {
       "FreeCell vs Spider Solitaire | Which Card Game Should You Play?",
     description:
       "A head-to-head comparison of FreeCell and Spider Solitaire — rules, strategy depth, difficulty, win rates, and which game fits your style.",
-    url: "https://playfreecellonline.com/freecell-vs-spider",
-    siteName: "PlayFreeCellOnline.com",
+    url: absoluteUrl('/freecell-vs-spider'),
+    siteName: siteConfig.siteName,
     type: "article",
   },
   twitter: {
@@ -166,6 +167,15 @@ function SectionHeading({
    ══════════════════════════════════════════════════════════════ */
 
 export default function FreecellVsSpiderPage() {
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl('/') },
+      { "@type": "ListItem", position: 2, name: "FreeCell vs Spider", item: absoluteUrl('/freecell-vs-spider') },
+    ],
+  };
+
   const jsonLd = [
     {
       "@context": "https://schema.org",
@@ -176,17 +186,17 @@ export default function FreecellVsSpiderPage() {
         "A detailed head-to-head comparison of FreeCell and Spider Solitaire — rules, strategy, difficulty, win rates, and which card game suits different player types.",
       author: {
         "@type": "Organization",
-        name: "PlayFreeCellOnline.com",
+        name: siteConfig.siteName,
       },
       publisher: {
         "@type": "Organization",
-        name: "PlayFreeCellOnline.com",
+        name: siteConfig.siteName,
       },
       datePublished: "2026-03-04",
       dateModified: "2026-03-04",
       mainEntityOfPage: {
         "@type": "WebPage",
-        "@id": "https://playfreecellonline.com/freecell-vs-spider",
+        "@id": absoluteUrl('/freecell-vs-spider'),
       },
     },
     {
@@ -208,6 +218,10 @@ export default function FreecellVsSpiderPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
 
       {/* ── Hero ── */}

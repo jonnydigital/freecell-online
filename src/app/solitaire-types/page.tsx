@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import ContentLayout from "../../components/ContentLayout";
 
 export const metadata: Metadata = {
@@ -22,8 +23,8 @@ export const metadata: Metadata = {
     title: "Types of Solitaire Card Games | 20 Variants Explained",
     description:
       "The complete guide to solitaire card games. 20 variants from beginner-friendly Klondike to expert-level FreeCell, with difficulty ratings and rules for each.",
-    url: "https://playfreecellonline.com/solitaire-types",
-    siteName: "PlayFreeCellOnline.com",
+    url: absoluteUrl('/solitaire-types'),
+    siteName: siteConfig.siteName,
     type: "article",
   },
 };
@@ -456,6 +457,15 @@ function VariantCard({ variant }: { variant: SolitaireVariant }) {
    ══════════════════════════════════════════════════════════════ */
 
 export default function SolitaireTypesPage() {
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl('/') },
+      { "@type": "ListItem", position: 2, name: "Solitaire Types", item: absoluteUrl('/solitaire-types') },
+    ],
+  };
+
   const jsonLd = [
     {
       "@context": "https://schema.org",
@@ -466,15 +476,15 @@ export default function SolitaireTypesPage() {
         "A comprehensive guide to 20 solitaire card game variants with difficulty ratings, rules overview, and strategy comparison. Covers Klondike, Spider, FreeCell, Pyramid, TriPeaks, and more.",
       author: {
         "@type": "Organization",
-        name: "PlayFreeCellOnline.com",
+        name: siteConfig.siteName,
       },
       publisher: {
         "@type": "Organization",
-        name: "PlayFreeCellOnline.com",
+        name: siteConfig.siteName,
       },
       mainEntityOfPage: {
         "@type": "WebPage",
-        "@id": "https://playfreecellonline.com/solitaire-types",
+        "@id": absoluteUrl('/solitaire-types'),
       },
     },
     {
@@ -496,6 +506,10 @@ export default function SolitaireTypesPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
 
       {/* ── Hero ── */}

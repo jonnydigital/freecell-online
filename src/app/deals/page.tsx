@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import ContentLayout from "../../components/ContentLayout";
 import DealsExplorer from "./DealsExplorer";
 
@@ -21,8 +22,8 @@ export const metadata: Metadata = {
     title: "FreeCell Deal Explorer | Browse & Play Specific Game Numbers",
     description:
       "Browse FreeCell game numbers by difficulty. Famous deals, beginner-friendly games, expert challenges, and more.",
-    url: "https://playfreecellonline.com/deals",
-    siteName: "PlayFreeCellOnline.com",
+    url: absoluteUrl('/deals'),
+    siteName: siteConfig.siteName,
     type: "website",
   },
   twitter: {
@@ -62,6 +63,15 @@ const faqs = [
 ];
 
 export default function DealsPage() {
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl('/') },
+      { "@type": "ListItem", position: 2, name: "Deal Explorer", item: absoluteUrl('/deals') },
+    ],
+  };
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -80,6 +90,10 @@ export default function DealsPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
 
       {/* Hero */}

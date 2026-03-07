@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import AdUnit from "../../components/AdUnit";
 import ContentLayout from "../../components/ContentLayout";
 
@@ -21,8 +22,8 @@ export const metadata: Metadata = {
     title: "FreeCell Glossary | Card Game Terms & Definitions",
     description:
       "Complete glossary of FreeCell and Solitaire card game terms with clear definitions.",
-    url: "https://playfreecellonline.com/glossary",
-    siteName: "PlayFreeCellOnline.com",
+    url: absoluteUrl('/glossary'),
+    siteName: siteConfig.siteName,
     type: "article",
   },
   twitter: {
@@ -316,17 +317,26 @@ export default function GlossaryPage() {
   const grouped = groupByLetter(GLOSSARY);
   const letters = Array.from(grouped.keys()).sort();
 
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl('/') },
+      { "@type": "ListItem", position: 2, name: "Glossary", item: absoluteUrl('/glossary') },
+    ],
+  };
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "DefinedTermSet",
     name: "FreeCell & Solitaire Glossary",
     description:
       "Complete glossary of FreeCell and Solitaire card game terms and definitions.",
-    url: "https://playfreecellonline.com/glossary",
+    url: absoluteUrl('/glossary'),
     hasDefinedTerm: GLOSSARY.map((t) => ({
       "@type": "DefinedTerm",
       name: t.term,
-      url: `https://playfreecellonline.com/glossary#${t.id}`,
+      url: absoluteUrl(`/glossary#${t.id}`),
     })),
   };
 
@@ -335,6 +345,10 @@ export default function GlossaryPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
 
       {/* ── Hero ── */}

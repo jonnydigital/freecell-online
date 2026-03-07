@@ -1,4 +1,5 @@
 import { ImageResponse } from 'next/og';
+import { siteConfig } from '@/lib/siteConfig';
 
 export const runtime = 'edge';
 export const alt = 'FreeCell Online - Play Free, No Download, No Signup';
@@ -145,7 +146,7 @@ export default function OGImage() {
             display: 'flex',
           }}
         >
-          playfreecellonline.com
+          {siteConfig.domain}
         </div>
       </div>
     ),

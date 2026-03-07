@@ -1,348 +1,468 @@
 # PlayFreeCellOnline.com — Product Requirements Document
 
-*Created: 2026-02-23 | Status: Draft v1*
-*Source: ChatGPT Deep Research (competitive analysis) + Gemini Deep Research (SEO/technical)*
+*Created: 2026-02-23 | Updated: 2026-03-07 | Status: v2 — Network Expansion*
+*Source: ChatGPT Deep Research + Gemini Deep Research + Holger Sindbaek case studies + 2 weeks of shipping*
 
 ---
 
-## 1. Vision & Opportunity
+## 1. Vision & Strategy
 
-### The Pitch
-Build the best FreeCell web app on the internet — visually stunning, buttery smooth, impossibly addictive — and capture a share of 2M+ monthly FreeCell searches.
+### The North Star
+**online-solitaire.com** (Holger Sindbaek) — a solo dev making ~$25K/month from a network of card game sites powered by Freestar header bidding. We're building the same thing, better.
 
-### Market Size
-- "freecell" — ~1,864,200 global searches/month
-- "freecell online" — ~162,500/month
-- "freecell solitaire" — ~128,800/month
-- "play freecell" — mid-tail, strong transactional intent
-- "solitaire" (broader) — 11.1M monthly (US alone)
+### The Evolution
+- **v1 (Feb 2026):** Build the best FreeCell web app on the internet.
+- **v2 (Mar 2026):** Build a network of card game properties that generates $3K-10K/month in passive ad revenue, anchored by best-in-class gameplay and aggressive SEO.
 
-### Competitive Landscape
-| Competitor | Est. Monthly Traffic | Avg Session | Pages/Visit | Core Strength |
-|-----------|---------------------|-------------|-------------|---------------|
-| solitaired.com | ~23.9M | 19:06 | 6.75 | 500+ variants, progression loops, UCLA partnership |
-| cardgames.io | ~19.4M | 16:15 | 7.21 | Frictionless minimalism, multi-game |
-| worldofsolitaire.com | ~7.8M | 2:13 | 1.39 | Legacy authority, 100+ games |
-| solitairebliss.com | ~4.5M | 16:54 | 5.03 | Blog/PR-driven backlinks, surveys |
-| 247solitaire.com | ~2.25M | ~2:04 | ~1.35 | Franchise branding, seasonal themes |
-| freecell.net | Smaller | Long | N/A | Purist streak tracking, anti-cheat, charity model |
-
-### Our Edge
-- **Exact-match domain**: playfreecellonline.com
-- **Modern stack**: Next.js + Phaser.js (Canvas/WebGL) vs aging DOM-based competitors
-- **Performance-first**: True 60fps, PWA, offline — most competitors are ad-bloated and sluggish
-- **Built from day one with ad slots** — not bolted on after
-
-### Revenue Potential
-- Solitaire sites at scale do **$50K+/month** in ad revenue
-- 100K MAU = $5,000–$100,000+/month (varies by geo, session length, ad optimization)
-- Premium subscriptions provide additional recurring revenue
+### Why This Works
+- "solitaire" = 11.1M monthly searches (US alone)
+- "freecell" = 1.8M monthly searches
+- Solitaire sites at scale do $50K+/month in ad revenue
+- The audience (35-65+, US/UK/CA/AU) has the highest ad CPMs
+- Competitors are ad-bloated, DOM-rendered, and slow — we're Canvas/WebGL at 60fps
+- AI-powered development means we ship 10x faster than a solo dev
 
 ---
 
-## 2. Competitive Intelligence
+## 2. Current State (March 7, 2026)
 
-### Three Winning Archetypes
-1. **Multi-game portals** (cardgames.io, solitaired.com, solitairebliss.com) — optimized for long sessions, cross-game navigation
-2. **FreeCell specialists** (freecell.net, free-freecell-solitaire.com, play-freecell.com) — habit loops, streak tracking, purist community
-3. **Casual gaming networks** (247*, AARP/Arkadium) — FreeCell as one of many SEO landers
+### What's Live on playfreecellonline.com
 
-### What Best-in-Class Looks Like
-- **Board-first, menu-second UI**: Game always visible, controls in compact rail/floating cluster
-- **Sequence-aware drag**: Drag a run; engine infers intermediate moves (freecell.net, greenfelt.net "Super Moves")
-- **Animation quality as feature**: TreeCardGames exposes hardware acceleration, drag swing, shadow toggles
-- **16-19 minute sessions**: Achieved via meta-progression (stats, challenges, leaderboards), not just good gameplay
+**Game Engines (4)**
+- [x] FreeCell (core)
+- [x] Baker's Game (same-suit variant)
+- [x] Eight Off (8 free cells variant)
+- [x] Spider Solitaire (1/2/4 suits)
 
-### What Sucks About Incumbents
-- Bloated ad-tech stacks killing performance (solitaire.net enumerates dozens of ad vendors)
-- DOM-based rendering → choppy on mobile (20-30fps)
-- worldofsolitaire.com: 7.8M visits but 2:13 sessions — no stickiness
-- 247 network: high reach, low engagement (~2 min sessions)
-- Few true PWAs with offline support
-- Many look dated (freecell.net has fierce loyalty but retro design)
+**Gameplay Features**
+- [x] Phaser 3.90 canvas rendering (60fps, mobile-first)
+- [x] Sequence-aware drag-and-drop
+- [x] A* solver with post-game optimal solution replay (unique differentiator — no competitor has this)
+- [x] Ghost mode (watch solver play mid-game)
+- [x] Hint system (heuristic solver)
+- [x] Auto-complete detection + acceleration
+- [x] Unlimited undo/redo with animation
+- [x] Single-tap auto-move
+- [x] Smart double-tap + sequence drag
+- [x] Seeded PRNG (reproducible deals, game numbering)
+- [x] Spring physics drag system
 
-### Competitor Backlink Profiles
-| Site | Referring Domains | Backlinks | Strategy |
-|------|------------------|-----------|----------|
-| 247solitaire.com | 9,626 | High | Franchise branding |
-| solitaired.com | 7,070 | ~148,750 | UCLA partnership, cognitive health positioning |
-| solitairebliss.com | 6,429 | High | Original surveys, PR-driven content |
-| worldofsolitaire.com | 3,086 | High | Legacy authority |
-| cardgames.io | 1,328 | High | Organic, multi-game breadth |
+**Engagement & Retention**
+- [x] Daily Challenge system + streak tracking (14 milestone levels)
+- [x] Puzzle Storm + Puzzle Streak modes
+- [x] Star rating per game
+- [x] 20 achievement badges across 6 categories
+- [x] Statistics page (tabs, game history, daily stats, mode breakdown)
+- [x] Leaderboard
+- [x] Interactive tutorial/onboarding (first-visit, replayable)
+- [x] Theme system (card backs, table backgrounds)
+- [x] Animation speed setting (slow/normal/fast)
+- [x] Sound effects (Web Audio API) with pitch variation
 
-### Key Strategies to Steal
-- **Solitaired.com**: UCLA CRESST "cognitive acuity score" partnership → health/education backlinks
-- **Solitaire Bliss**: Original surveys (workplace boredom, winter blues) → press coverage → backlinks
-- **Exact-match domain portfolio**: playsolitaireonline.com → online-solitaire.com; freecell-solitaire.com → play-freecell.com
-- **Embeddable widgets**: Free HTML5 FreeCell for education/senior-care sites
+**SEO Content Pages (15+)**
+- [x] /how-to-play — Rules & tutorial
+- [x] /strategy — 2500+ word guide
+- [x] /tips — 25 quick tips
+- [x] /glossary — Card game terminology
+- [x] /history — FreeCell origins (1600 lines)
+- [x] /faq — Structured FAQ with JSON-LD
+- [x] /winning-deals — Stats & easiest games
+- [x] /solitaire-types — 20 variants taxonomy
+- [x] /freecell-vs-spider — 1000+ word comparison with FAQPage schema
+- [x] /statistics — Win rates, solvability (2000+ words, FAQPage schema)
+- [x] /solver — Interactive solver + algorithm explainer (2000+ words, FAQPage schema)
+- [x] /deals — Deal Explorer with curated collections, search, random deal
+- [x] /game/[number] — Numbered game routes with SEO meta + share integration
+- [x] /privacy, /terms — Legal pages
 
----
+**Platform & Infrastructure**
+- [x] Next.js 16 on Vercel (edge rendering)
+- [x] PWA with offline support + auto-update
+- [x] GA4 analytics (G-988ZBJSKVJ)
+- [x] AdSense live (ca-pub-3083538874906149, auto-ads + manual placements)
+- [x] Cookie consent + AdSense loader
+- [x] Dynamic sitemap.xml (19 content pages + 24 game routes)
+- [x] WebApplication JSON-LD structured data
+- [x] Dynamic OG images + Twitter Cards (all pages + per-game)
+- [x] High contrast mode, screen reader support, reduced motion, focus indicators
+- [x] CI pipeline
 
-## 3. Target Users
-
-### Primary: Casual FreeCell Players
-- Searches "freecell online" or "play freecell"
-- Wants instant play, no signup, no download
-- Plays during work breaks, commutes, downtime
-- Desktop and mobile
-
-### Secondary: FreeCell Enthusiasts
-- Tracks win streaks, cares about stats
-- Plays daily challenges, competes on leaderboards
-- Values winnable deals, game numbering, difficulty levels
-- Will create an account for persistence
-
-### Tertiary: Solitaire Browsers
-- Arrives via "solitaire" or variant searches
-- Discovers FreeCell through cross-game navigation
-- Increases pages/session and time-on-site
-
-### Demographics
-- Skews 35-65+ (casual card game audience)
-- High representation of seniors (AARP partnership model proves this)
-- Significant mobile usage
-- Tier 1 countries (US, UK, CA, AU) = highest ad revenue
-
----
-
-## 4. Tech Stack
-
-| Layer | Choice | Rationale |
-|-------|--------|-----------|
-| **Framework** | Next.js 14+ | SSR for SEO, React for UI, Vercel-native |
-| **Game Engine** | Phaser.js (Canvas/WebGL) | Locked 60fps, built-in drag-and-drop, scene management, asset loading. DOM rendering causes layout thrashing (20-30fps mobile). |
-| **Auth/DB** | Supabase | Auth (Google/Apple OAuth + anonymous), Postgres for profiles/stats/game state, Realtime for leaderboards |
-| **Hosting** | Vercel | Edge network, fast cold starts, free tier to start |
-| **Solver** | fc-solve → WebAssembly (Emscripten) | Browser-side hints + winnable verification. Zero server cost, zero latency. Open-source C library. |
-| **Game Generation** | Seeded PRNG (client-side) | Reproducible deals from game numbers, endless offline play, no server requests |
-| **Caching/Realtime** | Supabase Realtime + edge caching | Leaderboards, session management |
-| **PWA** | Service Workers + Cache Storage API | Offline play, installable, no app store friction |
-| **Development** | Gemini 3.1 Pro (AI Studio) | Primary frontend development tool |
-
-### Rendering Architecture (Hybrid)
-- **Game board**: Phaser.js Canvas/WebGL (performance-critical)
-- **UI shell**: React (Next.js) for menus, settings, leaderboards, ad containers, SEO content
-- This separation keeps the game engine fast while letting Next.js handle routing, SSR, and content
-
-### PWA Caching Strategy
-- **Cache-First**: Static assets (HTML, CSS, sprites, audio, card images)
-- **Network-First**: Dynamic data (leaderboards, profiles, daily challenge)
-- **Stale-While-Revalidate**: Blog content, news feeds, stats dashboards
+### What We Don't Have
+- No Klondike Solitaire (biggest market — 10x FreeCell search volume)
+- No blog (Holger's #1 content strategy)
+- No embed/white-label system (free backlink engine)
+- No multi-language support (6x market multiplier)
+- Hub domain purchased: `solitairestack.com`
+- No email capture / newsletter
+- No desktop or mobile app store presence
+- No About page (trust signal — Holger's "my grandmother plays it" story)
+- Traffic and revenue near zero (need SEO to compound)
 
 ---
 
-## 5. Feature Roadmap
+## 3. Revenue Model
 
-### Phase 1 — MVP (Launch) 🎯
-**Goal**: Ship a playable, beautiful FreeCell game that ranks for target keywords.
+### The Lesson from Holger
+- Subscriptions are dead: $4.99/mo earns him $8.30/month total. "People don't want to pay for solitaire."
+- **100% of real revenue comes from display ads** via Freestar header bidding.
+- The single highest-leverage business decision was switching from AdSense to Freestar (+2,000% revenue).
+- Don't build premium tiers. Invest that effort in traffic + ad optimization.
 
-**Core Gameplay**
-- [ ] Drag-and-drop card movement (sequence-aware — drag a run, engine handles intermediate moves)
-- [ ] Auto-move to foundations (when mathematically safe)
-- [ ] Unlimited undo/redo
-- [ ] Hint system (fc-solve WASM — guides toward optimal path, not just any legal move)
-- [ ] Auto-finish when game is mathematically won
-- [ ] "Winnable Only" toggle (pre-verified via solver)
-- [ ] Game numbering (seeded PRNG, 1–9,999,999 reproducible deals)
+### Revenue Roadmap
 
-**Rendering & Performance**
-- [ ] Phaser.js canvas rendering (locked 60fps)
-- [ ] Smooth card animations (deal, move, flip, win celebration)
-- [ ] Hardware-accelerated animations
-- [ ] 0-latency drag pickup
-- [ ] Responsive design: mobile-first with wide/compact/normal view modes
+| Phase | Daily Users | Ad Network | Monthly Revenue |
+|-------|------------|------------|-----------------|
+| Now | <100 | AdSense (auto-ads) | $0-30 |
+| Phase 1 | 100-500 | AdSense optimized | $30-150 |
+| Phase 2 | 500-1K | AdSense | $150-500 |
+| Phase 3 | 1K-5K | **Apply to Freestar** | $500-3,000 |
+| Phase 4 | 5K-10K | Freestar | $3,000-10,000 |
+| Phase 5 | 10K+ | Freestar optimized | $10,000+ |
 
-**Player Identity**
-- [ ] Guest play (LocalStorage persistence — no signup required)
-- [ ] Optional Supabase auth (Google/Apple OAuth) for cross-device sync
-- [ ] Basic stats: win %, games played, best time, average time
+### Ad Placement Strategy
 
-**SEO Foundation**
-- [ ] H1: "Play FreeCell Online for Free"
-- [ ] First paragraph hits: "free, no download, no signup"
-- [ ] Rules page (How to Play FreeCell)
-- [ ] FAQ with JSON-LD schema
-- [ ] Strategy guide (basic)
-- [ ] Proper meta tags, Open Graph, sitemap
+**Desktop (1024px+):**
+- Game board left, 300px ad sidebar right (300x250 or 300x600)
+- Video ad player below sidebar ad
+- 16px minimum gap between game and ads
+- Game container max 700-800px to make room for sidebar
 
-**Monetization (Day 1)**
-- [ ] Ad slot placeholders designed into layout (flanking game board, static footer)
-- [ ] Google AdSense integration
-- [ ] Interstitials ONLY at natural breaks (post-win, pre-new-deal)
+**Mobile (<768px):**
+- Full-width game, no sidebar ads
+- Optional anchor ad at bottom (non-intrusive)
+- Interstitial between games (every 3-5 games)
+- Consider suppressing mobile ads entirely if UX suffers
 
----
+**Content Pages:**
+- In-content ads after intro section and before conclusion
+- Max 2 ad units per content page
 
-### Phase 2 — Stickiness 🔁
-**Goal**: Build the loops that turn one-time visitors into daily players.
-
-**Daily Systems**
-- [ ] Daily Challenge / Game of the Day (same deal for all players)
-- [ ] Daily challenge calendar (visual streak tracker)
-- [ ] Streak tracking with anti-cheat (server-side game state — can't dodge losses by closing browser)
-
-**Competition**
-- [ ] Leaderboards: daily/weekly/monthly, filterable
-- [ ] "Top Scores" display (today/this week/this month à la AARP)
-- [ ] Personal best tracking (fastest time, least moves, longest streak)
-
-**Achievements**
-- [ ] Trophy case / achievement badges
-  - "Flawless Execution" — win without undo
-  - "Speed Demon" — win in under 2 minutes
-  - "Iron Streak" — 50 wins in a row
-  - "Centurion" — 100 games completed
-  - (expand over time)
-
-**Customization**
-- [ ] Dark mode
-- [ ] Theme customization: card backs, table backgrounds, card faces
-- [ ] High contrast / large print mode (accessibility)
-
-**PWA**
-- [ ] Service Worker + offline mode
-- [ ] Install prompt ("Add to Home Screen")
-- [ ] Instant resume (pick up where you left off)
+**Rules:**
+- 5 free games before any ads appear (builds habit)
+- Never overlay ads on active gameplay
+- Interstitials only at natural breaks (post-win, pre-new-deal)
+- Lazy-load all ad scripts — never kill performance
 
 ---
 
-### Phase 3 — Growth & Revenue 💰
-**Goal**: Maximize revenue and organic traffic.
+## 4. SEO Strategy — The Traffic Engine
 
-**Premium Tier ($2.99/mo or $19.99/yr)**
-- [ ] Ad-free experience
-- [ ] Exclusive card skins & animated backgrounds
-- [ ] Historical Daily Challenge archive (replay any past daily)
-- [ ] Advanced analytics (cognitive acuity trends, ELO-style ratings)
+This is the business. Without organic traffic, nothing else matters.
 
-**Advanced Ads**
-- [ ] Rewarded video ads: opt-in for extra undos, premium hints, skin unlocks (eCPM $10-30)
-- [ ] Graduate from AdSense → header bidding / AdinPlay (HTML5 game specialist)
-- [ ] Consider Freestar (case study: 2000% revenue increase for online solitaire site)
+### Domain Strategy
 
-**Content & SEO Expansion**
-- [ ] Variant pages: Baker's Game, Eight Off, Double FreeCell, SeaHaven Towers
-- [ ] Deep strategy guides (long-tail keywords)
-- [ ] Glossary page (tableau, foundation, stockpile, cascade)
-- [ ] Blog: original research, surveys (Solitaire Bliss model for earning press backlinks)
-- [ ] Embeddable FreeCell widget for education/senior-care sites (backlink engine)
+**Current:** playfreecellonline.com — excellent for FreeCell, too narrow for multi-game hub.
 
-**UX Enhancements**
-- [ ] Keyboard shortcuts (spacebar flip, 'S' quick-move, 'A' undo)
-- [ ] Left-hand mode
-- [ ] Difficulty levels (Easy/Medium/Hard shuffles)
-- [ ] XP/leveling system (long-term progression)
+**Hub domain:** `solitairestack.com` (purchased)
 
----
+**Core network (4 domains):**
+- **solitairestack.com** — hub, all games, blog, embeds
+- **playfreecellonline.com** — FreeCell specialist (live, ~1.8M searches/mo)
+- **playspidersolitaireonline.com** — Spider specialist (~1M searches/mo per Semrush). Purchased. Domain matches the actual high-intent query "spider solitaire."
+- **playklondikeonline.com** — Klondike specialist (~500K searches/mo). Purchased.
 
-### Phase 4 — Expansion 🌐
-**Goal**: Become a multi-game destination.
+Note: Spider Solitaire has stronger keyword data than Klondike. Semrush shows ~1,000,000 US monthly searches for "spider solitaire" vs ~30K-500K for "klondike solitaire." Spider is the #1 expansion priority by search volume.
 
-- [ ] Additional solitaire variants (Spider, Klondike, Pyramid, etc.)
-- [ ] Cross-game navigation and internal linking (increases pages/session)
-- [ ] Mobile apps via PWA → Capacitor wrapper (if app store presence needed)
-- [ ] Competitive tournaments (seasonal events)
-- [ ] Social features (share game numbers, challenge friends)
-- [ ] "Cognitive acuity" angle (partner with researchers à la solitaired.com + UCLA)
+### Content Architecture
 
----
+**Tier 1: Game Pages (highest value — users play, ads serve)**
+Each game variant gets:
+- Playable game page (above the fold, instant play)
+- SEO-optimized title/description targeting "[game] online free"
+- Structured data (WebApplication, Game)
+- Cross-links to related content and other games
 
-## 6. SEO Strategy
+**Tier 2: SEO Content Pages (mid-tail keywords, internal linking)**
+Hub-and-spoke model. Each game anchors a cluster of content:
 
-### Domain Advantage
-**playfreecellonline.com** is an exact-match domain for high-intent transactional queries. This provides a significant ranking boost for "play freecell online" and related terms.
-
-### On-Page Optimization
-- H1 targeting: "Play FreeCell Online for Free"
-- First paragraph: "free, no download, no signup required"
-- Game embedded above the fold
-- Structured content below: rules, strategy, FAQ
-
-### Content Architecture (Hub & Spoke)
 ```
-playfreecellonline.com (hub)
-├── /how-to-play — Rules & tutorial
-├── /strategy — Tips & advanced strategy
-├── /variants/bakers-game — Baker's Game
-├── /variants/double-freecell — Double FreeCell
-├── /variants/eight-off — Eight Off
-├── /variants/seahaven-towers — SeaHaven Towers
-├── /glossary — Card game terminology
-├── /daily-challenge — Daily challenge landing
-├── /leaderboard — Competitive rankings
-├── /blog — Original content, surveys, research
-└── /faq — Structured FAQ (JSON-LD)
+/freecell (hub)
+  /how-to-play
+  /strategy
+  /tips
+  /history
+  /glossary
+  /winning-deals
+  /statistics
+  /solver
+  /deals
+  /faq
+  /freecell-vs-spider
+  /freecell-vs-klondike        <-- BUILT
+  /freecell-for-beginners      <-- BUILT
+  /freecell-world-records      <-- NOT BUILT
+  /daily-freecell              <-- BUILT (daily challenge landing)
+
+/klondike (hub)                <-- NOT BUILT
+  /klondike/how-to-play
+  /klondike/strategy
+  /klondike/history
+  /klondike/tips
+
+/spider (hub — gameplay + guides built)
+  /spider/how-to-play          <-- BUILT
+  /spider/strategy             <-- BUILT
 ```
 
-### Keyword Targeting (3 Layers)
-1. **Head terms**: "freecell", "freecell online", "freecell solitaire"
-2. **Mid-tail intent**: "no download", "no signup", "winnable deals", "daily challenge", "leaderboard"
-3. **Long-tail educational**: rules, strategy, variants, history, comparisons ("freecell vs spider solitaire")
+**Tier 3: Blog (long-tail traffic, ongoing)**
+Following Holger's playbook — write about anything that drives traffic:
+- Card game strategy guides
+- "Best games to play on your lunch break"
+- Data journalism ("Most popular card games by state")
+- Seasonal content ("Holiday games to play with family")
+- Cognitive health angle (Solitaired's UCLA partnership model)
+- Trending topics with tangential card game angles
+- Each blog post links back to game pages
 
-### Schema Markup
-- FAQ JSON-LD on strategy/rules pages
-- HowTo markup on tutorial content
-- Game structured data where applicable
+**Tier 4: Programmatic Pages (massive keyword surface)**
+- /game/[number] routes (already built — 1-999,999,999 possible)
+- /deals collections (already built)
+- Potential: /daily/[date] archive pages
 
-### Link Building
-1. Original surveys/research → press coverage → backlinks (Solitaire Bliss model)
-2. Embeddable HTML5 widget → education/senior sites
-3. Broken link building from competitor backlink analysis
-4. Variant pages for niche long-tail rankings
+### Keyword Targeting
+
+| Layer | Examples | Status |
+|-------|----------|--------|
+| Head terms | "freecell", "freecell online", "solitaire" | Targeting via domain + game pages |
+| Mid-tail | "freecell no download", "daily freecell", "freecell solver" | Mostly covered |
+| Long-tail | "freecell game 11982", "is every freecell winnable", "freecell vs klondike" | Partially covered |
+| Blog long-tail | "best card games for seniors", "games to play at work" | NOT STARTED |
+| Multi-language | All of the above in DE, ES, FR, IT, PT | NOT STARTED |
+
+### Link Building Strategy
+
+| Method | Effort | Impact | Status |
+|--------|--------|--------|--------|
+| Embed/white-label (free game for other sites, backlink required) | Medium | High | NOT BUILT |
+| Original surveys/research (press coverage, Solitaire Bliss model) | High | Very High | NOT STARTED |
+| Broken link building (from competitor backlink analysis) | Medium | Medium | NOT STARTED |
+| Game directories / solitaire listings | Low | Low-Medium | NOT STARTED |
+| Reddit/forums (r/solitaire, r/cardgames) | Low | Low | NOT STARTED |
+| Cognitive health / education partnerships (Solitaired + UCLA model) | High | Very High | NOT STARTED |
+
+### Schema Markup Checklist
+- [x] FAQPage on strategy, FAQ, statistics, solver, deals, freecell-vs-spider
+- [x] WebApplication on root layout
+- [x] HowTo on how-to-play page
+- [ ] Game on each game variant page
+- [ ] BlogPosting on blog posts
+- [ ] BreadcrumbList on all pages
+- [x] Organization on about page
 
 ---
 
-## 7. Monetization Architecture
+## 5. Expansion Roadmap
 
-### Ad Strategy (Phased)
-| Phase | Approach | Est. eCPM |
-|-------|----------|-----------|
-| Launch | Google AdSense (banners + natural-break interstitials) | $1.20–$3.50 |
-| Growth | Header bidding + AdinPlay (HTML5 specialist) | $2.50–$8.00 |
-| Scale | Rewarded video (opt-in) + premium tier | $10.00–$30.00 (video) |
+### Phase 1: SEO + Content Blitz (March 2026 — NOW)
+**Goal:** Maximize organic traffic from existing FreeCell property before expanding.
 
-### Ad Placement Philosophy
-- **Respect the game**: Ads flanking the board, static footer — never overlaying gameplay
-- **Natural breaks only**: Interstitials between games (post-win or pre-new-deal), never mid-game
-- **Performance first**: Lazy-load ads, don't let ad-tech bloat kill the "buttery smooth" promise
+| Task | Priority | Status |
+|------|----------|--------|
+| /freecell-vs-klondike comparison page | High | BUILT |
+| /freecell-for-beginners simplified guide | Medium | BUILT |
+| /daily-freecell landing page (SEO for "daily freecell") | Medium | BUILT |
+| /about page (trust signal, personal story) | Medium | BUILT |
+| /freecell-world-records fun facts page | Low | NOT BUILT |
+| /spider/how-to-play content page | High | BUILT |
+| /spider/strategy content page | High | BUILT |
+| HowTo schema on how-to-play | Medium | DONE |
+| BreadcrumbList schema on all pages | Medium | IN PROGRESS |
+| Submit sitemap to Google Search Console | High | VERIFY |
+| Verify AdSense is actually earning | High | JONATHAN |
+| Check GA4 for traffic baseline | High | JONATHAN |
+| Ad layout optimization (sidebar on desktop) | High | NOT DONE |
+| Blog engine (/blog with MDX or similar) | High | NOT BUILT |
+| First 5-10 blog posts | High | NOT WRITTEN |
 
-### Premium Subscription
-- $2.99/month or $19.99/year
-- Ad-free + exclusive cosmetics + daily challenge archive + advanced analytics
-- NOT pay-to-win — core gameplay identical for free users
+### Phase 2: Spider Solitaire Property (April 2026)
+**Goal:** Capture the #1 search volume opportunity (~1M US monthly searches for "spider solitaire").
 
-### Revenue Projections (Conservative)
-| MAU | Ad Revenue/mo | Premium Revenue/mo | Total |
-|-----|--------------|-------------------|-------|
-| 10K | $500–$2,000 | $150–$500 | $650–$2,500 |
-| 50K | $2,500–$15,000 | $750–$2,500 | $3,250–$17,500 |
-| 100K | $5,000–$30,000 | $1,500–$5,000 | $6,500–$35,000 |
-| 500K | $25,000–$150,000 | $7,500–$25,000 | $32,500–$175,000 |
+Spider already has a working engine on playfreecellonline.com. This phase is about deploying it as a standalone property with full SEO treatment.
+
+| Task | Priority |
+|------|----------|
+| Deploy Spider engine to playspidersolitaireonline.com | Critical |
+| /how-to-play SEO page (3000+ words) | High |
+| /strategy SEO page | High |
+| /spider-vs-freecell comparison page | High |
+| /tips page | Medium |
+| Daily challenge for Spider | High |
+| Spider-specific achievements | Medium |
+| Full structured data (WebApplication, FAQPage, Game) | High |
+| Dynamic OG images + sitemap | High |
+| AdSense integration | High |
+| Cross-link to solitairestack.com + playfreecellonline.com | High |
+
+### Phase 3: Klondike + Blog (May 2026)
+**Goal:** Add the #1 solitaire game by name + start the content marketing engine.
+
+| Task | Priority |
+|------|----------|
+| KlondikeScene.ts (Phaser engine — draw 1, draw 3) | Critical |
+| Scoring system (Vegas + Standard) | High |
+| Mobile-responsive layout | Critical |
+| Deploy to playklondikeonline.com | Critical |
+| /how-to-play, /strategy, /history SEO pages | High |
+| /freecell-vs-klondike comparison | High |
+| Daily challenge for Klondike | High |
+| Klondike achievements | Medium |
+| solitairestack.com hub becomes game picker homepage | Critical |
+| Game selector/picker component | High |
+| Cross-game internal linking across all 4 domains | High |
+
+### Phase 4: Blog + Embed (May-June 2026)
+**Goal:** Content marketing engine + viral backlink distribution.
+
+| Task | Priority |
+|------|----------|
+| Blog engine with MDX, categories, tags, RSS | High |
+| 10+ blog posts (agent-generated, human-reviewed) | High |
+| Embed/white-label system (/embed/[game]) | High |
+| Embed code generator page | Medium |
+| Attribution/backlink requirement on embeds | High |
+| Email capture ("daily challenge in your inbox") | Medium |
+| More solitaire variants (Pyramid, TriPeaks, Yukon) | Medium |
+
+### Phase 5: Multi-Language (July 2026)
+**Goal:** 6x market expansion.
+
+| Task | Priority |
+|------|----------|
+| next-intl setup + string extraction | Critical |
+| Translate to DE, ES, FR, IT, PT | High |
+| hreflang tags + locale routing | High |
+| Translate top SEO pages per game per domain | High |
+
+### Phase 6: Apps + Scale (August-September 2026)
+**Goal:** App store presence + premium ad network.
+
+| Task | Priority |
+|------|----------|
+| More variants (Pyramid, TriPeaks, Canfield — 10+ total) | Medium |
+| TWA wrapper for Play Store | Medium |
+| Desktop app (Tauri or ToDesktop) | Low |
+| Apply to Freestar (need 1K+ daily users) | Critical |
+| A/B test ad placements | High |
+| Video ad player integration | Medium |
 
 ---
 
-## 8. Design Principles
+## 6. Tech Stack
+
+| Layer | Choice | Status |
+|-------|--------|--------|
+| Framework | Next.js 16.1.6 | Live |
+| Game Engine | Phaser 3.90 (Canvas/WebGL) | Live |
+| Hosting | Vercel (edge network) | Live |
+| Styling | Tailwind CSS | Live |
+| Animation | Framer Motion (UI), Phaser tweens (game) | Live |
+| Icons | Lucide React | Live |
+| PWA | Service Workers + Cache Storage API | Live |
+| Analytics | GA4 (G-988ZBJSKVJ) | Live |
+| Ads | Google AdSense (ca-pub-3083538874906149) | Live |
+| Solver | Custom A* (TypeScript, Web Worker) | Live |
+| Auth/DB | Supabase (planned) | Not started |
+| i18n | next-intl (planned) | Not started |
+| Blog | MDX or Ghost CMS (planned) | Not started |
+| Ads (Phase 3+) | Freestar header bidding | Planned |
+
+---
+
+## 7. Competitive Landscape
+
+### Market Leaders
+| Competitor | Monthly Traffic | Avg Session | Revenue Model | Our Edge |
+|-----------|----------------|-------------|---------------|----------|
+| solitaired.com | ~23.9M | 19:06 | Google DFP ads, UCLA partnership | We have A* solver, they don't |
+| cardgames.io | ~19.4M | 16:15 | Ads, multi-game breadth | Better animations, modern stack |
+| online-solitaire.com | ~1M+ | Long | Freestar, 320 variants, network | Same model, better tech |
+| worldofsolitaire.com | ~7.8M | 2:13 | Legacy authority | Their sessions are short — low engagement |
+| solitairebliss.com | ~4.5M | 16:54 | Ads, PR-driven backlinks | We can replicate their survey/PR strategy |
+| freecell.net | Smaller | Long | Purist community, charity | We have better UX + more features |
+
+### Our Unique Differentiators
+1. **A* solver with post-game optimal analysis** — no competitor has this
+2. **Ghost mode** — watch the AI solve your game
+3. **Phaser canvas engine** — 60fps vs DOM-based competitors at 20-30fps
+4. **Next.js 16 on Vercel** — edge rendering, superior SEO vs React on Heroku
+5. **AI-powered development** — ship features 10x faster than solo devs
+6. **Spring physics drag** — custom physics vs competitors' GSAP tweens
+
+---
+
+## 8. Key Metrics
+
+### Track Daily
+- GA4: Users, sessions, pageviews, bounce rate, session duration
+- Google Search Console: Impressions, clicks, avg position, indexed pages
+- AdSense: RPM, impressions, estimated earnings
+- Game metrics: Games started, games won, avg session length
+
+### Milestones
+| Milestone | Target | Unlocks |
+|-----------|--------|---------|
+| 100 daily users | March-April 2026 | First real AdSense revenue |
+| 500 daily users | May 2026 | Meaningful RPM data |
+| 1,000 daily users | June 2026 | Apply to Freestar |
+| 3,000 daily users | August 2026 | $3K/month territory |
+| 10,000 daily users | Q4 2026 | $10K/month territory |
+
+---
+
+## 9. Blocked (Needs Jonathan)
+
+| Item | Status | Impact |
+|------|--------|--------|
+| Custom domain DNS (playfreecellonline.com -> Vercel) | Pending | SEO authority |
+| Hub domain decision (solitairestack.com) | Done | Multi-game expansion |
+| Register spoke domains | Done | playspidersolitaireonline.com + playklondikeonline.com |
+| Wire all purchased domains to Vercel + DNS | Pending | Blocks deployment of Spider/Klondike properties |
+| AdSense dashboard check — are ads actually earning? | Pending | Revenue baseline |
+| GA4 dashboard check — what's our traffic? | Pending | Strategy baseline |
+| Google Search Console — sitemap submitted? Pages indexed? | Pending | SEO foundation |
+| Sentry DSN for error tracking | Pending | Stability |
+| About page content (personal story / trust signal) | Pending | SEO + trust |
+
+---
+
+## 10. Design Principles
 
 1. **Board-first**: The game is always the hero. Everything else is secondary.
 2. **Instant play**: Zero friction to first card move. No forced signup, no tutorial walls.
-3. **Buttery smooth**: 60fps or nothing. Performance is a feature.
+3. **60fps or nothing**: Performance is a feature. Never let ad-tech bloat kill it.
 4. **Addictive by design**: Daily challenges, streaks, achievements — every session plants a seed for the next.
-5. **Respectful monetization**: Ads exist but never ruin the experience. Premium is a choice, not a requirement.
-6. **Mobile-native**: Touch-first design, PWA installable, works offline.
-7. **SEO as product**: Content pages aren't afterthoughts — they're acquisition engines.
+5. **SEO as product**: Content pages aren't afterthoughts — they're acquisition engines.
+6. **Ads respect the game**: Flanking the board, natural breaks only. Never overlay gameplay.
+7. **Network thinking**: Every feature decision evaluated against the multi-property endgame.
+8. **Ship > Perfect**: AI-powered velocity means we iterate fast. Get it live, then polish.
 
 ---
 
-## 9. Open Questions
+## 11. Risk Register
 
-- [ ] GitHub repo creation and CI/CD setup
-- [ ] Phaser.js + Next.js integration pattern (iframe? overlay? portal?)
-- [ ] fc-solve WASM compilation — need to test build pipeline
-- [ ] Card asset source (custom design? licensed? open-source?)
-- [ ] Analytics: GA4 + custom events for game metrics?
-- [ ] A/B testing framework for ad placements?
-- [ ] Legal: Privacy policy, cookie consent (GDPR), terms of service
-- [ ] Domain DNS → Vercel configuration
+| Risk | Likelihood | Impact | Mitigation |
+|------|-----------|--------|------------|
+| Google algorithm change tanks SEO | Medium | High | Diversify traffic (social, email, apps, embeds) |
+| AdSense account suspension | Low | Critical | Follow policies strictly, no click fraud |
+| AI-generated content flagged | Medium | Medium | Human review + edit pass on all content |
+| Competitor copies solver feature | Low | Low | Speed advantage, keep shipping |
+| No traffic growth despite content | Medium | High | Analyze Search Console, adjust keywords, try paid acquisition |
+| Freestar rejects our application | Low | Medium | Alternative: Mediavine, Ezoic, Raptive |
+| Scope creep / building too much | Medium | Medium | Stick to phases, prioritize traffic-driving work |
 
 ---
 
-*This is a living document. Each section will be expanded as we move from planning to execution.*
+## 12. Immediate Next Actions (This Week)
+
+1. Convert `solitairestack.com` root into a true hub homepage and validate the `/freecell` play route
+2. Wire `solitairestack.com` into its own Vercel project and QA canonicals, robots, and sitemap
+3. Finish BreadcrumbList coverage on the remaining important pages
+4. Optimize desktop layout for ad sidebar (game left, 300px ad column right)
+5. Jonathan: Check AdSense + GA4 dashboards for baseline numbers
+6. Jonathan: Verify Google Search Console setup + indexing status
+7. Start blog engine architecture
+8. Draft the next 5-10 evergreen content pages from the FreeCell and Spider queues
+
+---
+
+*This is a living document. Updated as we ship and learn. The game is live — now we need traffic.*

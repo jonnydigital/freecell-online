@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { siteConfig } from "@/lib/siteConfig";
 import ContentLayout from "../../components/ContentLayout";
 
 export const metadata: Metadata = {
@@ -208,7 +209,7 @@ export default function PrivacyPage() {
                   04. Contact
                 </h3>
                 <p className="text-[#444444] leading-relaxed">
-                  Questions? Reach out at privacy@playfreecellonline.com.
+                  Questions? Reach out at {siteConfig.privacyEmail}.
                 </p>
               </div>
             </div>

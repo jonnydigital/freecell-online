@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { absoluteUrl, siteConfig } from '@/lib/siteConfig';
 import GamePage from './GamePage';
 
 interface Props {
@@ -26,8 +27,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title,
       description,
-      url: `https://playfreecellonline.com/game/${gameNum}`,
-      siteName: 'PlayFreeCellOnline.com',
+      url: absoluteUrl(`/game/${gameNum}`),
+      siteName: siteConfig.siteName,
       type: 'website',
     },
     twitter: {

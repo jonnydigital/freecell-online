@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { absoluteUrl, siteConfig } from '@/lib/siteConfig';
 import BakersGamePage from './BakersGamePage';
 
 export const metadata: Metadata = {
@@ -19,8 +20,8 @@ export const metadata: Metadata = {
     title: "Baker's Game — Play Online Free",
     description:
       "Baker's Game is the same-suit ancestor of FreeCell. Harder, more strategic, and deeply satisfying. Play free online.",
-    url: 'https://playfreecellonline.com/bakers-game',
-    siteName: 'PlayFreeCellOnline.com',
+    url: absoluteUrl('/bakers-game'),
+    siteName: siteConfig.siteName,
     type: 'website',
   },
   robots: {
@@ -30,8 +31,21 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl('/') },
+      { "@type": "ListItem", position: 2, name: "Baker's Game", item: absoluteUrl('/bakers-game') },
+    ],
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <BakersGamePage />
       <article className="max-w-3xl mx-auto px-6 py-12 text-white/80 bg-[#072907]">
         <h2 className="text-3xl font-bold text-[#D4AF37] mb-6">

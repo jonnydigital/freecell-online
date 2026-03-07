@@ -9,6 +9,7 @@ import { getRandomSolvableGame } from '../lib/solvableDeals';
 import { loadStreakData, updateBestStreak } from '../lib/streakStorage';
 import { soundManager } from '../lib/sounds';
 import { loadSettings } from '../lib/storage';
+import { absoluteUrl } from '@/lib/siteConfig';
 
 type Phase = 'playing' | 'won' | 'over';
 
@@ -246,7 +247,7 @@ export default function StreakGameShell() {
 
   const handleShare = async () => {
     const streakText = currentStreak;
-    const shareText = `I solved ${streakText} FreeCell game${streakText !== 1 ? 's' : ''} in a row in Puzzle Streak mode! 🔥\nCan you beat my streak? https://playfreecellonline.com/streak`;
+    const shareText = `I solved ${streakText} FreeCell game${streakText !== 1 ? 's' : ''} in a row in Puzzle Streak mode! 🔥\nCan you beat my streak? ${absoluteUrl('/streak')}`;
 
     if (navigator.share) {
       try {

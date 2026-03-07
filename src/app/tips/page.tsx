@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import AdUnit from "../../components/AdUnit";
 import ContentLayout from "../../components/ContentLayout";
 
@@ -23,8 +24,8 @@ export const metadata: Metadata = {
     title: "25 FreeCell Tips & Tricks | Quick Ways to Win More Games",
     description:
       "25 quick, actionable FreeCell tips to boost your win rate. Scannable advice for beginners and experienced players. Start winning more games today.",
-    url: "https://playfreecellonline.com/tips",
-    siteName: "PlayFreeCellOnline.com",
+    url: absoluteUrl('/tips'),
+    siteName: siteConfig.siteName,
     type: "article",
   },
 };
@@ -263,6 +264,66 @@ function TipCard({
    ══════════════════════════════════════════════════════════════ */
 
 export default function TipsPage() {
+  const howToJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name: "How to Improve at FreeCell Solitaire",
+    description:
+      "25 actionable tips and tricks to improve your FreeCell win rate, from first-move strategy to endgame technique.",
+    step: [
+      {
+        "@type": "HowToStep",
+        name: "Scan the entire board before your first move",
+        text: "Spend 30 seconds studying the layout before touching a card. Find where the Aces and 2s are buried, identify which columns are most tangled, and form a rough plan.",
+      },
+      {
+        "@type": "HowToStep",
+        name: "Locate all four Aces immediately",
+        text: "Your first priority should be knowing exactly where every Ace is. An Ace buried under six cards needs to be uncovered early. This single habit shapes your entire opening strategy.",
+      },
+      {
+        "@type": "HowToStep",
+        name: "Play to the foundations whenever possible",
+        text: "Every card on a foundation is a card you never need to think about again. Move Aces, 2s, and next-in-sequence cards to the foundation immediately.",
+      },
+      {
+        "@type": "HowToStep",
+        name: "Keep free cells empty as long as possible",
+        text: "Empty free cells are your most valuable resource. Each empty cell gives you one more card of movement capacity. Filling all four cells early is the #1 cause of lost games.",
+      },
+      {
+        "@type": "HowToStep",
+        name: "Learn the supermove formula",
+        text: "You can move (1 + empty free cells) × 2^(empty columns) cards at once. This formula determines whether a multi-card move is possible. Memorize it.",
+      },
+      {
+        "@type": "HowToStep",
+        name: "Never fill the last free cell without a guaranteed path",
+        text: "Your last empty free cell is your lifeline. Using it without a clear plan to immediately free it usually means the game is over.",
+      },
+      {
+        "@type": "HowToStep",
+        name: "Empty columns are more valuable than free cells",
+        text: "An empty column can hold an entire ordered sequence, while a free cell holds only one card. Empty columns also double your supermove capacity. Prioritize creating and protecting them.",
+      },
+      {
+        "@type": "HowToStep",
+        name: "Fill empty columns with Kings",
+        text: "Kings can't be placed on any other card, so an empty column is their natural home. A King-led sequence in its own column is working toward a complete foundation run.",
+      },
+      {
+        "@type": "HowToStep",
+        name: "Build long descending sequences in the tableau",
+        text: "A well-ordered column of alternating-color cards from King down to a low card is extremely powerful. Work toward consolidating partial sequences into longer ones.",
+      },
+      {
+        "@type": "HowToStep",
+        name: "Track your win rate to measure improvement",
+        text: "Your win rate is the most honest measure of your skill. Beginners typically start around 30-50% and can reach 70-80% within weeks of deliberate practice.",
+      },
+    ],
+  };
+
   const jsonLd = [
     {
       "@context": "https://schema.org",
@@ -273,15 +334,15 @@ export default function TipsPage() {
         "25 actionable FreeCell tips and tricks to boost your win rate. Quick, scannable advice covering board scanning, free cell management, column strategy, and endgame technique.",
       author: {
         "@type": "Organization",
-        name: "PlayFreeCellOnline.com",
+        name: siteConfig.siteName,
       },
       publisher: {
         "@type": "Organization",
-        name: "PlayFreeCellOnline.com",
+        name: siteConfig.siteName,
       },
       mainEntityOfPage: {
         "@type": "WebPage",
-        "@id": "https://playfreecellonline.com/tips",
+        "@id": absoluteUrl('/tips'),
       },
     },
     {
@@ -298,13 +359,30 @@ export default function TipsPage() {
     },
   ];
 
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl('/') },
+      { "@type": "ListItem", position: 2, name: "Tips & Tricks", item: absoluteUrl('/tips') },
+    ],
+  };
+
   let tipNumber = 0;
 
   return (
     <ContentLayout variant="dark">
       <script
         type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
 
       {/* ── Hero ── */}

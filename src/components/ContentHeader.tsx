@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { siteConfig } from "@/lib/siteConfig";
 
 interface ContentHeaderProps {
   variant?: "light" | "dark";
@@ -6,6 +7,22 @@ interface ContentHeaderProps {
 
 export default function ContentHeader({ variant = "dark" }: ContentHeaderProps) {
   const isDark = variant === "dark";
+  const navLinks =
+    siteConfig.key === "solitairestack"
+      ? [
+          { href: siteConfig.primaryGamePath, label: "FreeCell" },
+          { href: "/spider", label: "Spider" },
+          { href: "/solitaire-types", label: "Games" },
+          { href: "/freecell-vs-klondike", label: "Compare" },
+          { href: "/freecell-for-beginners", label: "Guides" },
+        ]
+      : [
+          { href: "/how-to-play", label: "Rules" },
+          { href: "/strategy", label: "Strategy" },
+          { href: "/tips", label: "Tips" },
+          { href: "/faq", label: "FAQ" },
+          { href: "/glossary", label: "Glossary" },
+        ];
 
   return (
     <nav
@@ -21,7 +38,7 @@ export default function ContentHeader({ variant = "dark" }: ContentHeaderProps) 
           isDark ? "text-white hover:text-[#D4AF37]" : "text-gray-900 hover:text-[#D4AF37]"
         }`}
       >
-        Freecell<span className="text-[#D4AF37]">.</span>
+        {siteConfig.footerWordmark}<span className="text-[#D4AF37]">.</span>
       </Link>
 
       <div
@@ -29,18 +46,22 @@ export default function ContentHeader({ variant = "dark" }: ContentHeaderProps) 
           isDark ? "text-white/60" : "text-gray-500"
         }`}
       >
-        <Link href="/how-to-play" className={isDark ? "hover:text-white/80 transition-colors" : "hover:text-gray-700 transition-colors"}>Rules</Link>
-        <Link href="/strategy" className={isDark ? "hover:text-white/80 transition-colors" : "hover:text-gray-700 transition-colors"}>Strategy</Link>
-        <Link href="/tips" className={isDark ? "hover:text-white/80 transition-colors" : "hover:text-gray-700 transition-colors"}>Tips</Link>
-        <Link href="/faq" className={isDark ? "hover:text-white/80 transition-colors" : "hover:text-gray-700 transition-colors"}>FAQ</Link>
-        <Link href="/glossary" className={isDark ? "hover:text-white/80 transition-colors" : "hover:text-gray-700 transition-colors"}>Glossary</Link>
+        {navLinks.map((link) => (
+          <Link
+            key={link.href}
+            href={link.href}
+            className={isDark ? "hover:text-white/80 transition-colors" : "hover:text-gray-700 transition-colors"}
+          >
+            {link.label}
+          </Link>
+        ))}
       </div>
 
       <Link
-        href="/"
+        href={siteConfig.primaryGamePath}
         className="px-4 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider bg-[#D4AF37] hover:bg-[#c9a432] text-[#1a1a0a] transition-colors"
       >
-        Play Now
+        Play FreeCell
       </Link>
     </nav>
   );

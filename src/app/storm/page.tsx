@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { absoluteUrl, siteConfig } from '@/lib/siteConfig';
 import StormPage from './StormPage';
 
 export const metadata: Metadata = {
@@ -17,8 +18,8 @@ export const metadata: Metadata = {
     title: 'Puzzle Storm — FreeCell Online',
     description:
       'How many FreeCell games can you solve in 3 minutes? Test your speed in Puzzle Storm mode.',
-    url: 'https://playfreecellonline.com/storm',
-    siteName: 'PlayFreeCellOnline.com',
+    url: absoluteUrl('/storm'),
+    siteName: siteConfig.siteName,
     type: 'website',
   },
   robots: {

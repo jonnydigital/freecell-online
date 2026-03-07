@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { absoluteUrl, siteConfig } from '@/lib/siteConfig';
 import StreakPage from './StreakPage';
 
 export const metadata: Metadata = {
@@ -17,8 +18,8 @@ export const metadata: Metadata = {
     title: 'Puzzle Streak — FreeCell Online',
     description:
       'How many FreeCell games can you win in a row? Test your skill in Puzzle Streak mode.',
-    url: 'https://playfreecellonline.com/streak',
-    siteName: 'PlayFreeCellOnline.com',
+    url: absoluteUrl('/streak'),
+    siteName: siteConfig.siteName,
     type: 'website',
   },
   robots: {

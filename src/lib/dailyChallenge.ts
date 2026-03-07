@@ -5,6 +5,8 @@
  * tracks completion, streaks, and sharing.
  */
 
+import { siteConfig } from './siteConfig';
+
 const DAILY_CHALLENGE_KEY = 'freecell_daily_challenge';
 
 export interface DailyCompletion {
@@ -134,7 +136,7 @@ function formatTime(seconds: number): string {
 /** Generate share text for a daily challenge completion */
 export function getShareText(dateStr: string, moves: number, time: number): string {
   const seed = getDailySeed(dateStr);
-  return `I solved today's FreeCell Daily Challenge #${seed} in ${moves} moves / ${formatTime(time)}! 🃏\n\nhttps://playfreecellonline.com`;
+  return `I solved today's FreeCell Daily Challenge #${seed} in ${moves} moves / ${formatTime(time)}! 🃏\n\n${siteConfig.url}`;
 }
 
 /** Get all days in a month as date strings */

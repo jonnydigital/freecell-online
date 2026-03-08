@@ -2,10 +2,16 @@ import * as Phaser from 'phaser';
 import { SpiderEngine, SpiderLocation } from '../engine/SpiderEngine';
 import { Card, Suit, Rank, SUIT_SYMBOLS } from '../engine/Card';
 import { gameBridge } from './GameBridge';
-import { getCardAssetKey, getAllCardAssets } from './CardAssets';
+import { getCardAssetKey, getCardBackAssetKey, getAllCardAssets } from './CardAssets';
 import { soundManager } from '../lib/sounds';
 import { GameSettings, loadSettings } from '../lib/storage';
 import { ThemeDefinition, themes, getThemeById, hexToInt } from '../lib/themes';
+import {
+  CardStyleDefinition,
+  DEFAULT_CARD_STYLE_ID,
+  CARD_STYLE_STORAGE_KEY,
+  getCardStyleById,
+} from '../lib/cardStyles';
 
 const CARD_RATIO = 1.4;
 const MIN_CASCADE_OVERLAP_PX = 24;
@@ -24,6 +30,7 @@ export class SpiderScene extends Phaser.Scene {
   private gameNumber: number = 1;
   private settings!: GameSettings;
   private currentTheme: ThemeDefinition = themes[0];
+  private currentCardStyle: CardStyleDefinition = getCardStyleById(DEFAULT_CARD_STYLE_ID);
 
   // Layout
   private cardWidth: number = 0;
@@ -47,6 +54,7 @@ export class SpiderScene extends Phaser.Scene {
   private dragSource: 'touch' | 'mouse' | null = null;
   private activeDragVelocities: { x: number; y: number }[] = [];
   private activeDragAngleVelocities: number[] = [];
+  private lastDragPointerPosition: { x: number; y: number } | null = null;
   private settleTargets: { x: number; y: number }[] = [];
   private isSettlingDrag: boolean = false;
   private pendingSettledMove: { from: SpiderLocation; to: SpiderLocation } | null = null;
@@ -56,6 +64,10 @@ export class SpiderScene extends Phaser.Scene {
   private bridgeUnsubscribers: Array<() => void> = [];
   private scaleResizeHandler: ((gameSize: Phaser.Structs.Size) => void) | null = null;
   private isTouchDevice: boolean = false;
+
+  // Deal animation guard (prevents resize from killing deal tweens)
+  private isDealAnimating: boolean = false;
+  private pendingResize: boolean = false;
 
   // Visuals
   private vignette: Phaser.GameObjects.Graphics | null = null;
@@ -129,6 +141,10 @@ export class SpiderScene extends Phaser.Scene {
     if (storedThemeId) {
       this.currentTheme = getThemeById(storedThemeId);
     }
+    const storedCardStyleId = localStorage.getItem(CARD_STYLE_STORAGE_KEY);
+    if (storedCardStyleId) {
+      this.currentCardStyle = getCardStyleById(storedCardStyleId);
+    }
     this.cameras.main.setBackgroundColor(hexToInt(this.currentTheme.feltColor));
 
     this.isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
@@ -141,6 +157,11 @@ export class SpiderScene extends Phaser.Scene {
     this.dealCards(true);
 
     this.scaleResizeHandler = () => {
+      // Defer resize during deal animation to prevent killing deal tweens
+      if (this.isDealAnimating) {
+        this.pendingResize = true;
+        return;
+      }
       this.calculateLayout();
       this.invalidateOverlapCache();
       this.refreshCanvasMetrics();
@@ -160,6 +181,27 @@ export class SpiderScene extends Phaser.Scene {
     });
     this.bridgeUnsubscribers.push(unsubNewGame);
 
+    const unsubThemeChanged = gameBridge.on('themeChanged', (themeData: unknown) => {
+      if (
+        themeData &&
+        typeof themeData === 'object' &&
+        'theme' in themeData &&
+        'cardStyle' in themeData
+      ) {
+        const appearance = themeData as { theme: ThemeDefinition; cardStyle: CardStyleDefinition };
+        this.currentTheme = appearance.theme;
+        this.currentCardStyle = appearance.cardStyle;
+      } else {
+        this.currentTheme = themeData as ThemeDefinition;
+      }
+      this.cameras.main.setBackgroundColor(hexToInt(this.currentTheme.feltColor));
+      this.drawBackgroundEffects();
+      this.rebuildBoard();
+      this.recreateAllCardSprites();
+      this.repositionAllCards();
+    });
+    this.bridgeUnsubscribers.push(unsubThemeChanged);
+
     if (this.isTouchDevice) {
       this.setupTouchInput();
     } else {
@@ -178,6 +220,8 @@ export class SpiderScene extends Phaser.Scene {
     this.isDragging = false;
     this.isSettlingDrag = false;
     this.pendingSettledMove = null;
+    this.isDealAnimating = false;
+    this.pendingResize = false;
     this.invalidateOverlapCache();
 
     // Create new engine with current difficulty
@@ -192,6 +236,8 @@ export class SpiderScene extends Phaser.Scene {
   }
 
   private shutdown(): void {
+    this.isDealAnimating = false;
+    this.pendingResize = false;
     if (this.scaleResizeHandler) this.scale.off('resize', this.scaleResizeHandler, this);
     for (const unsub of this.bridgeUnsubscribers) {
       unsub();
@@ -326,89 +372,95 @@ export class SpiderScene extends Phaser.Scene {
     }
   }
 
-  private getCardTextureKey(card: Card): string {
-    return card.isFaceUp ? getCardAssetKey(card.suit, card.rank) : 'card_back_premium';
+  private getCardTextureKey(card: Card): string | null {
+    if (!card.isFaceUp) {
+      return getCardBackAssetKey(this.currentCardStyle.id);
+    }
+
+    if (this.currentCardStyle.renderer === 'image') {
+      return getCardAssetKey(card.suit, card.rank, this.currentCardStyle.id);
+    }
+
+    return null;
   }
 
   private createCardSprite(card: Card, x: number, y: number): CardSprite {
     const container = this.add.container(x, y) as CardSprite;
     container.setSize(this.cardWidth, this.cardHeight);
     container.cardData = card;
-
-    if (!card.isFaceUp) {
-      const base = this.add.graphics();
-      // Premium dark blue background
-      base.fillStyle(0x1e293b, 1);
-      base.fillRoundedRect(0, 0, this.cardWidth, this.cardHeight, 8);
-      base.lineStyle(2, 0x0f172a, 0.8);
-      base.strokeRoundedRect(0, 0, this.cardWidth, this.cardHeight, 8);
-
-      // Procedural minimal geometric pattern (diamonds)
-      const pattern = this.add.graphics();
-      pattern.lineStyle(2, 0x334155, 0.6); // Subtle slate-blue lines
-
-      const cx = this.cardWidth / 2;
-      const cy = this.cardHeight / 2;
-      const tileSize = this.cardWidth * 0.25;
-
-      // Draw a clean, minimalist nested diamond
-      pattern.beginPath();
-      pattern.moveTo(cx, cy - tileSize);
-      pattern.lineTo(cx + tileSize, cy);
-      pattern.lineTo(cx, cy + tileSize);
-      pattern.lineTo(cx - tileSize, cy);
-      pattern.closePath();
-      pattern.strokePath();
-
-      pattern.beginPath();
-      pattern.moveTo(cx, cy - tileSize * 0.5);
-      pattern.lineTo(cx + tileSize * 0.5, cy);
-      pattern.lineTo(cx, cy + tileSize * 0.5);
-      pattern.lineTo(cx - tileSize * 0.5, cy);
-      pattern.closePath();
-      pattern.strokePath();
-
-      container.add([base, pattern]);
-    } else {
-      const base = this.add.graphics();
-      base.fillStyle(0xffffff, 1);
-      base.fillRoundedRect(0, 0, this.cardWidth, this.cardHeight, 8);
-      base.lineStyle(2, 0x000000, 0.08);
-      base.strokeRoundedRect(0, 0, this.cardWidth, this.cardHeight, 8);
-      container.add(base);
-
-      const isRed = (card.suit === Suit.Hearts || card.suit === Suit.Diamonds);
-      const colorStr = isRed ? '#cc0000' : '#000000';
-      const rankMap: Record<number, string> = { 1: 'A', 11: 'J', 12: 'Q', 13: 'K' };
-      const rankStr = rankMap[card.rank] || card.rank.toString();
-
-      const fontSize = Math.floor(this.cardWidth * 0.28);
-      const text = this.add.text(this.cardWidth * 0.15, this.cardHeight * 0.05, rankStr, {
-        fontSize: `${fontSize}px`, color: colorStr, fontFamily: 'Inter, system-ui, sans-serif', fontStyle: '900'
-      });
-      text.setOrigin(0.5, 0);
-      container.add(text);
-
-      const suitMap: Record<string, string> = { [Suit.Hearts as string]: 'suit_heart', [Suit.Spades as string]: 'suit_spade', [Suit.Diamonds as string]: 'suit_diamond', [Suit.Clubs as string]: 'suit_club' };
-      const smallSuitSz = this.cardWidth * 0.18;
-      const suitY = this.cardHeight * 0.05 + fontSize;
-      const smallSuit = this.add.image(this.cardWidth * 0.15, suitY + (smallSuitSz / 2), suitMap[card.suit as string]);
-      smallSuit.setDisplaySize(smallSuitSz, smallSuitSz);
-      container.add(smallSuit);
-
-      const bigSuitSz = this.cardWidth * 0.45;
-      const suitImg = this.add.image(this.cardWidth / 2, this.cardHeight * 0.52, suitMap[card.suit as string]);
-      suitImg.setDisplaySize(bigSuitSz, bigSuitSz);
-      container.add(suitImg);
-    }
-
-    const shadow = this.add.graphics();
-    shadow.fillStyle(0x000000, 0.12);
-    shadow.fillRoundedRect(2, 2, this.cardWidth, this.cardHeight, 8);
-    container.addAt(shadow, 0);
+    this.renderCardSpriteContents(container);
 
     this.cardSprites.set(card.id, container);
     return container;
+  }
+
+  private renderProceduralCardFace(container: CardSprite, card: Card): void {
+    const base = this.add.graphics();
+    base.fillStyle(0xffffff, 1);
+    base.fillRoundedRect(0, 0, this.cardWidth, this.cardHeight, 10);
+    base.lineStyle(1.5, 0x000000, 0.12);
+    base.strokeRoundedRect(0, 0, this.cardWidth, this.cardHeight, 10);
+    container.add(base);
+
+    const isRed = (card.suit === Suit.Hearts || card.suit === Suit.Diamonds);
+    const colorStr = isRed ? '#c1121f' : '#111827';
+    const rankMap: Record<number, string> = { 1: 'A', 11: 'J', 12: 'Q', 13: 'K' };
+    const rankStr = rankMap[card.rank] || card.rank.toString();
+    const fontSize = Math.floor(this.cardWidth * 0.3);
+    const text = this.add.text(this.cardWidth * 0.16, this.cardHeight * 0.05, rankStr, {
+      fontSize: `${fontSize}px`,
+      color: colorStr,
+      fontFamily: 'Georgia, ui-serif, serif',
+      fontStyle: 'bold'
+    });
+    text.setOrigin(0.5, 0);
+    container.add(text);
+
+    const suitMap: Record<string, string> = {
+      [Suit.Hearts as string]: 'suit_heart',
+      [Suit.Spades as string]: 'suit_spade',
+      [Suit.Diamonds as string]: 'suit_diamond',
+      [Suit.Clubs as string]: 'suit_club'
+    };
+    const smallSuitSz = this.cardWidth * 0.2;
+    const suitY = this.cardHeight * 0.05 + fontSize;
+    const smallSuit = this.add.image(this.cardWidth * 0.16, suitY + (smallSuitSz / 2), suitMap[card.suit as string]);
+    smallSuit.setDisplaySize(smallSuitSz, smallSuitSz);
+    container.add(smallSuit);
+
+    const bigSuitSz = this.cardWidth * 0.48;
+    const suitImg = this.add.image(this.cardWidth / 2, this.cardHeight * 0.54, suitMap[card.suit as string]);
+    suitImg.setDisplaySize(bigSuitSz, bigSuitSz);
+    container.add(suitImg);
+  }
+
+  private renderCardSpriteContents(container: CardSprite): void {
+    const card = container.cardData;
+
+    const shadow = this.add.graphics();
+    shadow.fillStyle(0x000000, 0.16);
+    shadow.fillRoundedRect(3, 4, this.cardWidth, this.cardHeight, 10);
+    container.add(shadow);
+
+    const textureKey = this.getCardTextureKey(card);
+    if (textureKey && this.textures.exists(textureKey)) {
+      const img = this.add.image(this.cardWidth / 2, this.cardHeight / 2, textureKey);
+      img.setScale(Math.min(this.cardWidth / img.width, this.cardHeight / img.height));
+      container.add(img);
+      return;
+    }
+
+    if (!card.isFaceUp) {
+      const fallbackBack = getCardBackAssetKey(DEFAULT_CARD_STYLE_ID);
+      if (this.textures.exists(fallbackBack)) {
+        const img = this.add.image(this.cardWidth / 2, this.cardHeight / 2, fallbackBack);
+        img.setScale(Math.min(this.cardWidth / img.width, this.cardHeight / img.height));
+        container.add(img);
+      }
+      return;
+    }
+
+    this.renderProceduralCardFace(container, card);
   }
 
   private recreateAllCardSprites(): void {
@@ -464,6 +516,11 @@ export class SpiderScene extends Phaser.Scene {
     const state = this.engine.getState();
     const w = this.scale.width;
     let dealIndex = 0;
+    let lastDealDelay = 0;
+    if (staggered) {
+      this.isDealAnimating = true;
+      this.pendingResize = false;
+    }
 
     for (let col = 0; col < 10; col++) {
       const cascade = state.cascades[col];
@@ -475,12 +532,22 @@ export class SpiderScene extends Phaser.Scene {
           const sprite = this.createCardSprite(card, w / 2 - this.cardWidth / 2, -this.cardHeight);
           sprite.sourceLocation = { type: 'cascade', index: col, cardIndex: row };
           sprite.setDepth(500 + dealIndex);
+          sprite.setScale(0.94);
           sprite.alpha = 0;
 
-          const delay = dealIndex * 35;
-          this.tweens.add({ targets: sprite, x: pos.x, duration: 300, delay, ease: 'Power2' });
-          this.tweens.add({ targets: sprite, y: pos.y, duration: 450, delay, ease: 'Bounce.easeOut' });
-          this.tweens.add({ targets: sprite, alpha: 1, duration: 100, delay });
+          const delay = dealIndex * 24;
+          lastDealDelay = delay;
+          this.tweens.add({
+            targets: sprite,
+            x: pos.x,
+            y: pos.y,
+            scaleX: 1,
+            scaleY: 1,
+            alpha: 1,
+            duration: 240,
+            delay,
+            ease: 'Cubic.easeOut',
+          });
 
           this.time.delayedCall(delay + 150, () => {
             soundManager.cardSelect();
@@ -503,10 +570,22 @@ export class SpiderScene extends Phaser.Scene {
         const sprite = this.createCardSprite(card, w / 2, -this.cardHeight);
         sprite.sourceLocation = { type: 'stock' };
         sprite.setDepth(500 + dealIndex);
+        sprite.setScale(0.94);
+        sprite.alpha = 0;
 
         const delay = dealIndex * 15;
-        this.tweens.add({ targets: sprite, x: stockPos.x + (i % 5) * 2, duration: 300, delay, ease: 'Power2' });
-        this.tweens.add({ targets: sprite, y: stockPos.y - Math.floor(i / 5) * 2, duration: 300, delay, ease: 'Power2' });
+        lastDealDelay = delay;
+        this.tweens.add({
+          targets: sprite,
+          x: stockPos.x + (i % 5) * 2,
+          y: stockPos.y - Math.floor(i / 5) * 2,
+          scaleX: 1,
+          scaleY: 1,
+          alpha: 1,
+          duration: 220,
+          delay,
+          ease: 'Cubic.easeOut'
+        });
         dealIndex++;
       } else {
         const sprite = this.createCardSprite(card, stockPos.x + (i % 5) * 2, stockPos.y - Math.floor(i / 5) * 2);
@@ -514,6 +593,97 @@ export class SpiderScene extends Phaser.Scene {
         sprite.setDepth(10 + i);
       }
     }
+
+    // Clear deal animation flag after all tweens complete, then handle any deferred resize
+    if (staggered) {
+      const totalDealDuration = lastDealDelay + 240 + 50; // last delay + tween duration + buffer
+      this.time.delayedCall(totalDealDuration, () => {
+        this.isDealAnimating = false;
+        if (this.pendingResize && this.scaleResizeHandler) {
+          this.pendingResize = false;
+          this.scaleResizeHandler(this.scale.gameSize);
+        }
+      });
+    }
+  }
+
+  private animateDraggedCardsToTargets(
+    targets: Array<{ x: number; y: number }>,
+    onComplete: () => void
+  ): void {
+    if (this.activeDragCards.length === 0) {
+      onComplete();
+      return;
+    }
+
+    let completed = 0;
+    const total = this.activeDragCards.length;
+
+    for (let i = 0; i < this.activeDragCards.length; i++) {
+      const card = this.activeDragCards[i];
+      const target = targets[i] ?? targets[targets.length - 1];
+      if (!target) continue;
+
+      this.tweens.killTweensOf(card);
+      this.tweens.add({
+        targets: card,
+        x: target.x,
+        y: target.y,
+        angle: 0,
+        scaleX: 1,
+        scaleY: 1,
+        duration: 135 + i * 10,
+        ease: 'Cubic.easeOut',
+        onComplete: () => {
+          completed++;
+          if (completed === total) {
+            onComplete();
+          }
+        }
+      });
+    }
+  }
+
+  private isPointWithinCardBounds(
+    x: number,
+    y: number,
+    left: number,
+    top: number,
+    width: number,
+    height: number,
+    padX: number = 10,
+    padY: number = 8
+  ): boolean {
+    return (
+      x >= left - padX &&
+      x <= left + width + padX &&
+      y >= top - padY &&
+      y <= top + height + padY
+    );
+  }
+
+  private getCascadePickupIndexAtPoint(col: number, x: number, y: number): number {
+    const cascade = this.engine.getState().cascades[col];
+    if (cascade.length === 0) return -1;
+
+    const run = this.engine.getValidRun(col);
+    const runStart = cascade.length - run.length;
+    const overlap = this.getCurrentOverlap();
+
+    for (let i = cascade.length - 1; i >= runStart; i--) {
+      const sprite = this.cardSprites.get(cascade[i].id);
+      if (!sprite) continue;
+
+      const hitHeight = i === cascade.length - 1
+        ? this.cardHeight
+        : Math.min(this.cardHeight, overlap + 18);
+
+      if (this.isPointWithinCardBounds(x, y, sprite.x, sprite.y, this.cardWidth, hitHeight)) {
+        return i;
+      }
+    }
+
+    return -1;
   }
 
   // ===== ENGINE INTERACTION & ANIMATION =====
@@ -591,49 +761,18 @@ export class SpiderScene extends Phaser.Scene {
       const overlap = this.getCurrentOverlap();
       const targetX = this.activeDragTarget.x - this.activeDragOffsets.x;
       const targetY = this.activeDragTarget.y - this.activeDragOffsets.y;
+      const lastPointer = this.lastDragPointerPosition ?? this.activeDragTarget;
+      const pointerVelocityX = (this.activeDragTarget.x - lastPointer.x) / Math.max(dt, 1 / 120);
+      const targetAngle = Phaser.Math.Clamp(pointerVelocityX * 0.012, -4.5, 4.5);
 
       for (let i = 0; i < this.activeDragCards.length; i++) {
         const card = this.activeDragCards[i];
-        const tx = targetX;
-        const ty = targetY + i * overlap;
-
-        if (!this.activeDragVelocities[i]) this.activeDragVelocities[i] = { x: 0, y: 0 };
-        const vel = this.activeDragVelocities[i];
-
-        // Spring
-        const springX = -300 * (card.x - tx) - 28 * vel.x;
-        const springY = -300 * (card.y - ty) - 28 * vel.y;
-        vel.x += springX * dt; vel.y += springY * dt;
-        card.x += vel.x * dt; card.y += vel.y * dt;
+        card.x = targetX;
+        card.y = targetY + i * overlap;
+        card.angle = Phaser.Math.Linear(card.angle, targetAngle, Math.min(1, dt * 18));
       }
+      this.lastDragPointerPosition = { ...this.activeDragTarget };
       return;
-    }
-
-    if (this.isSettlingDrag && this.settleTargets.length === this.activeDragCards.length) {
-      let allSettled = true;
-      for (let i = 0; i < this.activeDragCards.length; i++) {
-        const card = this.activeDragCards[i];
-        const target = this.settleTargets[i];
-        const vel = this.activeDragVelocities[i] || { x: 0, y: 0 };
-
-        const springX = -180 * (card.x - target.x) - 22 * vel.x;
-        const springY = -180 * (card.y - target.y) - 22 * vel.y;
-        vel.x += springX * dt; vel.y += springY * dt;
-        card.x += vel.x * dt; card.y += vel.y * dt;
-
-        if (Math.abs(card.x - target.x) > 1 || Math.abs(card.y - target.y) > 1 || Math.abs(vel.x) > 10 || Math.abs(vel.y) > 10) {
-          allSettled = false;
-        }
-      }
-      if (allSettled) {
-        this.isSettlingDrag = false;
-        this.activeDragCards.forEach(c => { c.setScale(1); });
-        if (this.pendingSettledMove) {
-          this.executeMoveAndAnimate(this.pendingSettledMove.from, this.pendingSettledMove.to);
-        }
-        this.activeDragCards = [];
-        this.pendingSettledMove = null;
-      }
     }
   }
 
@@ -671,27 +810,17 @@ export class SpiderScene extends Phaser.Scene {
     if (col !== -1) {
       const cascade = this.engine.getState().cascades[col];
       if (cascade.length === 0) return;
-
-      const topRow = this.boardOffsetY + this.topRowHeight + this.cascadeGap;
-      const overlap = this.getCurrentOverlap();
-      let cardY = Math.floor((y - topRow) / Math.max(overlap, 1));
-
-      const lastTop = topRow + (cascade.length - 1) * overlap;
-      if (y > lastTop && y < lastTop + this.cardHeight) cardY = cascade.length - 1;
-
-      cardY = Math.max(0, Math.min(cardY, cascade.length - 1));
-
-      const run = this.engine.getValidRun(col);
-      const runStart = cascade.length - run.length;
-      if (cardY < runStart) cardY = runStart;
+      const cardY = this.getCascadePickupIndexAtPoint(col, x, y);
+      if (cardY === -1) return;
 
       for (let i = cardY; i < cascade.length; i++) {
         const sprite = this.cardSprites.get(cascade[i].id);
         if (sprite) {
           this.activeDragCards.push(sprite);
           this.activeDragVelocities.push({ x: 0, y: 0 });
-          sprite.setDepth(1000 + i);
-          sprite.setScale(1.08); // Lift effect
+          sprite.setDepth(5000 + i);
+          this.tweens.killTweensOf(sprite);
+          sprite.setScale(1.04);
         }
       }
 
@@ -699,6 +828,7 @@ export class SpiderScene extends Phaser.Scene {
         this.activeDragFrom = { type: 'cascade', index: col, cardIndex: cardY };
         this.activeDragOffsets = { x: x - this.activeDragCards[0].x, y: y - this.activeDragCards[0].y };
         this.activeDragTarget = { x, y };
+        this.lastDragPointerPosition = { x, y };
         this.isDragging = true;
         soundManager.cardSelect();
       }
@@ -715,9 +845,17 @@ export class SpiderScene extends Phaser.Scene {
         this.pendingSettledMove = { from: this.activeDragFrom, to };
         this.isDragging = false;
         this.isSettlingDrag = true;
-
         const tgtRow = this.engine.getState().cascades[col].length;
         this.settleTargets = this.activeDragCards.map((_, i) => this.getCascadeCardPosition(col, tgtRow + i));
+        this.lastDragPointerPosition = null;
+        this.animateDraggedCardsToTargets(this.settleTargets, () => {
+          this.isSettlingDrag = false;
+          if (this.pendingSettledMove) {
+            this.executeMoveAndAnimate(this.pendingSettledMove.from, this.pendingSettledMove.to);
+          }
+          this.activeDragCards = [];
+          this.pendingSettledMove = null;
+        });
         return;
       }
     }
@@ -728,6 +866,16 @@ export class SpiderScene extends Phaser.Scene {
     if (this.activeDragFrom.type === 'cascade') {
       const cascadeStart = this.activeDragFrom as { type: 'cascade'; index: number; cardIndex: number };
       this.settleTargets = this.activeDragCards.map((_, i) => this.getCascadeCardPosition(cascadeStart.index, cascadeStart.cardIndex + i));
+      this.lastDragPointerPosition = null;
+      this.animateDraggedCardsToTargets(this.settleTargets, () => {
+        this.isSettlingDrag = false;
+        this.activeDragCards.forEach((card) => {
+          card.setScale(1);
+          card.angle = 0;
+        });
+        this.activeDragCards = [];
+        this.pendingSettledMove = null;
+      });
     }
   }
 

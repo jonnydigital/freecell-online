@@ -10,7 +10,7 @@ import { Card, Suit, Rank, SUIT_SYMBOLS } from '../engine/Card';
 import { MoveHistory } from '../engine/MoveHistory';
 import { GameTimer } from '../engine/GameTimer';
 import { gameBridge } from './GameBridge';
-import { getCardAssetKey, getAllCardAssets } from './CardAssets';
+import { getCardAssetKey, getCardBackAssetKey, getAllCardAssets } from './CardAssets';
 import { getHint } from '../solver/solver';
 import type { SolverMove } from '../solver/FreeCellSolver';
 import { getRandomSolvableGame } from '../lib/solvableDeals';
@@ -20,6 +20,12 @@ import { announceToScreenReader } from '../lib/accessibility';
 import { registerTestBridge, unregisterTestBridge } from './TestBridge';
 import { ThemeDefinition, themes, getThemeById, hexToInt } from '../lib/themes';
 import { generateCardBackTexture } from './CardBacks';
+import {
+  CardStyleDefinition,
+  DEFAULT_CARD_STYLE_ID,
+  CARD_STYLE_STORAGE_KEY,
+  getCardStyleById,
+} from '../lib/cardStyles';
 
 // Layout constants
 const CARD_RATIO = 1.4; // height/width ratio
@@ -41,6 +47,7 @@ export class FreeCellScene extends Phaser.Scene {
   private gameNumber: number = 1;
   private settings!: GameSettings;
   private currentTheme: ThemeDefinition = themes[0];
+  private currentCardStyle: CardStyleDefinition = getCardStyleById(DEFAULT_CARD_STYLE_ID);
 
   // Layout measurements (recalculated on resize)
   private cardWidth: number = 0;
@@ -66,6 +73,10 @@ export class FreeCellScene extends Phaser.Scene {
   private settleTargets: { x: number; y: number }[] = [];
   private isSettlingDrag: boolean = false;
   private pendingSettledMove: { from: Location; to: Location } | null = null;
+  private lastDragPointerPosition: { x: number; y: number } | null = null;
+  private mouseDownCardId: string | null = null;
+  private suppressPointerClick: boolean = false;
+  private blockCardClicksUntil: number = 0;
 
   // Auto-move animation state (for fast foundation auto-moves)
   private pendingAutoMoveCards: Array<{ cardId: string; suit: Suit; rank: Rank; index: number }> = [];
@@ -121,6 +132,9 @@ export class FreeCellScene extends Phaser.Scene {
   private idleCheckTimer: Phaser.Time.TimerEvent | null = null;
   private dragGlowGraphics: Phaser.GameObjects.Graphics[] = [];
   private hintTextObj: Phaser.GameObjects.Container | null = null;
+  private initialAutoMoveTimer: Phaser.Time.TimerEvent | null = null;
+  private isDealAnimating: boolean = false;
+  private pendingResize: boolean = false;
 
   // Replay mode: disables user input while solver solution plays back
   private isReplayMode: boolean = false;
@@ -235,6 +249,10 @@ export class FreeCellScene extends Phaser.Scene {
     if (storedThemeId) {
       this.currentTheme = getThemeById(storedThemeId);
     }
+    const storedCardStyleId = localStorage.getItem(CARD_STYLE_STORAGE_KEY);
+    if (storedCardStyleId) {
+      this.currentCardStyle = getCardStyleById(storedCardStyleId);
+    }
     this.cameras.main.setBackgroundColor(hexToInt(this.currentTheme.feltColor));
 
     // Detect touch device
@@ -255,6 +273,11 @@ export class FreeCellScene extends Phaser.Scene {
 
     // Listen for resize
     this.scaleResizeHandler = () => {
+      // Defer resize during deal animation to prevent killing deal tweens
+      if (this.isDealAnimating) {
+        this.pendingResize = true;
+        return;
+      }
       this.clearSelection();
       this.calculateLayout();
       this.invalidateOverlapCache();
@@ -317,11 +340,24 @@ export class FreeCellScene extends Phaser.Scene {
     }));
 
     this.bridgeUnsubscribers.push(gameBridge.on('themeChanged', (themeData: unknown) => {
-      const newTheme = themeData as ThemeDefinition;
-      this.currentTheme = newTheme;
-      this.cameras.main.setBackgroundColor(hexToInt(newTheme.feltColor));
+      if (
+        themeData &&
+        typeof themeData === 'object' &&
+        'theme' in themeData &&
+        'cardStyle' in themeData
+      ) {
+        const appearance = themeData as { theme: ThemeDefinition; cardStyle: CardStyleDefinition };
+        this.currentTheme = appearance.theme;
+        this.currentCardStyle = appearance.cardStyle;
+      } else {
+        this.currentTheme = themeData as ThemeDefinition;
+      }
+      this.cameras.main.setBackgroundColor(hexToInt(this.currentTheme.feltColor));
       this.drawBackgroundEffects();
       this.rebuildBoard();
+      this.recreateAllCardSprites();
+      this.repositionAllCards(false);
+      this.updateHitAreas();
     }));
 
     this.bridgeUnsubscribers.push(gameBridge.on('cardBackChanged', (designId: unknown) => {
@@ -554,9 +590,7 @@ export class FreeCellScene extends Phaser.Scene {
 
     // Run auto-moves after deal animation completes
     // Deal: 52 cards × 45ms stagger + 450ms longest tween ≈ 2800ms
-    this.time.delayedCall(3000 * this.getSpeedMultiplier(), () => {
-      this.performAutoMoves();
-    });
+    this.scheduleInitialAutoMoves();
 
     // Juice: start inactivity checker (hint glow at 8s, idle wiggle at 12s)
     this.lastMoveTime = Date.now();
@@ -569,15 +603,7 @@ export class FreeCellScene extends Phaser.Scene {
     if (dt <= 0) return;
 
     if (this.isDragging && this.activeDragTarget) {
-      this.updateDraggedCards(this.activeDragTarget, 350, 28, dt, true);
-      return;
-    }
-
-    if (this.isSettlingDrag && this.settleTargets.length === this.activeDragCards.length) {
-      const settled = this.updateDraggedCardsToTargets(this.settleTargets, 250, 24, dt);
-      if (settled) {
-        this.finishSettledDrag();
-      }
+      this.updateDraggedCards(this.activeDragTarget, dt, true);
     }
   }
 
@@ -603,6 +629,14 @@ export class FreeCellScene extends Phaser.Scene {
       this.resizeTimeout = null;
     }
 
+    if (this.initialAutoMoveTimer) {
+      this.initialAutoMoveTimer.remove(false);
+      this.initialAutoMoveTimer = null;
+    }
+
+    this.isDealAnimating = false;
+    this.pendingResize = false;
+
     for (const { target, type, listener, options } of this.trackedDomListeners) {
       target.removeEventListener(type, listener, options as EventListenerOptions | boolean | undefined);
     }
@@ -621,6 +655,24 @@ export class FreeCellScene extends Phaser.Scene {
   ): void {
     target.addEventListener(type, listener, options);
     this.trackedDomListeners.push({ target, type, listener, options });
+  }
+
+  private scheduleInitialAutoMoves(): void {
+    if (this.initialAutoMoveTimer) {
+      this.initialAutoMoveTimer.remove(false);
+    }
+    this.initialAutoMoveTimer = this.time.delayedCall(3000 * this.getSpeedMultiplier(), () => {
+      this.initialAutoMoveTimer = null;
+      if (this.engine.getState().moveCount > 0) return;
+      if (this.activeDragCards.length > 0 || this.isDragging || this.isSettlingDrag) return;
+      this.performAutoMoves();
+    });
+  }
+
+  private cancelInitialAutoMoves(): void {
+    if (!this.initialAutoMoveTimer) return;
+    this.initialAutoMoveTimer.remove(false);
+    this.initialAutoMoveTimer = null;
   }
 
   private refreshCanvasMetrics(): void {
@@ -646,87 +698,67 @@ export class FreeCellScene extends Phaser.Scene {
     };
   }
 
-  private springUpdate(
-    current: number,
-    target: number,
-    velocity: number,
-    stiffness: number,
-    damping: number,
-    mass: number,
-    dt: number
-  ): { position: number; velocity: number } {
-    const springForce = -stiffness * (current - target);
-    const dampingForce = -damping * velocity;
-    const acceleration = (springForce + dampingForce) / mass;
-    const newVelocity = velocity + acceleration * dt;
-    const newPosition = current + newVelocity * dt;
-    return { position: newPosition, velocity: newVelocity };
-  }
-
   private updateDraggedCards(
     rawTarget: { x: number; y: number },
-    stiffness: number,
-    damping: number,
     dt: number,
     trackRotation: boolean
   ): void {
     const overlap = this.getCurrentOverlap();
     const targetX = rawTarget.x - this.activeDragOffsets.x;
     const targetY = rawTarget.y - this.activeDragOffsets.y;
-    const targets = this.activeDragCards.map((_, i) => ({
-      x: targetX,
-      y: targetY + i * overlap,
-    }));
-    this.updateDraggedCardsToTargets(targets, stiffness, damping, dt, trackRotation);
+    const lastPointer = this.lastDragPointerPosition ?? rawTarget;
+    const pointerVelocityX = (rawTarget.x - lastPointer.x) / Math.max(dt, 1 / 120);
+    const targetAngle = trackRotation
+      ? Phaser.Math.Clamp(pointerVelocityX * 0.012, -4.5, 4.5)
+      : 0;
+
+    for (let i = 0; i < this.activeDragCards.length; i++) {
+      const card = this.activeDragCards[i];
+      card.x = targetX;
+      card.y = targetY + i * overlap;
+      card.angle = Phaser.Math.Linear(card.angle, targetAngle, Math.min(1, dt * 18));
+    }
+
+    this.lastDragPointerPosition = { ...rawTarget };
   }
 
-  private updateDraggedCardsToTargets(
+  private animateDraggedCardsToTargets(
     targets: Array<{ x: number; y: number }>,
-    stiffness: number,
-    damping: number,
-    dt: number,
-    trackRotation: boolean = false
-  ): boolean {
-    let allSettled = true;
+    onComplete: () => void
+  ): void {
+    if (this.activeDragCards.length === 0) {
+      onComplete();
+      return;
+    }
+
+    let completed = 0;
+    const total = this.activeDragCards.length;
+    const baseDuration = 140 * this.getSpeedMultiplier();
 
     for (let i = 0; i < this.activeDragCards.length; i++) {
       const card = this.activeDragCards[i];
       const target = targets[i] ?? targets[targets.length - 1];
-      if (!target) continue;
-
-      if (!this.activeDragVelocities[i]) {
-        this.activeDragVelocities[i] = { x: 0, y: 0 };
+      if (!target) {
+        completed++;
+        continue;
       }
 
-      const velocity = this.activeDragVelocities[i];
-      const xUpdate = this.springUpdate(card.x, target.x, velocity.x, stiffness, damping, 1, dt);
-      const yUpdate = this.springUpdate(card.y, target.y, velocity.y, stiffness, damping, 1, dt);
-      card.x = xUpdate.position;
-      card.y = yUpdate.position;
-      velocity.x = xUpdate.velocity;
-      velocity.y = yUpdate.velocity;
-
-      const angleTarget = trackRotation
-        ? Phaser.Math.Clamp(xUpdate.velocity * 0.04, -8, 8)
-        : 0;
-      const angleVelocity = this.activeDragAngleVelocities[i] ?? 0;
-      const angleUpdate = this.springUpdate(card.angle, angleTarget, angleVelocity, stiffness, damping, 1, dt);
-      card.angle = angleUpdate.position;
-      this.activeDragAngleVelocities[i] = angleUpdate.velocity;
-
-      if (
-        Math.abs(card.x - target.x) > 0.5 ||
-        Math.abs(card.y - target.y) > 0.5 ||
-        Math.abs(velocity.x) > 5 ||
-        Math.abs(velocity.y) > 5 ||
-        Math.abs(card.angle - angleTarget) > 0.4 ||
-        Math.abs(this.activeDragAngleVelocities[i]) > 6
-      ) {
-        allSettled = false;
-      }
+      this.tweens.killTweensOf(card);
+      this.tweens.add({
+        targets: card,
+        x: target.x,
+        y: target.y,
+        angle: 0,
+        duration: Math.max(110, baseDuration + i * 10),
+        ease: 'Cubic.easeOut',
+        onComplete: () => {
+          completed++;
+          if (completed === total) {
+            onComplete();
+          }
+        }
+      });
     }
-
-    return allSettled;
   }
 
   private beginSettlingDrag(
@@ -739,7 +771,11 @@ export class FreeCellScene extends Phaser.Scene {
     this.isSettlingDrag = true;
     this.pendingSettledMove = pendingMove;
     this.settleTargets = targets;
+    this.lastDragPointerPosition = null;
     this.removeCardLiftEffect(this.activeDragCards);
+    this.animateDraggedCardsToTargets(targets, () => {
+      this.finishSettledDrag();
+    });
   }
 
   private finishSettledDrag(): void {
@@ -757,43 +793,40 @@ export class FreeCellScene extends Phaser.Scene {
     this.dragSource = null;
     this.activeDragTarget = null;
     this.isSettlingDrag = false;
+    this.lastDragPointerPosition = null;
 
-    // We only want to clean up state once, after the longest tween
-    let tweensFinished = 0;
-    const totalCards = this.activeDragCards.length;
+    const snapTargets = this.getSnapBackTargets();
+    let completed = 0;
 
-    for (const card of this.activeDragCards) {
-      // Gentle shake (2 quick nudges)
+    for (let i = 0; i < this.activeDragCards.length; i++) {
+      const card = this.activeDragCards[i];
+      const target = snapTargets[i];
+      if (!target) continue;
+
+      this.tweens.killTweensOf(card);
       this.tweens.add({
         targets: card,
-        x: '+=5',
-        angle: { from: -1.5, to: 1.5 },
+        x: card.x + (i % 2 === 0 ? 8 : -8),
+        y: card.y + 2,
+        angle: i % 2 === 0 ? 2 : -2,
+        duration: 45,
         yoyo: true,
         repeat: 1,
-        duration: 60,
         onComplete: () => {
-          // Snap back
-          const location = this.findCardLocation(card.cardData);
-          if (location) {
-            const pos = this.getLocationPosition(location);
-            this.tweens.add({
-              targets: card,
-              x: pos.x,
-              y: pos.y,
-              angle: 0,
-              duration: 150,
-              ease: 'Power3.easeOut',
-              onComplete: () => {
-                tweensFinished++;
-                if (tweensFinished === totalCards) {
-                  this.clearActiveDragState(true);
-                }
+          this.tweens.add({
+            targets: card,
+            x: target.x,
+            y: target.y,
+            angle: 0,
+            duration: 130,
+            ease: 'Cubic.easeOut',
+            onComplete: () => {
+              completed++;
+              if (completed === this.activeDragCards.length) {
+                this.clearActiveDragState(true);
               }
-            });
-          } else {
-            tweensFinished++;
-            if (tweensFinished === totalCards) this.clearActiveDragState(true);
-          }
+            }
+          });
         }
       });
     }
@@ -803,6 +836,7 @@ export class FreeCellScene extends Phaser.Scene {
     if (resetTransforms) {
       this.removeCardLiftEffect(this.activeDragCards, false);
       for (const card of this.activeDragCards) {
+        this.tweens.killTweensOf(card);
         card.angle = 0;
       }
     }
@@ -812,6 +846,7 @@ export class FreeCellScene extends Phaser.Scene {
     this.activeDragOffsets = { x: 0, y: 0 };
     this.activeDragVelocities = [];
     this.activeDragAngleVelocities = [];
+    this.lastDragPointerPosition = null;
     this.settleTargets = [];
     this.pendingSettledMove = null;
     this.isDragging = false;
@@ -823,13 +858,14 @@ export class FreeCellScene extends Phaser.Scene {
   /** Apply lift effect to cards being dragged — enhanced shadow, scale, y-offset */
   private applyCardLiftEffect(cards: CardSprite[]): void {
     for (const card of cards) {
-      card.setScale(1.08);
-      card.y -= 3;
+      this.tweens.killTweensOf(card);
+      card.setScale(1.04);
+      card.y -= 2;
       const shadow = card.getAt(0) as Phaser.GameObjects.Graphics;
       if (shadow && shadow instanceof Phaser.GameObjects.Graphics) {
         shadow.clear();
-        shadow.fillStyle(0x000000, 0.5);
-        shadow.fillRoundedRect(4, 6, this.cardWidth, this.cardHeight, 6);
+        shadow.fillStyle(0x000000, 0.22);
+        shadow.fillRoundedRect(4, 6, this.cardWidth, this.cardHeight, 10);
       }
     }
   }
@@ -841,15 +877,15 @@ export class FreeCellScene extends Phaser.Scene {
       const shadow = card.getAt(0) as Phaser.GameObjects.Graphics;
       if (shadow && shadow instanceof Phaser.GameObjects.Graphics) {
         shadow.clear();
-        shadow.fillStyle(0x000000, 0.3);
-        shadow.fillRoundedRect(2, 2, this.cardWidth, this.cardHeight, 6);
+        shadow.fillStyle(0x000000, 0.16);
+        shadow.fillRoundedRect(3, 4, this.cardWidth, this.cardHeight, 10);
       }
       if (animate) {
         this.tweens.add({
           targets: card,
           scaleX: 1,
           scaleY: 1,
-          duration: 150,
+          duration: 120,
           ease: 'Power2.easeOut',
         });
       } else {
@@ -876,6 +912,49 @@ export class FreeCellScene extends Phaser.Scene {
       }
       return { x: card.x, y: card.y };
     });
+  }
+
+  private isPointWithinCardBounds(
+    x: number,
+    y: number,
+    left: number,
+    top: number,
+    width: number,
+    height: number,
+    padX: number = 10,
+    padY: number = 8
+  ): boolean {
+    return (
+      x >= left - padX &&
+      x <= left + width + padX &&
+      y >= top - padY &&
+      y <= top + height + padY
+    );
+  }
+
+  private getCascadePickupIndexAtPoint(col: number, x: number, y: number): number {
+    const state = this.engine.getState();
+    const cascade = state.cascades[col];
+    if (cascade.length === 0) return -1;
+
+    const run = this.engine.getValidRun(col);
+    const runStart = cascade.length - run.length;
+    const overlap = this.getCurrentOverlap();
+
+    for (let i = cascade.length - 1; i >= runStart; i--) {
+      const sprite = this.cardSprites.get(cascade[i].id);
+      if (!sprite) continue;
+
+      const hitHeight = i === cascade.length - 1
+        ? this.cardHeight
+        : Math.min(this.cardHeight, overlap + 18);
+
+      if (this.isPointWithinCardBounds(x, y, sprite.x, sprite.y, this.cardWidth, hitHeight)) {
+        return i;
+      }
+    }
+
+    return -1;
   }
 
   private invalidateOverlapCache(): void {
@@ -1087,67 +1166,14 @@ export class FreeCellScene extends Phaser.Scene {
     const container = this.add.container(x, y) as CardSprite;
     container.setSize(this.cardWidth, this.cardHeight);
     container.cardData = card;
-
-    // 1. Procedural Vector Base (100% Clean)
-    const base = this.add.graphics();
-    base.fillStyle(0xffffff, 1);
-    base.fillRoundedRect(0, 0, this.cardWidth, this.cardHeight, 8);
-    // Subtle border for high-end definition
-    base.lineStyle(2, 0x000000, 0.08);
-    base.strokeRoundedRect(0, 0, this.cardWidth, this.cardHeight, 8);
-    container.add(base);
-
-    // 2. Rank Text Overlay (Crisp Typography)
-    const isRed = (card.suit === Suit.Hearts || card.suit === Suit.Diamonds);
-    const colorStr = isRed ? '#cc0000' : '#000000';
-
-    const rankMap: Record<number, string> = { 1: 'A', 11: 'J', 12: 'Q', 13: 'K' };
-    const rankStr = rankMap[card.rank] || card.rank.toString();
-
-    // Corner Rank - Minimalist and readable
-    const fontSize = Math.floor(this.cardWidth * 0.28);
-    const text = this.add.text(this.cardWidth * 0.15, this.cardHeight * 0.05, rankStr, {
-      fontSize: `${fontSize}px`,
-      color: colorStr,
-      fontFamily: 'Inter, system-ui, -apple-system, sans-serif',
-      fontStyle: '900'
-    });
-    text.setOrigin(0.5, 0);
-    container.add(text);
-
-    // 3. Hand-drawn Suit Icons (Cleaned Alpha)
-    const suitMap: Record<string, string> = {
-      [Suit.Hearts as string]: 'suit_heart',
-      [Suit.Spades as string]: 'suit_spade',
-      [Suit.Diamonds as string]: 'suit_diamond',
-      [Suit.Clubs as string]: 'suit_club',
-    };
-
-    // Small suit icon directly under corner rank
-    const smallSuitSz = this.cardWidth * 0.18; // Slightly smaller
-    const suitY = this.cardHeight * 0.05 + Math.floor(this.cardWidth * 0.28) * 1.0;
-    const smallSuit = this.add.image(this.cardWidth * 0.15, suitY + (smallSuitSz / 2), suitMap[card.suit as string]);
-    smallSuit.setDisplaySize(smallSuitSz, smallSuitSz);
-    container.add(smallSuit);
-
-    // Large center minimalist suit
-    const bigSuitSz = this.cardWidth * 0.45; // Slightly smaller for more professional breathing room
-    const suitImg = this.add.image(this.cardWidth / 2, this.cardHeight * 0.52, suitMap[card.suit as string]);
-    suitImg.setDisplaySize(bigSuitSz, bigSuitSz);
-    container.add(suitImg);
-
-    // Drop shadow - Softer, more professional
-    const shadow = this.add.graphics();
-    shadow.fillStyle(0x000000, 0.12); // Lighter
-    shadow.fillRoundedRect(2, 2, this.cardWidth, this.cardHeight, 8); // Less offset
-    container.addAt(shadow, 0); // Behind the card
+    this.renderCardSpriteContents(container);
 
     // Desktop: per-card interactivity for click-to-move (select + place)
     // Drag is handled by raw mouse events (setupMouseDrag), not Phaser's drag system
     // Touch devices use raw touch events (setupTouchInput)
     if (!this.isTouchDevice) {
       container.setInteractive(
-        new Phaser.Geom.Rectangle(0, 0, this.cardWidth, this.cardHeight),
+        new Phaser.Geom.Rectangle(-8, -8, this.cardWidth + 16, this.cardHeight + 16),
         Phaser.Geom.Rectangle.Contains
       );
 
@@ -1179,7 +1205,13 @@ export class FreeCellScene extends Phaser.Scene {
         }
       });
 
-      container.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
+      container.on('pointerdown', () => {
+        this.mouseDownCardId = container.cardData.id;
+      });
+
+      container.on('pointerup', (pointer: Phaser.Input.Pointer) => {
+        if (this.mouseDownCardId !== container.cardData.id) return;
+        if (this.suppressPointerClick || this.mouseMoved || this.isDragging || this.isSettlingDrag) return;
         this.cardTappedThisFrame = true;
         this.onCardClick(container, pointer);
       });
@@ -1187,6 +1219,87 @@ export class FreeCellScene extends Phaser.Scene {
 
     this.cardSprites.set(card.id, container);
     return container;
+  }
+
+  private getCardTextureKey(card: Card): string | null {
+    if (!card.isFaceUp) {
+      return getCardBackAssetKey(this.currentCardStyle.id);
+    }
+
+    if (this.currentCardStyle.renderer !== 'image') {
+      return null;
+    }
+
+    return getCardAssetKey(card.suit, card.rank, this.currentCardStyle.id);
+  }
+
+  private renderProceduralCardFace(container: CardSprite, card: Card): void {
+    const base = this.add.graphics();
+    base.fillStyle(0xffffff, 1);
+    base.fillRoundedRect(0, 0, this.cardWidth, this.cardHeight, 10);
+    base.lineStyle(1.5, 0x000000, 0.12);
+    base.strokeRoundedRect(0, 0, this.cardWidth, this.cardHeight, 10);
+    container.add(base);
+
+    const isRed = (card.suit === Suit.Hearts || card.suit === Suit.Diamonds);
+    const colorStr = isRed ? '#c1121f' : '#111827';
+    const rankMap: Record<number, string> = { 1: 'A', 11: 'J', 12: 'Q', 13: 'K' };
+    const rankStr = rankMap[card.rank] || card.rank.toString();
+    const fontSize = Math.floor(this.cardWidth * 0.3);
+    const text = this.add.text(this.cardWidth * 0.16, this.cardHeight * 0.05, rankStr, {
+      fontSize: `${fontSize}px`,
+      color: colorStr,
+      fontFamily: 'Georgia, ui-serif, serif',
+      fontStyle: 'bold'
+    });
+    text.setOrigin(0.5, 0);
+    container.add(text);
+
+    const suitMap: Record<string, string> = {
+      [Suit.Hearts as string]: 'suit_heart',
+      [Suit.Spades as string]: 'suit_spade',
+      [Suit.Diamonds as string]: 'suit_diamond',
+      [Suit.Clubs as string]: 'suit_club',
+    };
+    const smallSuitSz = this.cardWidth * 0.2;
+    const suitY = this.cardHeight * 0.05 + fontSize;
+    const smallSuit = this.add.image(this.cardWidth * 0.16, suitY + (smallSuitSz / 2), suitMap[card.suit as string]);
+    smallSuit.setDisplaySize(smallSuitSz, smallSuitSz);
+    container.add(smallSuit);
+
+    const bigSuitSz = this.cardWidth * 0.48;
+    const suitImg = this.add.image(this.cardWidth / 2, this.cardHeight * 0.54, suitMap[card.suit as string]);
+    suitImg.setDisplaySize(bigSuitSz, bigSuitSz);
+    container.add(suitImg);
+  }
+
+  private renderCardSpriteContents(container: CardSprite): void {
+    const card = container.cardData;
+
+    const shadow = this.add.graphics();
+    shadow.fillStyle(0x000000, 0.16);
+    shadow.fillRoundedRect(3, 4, this.cardWidth, this.cardHeight, 10);
+    container.add(shadow);
+
+    const textureKey = this.getCardTextureKey(card);
+    if (textureKey && this.textures.exists(textureKey)) {
+      const img = this.add.image(this.cardWidth / 2, this.cardHeight / 2, textureKey);
+      img.setScale(Math.min(this.cardWidth / img.width, this.cardHeight / img.height));
+      container.add(img);
+      return;
+    }
+
+    if (!card.isFaceUp) {
+      const fallbackBack = getCardBackAssetKey(DEFAULT_CARD_STYLE_ID);
+      if (this.textures.exists(fallbackBack)) {
+        const img = this.add.image(this.cardWidth / 2, this.cardHeight / 2, fallbackBack);
+        img.setScale(Math.min(this.cardWidth / img.width, this.cardHeight / img.height));
+        container.add(img);
+      }
+      return;
+    }
+
+    this.renderProceduralCardFace(container, card);
   }
 
   /**
@@ -1210,14 +1323,13 @@ export class FreeCellScene extends Phaser.Scene {
         if (isTop) {
           // Top (exposed) card: full card size hit area
           sprite.input.hitArea = new Phaser.Geom.Rectangle(
-            0, 0, this.cardWidth, this.cardHeight
+            -8, -8, this.cardWidth + 16, this.cardHeight + 16
           );
         } else {
           // Buried card: clickable area is the visible overlap strip
-          // Small expansion (4px) for easier clicking without bleeding into card below
           const visibleHeight = this.getCurrentOverlap();
           sprite.input.hitArea = new Phaser.Geom.Rectangle(
-            0, 0, this.cardWidth, Math.min(visibleHeight + 4, this.cardHeight)
+            -8, -8, this.cardWidth + 16, Math.min(visibleHeight + 18, this.cardHeight + 16)
           );
         }
       }
@@ -1230,7 +1342,7 @@ export class FreeCellScene extends Phaser.Scene {
         const sprite = this.cardSprites.get(card.id);
         if (sprite?.input) {
           sprite.input.hitArea = new Phaser.Geom.Rectangle(
-            0, 0, this.cardWidth, this.cardHeight
+            -8, -8, this.cardWidth + 16, this.cardHeight + 16
           );
         }
       }
@@ -1242,7 +1354,7 @@ export class FreeCellScene extends Phaser.Scene {
         const sprite = this.cardSprites.get(topCard.id);
         if (sprite?.input) {
           sprite.input.hitArea = new Phaser.Geom.Rectangle(
-            0, 0, this.cardWidth, this.cardHeight
+            -8, -8, this.cardWidth + 16, this.cardHeight + 16
           );
         }
       }
@@ -1254,6 +1366,11 @@ export class FreeCellScene extends Phaser.Scene {
     const w = this.scale.width;
 
     let dealIndex = 0;
+    let lastDealDelay = 0;
+    if (staggered) {
+      this.isDealAnimating = true;
+      this.pendingResize = false;
+    }
     for (let col = 0; col < 8; col++) {
       const cascade = state.cascades[col];
       for (let row = 0; row < cascade.length; row++) {
@@ -1261,7 +1378,7 @@ export class FreeCellScene extends Phaser.Scene {
         const pos = this.getCascadeCardPosition(col, row);
 
         if (staggered) {
-          // Start cards off-screen at top-center, animate with bounce into place
+          // Start cards off-screen at top-center, animate as a single smooth glide
           const sprite = this.createCardSprite(card, w / 2 - this.cardWidth / 2, -this.cardHeight);
 
           // Add premium card back for flip effect
@@ -1272,56 +1389,25 @@ export class FreeCellScene extends Phaser.Scene {
 
           sprite.sourceLocation = { type: 'cascade', index: col, cardIndex: row };
           sprite.setDepth(500 + dealIndex);
-          sprite.setScale(0.85); // Container scale overrides child scales, so backImg is handled
+          sprite.setScale(0.94);
           sprite.alpha = 0;
 
-          const delay = dealIndex * 45 * this.getSpeedMultiplier();
-          // X slides into column
+          const delay = dealIndex * 28 * this.getSpeedMultiplier();
+          lastDealDelay = delay;
           this.tweens.add({
             targets: sprite,
             x: pos.x,
-            duration: 300,
-            delay,
-            ease: 'Power2',
-          });
-          // Y bounces into row position
-          this.tweens.add({
-            targets: sprite,
             y: pos.y,
-            duration: 450,
-            delay,
-            ease: 'Bounce.easeOut',
-          });
-          // Fade in initial state
-          this.tweens.add({
-            targets: sprite,
+            scaleX: 1,
+            scaleY: 1,
             alpha: 1,
-            duration: 100,
+            duration: 240,
             delay,
-          });
-
-          // 3D Flip flip effect at the apex of the curve
-          this.time.delayedCall(delay + 150, () => {
-            this.tweens.add({
-              targets: sprite,
-              scaleX: 0,
-              duration: 150,
-              ease: 'Sine.easeIn',
-              onComplete: () => {
-                backImg.destroy();
-                soundManager.cardSelect(); // subtle flutter sound for flip
-                this.tweens.add({
-                  targets: sprite,
-                  scaleX: 1,
-                  scaleY: 1, // Ensure it restores to full size at the end
-                  duration: 150,
-                  ease: 'Back.easeOut',
-                  onComplete: () => {
-                    sprite.setDepth(row + 10);
-                  }
-                });
-              }
-            });
+            ease: 'Cubic.easeOut',
+            onComplete: () => {
+              sprite.setDepth(row + 10);
+              soundManager.cardSelect();
+            }
           });
 
           dealIndex++;
@@ -1331,6 +1417,18 @@ export class FreeCellScene extends Phaser.Scene {
           sprite.setDepth(row + 10);
         }
       }
+    }
+
+    // Clear deal animation flag after all tweens complete, then handle any deferred resize
+    if (staggered) {
+      const totalDealDuration = lastDealDelay + 240 + 50; // last delay + tween duration + buffer
+      this.time.delayedCall(totalDealDuration, () => {
+        this.isDealAnimating = false;
+        if (this.pendingResize && this.scaleResizeHandler) {
+          this.pendingResize = false;
+          this.scaleResizeHandler(this.scale.gameSize);
+        }
+      });
     }
 
     // Note: drag is handled by raw mouse/touch events (setupMouseDrag/setupTouchInput)
@@ -1362,6 +1460,7 @@ export class FreeCellScene extends Phaser.Scene {
     canvas.addEventListener('touchstart', (e: TouchEvent) => {
       e.preventDefault(); // Kill scroll, zoom, and 300ms tap delay
       if (this.isReplayMode) return;
+      this.cancelInitialAutoMoves();
       const touch = e.touches[0];
       const rect = canvas.getBoundingClientRect();
       const scaleX = canvas.width / rect.width;
@@ -1448,24 +1547,8 @@ export class FreeCellScene extends Phaser.Scene {
       const state = this.engine.getState();
       const cascade = state.cascades[col];
       if (cascade.length === 0) return;
-
-      // Find which card was touched based on Y
-      const cascadeTop = this.boardOffsetY + this.topRowHeight + this.cascadeGap;
-      const overlap = this.getCurrentOverlap();
-      const relativeY = y - cascadeTop;
-      let cardIndex = Math.floor(relativeY / Math.max(overlap, 1));
-      cardIndex = Math.min(Math.max(cardIndex, 0), cascade.length - 1);
-
-      // If touch is below last card bottom, select last card
-      const lastCardTop = cascadeTop + (cascade.length - 1) * overlap;
-      if (y > lastCardTop && y < lastCardTop + this.cardHeight) {
-        cardIndex = cascade.length - 1;
-      }
-
-      // Snap to valid run start
-      const run = this.engine.getValidRun(col);
-      const runStart = cascade.length - run.length;
-      if (cardIndex < runStart) cardIndex = runStart;
+      const cardIndex = this.getCascadePickupIndexAtPoint(col, x, y);
+      if (cardIndex === -1) return;
 
       // Gather the run cards into unified drag state
       this.clearActiveDragState(true);
@@ -1475,7 +1558,7 @@ export class FreeCellScene extends Phaser.Scene {
           this.activeDragCards.push(sprite);
           this.activeDragVelocities.push({ x: 0, y: 0 });
           this.activeDragAngleVelocities.push(0);
-          sprite.setDepth(1000 + (i - cardIndex));
+          sprite.setDepth(5000 + (i - cardIndex));
         }
       }
 
@@ -1485,6 +1568,7 @@ export class FreeCellScene extends Phaser.Scene {
         this.activeDragOffsets = { x: x - topSprite.x, y: y - topSprite.y };
         this.activeDragFrom = { type: 'cascade', index: col, cardIndex };
         this.activeDragTarget = { x, y };
+        this.lastDragPointerPosition = { x, y };
         this.isDragging = true;
         this.dragSource = 'touch';
 
@@ -1523,11 +1607,12 @@ export class FreeCellScene extends Phaser.Scene {
           this.activeDragCards = [sprite];
           this.activeDragVelocities = [{ x: 0, y: 0 }];
           this.activeDragAngleVelocities = [0];
-          sprite.setDepth(1000);
+          sprite.setDepth(5000);
           this.applyCardLiftEffect([sprite]);
           this.activeDragOffsets = { x: x - sprite.x, y: y - sprite.y };
           this.activeDragFrom = { type: 'freecell', index: topSlot.index };
           this.activeDragTarget = { x, y };
+          this.lastDragPointerPosition = { x, y };
           this.isDragging = true;
           this.dragSource = 'touch';
           this.clearSelection();
@@ -1620,6 +1705,7 @@ export class FreeCellScene extends Phaser.Scene {
     canvas.addEventListener('mousedown', (e: MouseEvent) => {
       if (e.button !== 0) return; // Left click only
       if (this.isReplayMode) return;
+      this.cancelInitialAutoMoves();
       const rect = canvas.getBoundingClientRect();
       const scaleX = canvas.width / rect.width;
       const scaleY = canvas.height / rect.height;
@@ -1627,6 +1713,8 @@ export class FreeCellScene extends Phaser.Scene {
       const y = (e.clientY - rect.top) * scaleY;
 
       this.mouseIsDown = true;
+      this.suppressPointerClick = false;
+      this.mouseDownCardId = null;
       this.mouseStartX = x;
       this.mouseStartY = y;
       this.mouseMoved = false;
@@ -1634,6 +1722,7 @@ export class FreeCellScene extends Phaser.Scene {
       // Pre-identify which card would be dragged (but don't lift yet)
       // Actual drag starts on first movement past threshold
       this.tryMousePickup(x, y);
+      this.mouseDownCardId = this.activeDragCards[0]?.cardData.id ?? null;
     });
 
     canvas.addEventListener('mousemove', (e: MouseEvent) => {
@@ -1651,6 +1740,8 @@ export class FreeCellScene extends Phaser.Scene {
         const dy = y - this.mouseStartY;
         if (Math.sqrt(dx * dx + dy * dy) < 5) return;
         this.mouseMoved = true;
+        this.suppressPointerClick = true;
+        this.blockCardClicksUntil = Date.now() + 350;
         if (this.activeDragCards.length > 0) {
           this.isDragging = true;
           this.dragSource = 'mouse';
@@ -1677,9 +1768,9 @@ export class FreeCellScene extends Phaser.Scene {
       const y = (e.clientY - rect.top) * scaleY;
 
       if (this.isDragging && this.mouseMoved) {
+        this.blockCardClicksUntil = Date.now() + 350;
         this.mouseDrop(x, y);
       } else {
-        // Was a click, not a drag — let Phaser's click system handle it
         this.clearActiveDragState(true);
       }
       this.mouseIsDown = false;
@@ -1702,21 +1793,8 @@ export class FreeCellScene extends Phaser.Scene {
       const state = this.engine.getState();
       const cascade = state.cascades[col];
       if (cascade.length === 0) return;
-
-      const cascadeTop = this.boardOffsetY + this.topRowHeight + this.cascadeGap;
-      const overlap = this.getCurrentOverlap();
-      const relativeY = y - cascadeTop;
-      let cardIndex = Math.floor(relativeY / Math.max(overlap, 1));
-      cardIndex = Math.min(Math.max(cardIndex, 0), cascade.length - 1);
-
-      const lastCardTop = cascadeTop + (cascade.length - 1) * overlap;
-      if (y > lastCardTop && y < lastCardTop + this.cardHeight) {
-        cardIndex = cascade.length - 1;
-      }
-
-      const run = this.engine.getValidRun(col);
-      const runStart = cascade.length - run.length;
-      if (cardIndex < runStart) cardIndex = runStart;
+      const cardIndex = this.getCascadePickupIndexAtPoint(col, x, y);
+      if (cardIndex === -1) return;
 
       this.clearActiveDragState(true);
       for (let i = cardIndex; i < cascade.length; i++) {
@@ -1725,7 +1803,7 @@ export class FreeCellScene extends Phaser.Scene {
           this.activeDragCards.push(sprite);
           this.activeDragVelocities.push({ x: 0, y: 0 });
           this.activeDragAngleVelocities.push(0);
-          sprite.setDepth(1000 + (i - cardIndex));
+          sprite.setDepth(5000 + (i - cardIndex));
         }
       }
 
@@ -1734,6 +1812,7 @@ export class FreeCellScene extends Phaser.Scene {
         this.activeDragOffsets = { x: x - topSprite.x, y: y - topSprite.y };
         this.activeDragFrom = { type: 'cascade', index: col, cardIndex };
         this.activeDragTarget = { x, y };
+        this.lastDragPointerPosition = { x, y };
 
         if (!this.timer.isRunning) this.timer.start();
         this.lastMoveTime = Date.now();
@@ -1756,10 +1835,11 @@ export class FreeCellScene extends Phaser.Scene {
           this.activeDragCards = [sprite];
           this.activeDragVelocities = [{ x: 0, y: 0 }];
           this.activeDragAngleVelocities = [0];
-          sprite.setDepth(1000);
+          sprite.setDepth(5000);
           this.activeDragOffsets = { x: x - sprite.x, y: y - sprite.y };
           this.activeDragFrom = { type: 'freecell', index: topSlot.index };
           this.activeDragTarget = { x, y };
+          this.lastDragPointerPosition = { x, y };
           if (!this.timer.isRunning) this.timer.start();
           this.lastMoveTime = Date.now();
           this.clearHintGlow();
@@ -2217,7 +2297,7 @@ export class FreeCellScene extends Phaser.Scene {
     const cardStartY = 10;
     for (let i = 0; i < cascade.length; i++) {
       const card = cascade[i];
-      const assetKey = getCardAssetKey(card.suit, card.rank);
+      const assetKey = this.getCardTextureKey(card) ?? getCardAssetKey(card.suit, card.rank, DEFAULT_CARD_STYLE_ID);
       if (this.textures.exists(assetKey)) {
         const img = this.add.image(
           cardStartX + tooltipCardWidth / 2,
@@ -2240,6 +2320,11 @@ export class FreeCellScene extends Phaser.Scene {
   // ── Click-to-Move System (Desktop) ─────────────────────────
 
   private onCardClick(sprite: CardSprite, pointer: Phaser.Input.Pointer): void {
+    this.cancelInitialAutoMoves();
+    if (!this.isTouchDevice && Date.now() < this.blockCardClicksUntil) {
+      return;
+    }
+
     // Don't process click if we're dragging
     if (this.dragCards.length > 0) return;
 
@@ -2260,10 +2345,14 @@ export class FreeCellScene extends Phaser.Scene {
       return;
     }
 
-    // If this card is already selected, try smart auto-move
+    // Desktop clicks should favor manual placement/drag over auto-moving.
     if (this.selectedCard === sprite) {
-      this.clearSelection();
-      this.smartAutoMove(sprite);
+      if (this.isTouchDevice) {
+        this.clearSelection();
+        this.smartAutoMove(sprite);
+      } else {
+        this.clearSelection();
+      }
       return;
     }
 
@@ -2277,7 +2366,13 @@ export class FreeCellScene extends Phaser.Scene {
       return;
     }
 
-    // No card selected: single-tap auto-move for bottom cascade card or freecell card
+    // Desktop: first click selects the card, so a hold/drag never turns into an unexpected auto-move.
+    if (!this.isTouchDevice) {
+      this.selectCard(sprite);
+      return;
+    }
+
+    // Touch: single-tap auto-move for bottom cascade card or freecell card
     const location = this.findCardLocation(sprite.cardData);
     if (location) {
       if (location.type === 'freecell') {
@@ -3247,65 +3342,14 @@ export class FreeCellScene extends Phaser.Scene {
     for (const [, sprite] of this.cardSprites) {
       // Remove all children (image, shadow, text objects)
       sprite.removeAll(true);
-
-      const card = sprite.cardData;
-
-      // 1. Procedural Vector Base (matches createCardSprite)
-      const base = this.add.graphics();
-      base.fillStyle(0xffffff, 1);
-      base.fillRoundedRect(0, 0, this.cardWidth, this.cardHeight, 8);
-      base.lineStyle(2, 0x000000, 0.08);
-      base.strokeRoundedRect(0, 0, this.cardWidth, this.cardHeight, 8);
-      sprite.add(base);
-
-      // 2. Rank Text
-      const isRed = (card.suit === Suit.Hearts || card.suit === Suit.Diamonds);
-      const colorStr = isRed ? '#cc0000' : '#000000';
-      const rankMap: Record<number, string> = { 1: 'A', 11: 'J', 12: 'Q', 13: 'K' };
-      const rankStr = rankMap[card.rank] || card.rank.toString();
-      const fontSize = Math.floor(this.cardWidth * 0.28);
-      const text = this.add.text(this.cardWidth * 0.15, this.cardHeight * 0.05, rankStr, {
-        fontSize: `${fontSize}px`,
-        color: colorStr,
-        fontFamily: 'Inter, system-ui, -apple-system, sans-serif',
-        fontStyle: '900'
-      });
-      text.setOrigin(0.5, 0);
-      sprite.add(text);
-
-      // 3. Suit Icons
-      const suitMap: Record<string, string> = {
-        [Suit.Hearts as string]: 'suit_heart',
-        [Suit.Spades as string]: 'suit_spade',
-        [Suit.Diamonds as string]: 'suit_diamond',
-        [Suit.Clubs as string]: 'suit_club',
-      };
-
-      // Small suit icon under corner rank
-      const smallSuitSz = this.cardWidth * 0.18;
-      const suitY = this.cardHeight * 0.05 + Math.floor(this.cardWidth * 0.28) * 1.0;
-      const smallSuit = this.add.image(this.cardWidth * 0.15, suitY + (smallSuitSz / 2), suitMap[card.suit as string]);
-      smallSuit.setDisplaySize(smallSuitSz, smallSuitSz);
-      sprite.add(smallSuit);
-
-      // Large center suit
-      const bigSuitSz = this.cardWidth * 0.45;
-      const suitImg = this.add.image(this.cardWidth / 2, this.cardHeight * 0.52, suitMap[card.suit as string]);
-      suitImg.setDisplaySize(bigSuitSz, bigSuitSz);
-      sprite.add(suitImg);
-
-      // 4. Shadow behind everything
-      const shadow = this.add.graphics();
-      shadow.fillStyle(0x000000, 0.12);
-      shadow.fillRoundedRect(2, 2, this.cardWidth, this.cardHeight, 8);
-      sprite.addAt(shadow, 0);
+      this.renderCardSpriteContents(sprite);
 
       // Update container size and re-add interactivity for desktop
       sprite.setSize(this.cardWidth, this.cardHeight);
 
       if (!this.isTouchDevice) {
         sprite.setInteractive(
-          new Phaser.Geom.Rectangle(0, 0, this.cardWidth, this.cardHeight),
+          new Phaser.Geom.Rectangle(-8, -8, this.cardWidth + 16, this.cardHeight + 16),
           Phaser.Geom.Rectangle.Contains
         );
       }
@@ -3761,6 +3805,10 @@ export class FreeCellScene extends Phaser.Scene {
   // ── New Game ──────────────────────────────────────────────
 
   private startNewGame(): void {
+    this.cancelInitialAutoMoves();
+    this.isDealAnimating = false;
+    this.pendingResize = false;
+
     // Exit replay mode if active (discard saved state)
     this.isReplayMode = false;
     this.preReplayEngine = null;
@@ -3793,10 +3841,7 @@ export class FreeCellScene extends Phaser.Scene {
     this.lastMoveTime = Date.now();
     gameBridge.emit('gameReady', { gameNumber: this.gameNumber });
 
-    // Auto-move after deal animation completes
-    this.time.delayedCall(3000 * this.getSpeedMultiplier(), () => {
-      this.performAutoMoves();
-    });
+    this.scheduleInitialAutoMoves();
   }
 
   // ── Juice: Inactivity Effects ────────────────────────────────

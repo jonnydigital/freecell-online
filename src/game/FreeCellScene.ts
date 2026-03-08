@@ -269,7 +269,7 @@ export class FreeCellScene extends Phaser.Scene {
     generateCardBackTexture(this, this.cardWidth, this.cardHeight);
     this.refreshCanvasMetrics();
     this.createBoard();
-    this.dealCards(true); // staggered deal on first load
+    this.dealCards(false); // staggered deal on first load
 
     // Listen for resize
     this.scaleResizeHandler = () => {
@@ -588,9 +588,8 @@ export class FreeCellScene extends Phaser.Scene {
     // Register test bridge for Antigravity QA
     registerTestBridge(this);
 
-    // Run auto-moves after deal animation completes
-    // Deal: 52 cards × 45ms stagger + 450ms longest tween ≈ 2800ms
-    this.scheduleInitialAutoMoves();
+    // Run auto-moves immediately (deal is instant, no animation to wait for)
+    this.performAutoMoves();
 
     // Juice: start inactivity checker (hint glow at 8s, idle wiggle at 12s)
     this.lastMoveTime = Date.now();
@@ -1380,12 +1379,6 @@ export class FreeCellScene extends Phaser.Scene {
         if (staggered) {
           // Start cards off-screen at top-center, animate as a single smooth glide
           const sprite = this.createCardSprite(card, w / 2 - this.cardWidth / 2, -this.cardHeight);
-
-          // Add premium card back for flip effect
-          const backKey = this.textures.exists('card_back_custom') ? 'card_back_custom' : 'card_back';
-          const backImg = this.add.image(this.cardWidth / 2, this.cardHeight / 2, backKey);
-          backImg.setDisplaySize(this.cardWidth, this.cardHeight);
-          sprite.add(backImg);
 
           sprite.sourceLocation = { type: 'cascade', index: col, cardIndex: row };
           sprite.setDepth(500 + dealIndex);
@@ -3843,11 +3836,12 @@ export class FreeCellScene extends Phaser.Scene {
 
     // Rebuild board and redeal with staggered animation
     this.rebuildBoard();
-    this.dealCards(true);
+    this.dealCards(false);
     this.lastMoveTime = Date.now();
     gameBridge.emit('gameReady', { gameNumber: this.gameNumber });
 
-    this.scheduleInitialAutoMoves();
+    // Run auto-moves immediately (deal is instant)
+    this.performAutoMoves();
   }
 
   // ── Juice: Inactivity Effects ────────────────────────────────

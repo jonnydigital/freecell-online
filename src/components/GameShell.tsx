@@ -492,19 +492,36 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
     } catch { /* silent fail */ }
   };
 
-  // Keyboard shortcuts
+  // Keyboard shortcuts (React-layer: overlays, undo/redo via Ctrl, new game confirmation)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      const tag = (e.target as HTMLElement)?.tagName;
+      if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+
       if (e.ctrlKey || e.metaKey) {
         if (e.key === 'z') { e.preventDefault(); handleUndo(); }
         if (e.key === 'y') { e.preventDefault(); handleRedo(); }
       }
-      if (e.key === 'n' && !e.ctrlKey && !e.metaKey) handleNewGame();
-      if (e.key === 'h' && !e.ctrlKey && !e.metaKey) handleHint();
-      if (e.key === '?') setShowShortcuts(true);
+      if (e.key === '?' && !e.ctrlKey && !e.metaKey) setShowShortcuts(true);
+      // Escape closes any open overlay
+      if (e.key === 'Escape') {
+        if (showShortcuts) setShowShortcuts(false);
+        else if (showSettings) setShowSettings(false);
+        else if (showHome) setShowHome(false);
+      }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [showShortcuts, showSettings, showHome]);
+
+  // Listen for 'requestNewGame' from Phaser keyboard handler (N key) to show confirmation
+  useEffect(() => {
+    const unsub = gameBridge.on('requestNewGame', () => {
+      if (window.confirm('Start a new game? Current progress will be lost.')) {
+        handleNewGame();
+      }
+    });
+    return unsub;
   }, []);
 
   const iconBtnClass = "p-3 hover:bg-white/10 text-white/80 rounded-full transition-all active:scale-95";

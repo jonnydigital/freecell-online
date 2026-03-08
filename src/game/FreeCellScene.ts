@@ -120,6 +120,9 @@ export class FreeCellScene extends Phaser.Scene {
   // Board slot graphics (for redraw on resize)
   private slotGraphics: Phaser.GameObjects.GameObject[] = [];
 
+  // Column number labels (keyboard hints)
+  private columnLabels: Phaser.GameObjects.Text[] = [];
+
   // Visual effects
   private vignette: Phaser.GameObjects.Graphics | null = null;
   private feltNoise: Phaser.GameObjects.Graphics | null = null;
@@ -337,6 +340,8 @@ export class FreeCellScene extends Phaser.Scene {
         this.clearHintGlow();
         this.clearHintText();
       }
+      // Refresh column labels when keyboard hints toggle changes
+      this.drawColumnLabels();
     }));
 
     this.bridgeUnsubscribers.push(gameBridge.on('themeChanged', (themeData: unknown) => {
@@ -458,15 +463,16 @@ export class FreeCellScene extends Phaser.Scene {
 
         const key = e.key.toLowerCase();
         const ctrl = e.ctrlKey || e.metaKey;
+        const shift = e.shiftKey;
 
         // Ctrl+Z / Cmd+Z: Undo
-        if (ctrl && key === 'z' && !e.shiftKey) {
+        if (ctrl && key === 'z' && !shift) {
           e.preventDefault();
           this.undoLastMove();
           return;
         }
         // Ctrl+Shift+Z / Ctrl+Y: Redo
-        if ((ctrl && key === 'z' && e.shiftKey) || (ctrl && key === 'y')) {
+        if ((ctrl && key === 'z' && shift) || (ctrl && key === 'y')) {
           e.preventDefault();
           this.redoMove();
           return;
@@ -481,93 +487,70 @@ export class FreeCellScene extends Phaser.Scene {
           return;
         }
 
+        // Z: undo (without modifier)
+        if (key === 'z') {
+          this.undoLastMove();
+          return;
+        }
+
+        // Y: redo (without modifier)
+        if (key === 'y') {
+          this.redoMove();
+          return;
+        }
+
         // H: hint
         if (key === 'h') {
           this.showHint();
           return;
         }
 
-        // N: new game
+        // N: new game (emits to GameShell which shows confirmation)
         if (key === 'n') {
-          gameBridge.emit('newGame');
+          gameBridge.emit('requestNewGame');
           return;
+        }
+
+        // Shift+1 through Shift+4: interact with free cells
+        if (shift) {
+          const shiftNum = parseInt(e.key);
+          if (shiftNum >= 1 && shiftNum <= 4) {
+            this.handleFreeCellKey(shiftNum - 1);
+            return;
+          }
         }
 
         // 1-8: interact with cascade column
         const colNum = parseInt(key);
         if (colNum >= 1 && colNum <= 8) {
-          const col = colNum - 1;
-          const state = this.engine.getState();
-          const cascade = state.cascades[col];
-
-          if (this.selectedCard) {
-            // If a card is selected, try to move it to this cascade
-            const from = this.findCardLocation(this.selectedCard.cardData);
-            if (from) {
-              const to: Location = { type: 'cascade', index: col };
-              if (this.engine.isLegalMove(from, to)) {
-                this.executeMoveAndAnimate(from, to);
-                this.clearSelection();
-                return;
-              }
-              // If target cascade has cards, try placing on top card
-              if (cascade.length > 0) {
-                const topCard = cascade[cascade.length - 1];
-                const topSprite = this.cardSprites.get(topCard.id);
-                if (topSprite) {
-                  this.tryMoveSelectedTo(topSprite);
-                  return;
-                }
-              }
-            }
-            this.clearSelection();
-          } else {
-            // No selection: auto-move the bottom card of this cascade
-            if (cascade.length > 0) {
-              const bottomCard = cascade[cascade.length - 1];
-              const sprite = this.cardSprites.get(bottomCard.id);
-              if (sprite) {
-                this.smartAutoMove(sprite);
-              }
-            }
-          }
+          this.handleCascadeKey(colNum - 1);
           return;
         }
 
-        // Q, W, E, R (+ T, Y, U, I for eight-off): interact with free cells
-        const freeCellMap: Record<string, number> = { q: 0, w: 1, e: 2, r: 3, t: 4, y: 5, u: 6, i: 7 };
+        // A/S/D/F: interact with free cells 1-4
+        const freeCellMap: Record<string, number> = { a: 0, s: 1, d: 2, f: 3 };
         if (key in freeCellMap) {
-          const fcIdx = freeCellMap[key];
-          const state = this.engine.getState();
-          if (fcIdx >= state.freeCells.length) return;
-
-          if (this.selectedCard) {
-            // Try to move selected card to this free cell
-            const from = this.findCardLocation(this.selectedCard.cardData);
-            if (from && state.freeCells[fcIdx] === null) {
-              const to: Location = { type: 'freecell', index: fcIdx };
-              if (this.engine.isLegalMove(from, to)) {
-                this.executeMoveAndAnimate(from, to);
-                this.clearSelection();
-                return;
-              }
-            }
-            this.clearSelection();
-          } else {
-            // No selection: auto-move the card in this free cell
-            const card = state.freeCells[fcIdx];
-            if (card) {
-              const sprite = this.cardSprites.get(card.id);
-              if (sprite) {
-                this.smartAutoMove(sprite);
-              }
-            }
-          }
+          this.handleFreeCellKey(freeCellMap[key]);
           return;
         }
 
-        // Space: auto-move selected card, or trigger auto-finish
-        if (key === ' ') {
+        // Q/W/E/R: move selected card to foundation 1-4
+        const foundationMap: Record<string, number> = { q: 0, w: 1, e: 2, r: 3 };
+        if (key in foundationMap) {
+          this.handleFoundationKey(foundationMap[key]);
+          return;
+        }
+
+        // F1-F4: move selected card to foundation 1-4
+        if (e.key >= 'F1' && e.key <= 'F4') {
+          e.preventDefault();
+          const fIdx = parseInt(e.key.slice(1)) - 1;
+          this.handleFoundationKey(fIdx);
+          return;
+        }
+
+        // Space or Enter: auto-move selected card, or trigger auto-finish
+        if (key === ' ' || key === 'enter') {
           e.preventDefault();
           if (this.selectedCard) {
             const sprite = this.selectedCard;
@@ -643,6 +626,7 @@ export class FreeCellScene extends Phaser.Scene {
 
     this.orientationChangeHandler = null;
     this.windowResizeHandler = null;
+    this.clearColumnLabels();
     this.clearActiveDragState(true);
   }
 
@@ -1108,6 +1092,7 @@ export class FreeCellScene extends Phaser.Scene {
 
   private createBoard(): void {
     this.drawSlots();
+    this.drawColumnLabels();
   }
 
   private drawSlots(): void {
@@ -1131,6 +1116,7 @@ export class FreeCellScene extends Phaser.Scene {
 
   private rebuildBoard(): void {
     this.drawSlots();
+    this.drawColumnLabels();
   }
 
   private createSlot(
@@ -3229,6 +3215,158 @@ export class FreeCellScene extends Phaser.Scene {
     }
 
     return null;
+  }
+
+  // ── Keyboard shortcut helpers ─────────────────────────────
+
+  private handleCascadeKey(col: number): void {
+    const state = this.engine.getState();
+    const cascade = state.cascades[col];
+
+    if (this.selectedCard) {
+      // If a card is selected, try to move it to this cascade
+      const from = this.findCardLocation(this.selectedCard.cardData);
+      if (from) {
+        const to: Location = { type: 'cascade', index: col };
+        if (this.engine.isLegalMove(from, to)) {
+          this.flashKeyboardTarget(to);
+          this.executeMoveAndAnimate(from, to);
+          this.clearSelection();
+          return;
+        }
+        // If target cascade has cards, try placing on top card
+        if (cascade.length > 0) {
+          const topCard = cascade[cascade.length - 1];
+          const topSprite = this.cardSprites.get(topCard.id);
+          if (topSprite) {
+            this.tryMoveSelectedTo(topSprite);
+            return;
+          }
+        }
+      }
+      this.clearSelection();
+    } else {
+      // No selection: select the bottom card of this cascade (or auto-move if settings.autoMove)
+      if (cascade.length > 0) {
+        const bottomCard = cascade[cascade.length - 1];
+        const sprite = this.cardSprites.get(bottomCard.id);
+        if (sprite) {
+          if (this.settings.autoMove) {
+            this.smartAutoMove(sprite);
+          } else {
+            this.onCardClick(sprite, { x: sprite.x, y: sprite.y } as Phaser.Input.Pointer);
+          }
+        }
+      }
+    }
+  }
+
+  private handleFreeCellKey(fcIdx: number): void {
+    const state = this.engine.getState();
+    if (fcIdx >= state.freeCells.length) return;
+
+    if (this.selectedCard) {
+      // Try to move selected card to this free cell
+      const from = this.findCardLocation(this.selectedCard.cardData);
+      if (from && state.freeCells[fcIdx] === null) {
+        const to: Location = { type: 'freecell', index: fcIdx };
+        if (this.engine.isLegalMove(from, to)) {
+          this.flashKeyboardTarget(to);
+          this.executeMoveAndAnimate(from, to);
+          this.clearSelection();
+          return;
+        }
+      }
+      this.clearSelection();
+    } else {
+      // No selection: select/auto-move the card in this free cell
+      const card = state.freeCells[fcIdx];
+      if (card) {
+        const sprite = this.cardSprites.get(card.id);
+        if (sprite) {
+          if (this.settings.autoMove) {
+            this.smartAutoMove(sprite);
+          } else {
+            this.onCardClick(sprite, { x: sprite.x, y: sprite.y } as Phaser.Input.Pointer);
+          }
+        }
+      }
+    }
+  }
+
+  private handleFoundationKey(fIdx: number): void {
+    if (!this.selectedCard) return;
+    const suits = [Suit.Clubs, Suit.Diamonds, Suit.Hearts, Suit.Spades];
+    const suit = suits[fIdx];
+    const from = this.findCardLocation(this.selectedCard.cardData);
+    if (!from) return;
+
+    const to: Location = { type: 'foundation', suit };
+    if (this.engine.isLegalMove(from, to)) {
+      this.flashKeyboardTarget(to);
+      this.executeMoveAndAnimate(from, to);
+      this.clearSelection();
+    }
+  }
+
+  /** Brief gold flash on the target location when a keyboard move is made */
+  private flashKeyboardTarget(loc: Location): void {
+    let pos: { x: number; y: number };
+    if (loc.type === 'cascade') {
+      const state = this.engine.getState();
+      const cascade = state.cascades[loc.index];
+      pos = cascade.length > 0
+        ? this.getCascadeCardPosition(loc.index, cascade.length - 1)
+        : this.getCascadeCardPosition(loc.index, 0);
+    } else if (loc.type === 'freecell') {
+      pos = this.getFreeCellPosition(loc.index);
+    } else {
+      const suits = [Suit.Clubs, Suit.Diamonds, Suit.Hearts, Suit.Spades];
+      const idx = suits.indexOf(loc.suit);
+      pos = this.getFoundationPosition(idx);
+    }
+
+    const flash = this.add.graphics();
+    flash.fillStyle(0xffd700, 0.35);
+    flash.fillRoundedRect(pos.x, pos.y, this.cardWidth, this.cardHeight, 6);
+    flash.setDepth(9999);
+
+    this.tweens.add({
+      targets: flash,
+      alpha: 0,
+      duration: 300,
+      ease: 'Power2.easeOut',
+      onComplete: () => flash.destroy(),
+    });
+  }
+
+  // ── Column number labels ─────────────────────────────
+
+  private drawColumnLabels(): void {
+    this.clearColumnLabels();
+    if (this.isTouchDevice) return;
+    if (!this.settings.showKeyboardHints) return;
+
+    const topRow = this.boardOffsetY + this.topRowHeight + this.cascadeGap;
+    const labelY = topRow - 14;
+
+    for (let i = 0; i < 8; i++) {
+      const x = this.getColumnX(i) + this.cardWidth / 2;
+      const label = this.add.text(x, labelY, `${i + 1}`, {
+        fontSize: `${Math.max(10, Math.floor(this.cardWidth * 0.14))}px`,
+        color: this.currentTheme.feltNoiseLight,
+        fontFamily: 'monospace',
+      });
+      label.setOrigin(0.5);
+      label.setAlpha(0.4);
+      label.setDepth(2);
+      this.columnLabels.push(label);
+    }
+  }
+
+  private clearColumnLabels(): void {
+    this.columnLabels.forEach(l => l.destroy());
+    this.columnLabels = [];
   }
 
   private snapCardsBack(): void {

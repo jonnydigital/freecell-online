@@ -230,6 +230,11 @@ const htpFaqs = [
     answer:
       "Free cells hold exactly one card each. Empty columns can hold a single card or an entire ordered sequence. Empty columns also double your supermove capacity, making them far more valuable than free cells. Prioritize creating and protecting empty columns.",
   },
+  {
+    question: "Can I play FreeCell with keyboard shortcuts?",
+    answer:
+      "Yes. On desktop, press 1\u20138 to select cascade columns, A/S/D/F for free cells, and Q/W/E/R to move cards to foundations. Z undoes, Y redoes, H shows a hint, and N starts a new game. Press Space or Enter to auto-move a selected card, and Escape to deselect. Press ? at any time to see the full shortcuts guide.",
+  },
 ];
 
 export default function HowToPlayPage() {

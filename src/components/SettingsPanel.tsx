@@ -254,16 +254,26 @@ export default function SettingsPanel({ isOpen, onClose, settings, onUpdateSetti
                                         <span className="text-[#D4AF37]/60 text-sm">⌨️</span>
                                         <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-white/30">Keyboard Shortcuts</h3>
                                     </div>
+
+                                    <SettingToggle
+                                        label="Show Column Numbers"
+                                        description="Display 1–8 labels above cascade columns"
+                                        enabled={settings.showKeyboardHints}
+                                        onToggle={() => toggleSetting('showKeyboardHints')}
+                                    />
+
                                     <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 text-[11px]">
                                         {[
                                             ['1-8', 'Select/move to column'],
-                                            ['Q W E R', 'Free cells 1-4'],
+                                            ['A S D F', 'Free cells 1-4'],
+                                            ['Q W E R', 'Foundations 1-4'],
+                                            ['Z / Ctrl+Z', 'Undo'],
+                                            ['Y / Ctrl+Y', 'Redo'],
                                             ['H', 'Hint'],
                                             ['N', 'New game'],
-                                            ['Space', 'Auto-move / finish'],
+                                            ['Space / Enter', 'Auto-move'],
                                             ['Esc', 'Deselect'],
-                                            ['Ctrl+Z', 'Undo'],
-                                            ['Ctrl+Shift+Z', 'Redo'],
+                                            ['?', 'Shortcuts guide'],
                                         ].map(([key, desc]) => (
                                             <div key={key} className="contents">
                                                 <span className="text-white/50 font-mono text-right">{key}</span>

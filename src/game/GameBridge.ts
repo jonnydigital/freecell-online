@@ -33,7 +33,8 @@ export type GameToUIEvent =
   | 'autoCompletable'
   | 'error'
   | 'elementPositionResponse'
-  | 'replayMoveExecuted';
+  | 'replayMoveExecuted'
+  | 'requestNewGame';
 
 export type BridgeEvent = UIToGameEvent | GameToUIEvent;
 

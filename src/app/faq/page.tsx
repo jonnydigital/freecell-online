@@ -211,6 +211,11 @@ const faqCategories: FaqCategory[] = [
         answer:
           "Empty columns are almost always more valuable. A free cell holds exactly one card, while an empty column can hold an entire sequence. Empty columns also double your supermove capacity exponentially. Use free cells only as a last resort and clear them as quickly as possible.",
       },
+      {
+        question: "Does FreeCell Online have keyboard shortcuts?",
+        answer:
+          "Yes. On desktop, you can play entirely with the keyboard. Press 1\u20138 for cascade columns, A/S/D/F for free cells, Q/W/E/R (or F1\u2013F4) to move cards to foundations. Z undoes, Y redoes, H gives a hint, and N starts a new game. Press ? at any time to see all available shortcuts.",
+      },
     ],
   },
 ];

@@ -19,6 +19,7 @@ import { GameSettings, loadSettings } from '../lib/storage';
 import { announceToScreenReader } from '../lib/accessibility';
 import { registerTestBridge, unregisterTestBridge } from './TestBridge';
 import { ThemeDefinition, themes, getThemeById, hexToInt } from '../lib/themes';
+import { generateCardBackTexture } from './CardBacks';
 
 // Layout constants
 const CARD_RATIO = 1.4; // height/width ratio
@@ -247,6 +248,7 @@ export class FreeCellScene extends Phaser.Scene {
     this.drawBackgroundEffects();
     this.createParticleTexture();
     this.calculateLayout();
+    generateCardBackTexture(this, this.cardWidth, this.cardHeight);
     this.refreshCanvasMetrics();
     this.createBoard();
     this.dealCards(true); // staggered deal on first load
@@ -258,6 +260,7 @@ export class FreeCellScene extends Phaser.Scene {
       this.invalidateOverlapCache();
       this.refreshCanvasMetrics();
       this.drawBackgroundEffects();
+      generateCardBackTexture(this, this.cardWidth, this.cardHeight);
       this.rebuildBoard();
       this.recreateAllCardSprites();
       this.repositionAllCards(true); // Smooth resize: animate cards to new positions
@@ -319,6 +322,10 @@ export class FreeCellScene extends Phaser.Scene {
       this.cameras.main.setBackgroundColor(hexToInt(newTheme.feltColor));
       this.drawBackgroundEffects();
       this.rebuildBoard();
+    }));
+
+    this.bridgeUnsubscribers.push(gameBridge.on('cardBackChanged', (designId: unknown) => {
+      generateCardBackTexture(this, this.cardWidth, this.cardHeight, designId as string);
     }));
 
     // Replay mode: solver solution playback
@@ -1258,7 +1265,8 @@ export class FreeCellScene extends Phaser.Scene {
           const sprite = this.createCardSprite(card, w / 2 - this.cardWidth / 2, -this.cardHeight);
 
           // Add premium card back for flip effect
-          const backImg = this.add.image(this.cardWidth / 2, this.cardHeight / 2, 'card_back');
+          const backKey = this.textures.exists('card_back_custom') ? 'card_back_custom' : 'card_back';
+          const backImg = this.add.image(this.cardWidth / 2, this.cardHeight / 2, backKey);
           backImg.setDisplaySize(this.cardWidth, this.cardHeight);
           sprite.add(backImg);
 

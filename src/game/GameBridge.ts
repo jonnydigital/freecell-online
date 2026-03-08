@@ -19,7 +19,8 @@ export type UIToGameEvent =
   | 'requestElementPosition'
   | 'replayMove'
   | 'setReplayMode'
-  | 'themeChanged';
+  | 'themeChanged'
+  | 'cardBackChanged';
 
 export type GameToUIEvent =
   | 'moveExecuted'

@@ -1,11 +1,13 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Settings, Volume2, Sparkles, Wand2, Monitor, Hand, MousePointer2, Ghost, Eye } from 'lucide-react';
+import { X, Settings, Volume2, Sparkles, Wand2, Monitor, Hand, MousePointer2, Ghost, Eye, Layers } from 'lucide-react';
 import { GameSettings } from '../lib/storage';
 import ThemeSelector from './ThemeSelector';
 import { getHighContrast, setHighContrast, getReducedMotion, setReducedMotion } from '../lib/accessibility';
+import { cardBackDesigns, getSelectedCardBack, setSelectedCardBack } from '../game/CardBacks';
+import { gameBridge } from '../game/GameBridge';
 
 interface SettingsPanelProps {
     isOpen: boolean;
@@ -20,10 +22,13 @@ interface SettingsPanelProps {
 export default function SettingsPanel({ isOpen, onClose, settings, onUpdateSettings, onGhostMode, ghostSolving }: SettingsPanelProps) {
     const [highContrast, setHighContrastState] = useState(false);
     const [reducedMotion, setReducedMotionState] = useState(false);
+    const [selectedCardBack, setSelectedCardBackState] = useState('classic-blue');
+    const cardBackCanvasRefs = useRef<Map<string, HTMLCanvasElement>>(new Map());
 
     useEffect(() => {
         setHighContrastState(getHighContrast());
         setReducedMotionState(getReducedMotion());
+        setSelectedCardBackState(getSelectedCardBack());
     }, [isOpen]);
 
     const toggleSetting = (key: keyof GameSettings) => {
@@ -47,6 +52,12 @@ export default function SettingsPanel({ isOpen, onClose, settings, onUpdateSetti
         const next = !reducedMotion;
         setReducedMotionState(next);
         setReducedMotion(next);
+    };
+
+    const handleCardBackSelect = (id: string) => {
+        setSelectedCardBackState(id);
+        setSelectedCardBack(id);
+        gameBridge.emit('cardBackChanged', id);
     };
 
     return (
@@ -149,6 +160,32 @@ export default function SettingsPanel({ isOpen, onClose, settings, onUpdateSetti
                                 <ThemeSelector />
                             </section>
 
+                            {/* Card Back Section */}
+                            <section className="space-y-4">
+                                <div className="flex items-center gap-2 mb-2">
+                                    <Layers size={16} className="text-[#D4AF37]/60" />
+                                    <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-white/30">Card Back</h3>
+                                </div>
+                                <div className="grid grid-cols-4 gap-2">
+                                    {cardBackDesigns.map((design) => {
+                                        const isActive = design.id === selectedCardBack;
+                                        return (
+                                            <button
+                                                key={design.id}
+                                                onClick={() => handleCardBackSelect(design.id)}
+                                                className={`relative rounded-lg overflow-hidden transition-all ${isActive ? 'ring-2 ring-[#D4AF37] scale-105' : 'ring-1 ring-white/10 hover:ring-white/25'}`}
+                                                title={design.name}
+                                            >
+                                                <CardBackThumbnail design={design} canvasRefs={cardBackCanvasRefs} />
+                                                <div className={`text-[8px] text-center py-0.5 truncate px-0.5 ${isActive ? 'text-[#D4AF37] font-bold' : 'text-white/40'}`}>
+                                                    {design.name}
+                                                </div>
+                                            </button>
+                                        );
+                                    })}
+                                </div>
+                            </section>
+
                             {/* Audio Section */}
                             <section className="space-y-4">
                                 <div className="flex items-center gap-2 mb-2">
@@ -247,6 +284,37 @@ export default function SettingsPanel({ isOpen, onClose, settings, onUpdateSetti
             )}
         </AnimatePresence>
     );
+}
+
+function CardBackThumbnail({ design, canvasRefs }: {
+    design: { id: string; renderToCanvas: (w: number, h: number) => HTMLCanvasElement };
+    canvasRefs: React.MutableRefObject<Map<string, HTMLCanvasElement>>;
+}) {
+    const containerRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const container = containerRef.current;
+        if (!container) return;
+
+        // Render at thumbnail size (card proportions)
+        const thumbW = 48;
+        const thumbH = 67;
+
+        let cached = canvasRefs.current.get(design.id);
+        if (!cached) {
+            cached = design.renderToCanvas(thumbW, thumbH);
+            canvasRefs.current.set(design.id, cached);
+        }
+
+        cached.style.width = '100%';
+        cached.style.height = 'auto';
+        cached.style.display = 'block';
+
+        container.innerHTML = '';
+        container.appendChild(cached);
+    }, [design, canvasRefs]);
+
+    return <div ref={containerRef} className="aspect-[5/7]" />;
 }
 
 function SettingToggle({ label, description, enabled, onToggle }: {

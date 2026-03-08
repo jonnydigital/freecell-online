@@ -1460,6 +1460,7 @@ export class FreeCellScene extends Phaser.Scene {
     canvas.addEventListener('touchstart', (e: TouchEvent) => {
       e.preventDefault(); // Kill scroll, zoom, and 300ms tap delay
       if (this.isReplayMode) return;
+      if (this.isSettlingDrag) return; // Don't start new drag while cards are settling
       this.cancelInitialAutoMoves();
       const touch = e.touches[0];
       const rect = canvas.getBoundingClientRect();
@@ -1524,6 +1525,8 @@ export class FreeCellScene extends Phaser.Scene {
       if (this.isDragging && this.touchMoved) {
         // Was dragging — try to drop
         this.touchDrop(x, y);
+      } else if (this.isSettlingDrag) {
+        // Cards are mid-settle animation — don't interrupt
       } else if (!this.touchMoved) {
         // Was a tap (no movement) — use tap logic (placement confirmation)
         this.clearActiveDragState(true);
@@ -1705,6 +1708,7 @@ export class FreeCellScene extends Phaser.Scene {
     canvas.addEventListener('mousedown', (e: MouseEvent) => {
       if (e.button !== 0) return; // Left click only
       if (this.isReplayMode) return;
+      if (this.isSettlingDrag) return; // Don't start new drag while cards are settling
       this.cancelInitialAutoMoves();
       const rect = canvas.getBoundingClientRect();
       const scaleX = canvas.width / rect.width;
@@ -1770,7 +1774,9 @@ export class FreeCellScene extends Phaser.Scene {
       if (this.isDragging && this.mouseMoved) {
         this.blockCardClicksUntil = Date.now() + 350;
         this.mouseDrop(x, y);
-      } else {
+      } else if (!this.isSettlingDrag) {
+        // Only clear drag state if we're not mid-settle animation
+        // (mouseleave already triggered snap-back — let it finish)
         this.clearActiveDragState(true);
       }
       this.mouseIsDown = false;

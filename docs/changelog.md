@@ -1,5 +1,9 @@
 # FreeCell Online — Changelog
 
+## 2026-03-08 (Sunday Overnight Build)
+### Shipped
+- **⌨️ Keyboard shortcut system** — Full keyboard controls for power users. 1-8 selects cascade columns, A/S/D/F selects free cells, Q/W/E/R targets foundations, Z undo, H hint, N new game, Escape deselect. Help overlay via `?` key showing all shortcuts. Column number labels (togglable in Settings). Visual highlight on keyboard-selected cards. Added keyboard shortcut section to FAQ and how-to-play pages. 334 lines across 8 files. (15th consecutive night of shipping)
+
 ## 2026-03-07 (Saturday Overnight Build)
 ### Shipped
 - **🧠 FreeCell Solver page** (`/solver`) — Interactive solver widget + 2000+ word SEO content page. Users enter a game number (1-1,000,000) and watch the solver find a solution in real-time via web worker. Shows move count, solve time, step-by-step solution with move descriptions. Handles unsolvable deals gracefully with info about the 8 known impossible deals. Rich content covers: how solvers work (DFS + heuristics), mathematics of FreeCell (52! permutations, 99.999% solvability), solver algorithms compared (DFS/BFS/A*/IDA*), famous unsolvable deals with game links, using solvers to improve play. 8-question FAQPage schema JSON-LD. AdUnit placements between sections. Cross-links to /statistics, /strategy, /tips, /deals, /game/11982, /history. Added to SiteFooter Explore column and sitemap. Targets "freecell solver", "freecell solution finder" keywords. (839 lines across page.tsx + SolverWidget.tsx)

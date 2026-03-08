@@ -194,7 +194,16 @@ export default function DailyFreecellPage() {
           compare.
         </p>
 
-        <div className="mt-8 flex items-center justify-center gap-3">
+        <div className="mt-6">
+          <Link
+            href="/daily-freecell/calendar"
+            className="inline-flex items-center gap-2 text-[#D4AF37]/80 hover:text-[#D4AF37] text-sm font-medium transition-colors"
+          >
+            View Your Challenge Calendar →
+          </Link>
+        </div>
+
+        <div className="mt-6 flex items-center justify-center gap-3">
           <div className="h-px w-12 bg-gradient-to-r from-transparent to-[#D4AF37]/50" />
           <span className="text-[#D4AF37] text-sm">
             {"\u2660"} {"\u2665"} {"\u2666"} {"\u2663"}

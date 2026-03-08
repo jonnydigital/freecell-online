@@ -19,6 +19,7 @@ export default function SiteFooter() {
           { href: '/streak', label: 'Streak Mode' },
           { href: '/storm', label: 'Storm Mode' },
           { href: '/winning-deals', label: 'Winning Deals' },
+          { href: '/daily-freecell/calendar', label: 'Challenge Calendar' },
         ];
 
   const learnLinks =

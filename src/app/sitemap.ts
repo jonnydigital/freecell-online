@@ -35,6 +35,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/leaderboard', changeFrequency: 'daily' as const, priority: 0.6 },
     { path: '/about', changeFrequency: 'yearly' as const, priority: 0.5 },
     { path: '/daily-freecell', changeFrequency: 'daily' as const, priority: 0.7 },
+    { path: '/daily-freecell/calendar', changeFrequency: 'daily' as const, priority: 0.6 },
     { path: '/freecell-for-beginners', changeFrequency: 'monthly' as const, priority: 0.7 },
     { path: '/is-every-freecell-game-winnable', changeFrequency: 'monthly' as const, priority: 0.7 },
     { path: '/easy-freecell-games', changeFrequency: 'monthly' as const, priority: 0.7 },

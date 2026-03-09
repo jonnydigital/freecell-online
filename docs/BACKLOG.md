@@ -42,7 +42,7 @@
 19. ~~**Animation speed setting**~~ ✅ SHIPPED — slow/normal/fast toggle in Settings panel, wired to game engine multiplier *(cardgames.io feature)*
 20. ~~**Sound pitch variation**~~ ✅ SHIPPED 03-03 — higher rank = higher pitch on foundation *(polish item from 02-26 analysis)*
 21. ~~**Dynamic OG Images + Twitter Cards**~~ ✅ SHIPPED 03-05 — Rich social preview images for all pages + per-game dynamic OG for /game/[number] routes. Twitter summary_large_image cards site-wide.
-22. **"Relaxed mode"** — Elderly-friendly option: no timer display, larger cards, simplified UI *(Reddit r/balatro insight — FreeCell audience skews older, accessibility matters)*
+22. ~~**"Relaxed mode"**~~ ✅ SHIPPED 03-09 — Elderly-friendly option: hides timer display, coffee icon indicator, gold info banner. Settings > Accessibility toggle. *(Reddit r/balatro insight — FreeCell audience skews older, accessibility matters)*
 23. **Submit to solitaireblog.com** — Martin Petroff reviews 80+ solitaire sites with ratings. Backlink + visibility opportunity. *(Wait for custom domain)*
 24. **Fix mobile gold rectangle** — Faint gold-bordered rectangle visible in bottom-right on 390px mobile viewport. Likely canvas z-index or autocomplete zone visibility bug.
 

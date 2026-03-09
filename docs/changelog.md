@@ -1,5 +1,9 @@
 # FreeCell Online — Changelog
 
+## 2026-03-09 (Monday Overnight Build)
+### Shipped
+- **☕ Relaxed Mode** — Elderly-friendly, pressure-free gameplay option in Settings > Accessibility. Hides the timer display on both desktop (replaced with Coffee icon + gold "Relaxed" label) and mobile (replaced with ☕ emoji). Timer continues running internally for stats tracking — move count remains visible. Gold info banner confirms mode when active ("Timer hidden • No time pressure • Just play"). SettingToggle component enhanced with optional icon support. Validated by Reddit r/balatro research (elderly grandfather who plays FreeCell with shaky hands, no need for timer pressure). 43 lines across 3 files. (17th consecutive night of shipping)
+
 ## 2026-03-08 (Sunday Overnight Build)
 ### Shipped
 - **📅 Daily Challenge Calendar page** (`/daily-freecell/calendar`) — Interactive monthly calendar showing daily challenge completion history. Streak stats section (current streak, longest streak, total completed, monthly completion rate) with animated counters. Gold-highlighted completed days with time/moves hover tooltips. Click any past day to replay that daily challenge. Monthly stats panel (best time, avg moves, perfect days). framer-motion animations throughout. BreadcrumbList JSON-LD. AdUnit placements. Added calendar link to daily-freecell hero, SiteFooter Play column, and sitemap. 470 lines across 5 files. (16th consecutive night of shipping)

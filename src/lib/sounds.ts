@@ -299,6 +299,58 @@ class SoundManager {
     osc.stop(t + 0.12);
   }
 
+  /** Suit completed! Triumphant ascending arpeggio with shimmer — plays when all 13 cards of one suit reach foundation */
+  suitComplete(): void {
+    if (this._muted) return;
+    const ctx = this.getContext();
+    if (!ctx) return;
+    const t = ctx.currentTime;
+
+    // Celebratory ascending arpeggio (C major scale fragment: C5 → E5 → G5 → C6)
+    const notes = [523.3, 659.3, 784.0, 1046.5];
+    notes.forEach((freq, i) => {
+      const start = t + i * 0.08;
+
+      // Main bell tone
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.value = freq;
+      gain.gain.setValueAtTime(0, start);
+      gain.gain.linearRampToValueAtTime(0.18, start + 0.015);
+      gain.gain.setValueAtTime(0.18, start + 0.12);
+      gain.gain.exponentialRampToValueAtTime(0.001, start + 0.4);
+      osc.connect(gain).connect(ctx.destination);
+      osc.start(start);
+      osc.stop(start + 0.4);
+
+      // Bright harmonic for sparkle
+      const osc2 = ctx.createOscillator();
+      const gain2 = ctx.createGain();
+      osc2.type = 'sine';
+      osc2.frequency.value = freq * 3;
+      gain2.gain.setValueAtTime(0, start);
+      gain2.gain.linearRampToValueAtTime(0.05, start + 0.01);
+      gain2.gain.exponentialRampToValueAtTime(0.001, start + 0.2);
+      osc2.connect(gain2).connect(ctx.destination);
+      osc2.start(start);
+      osc2.stop(start + 0.2);
+    });
+
+    // Sustained shimmer tail
+    const shimmerStart = t + 4 * 0.08;
+    const shimmer = ctx.createOscillator();
+    const sGain = ctx.createGain();
+    shimmer.type = 'sine';
+    shimmer.frequency.value = 2093; // C7
+    sGain.gain.setValueAtTime(0, shimmerStart);
+    sGain.gain.linearRampToValueAtTime(0.06, shimmerStart + 0.03);
+    sGain.gain.exponentialRampToValueAtTime(0.001, shimmerStart + 0.6);
+    shimmer.connect(sGain).connect(ctx.destination);
+    shimmer.start(shimmerStart);
+    shimmer.stop(shimmerStart + 0.6);
+  }
+
   /** Triumphant fanfare — chord progression win celebration */
   winFanfare(): void {
     if (this._muted) return;

@@ -2,6 +2,7 @@
 
 ## 2026-03-08 (Sunday Overnight Build)
 ### Shipped
+- **📅 Daily Challenge Calendar page** (`/daily-freecell/calendar`) — Interactive monthly calendar showing daily challenge completion history. Streak stats section (current streak, longest streak, total completed, monthly completion rate) with animated counters. Gold-highlighted completed days with time/moves hover tooltips. Click any past day to replay that daily challenge. Monthly stats panel (best time, avg moves, perfect days). framer-motion animations throughout. BreadcrumbList JSON-LD. AdUnit placements. Added calendar link to daily-freecell hero, SiteFooter Play column, and sitemap. 470 lines across 5 files. (16th consecutive night of shipping)
 - **⌨️ Keyboard shortcut system** — Full keyboard controls for power users. 1-8 selects cascade columns, A/S/D/F selects free cells, Q/W/E/R targets foundations, Z undo, H hint, N new game, Escape deselect. Help overlay via `?` key showing all shortcuts. Column number labels (togglable in Settings). Visual highlight on keyboard-selected cards. Added keyboard shortcut section to FAQ and how-to-play pages. 334 lines across 8 files. (15th consecutive night of shipping)
 
 ## 2026-03-07 (Saturday Overnight Build)

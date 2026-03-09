@@ -206,6 +206,43 @@ export class FreeCellScene extends Phaser.Scene {
     }
   }
 
+    /** Check if a suit's foundation pile is now complete (13 cards) and celebrate */
+  private checkSuitCompletion(suit: Suit): void {
+    const state = this.engine.getState();
+    const pile = state.foundations.get(suit);
+    if (!pile || pile.length !== 13) return;
+    // Don't play suit complete sound if game is already won (win fanfare handles that)
+    if (state.isWon) return;
+
+    // Suit complete! Play celebration sound
+    soundManager.suitComplete();
+
+    // Enhanced particle burst for suit completion
+    const suits = [Suit.Clubs, Suit.Diamonds, Suit.Hearts, Suit.Spades];
+    const idx = suits.indexOf(suit);
+    const pos = this.getFoundationPosition(idx);
+
+    const emitter = this.add.particles(pos.x + this.cardWidth / 2, pos.y + this.cardHeight / 2, 'gold_sparkle', {
+      speed: { min: 80, max: 350 },
+      angle: { min: 0, max: 360 },
+      scale: { start: 1.5, end: 0 },
+      alpha: { start: 1, end: 0 },
+      lifespan: 1000,
+      gravityY: 300,
+      quantity: 40,
+      emitting: false,
+      blendMode: 'ADD'
+    });
+    emitter.setDepth(10001);
+    emitter.explode(40);
+    this.time.delayedCall(1100, () => emitter.destroy());
+
+    // Screen reader announcement
+    const suitNames: Record<string, string> = { 'C': 'Clubs', 'D': 'Diamonds', 'H': 'Hearts', 'S': 'Spades' };
+    const suitName = suitNames[suit] || suit;
+    announceToScreenReader(`${suitName} suit complete!`, 'assertive');
+  }
+
   private emitFoundationParticles(suit: Suit): void {
     const suits = [Suit.Clubs, Suit.Diamonds, Suit.Hearts, Suit.Spades];
     const idx = suits.indexOf(suit);
@@ -2884,6 +2921,8 @@ export class FreeCellScene extends Phaser.Scene {
     if (to.type === 'foundation') {
       soundManager.cardToFoundation();
       this.emitFoundationParticles(to.suit);
+      // Check for suit completion (13 cards = complete suit)
+      this.checkSuitCompletion(to.suit);
       announceToScreenReader('Card moved to foundation');
     } else {
       soundManager.cardPlace();
@@ -2906,6 +2945,12 @@ export class FreeCellScene extends Phaser.Scene {
         this.time.delayedCall(initialDelay + i * stagger, () => {
           soundManager.cardToFoundation(am.cards[0].rank);
           this.emitFoundationParticles(am.cards[0].suit);
+          // Check for suit completion during auto-moves
+          if (am.cards[0].rank === 13) {
+            this.time.delayedCall(80, () => {
+              this.checkSuitCompletion(am.cards[0].suit);
+            });
+          }
         });
       });
     }
@@ -3074,6 +3119,10 @@ export class FreeCellScene extends Phaser.Scene {
         this.history.push(move, []);
         soundManager.cardToFoundation(bestRank);
         this.emitFoundationParticles(bestCard.suit);
+        // Check suit completion during auto-finish (King = rank 13)
+        if (bestRank === 13) {
+          this.checkSuitCompletion(bestCard.suit);
+        }
         this.repositionAllCards();
 
         gameBridge.emit('moveExecuted', {

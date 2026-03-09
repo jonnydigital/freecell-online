@@ -110,3 +110,11 @@
 - Gemini 3 Flash: code-level UI review
 - Gemini 3.1 Pro: visual UI review via AI Studio + CLI
 - Council review: Gemini + Claude alignment on priorities
+
+## 2026-03-08 (Night 17)
+
+### Added
+- **Suit completion celebration** — unique ascending arpeggio sound + 40-particle burst (2.7x normal) when all 13 cards of a suit reach the foundation
+- Screen reader announcement for suit completion ("Hearts suit complete!")
+- Works across all paths: manual moves, auto-moves, and auto-finish
+- Smart skip: doesn't play on 4th suit (win fanfare takes over)

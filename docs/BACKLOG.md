@@ -42,6 +42,9 @@
 19. ~~**Animation speed setting**~~ ✅ SHIPPED — slow/normal/fast toggle in Settings panel, wired to game engine multiplier *(cardgames.io feature)*
 20. ~~**Sound pitch variation**~~ ✅ SHIPPED 03-03 — higher rank = higher pitch on foundation *(polish item from 02-26 analysis)*
 21. ~~**Dynamic OG Images + Twitter Cards**~~ ✅ SHIPPED 03-05 — Rich social preview images for all pages + per-game dynamic OG for /game/[number] routes. Twitter summary_large_image cards site-wide.
+22. **"Relaxed mode"** — Elderly-friendly option: no timer display, larger cards, simplified UI *(Reddit r/balatro insight — FreeCell audience skews older, accessibility matters)*
+23. **Submit to solitaireblog.com** — Martin Petroff reviews 80+ solitaire sites with ratings. Backlink + visibility opportunity. *(Wait for custom domain)*
+24. **Fix mobile gold rectangle** — Faint gold-bordered rectangle visible in bottom-right on 390px mobile viewport. Likely canvas z-index or autocomplete zone visibility bug.
 
 ## ⏳ Blocked (Needs Jonathan)
 - **Custom domain** — playfreecellonline.com → Vercel DNS
@@ -78,11 +81,32 @@
 
 ---
 
-## Priority Rationale (2026-03-01 — Sunday Synthesis)
-- **🚨 Mobile rendering bug is P0** — If cards are invisible on mobile, nothing else matters. Fix first.
-- **Post-game analysis** — Still highest-ROI feature. Leverages existing solver, adds educational value + replay motivation.
-- **Numbered game URLs** — Standard competitor feature (cardgames.io has 1-50000). SEO + shareability.
-- **Video content** — Competitors (Solitaired, Solitaire Bliss) have video tutorials. We have zero. Affects dwell time + rich snippets.
-- **FreeCell history page** — Unique content opportunity. Green Felt owns this narrative but we can do it better.
-- **GA4 data STILL needed** — 3 nights without analytics. **Critical gap.** Consider GA4 API integration as alternative to browser-based access.
-- **Monetization roadmap** — Freestar header bidding delivers +2000% over AdSense. Plan for this once traffic justifies (need domain + AdSense first).
+## Priority Rationale (2026-03-08 — Sunday Synthesis)
+
+### 🚨 THE CRITICAL PATH: Traffic, Not Features
+After 17 features shipped this week and GA4 showing **1 user in 28 days** (just Fred's test), the diagnosis is clear:
+
+**Phase 1 (Build) is COMPLETE.** We have more features than most competitors:
+- 5 game modes (FreeCell, Baker's, Eight Off, Spider, Daily Challenge)
+- 3 competitive modes (Streak, Storm, numbered games)
+- 20+ content pages with FAQPage/WebApplication schema
+- PWA, dynamic sitemap, OG images, accessibility, themes
+- Interactive solver, ghost mode, achievements, deal explorer
+
+**Phase 2 (Launch & Grow) is BLOCKED on:**
+1. **🔴 Custom domain** — playfreecellonline.com → Vercel DNS. NOTHING else matters.
+2. **🔴 Google Search Console** — Can't submit without domain
+3. **🟡 AdSense** — Monetization code ready but needs publisher ID
+4. **🟡 Backlinks** — solitaireblog.com review, Reddit posts, Product Hunt launch (all waiting for domain)
+
+### What To Build While Waiting
+- **Video tutorial** — Can be produced independently and posted to YouTube
+- **Leaderboard backend** — Vercel KV integration
+- **Mobile gold rectangle fix** — Quick canvas bug
+- **"Relaxed mode"** — Elderly-friendly UX (validated by Reddit insight)
+
+### GA4 Status
+✅ Successfully accessed FreeCell Online property (ID 525799022) for the first time on 03-08. Browser-based access working through openclaw.
+
+### Monetization Planning
+Freestar header bidding delivers +2000% over basic AdSense. Plan for this once traffic justifies (need domain + traffic baseline first).

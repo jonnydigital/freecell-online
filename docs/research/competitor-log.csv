@@ -13,4 +13,9 @@ date,site,spark_found,description,priority,implemented
 2026-03-01,cardgames.io,yes,1-50000 numbered game library for shareability,medium,no
 2026-03-01,247freecell.com,no,Basic content — glossary definitions but no unique features,low,n/a
 2026-03-01,reddit/r/solitaire,yes,Win rate statistics content opportunity + quality frustration signal,medium,no
-2026-03-01,playfreecellonline.com,yes,CRITICAL: Mobile card rendering broken — cards show as blank rectangles,critical,no
+2026-03-01,playfreecellonline.com,yes,CRITICAL: Mobile card rendering broken — cards show as blank rectangles,critical,yes
+2026-03-08,solitaireblog.com,yes,Solitaire website catalog with ratings — submit for review as backlink opportunity,medium,no
+2026-03-08,google.com/search,no,Not ranking on page 1 for any target keywords — custom domain is prerequisite,critical,no
+2026-03-08,reddit/r/solitaire,yes,solitaireblog.com catalog discovery + daily challenge community engagement signal,medium,no
+2026-03-08,reddit/r/balatro,yes,Elderly FreeCell audience — accessibility and relaxed mode opportunity,medium,no
+2026-03-08,reddit/r/FreeCash,yes,Disney Solitaire dark patterns anger — validates our no-dark-patterns positioning,low,no

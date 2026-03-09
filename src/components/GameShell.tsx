@@ -10,7 +10,7 @@ import { initErrorTracking, setGameContext } from '../lib/errorTracking';
 import { checkWinAchievements, recordModePlayed, recordUniqueGame } from '../lib/achievementTracker';
 import type { Achievement } from '../lib/achievements';
 import { getTodaysSeed, getTodayStr, recordDailyCompletion, isTodayCompleted } from '../lib/dailyChallenge';
-import { RotateCcw, RotateCw, Lightbulb, Calendar, Home, Share2, AlertTriangle, ChevronLeft, Flame, Volume2, VolumeX, Eye, Ghost } from 'lucide-react';
+import { RotateCcw, RotateCw, Lightbulb, Calendar, Home, Share2, AlertTriangle, ChevronLeft, Flame, Volume2, VolumeX, Eye, Ghost, Coffee } from 'lucide-react';
 import StatsPanel from './StatsPanel';
 import FeedbackModal from './FeedbackModal';
 import DailyChallengePanel from './DailyChallengePanel';
@@ -563,10 +563,17 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
             <div className="flex items-center gap-6">
               {/* Game Stats Pill */}
               <div className="flex items-center gap-5 px-6 py-3 bg-black/30 border border-white/5 rounded-full text-sm font-medium text-white/80 shadow-inner">
-                <div className="flex items-center gap-2.5 border-r border-white/10 pr-5">
-                  <span className="text-white/60 uppercase tracking-widest text-xs">Time</span>
-                  <span className="tabular-nums font-mono text-[17px]">{formatTime(timeElapsed)}</span>
-                </div>
+                {settings.relaxedMode ? (
+                  <div className="flex items-center gap-2 border-r border-white/10 pr-5 text-[#D4AF37]/70">
+                    <Coffee size={15} />
+                    <span className="text-xs uppercase tracking-widest">Relaxed</span>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-2.5 border-r border-white/10 pr-5">
+                    <span className="text-white/60 uppercase tracking-widest text-xs">Time</span>
+                    <span className="tabular-nums font-mono text-[17px]">{formatTime(timeElapsed)}</span>
+                  </div>
+                )}
                 <div className="flex items-center gap-2.5 border-r border-white/10 pr-5">
                   <span className="text-white/60 uppercase tracking-widest text-xs">Moves</span>
                   <span className="tabular-nums font-mono text-[17px] text-yellow-400/90">{moveCount}</span>
@@ -641,7 +648,11 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
                 )}
               </div>
               <div className="flex items-center gap-3 text-xs text-white/70">
-                <span className="tabular-nums font-mono">{formatTime(timeElapsed)}</span>
+                {settings.relaxedMode ? (
+                  <span className="text-[#D4AF37]/70">☕</span>
+                ) : (
+                  <span className="tabular-nums font-mono">{formatTime(timeElapsed)}</span>
+                )}
                 <span>{moveCount} moves</span>
                 {isWon && (
                   <span className="text-yellow-400 font-bold animate-pulse">Win!</span>

@@ -17,6 +17,7 @@ export interface GameSettings {
   autoFinish: boolean;
   viewMode: 'normal' | 'wide' | 'compact';
   showKeyboardHints: boolean;
+  relaxedMode: boolean;
 }
 
 export interface SavedGameState {
@@ -36,6 +37,7 @@ const DEFAULT_SETTINGS: GameSettings = {
   autoFinish: true,
   viewMode: 'normal',
   showKeyboardHints: true,
+  relaxedMode: false,
 };
 
 function isBrowser(): boolean {

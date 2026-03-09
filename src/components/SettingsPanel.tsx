@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Settings, Volume2, Sparkles, Wand2, Monitor, Hand, MousePointer2, Ghost, Eye, Layers } from 'lucide-react';
+import { X, Settings, Volume2, Sparkles, Wand2, Monitor, Hand, MousePointer2, Ghost, Eye, Layers, Coffee } from 'lucide-react';
 import { GameSettings } from '../lib/storage';
 import ThemeSelector from './ThemeSelector';
 import { getHighContrast, setHighContrast, getReducedMotion, setReducedMotion } from '../lib/accessibility';
@@ -220,6 +220,20 @@ export default function SettingsPanel({ isOpen, onClose, settings, onUpdateSetti
                                     enabled={reducedMotion}
                                     onToggle={toggleReducedMotion}
                                 />
+                                <div>
+                                    <SettingToggle
+                                        label="Relaxed Mode"
+                                        description="Hide timer, reduce pressure — just enjoy the game"
+                                        enabled={settings.relaxedMode}
+                                        onToggle={() => toggleSetting('relaxedMode')}
+                                        icon={<Coffee size={14} className="text-[#D4AF37]/60" />}
+                                    />
+                                    {settings.relaxedMode && (
+                                        <div className="ml-3 mt-1 px-3 py-1.5 rounded-lg bg-[#D4AF37]/10 border border-[#D4AF37]/20 text-[10px] text-[#D4AF37]/70">
+                                            Timer hidden • No time pressure • Just play
+                                        </div>
+                                    )}
+                                </div>
                             </section>
 
                             {/* Ghost Mode Section */}
@@ -327,20 +341,24 @@ function CardBackThumbnail({ design, canvasRefs }: {
     return <div ref={containerRef} className="aspect-[5/7]" />;
 }
 
-function SettingToggle({ label, description, enabled, onToggle }: {
+function SettingToggle({ label, description, enabled, onToggle, icon }: {
     label: string;
     description: string;
     enabled: boolean;
-    onToggle: () => void
+    onToggle: () => void;
+    icon?: React.ReactNode;
 }) {
     return (
         <button
             onClick={onToggle}
             className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-white/5 transition-colors text-left"
         >
-            <div>
-                <div className="text-sm font-semibold text-white/90">{label}</div>
-                <div className="text-[10px] text-white/40">{description}</div>
+            <div className="flex items-center gap-2">
+                {icon}
+                <div>
+                    <div className="text-sm font-semibold text-white/90">{label}</div>
+                    <div className="text-[10px] text-white/40">{description}</div>
+                </div>
             </div>
             <div className={`w-10 h-5 rounded-full relative transition-colors ${enabled ? 'bg-[#D4AF37]' : 'bg-white/10'}`}>
                 <motion.div

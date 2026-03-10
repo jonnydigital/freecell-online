@@ -22,6 +22,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/winning-deals', changeFrequency: 'monthly' as const, priority: 0.7 },
     { path: '/bakers-game', changeFrequency: 'monthly' as const, priority: 0.8 },
     { path: '/eight-off', changeFrequency: 'monthly' as const, priority: 0.8 },
+    { path: '/easy-freecell', changeFrequency: 'monthly' as const, priority: 0.8 },
     { path: '/spider', changeFrequency: 'monthly' as const, priority: 0.8 },
     { path: '/freecell-vs-spider', changeFrequency: 'monthly' as const, priority: 0.7 },
     { path: '/freecell-vs-klondike', changeFrequency: 'monthly' as const, priority: 0.7 },

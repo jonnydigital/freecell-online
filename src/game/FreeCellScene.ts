@@ -1447,6 +1447,32 @@ export class FreeCellScene extends Phaser.Scene {
       });
     }
 
+    // Create sprites for any cards already in foundations (e.g. Easy FreeCell pre-placed aces+2s)
+    const suits = [Suit.Clubs, Suit.Diamonds, Suit.Hearts, Suit.Spades];
+    for (const [suit, pile] of state.foundations) {
+      const idx = suits.indexOf(suit);
+      const pos = this.getFoundationPosition(idx);
+      for (let cardIdx = 0; cardIdx < pile.length; cardIdx++) {
+        const card = pile[cardIdx];
+        if (!this.cardSprites.has(card.id)) {
+          const sprite = this.createCardSprite(card, pos.x, pos.y);
+          sprite.sourceLocation = { type: 'foundation', suit };
+          sprite.setDepth(5 + cardIdx);
+        }
+      }
+    }
+
+    // Create sprites for any cards already in free cells (e.g. Eight Off)
+    for (let i = 0; i < state.freeCells.length; i++) {
+      const card = state.freeCells[i];
+      if (card && !this.cardSprites.has(card.id)) {
+        const pos = this.getFreeCellPosition(i);
+        const sprite = this.createCardSprite(card, pos.x, pos.y);
+        sprite.sourceLocation = { type: 'freecell', index: i };
+        sprite.setDepth(5);
+      }
+    }
+
     // Note: drag is handled by raw mouse/touch events (setupMouseDrag/setupTouchInput)
     // Phaser's built-in drag system is NOT used — raw events give us zero-lag tracking
 

@@ -5,7 +5,7 @@
  * Handles move validation, sequence moves, auto-moves, and win detection.
  */
 
-import { Card, Suit, Rank, Color } from './Card';
+import { Card, Suit, type Rank, Color } from './Card';
 import { dealGame, dealEightOff } from './Deck';
 
 export interface GameState {
@@ -29,7 +29,7 @@ export interface Move {
   isAutoMove?: boolean;
 }
 
-export type GameVariant = 'freecell' | 'bakers-game' | 'eight-off';
+export type GameVariant = 'freecell' | 'bakers-game' | 'eight-off' | 'easy-freecell';
 
 export class FreeCellEngine {
   private state: GameState;
@@ -54,15 +54,33 @@ export class FreeCellEngine {
       freeCells = [null, null, null, null];
     }
 
+    const foundations = new Map<Suit, Card[]>([
+      [Suit.Spades, []],
+      [Suit.Hearts, []],
+      [Suit.Diamonds, []],
+      [Suit.Clubs, []],
+    ]);
+
+    // Easy FreeCell: pre-place Aces and 2s on foundations, remove them from cascades
+    if (variant === 'easy-freecell') {
+      for (const suit of [Suit.Spades, Suit.Hearts, Suit.Diamonds, Suit.Clubs]) {
+        for (const targetRank of [1, 2] as Rank[]) {
+          for (const cascade of cascades) {
+            const idx = cascade.findIndex(c => c.suit === suit && c.rank === targetRank);
+            if (idx !== -1) {
+              const [card] = cascade.splice(idx, 1);
+              foundations.get(suit)!.push(card);
+              break;
+            }
+          }
+        }
+      }
+    }
+
     this.state = {
       cascades,
       freeCells,
-      foundations: new Map([
-        [Suit.Spades, []],
-        [Suit.Hearts, []],
-        [Suit.Diamonds, []],
-        [Suit.Clubs, []],
-      ]),
+      foundations,
       gameNumber,
       moveCount: 0,
       isWon: false,

@@ -39,6 +39,11 @@ const featuredGames = [
     label: 'Eight Off',
     description: 'Eight reserve cells instead of four. More storage, different tactics, same open-information style.',
   },
+  {
+    href: '/easy-freecell',
+    label: 'Easy FreeCell',
+    description: 'Aces and 2s start on the foundations. A gentler on-ramp for beginners learning FreeCell strategy.',
+  },
 ];
 
 const faqItems = [

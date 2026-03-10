@@ -346,7 +346,7 @@ export default function EasyFreecellGamesPage() {
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Link
-                  href="/winning-deals"
+                  href="/easy-freecell"
                   className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl text-lg font-semibold transition-all duration-200 hover:scale-[1.03] active:scale-[0.98]"
                   style={{
                     background: 'linear-gradient(110deg, #B8860B, #D4AF37, #F3E5AB, #D4AF37, #B8860B)',
@@ -354,7 +354,7 @@ export default function EasyFreecellGamesPage() {
                     color: '#1a1a0a',
                   }}
                 >
-                  Explore Winning Deals
+                  Play Easy FreeCell
                 </Link>
                 <Link
                   href="/freecell-for-beginners"

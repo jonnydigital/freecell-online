@@ -9,12 +9,14 @@ export default function SiteFooter() {
           { href: '/spider', label: 'Spider Solitaire' },
           { href: '/bakers-game', label: "Baker's Game" },
           { href: '/eight-off', label: 'Eight Off' },
+          { href: '/easy-freecell', label: 'Easy FreeCell' },
           { href: '/winning-deals', label: 'Winning Deals' },
         ]
       : [
           { href: '/', label: 'FreeCell' },
           { href: '/bakers-game', label: "Baker's Game" },
           { href: '/eight-off', label: 'Eight Off' },
+          { href: '/easy-freecell', label: 'Easy FreeCell' },
           { href: '/spider', label: 'Spider Solitaire' },
           { href: '/streak', label: 'Streak Mode' },
           { href: '/storm', label: 'Storm Mode' },

@@ -2,6 +2,7 @@
 
 ## 2026-03-10 (Tuesday Overnight Build)
 ### Shipped
+- **🐛 Fix: Mobile gold rectangle** — The idle auto-hint glow (gold border around suggested card) was triggering after 8 seconds even on fresh game load before any user moves. At 390px mobile viewport, this looked like a rendering bug — a faint gold-bordered rectangle near the bottom-right of the card area. Fixed by gating all auto-hint effects (glow, wiggle, text hint) behind `moveCount > 0`. Also added `focus-visible: none` on `#game-container` to prevent browser focus outlines on the canvas wrapper. 2 files changed, 8 lines. (19th consecutive night of shipping)
 - **🌱 Easy FreeCell game mode** (`/easy-freecell`) — New beginner-friendly variant where all Aces and 2s start pre-placed on the foundation piles. Removes 8 cards from the tableau before the first move, giving players significantly more breathing room to learn FreeCell strategy. Same alternating-color stacking rules as standard FreeCell. Added to game menu (HomeOverlay with Sprout icon), site footer, hub home, and sitemap.xml. SEO-optimized page with 1000+ word article, 4-question FAQPage schema, breadcrumb JSON-LD. Cross-linked from existing `/easy-freecell-games` content page (CTA now points to playable game). Competitive response to Solitaired's Easy FreeCell variant. Also fixed `dealCards()` to properly render pre-placed foundation and free-cell card sprites on initial deal. 14 files changed, ~1975 lines. (18th consecutive night of shipping)
 
 ## 2026-03-09 (Monday Overnight Build)

@@ -45,7 +45,7 @@
 22. ~~**"Relaxed mode"**~~ ✅ SHIPPED 03-09 — Elderly-friendly option: hides timer display, coffee icon indicator, gold info banner. Settings > Accessibility toggle. *(Reddit r/balatro insight — FreeCell audience skews older, accessibility matters)*
 26. ~~**Easy FreeCell variant**~~ ✅ SHIPPED 03-10 — New `/easy-freecell` game mode: aces and 2s start pre-placed on foundations. Beginner-friendly on-ramp, 1000+ word SEO content page, FAQPage schema. *(Solitaired competitive response + "easy freecell" keyword opportunity)*
 23. **Submit to solitaireblog.com** — Martin Petroff reviews 80+ solitaire sites with ratings. Backlink + visibility opportunity. *(Wait for custom domain)*
-24. **Fix mobile gold rectangle** — Faint gold-bordered rectangle visible in bottom-right on 390px mobile viewport. Likely canvas z-index or autocomplete zone visibility bug.
+24. ~~**Fix mobile gold rectangle**~~ ✅ FIXED 03-10 — Was idle auto-hint glow (gold border) appearing after 8s even before first move. Now auto-hint effects only trigger after user makes at least 1 move. Also suppressed focus-visible outline on game container.
 
 ## ⏳ Blocked (Needs Jonathan)
 - **Custom domain** — playfreecellonline.com → Vercel DNS

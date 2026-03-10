@@ -1,5 +1,9 @@
 # FreeCell Online — Changelog
 
+## 2026-03-10 (Tuesday Overnight Build)
+### Shipped
+- **🌱 Easy FreeCell game mode** (`/easy-freecell`) — New beginner-friendly variant where all Aces and 2s start pre-placed on the foundation piles. Removes 8 cards from the tableau before the first move, giving players significantly more breathing room to learn FreeCell strategy. Same alternating-color stacking rules as standard FreeCell. Added to game menu (HomeOverlay with Sprout icon), site footer, hub home, and sitemap.xml. SEO-optimized page with 1000+ word article, 4-question FAQPage schema, breadcrumb JSON-LD. Cross-linked from existing `/easy-freecell-games` content page (CTA now points to playable game). Competitive response to Solitaired's Easy FreeCell variant. Also fixed `dealCards()` to properly render pre-placed foundation and free-cell card sprites on initial deal. 14 files changed, ~1975 lines. (18th consecutive night of shipping)
+
 ## 2026-03-09 (Monday Overnight Build)
 ### Shipped
 - **☕ Relaxed Mode** — Elderly-friendly, pressure-free gameplay option in Settings > Accessibility. Hides the timer display on both desktop (replaced with Coffee icon + gold "Relaxed" label) and mobile (replaced with ☕ emoji). Timer continues running internally for stats tracking — move count remains visible. Gold info banner confirms mode when active ("Timer hidden • No time pressure • Just play"). SettingToggle component enhanced with optional icon support. Validated by Reddit r/balatro research (elderly grandfather who plays FreeCell with shaky hands, no need for timer pressure). 43 lines across 3 files. (17th consecutive night of shipping)

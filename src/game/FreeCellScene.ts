@@ -4074,8 +4074,8 @@ export class FreeCellScene extends Phaser.Scene {
 
     const idle = (Date.now() - this.lastMoveTime) / 1000;
 
-    // Auto-hint effects (only if enabled)
-    if (this.settings.autoHint) {
+    // Auto-hint effects (only if enabled, and only after user has made at least 1 move)
+    if (this.settings.autoHint && this.engine.getState().moveCount > 0) {
       // Auto-hint glow after 8 seconds
       if (idle >= 8 && !this.hintGlowGraphics) {
         this.showAutoHintGlow();

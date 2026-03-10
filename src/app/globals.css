@@ -325,6 +325,12 @@ body {
   outline-offset: 2px;
 }
 
+/* Don't show focus outline on the game canvas container */
+#game-container:focus-visible,
+#game-container canvas:focus-visible {
+  outline: none;
+}
+
 /* ── High Contrast Mode ── */
 
 .high-contrast button {

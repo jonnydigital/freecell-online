@@ -21,7 +21,7 @@
 12. ~~**FreeCell variants** — Eight Off as additional mode.~~ ✅ SHIPPED 03-04 — Eight Off with 8 free cells, same-suit stacking, dynamic engine + scene layout *(NYT Games spark — game portfolio as retention moat)*
 13. ~~**SEO: FreeCell history page**~~ ✅ SHIPPED 03-02 — 1600-line rich content page covering Alfille, PLATO, Windows, Game #11982, structured data
 14. ~~**SEO: Solitaire types taxonomy**~~ ✅ SHIPPED — `/solitaire-types` page with 20 variants classified, difficulty ratings, internal links
-15. **Leaderboard backend** — Vercel KV for persistent daily challenge times/moves *(API routes exist, needs KV integration)*
+15. ~~**Leaderboard backend**~~ ✅ CODE-COMPLETE — API routes (`/api/leaderboard/submit`, `/api/leaderboard/daily`), Vercel KV sorted sets with rate limiting, localStorage fallback, client library, full page UI with today/all-time tabs, nickname editing, auto-submit on daily challenge win, compact widget in WinScreen. **Needs: Vercel KV provisioned (env: KV_REST_API_URL)** *(blocked on Jonathan)*
 16. ~~**Achievements/badges**~~ ✅ SHIPPED 03-02 — 20 badges across 6 categories with unlock animations
 17. ~~**Tutorial/onboarding**~~ ✅ SHIPPED — First-visit walkthrough with spotlight highlights, triggered automatically on first play, replayable from Settings
 18. **Video tutorial** — screen-recorded walkthrough, embed on game page *(Solitaire Bliss has YouTube embed. Huge for dwell time + rich snippets)*

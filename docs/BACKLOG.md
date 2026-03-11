@@ -25,6 +25,7 @@
 16. ~~**Achievements/badges**~~ ✅ SHIPPED 03-02 — 20 badges across 6 categories with unlock animations
 17. ~~**Tutorial/onboarding**~~ ✅ SHIPPED — First-visit walkthrough with spotlight highlights, triggered automatically on first play, replayable from Settings
 18. **Video tutorial** — screen-recorded walkthrough, embed on game page *(Solitaire Bliss has YouTube embed. Huge for dwell time + rich snippets)*
+27. ~~**FreeCell Mistakes to Avoid page**~~ ✅ SHIPPED 03-11 — `/freecell-mistakes-to-avoid` SEO content page: 8 common mistakes with supermove math, expert quotes, 5-question FAQ, FAQPage + Article + BreadcrumbList schema. *(Content research brief — "freecell mistakes" keyword opportunity)*
 19. ~~**Ghost mode**~~ ✅ SHIPPED 03-03 — watch the solver play mid-game (👻 button in toolbar + settings)
 20. ~~**SEO: FreeCell vs Spider comparison**~~ ✅ SHIPPED 03-04 — 1000+ line comparison page, FAQPage schema, side-by-side table
 21. ~~**Dynamic sitemap.xml**~~ ✅ SHIPPED 03-04 — Next.js sitemap covering 19 content pages + 24 game routes

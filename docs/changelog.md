@@ -1,5 +1,9 @@
 # FreeCell Online — Changelog
 
+## 2026-03-11 (Wednesday Overnight Build)
+### Shipped
+- **📝 FreeCell Mistakes to Avoid page** (`/freecell-mistakes-to-avoid`) — Comprehensive SEO content page covering the 8 most common FreeCell mistakes that cost players games. Covers: moving aces too early, filling free cells too quickly (with supermove formula breakdown), ignoring empty columns, not planning ahead, tunnel vision on one column, neglecting buried low cards, making purposeless moves, and giving up too soon. Includes Adrian Ettlinger's expert strategy quote, practical "the instinct vs the real cost" framing, supermove math table ((N+1)×2^M), 5-question FAQPage schema, Article + BreadcrumbList JSON-LD. Cross-linked to 10+ internal pages. Added to sitemap and SiteFooter Learn section. Targets "freecell mistakes", "why do I keep losing freecell", "freecell beginner mistakes" keywords. 542 lines, 3 files changed. (20th consecutive night of shipping)
+
 ## 2026-03-10 (Tuesday Overnight Build)
 ### Shipped
 - **🐛 Fix: Mobile gold rectangle** — The idle auto-hint glow (gold border around suggested card) was triggering after 8 seconds even on fresh game load before any user moves. At 390px mobile viewport, this looked like a rendering bug — a faint gold-bordered rectangle near the bottom-right of the card area. Fixed by gating all auto-hint effects (glow, wiggle, text hint) behind `moveCount > 0`. Also added `focus-visible: none` on `#game-container` to prevent browser focus outlines on the canvas wrapper. 2 files changed, 8 lines. (19th consecutive night of shipping)

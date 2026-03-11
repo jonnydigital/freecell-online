@@ -30,6 +30,7 @@ export default function SiteFooter() {
           { href: '/freecell-for-beginners', label: 'FreeCell for Beginners' },
           { href: '/spider/how-to-play', label: 'Spider Rules' },
           { href: '/spider/strategy', label: 'Spider Strategy' },
+          { href: '/spider/tips', label: 'Spider Tips' },
           { href: '/freecell-vs-klondike', label: 'FreeCell vs Klondike' },
           { href: '/solitaire-types', label: 'Solitaire Types' },
           { href: '/faq', label: 'FAQ' },

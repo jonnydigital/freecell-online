@@ -767,6 +767,13 @@ export default function SpiderStrategyPage() {
                 <p className="text-sm text-white/40 mt-1">Complete rules and setup guide</p>
               </Link>
               <Link
+                href="/spider/tips"
+                className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] hover:border-[#D4AF37]/30 transition-all"
+              >
+                <span className="text-[#D4AF37] font-semibold">Spider Tips & Tricks</span>
+                <p className="text-sm text-white/40 mt-1">Quick, practical tips for all levels</p>
+              </Link>
+              <Link
                 href="/freecell-vs-spider"
                 className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] hover:border-[#D4AF37]/30 transition-all"
               >

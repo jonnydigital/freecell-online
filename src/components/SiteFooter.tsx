@@ -38,6 +38,7 @@ export default function SiteFooter() {
           { href: '/how-to-play', label: 'How to Play' },
           { href: '/strategy', label: 'Strategy Guide' },
           { href: '/tips', label: 'Tips & Tricks' },
+          { href: '/freecell-mistakes-to-avoid', label: 'Common Mistakes' },
           { href: '/glossary', label: 'Glossary' },
           { href: '/faq', label: 'FAQ' },
           { href: '/statistics', label: 'Statistics & Win Rates' },

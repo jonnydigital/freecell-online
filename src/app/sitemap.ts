@@ -41,6 +41,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/is-every-freecell-game-winnable', changeFrequency: 'monthly' as const, priority: 0.7 },
     { path: '/easy-freecell-games', changeFrequency: 'monthly' as const, priority: 0.7 },
     { path: '/hard-freecell-games', changeFrequency: 'monthly' as const, priority: 0.7 },
+    { path: '/freecell-mistakes-to-avoid', changeFrequency: 'monthly' as const, priority: 0.7 },
     { path: '/spider/how-to-play', changeFrequency: 'monthly' as const, priority: 0.7 },
     { path: '/spider/strategy', changeFrequency: 'monthly' as const, priority: 0.7 },
     { path: '/spider/1-suit-vs-2-suit-vs-4-suit', changeFrequency: 'monthly' as const, priority: 0.7 },

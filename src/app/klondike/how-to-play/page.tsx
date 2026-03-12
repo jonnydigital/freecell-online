@@ -545,6 +545,15 @@ export default function KlondikeHowToPlayPage() {
             <Link href="/solitaire-types" className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] transition-colors">
               <span className="text-sm text-[#D4AF37]">Solitaire Types</span>
             </Link>
+            <Link href="/klondike/strategy" className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] transition-colors">
+              <span className="text-sm text-[#D4AF37]">Klondike Strategy Guide</span>
+            </Link>
+            <Link href="/klondike/tips" className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] transition-colors">
+              <span className="text-sm text-[#D4AF37]">Klondike Tips & Tricks</span>
+            </Link>
+            <Link href="/klondike/winning-strategies" className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] transition-colors">
+              <span className="text-sm text-[#D4AF37]">Klondike Winning Strategies</span>
+            </Link>
             <Link href="/strategy" className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] transition-colors">
               <span className="text-sm text-[#D4AF37]">FreeCell Strategy</span>
             </Link>

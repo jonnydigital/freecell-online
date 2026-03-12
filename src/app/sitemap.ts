@@ -53,7 +53,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/freecell-world-records', changeFrequency: 'monthly' as const, priority: 0.7 },
     { path: '/klondike', changeFrequency: 'monthly' as const, priority: 0.8 },
     { path: '/klondike/how-to-play', changeFrequency: 'monthly' as const, priority: 0.8 },
-    { path: '/klondike/strategy', changeFrequency: 'monthly' as const, priority: 0.8 },
+    { path: '/klondike/strategy', changeFrequency: 'monthly' as const, priority: 0.7 },
+    { path: '/klondike/tips', changeFrequency: 'monthly' as const, priority: 0.7 },
+    { path: '/klondike/winning-strategies', changeFrequency: 'monthly' as const, priority: 0.7 },
     { path: '/privacy', changeFrequency: 'yearly' as const, priority: 0.2 },
     { path: '/terms', changeFrequency: 'yearly' as const, priority: 0.2 },
   ];

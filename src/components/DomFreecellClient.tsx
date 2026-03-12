@@ -1,13 +1,28 @@
 'use client';
 
-/**
- * Placeholder for future DOM-based FreeCell engine.
- * Currently unused — shouldUseDomEngine() returns false.
- */
-export default function DomFreecellClient({ initialGameNumber }: { initialGameNumber?: number }) {
-  return (
-    <div className="flex items-center justify-center min-h-[400px] text-white/60">
-      <p>DOM engine not yet available. Please refresh.</p>
+import dynamic from 'next/dynamic';
+import GameErrorBoundary from './GameErrorBoundary';
+
+const DomGameShell = dynamic(() => import('./dom-freecell/DomGameShell'), {
+  ssr: false,
+  loading: () => (
+    <div className="flex items-center justify-center h-screen bg-[#0a3d0a]">
+      <div className="text-center">
+        <div className="text-4xl mb-4">&#127183;</div>
+        <p className="text-white/60 text-lg">Loading FreeCell...</p>
+      </div>
     </div>
+  ),
+});
+
+interface DomFreecellClientProps {
+  initialGameNumber?: number;
+}
+
+export default function DomFreecellClient({ initialGameNumber }: DomFreecellClientProps) {
+  return (
+    <GameErrorBoundary>
+      <DomGameShell initialGameNumber={initialGameNumber} />
+    </GameErrorBoundary>
   );
 }

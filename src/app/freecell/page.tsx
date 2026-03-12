@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 import FreecellHomeClient from '@/components/FreecellHomeClient';
+import DomFreecellClient from '@/components/DomFreecellClient';
 import { absoluteUrl, isHubSite, siteConfig } from '@/lib/siteConfig';
+import { shouldUseDomEngine } from '@/lib/useDomEngine';
 
 export const metadata: Metadata = {
   title: 'Play FreeCell Online for Free | No Download Required',
@@ -32,6 +34,8 @@ export default function FreecellPage() {
     redirect('/');
   }
 
+  const useDom = shouldUseDomEngine();
+
   return (
     <>
       <script
@@ -47,7 +51,7 @@ export default function FreecellPage() {
           }),
         }}
       />
-      <FreecellHomeClient />
+      {useDom ? <DomFreecellClient /> : <FreecellHomeClient />}
     </>
   );
 }

@@ -44,6 +44,7 @@ export default function SiteFooter() {
           { href: '/faq', label: 'FAQ' },
           { href: '/statistics', label: 'Statistics & Win Rates' },
           { href: '/klondike/how-to-play', label: 'Klondike Rules' },
+          { href: '/klondike/strategy', label: 'Klondike Strategy' },
         ];
 
   const exploreLinks =

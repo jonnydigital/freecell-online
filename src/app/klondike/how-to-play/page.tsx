@@ -509,6 +509,24 @@ export default function KlondikeHowToPlayPage() {
           </div>
         </section>
 
+        {/* Strategy CTA */}
+        <section className="mb-12">
+          <div className="bg-gradient-to-br from-emerald-900/30 to-emerald-900/10 border border-emerald-500/20 rounded-xl p-6 text-center">
+            <h2 className="text-xl font-bold mb-2" style={{ fontFamily: 'var(--font-playfair)' }}>
+              Ready to Improve?
+            </h2>
+            <p className="text-white/60 mb-4 max-w-md mx-auto text-sm">
+              Now that you know the rules, learn the 7 strategies that separate consistent winners from casual players.
+            </p>
+            <Link
+              href="/klondike/strategy"
+              className="inline-block px-6 py-3 bg-emerald-700 hover:bg-emerald-600 text-white font-bold rounded-lg transition-colors"
+            >
+              Read the Klondike Strategy Guide →
+            </Link>
+          </div>
+        </section>
+
         {/* Related Pages */}
         <section className="mb-8">
           <h2 className="text-xl font-bold mb-4 text-white/40" style={{ fontFamily: 'var(--font-playfair)' }}>

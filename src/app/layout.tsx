@@ -13,6 +13,9 @@ const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfa
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
+  alternates: {
+    canonical: './',
+  },
   title: siteConfig.defaultTitle,
   description: siteConfig.defaultDescription,
   keywords: [
@@ -40,7 +43,6 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
-  manifest: "/manifest.json",
 };
 
 export default function RootLayout({

@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import AdUnit from "../../components/AdUnit";
 import ContentLayout from "../../components/ContentLayout";
+import NetworkCrossLinks from "@/components/NetworkCrossLinks";
 
 export const metadata: Metadata = {
   title:
@@ -1024,6 +1025,7 @@ export default function FreecellVsSpiderPage() {
           </div>
         </section>
 
+        <NetworkCrossLinks />
       </main>
     </ContentLayout>
   );

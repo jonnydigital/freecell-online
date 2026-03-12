@@ -2,7 +2,15 @@ import { ImageResponse } from 'next/og';
 import { siteConfig } from '@/lib/siteConfig';
 
 export const runtime = 'edge';
-export const alt = 'FreeCell Online - Play Free, No Download, No Signup';
+const isHubImage = siteConfig.key === 'solitairestack';
+const titleText = isHubImage ? siteConfig.brandName : 'FreeCell Online';
+const subtitleText = isHubImage
+  ? 'PLAY SOLITAIRE • NO DOWNLOAD • NO SIGNUP'
+  : 'PLAY FREE • NO DOWNLOAD • NO SIGNUP';
+
+export const alt = isHubImage
+  ? 'Solitaire Stack - Play Solitaire Games Online'
+  : 'FreeCell Online - Play Free, No Download, No Signup';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
@@ -108,7 +116,7 @@ export default function OGImage() {
             display: 'flex',
           }}
         >
-          FreeCell Online
+          {titleText}
         </div>
 
         {/* Gold divider */}
@@ -132,7 +140,7 @@ export default function OGImage() {
             display: 'flex',
           }}
         >
-          PLAY FREE • NO DOWNLOAD • NO SIGNUP
+          {subtitleText}
         </div>
 
         {/* Domain */}

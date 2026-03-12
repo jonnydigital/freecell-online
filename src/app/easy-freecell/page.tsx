@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { absoluteUrl, siteConfig } from '@/lib/siteConfig';
 import EasyFreeCellPage from './EasyFreeCellPage';
+import MoreGames from '@/components/MoreGames';
 
 export const metadata: Metadata = {
   title: 'Easy FreeCell — Play Beginner-Friendly FreeCell Online Free',
@@ -160,6 +161,7 @@ export default function Page() {
           with standard FreeCell. The core skills transfer directly — you will just need to
           manage a tighter board and find those opening Aces yourself.
         </p>
+        <MoreGames currentSlug="easy-freecell" />
       </article>
     </>
   );

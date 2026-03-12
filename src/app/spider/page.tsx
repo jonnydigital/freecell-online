@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import SpiderGamePage from "./SpiderGamePage";
+import MoreGames from '@/components/MoreGames';
 
 export const metadata: Metadata = {
   title: "Spider Solitaire | Play Online Free — 1, 2 & 4 Suit",
@@ -211,6 +212,7 @@ export default function Page() {
             — Explore 20+ solitaire variants
           </li>
         </ul>
+        <MoreGames currentSlug="spider" />
       </article>
     </>
   );

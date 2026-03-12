@@ -1,6 +1,8 @@
+import Link from 'next/link';
 import type { Metadata } from 'next';
 import { absoluteUrl, siteConfig } from '@/lib/siteConfig';
 import EightOffPage from './EightOffPage';
+import MoreGames from '@/components/MoreGames';
 
 export const metadata: Metadata = {
   title: 'Eight Off Solitaire — Play the Classic 8 Free Cell Card Game Online Free',
@@ -173,6 +175,26 @@ export default function Page() {
           among solitaire enthusiasts who enjoy a challenging yet solvable patience
           game that tests strategic thinking without relying on luck.
         </p>
+        <h3 className="text-xl font-semibold text-white/90 mt-8 mb-3">
+          Learn More
+        </h3>
+
+        <p className="mb-4 leading-relaxed">
+          Want to sharpen your Eight Off skills? Our{' '}
+          <Link href="/eight-off/strategy" className="text-[#D4AF37] hover:underline">
+            Eight Off Strategy Guide
+          </Link>{' '}
+          covers reserve cell management, opening card analysis, same-suit sequencing,
+          and how Eight Off strategy differs from FreeCell and Baker&apos;s Game. You
+          can also try{' '}
+          <Link href="/bakers-game" className="text-[#D4AF37] hover:underline">
+            Baker&apos;s Game
+          </Link>
+          , which uses the same same-suit stacking rule but with only 4 free cells
+          for an even tougher challenge.
+        </p>
+
+        <MoreGames currentSlug="eight-off" />
       </article>
     </>
   );

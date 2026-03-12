@@ -1,6 +1,8 @@
+import Link from 'next/link';
 import type { Metadata } from 'next';
 import { absoluteUrl, siteConfig } from '@/lib/siteConfig';
 import BakersGamePage from './BakersGamePage';
+import MoreGames from '@/components/MoreGames';
 
 export const metadata: Metadata = {
   title: "Baker's Game — Play the Original FreeCell Ancestor Online Free",
@@ -158,6 +160,26 @@ export default function Page() {
           Game offers a deeply rewarding experience that tests your patience, foresight,
           and strategic skill.
         </p>
+        <h3 className="text-xl font-semibold text-white/90 mt-8 mb-3">
+          Learn More
+        </h3>
+
+        <p className="mb-4 leading-relaxed">
+          Ready to improve your Baker&apos;s Game win rate? Our{' '}
+          <Link href="/bakers-game/strategy" className="text-[#D4AF37] hover:underline">
+            Baker&apos;s Game Strategy Guide
+          </Link>{' '}
+          covers same-suit sequencing techniques, free cell management, empty cascade
+          tactics, and common mistakes that FreeCell players make when switching to
+          Baker&apos;s Game. You can also explore{' '}
+          <Link href="/eight-off" className="text-[#D4AF37] hover:underline">
+            Eight Off
+          </Link>
+          , a related variant that uses 8 reserve cells with the same same-suit
+          stacking rule.
+        </p>
+
+        <MoreGames currentSlug="bakers-game" />
       </article>
     </>
   );

@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import ContentLayout from "../../components/ContentLayout";
+import NetworkCrossLinks from "@/components/NetworkCrossLinks";
 
 export const metadata: Metadata = {
   title: "Types of Solitaire Card Games | 20 Solitaire Variants Explained",
@@ -832,6 +833,7 @@ export default function SolitaireTypesPage() {
           </div>
         </section>
 
+        <NetworkCrossLinks />
       </main>
     </ContentLayout>
   );

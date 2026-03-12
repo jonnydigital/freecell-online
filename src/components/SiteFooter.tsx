@@ -47,6 +47,7 @@ export default function SiteFooter() {
           { href: '/klondike/strategy', label: 'Klondike Strategy' },
           { href: '/klondike/tips', label: 'Klondike Tips' },
           { href: '/klondike/winning-strategies', label: 'Klondike Winning Strategies' },
+          { href: '/klondike/draw-1-vs-draw-3', label: 'Draw 1 vs Draw 3' },
         ];
 
   const exploreLinks =

@@ -827,6 +827,13 @@ export default function KlondikeStrategyPage() {
                 <p className="text-sm text-white/40 mt-1">Advanced tactics for higher win rates</p>
               </Link>
               <Link
+                href="/klondike/draw-1-vs-draw-3"
+                className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] hover:border-[#D4AF37]/30 transition-all"
+              >
+                <span className="text-[#D4AF37] font-semibold">Draw 1 vs Draw 3</span>
+                <p className="text-sm text-white/40 mt-1">Complete comparison of both modes</p>
+              </Link>
+              <Link
                 href="/freecell-vs-klondike"
                 className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] hover:border-[#D4AF37]/30 transition-all"
               >

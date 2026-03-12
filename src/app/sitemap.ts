@@ -56,6 +56,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/klondike/strategy', changeFrequency: 'monthly' as const, priority: 0.7 },
     { path: '/klondike/tips', changeFrequency: 'monthly' as const, priority: 0.7 },
     { path: '/klondike/winning-strategies', changeFrequency: 'monthly' as const, priority: 0.7 },
+    { path: '/klondike/draw-1-vs-draw-3', changeFrequency: 'monthly' as const, priority: 0.7 },
     { path: '/privacy', changeFrequency: 'yearly' as const, priority: 0.2 },
     { path: '/terms', changeFrequency: 'yearly' as const, priority: 0.2 },
   ];

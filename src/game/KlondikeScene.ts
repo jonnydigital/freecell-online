@@ -237,6 +237,7 @@ export class KlondikeScene extends Phaser.Scene {
   }
 
   private restartWithNewGame(gameNumber: number): void {
+    this.cleanupWinCelebration();
     for (const sprite of this.cardSprites.values()) {
       sprite.destroy();
     }
@@ -262,6 +263,7 @@ export class KlondikeScene extends Phaser.Scene {
   }
 
   private shutdown(): void {
+    this.cleanupWinCelebration();
     this.isDealAnimating = false;
     this.pendingResize = false;
     if (this.scaleResizeHandler) this.scale.off('resize', this.scaleResizeHandler, this);
@@ -857,12 +859,204 @@ export class KlondikeScene extends Phaser.Scene {
     });
   }
 
+  private winCelebrationActive: boolean = false;
+  private winCelebrationObjects: Phaser.GameObjects.GameObject[] = [];
+
   private handleWin(): void {
     soundManager.winFanfare();
     gameBridge.emit('gameWon', {
-      time: 0, // Timer managed by React
+      time: 0, // Timer managed by React (GameShell uses its own timer as fallback)
       moves: this.engine.getMoveCount(),
     });
+    this.time.delayedCall(400, () => this.winCelebration());
+  }
+
+  private winCelebration(): void {
+    this.winCelebrationActive = true;
+
+    const w = this.scale.width;
+    const h = this.scale.height;
+    const cw = this.cardWidth;
+    const ch = this.cardHeight;
+
+    // Collect cards from foundations (top card first, then next, etc.)
+    const state = this.engine.getState();
+    const suitOrder = [Suit.Clubs, Suit.Diamonds, Suit.Hearts, Suit.Spades];
+    const cardQueue: { card: Card; foundationIdx: number }[] = [];
+    for (let rank = 13; rank >= 1; rank--) {
+      for (let si = 0; si < 4; si++) {
+        const pile = state.foundations.get(suitOrder[si]);
+        if (pile && pile.length >= rank) {
+          cardQueue.push({ card: pile[rank - 1], foundationIdx: si });
+        }
+      }
+    }
+
+    // Suit trail colors
+    const suitColors: Record<string, number> = {
+      [Suit.Hearts]: 0xff2222,
+      [Suit.Diamonds]: 0xff6622,
+      [Suit.Clubs]: 0x2244ff,
+      [Suit.Spades]: 0x22cc44,
+    };
+
+    // Physics-based bouncing card simulation
+    const GRAVITY = 0.4;
+    const BOUNCE_DAMPING = 0.85;
+    const TRAIL_INTERVAL = 2;
+
+    interface BouncingCard {
+      sprite: CardSprite;
+      x: number;
+      y: number;
+      vx: number;
+      vy: number;
+      trailColor: number;
+      frameCount: number;
+      alive: boolean;
+    }
+
+    const activeCards: BouncingCard[] = [];
+    let launchIndex = 0;
+
+    // Launch a new card every 150ms
+    const launchTimer = this.time.addEvent({
+      delay: 150,
+      repeat: cardQueue.length - 1,
+      callback: () => {
+        if (launchIndex >= cardQueue.length) return;
+        const { card, foundationIdx } = cardQueue[launchIndex];
+        const pos = this.getFoundationPosition(foundationIdx);
+
+        const sprite = this.cardSprites.get(card.id);
+        if (!sprite) { launchIndex++; return; }
+
+        sprite.setDepth(2000 + launchIndex);
+        sprite.setPosition(pos.x, pos.y);
+
+        const launchAngle = -Math.PI * (0.2 + Math.random() * 0.6);
+        const speed = 4 + Math.random() * 5;
+
+        activeCards.push({
+          sprite,
+          x: pos.x,
+          y: pos.y,
+          vx: Math.cos(launchAngle) * speed,
+          vy: Math.sin(launchAngle) * speed,
+          trailColor: suitColors[card.suit] || 0xffffff,
+          frameCount: 0,
+          alive: true,
+        });
+
+        launchIndex++;
+      },
+    });
+    this.winCelebrationObjects.push(launchTimer as unknown as Phaser.GameObjects.GameObject);
+
+    // Physics update loop
+    const updateEvent = this.time.addEvent({
+      delay: 16,
+      loop: true,
+      callback: () => {
+        if (!this.winCelebrationActive) {
+          updateEvent.destroy();
+          return;
+        }
+
+        for (const bc of activeCards) {
+          if (!bc.alive) continue;
+
+          bc.vy += GRAVITY;
+          bc.x += bc.vx;
+          bc.y += bc.vy;
+
+          if (bc.x < 0) { bc.x = 0; bc.vx = Math.abs(bc.vx) * BOUNCE_DAMPING; }
+          else if (bc.x + cw > w) { bc.x = w - cw; bc.vx = -Math.abs(bc.vx) * BOUNCE_DAMPING; }
+
+          if (bc.y + ch > h) {
+            bc.y = h - ch;
+            bc.vy = -Math.abs(bc.vy) * BOUNCE_DAMPING;
+            if (Math.abs(bc.vy) < 1) bc.alive = false;
+          }
+
+          if (bc.y < 0) { bc.y = 0; bc.vy = Math.abs(bc.vy) * BOUNCE_DAMPING; }
+
+          bc.frameCount++;
+          if (bc.frameCount % TRAIL_INTERVAL === 0) {
+            const trail = this.add.graphics();
+            trail.fillStyle(bc.trailColor, 0.5);
+            trail.fillRoundedRect(0, 0, cw, ch, 6);
+            trail.setPosition(bc.x, bc.y);
+            trail.setDepth(1999);
+            this.winCelebrationObjects.push(trail);
+
+            this.tweens.add({
+              targets: trail,
+              alpha: 0,
+              duration: 1200,
+              ease: 'Power2',
+              onComplete: () => trail.destroy(),
+            });
+          }
+
+          bc.sprite.setPosition(bc.x, bc.y);
+        }
+      },
+    });
+    this.winCelebrationObjects.push(updateEvent as unknown as Phaser.GameObjects.GameObject);
+
+    // Confetti
+    this.spawnConfetti();
+  }
+
+  private spawnConfetti(): void {
+    const w = this.scale.width;
+    const h = this.scale.height;
+    const confettiColors = [0xffd700, 0xff4444, 0x44ff44, 0x4444ff, 0xff44ff, 0xffaa00, 0x00ffff, 0xff8800];
+
+    for (let wave = 0; wave < 4; wave++) {
+      this.time.delayedCall(wave * 800, () => {
+        if (!this.winCelebrationActive) return;
+
+        for (let i = 0; i < 30; i++) {
+          const gfx = this.add.graphics();
+          const color = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+          const pw = 3 + Math.random() * 6;
+          const ph = pw * (0.5 + Math.random());
+          gfx.fillStyle(color, 1);
+          gfx.fillRect(-pw / 2, -ph / 2, pw, ph);
+
+          const startX = Math.random() * w;
+          const startY = -10 - Math.random() * 50;
+          gfx.setPosition(startX, startY);
+          gfx.setDepth(3000);
+          this.winCelebrationObjects.push(gfx);
+
+          const drift = (Math.random() - 0.5) * 100;
+          const duration = 2000 + Math.random() * 2000;
+
+          this.tweens.add({
+            targets: gfx,
+            x: startX + drift,
+            y: h + 20,
+            angle: 360 + Math.random() * 720,
+            duration,
+            ease: 'Sine.easeIn',
+            onComplete: () => gfx.destroy(),
+          });
+        }
+      });
+    }
+  }
+
+  private cleanupWinCelebration(): void {
+    this.winCelebrationActive = false;
+    for (const obj of this.winCelebrationObjects) {
+      if (obj && 'destroy' in obj) {
+        try { (obj as Phaser.GameObjects.GameObject).destroy(); } catch { /* already destroyed */ }
+      }
+    }
+    this.winCelebrationObjects = [];
   }
 
   private autoFinish(): void {

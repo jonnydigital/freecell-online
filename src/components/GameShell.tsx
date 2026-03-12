@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { gameBridge } from '../game/GameBridge';
 import { GameStats, createEmptyStats, recordWin, recordLoss } from '../lib/stats';
-import { loadStats, saveStats } from '../lib/storage';
+import { loadStats, saveStats, GameVariant } from '../lib/storage';
 import { recordGameResult } from '../lib/gameHistory';
 import { trackGameStart, trackWin, trackAbandoned, trackHint, trackUndo, trackMove, trackDeadlock, gameSession } from '../lib/analytics';
 import { initErrorTracking, setGameContext } from '../lib/errorTracking';
@@ -82,6 +82,15 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
   const [leaderboardEntries, setLeaderboardEntries] = useState<LeaderboardEntry[]>([]);
   const [leaderboardRank, setLeaderboardRank] = useState<number | undefined>();
   const [leaderboardLoading, setLeaderboardLoading] = useState(false);
+  const timeElapsedRef = useRef(0);
+
+  // Keep ref in sync with state for use in callbacks
+  useEffect(() => {
+    timeElapsedRef.current = timeElapsed;
+  }, [timeElapsed]);
+
+  // Determine stats variant key
+  const statsVariant: GameVariant | undefined = variant === 'klondike' ? 'klondike' : undefined;
 
   // Timer effect
   useEffect(() => {
@@ -101,7 +110,7 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
   };
   // Load stats on mount + track current theme
   useEffect(() => {
-    setStats(loadStats());
+    setStats(loadStats(statsVariant));
     setDailyCompleted(isTodayCompleted());
     initErrorTracking();
     // Record game mode for Explorer achievement
@@ -142,15 +151,18 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
   const handleWin = useCallback(
     (data: unknown) => {
       const d = data as { time: number; moves: number };
-      winDataRef.current = d;
+      // Use React timer as fallback when scene sends time: 0
+      const winTime = d.time > 0 ? d.time : timeElapsedRef.current;
+      const winData = { time: winTime, moves: d.moves };
+      winDataRef.current = winData;
       setIsWon(true);
-      trackWin(d.time, d.moves);
-      announceToScreenReader(`Congratulations! You won in ${d.moves} moves.`, 'assertive');
-      recordGameResult(true, d.moves, d.time, gameNumber ?? undefined);
+      trackWin(winData.time, winData.moves);
+      announceToScreenReader(`Congratulations! You won in ${winData.moves} moves.`, 'assertive');
+      recordGameResult(true, winData.moves, winData.time, gameNumber ?? undefined, variant);
       if (gameNumber) recordUniqueGame(gameNumber);
       setStats((prev) => {
-        const updated = recordWin(prev, d.time, d.moves);
-        saveStats(updated);
+        const updated = recordWin(prev, winData.time, winData.moves);
+        saveStats(updated, statsVariant);
         if (isMilestone(updated.currentStreak)) {
           setStreakMilestone(updated.currentStreak);
         }

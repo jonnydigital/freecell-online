@@ -5,9 +5,17 @@
 import { GameStats, createEmptyStats } from './stats';
 
 const STATS_KEY = 'freecell_stats';
+const KLONDIKE_STATS_KEY = 'klondike_stats';
 const SETTINGS_KEY = 'freecell_settings';
 const GAME_STATE_KEY = 'freecell_game_state';
 const STARS_KEY = 'freecell_stars';
+
+export type GameVariant = 'freecell' | 'bakers-game' | 'eight-off' | 'easy-freecell' | 'spider' | 'klondike';
+
+function getStatsKey(variant?: GameVariant): string {
+  if (variant === 'klondike') return KLONDIKE_STATS_KEY;
+  return STATS_KEY;
+}
 
 export interface GameSettings {
   soundEnabled: boolean;
@@ -45,20 +53,20 @@ function isBrowser(): boolean {
 }
 
 // Stats
-export function loadStats(): GameStats {
+export function loadStats(variant?: GameVariant): GameStats {
   if (!isBrowser()) return createEmptyStats();
   try {
-    const data = localStorage.getItem(STATS_KEY);
+    const data = localStorage.getItem(getStatsKey(variant));
     return data ? JSON.parse(data) : createEmptyStats();
   } catch {
     return createEmptyStats();
   }
 }
 
-export function saveStats(stats: GameStats): void {
+export function saveStats(stats: GameStats, variant?: GameVariant): void {
   if (!isBrowser()) return;
   try {
-    localStorage.setItem(STATS_KEY, JSON.stringify(stats));
+    localStorage.setItem(getStatsKey(variant), JSON.stringify(stats));
   } catch {
     // Storage full or blocked
   }

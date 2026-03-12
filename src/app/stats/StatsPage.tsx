@@ -19,7 +19,7 @@ import {
   Swords,
   Timer,
 } from 'lucide-react';
-import { loadStats } from '../../lib/storage';
+import { loadStats, type GameVariant } from '../../lib/storage';
 import { loadAllStarRatings } from '../../lib/storage';
 import { getAverageMoves, getAverageTime, getWinPercent } from '../../lib/stats';
 import { loadDailyData, getCurrentStreak } from '../../lib/dailyChallenge';
@@ -741,11 +741,15 @@ function ModeBreakdown({
 
 // ─── Main Page ───
 
+type GameType = 'freecell' | 'klondike';
+
 export default function StatsPage() {
   const [filter, setFilter] = useState<TimeFilter>('all');
   const [tab, setTab] = useState<Tab>('overview');
+  const [gameType, setGameType] = useState<GameType>('freecell');
 
-  const stats = useMemo(() => loadStats(), []);
+  const statsVariant: GameVariant | undefined = gameType === 'klondike' ? 'klondike' : undefined;
+  const stats = useMemo(() => loadStats(statsVariant), [statsVariant]);
   const allHistory = useMemo(() => loadGameHistory(), []);
   const dailyData = useMemo(() => loadDailyData(), []);
   const dailyStreak = useMemo(() => getCurrentStreak(), []);
@@ -753,7 +757,12 @@ export default function StatsPage() {
   const puzzleStormBest = useMemo(() => loadStormData().bestScore, []);
   const starMap = useMemo(() => loadAllStarRatings(), []);
 
-  const history = useMemo(() => filterByTime(allHistory, filter), [allHistory, filter]);
+  // Filter history by game type: entries without a variant field are assumed to be freecell (legacy data)
+  const typeFilteredHistory = useMemo(() => {
+    if (gameType === 'klondike') return allHistory.filter(g => g.variant === 'klondike');
+    return allHistory.filter(g => !g.variant || g.variant === 'freecell');
+  }, [allHistory, gameType]);
+  const history = useMemo(() => filterByTime(typeFilteredHistory, filter), [typeFilteredHistory, filter]);
 
   // Derived stats from filtered history
   const filteredStats = useMemo(() => {
@@ -837,6 +846,28 @@ export default function StatsPage() {
             Statistics
           </h1>
         </motion.header>
+
+        {/* Game Type Toggle */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.05, duration: 0.3 }}
+          className="flex gap-2 mb-4"
+        >
+          {([['freecell', 'FreeCell'], ['klondike', 'Klondike']] as const).map(([key, label]) => (
+            <button
+              key={key}
+              onClick={() => setGameType(key)}
+              className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
+                gameType === key
+                  ? 'bg-white/15 text-white border border-white/20'
+                  : 'bg-white/5 text-white/40 hover:bg-white/10 hover:text-white/60 border border-transparent'
+              }`}
+            >
+              {label}
+            </button>
+          ))}
+        </motion.div>
 
         {/* Tab Navigation */}
         <motion.div
@@ -953,7 +984,7 @@ export default function StatsPage() {
             {/* Streak Calendar */}
             <motion.div variants={fadeUp} custom={4} className="bg-white/5 border border-white/10 rounded-xl p-4 mb-6">
               <h3 className="text-sm font-semibold text-white/60 mb-3">Win Streak (Last 30 Days)</h3>
-              <StreakCalendar history={allHistory} />
+              <StreakCalendar history={typeFilteredHistory} />
               <div className="flex items-center justify-center gap-4 mt-3 text-[9px] text-white/30">
                 <span className="flex items-center gap-1">
                   <span className="inline-block w-2.5 h-2.5 rounded-sm bg-emerald-500/30 border border-emerald-500/30" />
@@ -973,7 +1004,7 @@ export default function StatsPage() {
             {/* Activity Heatmap */}
             <motion.div variants={fadeUp} custom={5} className="bg-white/5 border border-white/10 rounded-xl p-4 mb-6">
               <h3 className="text-sm font-semibold text-white/60 mb-3">Activity (Past Year)</h3>
-              <ActivityHeatmap history={allHistory} dailyCompletions={dailyData.completedDays} />
+              <ActivityHeatmap history={typeFilteredHistory} dailyCompletions={gameType === 'freecell' ? dailyData.completedDays : {}} />
               <div className="flex items-center justify-end gap-1 mt-3 text-[9px] text-white/30">
                 <span>Less</span>
                 {[0.06, 0.25, 0.45, 0.65, 0.9].map((opacity, i) => (
@@ -1016,7 +1047,7 @@ export default function StatsPage() {
           >
             <div className="bg-white/5 border border-white/10 rounded-xl p-4 mb-6">
               <h3 className="text-sm font-semibold text-white/60 mb-3">Recent Games</h3>
-              <GameHistoryTable history={allHistory} starMap={starMap} />
+              <GameHistoryTable history={typeFilteredHistory} starMap={starMap} />
             </div>
           </motion.div>
         )}
@@ -1042,7 +1073,7 @@ export default function StatsPage() {
             transition={{ duration: 0.3 }}
           >
             <ModeBreakdown
-              history={allHistory}
+              history={typeFilteredHistory}
               dailyData={dailyData}
               puzzleStreakBest={puzzleStreakBest}
               puzzleStormBest={puzzleStormBest}

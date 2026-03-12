@@ -12,6 +12,7 @@ export interface GameResult {
   moves: number;    // total moves made
   time: number;     // seconds elapsed
   game?: number;    // game number (if known)
+  variant?: string; // 'freecell' | 'klondike' etc.
 }
 
 function isBrowser(): boolean {
@@ -42,6 +43,7 @@ export function recordGameResult(
   moves: number,
   time: number,
   gameNumber?: number,
+  variant?: string,
 ): void {
   const history = loadGameHistory();
   history.push({
@@ -50,6 +52,7 @@ export function recordGameResult(
     moves,
     time,
     game: gameNumber,
+    variant,
   });
   // Trim to max size (keep most recent)
   if (history.length > MAX_HISTORY) {

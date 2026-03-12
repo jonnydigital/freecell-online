@@ -1,5 +1,9 @@
 # FreeCell Online — Changelog
 
+## 2026-03-12 (Thursday Overnight Build)
+### Shipped
+- **♟️ Klondike Solitaire Strategy Guide** (`/klondike/strategy`) — Comprehensive SEO content page targeting high-volume "solitaire strategy" and "how to win solitaire" keywords. 7 proven strategies: foundation timing (aces/twos always, higher cards conditionally), face-down card exposure priority, Kings-only column rule, draw-1 vs draw-3 odds with comparison table (52% vs 18% AI win rates, skilled human ~43%), foundation safety test, even column distribution, systematic stock pile management. Advanced section: card tracking in stock pile, "Thoughtful Solitaire" approach (81.9% draw-3 win rate when all cards visible). Persi Diaconis quote on Klondike odds being "one of the embarrassments of applied probability." Color-coded tip boxes (green/amber/red), 4-question FAQ. Article + BreadcrumbList + FAQPage JSON-LD schemas. AdUnit placements. Cross-linked to 8+ internal pages. Added to sitemap and SiteFooter Learn column. Strategy CTA added to klondike/how-to-play page. 709 lines, 4 files. (24th consecutive night of shipping)
+
 ## 2026-03-11 (Wednesday)
 ### Shipped
 - **🎉 Klondike Polish** — Variant-aware stats (separate `klondike_stats` localStorage key), React timer fallback for win time, bouncing card win celebration with colored trails and confetti (ported from FreeCellScene), Stats page FreeCell/Klondike toggle with history filtered by variant, game history variant field. 5 files, 268 lines.

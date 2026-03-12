@@ -1,7 +1,11 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { absoluteUrl, siteConfig } from '@/lib/siteConfig';
+import { shouldUseDomEngine } from '@/lib/useDomEngine';
+import { dealLookup, sitemapGameNumbers } from '@/lib/curatedDeals';
 import GamePage from './GamePage';
+import GameDealInfo from './GameDealInfo';
+import DomFreecellClient from '@/components/DomFreecellClient';
 
 interface Props {
   params: Promise<{ number: string }>;
@@ -18,8 +22,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const gameNum = parseGameNumber(number);
   if (!gameNum) return {};
 
-  const title = `FreeCell Game #${gameNum} - Play This Deal Online`;
-  const description = `Play FreeCell Game #${gameNum} online for free. Share this specific deal with friends and see if they can solve it. No download required.`;
+  const deal = dealLookup.get(gameNum);
+  const title = deal
+    ? `FreeCell Game #${gameNum} - ${deal.label} Deal`
+    : `FreeCell Game #${gameNum} - Play Deal ${gameNum.toLocaleString()} Online Free`;
+  const description = deal
+    ? `Play FreeCell Game #${gameNum} online for free — ${deal.label.toLowerCase()}${deal.difficulty ? ` (${deal.difficulty})` : ''}. Share this specific deal with friends. No download required.`
+    : `Play FreeCell deal #${gameNum} online. This specific card layout is the same every time — share it with friends, retry after a loss, or compare strategies. 99.999% of deals are solvable.`;
 
   return {
     title,
@@ -42,8 +51,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export function generateStaticParams() {
-  return Array.from({ length: 100 }, (_, i) => ({
-    number: String(i + 1),
+  return sitemapGameNumbers.map((num) => ({
+    number: String(num),
   }));
 }
 
@@ -52,5 +61,42 @@ export default async function Page({ params }: Props) {
   const gameNum = parseGameNumber(number);
   if (!gameNum) notFound();
 
-  return <GamePage gameNumber={gameNum} />;
+  const deal = dealLookup.get(gameNum);
+  const gameName = deal
+    ? `FreeCell Game #${gameNum} - ${deal.label}`
+    : `FreeCell Game #${gameNum}`;
+  const gameDescription = deal
+    ? `FreeCell deal #${gameNum}: ${deal.label.toLowerCase()}${deal.difficulty ? ` (${deal.difficulty})` : ''}. Play online for free.`
+    : `Play FreeCell Game #${gameNum} online for free.`;
+
+  const jsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Game',
+      name: gameName,
+      description: gameDescription,
+      numberOfPlayers: 1,
+      genre: 'Card Game',
+      gamePlatform: 'Web Browser',
+      url: absoluteUrl(`/game/${gameNum}`),
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: absoluteUrl('/') },
+        { '@type': 'ListItem', position: 2, name: 'FreeCell', item: absoluteUrl('/') },
+        { '@type': 'ListItem', position: 3, name: `Game #${gameNum}`, item: absoluteUrl(`/game/${gameNum}`) },
+      ],
+    },
+  ];
+
+  const useDom = shouldUseDomEngine();
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      {useDom ? <DomFreecellClient initialGameNumber={gameNum} /> : <GamePage gameNumber={gameNum} />}
+      <GameDealInfo gameNum={gameNum} deal={deal} />
+    </>
+  );
 }

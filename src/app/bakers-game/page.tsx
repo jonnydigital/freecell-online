@@ -31,6 +31,17 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
+  const gameJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Game",
+    name: "Baker's Game",
+    description: "Baker's Game is a same-suit FreeCell variant and the direct ancestor of modern FreeCell. Build foundations by suit with stricter stacking rules.",
+    numberOfPlayers: 1,
+    genre: "Card Game",
+    gamePlatform: "Web Browser",
+    url: absoluteUrl('/bakers-game'),
+  };
+
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -42,6 +53,10 @@ export default function Page() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(gameJsonLd) }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}

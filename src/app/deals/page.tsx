@@ -48,7 +48,7 @@ const faqs = [
   {
     question: "Which FreeCell game numbers are impossible to win?",
     answer:
-      "Of the original 32,000 Microsoft deals, only #11982 is proven impossible. In the extended 1,000,000 deal set, a handful of additional impossible deals have been identified, including #146692, #495000, #512118, #517776, and #781948.",
+      "Of the original 32,000 Microsoft deals, only #11982 is proven impossible. In the extended 1,000,000 deal set, seven additional impossible deals have been confirmed: #146692, #186216, #455889, #495505, #512118, #517776, and #781948.",
   },
   {
     question: "What is the easiest FreeCell game number?",
@@ -113,7 +113,6 @@ export default function DealsPage() {
 
         <h1
           className="text-4xl sm:text-5xl lg:text-6xl font-semibold text-[#D4AF37] mb-4 max-w-3xl mx-auto leading-tight"
-          style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
         >
           FreeCell Deal Explorer
         </h1>
@@ -137,10 +136,9 @@ export default function DealsPage() {
         <DealsExplorer />
 
         {/* FAQ */}
-        <section className="bg-white/[0.03] border border-white/10 rounded-xl p-6 sm:p-8">
+        <section className="rounded-xl bg-white/[0.04] border border-white/[0.07] overflow-hidden p-6 sm:p-8">
           <h2
-            className="text-2xl font-bold text-white/90 mb-6"
-            style={{ fontFamily: "var(--font-playfair)" }}
+            className="text-2xl font-bold text-white mb-6"
           >
             Frequently Asked Questions
           </h2>
@@ -152,7 +150,7 @@ export default function DealsPage() {
                 </h3>
                 <p className="text-white/50 leading-relaxed">{faq.answer}</p>
                 {i < faqs.length - 1 && (
-                  <div className="mt-6 border-b border-white/10" />
+                  <div className="mt-6 border-b border-white/[0.07]" />
                 )}
               </div>
             ))}
@@ -160,31 +158,30 @@ export default function DealsPage() {
         </section>
 
         {/* Cross-links */}
-        <section className="bg-white/[0.03] border border-white/10 rounded-xl p-6 sm:p-8">
+        <section className="rounded-xl bg-white/[0.04] border border-white/[0.07] overflow-hidden p-6 sm:p-8">
           <h2
-            className="text-xl font-bold text-white/90 mb-4"
-            style={{ fontFamily: "var(--font-playfair)" }}
+            className="text-xl font-bold text-white mb-4"
           >
             Related Pages
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <Link
               href="/winning-deals"
-              className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] hover:border-[#D4AF37]/30 transition-all"
+              className="bg-white/[0.05] border border-white/[0.07] rounded-lg p-4 hover:bg-white/[0.06] hover:border-[#D4AF37]/30 transition-all"
             >
               <span className="text-[#D4AF37] font-semibold">Winning Deals</span>
               <p className="text-sm text-white/40 mt-1">Easiest &amp; hardest deals with detailed analysis</p>
             </Link>
             <Link
               href="/statistics"
-              className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] hover:border-[#D4AF37]/30 transition-all"
+              className="bg-white/[0.05] border border-white/[0.07] rounded-lg p-4 hover:bg-white/[0.06] hover:border-[#D4AF37]/30 transition-all"
             >
               <span className="text-[#D4AF37] font-semibold">Statistics</span>
               <p className="text-sm text-white/40 mt-1">Win rates, solvability data, and more</p>
             </Link>
             <Link
               href="/strategy"
-              className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] hover:border-[#D4AF37]/30 transition-all"
+              className="bg-white/[0.05] border border-white/[0.07] rounded-lg p-4 hover:bg-white/[0.06] hover:border-[#D4AF37]/30 transition-all"
             >
               <span className="text-[#D4AF37] font-semibold">Strategy Guide</span>
               <p className="text-sm text-white/40 mt-1">Advanced techniques to beat tough deals</p>

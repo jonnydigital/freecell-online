@@ -32,6 +32,17 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
+  const gameJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Game",
+    name: "Spider Solitaire",
+    description: "Play Spider Solitaire online with 1-suit, 2-suit, or 4-suit difficulty. A classic 2-deck patience card game.",
+    numberOfPlayers: 1,
+    genre: "Card Game",
+    gamePlatform: "Web Browser",
+    url: absoluteUrl("/spider"),
+  };
+
   const appJsonLd = {
     "@context": "https://schema.org",
     "@type": "WebApplication",
@@ -69,6 +80,10 @@ export default function Page() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(gameJsonLd) }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(appJsonLd) }}

@@ -33,6 +33,17 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
+  const gameJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Game",
+    name: "Eight Off Solitaire",
+    description: "Eight Off is a challenging FreeCell variant with 8 free cells and same-suit stacking. Build foundations by suit from Ace to King.",
+    numberOfPlayers: 1,
+    genre: "Card Game",
+    gamePlatform: "Web Browser",
+    url: absoluteUrl('/eight-off'),
+  };
+
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -44,6 +55,10 @@ export default function Page() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(gameJsonLd) }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}

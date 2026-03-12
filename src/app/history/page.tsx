@@ -37,10 +37,7 @@ export const metadata: Metadata = {
   },
 };
 
-const CARD = "card-panel";
-const CARD_TOP: React.CSSProperties = {
-  borderTop: "1px solid rgba(184, 134, 11, 0.08)",
-};
+const CARD = "rounded-xl bg-white/[0.04] border border-white/[0.07] overflow-hidden";
 
 /* ── FAQ data ── */
 
@@ -233,21 +230,20 @@ function SectionHeading({
   icon?: string;
 }) {
   return (
-    <div className="px-6 sm:px-8 md:px-10 pt-8 sm:pt-10 pb-0">
+    <div className="px-8 sm:px-10 md:px-12 pt-6 sm:pt-8 pb-0">
       {sub && (
-        <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#B8860B]/60 mb-1.5 block">
+        <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#D4AF37]/60 mb-1.5 block">
           {sub}
         </span>
       )}
       <h2
         id={id}
-        className="text-2xl sm:text-3xl font-bold text-[#2a2522]"
-        style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
+        className="text-2xl sm:text-3xl font-bold text-white"
       >
-        {icon && <span className="mr-2 text-[#c9a84c]">{icon}</span>}
+        {icon && <span className="mr-2 text-[#D4AF37]">{icon}</span>}
         {children}
       </h2>
-      <div className="card-title-separator mt-5" />
+      <div className="mt-4 h-px bg-gradient-to-r from-[#D4AF37]/40 to-transparent" />
     </div>
   );
 }
@@ -337,11 +333,10 @@ export default function HistoryPage() {
 
         <h1
           className="text-4xl sm:text-5xl lg:text-6xl font-semibold text-[#D4AF37] mb-4 max-w-3xl mx-auto leading-tight"
-          style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
         >
           History of FreeCell
         </h1>
-        <p className="text-[#6B7280] text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
+        <p className="text-white/40 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
           From a university mainframe in 1978 to every Windows desktop on
           Earth — the story of the card game that proved solitaire could be
           a game of pure skill.
@@ -389,10 +384,10 @@ export default function HistoryPage() {
       </nav>
 
       {/* ── Content ── */}
-      <main className="max-w-4xl mx-auto px-6 sm:px-10 lg:px-12 pb-20 flex flex-col gap-12">
+      <main className="max-w-4xl mx-auto px-6 sm:px-10 lg:px-12 pb-20 flex flex-col gap-8">
         {/* Section: Origins */}
         <section id="origins" className="scroll-mt-6">
-          <div className={CARD} style={CARD_TOP}>
+          <div className={CARD}>
             <SectionHeading
               sub="Where It All Began"
               id="origins-heading"
@@ -401,7 +396,7 @@ export default function HistoryPage() {
               Paul Alfille and the Invention of FreeCell
             </SectionHeading>
 
-            <div className="px-6 sm:px-8 md:px-10 py-8 space-y-5 text-[#444444] leading-relaxed">
+            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-5 text-white/70 leading-relaxed">
               <p>
                 In 1978, Paul Alfille was a medical student at the University of
                 Illinois at Urbana-Champaign. Like many students of the era, he
@@ -481,18 +476,15 @@ export default function HistoryPage() {
                 that would bring it to a global audience.
               </p>
 
-              <div className="card-inset rounded-lg p-5 mt-4">
+              <div className="bg-white/[0.05] border border-white/[0.07] rounded-lg p-5 mt-4">
                 <h3
-                  className="font-medium text-[#2a2522] text-lg mb-2"
-                  style={{
-                    fontFamily: "var(--font-playfair), Georgia, serif",
-                  }}
+                  className="font-medium text-white text-lg mb-2"
                 >
                   What Made FreeCell Revolutionary
                 </h3>
-                <ul className="space-y-2 text-[#444444]">
+                <ul className="space-y-2 text-white/70">
                   <li className="flex items-start gap-2">
-                    <span className="text-[#B8860B] mt-1 shrink-0">
+                    <span className="text-[#D4AF37] mt-1 shrink-0">
                       {"\u2660"}
                     </span>
                     <span>
@@ -520,7 +512,7 @@ export default function HistoryPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-[#B8860B] mt-1 shrink-0">
+                    <span className="text-[#D4AF37] mt-1 shrink-0">
                       {"\u2663"}
                     </span>
                     <span>
@@ -540,11 +532,11 @@ export default function HistoryPage() {
           </div>
         </section>
 
-        <AdUnit className="my-2" />
+        <AdUnit className="my-0" />
 
         {/* Section: Baker's Game */}
         <section id="bakers-game" className="scroll-mt-6">
-          <div className={CARD} style={CARD_TOP}>
+          <div className={CARD}>
             <SectionHeading
               sub="The Predecessor"
               id="bakers-game-heading"
@@ -553,7 +545,7 @@ export default function HistoryPage() {
               Baker&apos;s Game: The Foundation FreeCell Built Upon
             </SectionHeading>
 
-            <div className="px-6 sm:px-8 md:px-10 py-8 space-y-5 text-[#444444] leading-relaxed">
+            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-5 text-white/70 leading-relaxed">
               <p>
                 To understand FreeCell, you need to understand the game it
                 evolved from. Baker&apos;s Game, created by C.L. Baker in the
@@ -616,41 +608,38 @@ export default function HistoryPage() {
                 into the world&apos;s most popular strategic card game.
               </p>
 
-              <div className="card-inset rounded-lg p-5 mt-2">
+              <div className="bg-white/[0.05] border border-white/[0.07] rounded-lg p-5 mt-2">
                 <h3
-                  className="font-medium text-[#2a2522] text-lg mb-3"
-                  style={{
-                    fontFamily: "var(--font-playfair), Georgia, serif",
-                  }}
+                  className="font-medium text-white text-lg mb-3"
                 >
                   Baker&apos;s Game vs. FreeCell: Key Differences
                 </h3>
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
                     <thead>
-                      <tr className="border-b border-[#e5e0d8]">
-                        <th className="text-left py-2 pr-4 font-semibold text-[#2a2522]">Feature</th>
-                        <th className="text-left py-2 pr-4 font-semibold text-[#2a2522]">Baker&apos;s Game</th>
-                        <th className="text-left py-2 font-semibold text-[#2a2522]">FreeCell</th>
+                      <tr className="border-b border-white/[0.07]">
+                        <th className="text-left py-2 pr-4 font-semibold text-white">Feature</th>
+                        <th className="text-left py-2 pr-4 font-semibold text-white">Baker&apos;s Game</th>
+                        <th className="text-left py-2 font-semibold text-white">FreeCell</th>
                       </tr>
                     </thead>
-                    <tbody className="text-[#444444]">
-                      <tr className="border-b border-[#e5e0d8]/50">
+                    <tbody className="text-white/70">
+                      <tr className="border-b border-white/[0.07]/50">
                         <td className="py-2 pr-4">Tableau building</td>
                         <td className="py-2 pr-4">By suit</td>
                         <td className="py-2">Alternating color</td>
                       </tr>
-                      <tr className="border-b border-[#e5e0d8]/50">
+                      <tr className="border-b border-white/[0.07]/50">
                         <td className="py-2 pr-4">Cards visible</td>
                         <td className="py-2 pr-4">All 52</td>
                         <td className="py-2">All 52</td>
                       </tr>
-                      <tr className="border-b border-[#e5e0d8]/50">
+                      <tr className="border-b border-white/[0.07]/50">
                         <td className="py-2 pr-4">Free cells</td>
                         <td className="py-2 pr-4">4</td>
                         <td className="py-2">4</td>
                       </tr>
-                      <tr className="border-b border-[#e5e0d8]/50">
+                      <tr className="border-b border-white/[0.07]/50">
                         <td className="py-2 pr-4">Solvability rate</td>
                         <td className="py-2 pr-4">~75%</td>
                         <td className="py-2">~99.999%</td>
@@ -668,11 +657,11 @@ export default function HistoryPage() {
           </div>
         </section>
 
-        <AdUnit className="my-2" />
+        <AdUnit className="my-0" />
 
         {/* Section: Microsoft FreeCell */}
         <section id="microsoft" className="scroll-mt-6">
-          <div className={CARD} style={CARD_TOP}>
+          <div className={CARD}>
             <SectionHeading
               sub="From Niche to Worldwide"
               id="microsoft-heading"
@@ -681,7 +670,7 @@ export default function HistoryPage() {
               Microsoft FreeCell: Windows 3.1 to Windows 10
             </SectionHeading>
 
-            <div className="px-6 sm:px-8 md:px-10 py-8 space-y-5 text-[#444444] leading-relaxed">
+            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-5 text-white/70 leading-relaxed">
               <p>
                 FreeCell might have remained a footnote in computing history if
                 not for one person: Jim Horne. A programmer at Microsoft,
@@ -711,10 +700,7 @@ export default function HistoryPage() {
               </p>
 
               <h3
-                className="font-medium text-[#2a2522] text-lg pt-2"
-                style={{
-                  fontFamily: "var(--font-playfair), Georgia, serif",
-                }}
+                className="font-medium text-white text-lg pt-2"
               >
                 Windows 3.1 and the Entertainment Pack (1991–1994)
               </h3>
@@ -730,10 +716,7 @@ export default function HistoryPage() {
               </p>
 
               <h3
-                className="font-medium text-[#2a2522] text-lg pt-2"
-                style={{
-                  fontFamily: "var(--font-playfair), Georgia, serif",
-                }}
+                className="font-medium text-white text-lg pt-2"
               >
                 Windows 95: The Tipping Point (1995)
               </h3>
@@ -758,10 +741,7 @@ export default function HistoryPage() {
               </p>
 
               <h3
-                className="font-medium text-[#2a2522] text-lg pt-2"
-                style={{
-                  fontFamily: "var(--font-playfair), Georgia, serif",
-                }}
+                className="font-medium text-white text-lg pt-2"
               >
                 Windows XP Through Windows 7: The Golden Era (2001–2012)
               </h3>
@@ -793,10 +773,7 @@ export default function HistoryPage() {
               </p>
 
               <h3
-                className="font-medium text-[#2a2522] text-lg pt-2"
-                style={{
-                  fontFamily: "var(--font-playfair), Georgia, serif",
-                }}
+                className="font-medium text-white text-lg pt-2"
               >
                 Windows 8 and the Microsoft Solitaire Collection (2012–Present)
               </h3>
@@ -829,11 +806,11 @@ export default function HistoryPage() {
           </div>
         </section>
 
-        <AdUnit className="my-2" />
+        <AdUnit className="my-0" />
 
         {/* Section: Timeline */}
         <section id="timeline" className="scroll-mt-6">
-          <div className={CARD} style={CARD_TOP}>
+          <div className={CARD}>
             <SectionHeading
               sub="Year by Year"
               id="timeline-heading"
@@ -842,7 +819,7 @@ export default function HistoryPage() {
               FreeCell Through the Decades
             </SectionHeading>
 
-            <div className="px-6 sm:px-8 md:px-10 py-8 space-y-0">
+            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-0">
               {timeline.map((entry, i) => (
                 <div key={entry.year} className="flex gap-4 sm:gap-6 group">
                   {/* Timeline line + dot */}
@@ -855,18 +832,15 @@ export default function HistoryPage() {
 
                   {/* Content */}
                   <div className="pb-8">
-                    <span className="text-xs font-bold uppercase tracking-widest text-[#B8860B]">
+                    <span className="text-xs font-bold uppercase tracking-widest text-[#D4AF37]">
                       {entry.year}
                     </span>
                     <h3
-                      className="font-medium text-[#2a2522] text-lg mt-1 mb-2"
-                      style={{
-                        fontFamily: "var(--font-playfair), Georgia, serif",
-                      }}
+                      className="font-medium text-white text-lg mt-1 mb-2"
                     >
                       {entry.title}
                     </h3>
-                    <p className="text-[#444444] leading-relaxed">
+                    <p className="text-white/70 leading-relaxed">
                       {entry.description}
                     </p>
                   </div>
@@ -876,11 +850,11 @@ export default function HistoryPage() {
           </div>
         </section>
 
-        <AdUnit className="my-2" />
+        <AdUnit className="my-0" />
 
         {/* Section: Game #11982 */}
         <section id="11982" className="scroll-mt-6">
-          <div className={CARD} style={CARD_TOP}>
+          <div className={CARD}>
             <SectionHeading
               sub="The Impossible Deal"
               id="11982-heading"
@@ -889,7 +863,7 @@ export default function HistoryPage() {
               Game #11982: FreeCell&apos;s Only Unsolvable Deal
             </SectionHeading>
 
-            <div className="px-6 sm:px-8 md:px-10 py-8 space-y-5 text-[#444444] leading-relaxed">
+            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-5 text-white/70 leading-relaxed">
               <p>
                 Among the original 32,000 numbered deals in Microsoft FreeCell,
                 game #11982 holds a unique distinction: it is the only deal that
@@ -940,12 +914,9 @@ export default function HistoryPage() {
                 all four foundation piles being completed.
               </p>
 
-              <div className="card-inset rounded-lg p-5 mt-2">
+              <div className="bg-white/[0.05] border border-white/[0.07] rounded-lg p-5 mt-2">
                 <h3
-                  className="font-medium text-[#2a2522] text-lg mb-3"
-                  style={{
-                    fontFamily: "var(--font-playfair), Georgia, serif",
-                  }}
+                  className="font-medium text-white text-lg mb-3"
                 >
                   The Numbers Behind the Legend
                 </h3>
@@ -953,39 +924,30 @@ export default function HistoryPage() {
                   <div>
                     <div
                       className="text-3xl font-bold text-[#D4AF37]"
-                      style={{
-                        fontFamily: "var(--font-playfair), Georgia, serif",
-                      }}
                     >
                       32,000
                     </div>
-                    <div className="text-sm text-[#6B7280] mt-1">
+                    <div className="text-sm text-white/40 mt-1">
                       original Microsoft deals
                     </div>
                   </div>
                   <div>
                     <div
                       className="text-3xl font-bold text-[#D4AF37]"
-                      style={{
-                        fontFamily: "var(--font-playfair), Georgia, serif",
-                      }}
                     >
                       31,999
                     </div>
-                    <div className="text-sm text-[#6B7280] mt-1">
+                    <div className="text-sm text-white/40 mt-1">
                       confirmed solvable
                     </div>
                   </div>
                   <div>
                     <div
                       className="text-3xl font-bold text-[#D4AF37]"
-                      style={{
-                        fontFamily: "var(--font-playfair), Georgia, serif",
-                      }}
                     >
                       1
                     </div>
-                    <div className="text-sm text-[#6B7280] mt-1">
+                    <div className="text-sm text-white/40 mt-1">
                       proven impossible (#11982)
                     </div>
                   </div>
@@ -1047,7 +1009,7 @@ export default function HistoryPage() {
 
         {/* Section: Mathematics */}
         <section id="mathematics" className="scroll-mt-6">
-          <div className={CARD} style={CARD_TOP}>
+          <div className={CARD}>
             <SectionHeading
               sub="The Numbers Behind the Game"
               id="mathematics-heading"
@@ -1056,7 +1018,7 @@ export default function HistoryPage() {
               FreeCell Mathematics: Why 99.999% of Deals Are Solvable
             </SectionHeading>
 
-            <div className="px-6 sm:px-8 md:px-10 py-8 space-y-5 text-[#444444] leading-relaxed">
+            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-5 text-white/70 leading-relaxed">
               <p>
                 FreeCell occupies a fascinating position in the intersection
                 of recreational mathematics and computer science. Unlike most
@@ -1067,10 +1029,7 @@ export default function HistoryPage() {
               </p>
 
               <h3
-                className="font-medium text-[#2a2522] text-lg pt-2"
-                style={{
-                  fontFamily: "var(--font-playfair), Georgia, serif",
-                }}
+                className="font-medium text-white text-lg pt-2"
               >
                 How Many FreeCell Deals Exist?
               </h3>
@@ -1097,10 +1056,7 @@ export default function HistoryPage() {
               </p>
 
               <h3
-                className="font-medium text-[#2a2522] text-lg pt-2"
-                style={{
-                  fontFamily: "var(--font-playfair), Georgia, serif",
-                }}
+                className="font-medium text-white text-lg pt-2"
               >
                 The 99.999% Solvability Rate
               </h3>
@@ -1127,10 +1083,7 @@ export default function HistoryPage() {
               </p>
 
               <h3
-                className="font-medium text-[#2a2522] text-lg pt-2"
-                style={{
-                  fontFamily: "var(--font-playfair), Georgia, serif",
-                }}
+                className="font-medium text-white text-lg pt-2"
               >
                 Computational Complexity
               </h3>
@@ -1162,12 +1115,9 @@ export default function HistoryPage() {
                 artificial intelligence.
               </p>
 
-              <div className="card-inset rounded-lg p-5 mt-2">
+              <div className="bg-white/[0.05] border border-white/[0.07] rounded-lg p-5 mt-2">
                 <h3
-                  className="font-medium text-[#2a2522] text-lg mb-3"
-                  style={{
-                    fontFamily: "var(--font-playfair), Georgia, serif",
-                  }}
+                  className="font-medium text-white text-lg mb-3"
                 >
                   FreeCell by the Numbers
                 </h3>
@@ -1175,52 +1125,40 @@ export default function HistoryPage() {
                   <div className="text-center p-3">
                     <div
                       className="text-2xl font-bold text-[#D4AF37]"
-                      style={{
-                        fontFamily: "var(--font-playfair), Georgia, serif",
-                      }}
                     >
                       8.07 × 10<sup>67</sup>
                     </div>
-                    <div className="text-sm text-[#6B7280] mt-1">
+                    <div className="text-sm text-white/40 mt-1">
                       total possible deals (52!)
                     </div>
                   </div>
                   <div className="text-center p-3">
                     <div
                       className="text-2xl font-bold text-[#D4AF37]"
-                      style={{
-                        fontFamily: "var(--font-playfair), Georgia, serif",
-                      }}
                     >
                       99.999%
                     </div>
-                    <div className="text-sm text-[#6B7280] mt-1">
+                    <div className="text-sm text-white/40 mt-1">
                       estimated solvable deals
                     </div>
                   </div>
                   <div className="text-center p-3">
                     <div
                       className="text-2xl font-bold text-[#D4AF37]"
-                      style={{
-                        fontFamily: "var(--font-playfair), Georgia, serif",
-                      }}
                     >
                       ~75%
                     </div>
-                    <div className="text-sm text-[#6B7280] mt-1">
+                    <div className="text-sm text-white/40 mt-1">
                       Baker&apos;s Game solvability (by comparison)
                     </div>
                   </div>
                   <div className="text-center p-3">
                     <div
                       className="text-2xl font-bold text-[#D4AF37]"
-                      style={{
-                        fontFamily: "var(--font-playfair), Georgia, serif",
-                      }}
                     >
                       NP-complete
                     </div>
-                    <div className="text-sm text-[#6B7280] mt-1">
+                    <div className="text-sm text-white/40 mt-1">
                       computational complexity class
                     </div>
                   </div>
@@ -1232,7 +1170,7 @@ export default function HistoryPage() {
 
         {/* Section: Cultural Impact */}
         <section id="cultural-impact" className="scroll-mt-6">
-          <div className={CARD} style={CARD_TOP}>
+          <div className={CARD}>
             <SectionHeading
               sub="Beyond the Game"
               id="cultural-impact-heading"
@@ -1241,7 +1179,7 @@ export default function HistoryPage() {
               FreeCell&apos;s Cultural Impact
             </SectionHeading>
 
-            <div className="px-6 sm:px-8 md:px-10 py-8 space-y-5 text-[#444444] leading-relaxed">
+            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-5 text-white/70 leading-relaxed">
               <p>
                 FreeCell&apos;s impact extends far beyond the game itself.
                 As one of the three card games bundled with Windows (alongside{" "}
@@ -1314,7 +1252,7 @@ export default function HistoryPage() {
 
         {/* Section: Speedrunning */}
         <section id="speedrunning" className="scroll-mt-6">
-          <div className={CARD} style={CARD_TOP}>
+          <div className={CARD}>
             <SectionHeading
               sub="Competitive FreeCell"
               id="speedrunning-heading"
@@ -1323,7 +1261,7 @@ export default function HistoryPage() {
               The Speedrunning and Competitive Community
             </SectionHeading>
 
-            <div className="px-6 sm:px-8 md:px-10 py-8 space-y-5 text-[#444444] leading-relaxed">
+            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-5 text-white/70 leading-relaxed">
               <p>
                 While most people play FreeCell casually, a dedicated
                 competitive community has emerged around the game, pushing
@@ -1409,7 +1347,7 @@ export default function HistoryPage() {
 
         {/* Section: Mobile & Web */}
         <section id="mobile-web" className="scroll-mt-6">
-          <div className={CARD} style={CARD_TOP}>
+          <div className={CARD}>
             <SectionHeading
               sub="The Modern Era"
               id="mobile-web-heading"
@@ -1418,7 +1356,7 @@ export default function HistoryPage() {
               FreeCell&apos;s Evolution to Mobile and Web
             </SectionHeading>
 
-            <div className="px-6 sm:px-8 md:px-10 py-8 space-y-5 text-[#444444] leading-relaxed">
+            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-5 text-white/70 leading-relaxed">
               <p>
                 The launch of Apple&apos;s iPhone in 2007 and the subsequent
                 explosion of smartphone apps created an entirely new chapter
@@ -1487,7 +1425,7 @@ export default function HistoryPage() {
 
         {/* Section: Fun Facts */}
         <section id="fun-facts" className="scroll-mt-6">
-          <div className={CARD} style={CARD_TOP}>
+          <div className={CARD}>
             <SectionHeading
               sub="Things You Didn&apos;t Know"
               id="fun-facts-heading"
@@ -1496,7 +1434,7 @@ export default function HistoryPage() {
               FreeCell Fun Facts
             </SectionHeading>
 
-            <div className="px-6 sm:px-8 md:px-10 py-8">
+            <div className="px-8 sm:px-10 md:px-12 py-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {funFacts.map((item, i) => {
                   const suits = ["\u2660", "\u2665", "\u2666", "\u2663"];
@@ -1505,19 +1443,19 @@ export default function HistoryPage() {
                   return (
                     <div
                       key={i}
-                      className="card-inset rounded-lg p-5"
+                      className="bg-white/[0.05] border border-white/[0.07] rounded-lg p-5"
                     >
                       <div className="flex items-start gap-3">
                         <span
-                          className={`text-lg shrink-0 mt-0.5 ${isRed ? "text-red-500" : "text-[#B8860B]"}`}
+                          className={`text-lg shrink-0 mt-0.5 ${isRed ? "text-red-500" : "text-[#D4AF37]"}`}
                         >
                           {suit}
                         </span>
                         <div>
-                          <h3 className="font-medium text-[#2a2522] text-base mb-1">
+                          <h3 className="font-medium text-white text-base mb-1">
                             {item.fact}
                           </h3>
-                          <p className="text-[#444444] text-sm leading-relaxed">
+                          <p className="text-white/70 text-sm leading-relaxed">
                             {item.detail}
                           </p>
                         </div>
@@ -1532,7 +1470,7 @@ export default function HistoryPage() {
 
         {/* Section: FAQ */}
         <section id="faq" className="scroll-mt-6">
-          <div className={CARD} style={CARD_TOP}>
+          <div className={CARD}>
             <SectionHeading
               sub="Common Questions"
               id="faq-heading"
@@ -1541,20 +1479,55 @@ export default function HistoryPage() {
               FreeCell History FAQ
             </SectionHeading>
 
-            <div className="px-6 sm:px-8 md:px-10 py-8 space-y-6">
+            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-6">
               {historyFaqs.map((faq, i) => (
                 <div key={i}>
-                  <h3 className="font-medium text-[#2a2522] text-lg mb-2">
+                  <h3 className="font-medium text-white text-lg mb-2">
                     {faq.question}
                   </h3>
-                  <p className="text-[#444444] leading-relaxed">
+                  <p className="text-white/70 leading-relaxed">
                     {faq.answer}
                   </p>
                   {i < historyFaqs.length - 1 && (
-                    <div className="mt-6 border-b border-[#e5e0d8]" />
+                    <div className="mt-6 border-b border-white/[0.07]" />
                   )}
                 </div>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── Related Guides ── */}
+        <section id="related-guides" className="scroll-mt-6">
+          <div className={CARD}>
+            <SectionHeading sub="Read Next" id="related-heading" icon={"\u2660"}>
+              Related Guides
+            </SectionHeading>
+            <div className="px-8 sm:px-10 md:px-12 py-6 grid gap-4 md:grid-cols-2">
+              <Link href="/famous-freecell-deals" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
+                <h3 className="text-lg font-semibold text-white">Famous FreeCell Deals</h3>
+                <p className="mt-2 text-sm leading-7 text-white/70">
+                  Explore the most iconic game numbers in FreeCell history, from easy wins to the proven impossible.
+                </p>
+              </Link>
+              <Link href="/freecell-game-11982" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
+                <h3 className="text-lg font-semibold text-white">FreeCell Game #11982</h3>
+                <p className="mt-2 text-sm leading-7 text-white/70">
+                  The full story of the only proven unsolvable deal and why it became a cult classic.
+                </p>
+              </Link>
+              <Link href="/freecell-world-records" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
+                <h3 className="text-lg font-semibold text-white">FreeCell World Records</h3>
+                <p className="mt-2 text-sm leading-7 text-white/70">
+                  Fastest times, longest streaks, and community achievements from decades of competitive play.
+                </p>
+              </Link>
+              <Link href="/is-every-freecell-game-winnable" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
+                <h3 className="text-lg font-semibold text-white">Is Every FreeCell Game Winnable?</h3>
+                <p className="mt-2 text-sm leading-7 text-white/70">
+                  Why 99.999% of deals are solvable, what makes the rest impossible, and how to tell the difference.
+                </p>
+              </Link>
             </div>
           </div>
         </section>
@@ -1564,7 +1537,6 @@ export default function HistoryPage() {
           <div
             className={CARD}
             style={{
-              ...CARD_TOP,
               background:
                 "linear-gradient(135deg, rgba(10,74,42,0.6) 0%, rgba(6,37,22,0.8) 100%)",
             }}
@@ -1585,11 +1557,10 @@ export default function HistoryPage() {
 
               <h2
                 className="text-2xl sm:text-3xl font-semibold text-white mb-3"
-                style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
               >
                 Write Your Own FreeCell History
               </h2>
-              <p className="text-[#6B7280] mb-6 max-w-md mx-auto">
+              <p className="text-white/40 mb-6 max-w-md mx-auto">
                 Join millions of players who have enjoyed FreeCell since 1978.
                 Start a game now and see how your strategy measures up.
               </p>

@@ -5,60 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Search, Shuffle, ChevronDown, ChevronUp } from 'lucide-react';
 import AdUnit from '../../components/AdUnit';
-
-/* ── Deal data ── */
-
-type Difficulty = 'Easy' | 'Medium' | 'Hard' | 'Impossible';
-
-interface DealInfo {
-  number: number;
-  label: string;
-  difficulty?: Difficulty;
-}
-
-const famousDeals: DealInfo[] = [
-  { number: 1, label: 'First MS deal', difficulty: 'Easy' },
-  { number: 617, label: 'Windows default', difficulty: 'Easy' },
-  { number: 11982, label: 'Proven impossible', difficulty: 'Impossible' },
-  { number: 146692, label: 'Impossible deal', difficulty: 'Impossible' },
-  { number: 495000, label: 'Impossible deal', difficulty: 'Impossible' },
-  { number: 512118, label: 'Impossible deal', difficulty: 'Impossible' },
-  { number: 517776, label: 'Impossible deal', difficulty: 'Impossible' },
-  { number: 781948, label: 'Impossible deal', difficulty: 'Impossible' },
-];
-
-const beginnerDeals: DealInfo[] = [
-  { number: 164, label: 'One of the easiest', difficulty: 'Easy' },
-  { number: 278, label: 'Smooth opening', difficulty: 'Easy' },
-  { number: 420, label: 'Forgiving layout', difficulty: 'Easy' },
-  { number: 1029, label: 'Clear paths', difficulty: 'Easy' },
-  { number: 2984, label: 'Natural sequences', difficulty: 'Easy' },
-  { number: 3285, label: 'Accessible Aces', difficulty: 'Easy' },
-  { number: 7391, label: 'Quick win', difficulty: 'Easy' },
-  { number: 10692, label: 'Beginner friendly', difficulty: 'Easy' },
-];
-
-const expertDeals: DealInfo[] = [
-  { number: 169, label: 'Notoriously difficult', difficulty: 'Hard' },
-  { number: 178, label: 'Expert challenge', difficulty: 'Hard' },
-  { number: 258, label: 'Buried Aces', difficulty: 'Hard' },
-  { number: 454, label: 'Tight margins', difficulty: 'Hard' },
-  { number: 1689, label: 'Complex extraction', difficulty: 'Hard' },
-  { number: 3148, label: 'Deep planning needed', difficulty: 'Hard' },
-  { number: 7107, label: 'Advanced only', difficulty: 'Hard' },
-  { number: 10613, label: 'Near-impossible', difficulty: 'Hard' },
-];
-
-const communityDeals: DealInfo[] = [
-  { number: 25, label: 'Community classic' },
-  { number: 50, label: 'Popular pick' },
-  { number: 100, label: 'Round number favorite' },
-  { number: 1000, label: 'Milestone deal' },
-  { number: 5000, label: 'Mid-range gem' },
-  { number: 10000, label: 'Five digits' },
-  { number: 25000, label: 'Quarter mark' },
-  { number: 32000, label: 'Last MS deal' },
-];
+import { famousDeals, beginnerDeals, expertDeals, communityDeals, type Difficulty, type DealInfo } from '@/lib/curatedDeals';
 
 const ranges = [
   { label: '1-100', start: 1, end: 100 },

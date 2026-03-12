@@ -1,8 +1,9 @@
 import type { MetadataRoute } from 'next';
 import { absoluteUrl, isHubSite } from '@/lib/siteConfig';
+import { sitemapGameNumbers, isHighPriorityDeal } from '@/lib/curatedDeals';
 
 /**
- * Dynamic sitemap for all content pages + notable game number routes.
+ * Dynamic sitemap for all content pages + curated/milestone game routes.
  * Next.js auto-serves this at /sitemap.xml
  */
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -42,6 +43,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/easy-freecell-games', changeFrequency: 'monthly' as const, priority: 0.7 },
     { path: '/hard-freecell-games', changeFrequency: 'monthly' as const, priority: 0.7 },
     { path: '/freecell-mistakes-to-avoid', changeFrequency: 'monthly' as const, priority: 0.7 },
+    { path: '/famous-freecell-deals', changeFrequency: 'monthly' as const, priority: 0.7 },
+    { path: '/freecell-game-11982', changeFrequency: 'yearly' as const, priority: 0.7 },
     { path: '/spider/how-to-play', changeFrequency: 'monthly' as const, priority: 0.7 },
     { path: '/spider/strategy', changeFrequency: 'monthly' as const, priority: 0.7 },
     { path: '/spider/tips', changeFrequency: 'monthly' as const, priority: 0.7 },
@@ -61,20 +64,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: p.priority,
   }));
 
-  /* ── Notable game number routes ── */
-  // Include the famous/notable deals that have SEO value
-  // Plus a spread of game numbers for discoverability
-  const notableGames = [
-    1, 2, 3, 10, 25, 50, 100, 169, 250, 500, 617,
-    1000, 1941, 2500, 5000, 7500, 10000, 11982, // 11982 = famous "impossible" deal
-    15000, 20000, 25000, 30000, 31999, 32000,
-  ];
-
-  const gameEntries: MetadataRoute.Sitemap = notableGames.map((num) => ({
+  /* ── Game number routes derived from shared curated data + milestones ── */
+  const gameEntries: MetadataRoute.Sitemap = sitemapGameNumbers.map((num) => ({
     url: absoluteUrl(`/game/${num}`),
     lastModified: now,
     changeFrequency: 'yearly' as const,
-    priority: num === 11982 ? 0.6 : 0.4,
+    priority: isHighPriorityDeal(num) ? 0.6 : 0.4,
   }));
 
   return [...staticEntries, ...gameEntries];

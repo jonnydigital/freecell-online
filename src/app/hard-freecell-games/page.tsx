@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { absoluteUrl, siteConfig } from '@/lib/siteConfig';
+import { expertDeals } from '@/lib/curatedDeals';
 import AdUnit from '../../components/AdUnit';
 import ContentLayout from '../../components/ContentLayout';
 
@@ -28,10 +29,7 @@ export const metadata: Metadata = {
   },
 };
 
-const CARD = 'card-panel';
-const CARD_TOP: React.CSSProperties = {
-  borderTop: '1px solid rgba(184, 134, 11, 0.08)',
-};
+const CARD = 'rounded-xl bg-white/[0.04] border border-white/[0.07] overflow-hidden';
 
 const faqs = [
   {
@@ -64,19 +62,18 @@ function SectionHeading({
   sub?: string;
 }) {
   return (
-    <div className="px-6 sm:px-8 md:px-10 pt-8 sm:pt-10 pb-0">
+    <div className="px-8 sm:px-10 md:px-12 pt-6 sm:pt-8 pb-0">
       {sub && (
-        <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#B8860B]/60 mb-1.5 block">
+        <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#D4AF37]/60 mb-1.5 block">
           {sub}
         </span>
       )}
       <h2
-        className="text-2xl sm:text-3xl font-bold text-[#2a2522] scroll-mt-6"
-        style={{ fontFamily: 'var(--font-playfair), Georgia, serif' }}
+        className="text-2xl sm:text-3xl font-bold text-white scroll-mt-6"
       >
         {children}
       </h2>
-      <div className="card-title-separator mt-5" />
+      <div className="mt-4 h-px bg-gradient-to-r from-[#D4AF37]/40 to-transparent" />
     </div>
   );
 }
@@ -143,28 +140,27 @@ export default function HardFreecellGamesPage() {
       <main className="max-w-5xl mx-auto px-4 sm:px-6 pt-6 pb-20 space-y-6">
         <section>
           <div className={CARD}>
-            <div className="px-6 sm:px-8 md:px-10 pt-8 sm:pt-10 pb-8">
-              <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#B8860B]/60 block mb-3">
+            <div className="px-8 sm:px-10 md:px-12 pt-6 sm:pt-8 pb-6">
+              <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#D4AF37]/60 block mb-3">
                 Advanced FreeCell
               </span>
               <h1
-                className="text-4xl sm:text-5xl font-bold text-[#2a2522] leading-tight"
-                style={{ fontFamily: 'var(--font-playfair), Georgia, serif' }}
+                className="text-4xl sm:text-5xl font-bold text-white leading-tight"
               >
                 Hard FreeCell Games
               </h1>
-              <p className="mt-5 text-lg leading-8 text-[#444444] max-w-3xl">
+              <p className="mt-5 text-lg leading-8 text-white/70 max-w-3xl">
                 Difficult FreeCell deals are not hard because the rules change. They are hard
                 because the board gives you less room, fewer forgiving lines, and more chances to
                 mistake motion for progress.
               </p>
 
               <div className="mt-8 grid gap-4 md:grid-cols-[1.1fr,0.9fr]">
-                <div className="card-inset rounded-xl p-6">
-                  <div className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#B8860B]/65 mb-3">
+                <div className="bg-white/[0.05] border border-white/[0.07] rounded-xl p-6">
+                  <div className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#D4AF37]/60 mb-3">
                     The core idea
                   </div>
-                  <p className="text-[#2a2522] leading-7">
+                  <p className="text-white leading-7">
                     Hard deals restrict mobility. The more the board forces you to spend free cells
                     and delay low-card progress, the narrower the winning line becomes.
                   </p>
@@ -187,50 +183,50 @@ export default function HardFreecellGamesPage() {
         </section>
 
         <section>
-          <div className={CARD} style={CARD_TOP}>
+          <div className={CARD}>
             <SectionHeading sub="The Patterns">What Makes A FreeCell Deal Difficult</SectionHeading>
-            <div className="px-6 sm:px-8 md:px-10 py-8 grid gap-4 md:grid-cols-2">
-              <div className="rounded-xl border border-[#e5e0d8] p-5">
-                <h3 className="text-lg font-semibold text-[#2a2522] mb-2">Buried low cards</h3>
-                <p className="text-[#444444] text-sm leading-7">
+            <div className="px-8 sm:px-10 md:px-12 py-6 grid gap-4 md:grid-cols-2">
+              <div className="rounded-xl border border-white/[0.07] p-5">
+                <h3 className="text-lg font-semibold text-white mb-2">Buried low cards</h3>
+                <p className="text-white/70 text-sm leading-7">
                   If aces, twos, and threes are trapped under long mixed stacks, the foundations
                   stall and the whole board stays heavier for longer.
                 </p>
               </div>
-              <div className="rounded-xl border border-[#e5e0d8] p-5">
-                <h3 className="text-lg font-semibold text-[#2a2522] mb-2">No easy empty column</h3>
-                <p className="text-[#444444] text-sm leading-7">
+              <div className="rounded-xl border border-white/[0.07] p-5">
+                <h3 className="text-lg font-semibold text-white mb-2">No easy empty column</h3>
+                <p className="text-white/70 text-sm leading-7">
                   Difficult deals often deny you a clean column. Without that space, every rebuild
                   becomes more expensive and every mistake costs more.
                 </p>
               </div>
-              <div className="rounded-xl border border-[#e5e0d8] p-5">
-                <h3 className="text-lg font-semibold text-[#2a2522] mb-2">Conflicting color ladders</h3>
-                <p className="text-[#444444] text-sm leading-7">
+              <div className="rounded-xl border border-white/[0.07] p-5">
+                <h3 className="text-lg font-semibold text-white mb-2">Conflicting color ladders</h3>
+                <p className="text-white/70 text-sm leading-7">
                   Hard games create stacks that look useful but block the exact color alternation
                   you need for a clean release later.
                 </p>
               </div>
-              <div className="rounded-xl border border-[#e5e0d8] p-5">
-                <h3 className="text-lg font-semibold text-[#2a2522] mb-2">False-choice openings</h3>
-                <p className="text-[#444444] text-sm leading-7">
+              <div className="rounded-xl border border-white/[0.07] p-5">
+                <h3 className="text-lg font-semibold text-white mb-2">False-choice openings</h3>
+                <p className="text-white/70 text-sm leading-7">
                   The opening move is not always obviously wrong. Hard deals often give you several
-                  plausible starts, but only one preserves the board's future flexibility.
+                  plausible starts, but only one preserves the board&apos;s future flexibility.
                 </p>
               </div>
             </div>
           </div>
         </section>
 
-        <AdUnit className="my-2" />
+        <AdUnit className="my-0" />
 
         <section>
-          <div className={CARD} style={CARD_TOP}>
+          <div className={CARD}>
             <SectionHeading sub="Do Not Confuse Them">Hard Versus Impossible</SectionHeading>
-            <div className="px-6 sm:px-8 md:px-10 py-8 space-y-5 text-[#444444] leading-8">
+            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-5 text-white/70 leading-8">
               <p>
                 A hard deal gives you a narrow path. An impossible deal gives you none. That
-                distinction matters because players routinely label a deal "impossible" after
+                distinction matters because players routinely label a deal &quot;impossible&quot; after
                 wasting all their space and getting stuck in a damaged position.
               </p>
               <p>
@@ -242,10 +238,10 @@ export default function HardFreecellGamesPage() {
                 deals exist, but they are rare enough that your default assumption should still be:
                 there is probably a line here if I manage space better.
               </p>
-              <div className="card-inset rounded-xl p-6">
-                <h3 className="text-lg font-semibold text-[#2a2522] mb-3">A better question to ask mid-game</h3>
+              <div className="bg-white/[0.05] border border-white/[0.07] rounded-xl p-6">
+                <h3 className="text-lg font-semibold text-white mb-3">A better question to ask mid-game</h3>
                 <p className="text-sm leading-7">
-                  Instead of asking "Is this deal impossible?" ask "What resource did I lose?" Most
+                  Instead of asking &quot;Is this deal impossible?&quot; ask &quot;What resource did I lose?&quot; Most
                   hard positions get ugly because you lost an empty column, buried a critical low
                   card again, or spent a free cell to make a move that looked active but reduced mobility.
                 </p>
@@ -255,33 +251,33 @@ export default function HardFreecellGamesPage() {
         </section>
 
         <section>
-          <div className={CARD} style={CARD_TOP}>
+          <div className={CARD}>
             <SectionHeading sub="Practical Tactics">How To Attack Hard Deals</SectionHeading>
-            <div className="px-6 sm:px-8 md:px-10 py-8 grid gap-4 md:grid-cols-2">
-              <div className="card-inset rounded-xl p-5">
-                <h3 className="text-lg font-semibold text-[#2a2522] mb-2">Scan longer before move one</h3>
-                <p className="text-[#444444] text-sm leading-7">
+            <div className="px-8 sm:px-10 md:px-12 py-6 grid gap-4 md:grid-cols-2">
+              <div className="bg-white/[0.05] border border-white/[0.07] rounded-xl p-5">
+                <h3 className="text-lg font-semibold text-white mb-2">Scan longer before move one</h3>
+                <p className="text-white/70 text-sm leading-7">
                   Hard deals reward patience at the start. Locate every ace, low card, and nearly
                   clear column before you commit to a sequence.
                 </p>
               </div>
-              <div className="card-inset rounded-xl p-5">
-                <h3 className="text-lg font-semibold text-[#2a2522] mb-2">Protect free cells</h3>
-                <p className="text-[#444444] text-sm leading-7">
+              <div className="bg-white/[0.05] border border-white/[0.07] rounded-xl p-5">
+                <h3 className="text-lg font-semibold text-white mb-2">Protect free cells</h3>
+                <p className="text-white/70 text-sm leading-7">
                   In tough positions, free cells are not for decoration. They are tactical reserve.
                   Spend them only when they open something more valuable.
                 </p>
               </div>
-              <div className="card-inset rounded-xl p-5">
-                <h3 className="text-lg font-semibold text-[#2a2522] mb-2">Value mobility over beauty</h3>
-                <p className="text-[#444444] text-sm leading-7">
+              <div className="bg-white/[0.05] border border-white/[0.07] rounded-xl p-5">
+                <h3 className="text-lg font-semibold text-white mb-2">Value mobility over beauty</h3>
+                <p className="text-white/70 text-sm leading-7">
                   A pretty descending stack can be a trap. Favor lines that create room and expose
                   low cards, even if the tableau looks less elegant in the short term.
                 </p>
               </div>
-              <div className="card-inset rounded-xl p-5">
-                <h3 className="text-lg font-semibold text-[#2a2522] mb-2">Study failed positions</h3>
-                <p className="text-[#444444] text-sm leading-7">
+              <div className="bg-white/[0.05] border border-white/[0.07] rounded-xl p-5">
+                <h3 className="text-lg font-semibold text-white mb-2">Study failed positions</h3>
+                <p className="text-white/70 text-sm leading-7">
                   Use undo, hints, and the{" "}
                   <Link href="/solver" className="text-[#D4AF37] hover:underline">
                     solver
@@ -295,25 +291,62 @@ export default function HardFreecellGamesPage() {
         </section>
 
         <section>
-          <div className={CARD} style={CARD_TOP}>
+          <div className={CARD}>
+            <SectionHeading sub="Test Your Skills">Try These Expert Challenge Deals</SectionHeading>
+            <div className="px-8 sm:px-10 md:px-12 py-6">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {expertDeals.map((deal) => (
+                  <Link
+                    key={deal.number}
+                    href={`/game/${deal.number}`}
+                    className="rounded-xl border border-white/[0.07] bg-white/[0.05] p-5 hover:border-[#D4AF37]/50 transition-colors text-center"
+                  >
+                    <span className="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-semibold uppercase tracking-wider bg-red-500/20 text-red-400 mb-3">
+                      Hard
+                    </span>
+                    <div className="text-2xl font-bold text-white mb-1">#{deal.number}</div>
+                    <div className="text-sm text-white/60">{deal.label}</div>
+                  </Link>
+                ))}
+              </div>
+              <div className="mt-6 flex flex-wrap gap-4 justify-center">
+                <Link href="/famous-freecell-deals" className="text-[#D4AF37] hover:underline text-sm font-medium">
+                  See all famous deals &rarr;
+                </Link>
+                <Link href="/deals" className="text-[#D4AF37] hover:underline text-sm font-medium">
+                  Browse all deals &rarr;
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <div className={CARD}>
             <SectionHeading sub="Read Next">Build The Full Difficulty Cluster</SectionHeading>
-            <div className="px-6 sm:px-8 md:px-10 py-8 grid gap-4 md:grid-cols-3">
-              <Link href="/easy-freecell-games" className="rounded-xl border border-[#e5e0d8] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                <h3 className="text-lg font-semibold text-[#2a2522]">Easy FreeCell Games</h3>
-                <p className="mt-2 text-sm leading-7 text-[#444444]">
+            <div className="px-8 sm:px-10 md:px-12 py-6 grid gap-4 md:grid-cols-2">
+              <Link href="/easy-freecell-games" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
+                <h3 className="text-lg font-semibold text-white">Easy FreeCell Games</h3>
+                <p className="mt-2 text-sm leading-7 text-white/70">
                   Learn what a forgiving deal looks like and why easier boards are ideal for practice.
                 </p>
               </Link>
-              <Link href="/is-every-freecell-game-winnable" className="rounded-xl border border-[#e5e0d8] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                <h3 className="text-lg font-semibold text-[#2a2522]">Is Every Game Winnable?</h3>
-                <p className="mt-2 text-sm leading-7 text-[#444444]">
+              <Link href="/is-every-freecell-game-winnable" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
+                <h3 className="text-lg font-semibold text-white">Is Every Game Winnable?</h3>
+                <p className="mt-2 text-sm leading-7 text-white/70">
                   Separate truly impossible deals from solvable boards that only look dead.
                 </p>
               </Link>
-              <Link href="/tips" className="rounded-xl border border-[#e5e0d8] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                <h3 className="text-lg font-semibold text-[#2a2522]">Tips and Tricks</h3>
-                <p className="mt-2 text-sm leading-7 text-[#444444]">
+              <Link href="/tips" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
+                <h3 className="text-lg font-semibold text-white">Tips and Tricks</h3>
+                <p className="mt-2 text-sm leading-7 text-white/70">
                   Pair this page with a quicker tactical checklist you can use during live play.
+                </p>
+              </Link>
+              <Link href="/famous-freecell-deals" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
+                <h3 className="text-lg font-semibold text-white">Famous FreeCell Deals</h3>
+                <p className="mt-2 text-sm leading-7 text-white/70">
+                  Explore the iconic games that define FreeCell difficulty — from the notoriously hard to the proven impossible.
                 </p>
               </Link>
             </div>
@@ -321,14 +354,14 @@ export default function HardFreecellGamesPage() {
         </section>
 
         <section id="faq">
-          <div className={CARD} style={CARD_TOP}>
+          <div className={CARD}>
             <SectionHeading sub="Common Questions">Hard FreeCell Games FAQ</SectionHeading>
-            <div className="px-6 sm:px-8 md:px-10 py-8 space-y-6">
+            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-6">
               {faqs.map((faq, index) => (
                 <div key={faq.question}>
-                  <h3 className="font-medium text-[#2a2522] text-lg mb-2">{faq.question}</h3>
-                  <p className="text-[#444444] leading-relaxed">{faq.answer}</p>
-                  {index < faqs.length - 1 && <div className="mt-6 border-b border-[#e5e0d8]" />}
+                  <h3 className="font-medium text-white text-lg mb-2">{faq.question}</h3>
+                  <p className="text-white/70 leading-relaxed">{faq.answer}</p>
+                  {index < faqs.length - 1 && <div className="mt-6 border-b border-white/[0.07]" />}
                 </div>
               ))}
             </div>
@@ -339,18 +372,16 @@ export default function HardFreecellGamesPage() {
           <div
             className={CARD}
             style={{
-              ...CARD_TOP,
               background: 'linear-gradient(135deg, rgba(10,74,42,0.6) 0%, rgba(6,37,22,0.8) 100%)',
             }}
           >
             <div className="p-8 sm:p-10 text-center relative">
               <h2
                 className="text-2xl sm:text-3xl font-semibold text-white mb-3"
-                style={{ fontFamily: 'var(--font-playfair), Georgia, serif' }}
               >
                 Try A Deal That Makes You Think
               </h2>
-              <p className="text-[#6B7280] mb-6 max-w-2xl mx-auto">
+              <p className="text-white/40 mb-6 max-w-2xl mx-auto">
                 Tough FreeCell games are where discipline shows up. Play one, lose with purpose,
                 and use the position to sharpen your next opening scan.
               </p>

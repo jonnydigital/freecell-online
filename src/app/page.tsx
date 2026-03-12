@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
 import FreecellHomeClient from '@/components/FreecellHomeClient';
+import DomFreecellClient from '@/components/DomFreecellClient';
 import SolitaireHubHome from '@/components/SolitaireHubHome';
 import { absoluteUrl, isHubSite, siteConfig } from '@/lib/siteConfig';
+import { shouldUseDomEngine } from '@/lib/useDomEngine';
 
 export const metadata: Metadata = isHubSite
   ? {
@@ -51,5 +53,33 @@ export const metadata: Metadata = isHubSite
     };
 
 export default function Home() {
-  return isHubSite ? <SolitaireHubHome /> : <FreecellHomeClient />;
+  const webSiteJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: siteConfig.siteName,
+    url: siteConfig.url,
+    description: siteConfig.defaultDescription,
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: `${siteConfig.url}/game/{game_number}`,
+      'query-input': 'required name=game_number',
+    },
+  };
+
+  if (isHubSite) {
+    return (
+      <>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteJsonLd) }} />
+        <SolitaireHubHome />
+      </>
+    );
+  }
+
+  const useDom = shouldUseDomEngine();
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteJsonLd) }} />
+      {useDom ? <DomFreecellClient /> : <FreecellHomeClient />}
+    </>
+  );
 }

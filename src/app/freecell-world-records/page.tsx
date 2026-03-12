@@ -29,10 +29,7 @@ export const metadata: Metadata = {
   },
 };
 
-const CARD = 'card-panel';
-const CARD_TOP: React.CSSProperties = {
-  borderTop: '1px solid rgba(184, 134, 11, 0.08)',
-};
+const CARD = 'rounded-xl bg-white/[0.04] border border-white/[0.07] overflow-hidden';
 
 const faqs = [
   {
@@ -77,20 +74,19 @@ function SectionHeading({
   sub?: string;
 }) {
   return (
-    <div className="px-6 sm:px-8 md:px-10 pt-8 sm:pt-10 pb-0">
+    <div className="px-8 sm:px-10 md:px-12 pt-6 sm:pt-8 pb-0">
       {sub && (
-        <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#B8860B]/60 mb-1.5 block">
+        <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#D4AF37]/60 mb-1.5 block">
           {sub}
         </span>
       )}
       <h2
         id={id}
-        className="text-2xl sm:text-3xl font-bold text-[#2a2522] scroll-mt-6"
-        style={{ fontFamily: 'var(--font-playfair), Georgia, serif' }}
+        className="text-2xl sm:text-3xl font-bold text-white scroll-mt-6"
       >
         {children}
       </h2>
-      <div className="card-title-separator mt-5" />
+      <div className="mt-4 h-px bg-gradient-to-r from-[#D4AF37]/40 to-transparent" />
     </div>
   );
 }
@@ -157,17 +153,16 @@ export default function FreecellWorldRecordsPage() {
       <main className="max-w-5xl mx-auto px-4 sm:px-6 pt-6 pb-20 space-y-6">
         <section>
           <div className={CARD}>
-            <div className="px-6 sm:px-8 md:px-10 pt-8 sm:pt-10 pb-8">
-              <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#B8860B]/60 block mb-3">
+            <div className="px-8 sm:px-10 md:px-12 pt-6 sm:pt-8 pb-6">
+              <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#D4AF37]/60 block mb-3">
                 Community Achievements
               </span>
               <h1
-                className="text-4xl sm:text-5xl font-bold text-[#2a2522] leading-tight"
-                style={{ fontFamily: 'var(--font-playfair), Georgia, serif' }}
+                className="text-4xl sm:text-5xl font-bold text-white leading-tight"
               >
                 FreeCell World Records
               </h1>
-              <p className="mt-5 text-lg leading-8 text-[#444444] max-w-3xl">
+              <p className="mt-5 text-lg leading-8 text-white/70 max-w-3xl">
                 FreeCell has no governing body, no official tournament circuit, and no certified
                 record book. That has not stopped players from pushing the game to extraordinary
                 limits. The records that matter most are tracked by the community itself — on
@@ -175,11 +170,11 @@ export default function FreecellWorldRecordsPage() {
               </p>
 
               <div className="mt-8 grid gap-4 md:grid-cols-[1.15fr,0.85fr]">
-                <div className="card-inset rounded-xl p-6">
-                  <div className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#B8860B]/65 mb-3">
+                <div className="bg-white/[0.05] border border-white/[0.07] rounded-xl p-6">
+                  <div className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#D4AF37]/60 mb-3">
                     Important context
                   </div>
-                  <p className="text-[#2a2522] leading-7">
+                  <p className="text-white leading-7">
                     Because there is no central authority, nearly all FreeCell records are
                     self-reported or tracked by individual platforms. We use hedging language
                     throughout this page — &quot;reported,&quot; &quot;community records suggest,&quot;
@@ -204,9 +199,9 @@ export default function FreecellWorldRecordsPage() {
         </section>
 
         <section id="speed-records" className="scroll-mt-6">
-          <div className={CARD} style={CARD_TOP}>
+          <div className={CARD}>
             <SectionHeading sub="Against The Clock">Fastest FreeCell Completion Times</SectionHeading>
-            <div className="px-6 sm:px-8 md:px-10 py-8 space-y-5 text-[#444444] leading-8">
+            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-5 text-white/70 leading-8">
               <p>
                 Speed is the most visible FreeCell record category. Players compete to clear deals
                 as fast as possible, and reported times have dropped dramatically as interfaces
@@ -214,24 +209,24 @@ export default function FreecellWorldRecordsPage() {
                 auto-move behavior, drag mechanics, and deal difficulty all vary.
               </p>
               <div className="grid gap-4 md:grid-cols-3">
-                <div className="card-inset rounded-xl p-5">
-                  <h3 className="text-lg font-semibold text-[#2a2522] mb-2">Sub-minute completions</h3>
+                <div className="bg-white/[0.05] border border-white/[0.07] rounded-xl p-5">
+                  <h3 className="text-lg font-semibold text-white mb-2">Sub-minute completions</h3>
                   <p className="text-sm leading-7">
                     Experienced players regularly complete favorable deals in under 60 seconds.
                     Community reports suggest that times in the 30 to 45 second range are
                     achievable on deals with early foundation access and natural cascading.
                   </p>
                 </div>
-                <div className="card-inset rounded-xl p-5">
-                  <h3 className="text-lg font-semibold text-[#2a2522] mb-2">The auto-move factor</h3>
+                <div className="bg-white/[0.05] border border-white/[0.07] rounded-xl p-5">
+                  <h3 className="text-lg font-semibold text-white mb-2">The auto-move factor</h3>
                   <p className="text-sm leading-7">
                     Many fast times rely heavily on auto-move features that send cards to
                     foundations automatically. This means the player is not manually placing every
                     card — the interface is doing much of the late-game work.
                   </p>
                 </div>
-                <div className="card-inset rounded-xl p-5">
-                  <h3 className="text-lg font-semibold text-[#2a2522] mb-2">Deal selection matters</h3>
+                <div className="bg-white/[0.05] border border-white/[0.07] rounded-xl p-5">
+                  <h3 className="text-lg font-semibold text-white mb-2">Deal selection matters</h3>
                   <p className="text-sm leading-7">
                     Not all deals are created equal for speed. Some deals cascade beautifully once
                     the first few moves are made. Speed records almost always come from
@@ -248,12 +243,12 @@ export default function FreecellWorldRecordsPage() {
           </div>
         </section>
 
-        <AdUnit className="my-2" />
+        <AdUnit className="my-0" />
 
         <section id="win-streaks" className="scroll-mt-6">
-          <div className={CARD} style={CARD_TOP}>
+          <div className={CARD}>
             <SectionHeading sub="Never Losing">Longest Win Streaks</SectionHeading>
-            <div className="px-6 sm:px-8 md:px-10 py-8 space-y-5 text-[#444444] leading-8">
+            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-5 text-white/70 leading-8">
               <p>
                 Win streaks are FreeCell&apos;s endurance record. Because nearly every deal is
                 solvable, a skilled and patient player can theoretically win indefinitely. The
@@ -261,18 +256,18 @@ export default function FreecellWorldRecordsPage() {
                 focus.
               </p>
               <div className="grid gap-4 md:grid-cols-2">
-                <div className="rounded-xl border border-[#e5e0d8] p-5">
-                  <h3 className="text-lg font-semibold text-[#2a2522] mb-2">Reported mega-streaks</h3>
-                  <p className="text-[#444444] text-sm leading-7">
+                <div className="rounded-xl border border-white/[0.07] p-5">
+                  <h3 className="text-lg font-semibold text-white mb-2">Reported mega-streaks</h3>
+                  <p className="text-white/70 text-sm leading-7">
                     Online communities have documented players claiming win streaks of several
                     thousand games. Some reports go as high as 10,000 or more consecutive wins.
                     These numbers are plausible given FreeCell&apos;s high solvability rate, but
                     they raise questions about undo usage, restarts, and deal filtering.
                   </p>
                 </div>
-                <div className="rounded-xl border border-[#e5e0d8] p-5">
-                  <h3 className="text-lg font-semibold text-[#2a2522] mb-2">What counts as a &quot;win&quot;?</h3>
-                  <p className="text-[#444444] text-sm leading-7">
+                <div className="rounded-xl border border-white/[0.07] p-5">
+                  <h3 className="text-lg font-semibold text-white mb-2">What counts as a &quot;win&quot;?</h3>
+                  <p className="text-white/70 text-sm leading-7">
                     This is the central debate. Does a win streak break if you restart a deal? If
                     you use unlimited undo? If you skip a deal you cannot solve? Different
                     platforms define streaks differently, which makes cross-platform comparison
@@ -295,9 +290,9 @@ export default function FreecellWorldRecordsPage() {
         </section>
 
         <section id="deal-11982" className="scroll-mt-6">
-          <div className={CARD} style={CARD_TOP}>
+          <div className={CARD}>
             <SectionHeading sub="The Famous Exception">The Deal #11982 Story</SectionHeading>
-            <div className="px-6 sm:px-8 md:px-10 py-8 space-y-5 text-[#444444] leading-8">
+            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-5 text-white/70 leading-8">
               <p>
                 No discussion of FreeCell records is complete without{' '}
                 <Link href="/game/11982" className="text-[#D4AF37] hover:underline">
@@ -306,8 +301,8 @@ export default function FreecellWorldRecordsPage() {
                 . It is the most famous individual FreeCell deal in history — not because someone
                 won it, but because nobody can.
               </p>
-              <div className="card-inset rounded-xl p-6">
-                <h3 className="text-lg font-semibold text-[#2a2522] mb-3">The timeline</h3>
+              <div className="bg-white/[0.05] border border-white/[0.07] rounded-xl p-6">
+                <h3 className="text-lg font-semibold text-white mb-3">The timeline</h3>
                 <ul className="space-y-3 text-sm leading-7">
                   <li>
                     <strong>Early 1990s:</strong> Microsoft ships FreeCell with Windows, including
@@ -336,33 +331,41 @@ export default function FreecellWorldRecordsPage() {
                 The Deal #11982 story matters because it proved that FreeCell is not trivially
                 solvable. The game sits in a fascinating sweet spot: almost every deal has a
                 solution, but finding it requires genuine skill and planning. That balance is what
-                keeps players coming back decades later.
+                keeps players coming back decades later. Read the full story on our dedicated{' '}
+                <Link href="/freecell-game-11982" className="text-[#D4AF37] hover:underline">
+                  Game #11982
+                </Link>{' '}
+                page, or explore other notable deals in our{' '}
+                <Link href="/famous-freecell-deals" className="text-[#D4AF37] hover:underline">
+                  famous FreeCell deals
+                </Link>{' '}
+                guide.
               </p>
             </div>
           </div>
         </section>
 
         <section id="community-projects" className="scroll-mt-6">
-          <div className={CARD} style={CARD_TOP}>
+          <div className={CARD}>
             <SectionHeading sub="Collective Effort">Community Solvability Projects</SectionHeading>
-            <div className="px-6 sm:px-8 md:px-10 py-8 space-y-5 text-[#444444] leading-8">
+            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-5 text-white/70 leading-8">
               <p>
                 Some of the most impressive FreeCell achievements are not individual records but
                 community-wide projects. Groups of players have systematically worked through
                 massive deal sets to determine which deals are solvable and which are not.
               </p>
               <div className="grid gap-4 md:grid-cols-2">
-                <div className="card-inset rounded-xl p-5">
-                  <h3 className="text-lg font-semibold text-[#2a2522] mb-2">The 32,000 project</h3>
-                  <p className="text-sm leading-7 text-[#444444]">
+                <div className="bg-white/[0.05] border border-white/[0.07] rounded-xl p-5">
+                  <h3 className="text-lg font-semibold text-white mb-2">The 32,000 project</h3>
+                  <p className="text-sm leading-7 text-white/70">
                     The original Microsoft FreeCell shipped with 32,000 numbered deals. The
                     community collectively solved all but a tiny handful, establishing that
                     FreeCell&apos;s solvability rate in that set is above 99.99%.
                   </p>
                 </div>
-                <div className="card-inset rounded-xl p-5">
-                  <h3 className="text-lg font-semibold text-[#2a2522] mb-2">Million-deal analyses</h3>
-                  <p className="text-sm leading-7 text-[#444444]">
+                <div className="bg-white/[0.05] border border-white/[0.07] rounded-xl p-5">
+                  <h3 className="text-lg font-semibold text-white mb-2">Million-deal analyses</h3>
+                  <p className="text-sm leading-7 text-white/70">
                     Solver programs have been run on deal sets of one million or more. These
                     large-scale analyses confirm that roughly 99.999% of random FreeCell deals are
                     solvable — an extraordinary number for a card game. Learn more on our{' '}
@@ -382,35 +385,35 @@ export default function FreecellWorldRecordsPage() {
           </div>
         </section>
 
-        <AdUnit className="my-2" />
+        <AdUnit className="my-0" />
 
         <section id="your-records" className="scroll-mt-6">
-          <div className={CARD} style={CARD_TOP}>
+          <div className={CARD}>
             <SectionHeading sub="Start Tracking">Building Your Own Records</SectionHeading>
-            <div className="px-6 sm:px-8 md:px-10 py-8 space-y-5 text-[#444444] leading-8">
+            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-5 text-white/70 leading-8">
               <p>
                 You do not need to chase world records to enjoy the competitive side of FreeCell.
                 Personal bests are just as satisfying. Here are the records worth tracking in your
                 own play.
               </p>
               <div className="grid gap-4 md:grid-cols-3">
-                <Link href="/statistics" className="card-inset rounded-xl p-5 hover:border-[#D4AF37]/40 border border-transparent transition-colors">
-                  <h3 className="text-lg font-semibold text-[#2a2522]">Win rate over time</h3>
-                  <p className="mt-2 text-sm leading-7 text-[#444444]">
+                <Link href="/statistics" className="bg-white/[0.05] border border-white/[0.07] rounded-xl p-5 hover:border-[#D4AF37]/40 transition-colors">
+                  <h3 className="text-lg font-semibold text-white">Win rate over time</h3>
+                  <p className="mt-2 text-sm leading-7 text-white/70">
                     Track your win percentage across all games. A rising win rate is the clearest
                     sign of improvement. Check your stats on the statistics page.
                   </p>
                 </Link>
-                <Link href="/streak" className="card-inset rounded-xl p-5 hover:border-[#D4AF37]/40 border border-transparent transition-colors">
-                  <h3 className="text-lg font-semibold text-[#2a2522]">Current win streak</h3>
-                  <p className="mt-2 text-sm leading-7 text-[#444444]">
+                <Link href="/streak" className="bg-white/[0.05] border border-white/[0.07] rounded-xl p-5 hover:border-[#D4AF37]/40 transition-colors">
+                  <h3 className="text-lg font-semibold text-white">Current win streak</h3>
+                  <p className="mt-2 text-sm leading-7 text-white/70">
                     See how many consecutive games you can win. Streak mode is designed for exactly
                     this kind of focused practice.
                   </p>
                 </Link>
-                <Link href="/storm" className="card-inset rounded-xl p-5 hover:border-[#D4AF37]/40 border border-transparent transition-colors">
-                  <h3 className="text-lg font-semibold text-[#2a2522]">Best timed session</h3>
-                  <p className="mt-2 text-sm leading-7 text-[#444444]">
+                <Link href="/storm" className="bg-white/[0.05] border border-white/[0.07] rounded-xl p-5 hover:border-[#D4AF37]/40 transition-colors">
+                  <h3 className="text-lg font-semibold text-white">Best timed session</h3>
+                  <p className="mt-2 text-sm leading-7 text-white/70">
                     Storm mode lets you play under time pressure. Your fastest session is a
                     personal speed record with built-in accountability.
                   </p>
@@ -421,14 +424,14 @@ export default function FreecellWorldRecordsPage() {
         </section>
 
         <section id="faq" className="scroll-mt-6">
-          <div className={CARD} style={CARD_TOP}>
+          <div className={CARD}>
             <SectionHeading sub="Common Questions">FreeCell World Records FAQ</SectionHeading>
-            <div className="px-6 sm:px-8 md:px-10 py-8 space-y-6">
+            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-6">
               {faqs.map((faq, index) => (
                 <div key={faq.question}>
-                  <h3 className="font-medium text-[#2a2522] text-lg mb-2">{faq.question}</h3>
-                  <p className="text-[#444444] leading-relaxed">{faq.answer}</p>
-                  {index < faqs.length - 1 && <div className="mt-6 border-b border-[#e5e0d8]" />}
+                  <h3 className="font-medium text-white text-lg mb-2">{faq.question}</h3>
+                  <p className="text-white/70 leading-relaxed">{faq.answer}</p>
+                  {index < faqs.length - 1 && <div className="mt-6 border-b border-white/[0.07]" />}
                 </div>
               ))}
             </div>
@@ -439,18 +442,16 @@ export default function FreecellWorldRecordsPage() {
           <div
             className={CARD}
             style={{
-              ...CARD_TOP,
               background: 'linear-gradient(135deg, rgba(10,74,42,0.6) 0%, rgba(6,37,22,0.8) 100%)',
             }}
           >
             <div className="p-8 sm:p-10 text-center relative">
               <h2
                 className="text-2xl sm:text-3xl font-semibold text-white mb-3"
-                style={{ fontFamily: 'var(--font-playfair), Georgia, serif' }}
               >
                 Start Building Your Own Record
               </h2>
-              <p className="text-[#6B7280] mb-6 max-w-2xl mx-auto">
+              <p className="text-white/40 mb-6 max-w-2xl mx-auto">
                 Every record starts with a single game. Play a deal, beat your best time, extend
                 your streak, and track your progress.
               </p>

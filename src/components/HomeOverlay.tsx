@@ -10,7 +10,7 @@ import { getAverageTime } from '../lib/stats';
 interface HomeOverlayProps {
   isOpen: boolean;
   onClose: () => void;
-  onPlayDaily: (seed: number) => void;
+  onPlayDaily?: (seed: number) => void;
   onNewGame: () => void;
   isMuted: boolean;
   onToggleMute: () => void;
@@ -113,8 +113,8 @@ export default function HomeOverlay({
             <div className="overflow-y-auto flex-1 px-5 pb-8">
               <div className="max-w-lg mx-auto space-y-5">
 
-                {/* 1. Daily Challenge CTA */}
-                {todayCompleted ? (
+                {/* 1. Daily Challenge CTA (only for standard FreeCell) */}
+                {onPlayDaily && (todayCompleted ? (
                   <div className="text-center bg-black/20 border border-[#c9a84c]/40 rounded-xl p-5">
                     <div className="text-base text-white/50 mb-1">Today&apos;s Challenge</div>
                     <div className="text-[#D4AF37] font-bold text-xl mb-2">Completed</div>
@@ -151,7 +151,7 @@ export default function HomeOverlay({
                       </button>
                     )}
                   </div>
-                )}
+                ))}
 
                 {/* 2. Game Modes — 2x2 grid */}
                 <div className="grid grid-cols-2 gap-3">

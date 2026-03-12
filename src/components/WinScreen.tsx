@@ -5,20 +5,30 @@ import { motion } from 'framer-motion';
 import { Shuffle, Calendar, Trophy, Share2, Eye } from 'lucide-react';
 import { saveStarRating } from '@/lib/storage';
 import { absoluteUrl, siteConfig } from '@/lib/siteConfig';
+import { getShareText as getDailyShareText } from '@/lib/dailyChallenge';
+import { getTodayStr } from '@/lib/dailyChallenge';
 import { CompactLeaderboard } from './Leaderboard';
 import { LeaderboardEntry } from '@/lib/leaderboardClient';
+
+const VARIANT_META: Record<string, { path: string; name: string }> = {
+  'freecell-1cell': { path: '/freecell/1-cell', name: '1-Cell FreeCell' },
+  'freecell-2cell': { path: '/freecell/2-cell', name: '2-Cell FreeCell' },
+  'freecell-3cell': { path: '/freecell/3-cell', name: '3-Cell FreeCell' },
+};
 
 interface WinScreenProps {
   gameNumber: number;
   time: number;
   moves: number;
   hintsUsed: number;
+  variant?: string;
   onPlayAgain: () => void;
   onDailyChallenge: () => void;
   solverStatus?: 'idle' | 'solving' | 'solved' | 'failed';
   optimalMoves?: number;
   onViewSolution?: () => void;
   isDailyGame?: boolean;
+  streak?: number;
   leaderboardEntries?: LeaderboardEntry[];
   leaderboardRank?: number;
   leaderboardLoading?: boolean;
@@ -42,12 +52,14 @@ export default function WinScreen({
   time,
   moves,
   hintsUsed,
+  variant,
   onPlayAgain,
   onDailyChallenge,
   solverStatus,
   optimalMoves,
   onViewSolution,
   isDailyGame,
+  streak,
   leaderboardEntries,
   leaderboardRank,
   leaderboardLoading,
@@ -69,8 +81,19 @@ export default function WinScreen({
   }, []);
 
   const handleShare = async () => {
-    const starEmoji = '⭐'.repeat(starCount);
-    const shareText = `I solved FreeCell Game #${gameNumber} in ${moves} moves (${formatTime(time)})! ${starEmoji}\nCan you beat it? ${absoluteUrl(`/game/${gameNumber}`)}`;
+    let shareText: string;
+
+    if (isDailyGame) {
+      shareText = getDailyShareText(getTodayStr(), moves, time, hintsUsed, streak);
+    } else {
+      const starEmoji = '⭐'.repeat(starCount);
+      const meta = VARIANT_META[variant || 'freecell'];
+      const gameName = meta?.name || 'FreeCell';
+      const gameUrl = meta
+        ? absoluteUrl(`${meta.path}?game=${gameNumber}`)
+        : absoluteUrl(`/game/${gameNumber}`);
+      shareText = `I solved ${gameName} Game #${gameNumber} in ${moves} moves (${formatTime(time)})! ${starEmoji}\nCan you beat it? ${gameUrl}`;
+    }
 
     if (navigator.share) {
       try {
@@ -210,13 +233,15 @@ export default function WinScreen({
             <Share2 size={18} />
             {shareStatus === 'copied' ? 'Copied!' : 'Share Results'}
           </button>
-          <button
-            onClick={onDailyChallenge}
-            className="flex items-center justify-center gap-2 w-full py-3 bg-yellow-700/80 hover:bg-yellow-600 text-white font-semibold rounded-lg transition-colors"
-          >
-            <Calendar size={18} />
-            Daily Challenge
-          </button>
+          {(!variant || variant === 'freecell') && (
+            <button
+              onClick={onDailyChallenge}
+              className="flex items-center justify-center gap-2 w-full py-3 bg-yellow-700/80 hover:bg-yellow-600 text-white font-semibold rounded-lg transition-colors"
+            >
+              <Calendar size={18} />
+              Daily Challenge
+            </button>
+          )}
           {solverStatus === 'solved' && onViewSolution && (
             <button
               onClick={onViewSolution}

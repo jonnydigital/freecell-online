@@ -1042,7 +1042,13 @@ export class FreeCellScene extends Phaser.Scene {
   }
 
   private get numFreeCells(): number {
-    return this.currentVariant === 'eight-off' ? 8 : 4;
+    switch (this.currentVariant) {
+      case 'eight-off': return 8;
+      case 'freecell-1cell': return 1;
+      case 'freecell-2cell': return 2;
+      case 'freecell-3cell': return 3;
+      default: return 4;
+    }
   }
 
   private get topRowSlots(): number {

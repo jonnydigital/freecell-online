@@ -9,7 +9,7 @@ import { trackGameStart, trackWin, trackAbandoned, trackHint, trackUndo, trackMo
 import { initErrorTracking, setGameContext } from '../lib/errorTracking';
 import { checkWinAchievements, recordModePlayed, recordUniqueGame } from '../lib/achievementTracker';
 import type { Achievement } from '../lib/achievements';
-import { getTodaysSeed, getTodayStr, recordDailyCompletion, isTodayCompleted } from '../lib/dailyChallenge';
+import { getTodaysSeed, getTodayStr, recordDailyCompletion, isTodayCompleted, getCurrentStreak } from '../lib/dailyChallenge';
 import { RotateCcw, RotateCw, Lightbulb, Calendar, Home, Share2, AlertTriangle, ChevronLeft, Flame, Volume2, VolumeX, Eye, Ghost, Coffee } from 'lucide-react';
 import StatsPanel from './StatsPanel';
 import FeedbackModal from './FeedbackModal';
@@ -35,9 +35,15 @@ import { submitScore, fetchDailyLeaderboard, LeaderboardEntry } from '../lib/lea
 import { getPlayerId } from '../lib/playerIdentity';
 import { announceToScreenReader } from '../lib/accessibility';
 
+const VARIANT_META: Record<string, { path: string; name: string }> = {
+  'freecell-1cell': { path: '/freecell/1-cell', name: '1-Cell FreeCell' },
+  'freecell-2cell': { path: '/freecell/2-cell', name: '2-Cell FreeCell' },
+  'freecell-3cell': { path: '/freecell/3-cell', name: '3-Cell FreeCell' },
+};
+
 interface GameShellProps {
   initialGameNumber?: number;
-  variant?: 'freecell' | 'bakers-game' | 'eight-off' | 'easy-freecell' | 'spider' | 'klondike';
+  variant?: 'freecell' | 'bakers-game' | 'eight-off' | 'easy-freecell' | 'freecell-1cell' | 'freecell-2cell' | 'freecell-3cell' | 'spider' | 'klondike';
 }
 
 export default function GameShell({ initialGameNumber, variant = 'freecell' }: GameShellProps = {}) {
@@ -287,11 +293,16 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
       setIsWon(false);
       setAutoCompletable(false);
       trackGameStart(d.gameNumber);
-      setIsDailyGame(d.gameNumber === getTodaysSeed());
+      setIsDailyGame(variant === 'freecell' && d.gameNumber === getTodaysSeed());
       announceToScreenReader(`New game started. Game number ${d.gameNumber}.`);
       // Update URL to reflect current game number (shareable)
       if (d.gameNumber >= 1 && d.gameNumber <= 1000000) {
-        window.history.replaceState(null, '', `/game/${d.gameNumber}`);
+        const meta = VARIANT_META[variant];
+        if (meta) {
+          window.history.replaceState(null, '', `${meta.path}?game=${d.gameNumber}`);
+        } else {
+          window.history.replaceState(null, '', `/game/${d.gameNumber}`);
+        }
       }
     });
 
@@ -331,7 +342,7 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
   useEffect(() => {
     if (isWon && isDailyGame && winDataRef.current) {
       const todayStr = getTodayStr();
-      recordDailyCompletion(todayStr, winDataRef.current.moves, winDataRef.current.time);
+      recordDailyCompletion(todayStr, winDataRef.current.moves, winDataRef.current.time, gameSession.hintsUsed);
       setDailyCompleted(true);
     }
   }, [isWon, isDailyGame]);
@@ -358,11 +369,12 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
   }, [isWon, isDailyGame, gameNumber]);
 
   // Start solver analysis when game is won or deadlocked
+  // Solver is hardcoded for 4 free cells — only invoke for standard 'freecell' variant
   useEffect(() => {
-    if ((isWon || isDeadlocked) && gameNumber) {
+    if ((isWon || isDeadlocked) && gameNumber && variant === 'freecell') {
       startSolver(gameNumber);
     }
-  }, [isWon, isDeadlocked, gameNumber, startSolver]);
+  }, [isWon, isDeadlocked, gameNumber, startSolver, variant]);
 
   const handleNewGame = () => {
     setIsDailyGame(false);
@@ -390,8 +402,9 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
   };
 
   // Ghost Mode: watch the solver play the current game
+  // Solver is hardcoded for 4 free cells — only allow for standard 'freecell' variant
   const handleGhostMode = () => {
-    if (!gameNumber || isWon || ghostMode || ghostSolving) return;
+    if (!gameNumber || isWon || ghostMode || ghostSolving || variant !== 'freecell') return;
     setGhostSolving(true);
     startGhostSolver(gameNumber);
   };
@@ -415,6 +428,7 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
   };
 
   const handlePlayDaily = (seed: number) => {
+    if (variant !== 'freecell') return;
     setIsDailyGame(true);
     gameBridge.emit('newGame', seed);
   };
@@ -487,8 +501,12 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
 
   const handleShareGame = async () => {
     if (!gameNumber) return;
-    const shareUrl = `${window.location.origin}/game/${gameNumber}`;
-    const shareText = `Can you solve FreeCell #${gameNumber}? 🃏 ${shareUrl}`;
+    const meta = VARIANT_META[variant];
+    const gameName = meta?.name || 'FreeCell';
+    const shareUrl = meta
+      ? `${window.location.origin}${meta.path}?game=${gameNumber}`
+      : `${window.location.origin}/game/${gameNumber}`;
+    const shareText = `Can you solve ${gameName} #${gameNumber}? 🃏 ${shareUrl}`;
 
     if (navigator.share) {
       try {
@@ -564,12 +582,14 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
               </button>
 
               {/* Daily Challenge Link */}
-              <nav className="flex items-center gap-5 font-medium text-white/60">
-                <button onClick={() => setShowDaily(true)} className="flex items-center gap-2 text-yellow-500/80 hover:text-yellow-400 transition-colors text-base">
-                  <Calendar size={18} />
-                  Daily Challenge
-                </button>
-              </nav>
+              {variant === 'freecell' && (
+                <nav className="flex items-center gap-5 font-medium text-white/60">
+                  <button onClick={() => setShowDaily(true)} className="flex items-center gap-2 text-yellow-500/80 hover:text-yellow-400 transition-colors text-base">
+                    <Calendar size={18} />
+                    Daily Challenge
+                  </button>
+                </nav>
+              )}
             </div>
 
             <div className="flex items-center gap-6">
@@ -709,6 +729,7 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
                 time={winDataRef.current.time}
                 moves={winDataRef.current.moves}
                 hintsUsed={gameSession.hintsUsed}
+                variant={variant}
                 onPlayAgain={handleNewGame}
                 onDailyChallenge={() => {
                   handlePlayDaily(getTodaysSeed());
@@ -717,6 +738,7 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
                 optimalMoves={solverMoves.length}
                 onViewSolution={() => setShowReplay(true)}
                 isDailyGame={isDailyGame}
+                streak={isDailyGame ? getCurrentStreak() : undefined}
                 leaderboardEntries={leaderboardEntries}
                 leaderboardRank={leaderboardRank}
                 leaderboardLoading={leaderboardLoading}
@@ -883,7 +905,7 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
           <HomeOverlay
             isOpen={showHome}
             onClose={() => setShowHome(false)}
-            onPlayDaily={(seed) => { handlePlayDaily(seed); setShowHome(false); }}
+            onPlayDaily={variant === 'freecell' ? (seed) => { handlePlayDaily(seed); setShowHome(false); } : undefined}
             onNewGame={() => { handleNewGame(); setShowHome(false); }}
             isMuted={isMuted}
             onToggleMute={handleToggleMute}

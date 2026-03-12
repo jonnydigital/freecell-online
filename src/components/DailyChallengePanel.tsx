@@ -61,7 +61,7 @@ export default function DailyChallengePanel({ isOpen, onClose, onPlayDaily }: Pr
     const completion = data.completedDays[todayStr];
     if (!completion) return;
 
-    const text = getShareText(todayStr, completion.moves, completion.time);
+    const text = getShareText(todayStr, completion.moves, completion.time, completion.hintsUsed ?? 0, streak);
     if (navigator.share) {
       try {
         await navigator.share({ text });

@@ -9,7 +9,7 @@ import { getThemeById, themes } from '../lib/themes';
 
 export function createPhaserConfig(
   parent: HTMLElement,
-  variant: 'freecell' | 'bakers-game' | 'eight-off' | 'easy-freecell' | 'spider' | 'klondike' = 'freecell'
+  variant: 'freecell' | 'bakers-game' | 'eight-off' | 'easy-freecell' | 'freecell-1cell' | 'freecell-2cell' | 'freecell-3cell' | 'spider' | 'klondike' = 'freecell'
 ): Phaser.Types.Core.GameConfig {
   // Read stored theme for initial background color (avoids flash of wrong color)
   const storedId = typeof window !== 'undefined' ? localStorage.getItem('theme-id') : null;

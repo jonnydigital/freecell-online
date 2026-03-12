@@ -12,6 +12,7 @@ const DAILY_CHALLENGE_KEY = 'freecell_daily_challenge';
 export interface DailyCompletion {
   moves: number;
   time: number;
+  hintsUsed?: number;
 }
 
 export interface DailyChallengeData {
@@ -84,13 +85,13 @@ function getYesterday(dateStr: string): string {
 }
 
 /** Record a daily challenge completion */
-export function recordDailyCompletion(dateStr: string, moves: number, time: number): DailyChallengeData {
+export function recordDailyCompletion(dateStr: string, moves: number, time: number, hintsUsed?: number): DailyChallengeData {
   const data = loadDailyData();
 
   // Already completed this day
   if (data.completedDays[dateStr]) return data;
 
-  data.completedDays[dateStr] = { moves, time };
+  data.completedDays[dateStr] = { moves, time, hintsUsed: hintsUsed ?? 0 };
 
   // Calculate streak
   const yesterday = getYesterday(dateStr);
@@ -133,10 +134,56 @@ function formatTime(seconds: number): string {
   return `${m}:${String(s).padStart(2, '0')}`;
 }
 
+/** Get speed tier emoji: green < 3min, yellow 3-8min, red > 8min */
+export function getSpeedTier(time: number): string {
+  if (time < 180) return '🟩';
+  if (time <= 480) return '🟨';
+  return '🟥';
+}
+
+/** Get move tier emoji: green <= 60, yellow 61-90, red > 90 */
+export function getMoveTier(moves: number): string {
+  if (moves <= 60) return '🟩';
+  if (moves <= 90) return '🟨';
+  return '🟥';
+}
+
+/** Build the 3-cell emoji performance grid: [speed][moves][hints] */
+export function getEmojiGrid(moves: number, time: number, hintsUsed: number): string {
+  const speed = getSpeedTier(time);
+  const moveTier = getMoveTier(moves);
+  const hint = hintsUsed === 0 ? '🧠' : '💡';
+  return `${speed}${moveTier}${hint}`;
+}
+
+function getStarEmoji(moves: number): string {
+  if (moves <= 60) return '⭐⭐⭐';
+  if (moves <= 90) return '⭐⭐';
+  return '⭐';
+}
+
 /** Generate share text for a daily challenge completion */
-export function getShareText(dateStr: string, moves: number, time: number): string {
+export function getShareText(
+  dateStr: string,
+  moves: number,
+  time: number,
+  hintsUsed?: number,
+  streak?: number,
+): string {
   const seed = getDailySeed(dateStr);
-  return `I solved today's FreeCell Daily Challenge #${seed} in ${moves} moves / ${formatTime(time)}! 🃏\n\n${siteConfig.url}`;
+  const stars = getStarEmoji(moves);
+  const grid = getEmojiGrid(moves, time, hintsUsed ?? 0);
+  const lines = [
+    `FreeCell Daily #${seed}`,
+    `${stars} | ${grid}`,
+    `${moves} moves · ${formatTime(time)}`,
+  ];
+  if (streak && streak >= 2) {
+    lines.push(`🔥 ${streak}-day streak`);
+  }
+  lines.push('');
+  lines.push('playfreecellonline.com/daily-freecell');
+  return lines.join('\n');
 }
 
 /** Get all days in a month as date strings */

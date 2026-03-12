@@ -29,7 +29,7 @@ export interface Move {
   isAutoMove?: boolean;
 }
 
-export type GameVariant = 'freecell' | 'bakers-game' | 'eight-off' | 'easy-freecell';
+export type GameVariant = 'freecell' | 'bakers-game' | 'eight-off' | 'easy-freecell' | 'freecell-1cell' | 'freecell-2cell' | 'freecell-3cell';
 
 export class FreeCellEngine {
   private state: GameState;
@@ -51,7 +51,16 @@ export class FreeCellEngine {
       ];
     } else {
       cascades = dealGame(gameNumber);
-      freeCells = [null, null, null, null];
+      // Restricted-cell variants get fewer free cells
+      if (variant === 'freecell-1cell') {
+        freeCells = [null];
+      } else if (variant === 'freecell-2cell') {
+        freeCells = [null, null];
+      } else if (variant === 'freecell-3cell') {
+        freeCells = [null, null, null];
+      } else {
+        freeCells = [null, null, null, null];
+      }
     }
 
     const foundations = new Map<Suit, Card[]>([

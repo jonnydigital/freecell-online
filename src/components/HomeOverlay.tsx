@@ -204,6 +204,13 @@ export default function HomeOverlay({
                     <Bug size={22} className="text-rose-400 shrink-0" />
                     <span className="text-base font-semibold text-rose-300">Spider</span>
                   </a>
+                  <a
+                    href="/klondike"
+                    className="flex items-center gap-3 py-4 px-4 rounded-xl bg-white/5 border border-amber-500/20 hover:bg-amber-500/10 active:scale-[0.97] transition-all"
+                  >
+                    <Layers size={22} className="text-amber-400 shrink-0" />
+                    <span className="text-base font-semibold text-amber-300">Klondike</span>
+                  </a>
                 </div>
 
                 {/* 3. Stats row */}

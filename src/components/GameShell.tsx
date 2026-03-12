@@ -37,7 +37,7 @@ import { announceToScreenReader } from '../lib/accessibility';
 
 interface GameShellProps {
   initialGameNumber?: number;
-  variant?: 'freecell' | 'bakers-game' | 'eight-off' | 'easy-freecell' | 'spider';
+  variant?: 'freecell' | 'bakers-game' | 'eight-off' | 'easy-freecell' | 'spider' | 'klondike';
 }
 
 export default function GameShell({ initialGameNumber, variant = 'freecell' }: GameShellProps = {}) {

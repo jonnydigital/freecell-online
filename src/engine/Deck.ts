@@ -10,6 +10,7 @@
 
 import { Card, Suit, Rank } from './Card';
 import { SpiderDifficulty } from './SpiderEngine';
+import { KlondikeDrawMode } from './KlondikeEngine';
 
 
 const SUITS_MS_ORDER: Suit[] = [Suit.Clubs, Suit.Diamonds, Suit.Hearts, Suit.Spades];
@@ -171,6 +172,54 @@ export function dealEightOff(gameNumber: number): { cascades: Card[][]; freeCell
   const freeCellCards = dealt.slice(48);
 
   return { cascades, freeCellCards };
+}
+
+/**
+ * Deal a Klondike Solitaire game
+ * 7 tableau columns: col 1 gets 1 card, col 2 gets 2, ... col 7 gets 7
+ * Only top card of each column is face-up, rest face-down
+ * Remaining 24 cards go to stock (face-down)
+ */
+export function dealKlondikeGame(gameNumber: number): { cascades: Card[][]; stock: Card[] } {
+  if (gameNumber < 1 || gameNumber > 9999999 || !Number.isInteger(gameNumber)) {
+    throw new Error(`Invalid game number: ${gameNumber}. Must be integer 1-9999999.`);
+  }
+
+  const deck = createOrderedDeck();
+  const rng = new MSLCG(gameNumber);
+
+  // Shuffle using same MS algorithm
+  const dealt: Card[] = [];
+  let remaining = deck.length;
+  for (let i = 0; i < 52; i++) {
+    const j = rng.next() % remaining;
+    [deck[j], deck[remaining - 1]] = [deck[remaining - 1], deck[j]];
+    dealt.push(deck[remaining - 1]);
+    remaining--;
+  }
+
+  // Deal 28 cards to 7 cascades
+  const cascades: Card[][] = Array.from({ length: 7 }, () => []);
+  let cardIndex = 0;
+
+  for (let col = 0; col < 7; col++) {
+    const numCards = col + 1;
+    for (let c = 0; c < numCards; c++) {
+      const card = dealt[cardIndex++];
+      // Only the top card (last dealt to this column) is face-up
+      card.isFaceUp = (c === numCards - 1);
+      cascades[col].push(card);
+    }
+  }
+
+  // Remaining 24 cards go to stock (face-down)
+  const stock: Card[] = [];
+  for (let i = cardIndex; i < 52; i++) {
+    dealt[i].isFaceUp = false;
+    stock.push(dealt[i]);
+  }
+
+  return { cascades, stock };
 }
 
 export function dealSpiderGame(gameNumber: number, difficulty: SpiderDifficulty) {

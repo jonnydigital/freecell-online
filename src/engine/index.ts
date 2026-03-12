@@ -6,3 +6,6 @@ export type { GameState, Location, Move } from './FreeCellEngine';
 export { MoveHistory } from './MoveHistory';
 export type { MoveEntry } from './MoveHistory';
 export { GameTimer } from './GameTimer';
+export { KlondikeEngine } from './KlondikeEngine';
+export type { KlondikeGameState, KlondikeLocation, KlondikeMove, KlondikeDrawMode } from './KlondikeEngine';
+export { dealKlondikeGame } from './Deck';

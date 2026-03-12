@@ -1,5 +1,9 @@
 # FreeCell Online — Changelog
 
+## 2026-03-12 (Thursday Evening Build)
+### Shipped
+- **🔀 Klondike Draw 1 vs Draw 3 Comparison** (`/klondike/draw-1-vs-draw-3`) — 811-line SEO content page comparing the two Klondike drawing modes. Win rate deep dive (79-82% Draw 1 vs 10-30% Draw 3), 9-metric comparison table, strategy differences (stock cycling, card access, foundation pacing, empty column value), advanced Draw 3 stock manipulation technique, "Which mode should YOU play?" skill-based decision guide, history and origins. 5-question FAQ. Article + BreadcrumbList + FAQPage JSON-LD. Cross-linked to all Klondike pages + /solitaire-types. Added to sitemap and SiteFooter Learn column. Cross-link added to strategy page. Klondike section now has 6 pages. (25th consecutive night of shipping)
+
 ## 2026-03-12 (Thursday Overnight Build)
 ### Shipped
 - **♟️ Klondike Solitaire Strategy Guide** (`/klondike/strategy`) — Comprehensive SEO content page targeting high-volume "solitaire strategy" and "how to win solitaire" keywords. 7 proven strategies: foundation timing (aces/twos always, higher cards conditionally), face-down card exposure priority, Kings-only column rule, draw-1 vs draw-3 odds with comparison table (52% vs 18% AI win rates, skilled human ~43%), foundation safety test, even column distribution, systematic stock pile management. Advanced section: card tracking in stock pile, "Thoughtful Solitaire" approach (81.9% draw-3 win rate when all cards visible). Persi Diaconis quote on Klondike odds being "one of the embarrassments of applied probability." Color-coded tip boxes (green/amber/red), 4-question FAQ. Article + BreadcrumbList + FAQPage JSON-LD schemas. AdUnit placements. Cross-linked to 8+ internal pages. Added to sitemap and SiteFooter Learn column. Strategy CTA added to klondike/how-to-play page. 709 lines, 4 files. (24th consecutive night of shipping)

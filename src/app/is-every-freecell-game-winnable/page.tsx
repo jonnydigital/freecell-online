@@ -327,6 +327,12 @@ export default function IsEveryFreecellGameWinnablePage() {
                   Go deeper on free cells, empty columns, supermoves, and disciplined board management.
                 </p>
               </Link>
+              <Link href="/freecell-probability" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
+                <h3 className="text-lg font-semibold text-white">FreeCell Probability & Math</h3>
+                <p className="mt-2 text-sm leading-7 text-white/70">
+                  The numbers behind winnability -- deal distributions, supermove calculations, and statistical analysis.
+                </p>
+              </Link>
             </div>
           </div>
         </section>

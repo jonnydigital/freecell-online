@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { absoluteUrl } from "@/lib/siteConfig";
 import AdUnit from "../../components/AdUnit";
 import ContentLayout from "../../components/ContentLayout";
+import NetworkCrossLinks from "@/components/NetworkCrossLinks";
 
 export const metadata: Metadata = {
   title: "How to Play FreeCell Solitaire | Complete Rules & Tutorial Guide",
@@ -513,7 +514,12 @@ export default function HowToPlayPage() {
                 </h3>
                 <p className="text-[#444444] leading-relaxed mb-4">
                   Move cards between columns in descending rank and alternating
-                  colors. A Black 10 must be placed on a Red Jack.
+                  colors. A Black 10 must be placed on a Red Jack. (For a
+                  condensed version of all the{" "}
+                  <Link href="/freecell-rules" className="text-[#D4AF37] hover:underline">
+                    FreeCell rules
+                  </Link>
+                  , see our quick-reference page.)
                 </p>
                 <ColorAlternationDiagram />
               </div>
@@ -744,6 +750,18 @@ export default function HowToPlayPage() {
                   </Link>
                   <span className="text-[#444444]"> — Definitions for every FreeCell term, from cascade to supermove.</span>
                 </li>
+                <li>
+                  <Link href="/freecell-rules" className="text-[#D4AF37] hover:underline font-medium">
+                    FreeCell Rules Quick Reference
+                  </Link>
+                  <span className="text-[#444444]"> — A concise, printable summary of every FreeCell rule on one page.</span>
+                </li>
+                <li>
+                  <Link href="/freecell-cheat-sheet" className="text-[#D4AF37] hover:underline font-medium">
+                    FreeCell Cheat Sheet
+                  </Link>
+                  <span className="text-[#444444]"> — Key formulas, move priorities, and at-a-glance reminders for mid-game.</span>
+                </li>
               </ul>
             </div>
           </div>
@@ -807,6 +825,7 @@ export default function HowToPlayPage() {
             </div>
           </div>
         </section>
+        <NetworkCrossLinks />
       </main>
     </ContentLayout>
   );

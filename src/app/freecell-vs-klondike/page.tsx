@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import AdUnit from "../../components/AdUnit";
 import ContentLayout from "../../components/ContentLayout";
+import NetworkCrossLinks from "@/components/NetworkCrossLinks";
 
 export const metadata: Metadata = {
   title:
@@ -1150,6 +1151,16 @@ export default function FreecellVsKlondikePage() {
                     title: "History of FreeCell",
                     desc: "From 1978 PLATO to modern browsers.",
                   },
+                  {
+                    href: "/klondike/strategy",
+                    title: "Klondike Strategy Guide",
+                    desc: "Winning tactics for Klondike Solitaire.",
+                  },
+                  {
+                    href: "/klondike/faq",
+                    title: "Klondike FAQ",
+                    desc: "Common questions about Klondike Solitaire answered.",
+                  },
                 ].map((link) => (
                   <Link
                     key={link.href}
@@ -1169,6 +1180,7 @@ export default function FreecellVsKlondikePage() {
           </div>
         </section>
 
+        <NetworkCrossLinks />
       </main>
     </ContentLayout>
   );

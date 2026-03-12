@@ -745,7 +745,20 @@ export default function FreecellForBeginnersPage() {
                     complete rules
                   </Link>.</strong>{" "}
                   Our detailed rules page covers advanced mechanics like supermoves
-                  that become important as you improve.
+                  that become important as you improve. Or grab the concise{" "}
+                  <Link href="/freecell-rules" className="text-[#D4AF37] hover:underline">
+                    FreeCell rules reference
+                  </Link>{" "}
+                  for a quick refresher any time.
+                </p>
+                <p>
+                  <strong className="text-[#2a2522]">Playing as a senior?</strong>{" "}
+                  Our{" "}
+                  <Link href="/freecell-for-seniors" className="text-[#D4AF37] hover:underline">
+                    FreeCell for Seniors
+                  </Link>{" "}
+                  guide covers accessibility settings, larger card sizes, and why
+                  FreeCell is one of the best card games for keeping your mind sharp.
                 </p>
                 <p>
                   <strong className="text-[#2a2522]">Understand why the game is so solvable.</strong>{" "}

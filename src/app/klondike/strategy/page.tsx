@@ -5,28 +5,28 @@ import ContentLayout from "../../../components/ContentLayout";
 import AdUnit from "../../../components/AdUnit";
 
 export const metadata: Metadata = {
-  title: "Klondike Solitaire Strategy Guide | How to Win More Games in 2026",
+  title: "Klondike Solitaire Strategy Guide — Tips to Win More Games",
   description:
-    "Master Klondike Solitaire with our in-depth strategy guide. Learn when to draw vs play, king placement tactics, ace management, and Draw 1 vs Draw 3 strategies. Improve your win rate today.",
+    "Master Klondike Solitaire with proven strategies for Draw 1 and Draw 3. Learn stock-pass discipline, empty column tactics, foundation timing, and common traps to avoid.",
   keywords: [
     "klondike solitaire strategy",
-    "solitaire strategy",
-    "how to win solitaire",
-    "klondike strategy guide",
-    "solitaire winning strategy",
-    "draw 1 vs draw 3 strategy",
     "klondike solitaire tips",
-    "solitaire strategy guide",
     "how to win klondike solitaire",
+    "solitaire strategy guide",
+    "klondike winning strategy",
+    "draw 3 solitaire strategy",
+    "klondike solitaire tricks",
+    "solitaire tips and tricks",
     "best solitaire strategy",
+    "klondike expert tips",
   ],
   alternates: {
     canonical: absoluteUrl("/klondike/strategy"),
   },
   openGraph: {
-    title: "Klondike Solitaire Strategy Guide | How to Win More Games",
+    title: "Klondike Solitaire Strategy Guide — Tips to Win More Games",
     description:
-      "Expert strategies for Klondike Solitaire. Learn Draw 1 vs Draw 3 tactics, king placement, ace management, and tableau building. Win more games starting today.",
+      "Proven strategies for Draw 1 and Draw 3 Klondike. Stock-pass discipline, empty column tactics, foundation timing, and common traps to avoid.",
     url: absoluteUrl("/klondike/strategy"),
     siteName: siteConfig.siteName,
     type: "article",
@@ -40,41 +40,42 @@ const faqs = [
   {
     question: "What is the best strategy for Klondike Solitaire?",
     answer:
-      "The best Klondike strategy combines several principles: always play aces and twos to the foundation immediately, prioritize uncovering face-down cards over other moves, keep tableau columns balanced, place kings strategically in empty columns (choose the color that unblocks the most buried cards), and avoid drawing from the stock when productive tableau moves remain. In Draw 3, also pay attention to the stock cycle to access buried cards.",
+      "The most impactful strategies are: always prioritize uncovering face-down cards over other moves, play Aces and Twos to foundations immediately, never empty a column unless you have a King ready to fill it, and cycle through the stock pile methodically rather than randomly. In Draw 3, tracking which cards are accessible on each pass through the stock is essential.",
   },
   {
-    question: "Is Draw 1 or Draw 3 Klondike easier to win?",
+    question: "Is Draw 1 or Draw 3 easier to win?",
     answer:
-      "Draw 1 is significantly easier. With Draw 1, you see every card in the stock and can access them individually, giving you roughly a 79-82% win rate with solid play. Draw 3 limits your access to every third card and typically yields a 10-30% win rate depending on skill. Draw 1 is recommended for learning strategy, while Draw 3 is the classic challenge.",
+      "Draw 1 is significantly easier. In Draw 1, you see every card in the stock each cycle, giving you access to all 24 stock cards. In Draw 3, you only see every third card per cycle, meaning roughly two-thirds of the stock is inaccessible on any given pass. Skilled players win 40-50% of Draw 1 games but only 10-20% of Draw 3 games.",
   },
   {
-    question: "What percentage of Klondike Solitaire games are winnable?",
+    question: "Should I always move cards to the foundation as soon as possible?",
     answer:
-      "Computer analysis suggests that roughly 79-82% of random Klondike deals are theoretically solvable in Draw 1 mode. For Draw 3, the figure drops because the restricted stock access means many solvable deals become unwinnable in practice. Unlike FreeCell where 99.999% of deals are solvable, Klondike has a significant luck component — some deals simply cannot be won regardless of how well you play.",
+      "Not always. Aces and Twos should go to foundations immediately since they are never useful on the tableau. But higher cards — especially Fives and above — sometimes serve better as tableau anchors. For example, a red 7 on the tableau might be needed to hold a black 6 that is covering a face-down card. Moving it to the foundation prematurely can block important uncovering moves.",
   },
   {
-    question: "Should I always move aces to the foundation in Klondike?",
+    question: "How many Klondike deals are actually winnable?",
     answer:
-      "Aces and twos should almost always go to the foundation immediately — they serve no useful purpose on the tableau. For threes and above, pause and check whether the card is needed as a landing spot for building alternating-color sequences on the tableau. Sending a red 4 to the foundation when you need it to place a black 3 can cost you the game.",
+      "Computer analysis suggests that roughly 79-82% of Draw 1 deals are theoretically winnable with perfect play, though no human plays perfectly — skilled players win about 40-50%. For Draw 3, the theoretical winnability is lower, and practical win rates drop to 10-20%. About 18-21% of all Klondike deals are genuinely impossible regardless of how well you play.",
   },
   {
-    question: "How important are empty columns in Klondike?",
+    question: "What should I do when I get stuck in Klondike?",
     answer:
-      "Empty columns are extremely valuable in Klondike because only kings can be placed in them, and a well-chosen king can become the anchor for an entire tableau sequence. However, unlike FreeCell or Spider, you cannot place just any card in an empty column — only kings. This makes the decision of which king to place (and whether to fill the column at all) a critical strategic choice.",
-  },
-  {
-    question: "When should I draw from the stock in Klondike?",
-    answer:
-      "Draw from the stock when you have exhausted all productive moves on the tableau. Productive moves include: uncovering face-down cards, building useful sequences, moving aces and twos to the foundation, and freeing columns for king placement. Drawing too early means missing tableau moves that would have been more beneficial.",
-  },
-  {
-    question: "What is the biggest mistake in Klondike Solitaire?",
-    answer:
-      "The biggest mistake is building foundations unevenly — racing one suit to the top while others languish. This removes cards from the tableau that you need for building alternating-color sequences. Keep foundations roughly balanced (within 2 ranks of each other) to maintain tableau flexibility. The second biggest mistake is placing the wrong king in an empty column.",
+      "First, scan every column carefully — there is often a move hiding in plain sight. Second, cycle through the stock pile again; a card you skipped earlier might now have a valid destination. Third, consider moving cards back from the foundation to the tableau if it unlocks a chain of moves (this costs points in scored games, but it can save the game). If none of that works, the deal may simply be unwinnable.",
   },
 ];
 
 export default function KlondikeStrategyPage() {
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: "Klondike Solitaire Strategy Guide — Tips to Win More Games",
+    description:
+      "Proven strategies for Draw 1 and Draw 3 Klondike Solitaire. Learn stock-pass discipline, empty column tactics, foundation timing, and common traps.",
+    author: { "@type": "Organization", name: siteConfig.brandName },
+    publisher: { "@type": "Organization", name: siteConfig.brandName },
+    mainEntityOfPage: absoluteUrl("/klondike/strategy"),
+  };
+
   const faqJsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -113,27 +114,12 @@ export default function KlondikeStrategyPage() {
     ],
   };
 
-  const articleJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    headline: "Klondike Solitaire Strategy Guide",
-    description:
-      "Expert strategies for winning more Klondike Solitaire games, covering Draw 1 and Draw 3 tactics.",
-    author: {
-      "@type": "Organization",
-      name: siteConfig.siteName,
-      url: absoluteUrl("/"),
-    },
-    publisher: {
-      "@type": "Organization",
-      name: siteConfig.siteName,
-    },
-    datePublished: "2026-03-12",
-    dateModified: "2026-03-12",
-  };
-
   return (
     <ContentLayout variant="dark">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
@@ -142,10 +128,6 @@ export default function KlondikeStrategyPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
-      />
 
       {/* Hero */}
       <header className="relative pt-6 pb-12 sm:pt-8 sm:pb-16 px-6 text-center overflow-hidden">
@@ -153,7 +135,7 @@ export default function KlondikeStrategyPage() {
           className="absolute top-10 left-[10%] text-6xl sm:text-8xl text-white/[0.03] select-none pointer-events-none"
           aria-hidden="true"
         >
-          {"\u2663"}
+          {"\u2660"}
         </div>
         <div
           className="absolute top-16 right-[8%] text-5xl sm:text-7xl text-red-500/[0.04] select-none pointer-events-none"
@@ -162,12 +144,6 @@ export default function KlondikeStrategyPage() {
           {"\u2665"}
         </div>
 
-        <p className="text-sm uppercase tracking-[0.2em] text-[var(--gold)] mb-3 font-medium">
-          <Link href="/klondike" className="hover:text-white transition-colors">
-            Klondike Solitaire
-          </Link>{" "}
-          / Strategy
-        </p>
         <h1
           className="text-4xl sm:text-5xl lg:text-6xl font-semibold text-[#D4AF37] mb-4 max-w-3xl mx-auto leading-tight"
           style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
@@ -175,8 +151,8 @@ export default function KlondikeStrategyPage() {
           Klondike Solitaire Strategy Guide
         </h1>
         <p className="text-white/50 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
-          Expert strategies for Draw 1 and Draw 3 Klondike. Learn the principles that
-          separate consistent winners from players stuck at 30%.
+          Proven strategies, tips, and techniques for winning more games in both
+          Draw 1 and Draw 3 Klondike.
         </p>
 
         <div className="mt-8 flex items-center justify-center gap-3">
@@ -191,365 +167,45 @@ export default function KlondikeStrategyPage() {
       {/* Main Content */}
       <main className="max-w-4xl mx-auto px-6 sm:px-10 lg:px-12 pb-20 flex flex-col gap-8">
         <article className="space-y-10">
-          {/* Win Rate Context */}
-          <section>
-            <div className="bg-white/[0.04] border border-white/10 rounded-xl p-6 mb-6">
-              <h2 className="text-lg font-bold text-[var(--gold)] mb-3">
-                Win Rate Expectations
-              </h2>
-              <p className="text-white/70 leading-relaxed mb-4">
-                Before diving into strategy, set realistic expectations. Klondike Solitaire
-                has a significant luck component — not every deal is winnable.
-              </p>
-              <div className="overflow-x-auto">
-                <div className="bg-white/[0.03] border border-white/10 rounded-xl overflow-hidden">
-                  <div className="grid grid-cols-3 text-sm font-bold text-white/40 uppercase tracking-wider px-4 py-3 border-b border-white/5">
-                    <span>Mode</span>
-                    <span>Good Win Rate</span>
-                    <span>Expert Win Rate</span>
-                  </div>
-                  <div className="grid grid-cols-3 text-white/70 px-4 py-3 border-b border-white/5">
-                    <span>Draw 1</span>
-                    <span>60–70%</span>
-                    <span className="text-emerald-400">79–82%</span>
-                  </div>
-                  <div className="grid grid-cols-3 text-white/70 px-4 py-3">
-                    <span>Draw 3</span>
-                    <span>15–20%</span>
-                    <span className="text-amber-400">25–33%</span>
-                  </div>
-                </div>
-              </div>
-              <p className="text-white/40 text-sm mt-3">
-                These numbers assume thoughtful play. Speed-playing without thinking
-                produces much lower rates.
-              </p>
-            </div>
-          </section>
-
-          {/* Core Principles */}
+          {/* Section 1: Why Strategy Matters */}
           <section>
             <h2
               className="text-2xl sm:text-3xl font-bold text-white/90 mb-4"
               style={{ fontFamily: "var(--font-playfair)" }}
             >
-              Core Strategic Principles
+              Why Strategy Matters in Klondike
             </h2>
             <div className="space-y-4 text-white/60 leading-relaxed">
               <p>
-                Klondike Solitaire rewards a specific set of habits that apply regardless
-                of whether you play Draw 1 or Draw 3. These five principles form the
-                foundation of winning play.
+                Klondike Solitaire sits at a fascinating intersection of luck and skill. Unlike{" "}
+                <Link href="/" className="text-[#D4AF37] hover:underline">
+                  FreeCell
+                </Link>
+                , where every card is visible and 99.999% of deals are solvable, Klondike hides 21
+                cards face-down at the start. This means some deals are genuinely unwinnable no
+                matter what you do. But that does not mean strategy is irrelevant — far from it.
               </p>
-
-              <div className="space-y-4">
-                <div className="bg-white/[0.03] border border-white/10 rounded-lg p-5">
-                  <h3 className="font-semibold text-[#D4AF37] mb-2">
-                    Principle 1: Uncover Face-Down Cards First
-                  </h3>
-                  <p className="text-sm">
-                    Klondike starts with 21 face-down cards across the seven tableau piles.
-                    These hidden cards are the biggest obstacle to winning — you cannot plan
-                    around cards you cannot see. When choosing between two otherwise equal
-                    moves, always pick the one that flips a face-down card. Prioritize
-                    columns with the most hidden cards, since those represent the greatest
-                    information gaps.
-                  </p>
-                </div>
-
-                <div className="bg-white/[0.03] border border-white/10 rounded-lg p-5">
-                  <h3 className="font-semibold text-[#D4AF37] mb-2">
-                    Principle 2: Keep Foundations Balanced
-                  </h3>
-                  <p className="text-sm">
-                    It is tempting to race one suit to the top of its foundation pile. Resist
-                    this urge. Building foundations unevenly removes cards from the tableau
-                    that you need for alternating-color sequences. If your spades foundation
-                    is at 7 but hearts is at 2, you have removed five black cards that could
-                    have been used as landing spots for red cards. Aim to keep all four
-                    foundations within 2 ranks of each other.
-                  </p>
-                </div>
-
-                <div className="bg-white/[0.03] border border-white/10 rounded-lg p-5">
-                  <h3 className="font-semibold text-[#D4AF37] mb-2">
-                    Principle 3: Think Before You King
-                  </h3>
-                  <p className="text-sm">
-                    Kings are the only cards that can fill empty tableau columns. This makes
-                    king placement one of the most important decisions in Klondike. Before
-                    placing a king, consider which color unblocks the most buried cards. A red
-                    king lets you build black queens, jacks, and so on — meaning it helps uncover
-                    cards trapped beneath black cards. Choose the king color that creates the
-                    most useful building opportunities for your current board state.
-                  </p>
-                </div>
-
-                <div className="bg-white/[0.03] border border-white/10 rounded-lg p-5">
-                  <h3 className="font-semibold text-[#D4AF37] mb-2">
-                    Principle 4: Do Not Build Empty Columns Without a King
-                  </h3>
-                  <p className="text-sm">
-                    An empty column in Klondike is only useful if you have a king to fill it
-                    (or are about to uncover one). Unlike{" "}
-                    <Link href="/" className="text-[#D4AF37] hover:underline">
-                      FreeCell
-                    </Link>{" "}
-                    or{" "}
-                    <Link href="/spider" className="text-[#D4AF37] hover:underline">
-                      Spider Solitaire
-                    </Link>
-                    , you cannot place any card in an empty Klondike column. Creating an
-                    empty column without a king to fill it is usually wasteful — you have
-                    removed building space from the tableau for no immediate benefit.
-                  </p>
-                </div>
-
-                <div className="bg-white/[0.03] border border-white/10 rounded-lg p-5">
-                  <h3 className="font-semibold text-[#D4AF37] mb-2">
-                    Principle 5: Exhaust Tableau Moves Before Drawing
-                  </h3>
-                  <p className="text-sm">
-                    Every time you draw from the stock, you skip over tableau moves that
-                    might have been more valuable. Before drawing, scan the entire board: are
-                    there face-down cards you can uncover? Can you build any useful sequences?
-                    Are there aces or twos to send to the foundation? Only draw when you have
-                    genuinely run out of productive tableau plays.
-                  </p>
-                </div>
-              </div>
+              <p>
+                The difference between a casual player and a skilled one is stark. A beginner
+                playing Draw 1 might win 15-20% of games. A player who understands Klondike
+                strategy wins 40-50% of the same deals. That gap — doubling or tripling your win
+                rate — comes entirely from better decision-making. Every move in Klondike involves
+                a choice, and the accumulation of good choices is what separates winning players
+                from losing ones.
+              </p>
+              <p>
+                This guide covers the strategies that make the biggest difference, from fundamental
+                principles that apply to every game through to Draw-3-specific techniques that
+                separate intermediate players from experts. Whether you are brand new to Klondike
+                or you have been playing for years and want to push your win rate higher, there is
+                something here for you.
+              </p>
             </div>
           </section>
 
           <AdUnit format="horizontal" className="my-4" />
 
-          {/* Drawing Strategy */}
-          <section>
-            <h2
-              className="text-2xl sm:text-3xl font-bold text-white/90 mb-4"
-              style={{ fontFamily: "var(--font-playfair)" }}
-            >
-              When to Draw vs When to Play
-            </h2>
-            <div className="space-y-4 text-white/60 leading-relaxed">
-              <p>
-                The stock pile is your lifeline in Klondike — it contains the 24 cards not
-                dealt to the tableau. Managing when and how you draw from it is a core
-                strategic skill.
-              </p>
-
-              <div className="bg-white/[0.03] border border-white/10 rounded-lg p-5 space-y-3">
-                <h3 className="font-semibold text-green-400">Play first when:</h3>
-                <ul className="list-disc pl-5 space-y-2 text-sm">
-                  <li>Any tableau move uncovers a face-down card</li>
-                  <li>You can send an ace or two directly to the foundation</li>
-                  <li>A move creates a useful building sequence without burying needed cards</li>
-                  <li>You can free a column for a king that is ready to be placed</li>
-                  <li>Moving a card from one pile to another extends two sequences at once</li>
-                </ul>
-              </div>
-
-              <div className="bg-white/[0.03] border border-white/10 rounded-lg p-5 space-y-3 mt-3">
-                <h3 className="font-semibold text-amber-400">Draw when:</h3>
-                <ul className="list-disc pl-5 space-y-2 text-sm">
-                  <li>No tableau moves uncover hidden cards</li>
-                  <li>All available moves would bury cards you need later</li>
-                  <li>You are waiting for a specific card to continue a sequence</li>
-                  <li>The stock has not been cycled through yet and you need to see what is available</li>
-                </ul>
-              </div>
-
-              <div className="bg-emerald-900/20 border border-emerald-500/20 rounded-lg p-4 mt-3">
-                <p className="text-emerald-300/80 text-sm">
-                  <strong>Key insight:</strong> In Klondike, drawing is not a failure — it
-                  is a necessary part of the game. Unlike Spider Solitaire where dealing is
-                  always a last resort, Klondike&apos;s stock is a regular source of playable
-                  cards. The skill is in knowing when to stop drawing and start building.
-                </p>
-              </div>
-            </div>
-          </section>
-
-          {/* Tableau Building */}
-          <section>
-            <h2
-              className="text-2xl sm:text-3xl font-bold text-white/90 mb-4"
-              style={{ fontFamily: "var(--font-playfair)" }}
-            >
-              Building Tableau Sequences
-            </h2>
-            <div className="space-y-4 text-white/60 leading-relaxed">
-              <p>
-                The tableau is where Klondike is won or lost. Building effective
-                alternating-color, descending sequences is the core mechanical skill.
-                Here are the key tactical considerations:
-              </p>
-
-              <h3 className="text-lg font-semibold text-white/80 mt-4">
-                Long Sequences vs Short Sequences
-              </h3>
-              <p>
-                A long tableau sequence (K-Q-J-10-9-8-7-6-5-4-3-2) is a completed column
-                that can only grow through foundation play. Short, flexible sequences are
-                often more useful in the early and mid-game because they can be
-                rearranged more easily. Do not obsess over building one perfect column —
-                spread your building across multiple piles to maximize flexibility.
-              </p>
-
-              <h3 className="text-lg font-semibold text-white/80 mt-4">
-                Color Alternation Traps
-              </h3>
-              <p>
-                Klondike requires alternating red and black cards in tableau sequences.
-                This means a red king locks you into a specific pattern: red K, black Q,
-                red J, black 10, and so on. If most of your useful cards are the wrong
-                color for the sequence you are building, you will stall. Before committing
-                to a long build, glance at the visible cards and the stock to check
-                whether the alternating pattern is achievable.
-              </p>
-
-              <h3 className="text-lg font-semibold text-white/80 mt-4">
-                Moving Partial Sequences
-              </h3>
-              <p>
-                In Klondike, you can move an entire properly-ordered sequence from one
-                column to another (unlike some variants that restrict this). Use this to
-                your advantage: if moving a sequence from column A to column B uncovers a
-                face-down card in column A, that is almost always worth doing, even if it
-                makes column B taller. Tall columns are not a problem — buried face-down
-                cards are.
-              </p>
-
-              <h3 className="text-lg font-semibold text-white/80 mt-4">
-                The Aces-and-Twos Rule
-              </h3>
-              <p>
-                Aces and twos should go to the foundation immediately. They serve no
-                purpose on the tableau — no card can be placed on top of an ace, and a two
-                can only hold an ace (which should already be on the foundation). Sending
-                them up costs nothing and clears space. For threes and above, check whether
-                the card is needed as a tableau building target before promoting it.
-              </p>
-            </div>
-          </section>
-
-          <AdUnit format="auto" className="my-4" />
-
-          {/* King Placement */}
-          <section>
-            <h2
-              className="text-2xl sm:text-3xl font-bold text-white/90 mb-4"
-              style={{ fontFamily: "var(--font-playfair)" }}
-            >
-              King Placement Strategy
-            </h2>
-            <div className="space-y-4 text-white/60 leading-relaxed">
-              <p>
-                King placement is arguably the single highest-leverage decision in
-                Klondike. A well-placed king can anchor a sequence that clears half the
-                board. A poorly placed king can lock you into a dead end.
-              </p>
-
-              <div className="bg-white/[0.03] border border-white/10 rounded-lg p-5">
-                <h3 className="font-semibold text-[#D4AF37] mb-3">
-                  The King Decision Framework
-                </h3>
-                <ol className="list-decimal pl-5 space-y-3 text-sm">
-                  <li>
-                    <strong className="text-white/80">Check which color unblocks more cards.</strong>{" "}
-                    A red king lets you build black Q, red J, black 10, etc. A black king
-                    gives you red Q, black J, red 10, etc. Look at your buried cards — which
-                    color chain helps you uncover the most face-down cards?
-                  </li>
-                  <li>
-                    <strong className="text-white/80">Check which queen you can place.</strong>{" "}
-                    A king in an empty column does nothing until you place a queen on it.
-                    If you have a black queen available, place a red king. If you have a red
-                    queen, place a black king. No available queen? Consider waiting.
-                  </li>
-                  <li>
-                    <strong className="text-white/80">Consider both kings if you have a choice.</strong>{" "}
-                    If both a red and black king are available, pick the one whose subsequent
-                    building sequence best serves your current position. This is the moment
-                    to think 3-4 moves ahead.
-                  </li>
-                  <li>
-                    <strong className="text-white/80">Do not place a king just to fill a column.</strong>{" "}
-                    Sometimes an empty column is better left empty until the right king
-                    appears. Filling it with the wrong king wastes the column permanently.
-                  </li>
-                </ol>
-              </div>
-
-              <div className="bg-red-900/20 border border-red-500/20 rounded-lg p-4 mt-3">
-                <p className="text-red-300/80 text-sm">
-                  <strong>Common mistake:</strong> Players often grab the first king they see
-                  and dump it into an empty column. This is one of the most damaging habits in
-                  Klondike. A king placed without thought can lock you out of the entire column
-                  for the rest of the game.
-                </p>
-              </div>
-            </div>
-          </section>
-
-          {/* Ace & Foundation Management */}
-          <section>
-            <h2
-              className="text-2xl sm:text-3xl font-bold text-white/90 mb-4"
-              style={{ fontFamily: "var(--font-playfair)" }}
-            >
-              Ace and Foundation Management
-            </h2>
-            <div className="space-y-4 text-white/60 leading-relaxed">
-              <p>
-                The foundations are where you win the game — all 52 cards must end up there.
-                But the order in which you build the foundations matters more than most
-                players realize.
-              </p>
-
-              <h3 className="text-lg font-semibold text-white/80 mt-4">
-                The Balance Rule
-              </h3>
-              <p>
-                Keep your four foundation piles within 2 ranks of each other. If spades are
-                at 6 and diamonds are at 2, you have removed four black cards (3♠ through
-                6♠) that could be serving as landing spots for red cards on the tableau.
-                This &quot;foundation gap&quot; limits your building options and can stall the game.
-              </p>
-
-              <h3 className="text-lg font-semibold text-white/80 mt-4">
-                Safe vs Risky Foundation Plays
-              </h3>
-              <p>
-                A foundation play is <strong className="text-white/80">safe</strong> when the
-                card you are promoting is no longer needed as a tableau building target.
-                Specifically, it is safe when both cards of the opposite color and one rank
-                lower are already on the foundations. For example, promoting the 5♠ is safe
-                if both the 4♥ and 4♦ are already on their foundations — because no red card
-                will ever need the 5♠ as a landing spot.
-              </p>
-              <p>
-                A foundation play is <strong className="text-white/80">risky</strong> when the
-                card might still be needed on the tableau. Promoting the 5♠ when the 4♥ is
-                still in the stock or buried means you might later need to place the 4♥ on
-                a black 5 — and you just sent the only visible one to the foundation.
-              </p>
-
-              <h3 className="text-lg font-semibold text-white/80 mt-4">
-                The &quot;Two-Rank&quot; Safety Check
-              </h3>
-              <p>
-                A quick mental shortcut: before sending a card to the foundation, check
-                whether both opposite-color cards two ranks below are already on the
-                foundation. If they are, the play is safe. If not, pause and consider
-                whether you might need the card later.
-              </p>
-            </div>
-          </section>
-
-          <AdUnit format="auto" className="my-4" />
-
-          {/* Draw 1 vs Draw 3 */}
+          {/* Section 2: Draw 1 vs Draw 3 Strategy */}
           <section>
             <h2
               className="text-2xl sm:text-3xl font-bold text-white/90 mb-4"
@@ -559,210 +215,425 @@ export default function KlondikeStrategyPage() {
             </h2>
             <div className="space-y-4 text-white/60 leading-relaxed">
               <p>
-                While the core principles apply to both modes, Draw 1 and Draw 3 require
-                different tactical approaches due to how you access the stock pile.
+                The choice between Draw 1 and Draw 3 fundamentally changes how you approach the
+                game. Understanding these differences is essential before diving into specific
+                tactics.
               </p>
 
-              <div className="grid gap-4 md:grid-cols-2 mt-4">
-                <div className="bg-emerald-900/10 border border-emerald-500/15 rounded-xl p-5">
-                  <h3 className="text-lg font-bold text-emerald-400 mb-3">
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="bg-white/[0.03] border border-white/10 rounded-lg p-5">
+                  <h3 className="font-semibold text-emerald-400 mb-3">
                     Draw 1 Strategy
                   </h3>
-                  <p className="text-white/70 leading-relaxed mb-3 text-sm">
-                    In Draw 1, you flip one card at a time and can access every card in the
-                    stock. This gives you near-complete information and maximum flexibility.
-                    Win rates of 79-82% are achievable.
-                  </p>
-                  <ul className="list-disc list-inside text-white/70 space-y-1.5 ml-2 text-sm">
-                    <li>Play more aggressively — you will see every stock card</li>
-                    <li>Use the stock as a planning tool: cycle through once to see what is available</li>
-                    <li>Build foundations more freely since you can access any stock card</li>
-                    <li>Focus on tableau optimization since stock access is not a constraint</li>
-                    <li>Empty columns matter less — you can always find a king in the stock</li>
+                  <ul className="space-y-2 text-sm">
+                    <li>
+                      You see every card in the stock each cycle, so card tracking is straightforward.
+                    </li>
+                    <li>
+                      You have maximum flexibility — every stock card is accessible in order.
+                    </li>
+                    <li>
+                      Focus on tableau organization first, since the stock will always be there as a
+                      reliable backup source.
+                    </li>
+                    <li>
+                      Win rate ceiling is higher (~40-50%), so aggressive play pays off more often.
+                    </li>
+                    <li>
+                      The main skill is prioritizing which face-down cards to uncover and when to
+                      move cards to foundations.
+                    </li>
                   </ul>
                 </div>
 
-                <div className="bg-amber-900/10 border border-amber-500/15 rounded-xl p-5">
-                  <h3 className="text-lg font-bold text-amber-400 mb-3">
+                <div className="bg-white/[0.03] border border-white/10 rounded-lg p-5">
+                  <h3 className="font-semibold text-amber-400 mb-3">
                     Draw 3 Strategy
                   </h3>
-                  <p className="text-white/70 leading-relaxed mb-3 text-sm">
-                    In Draw 3, you flip three cards and can only play the top one. Two-thirds
-                    of the stock is inaccessible on any given pass. This demands careful stock
-                    management. Win rates of 25-33% represent expert play.
-                  </p>
-                  <ul className="list-disc list-inside text-white/70 space-y-1.5 ml-2 text-sm">
-                    <li>Track the stock cycle — know which cards appear every 3 flips</li>
-                    <li>Sometimes skip a playable stock card to access a more valuable card behind it</li>
-                    <li>Playing a card changes the stock order — plan around this</li>
-                    <li>Build foundations conservatively; you may not get the card back</li>
-                    <li>Empty columns are more precious since kings are harder to access</li>
+                  <ul className="space-y-2 text-sm">
+                    <li>
+                      Only every third card is accessible per pass. Two-thirds of the stock is
+                      hidden on any given cycle.
+                    </li>
+                    <li>
+                      Card position tracking becomes critical — you need to know where key cards
+                      sit relative to the three-card draw rhythm.
+                    </li>
+                    <li>
+                      Sometimes you should <em>not</em> play an available card, because doing so
+                      shifts the three-card alignment and may bury a more important card.
+                    </li>
+                    <li>
+                      Win rates are much lower (~10-20%), so conservative, methodical play is
+                      essential.
+                    </li>
+                    <li>
+                      Tableau moves that change the stock&apos;s draw alignment (by adding cards to
+                      the waste pile) are strategically significant.
+                    </li>
                   </ul>
                 </div>
               </div>
 
-              <h3 className="text-lg font-semibold text-white/80 mt-6">
-                The Draw 3 Stock Cycle
-              </h3>
               <p>
-                In Draw 3, the stock is divided into groups of three. On each pass through
-                the stock, you see the same cards in the same positions (unless you play one,
-                which shifts the cycle). Expert Draw 3 players memorize the position of key
-                cards in the stock cycle and plan their draws to access them.
-              </p>
-              <p>
-                For example, if the ace of hearts is the second card in a group of three,
-                you need to play the card on top of it (or rearrange the cycle by playing a
-                different stock card) to access the ace. This kind of stock manipulation is
-                what separates 15% win rates from 30% win rates in Draw 3.
+                The single biggest strategic difference: in Draw 1, you can afford to play
+                intuitively because every card is reachable. In Draw 3, you must think about the
+                stock pile as a constrained resource where card order and accessibility are constant
+                strategic factors.
               </p>
             </div>
           </section>
 
-          {/* Common Mistakes */}
+          {/* Section 3: Stock-Pass Discipline */}
           <section>
             <h2
               className="text-2xl sm:text-3xl font-bold text-white/90 mb-4"
               style={{ fontFamily: "var(--font-playfair)" }}
             >
-              Common Mistakes to Avoid
+              Stock-Pass Discipline
             </h2>
             <div className="space-y-4 text-white/60 leading-relaxed">
               <p>
-                Even experienced Klondike players fall into these traps. Being aware of
-                them is the first step to eliminating them from your play.
+                How you cycle through the stock pile is one of the most underrated skills in
+                Klondike. Many players treat the stock as an afterthought — they flip through it
+                quickly, grab whatever they can, and move on. Skilled players treat the stock with
+                deliberate discipline.
               </p>
 
-              <div className="space-y-4">
-                <div className="bg-white/[0.03] border border-red-500/10 rounded-lg p-5">
-                  <h3 className="font-semibold text-red-400 mb-2">
-                    Mistake 1: Uneven Foundation Building
-                  </h3>
-                  <p className="text-sm">
-                    Racing one suit high while others are low removes cards you need for
-                    tableau building. The 7♠ on the foundation cannot serve as a landing spot
-                    for the 6♥. Keep foundations balanced within 2 ranks.
-                  </p>
-                </div>
+              <div className="bg-white/[0.03] border border-white/10 rounded-lg p-5">
+                <h3 className="font-semibold text-[#D4AF37] mb-2">
+                  Exhaust Tableau Moves First
+                </h3>
+                <p className="text-sm">
+                  Before drawing from the stock, scan the entire tableau for moves. Prioritize
+                  moves that uncover face-down cards. The stock should be your second resort, not
+                  your first. Every card you play from the tableau is a card you do not need to
+                  find in the stock.
+                </p>
+              </div>
 
-                <div className="bg-white/[0.03] border border-red-500/10 rounded-lg p-5">
-                  <h3 className="font-semibold text-red-400 mb-2">
-                    Mistake 2: Wrong King in Empty Column
-                  </h3>
-                  <p className="text-sm">
-                    Placing the wrong color king locks you into a building pattern that may
-                    not serve your board. Always consider which queen you can place on the
-                    king and what that sequence unblocks.
-                  </p>
-                </div>
+              <div className="bg-white/[0.03] border border-white/10 rounded-lg p-5">
+                <h3 className="font-semibold text-[#D4AF37] mb-2">
+                  Track Your Passes (Draw 3)
+                </h3>
+                <p className="text-sm">
+                  In Draw 3, pay attention to which cards you see on each pass. If you know the
+                  Ace of Spades is two cards deep in a three-card group, you can plan moves that
+                  shift the alignment to make it accessible on the next pass. This level of
+                  tracking separates intermediate players from advanced ones.
+                </p>
+              </div>
 
-                <div className="bg-white/[0.03] border border-red-500/10 rounded-lg p-5">
-                  <h3 className="font-semibold text-red-400 mb-2">
-                    Mistake 3: Ignoring Face-Down Cards
-                  </h3>
-                  <p className="text-sm">
-                    Building neat sequences while ignoring columns full of hidden cards is a
-                    common trap. That tidy 8-card sequence means nothing if three columns
-                    remain unexplored. Prioritize uncovering hidden cards over cosmetic
-                    organizing.
-                  </p>
-                </div>
+              <div className="bg-white/[0.03] border border-white/10 rounded-lg p-5">
+                <h3 className="font-semibold text-[#D4AF37] mb-2">
+                  Know When to Stop Cycling
+                </h3>
+                <p className="text-sm">
+                  If you go through the entire stock without playing a single card, and you have
+                  no tableau moves available, the game is over — you are stuck. But more subtly,
+                  if you cycle through the stock and only play cards that do not uncover any new
+                  face-down cards or enable any new moves, you are likely spinning your wheels.
+                  Recognize when a game is unwinnable and start a new one rather than cycling
+                  endlessly.
+                </p>
+              </div>
 
-                <div className="bg-white/[0.03] border border-red-500/10 rounded-lg p-5">
-                  <h3 className="font-semibold text-red-400 mb-2">
-                    Mistake 4: Drawing Before Exhausting Tableau Moves
-                  </h3>
-                  <p className="text-sm">
-                    Every productive tableau move you skip by drawing early is an opportunity
-                    lost. The stock will still be there after you make your tableau plays.
-                    Scan the full board before reaching for the stock.
-                  </p>
-                </div>
-
-                <div className="bg-white/[0.03] border border-red-500/10 rounded-lg p-5">
-                  <h3 className="font-semibold text-red-400 mb-2">
-                    Mistake 5: Not Tracking the Stock (Draw 3)
-                  </h3>
-                  <p className="text-sm">
-                    In Draw 3, playing blindly through the stock wastes your most constrained
-                    resource. Pay attention to which cards appear at which positions. Even
-                    rough mental tracking of aces and kings significantly improves your play.
-                  </p>
-                </div>
+              <div className="bg-white/[0.03] border border-white/10 rounded-lg p-5">
+                <h3 className="font-semibold text-[#D4AF37] mb-2">
+                  Strategic Non-Play (Draw 3)
+                </h3>
+                <p className="text-sm">
+                  This is the most advanced stock-management technique. In Draw 3, playing a
+                  card from the waste pile changes which cards are accessible on your next pass
+                  through the stock. Sometimes the correct play is to <em>not</em> play an
+                  available card because doing so would shift the draw alignment and bury a more
+                  important card. This requires you to remember (or at least estimate) what is
+                  coming next in the stock.
+                </p>
               </div>
             </div>
           </section>
 
           <AdUnit format="auto" className="my-4" />
 
-          {/* Advanced Techniques */}
+          {/* Section 4: Empty Column Usage */}
           <section>
             <h2
               className="text-2xl sm:text-3xl font-bold text-white/90 mb-4"
               style={{ fontFamily: "var(--font-playfair)" }}
             >
-              Advanced Techniques
+              Empty Column Usage — When to Move Kings
             </h2>
             <div className="space-y-4 text-white/60 leading-relaxed">
-              <h3 className="text-lg font-semibold text-[#D4AF37] mt-4">
-                The Opening Scan
-              </h3>
               <p>
-                Before making your first move, survey the entire tableau. Identify where
-                the aces are (visible or potentially buried), which columns have the fewest
-                face-down cards, and which kings and queens are available. This 10-second
-                scan prevents the most common early-game mistakes and gives you a roadmap
-                for your first 5-10 moves.
+                In Klondike, only Kings can fill empty columns. This makes empty columns
+                simultaneously valuable and dangerous. An empty column is only useful if you have
+                a King to place there — otherwise it is dead space.
               </p>
 
-              <h3 className="text-lg font-semibold text-[#D4AF37] mt-4">
-                Column Priority Ranking
+              <h3 className="text-lg font-semibold text-white/80 mt-4">
+                When to Create an Empty Column
               </h3>
               <p>
-                Rank your seven tableau columns by how many face-down cards they contain.
-                Columns with more hidden cards should receive higher priority for
-                uncovering. The seventh column (6 face-down cards) is your biggest
-                liability — getting it cleared early dramatically improves your win chances.
+                Create an empty column when you have a King ready to move there and doing so will
+                uncover face-down cards or enable a chain of productive moves. The ideal scenario:
+                you move the last cards off a column (uncovering a face-down card), immediately
+                place a King in the now-empty column, and the King brings along a sequence of
+                cards that were blocking progress elsewhere.
               </p>
 
-              <h3 className="text-lg font-semibold text-[#D4AF37] mt-4">
-                The &quot;What If&quot; Technique
+              <h3 className="text-lg font-semibold text-white/80 mt-4">
+                Choosing Which King to Place
               </h3>
               <p>
-                Before each move, mentally play out the next 2-3 moves that follow from
-                it. &quot;If I move this 7 onto that 8, it uncovers a card. If that card is
-                useful, I continue. If not, was the move still worth it for the information?&quot;
-                This habit catches bad moves before you make them and is especially important
-                in{" "}
-                <Link href="/klondike/winning-strategies" className="text-[#D4AF37] hover:underline">
-                  advanced play
-                </Link>.
+                When you have multiple Kings available, choose carefully. Consider which King will
+                allow you to build the longest alternating-color sequence. A black King lets you
+                build red Queen, black Jack, red 10, and so on — look at what cards are available
+                and pick the King color that offers the most building potential. Also consider
+                whether moving a particular King will uncover hidden cards in its original column.
               </p>
 
-              <h3 className="text-lg font-semibold text-[#D4AF37] mt-4">
-                Stock Manipulation (Draw 3)
+              <h3 className="text-lg font-semibold text-white/80 mt-4">
+                The Empty Column Trap
               </h3>
               <p>
-                In Draw 3, every card you play from the stock shifts the cycle for every
-                subsequent pass. Advanced players deliberately play certain stock cards not
-                because they need them, but because removing them gives access to a more
-                valuable card on the next pass. This technique — called stock manipulation —
-                is the single biggest skill gap between intermediate and expert Draw 3
-                players.
+                One of the most common beginner mistakes is clearing a column when no King is
+                available. You move all the cards off a column, flip the last face-down card, and
+                then... the column sits empty with nothing to put there. Meanwhile, you may have
+                disrupted useful sequences on other columns to accomplish this. Always check: do
+                I have a King (or a King-led sequence) ready before I clear this column?
               </p>
 
-              <h3 className="text-lg font-semibold text-[#D4AF37] mt-4">
-                Endgame Recognition
+              <h3 className="text-lg font-semibold text-white/80 mt-4">
+                Kings from the Stock Pile
               </h3>
               <p>
-                When all face-down cards are revealed and the stock is exhausted (or fully
-                known), the game shifts from strategy to execution. At this point, the game
-                is either solvable or not. If it is solvable, play methodically: build
-                foundations evenly, do not leave needed cards buried in long sequences, and
-                work from the bottom of each pile upward.
+                Kings drawn from the stock are especially valuable because playing them does not
+                disrupt any existing tableau sequences. If you have an empty column and draw a
+                King from the stock, that is nearly always a strong play. The King fills the
+                empty column for free, and you can start building on it immediately.
               </p>
             </div>
           </section>
+
+          {/* Section 5: Foundation Timing */}
+          <section>
+            <h2
+              className="text-2xl sm:text-3xl font-bold text-white/90 mb-4"
+              style={{ fontFamily: "var(--font-playfair)" }}
+            >
+              Foundation Timing — When to Move Cards Up
+            </h2>
+            <div className="space-y-4 text-white/60 leading-relaxed">
+              <p>
+                A common misconception is that you should move cards to the foundations as quickly
+                as possible. In reality, foundation timing is one of the most nuanced aspects of
+                Klondike strategy. Moving a card to the foundation removes it from the tableau
+                permanently, which can be both helpful and harmful.
+              </p>
+
+              <div className="bg-white/[0.03] border border-emerald-500/10 rounded-lg p-5 space-y-3">
+                <h3 className="font-semibold text-emerald-400">Always move to foundation:</h3>
+                <ul className="list-disc pl-5 space-y-2 text-sm">
+                  <li>
+                    <strong className="text-white/80">Aces</strong> — They serve no purpose
+                    on the tableau and are required to start foundation piles.
+                  </li>
+                  <li>
+                    <strong className="text-white/80">Twos</strong> — No card in the game
+                    needs a Two underneath it on the tableau (nothing goes on an Ace).
+                  </li>
+                  <li>
+                    <strong className="text-white/80">Cards that uncover face-down cards</strong>
+                    {" "}— If moving a card to the foundation reveals a hidden card, that is almost
+                    always worth it.
+                  </li>
+                </ul>
+              </div>
+
+              <div className="bg-white/[0.03] border border-amber-500/10 rounded-lg p-5 space-y-3 mt-3">
+                <h3 className="font-semibold text-amber-400">Think twice before moving:</h3>
+                <ul className="list-disc pl-5 space-y-2 text-sm">
+                  <li>
+                    <strong className="text-white/80">Cards that anchor useful sequences</strong>
+                    {" "}— A red 7 holding a black 6 that covers a face-down card should stay on
+                    the tableau until that face-down card is exposed.
+                  </li>
+                  <li>
+                    <strong className="text-white/80">Cards where both colors of the next
+                    lower rank are still needed on the tableau</strong> — If you move a black 8 to
+                    the foundation, you lose a potential anchor for both the red 7 of Hearts and
+                    red 7 of Diamonds.
+                  </li>
+                  <li>
+                    <strong className="text-white/80">Cards that break a long sequence</strong>
+                    {" "}— A long tableau sequence is a powerful asset. Do not disassemble it to
+                    move one card to the foundation unless the sequence is no longer needed.
+                  </li>
+                </ul>
+              </div>
+
+              <p>
+                A practical rule of thumb: if both cards of the rank below the one you want to
+                move are already on the foundations, it is safe to move. For example, if both red
+                5s are already on their foundations, then any black 6 can safely go to the
+                foundation because no tableau card will ever need to sit on a black 6 again.
+              </p>
+            </div>
+          </section>
+
+          <AdUnit format="auto" className="my-4" />
+
+          {/* Section 6: Common Traps and Mistakes */}
+          <section>
+            <h2
+              className="text-2xl sm:text-3xl font-bold text-white/90 mb-4"
+              style={{ fontFamily: "var(--font-playfair)" }}
+            >
+              Common Traps and Mistakes
+            </h2>
+            <div className="space-y-4 text-white/60 leading-relaxed">
+              <p>
+                Even experienced Klondike players fall into these patterns. Recognizing them is the
+                first step to playing past them.
+              </p>
+
+              <div className="space-y-4">
+                <div className="bg-white/[0.03] border border-red-500/10 rounded-lg p-5">
+                  <h3 className="font-semibold text-red-400 mb-2">
+                    Trap 1: Emptying Columns Without a King
+                  </h3>
+                  <p className="text-sm">
+                    This is the most common mistake in Klondike. You work hard to clear a column,
+                    only to discover you have no King to place there. The empty column becomes
+                    dead space, and you have disrupted your tableau for nothing. Always verify a
+                    King is available (on the tableau or coming soon in the stock) before investing
+                    moves in clearing a column.
+                  </p>
+                </div>
+
+                <div className="bg-white/[0.03] border border-red-500/10 rounded-lg p-5">
+                  <h3 className="font-semibold text-red-400 mb-2">
+                    Trap 2: Rushing Cards to the Foundation
+                  </h3>
+                  <p className="text-sm">
+                    Moving every possible card to the foundation feels productive but can backfire.
+                    A 6 moved to the foundation cannot anchor a 5 on the tableau later. This is
+                    especially dangerous in the mid-game when you need tableau flexibility to
+                    uncover the remaining face-down cards. Be selective about which cards go up
+                    and when.
+                  </p>
+                </div>
+
+                <div className="bg-white/[0.03] border border-red-500/10 rounded-lg p-5">
+                  <h3 className="font-semibold text-red-400 mb-2">
+                    Trap 3: Ignoring the Longer Columns
+                  </h3>
+                  <p className="text-sm">
+                    Columns 6 and 7 start with the most face-down cards (5 and 6 respectively).
+                    Players often focus on the shorter columns because progress feels faster, but
+                    the long columns contain the most hidden information. Prioritize uncovering
+                    cards in the longest columns — they hold the keys to whether the game is
+                    winnable.
+                  </p>
+                </div>
+
+                <div className="bg-white/[0.03] border border-red-500/10 rounded-lg p-5">
+                  <h3 className="font-semibold text-red-400 mb-2">
+                    Trap 4: Making Moves Just Because They Are Available
+                  </h3>
+                  <p className="text-sm">
+                    Not every legal move is a good move. Moving a card from one tableau column to
+                    another just because you can — without it uncovering a face-down card, enabling
+                    a stock card to be played, or building toward a productive sequence — is a
+                    wasted move at best and actively harmful at worst. Every move should have a
+                    purpose.
+                  </p>
+                </div>
+
+                <div className="bg-white/[0.03] border border-red-500/10 rounded-lg p-5">
+                  <h3 className="font-semibold text-red-400 mb-2">
+                    Trap 5: Not Using Undo
+                  </h3>
+                  <p className="text-sm">
+                    In our{" "}
+                    <Link href="/klondike" className="text-[#D4AF37] hover:underline">
+                      online Klondike game
+                    </Link>
+                    , unlimited undo is available. Use it. When you uncover a face-down card and
+                    realize a different sequence of moves would have been better, undo and replay.
+                    Undo is not cheating — it is a learning tool that helps you develop better
+                    intuition for future games.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Section 7: Unwinnable Deals */}
+          <section>
+            <h2
+              className="text-2xl sm:text-3xl font-bold text-white/90 mb-4"
+              style={{ fontFamily: "var(--font-playfair)" }}
+            >
+              Unwinnable Deals — The Reality of Klondike
+            </h2>
+            <div className="space-y-4 text-white/60 leading-relaxed">
+              <p>
+                One of the most important things to understand about Klondike is that not every
+                deal can be won. Computer analysis of millions of random deals has established
+                that roughly 18-21% of Klondike deals are mathematically impossible to complete,
+                regardless of how well you play.
+              </p>
+              <p>
+                This is fundamentally different from{" "}
+                <Link href="/" className="text-[#D4AF37] hover:underline">
+                  FreeCell
+                </Link>
+                , where 99.999% of deals are solvable (only one known unsolvable deal in the
+                standard 32,000-deal set). The difference comes from hidden information: in
+                Klondike, the 21 face-down cards and the stock pile order create situations where
+                critical cards are permanently trapped.
+              </p>
+
+              <div className="bg-white/[0.03] border border-white/10 rounded-lg p-5">
+                <h3 className="font-semibold text-[#D4AF37] mb-2">
+                  Common Causes of Unwinnable Deals
+                </h3>
+                <ul className="list-disc pl-5 space-y-2 text-sm">
+                  <li>
+                    <strong className="text-white/80">Buried Aces:</strong> If an Ace is
+                    trapped at the bottom of a long column with no way to reach it, the
+                    corresponding foundation can never be started.
+                  </li>
+                  <li>
+                    <strong className="text-white/80">Circular dependencies:</strong> Card A
+                    can only be freed by moving Card B, but Card B can only be freed by moving
+                    Card A. This deadlock is unresolvable.
+                  </li>
+                  <li>
+                    <strong className="text-white/80">Stock pile order:</strong> In Draw 3,
+                    a critical card may be in a position where it is never accessible given the
+                    three-card draw rhythm and the cards around it.
+                  </li>
+                  <li>
+                    <strong className="text-white/80">King placement conflicts:</strong> If
+                    all four Kings are buried under critical cards, and clearing any column
+                    requires a King that is itself trapped, the game locks up.
+                  </li>
+                </ul>
+              </div>
+
+              <p>
+                The practical takeaway: do not blame yourself for every loss. If you are winning
+                35-45% of Draw 1 games, you are playing well. If you are winning 15-20% of Draw
+                3 games, you are playing at a strong level. Anything above these ranges means
+                you are an excellent Klondike player.
+              </p>
+            </div>
+          </section>
+
+          <AdUnit format="auto" className="my-4" />
 
           {/* FAQ Section */}
           <section className="bg-white/[0.03] border border-white/10 rounded-xl p-6 sm:p-8">
@@ -789,6 +660,26 @@ export default function KlondikeStrategyPage() {
 
           <AdUnit format="horizontal" className="my-4" />
 
+          {/* CTA */}
+          <section className="text-center py-8">
+            <h2
+              className="text-2xl sm:text-3xl font-bold text-white/90 mb-4"
+              style={{ fontFamily: "var(--font-playfair)" }}
+            >
+              Ready to Put These Strategies to Work?
+            </h2>
+            <p className="text-white/50 mb-6 max-w-xl mx-auto">
+              Practice makes perfect. Try our free online Klondike Solitaire with Draw 1 and
+              Draw 3 modes, unlimited undo, and instant new deals.
+            </p>
+            <Link
+              href="/klondike"
+              className="inline-block bg-[#D4AF37] text-[#072907] font-bold px-8 py-3 rounded-lg hover:bg-[#e8c54a] transition-colors text-lg"
+            >
+              Play Klondike Solitaire
+            </Link>
+          </section>
+
           {/* Cross-links */}
           <section className="bg-white/[0.03] border border-white/10 rounded-xl p-6 sm:p-8">
             <h2
@@ -813,25 +704,11 @@ export default function KlondikeStrategyPage() {
                 <p className="text-sm text-white/40 mt-1">Complete rules and setup guide</p>
               </Link>
               <Link
-                href="/klondike/tips"
+                href="/klondike/faq"
                 className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] hover:border-[#D4AF37]/30 transition-all"
               >
-                <span className="text-[#D4AF37] font-semibold">Klondike Tips & Tricks</span>
-                <p className="text-sm text-white/40 mt-1">Quick, practical tips for all levels</p>
-              </Link>
-              <Link
-                href="/klondike/winning-strategies"
-                className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] hover:border-[#D4AF37]/30 transition-all"
-              >
-                <span className="text-[#D4AF37] font-semibold">Winning Strategies</span>
-                <p className="text-sm text-white/40 mt-1">Advanced tactics for higher win rates</p>
-              </Link>
-              <Link
-                href="/klondike/draw-1-vs-draw-3"
-                className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] hover:border-[#D4AF37]/30 transition-all"
-              >
-                <span className="text-[#D4AF37] font-semibold">Draw 1 vs Draw 3</span>
-                <p className="text-sm text-white/40 mt-1">Complete comparison of both modes</p>
+                <span className="text-[#D4AF37] font-semibold">Klondike FAQ</span>
+                <p className="text-sm text-white/40 mt-1">Common questions answered</p>
               </Link>
               <Link
                 href="/freecell-vs-klondike"
@@ -839,20 +716,6 @@ export default function KlondikeStrategyPage() {
               >
                 <span className="text-[#D4AF37] font-semibold">FreeCell vs Klondike</span>
                 <p className="text-sm text-white/40 mt-1">Head-to-head comparison</p>
-              </Link>
-              <Link
-                href="/spider/strategy"
-                className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] hover:border-[#D4AF37]/30 transition-all"
-              >
-                <span className="text-[#D4AF37] font-semibold">Spider Strategy</span>
-                <p className="text-sm text-white/40 mt-1">Strategy guide for Spider Solitaire</p>
-              </Link>
-              <Link
-                href="/strategy"
-                className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] hover:border-[#D4AF37]/30 transition-all"
-              >
-                <span className="text-[#D4AF37] font-semibold">FreeCell Strategy</span>
-                <p className="text-sm text-white/40 mt-1">FreeCell tips and techniques</p>
               </Link>
               <Link
                 href="/solitaire-types"

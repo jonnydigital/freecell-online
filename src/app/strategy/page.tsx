@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { absoluteUrl } from "@/lib/siteConfig";
 import AdUnit from "../../components/AdUnit";
 import ContentLayout from "../../components/ContentLayout";
+import NetworkCrossLinks from "@/components/NetworkCrossLinks";
 
 export const metadata: Metadata = {
   title: "FreeCell Strategy Guide | How to Win FreeCell — Beginner to Expert Tips",
@@ -843,12 +844,25 @@ export default function StrategyPage() {
                 For a more focused study path, read{" "}
                 <Link href="/is-every-freecell-game-winnable" className="text-[#D4AF37] hover:underline">
                   why almost every FreeCell game is solvable
-                </Link>{" "}
-                and what separates{" "}
+                </Link>
+                , what separates{" "}
                 <Link href="/hard-freecell-games" className="text-[#D4AF37] hover:underline">
                   hard deals
                 </Link>{" "}
-                from merely messy ones.
+                from merely messy ones, or grab the{" "}
+                <Link href="/freecell-cheat-sheet" className="text-[#D4AF37] hover:underline">
+                  cheat sheet
+                </Link>{" "}
+                for a quick-reference version of these strategies. You can also
+                explore the{" "}
+                <Link href="/freecell-probability" className="text-[#D4AF37] hover:underline">
+                  probability and math behind FreeCell
+                </Link>{" "}
+                or see how these tactics adapt to{" "}
+                <Link href="/bakers-game/strategy" className="text-[#D4AF37] hover:underline">
+                  Baker&apos;s Game strategy
+                </Link>
+                .
               </p>
 
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
@@ -874,6 +888,7 @@ export default function StrategyPage() {
             </div>
           </div>
         </section>
+        <NetworkCrossLinks />
       </main>
     </ContentLayout>
   );

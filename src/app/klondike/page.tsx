@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import KlondikeGamePage from "./KlondikeGamePage";
+import MoreGames from '@/components/MoreGames';
 
 export const metadata: Metadata = {
   title: "Klondike Solitaire | Play Online Free — Draw 1 & Draw 3",
@@ -160,6 +161,33 @@ export default function Page() {
           </li>
           <li>
             <Link
+              href="/klondike/strategy"
+              className="text-[#D4AF37] hover:underline"
+            >
+              Klondike Strategy Guide
+            </Link>{" "}
+            — Tips to win more games
+          </li>
+          <li>
+            <Link
+              href="/klondike/faq"
+              className="text-[#D4AF37] hover:underline"
+            >
+              Klondike FAQ
+            </Link>{" "}
+            — Common questions answered
+          </li>
+          <li>
+            <Link
+              href="/freecell-vs-klondike"
+              className="text-[#D4AF37] hover:underline"
+            >
+              FreeCell vs Klondike
+            </Link>{" "}
+            — Head-to-head comparison
+          </li>
+          <li>
+            <Link
               href="/spider"
               className="text-[#D4AF37] hover:underline"
             >
@@ -177,6 +205,7 @@ export default function Page() {
             — Explore 20+ solitaire variants
           </li>
         </ul>
+        <MoreGames currentSlug="klondike" />
       </article>
     </>
   );

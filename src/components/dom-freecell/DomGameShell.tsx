@@ -9,7 +9,7 @@ import { getTodaysSeed, getTodayStr, isTodayCompleted, getCurrentStreak, recordD
 import { soundManager } from '@/lib/sounds';
 import { useSolver } from '@/hooks/useSolver';
 import { describeSolution } from '@/solver/FreeCellSolver';
-import { RotateCcw, RotateCw, Lightbulb, Settings, AlertTriangle, ChevronLeft, ChevronRight, Volume2, VolumeX, X, Share2, Home, Shuffle, HelpCircle, Swords, Trophy, Play, Pause, Ghost, Layers } from 'lucide-react';
+import { RotateCcw, RotateCw, Lightbulb, Settings, AlertTriangle, ChevronLeft, ChevronRight, ChevronDown, Volume2, VolumeX, X, Share2, Home, Shuffle, HelpCircle, Swords, Trophy, Play, Pause, Ghost, Layers } from 'lucide-react';
 import { cardBackDesigns, getSelectedCardBack, setSelectedCardBack, type CardBackDesign } from '@/game/CardBacks';
 import { checkWinAchievements, recordModePlayed, recordUniqueGame } from '@/lib/achievementTracker';
 import type { Achievement } from '@/lib/achievements';
@@ -26,6 +26,24 @@ import DomBoard from './DomBoard';
 import { useHint } from './useHint';
 import { announceToScreenReader } from '@/lib/accessibility';
 import AdUnit from '@/components/AdUnit';
+import Link from 'next/link';
+import { isHubSite } from '@/lib/siteConfig';
+
+// Game picker dropdown data
+const GAME_PICKER_SOLITAIRE = [
+  { label: 'FreeCell', href: isHubSite ? '/freecell' : '/', icon: '♠', current: true },
+  { label: 'Spider Solitaire', href: '/spider', icon: '♣' },
+  { label: 'Klondike', href: '/klondike', icon: '♦' },
+  { label: "Baker's Game", href: '/bakers-game', icon: '♥' },
+  { label: 'Eight Off', href: '/eight-off', icon: '♠' },
+];
+const GAME_PICKER_VARIANTS = [
+  { label: 'Easy FreeCell', href: '/easy-freecell', icon: '🟢' },
+  { label: '1-Cell FreeCell', href: '/freecell/1-cell', icon: '1' },
+  { label: '2-Cell FreeCell', href: '/freecell/2-cell', icon: '2' },
+  { label: '3-Cell FreeCell', href: '/freecell/3-cell', icon: '3' },
+  { label: 'Storm Mode', href: '/storm', icon: '⚡' },
+];
 
 // ---------------------------------------------------------------------------
 // Props
@@ -109,6 +127,20 @@ export default function DomGameShell({ initialGameNumber }: DomGameShellProps) {
   const [newAchievements, setNewAchievements] = useState<Achievement[]>([]);
   const [streakMilestone, setStreakMilestone] = useState<number | null>(null);
   const [showReplay, setShowReplay] = useState(false);
+  const [showGamePicker, setShowGamePicker] = useState(false);
+  const gamePickerRef = useRef<HTMLDivElement>(null);
+
+  // Close game picker on outside click
+  useEffect(() => {
+    if (!showGamePicker) return;
+    const handler = (e: MouseEvent) => {
+      if (gamePickerRef.current && !gamePickerRef.current.contains(e.target as Node)) {
+        setShowGamePicker(false);
+      }
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, [showGamePicker]);
 
   // Game number input state
   const [gameInputValue, setGameInputValue] = useState('');
@@ -242,8 +274,19 @@ export default function DomGameShell({ initialGameNumber }: DomGameShellProps) {
   const handleGhostStop = useCallback(() => {
     setGhostPlaying(false);
     solver.reset();
-    stopReplay();
-  }, [solver, stopReplay]);
+    if (isWon) {
+      // Game was won during ghost replay — clear replay UI without resetting engine
+      // (stopReplay recreates the engine which would clear isWon and dismiss win screen)
+      useDomFreecellStore.setState({
+        replayMode: false,
+        replayMoves: [],
+        replayIndex: 0,
+        preReplayGameNumber: null,
+      });
+    } else {
+      stopReplay();
+    }
+  }, [solver, stopReplay, isWon]);
 
   const handleGhostCycleSpeed = useCallback(() => {
     setGhostSpeed((prev) => {
@@ -344,6 +387,17 @@ export default function DomGameShell({ initialGameNumber }: DomGameShellProps) {
       setTimeout(() => setShowConfetti(false), 5000);
       announceToScreenReader(`Congratulations! You won in ${moveCount} moves.`, 'assertive');
 
+      // If Ghost Mode replay was active, auto-stop it so win screen is clean
+      if (replayMode) {
+        setGhostPlaying(false);
+        useDomFreecellStore.setState({
+          replayMode: false,
+          replayMoves: [],
+          replayIndex: 0,
+          preReplayGameNumber: null,
+        });
+      }
+
       // Record unique game for achievement tracking
       recordUniqueGame(gameNumber);
 
@@ -386,6 +440,7 @@ export default function DomGameShell({ initialGameNumber }: DomGameShellProps) {
       // to DomGameShell, guard this call: only invoke for standard 'freecell'.
       solver.solve(gameNumber);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isWon, gameNumber, timerSeconds, moveCount, undosUsed, solver]);
 
   // ── Leaderboard submission on daily challenge win ──
@@ -654,10 +709,10 @@ export default function DomGameShell({ initialGameNumber }: DomGameShellProps) {
           borderBottom: '1px solid rgba(255,255,255,0.06)',
         }}
       >
-        {/* Left: Home button */}
-        <div style={{ flex: '0 0 140px' }}>
+        {/* Left: Game picker dropdown */}
+        <div style={{ flex: '0 0 200px' }} ref={gamePickerRef} className="relative">
           <button
-            onClick={() => setShowHome(true)}
+            onClick={() => setShowGamePicker((p) => !p)}
             className="group transition-all active:scale-95"
             style={{
               display: 'flex',
@@ -668,16 +723,44 @@ export default function DomGameShell({ initialGameNumber }: DomGameShellProps) {
               background: 'rgba(255,255,255,0.04)',
               border: '1px solid rgba(255,255,255,0.06)',
             }}
-            title="Menu"
           >
-            <Home size={18} style={{ color: 'rgba(212,175,55,0.8)' }} />
+            <span style={{ fontSize: '15px' }}>♠</span>
             <span style={{
               fontSize: '13px',
-              fontWeight: 600,
-              color: 'rgba(255,255,255,0.5)',
-              letterSpacing: '0.04em',
-            }}>Menu</span>
+              fontWeight: 700,
+              color: 'rgba(255,255,255,0.7)',
+              letterSpacing: '0.02em',
+            }}>FreeCell</span>
+            <ChevronDown size={14} style={{ color: 'rgba(255,255,255,0.4)' }} className={`transition-transform ${showGamePicker ? 'rotate-180' : ''}`} />
           </button>
+          {showGamePicker && (
+            <div
+              className="absolute top-full left-0 mt-2 z-[80] rounded-xl shadow-2xl border border-white/10 py-2 min-w-[220px]"
+              style={{ background: 'linear-gradient(180deg, #0f3a0f 0%, #0a2d0a 100%)' }}
+            >
+              <div className="px-3 pt-1 pb-1.5">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-white/30">Solitaire Games</span>
+              </div>
+              {GAME_PICKER_SOLITAIRE.map((g) => (
+                <Link key={g.label} href={g.href} onClick={() => setShowGamePicker(false)} className={`flex items-center gap-3 px-4 py-2 text-sm transition-colors ${g.current ? 'text-[#D4AF37] font-semibold hover:bg-white/5' : 'text-white/70 hover:bg-white/5 hover:text-white'}`}>
+                  <span className="w-4 text-center">{g.icon}</span> {g.label}
+                </Link>
+              ))}
+              <div className="my-1 mx-3 border-t border-white/[0.08]" />
+              <div className="px-3 pt-1 pb-1.5">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-white/30">FreeCell Variants</span>
+              </div>
+              {GAME_PICKER_VARIANTS.map((g) => (
+                <Link key={g.label} href={g.href} onClick={() => setShowGamePicker(false)} className="flex items-center gap-3 px-4 py-2 text-sm text-white/70 hover:bg-white/5 hover:text-white transition-colors">
+                  <span className="w-4 text-center text-xs">{g.icon}</span> {g.label}
+                </Link>
+              ))}
+              <div className="my-1 mx-3 border-t border-white/[0.08]" />
+              <button onClick={() => { setShowGamePicker(false); setShowHome(true); }} className="flex items-center gap-3 px-4 py-2 text-sm text-white/50 hover:bg-white/5 hover:text-white transition-colors w-full text-left">
+                <Home size={14} /> Menu & Settings
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Center: Stats pill */}
@@ -867,7 +950,7 @@ export default function DomGameShell({ initialGameNumber }: DomGameShellProps) {
       {/* ── Board Area ── */}
       <div ref={boardContainerRef} className={`relative flex-1 overflow-hidden${isIdleHint ? ' dom-board--idle-hint' : ''}`} role="main" aria-label="FreeCell game board">
         <div
-          className="absolute inset-0 overflow-auto px-1 py-2 sm:px-2 sm:py-4"
+          className="absolute inset-0 overflow-auto px-2 py-2 sm:px-4 sm:py-4"
           style={{ backgroundColor: 'var(--theme-mid, #0d2e0d)' }}
         >
           <DomBoard hint={hint} />
@@ -929,12 +1012,12 @@ export default function DomGameShell({ initialGameNumber }: DomGameShellProps) {
         )}
 
         {/* ── Ghost Mode Replay Control Bar ── */}
-        {replayMode && (
+        {replayMode && !(showWin && isWon) && (
           <div className="absolute inset-x-0 bottom-0 z-[60] flex justify-center pb-4 sm:pb-6 pointer-events-none">
-            <div className="pointer-events-auto rounded-2xl shadow-2xl p-5 sm:p-7 max-w-md w-[92%] backdrop-blur-sm" style={{ backgroundColor: 'color-mix(in srgb, var(--theme-panel) 95%, transparent)', border: '1px solid color-mix(in srgb, var(--theme-border) 60%, transparent)' }}>
+            <div className="pointer-events-auto rounded-2xl shadow-2xl p-6 sm:p-8 max-w-md w-[92%] backdrop-blur-sm" style={{ backgroundColor: 'color-mix(in srgb, var(--theme-panel) 95%, transparent)', border: '1px solid color-mix(in srgb, var(--theme-border) 60%, transparent)' }}>
               {/* Header */}
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-base font-bold text-white flex items-center gap-2">
+              <div className="flex items-center justify-between mb-5">
+                <h3 className="text-base font-bold text-white flex items-center gap-2.5">
                   <Ghost size={18} className="text-emerald-400" />
                   Ghost Mode
                 </h3>
@@ -947,7 +1030,7 @@ export default function DomGameShell({ initialGameNumber }: DomGameShellProps) {
               </div>
 
               {/* Progress bar */}
-              <div className="h-1.5 bg-white/10 rounded-full mb-4 overflow-hidden">
+              <div className="h-1.5 bg-white/10 rounded-full mb-5 overflow-hidden">
                 <div
                   className="h-full bg-emerald-500 rounded-full transition-all duration-300"
                   style={{ width: `${replayMoves.length > 0 ? (replayIndex / replayMoves.length) * 100 : 0}%` }}
@@ -955,11 +1038,11 @@ export default function DomGameShell({ initialGameNumber }: DomGameShellProps) {
               </div>
 
               {/* Move list */}
-              <div className="bg-black/30 rounded-xl p-3 mb-4 min-h-[100px] max-h-[160px] overflow-hidden">
+              <div className="bg-black/30 rounded-xl p-4 mb-5 min-h-[100px] max-h-[160px] overflow-hidden">
                 {ghostDescriptions.length === 0 ? (
                   <div className="text-white/30 text-center text-sm py-6">No moves needed</div>
                 ) : (
-                  <div className="space-y-0.5">
+                  <div className="space-y-1">
                     {(() => {
                       const windowSize = 5;
                       const halfWindow = Math.floor(windowSize / 2);
@@ -975,7 +1058,7 @@ export default function DomGameShell({ initialGameNumber }: DomGameShellProps) {
                         return (
                           <div
                             key={stepIndex}
-                            className={`text-xs px-2 py-1 rounded transition-all duration-200 font-mono ${
+                            className={`text-xs px-3 py-1.5 rounded transition-all duration-200 font-mono ${
                               isCurrent
                                 ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
                                 : isPast
@@ -983,7 +1066,7 @@ export default function DomGameShell({ initialGameNumber }: DomGameShellProps) {
                                 : 'text-white/60'
                             }`}
                           >
-                            <span className="text-white/30 mr-1.5 inline-block w-4 text-right">{stepIndex + 1}.</span>
+                            <span className="text-white/30 mr-2 inline-block w-5 text-right">{stepIndex + 1}.</span>
                             {desc}
                           </div>
                         );
@@ -1286,10 +1369,10 @@ export default function DomGameShell({ initialGameNumber }: DomGameShellProps) {
     {stats.gamesPlayed >= 1 && (
       <div className="hidden lg:flex flex-col w-[300px] shrink-0 items-center gap-4 py-4 px-2 border-l border-white/10 bg-black/10">
         <div className="w-[300px] h-[250px]">
-          <AdUnit slot="" width={300} height={250} format="rectangle" />
+          <AdUnit slot="5697552640" width={300} height={250} format="rectangle" />
         </div>
         <div className="w-[300px] h-[600px]">
-          <AdUnit slot="" width={300} height={600} format="vertical" />
+          <AdUnit slot="1215382155" width={300} height={600} format="vertical" />
         </div>
       </div>
     )}

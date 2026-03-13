@@ -54,7 +54,7 @@ export default function AchievementToast({ achievements, onDone }: AchievementTo
             animate={{ y: 0, opacity: 1, scale: 1 }}
             exit={{ y: -40, opacity: 0, scale: 0.9 }}
             transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-            className="pointer-events-auto flex items-center gap-3 px-5 py-3 rounded-2xl shadow-2xl border border-[#D4AF37]/40"
+            className="pointer-events-auto flex items-center gap-4 px-6 py-4 rounded-2xl shadow-2xl border border-[#D4AF37]/40"
             style={{
               background: 'linear-gradient(135deg, #1a1000 0%, #2a1a00 50%, #1a1000 100%)',
               boxShadow: '0 0 30px rgba(212,175,55,0.25), 0 8px 32px rgba(0,0,0,0.6)',
@@ -69,15 +69,15 @@ export default function AchievementToast({ achievements, onDone }: AchievementTo
             </div>
 
             {/* Content */}
-            <div className="min-w-0">
+            <div className="min-w-0 py-0.5">
               <div className="text-[10px] uppercase tracking-[0.15em] text-[#D4AF37]/60 font-semibold">
                 Achievement Unlocked
               </div>
-              <div className="flex items-center gap-2 mt-0.5">
+              <div className="flex items-center gap-2 mt-1.5">
                 <span className="text-lg">{current.icon}</span>
                 <span className="text-sm font-bold text-[#D4AF37]">{current.name}</span>
               </div>
-              <div className="text-[11px] text-white/50 mt-0.5">{current.description}</div>
+              <div className="text-[11px] text-white/50 mt-1.5 leading-relaxed">{current.description}</div>
             </div>
           </motion.div>
         )}

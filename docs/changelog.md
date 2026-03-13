@@ -1,5 +1,9 @@
 # FreeCell Online — Changelog
 
+## 2026-03-13 (Friday Overnight Build)
+### Shipped
+- **🔗 SEO Internal Link Infrastructure** — Added 12 orphaned content pages to SiteFooter navigation. Learn section gained 6 links: FreeCell Rules, Cheat Sheet, Beginner Guide, FreeCell for Seniors, Hints Explained, Probability & Math. Explore section gained 6 links: FreeCell vs Klondike, Hard FreeCell Games, Easy FreeCell Games, Famous Deals, World Records, Is Every Game Winnable? Previously, 10+ substantial content pages (400-850 lines each) were only discoverable via sitemap or cross-links — now every content page has footer visibility for maximum crawlability and internal link equity at domain launch. Also fixed pre-existing build break (missing `zustand` dependency for lab/dom-freecell). 2 files changed. (26th consecutive night of shipping)
+
 ## 2026-03-12 (Thursday Evening Build)
 ### Shipped
 - **🔀 Klondike Draw 1 vs Draw 3 Comparison** (`/klondike/draw-1-vs-draw-3`) — 811-line SEO content page comparing the two Klondike drawing modes. Win rate deep dive (79-82% Draw 1 vs 10-30% Draw 3), 9-metric comparison table, strategy differences (stock cycling, card access, foundation pacing, empty column value), advanced Draw 3 stock manipulation technique, "Which mode should YOU play?" skill-based decision guide, history and origins. 5-question FAQ. Article + BreadcrumbList + FAQPage JSON-LD. Cross-linked to all Klondike pages + /solitaire-types. Added to sitemap and SiteFooter Learn column. Cross-link added to strategy page. Klondike section now has 6 pages. (25th consecutive night of shipping)

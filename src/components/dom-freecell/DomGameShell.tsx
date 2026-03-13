@@ -950,7 +950,7 @@ export default function DomGameShell({ initialGameNumber }: DomGameShellProps) {
       {/* ── Board Area ── */}
       <div ref={boardContainerRef} className={`relative flex-1 overflow-hidden${isIdleHint ? ' dom-board--idle-hint' : ''}`} role="main" aria-label="FreeCell game board">
         <div
-          className="absolute inset-0 overflow-auto px-2 py-2 sm:px-4 sm:py-4"
+          className="absolute inset-0 overflow-hidden px-2 py-2 sm:px-4 sm:py-4"
           style={{ backgroundColor: 'var(--theme-mid, #0d2e0d)' }}
         >
           <DomBoard hint={hint} />

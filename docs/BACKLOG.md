@@ -26,7 +26,7 @@
 17. ~~**Tutorial/onboarding**~~ ✅ SHIPPED — First-visit walkthrough with spotlight highlights, triggered automatically on first play, replayable from Settings
 18. **Video tutorial** — screen-recorded walkthrough, embed on game page *(Solitaire Bliss has YouTube embed. Huge for dwell time + rich snippets)*
 29. ~~**Hard FreeCell Games page**~~ ✅ SHIPPED 03-13 — `/hard-freecell-games` SEO content page: difficulty patterns, hard vs impossible distinction, tactical advice, expert challenge deals grid, FAQPage + Article + BreadcrumbList schema. 413 lines. Added to SiteFooter Explore column. *(Content research brief + Reddit "Blue 9 unsolvable" discussion — targets "hard freecell games" keyword)*
-30. **Card size toggle / "Large Cards" mode** — Settings option for larger card rendering. Targets older demographic, competitive response to solitaires-online.com entering SERP top 10 with "Large Cards" positioning. Quick UX win. *(solitaires-online.com spark)*
+30. ~~**Card size toggle / "Large Cards" mode**~~ ✅ SHIPPED 03-13 — Settings > Accessibility toggle, 1.3x card width multiplier, auto-adjusts cascade overlap, immediate relayout. Targets older demographic. *(solitaires-online.com spark)*
 31. ~~**Spider Tips page**~~ ✅ SHIPPED 03-11 — `/spider/tips` SEO content page: 7 practical tips, difficulty-specific tips for 1/2/4-suit, win rate table, quick reference cheat sheet, 4-question FAQ. FAQPage + Article + BreadcrumbList schema. 727 lines. *(Content research brief)*
 28. ~~**Klondike Strategy Guide**~~ ✅ SHIPPED 03-12 — `/klondike/strategy` SEO content page: 7 proven strategies with AI win-rate data, draw-1 vs draw-3 comparison table, advanced card tracking + Thoughtful Solitaire, Persi Diaconis quote, 4-question FAQ, FAQPage + Article + BreadcrumbList schema. 709 lines. *(Content research brief — "solitaire strategy" high-volume keyword)*
 27. ~~**FreeCell Mistakes to Avoid page**~~ ✅ SHIPPED 03-11 — `/freecell-mistakes-to-avoid` SEO content page: 8 common mistakes with supermove math, expert quotes, 5-question FAQ, FAQPage + Article + BreadcrumbList schema. *(Content research brief — "freecell mistakes" keyword opportunity)*
@@ -53,9 +53,11 @@
 24. ~~**Fix mobile gold rectangle**~~ ✅ FIXED 03-10 — Was idle auto-hint glow (gold border) appearing after 8s even before first move. Now auto-hint effects only trigger after user makes at least 1 move. Also suppressed focus-visible outline on game container.
 
 ## ⏳ Blocked (Needs Jonathan)
-- **Custom domain** — playfreecellonline.com → Vercel DNS
+- ~~**Custom domain** — playfreecellonline.com → Vercel DNS~~ ✅ LIVE as of 2026-03-13!
 - **AdSense publisher ID** — code ready, needs ca-pub-XXXXXXXXXX
 - **Sentry DSN** — error tracking env var
+- ~~**Google Search Console** — submit playfreecellonline.com property + sitemap~~ ✅ DONE 2026-03-13 — auto-verified, sitemap processed, 156 pages discovered
+- **Vercel KV** — needed for leaderboard backend (code-complete, waiting on provisioning)
 
 ## ✅ Completed
 - [x] Core game engine + solvable deals

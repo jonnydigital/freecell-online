@@ -32,20 +32,20 @@
 }
 
 .dom-board-surface {
-  --card-width: 105px;
-  --card-height: 147px;
-  --card-border-radius: 9px;
-  --cascade-overlap: 32px;
-  --pile-gap: 6px;
-  --board-padding-x: 12px;
-  --board-padding-y: 16px;
-  --board-max-width: 960px;
-  --card-corner-offset-y: 6px;
-  --card-corner-offset-x: 7px;
-  --card-rank-size: 16px;
-  --card-suit-small-size: 14px;
-  --card-center-suit-size: 38px;
-  --slot-label-size: 24px;
+  --card-width: 120px;
+  --card-height: 168px;
+  --card-border-radius: 10px;
+  --cascade-overlap: 36px;
+  --pile-gap: 8px;
+  --board-padding-x: 14px;
+  --board-padding-y: 18px;
+  --board-max-width: 1120px;
+  --card-corner-offset-y: 7px;
+  --card-corner-offset-x: 8px;
+  --card-rank-size: 18px;
+  --card-suit-small-size: 16px;
+  --card-center-suit-size: 44px;
+  --slot-label-size: 28px;
 }
 
 @media (max-width: 767px) {

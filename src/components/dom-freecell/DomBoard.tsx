@@ -72,6 +72,47 @@ const StaticCard: React.FC<StaticCardProps> = React.memo(({ card, style, zIndex,
 StaticCard.displayName = 'StaticCard';
 
 // ---------------------------------------------------------------------------
+// Cascade hit target — transparent overlay that captures pointer events
+// for the exposed (visible) area of each card in a valid run.
+// This solves the z-index overlap problem: without it, clicking on a
+// partially-hidden upper card in a cascade actually hits the lower card's
+// DOM element (which has a higher z-index), preventing multi-card drags.
+// ---------------------------------------------------------------------------
+
+interface CascadeHitTargetProps {
+  cardIds: string[];
+  sourceLocation: Location;
+  boardRef: React.RefObject<HTMLElement>;
+  rowIdx: number;
+  isBottomCard: boolean;
+  onDoubleClick?: () => void;
+}
+
+const CascadeHitTarget: React.FC<CascadeHitTargetProps> = React.memo(
+  ({ cardIds, sourceLocation, boardRef, rowIdx, isBottomCard, onDoubleClick }) => {
+    const { onPointerDown } = useDrag({ cardIds, sourceLocation, boardRef });
+
+    return (
+      <div
+        onPointerDown={onPointerDown}
+        onDoubleClick={onDoubleClick}
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: 'var(--card-width)',
+          height: isBottomCard ? 'var(--card-height)' : 'var(--cascade-overlap)',
+          transform: `translateY(calc(${rowIdx} * var(--cascade-overlap)))`,
+          zIndex: 500 + rowIdx,
+          cursor: 'grab',
+        }}
+      />
+    );
+  },
+);
+CascadeHitTarget.displayName = 'CascadeHitTarget';
+
+// ---------------------------------------------------------------------------
 // Foundation sparkle particles
 // ---------------------------------------------------------------------------
 
@@ -313,51 +354,47 @@ export default function DomBoard({ hint }: DomBoardProps) {
               }}
             >
               <DomPile type="cascade" isHintTarget={isHintTarget('cascade', colIdx)}>
+                {/* Visual cards — rendered without pointer events */}
+                {cascade.map((card, rowIdx) => (
+                  <DomCard
+                    key={card.id}
+                    card={card as any}
+                    style={{
+                      top: 0,
+                      left: 0,
+                      transform: `translateY(calc(${rowIdx} * var(--cascade-overlap)))`,
+                      pointerEvents: 'none',
+                      cursor: 'default',
+                    }}
+                    zIndex={rowIdx + 1}
+                    isHintSource={hintSourceIds.has(card.id)}
+                  />
+                ))}
+                {/* Hit targets — transparent overlays sized to each card's
+                    exposed area, sitting above all visual cards in z-order.
+                    This lets clicking on any visible part of a run card
+                    correctly initiate a multi-card drag. */}
                 {cascade.map((card, rowIdx) => {
                   const isInRun = rowIdx >= runStartIndex && run.length > 0;
+                  if (!isInRun) return null;
+
                   const isBottomCard = rowIdx === cascade.length - 1;
-                  // Deal index: simulate dealing across columns (row0 col0, row0 col1, ... row1 col0, ...)
-                  // Cards in the valid run are draggable (from their position down)
-                  if (isInRun) {
-                    // The drag group: from this card to the bottom of the cascade
-                    const dragCardIds = cascade.slice(rowIdx).map((c) => c.id);
-                    const sourceLocation: Location = {
-                      type: 'cascade',
-                      index: colIdx,
-                      cardIndex: rowIdx,
-                    };
+                  const dragCardIds = cascade.slice(rowIdx).map((c) => c.id);
+                  const srcLoc: Location = {
+                    type: 'cascade',
+                    index: colIdx,
+                    cardIndex: rowIdx,
+                  };
 
-                    return (
-                      <DraggableCard
-                        key={card.id}
-                        card={card}
-                        cardIds={dragCardIds}
-                        sourceLocation={sourceLocation}
-                        boardRef={boardRef}
-                        style={{
-                          top: 0,
-                          left: 0,
-                          transform: `translateY(calc(${rowIdx} * var(--cascade-overlap)))`,
-                        }}
-                        zIndex={rowIdx + 1}
-                        isHintSource={hintSourceIds.has(card.id)}
-                        onDoubleClick={() => handleDoubleClick(card.id)}
-                      />
-                    );
-                  }
-
-                  // Non-draggable cards (buried in cascade)
                   return (
-                    <StaticCard
-                      key={card.id}
-                      card={card}
-                      style={{
-                        top: 0,
-                        left: 0,
-                        transform: `translateY(calc(${rowIdx} * var(--cascade-overlap)))`,
-                      }}
-                      zIndex={rowIdx + 1}
-                      isHintSource={hintSourceIds.has(card.id)}
+                    <CascadeHitTarget
+                      key={`hit-${card.id}`}
+                      cardIds={dragCardIds}
+                      sourceLocation={srcLoc}
+                      boardRef={boardRef}
+                      rowIdx={rowIdx}
+                      isBottomCard={isBottomCard}
+                      onDoubleClick={() => handleDoubleClick(card.id)}
                     />
                   );
                 })}

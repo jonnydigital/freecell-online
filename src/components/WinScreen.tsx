@@ -119,14 +119,14 @@ export default function WinScreen({
   if (!visible) return null;
 
   return (
-    <div className="absolute inset-0 z-50 flex items-center justify-center animate-in fade-in duration-500 overflow-y-auto py-4 backdrop-blur-sm">
-      <div className="bg-[#0d2f0d]/95 border border-[#2a7c2a]/60 rounded-2xl shadow-2xl p-6 sm:p-8 max-w-sm w-[90%] text-center backdrop-blur-sm my-auto">
-        <Trophy size={48} className="mx-auto text-yellow-400 mb-3" />
-        <h2 className="text-2xl font-bold text-yellow-400 mb-1">You Win!</h2>
-        <p className="text-white/50 text-sm mb-4">Congratulations!</p>
+    <div className="absolute inset-0 z-50 flex items-center justify-center animate-in fade-in duration-500 overflow-y-auto py-6 backdrop-blur-sm">
+      <div className="bg-[#0d2f0d]/95 border border-[#2a7c2a]/60 rounded-2xl shadow-2xl p-8 sm:p-10 max-w-md w-[92%] text-center backdrop-blur-sm my-auto">
+        <Trophy size={52} className="mx-auto text-yellow-400 mb-4" />
+        <h2 className="text-3xl font-bold text-yellow-400 mb-1.5">You Win!</h2>
+        <p className="text-white/50 text-sm mb-5">Congratulations!</p>
 
         {/* Star Rating */}
-        <div className="flex items-center justify-center gap-1 mb-2">
+        <div className="flex items-center justify-center gap-2 mb-2">
           {[0, 1, 2].map((i) => (
             <motion.svg
               key={i}
@@ -149,14 +149,14 @@ export default function WinScreen({
             initial={{ opacity: 0, y: -5 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.0 }}
-            className="text-xs font-bold text-yellow-300 mb-4"
+            className="text-xs font-bold text-yellow-300 mb-5"
           >
             New Best!
           </motion.div>
         )}
-        {!isNewBest && <div className="mb-4" />}
+        {!isNewBest && <div className="mb-5" />}
 
-        <div className="grid grid-cols-3 gap-4 mb-4">
+        <div className="grid grid-cols-3 gap-6 mb-5">
           <div>
             <div className="text-2xl font-bold text-white">{formatTime(time)}</div>
             <div className="text-xs text-white/50 mt-1">Time</div>
@@ -173,10 +173,10 @@ export default function WinScreen({
 
         {/* Solver Analysis */}
         {solverStatus === 'solving' && (
-          <div className="text-sm text-white/40 mb-4 animate-pulse">Analyzing optimal solution...</div>
+          <div className="text-sm text-white/40 mb-5 animate-pulse">Analyzing optimal solution...</div>
         )}
         {solverStatus === 'solved' && optimalMoves !== undefined && (
-          <div className="text-sm text-white/60 mb-4">
+          <div className="text-sm text-white/60 mb-5">
             Optimal: <span className="text-emerald-400 font-bold">{optimalMoves}</span> moves
             {moves <= optimalMoves ? (
               <span className="text-yellow-400 ml-1 font-semibold">Perfect!</span>
@@ -185,7 +185,7 @@ export default function WinScreen({
             )}
           </div>
         )}
-        {(solverStatus !== 'solving' && solverStatus !== 'solved') && <div className="mb-2" />}
+        {(solverStatus !== 'solving' && solverStatus !== 'solved') && <div className="mb-3" />}
 
         {/* Leaderboard Rank */}
         {isDailyGame && leaderboardRank && (
@@ -193,7 +193,7 @@ export default function WinScreen({
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.5 }}
-            className="mb-4 py-2 px-3 bg-yellow-500/10 border border-yellow-500/20 rounded-lg"
+            className="mb-5 py-3 px-4 bg-yellow-500/10 border border-yellow-500/20 rounded-xl"
           >
             <p className="text-xs text-yellow-400 font-bold">
               Ranked #{leaderboardRank} on today&apos;s leaderboard
@@ -207,7 +207,7 @@ export default function WinScreen({
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.7 }}
-            className="mb-4"
+            className="mb-5"
           >
             <CompactLeaderboard
               entries={leaderboardEntries}
@@ -218,17 +218,17 @@ export default function WinScreen({
           </motion.div>
         )}
 
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3.5">
           <button
             onClick={onPlayAgain}
-            className="flex items-center justify-center gap-2 w-full py-3 bg-[#1a5c1a] hover:bg-[#2a7c2a] text-white font-semibold rounded-lg transition-colors"
+            className="flex items-center justify-center gap-2 w-full py-3.5 bg-[#1a5c1a] hover:bg-[#2a7c2a] text-white font-semibold rounded-xl transition-colors"
           >
             <Shuffle size={18} />
             Play Again
           </button>
           <button
             onClick={handleShare}
-            className="flex items-center justify-center gap-2 w-full py-3 bg-[#D4AF37] hover:bg-[#c9a84c] text-black font-bold rounded-lg transition-colors"
+            className="flex items-center justify-center gap-2 w-full py-3.5 bg-[#D4AF37] hover:bg-[#c9a84c] text-black font-bold rounded-xl transition-colors"
           >
             <Share2 size={18} />
             {shareStatus === 'copied' ? 'Copied!' : 'Share Results'}
@@ -236,7 +236,7 @@ export default function WinScreen({
           {(!variant || variant === 'freecell') && (
             <button
               onClick={onDailyChallenge}
-              className="flex items-center justify-center gap-2 w-full py-3 bg-yellow-700/80 hover:bg-yellow-600 text-white font-semibold rounded-lg transition-colors"
+              className="flex items-center justify-center gap-2 w-full py-3.5 bg-yellow-700/80 hover:bg-yellow-600 text-white font-semibold rounded-xl transition-colors"
             >
               <Calendar size={18} />
               Daily Challenge
@@ -245,7 +245,7 @@ export default function WinScreen({
           {solverStatus === 'solved' && onViewSolution && (
             <button
               onClick={onViewSolution}
-              className="flex items-center justify-center gap-2 w-full py-3 bg-emerald-800/80 hover:bg-emerald-700 text-white font-semibold rounded-lg transition-colors"
+              className="flex items-center justify-center gap-2 w-full py-3.5 bg-emerald-800/80 hover:bg-emerald-700 text-white font-semibold rounded-xl transition-colors"
             >
               <Eye size={18} />
               View Optimal Solution

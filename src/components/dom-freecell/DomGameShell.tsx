@@ -926,10 +926,10 @@ export default function DomGameShell({ initialGameNumber }: DomGameShellProps) {
 
         {/* ── Ghost Mode Replay Control Bar ── */}
         {replayMode && (
-          <div className="absolute inset-x-0 bottom-0 z-[60] flex justify-center pb-2 sm:pb-4 pointer-events-none">
-            <div className="pointer-events-auto rounded-2xl shadow-2xl p-4 sm:p-5 max-w-sm w-[94%] backdrop-blur-sm" style={{ backgroundColor: 'color-mix(in srgb, var(--theme-panel) 95%, transparent)', border: '1px solid color-mix(in srgb, var(--theme-border) 60%, transparent)' }}>
+          <div className="absolute inset-x-0 bottom-0 z-[60] flex justify-center pb-4 sm:pb-6 pointer-events-none">
+            <div className="pointer-events-auto rounded-2xl shadow-2xl p-5 sm:p-7 max-w-md w-[92%] backdrop-blur-sm" style={{ backgroundColor: 'color-mix(in srgb, var(--theme-panel) 95%, transparent)', border: '1px solid color-mix(in srgb, var(--theme-border) 60%, transparent)' }}>
               {/* Header */}
-              <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center justify-between mb-4">
                 <h3 className="text-base font-bold text-white flex items-center gap-2">
                   <Ghost size={18} className="text-emerald-400" />
                   Ghost Mode
@@ -943,7 +943,7 @@ export default function DomGameShell({ initialGameNumber }: DomGameShellProps) {
               </div>
 
               {/* Progress bar */}
-              <div className="h-1 bg-white/10 rounded-full mb-3 overflow-hidden">
+              <div className="h-1.5 bg-white/10 rounded-full mb-4 overflow-hidden">
                 <div
                   className="h-full bg-emerald-500 rounded-full transition-all duration-300"
                   style={{ width: `${replayMoves.length > 0 ? (replayIndex / replayMoves.length) * 100 : 0}%` }}
@@ -951,7 +951,7 @@ export default function DomGameShell({ initialGameNumber }: DomGameShellProps) {
               </div>
 
               {/* Move list */}
-              <div className="bg-black/30 rounded-lg p-2 mb-3 min-h-[100px] max-h-[140px] overflow-hidden">
+              <div className="bg-black/30 rounded-xl p-3 mb-4 min-h-[100px] max-h-[160px] overflow-hidden">
                 {ghostDescriptions.length === 0 ? (
                   <div className="text-white/30 text-center text-sm py-6">No moves needed</div>
                 ) : (
@@ -990,7 +990,7 @@ export default function DomGameShell({ initialGameNumber }: DomGameShellProps) {
               </div>
 
               {/* Controls */}
-              <div className="flex items-center justify-center gap-2">
+              <div className="flex items-center justify-center gap-3">
                 <button
                   onClick={() => { setGhostPlaying(false); stopReplay(); startReplay(replayMoves); }}
                   className="p-2.5 text-white/50 hover:text-white transition-colors active:scale-90"
@@ -1099,8 +1099,8 @@ export default function DomGameShell({ initialGameNumber }: DomGameShellProps) {
 
         {/* ── Deadlock Overlay ── */}
         {noMovesAvailable && !isWon && (
-          <div className="absolute inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-[2px]">
-            <div className="bg-white rounded-2xl p-8 max-w-sm w-full shadow-2xl text-center flex flex-col items-center gap-6 animate-in fade-in zoom-in duration-300">
+          <div className="absolute inset-0 z-50 flex items-center justify-center p-6 bg-black/40 backdrop-blur-[2px]">
+            <div className="bg-white rounded-2xl p-8 sm:p-10 max-w-md w-[92%] shadow-2xl text-center flex flex-col items-center gap-7 animate-in fade-in zoom-in duration-300">
               <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center text-amber-600">
                 <AlertTriangle size={32} />
               </div>

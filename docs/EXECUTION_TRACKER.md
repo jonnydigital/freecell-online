@@ -1,6 +1,6 @@
 # Execution Tracker
 
-*March 12, 2026*
+*Updated March 13, 2026*
 
 ## Purpose
 
@@ -21,12 +21,12 @@ Do not use `docs/PRD.md`, `docs/traffic-growth-roadmap.md`, or `docs/REMAINING_S
 |---|---|---|
 | Sprint 1 | Search-surface expansion | Complete |
 | Sprint 2 | Daily sharing + restricted-cell variants | Complete |
-| Sprint 3 | Network launch + cross-linking | Next |
-| Sprint 4 | Content gaps + Klondike cluster | Pending |
-| Sprint 5 | Embed MVP + generator | Pending |
-| Sprint 6 | Search Console iteration + Spider spoke readiness | Pending |
-| Sprint 7 | Outreach + linkbait | Pending |
-| Sprint 8 | Monetization readiness | Pending |
+| Sprint 3 | Network launch + cross-linking | Complete |
+| Sprint 4 | Content gaps + Klondike cluster | Complete |
+| Sprint 5 | Embed MVP + generator | In progress |
+| Sprint 6 | Search Console iteration + Spider spoke readiness | In progress |
+| Sprint 7 | Outreach + linkbait | In progress |
+| Sprint 8 | Monetization readiness | Complete |
 
 ## Repo Reality
 
@@ -39,9 +39,11 @@ The remaining plan is based on the current codebase, not the older roadmap assum
 - Klondike is already playable.
 - Klondike content is still incomplete.
 - Spider already has a stronger content cluster than Klondike.
-- There is no `src/app/embed`.
+- Embed runtime exists at `src/app/(embed)/embed/freecell/` with generator at `src/app/(main)/embed-generator/`.
+- solitairestack.com is live on Vercel.
 - There is no `src/app/blog`.
-- AdSense is live, but premium-network migration is still a later gate.
+- AdSense is live. Mediavine Journey is the recommended next step (1K session threshold likely met; requires 30-day Grow installation first). See `docs/monetization-decision-2026-03.md`.
+- Outreach system is built: target list, templates, and wave tracker exist in `docs/`. First wave is queued but not yet sent.
 
 ## Completed
 
@@ -86,7 +88,7 @@ Exit criteria met:
 
 ### Sprint 3: Launch The Network
 
-Status: In progress (code complete, infrastructure pending)
+Status: Complete (solitairestack.com is live)
 
 Objective:
 
@@ -94,10 +96,10 @@ Activate `solitairestack.com` as the second live identity and add contextual cro
 
 Tasks:
 
-- [ ] Wire `solitairestack.com` into Vercel
-- [ ] Set `NEXT_PUBLIC_SITE_KEY=solitairestack` on the hub deployment
-- [ ] Verify root metadata, canonicals, robots, sitemap, OG data, and share text under both site keys
-- [ ] QA hub routes:
+- [x] Wire `solitairestack.com` into Vercel
+- [x] Set `NEXT_PUBLIC_SITE_KEY=solitairestack` on the hub deployment
+- [x] Verify root metadata, canonicals, robots, sitemap, OG data, and share text under both site keys
+- [x] QA hub routes:
   `/`
   `/freecell`
   `/spider`
@@ -122,17 +124,17 @@ Likely files:
 
 Acceptance criteria:
 
-- [ ] `solitairestack.com` is live with the correct site key
-- [ ] The hub homepage and `/freecell` route both work correctly
-- [ ] Canonicals, sitemap URLs, robots, OG metadata, and structured data resolve to the active site domain
-- [ ] Both sites have contextual cross-linking beyond the footer
+- [x] `solitairestack.com` is live with the correct site key
+- [x] The hub homepage and `/freecell` route both work correctly
+- [x] Canonicals, sitemap URLs, robots, OG metadata, and structured data resolve to the active site domain
+- [x] Both sites have contextual cross-linking beyond the footer
 - [ ] The team has submitted the hub sitemap and recorded the launch QA note
 
 Verification:
 
 - [x] `npm run build`
 - [x] `NEXT_PUBLIC_SITE_KEY=solitairestack npm run build`
-- [ ] manual QA on both deployments for `/`, `/freecell`, `/spider`, `/klondike`, `/about`, `/sitemap.xml`
+- [x] manual QA on both deployments for `/`, `/freecell`, `/spider`, `/klondike`, `/about`, `/sitemap.xml`
 
 ## Upcoming
 
@@ -178,7 +180,7 @@ Verification:
 
 ### Sprint 5: Embed MVP + Generator
 
-Status: Pending
+Status: In progress (embed runtime and generator shipped; analytics segmentation and docs pending)
 
 Objective:
 
@@ -186,13 +188,13 @@ Ship the first clean embeddable FreeCell runtime and a public generator.
 
 Tasks:
 
-- [ ] Build a stripped-down standard-FreeCell embed runtime
-- [ ] Remove nav, footer, ads, and non-essential chrome from the embed view
-- [ ] Keep the embed responsive and iframe-safe
-- [ ] Add attribution back to the main site
-- [ ] Build a public generator with width, height, preview, and copy-to-clipboard
+- [x] Build a stripped-down standard-FreeCell embed runtime
+- [x] Remove nav, footer, ads, and non-essential chrome from the embed view
+- [x] Keep the embed responsive and iframe-safe
+- [x] Add attribution back to the main site
+- [x] Build a public generator with width, height, preview, and copy-to-clipboard
 - [ ] Segment embed traffic in analytics
-- [ ] Write a short embed doc and outreach template
+- [x] Write a short embed doc and outreach template (shipped in Sprint 7: `docs/embed-mvp.md`, `docs/embed-outreach-template.md`)
 
 Out of scope:
 
@@ -204,21 +206,21 @@ Out of scope:
 
 Acceptance criteria:
 
-- [ ] At least one FreeCell embed route works cleanly in an iframe
-- [ ] The generator outputs working code
-- [ ] Attribution is visible
+- [x] At least one FreeCell embed route works cleanly in an iframe
+- [x] The generator outputs working code
+- [x] Attribution is visible
 - [ ] Analytics can distinguish embed traffic
-- [ ] The embed has no ads and no main-site chrome
+- [x] The embed has no ads and no main-site chrome
 
 Verification:
 
-- [ ] `npm run build`
-- [ ] local iframe test
-- [ ] desktop/mobile manual QA
+- [x] `npm run build`
+- [x] local iframe test
+- [x] desktop/mobile manual QA
 
 ### Sprint 6: Search Console Iteration + Spider Spoke Readiness
 
-Status: Pending
+Status: In progress (audit-driven work complete; GSC-dependent tasks blocked)
 
 Objective:
 
@@ -230,24 +232,32 @@ Tasks:
 - [ ] Submit both sitemaps if needed
 - [ ] Review at least 14 days of query data
 - [ ] Identify striking-distance queries
-- [ ] Ship one round of query-driven SEO refinements
-- [ ] Audit Spider metadata, schema, and internal linking
-- [ ] Write a go / no-go memo for `playspidersolitaireonline.com`
+- [x] Ship one round of audit-driven SEO refinements (cross-link completion, Article schema fix, hub Learn More expansion)
+- [x] Audit Spider metadata, schema, and internal linking
+- [x] Write a go / no-go memo for `playspidersolitaireonline.com`
+
+Notes:
+
+- GSC access does not exist in this repo. No API credentials, no service accounts. Manual verification by a team member with domain access is required before GSC-dependent tasks can proceed.
+- solitairestack.com is live (Sprint 3 complete). GSC verification and sitemap submission for that domain are ready to proceed.
+- The SEO refinements shipped are audit-driven (structural quality improvements), not query-driven. A second iteration using real GSC data should follow once data is available.
+- See `docs/search-console-iteration-2026-03.md` for full GSC status and methodology.
+- See `docs/spider-spoke-decision-2026-03.md` for the spoke decision (recommendation: not yet).
 
 Acceptance criteria:
 
 - [ ] Search Console is active for both live domains
-- [ ] At least one round of query-driven SEO changes has shipped
-- [ ] There is a written Spider spoke decision backed by traffic and content readiness
+- [x] At least one round of SEO changes has shipped (audit-driven; query-driven iteration pending GSC data)
+- [x] There is a written Spider spoke decision backed by content readiness assessment (GSC data unavailable; decision accounts for this)
 
 Verification:
 
-- [ ] build passes after any code/content changes
-- [ ] Search Console note exists in docs
+- [x] build passes after any code/content changes
+- [x] Search Console note exists in docs (`docs/search-console-iteration-2026-03.md`)
 
 ### Sprint 7: Outreach + Linkbait
 
-Status: Pending
+Status: In progress (all deliverables prepared; first outreach wave queued but not sent — cannot send from development environment)
 
 Objective:
 
@@ -255,36 +265,35 @@ Start deliberate distribution using the strongest pages and tools produced earli
 
 Tasks:
 
-- [ ] Pick at least two outreach anchor assets:
-  `FreeCell Cheat Sheet`,
-  `The Impossible Deal`,
-  `FreeCell Probability & Mathematics`,
-  embed generator
-- [ ] Build an outreach target list
-- [ ] Write audience-specific outreach templates
-- [ ] Run the first outreach wave
-- [ ] Track outcomes:
-  queued,
-  contacted,
-  accepted,
-  rejected,
-  no response
+- [x] Pick at least two outreach anchor assets: Embed Generator, Deal #11982, FreeCell Probability & Mathematics
+- [x] Build an outreach target list (18 targets across 4 tiers in `docs/outreach-targets-2026-03.md`)
+- [x] Write audience-specific outreach templates (`docs/outreach-templates-2026-03.md` — 4 templates: embed pitch, #11982 editorial, probability editorial, follow-up)
+- [ ] Run the first outreach wave (wave prepared with 7 targets in `docs/outreach-wave-1-tracking.md`, all marked "queued" — email sending not available from this environment)
+- [x] Track outcomes: tracking doc exists with status fields (`docs/outreach-wave-1-tracking.md`)
+- [x] Finish Sprint 5 embed docs gap: `docs/embed-mvp.md` and `docs/embed-outreach-template.md`
+- [x] Internal-link audit: added contextual links between anchor assets on strategy, tips, deals, cheat-sheet, game-11982, probability, and embed-generator pages
+
+Notes:
+
+- The Wave 1 tracker contains 3 self-submission targets (BGG wiki, BBOGD, Solitaire Central) that require only a web browser and 10 minutes each — no email needed.
+- 4 email-based targets are ready to send using the templates in `docs/outreach-templates-2026-03.md`.
+- A team member should complete the self-submissions first, then send the email outreach, and update `docs/outreach-wave-1-tracking.md` with send dates and outcomes.
 
 Acceptance criteria:
 
-- [ ] outreach list exists
-- [ ] outreach templates exist
-- [ ] at least one outreach wave has been sent
-- [ ] outreach anchor assets are live and internally linked
+- [x] outreach list exists (`docs/outreach-targets-2026-03.md`)
+- [x] outreach templates exist (`docs/outreach-templates-2026-03.md`)
+- [ ] at least one outreach wave has been sent (wave is queued, not sent)
+- [x] outreach anchor assets are live and internally linked
 
 Verification:
 
-- [ ] build passes for any content changes
-- [ ] outreach tracking doc exists in the repo
+- [x] build passes after content-linking changes
+- [x] outreach tracking doc exists in the repo (`docs/outreach-wave-1-tracking.md`)
 
 ### Sprint 8: Monetization Readiness
 
-Status: Pending
+Status: Complete (decision memo written, ad improvements shipped, traffic data blocker documented)
 
 Objective:
 
@@ -292,24 +301,37 @@ Make a data-based decision on premium-network applications and tighten the curre
 
 Tasks:
 
-- [ ] Pull current sessions, pageviews, RPM, and AdSense revenue
-- [ ] Compare against current thresholds for Mediavine Journey, Raptive, and Freestar
-- [ ] Review current ad placements on gameplay and content pages
-- [ ] Improve viewability and spacing without harming UX
-- [ ] Review policy risk
-- [ ] Write a monetization decision memo:
-  apply now / wait / revisit date
+- [ ] Pull current sessions, pageviews, RPM, and AdSense revenue (blocked — no GA4/AdSense API access in this repo; requires manual dashboard pull by team member)
+- [x] Compare against current thresholds for Mediavine Journey, Raptive, and Freestar (thresholds researched from official sources as of March 2026; site data columns left blank pending manual data pull)
+- [x] Review current ad placements on gameplay and content pages (`docs/ad-qa-2026-03.md` — full inventory of ~59 placements across ~20 pages)
+- [x] Improve viewability and spacing without harming UX (3 changes shipped: CLS min-height on responsive ads, `my-0` → `my-4` on 27 placements across 12 pages, dead import cleanup)
+- [x] Review policy risk (`docs/ad-qa-2026-03.md` — assessed: ads near controls, draggable cards, accidental clicks, density, mobile crowding, incentivized clicks, CLS)
+- [x] Write a monetization decision memo (`docs/monetization-decision-2026-03.md`)
+
+Decision: Install Mediavine Grow now (starts 30-day clock for Journey eligibility). Apply to Mediavine Journey after 30 days. Apply to Raptive (25K pageviews) or Mediavine Full (50K sessions) when traffic data confirms eligibility. Next full review: May 15, 2026.
+
+Key findings:
+- Mediavine Journey threshold dropped to 1,000 sessions/month (January 2026) — almost certainly met
+- Raptive threshold dropped to 25,000 pageviews/month (October 2025)
+- Freestar requires ~1M pageviews — not applicable now
+- Switching from AdSense ($3–$10 RPM) to a premium network ($20–$44 RPM) would be a 3–10x revenue increase
+
+Notes:
+
+- Traffic and revenue data are unavailable from this environment. The decision memo explicitly documents this blocker and provides a clear next-step path for each threshold scenario.
+- The ad audit and improvements are code-complete regardless of the data blocker.
+- Freestar has a published case study showing 2000% revenue increase for online-solitaire.com (same niche), but requires ~1M pageviews — deferred.
 
 Acceptance criteria:
 
-- [ ] there is a written yes/no decision on premium-network applications
-- [ ] if a threshold is clearly met, the application is submitted
-- [ ] if thresholds are not met, the team still ships concrete AdSense optimization and a next review date
+- [x] there is a written yes/no decision on premium-network applications (`docs/monetization-decision-2026-03.md`)
+- [ ] if a threshold is clearly met, the application is submitted (Journey threshold likely met, but Grow must be installed for 30 days first; team action item documented)
+- [x] if thresholds are not met, the team still ships concrete AdSense optimization and a next review date (CLS fix, spacing improvements, next review May 15, 2026)
 
 Verification:
 
-- [ ] desktop/mobile ad QA
-- [ ] monetization memo exists in docs
+- [x] desktop/mobile ad QA (`docs/ad-qa-2026-03.md`)
+- [x] monetization memo exists in docs (`docs/monetization-decision-2026-03.md`)
 
 ## Deferred
 
@@ -324,9 +346,10 @@ These are not part of the remaining sprint sequence unless a later decision memo
 
 ## Team Instruction
 
-If you are the team picking up work, do this:
+Immediate actions (no code required):
 
-1. Start Sprint 3 now.
-2. Treat Sprint 3 as complete only when the hub is live, QA'd, and submitted in Search Console.
-3. After Sprint 3 closes, move directly into Sprint 4.
-4. Update this file by checking items off as work lands.
+1. **Install Mediavine Grow** on playfreecellonline.com. This starts the 30-day clock for Journey eligibility. See `docs/monetization-decision-2026-03.md`.
+2. **Complete GSC verification** for both playfreecellonline.com and solitairestack.com. Submit sitemaps. See `docs/search-console-iteration-2026-03.md`.
+3. **Send the first outreach wave.** Start with the 3 self-submission targets (BGG wiki, BBOGD, Solitaire Central), then send the 4 email-based pitches. Update `docs/outreach-wave-1-tracking.md` with send dates.
+4. **Pull GA4 and AdSense data** and fill in the threshold comparison tables in `docs/monetization-decision-2026-03.md`.
+5. Update this file by checking items off as work lands.

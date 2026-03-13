@@ -67,6 +67,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/freecell/1-cell', changeFrequency: 'monthly' as const, priority: 0.8 },
     { path: '/freecell/2-cell', changeFrequency: 'monthly' as const, priority: 0.8 },
     { path: '/freecell/3-cell', changeFrequency: 'monthly' as const, priority: 0.8 },
+    { path: '/embed-generator', changeFrequency: 'monthly' as const, priority: 0.6 },
     { path: '/privacy', changeFrequency: 'yearly' as const, priority: 0.2 },
     { path: '/terms', changeFrequency: 'yearly' as const, priority: 0.2 },
   ];

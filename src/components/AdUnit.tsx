@@ -38,7 +38,7 @@ export default function AdUnit({ slot, format = 'auto', className = '', width, h
     : { display: 'block' };
 
   return (
-    <div className={`ad-container overflow-hidden ${className}`}>
+    <div className={`ad-container overflow-hidden ${className}`} style={!isFixedSize ? { minHeight: '90px' } : undefined}>
       <ins
         className="adsbygoogle"
         style={insStyle}

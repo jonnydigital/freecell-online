@@ -1,10 +1,5 @@
 import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
-import Analytics from "../components/Analytics";
-import CookieConsent from "../components/CookieConsent";
-import ThemeInitializer from "../components/ThemeInitializer";
-import AccessibilityInitializer from "../components/AccessibilityInitializer";
-import SiteFooter from "../components/SiteFooter";
 import { siteConfig } from "@/lib/siteConfig";
 import "./globals.css";
 
@@ -61,65 +56,9 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" href="/icons/favicon.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3083538874906149" crossOrigin="anonymous"></script>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "WebApplication",
-              "name": siteConfig.brandName,
-              "url": siteConfig.url,
-              "description": siteConfig.defaultDescription,
-              "applicationCategory": "GameApplication",
-              "operatingSystem": "Any",
-              "browserRequirements": "Requires JavaScript",
-              "offers": {
-                "@type": "Offer",
-                "price": "0",
-                "priceCurrency": "USD"
-              },
-              "author": {
-                "@type": "Organization",
-                "name": siteConfig.siteName
-              },
-              "genre": "Card Game",
-              "gamePlatform": ["Web Browser", "Mobile Browser"]
-            }),
-          }}
-        />
       </head>
       <body className={`${inter.variable} ${playfair.variable} ${inter.className}`}>
-        <a href="#game-container" className="skip-to-game">
-          Skip to game
-        </a>
-        <ThemeInitializer />
-        <AccessibilityInitializer />
-        <Analytics />
         {children}
-        <SiteFooter />
-        <CookieConsent />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              if ('serviceWorker' in navigator) {
-                window.addEventListener('load', () => {
-                  navigator.serviceWorker.register('/sw.js').then(function(reg) {
-                    // Check for updates every 60 seconds
-                    setInterval(function() { reg.update(); }, 60000);
-                  }).catch(function() {});
-
-                  // Listen for SW_UPDATED message — auto-reload when new version lands
-                  navigator.serviceWorker.addEventListener('message', function(event) {
-                    if (event.data && event.data.type === 'SW_UPDATED') {
-                      window.location.reload();
-                    }
-                  });
-                });
-              }
-            `,
-          }}
-        />
       </body>
     </html>
   );

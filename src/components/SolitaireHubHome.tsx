@@ -1,12 +1,12 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { absoluteUrl, siteConfig } from '@/lib/siteConfig';
 import GameErrorBoundary from './GameErrorBoundary';
 
-const GameShell = dynamic(() => import('./GameShell'), {
+const DomGameShell = dynamic(() => import('./dom-freecell/DomGameShell'), {
   ssr: false,
   loading: () => (
     <div className="flex items-center justify-center h-screen bg-[#0a3d0a]">
@@ -82,8 +82,6 @@ const faqItems = [
 ];
 
 export default function SolitaireHubHome() {
-  const gameWrapperRef = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
     // Override global overflow:hidden so the page can scroll past the game
     document.documentElement.style.overflow = 'auto';
@@ -91,33 +89,11 @@ export default function SolitaireHubHome() {
     document.documentElement.style.height = 'auto';
     document.body.style.height = 'auto';
 
-    // Intercept wheel events on the game wrapper: if user scrolls down
-    // while at the bottom of the game area, let the page scroll instead
-    const wrapper = gameWrapperRef.current;
-    const handleWheel = (e: WheelEvent) => {
-      // Always allow page-level scrolling — don't let the game canvas trap it
-      if (e.deltaY > 0) {
-        // Scrolling down — let it bubble to the page
-        e.preventDefault();
-        window.scrollBy(0, e.deltaY);
-      } else if (window.scrollY > 0) {
-        // Scrolling up while page is scrolled — scroll the page back up
-        e.preventDefault();
-        window.scrollBy(0, e.deltaY);
-      }
-    };
-    if (wrapper) {
-      wrapper.addEventListener('wheel', handleWheel, { passive: false });
-    }
-
     return () => {
       document.documentElement.style.overflow = '';
       document.body.style.overflow = '';
       document.documentElement.style.height = '';
       document.body.style.height = '';
-      if (wrapper) {
-        wrapper.removeEventListener('wheel', handleWheel);
-      }
     };
   }, []);
 
@@ -170,9 +146,9 @@ export default function SolitaireHubHome() {
       />
 
       {/* Game above the fold */}
-      <div ref={gameWrapperRef} className="h-dvh overflow-hidden relative">
+      <div className="h-dvh overflow-hidden relative">
         <GameErrorBoundary>
-          <GameShell />
+          <DomGameShell />
         </GameErrorBoundary>
       </div>
 

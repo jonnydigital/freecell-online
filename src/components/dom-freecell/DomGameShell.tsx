@@ -25,6 +25,7 @@ import AchievementToast from '../AchievementToast';
 import DomBoard from './DomBoard';
 import { useHint } from './useHint';
 import { announceToScreenReader } from '@/lib/accessibility';
+import AdUnit from '@/components/AdUnit';
 
 // ---------------------------------------------------------------------------
 // Props
@@ -639,7 +640,10 @@ export default function DomGameShell({ initialGameNumber }: DomGameShellProps) {
 
   // ── Render ──
   return (
-    <div className="flex flex-col w-full h-full" style={{ backgroundColor: 'var(--theme-base, #0d2e0d)' }}>
+    <div className="flex w-full h-dvh" style={{ backgroundColor: 'var(--theme-base, #0d2e0d)' }}>
+    <div className="flex w-full h-full max-w-[1320px] mx-auto relative overflow-hidden">
+    {/* Game Container */}
+    <div className="flex flex-col flex-1 h-full" style={{ backgroundColor: 'var(--theme-base, #0d2e0d)' }}>
 
       {/* ── Desktop Top Bar ── */}
       <div
@@ -1276,6 +1280,20 @@ export default function DomGameShell({ initialGameNumber }: DomGameShellProps) {
         isOpen={showAchievements}
         onClose={() => setShowAchievements(false)}
       />
+    </div>
+
+    {/* Right Ad Sidebar (desktop only, after 1+ games played) */}
+    {stats.gamesPlayed >= 1 && (
+      <div className="hidden lg:flex flex-col w-[300px] shrink-0 items-center gap-4 py-4 px-2 border-l border-white/10 bg-black/10">
+        <div className="w-[300px] h-[250px]">
+          <AdUnit slot="" width={300} height={250} format="rectangle" />
+        </div>
+        <div className="w-[300px] h-[600px]">
+          <AdUnit slot="" width={300} height={600} format="vertical" />
+        </div>
+      </div>
+    )}
+    </div>
     </div>
   );
 }

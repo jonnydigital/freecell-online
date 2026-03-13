@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import GameErrorBoundary from './GameErrorBoundary';
 
@@ -21,21 +20,6 @@ interface DomFreecellClientProps {
 }
 
 export default function DomFreecellClient({ initialGameNumber }: DomFreecellClientProps) {
-  useEffect(() => {
-    // Override global overflow so the page can scroll past the game to below-fold content
-    document.documentElement.style.overflow = 'auto';
-    document.body.style.overflow = 'auto';
-    document.documentElement.style.height = 'auto';
-    document.body.style.height = 'auto';
-
-    return () => {
-      document.documentElement.style.overflow = '';
-      document.body.style.overflow = '';
-      document.documentElement.style.height = '';
-      document.body.style.height = '';
-    };
-  }, []);
-
   return (
     <GameErrorBoundary>
       <DomGameShell initialGameNumber={initialGameNumber} />

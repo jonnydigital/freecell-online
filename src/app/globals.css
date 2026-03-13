@@ -22,10 +22,19 @@
   padding: 0;
 }
 
-html,
-body {
+html {
   height: 100%;
-  overflow: hidden;
+  overflow-y: auto;
+  background-color: var(--felt-green);
+  color: white;
+  font-family: var(--font-inter), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  min-height: 100%;
+  overflow-y: auto;
   background-color: var(--felt-green);
   color: white;
   font-family: var(--font-inter), system-ui, sans-serif;

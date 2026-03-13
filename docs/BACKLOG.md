@@ -1,5 +1,5 @@
 # FreeCell Online — Feature Backlog
-*Ranked by impact × effort. Updated 2026-03-10.*
+*Ranked by impact × effort. Updated 2026-03-12.*
 
 ## 🚨 P0: Critical Bug
 1. ~~**🔴 Mobile card rendering broken**~~ ✅ FIXED 03-02 — Root cause: `recreateAllCardSprites()` used PNG asset keys that were never loaded. On resize (common on mobile), cards became empty containers. Fixed with procedural rendering matching `createCardSprite()`.
@@ -25,6 +25,9 @@
 16. ~~**Achievements/badges**~~ ✅ SHIPPED 03-02 — 20 badges across 6 categories with unlock animations
 17. ~~**Tutorial/onboarding**~~ ✅ SHIPPED — First-visit walkthrough with spotlight highlights, triggered automatically on first play, replayable from Settings
 18. **Video tutorial** — screen-recorded walkthrough, embed on game page *(Solitaire Bliss has YouTube embed. Huge for dwell time + rich snippets)*
+29. **Hard FreeCell Games page** — `/hard-freecell-games` SEO content page: famous unsolvable deals (#11982, etc.), difficulty ratings, tie into solver + deal explorer. FAQPage schema. *(Content research brief + Reddit "Blue 9 unsolvable" discussion — targets "hard freecell games" keyword)*
+30. **Card size toggle / "Large Cards" mode** — Settings option for larger card rendering. Targets older demographic, competitive response to solitaires-online.com entering SERP top 10 with "Large Cards" positioning. Quick UX win. *(solitaires-online.com spark)*
+31. **Spider Tips page** — `/spider/tips` SEO content page targeting "spider solitaire tips" high-volume keyword cluster. Content gap vs Klondike (which now has 5 pages). *(Content research brief)*
 28. ~~**Klondike Strategy Guide**~~ ✅ SHIPPED 03-12 — `/klondike/strategy` SEO content page: 7 proven strategies with AI win-rate data, draw-1 vs draw-3 comparison table, advanced card tracking + Thoughtful Solitaire, Persi Diaconis quote, 4-question FAQ, FAQPage + Article + BreadcrumbList schema. 709 lines. *(Content research brief — "solitaire strategy" high-volume keyword)*
 27. ~~**FreeCell Mistakes to Avoid page**~~ ✅ SHIPPED 03-11 — `/freecell-mistakes-to-avoid` SEO content page: 8 common mistakes with supermove math, expert quotes, 5-question FAQ, FAQPage + Article + BreadcrumbList schema. *(Content research brief — "freecell mistakes" keyword opportunity)*
 19. ~~**Ghost mode**~~ ✅ SHIPPED 03-03 — watch the solver play mid-game (👻 button in toolbar + settings)
@@ -87,8 +90,8 @@
 
 ## Priority Rationale (2026-03-08 — Sunday Synthesis)
 
-### 🚨 THE CRITICAL PATH: Traffic, Not Features
-After 17 features shipped this week and GA4 showing **1 user in 28 days** (just Fred's test), the diagnosis is clear:
+### 🚨 THE CRITICAL PATH: Traffic, Not Features (Updated 2026-03-12)
+After 4 consecutive weeks of identical GA4 data (1 user = Fred's test) and 30+ content pages published, the diagnosis hasn't changed:
 
 **Phase 1 (Build) is COMPLETE.** We have more features than most competitors:
 - 5 game modes (FreeCell, Baker's, Eight Off, Spider, Daily Challenge)

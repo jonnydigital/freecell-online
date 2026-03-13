@@ -95,7 +95,7 @@ export default function HardFreecellGamesPage() {
         name: siteConfig.siteName,
       },
       datePublished: '2026-03-07',
-      dateModified: '2026-03-07',
+      dateModified: '2026-03-13',
       mainEntityOfPage: {
         '@type': 'WebPage',
         '@id': absoluteUrl('/hard-freecell-games'),

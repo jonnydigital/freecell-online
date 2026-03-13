@@ -26,6 +26,7 @@ export interface GameSettings {
   viewMode: 'normal' | 'wide' | 'compact';
   showKeyboardHints: boolean;
   relaxedMode: boolean;
+  largeCards: boolean;
 }
 
 export interface SavedGameState {
@@ -46,6 +47,7 @@ const DEFAULT_SETTINGS: GameSettings = {
   viewMode: 'normal',
   showKeyboardHints: true,
   relaxedMode: false,
+  largeCards: false,
 };
 
 function isBrowser(): boolean {

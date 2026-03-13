@@ -220,6 +220,12 @@ export default function SettingsPanel({ isOpen, onClose, settings, onUpdateSetti
                                     enabled={reducedMotion}
                                     onToggle={toggleReducedMotion}
                                 />
+                                <SettingToggle
+                                    label="Large Cards"
+                                    description="Bigger cards for easier reading"
+                                    enabled={settings.largeCards}
+                                    onToggle={() => toggleSetting('largeCards')}
+                                />
                                 <div>
                                     <SettingToggle
                                         label="Relaxed Mode"

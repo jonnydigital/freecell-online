@@ -371,6 +371,7 @@ export class FreeCellScene extends Phaser.Scene {
     this.bridgeUnsubscribers.push(gameBridge.on('autoFinish', () => this.performAutoFinish()));
 
     this.bridgeUnsubscribers.push(gameBridge.on('updateSettings', (newSettings: unknown) => {
+      const prev = this.settings;
       this.settings = newSettings as GameSettings;
       // You could trigger immediate effects here if needed (e.g. show/hide hints)
       if (!this.settings.autoHint) {
@@ -379,6 +380,16 @@ export class FreeCellScene extends Phaser.Scene {
       }
       // Refresh column labels when keyboard hints toggle changes
       this.drawColumnLabels();
+      // Recalculate layout when large cards mode changes
+      if (prev?.largeCards !== this.settings.largeCards) {
+        this.calculateLayout();
+        this.invalidateOverlapCache();
+        this.refreshCanvasMetrics();
+        generateCardBackTexture(this, this.cardWidth, this.cardHeight);
+        this.rebuildBoard();
+        this.recreateAllCardSprites();
+        this.repositionAllCards(true);
+      }
     }));
 
     this.bridgeUnsubscribers.push(gameBridge.on('themeChanged', (themeData: unknown) => {
@@ -986,11 +997,14 @@ export class FreeCellScene extends Phaser.Scene {
     const h = this.scale.height;
     this.isPortrait = h > w * 1.1; // Portrait if significantly taller than wide
 
+    // Large Cards mode: scale up by 30% — reduce effective columns to give cards more space
+    const largeCardsScale = this.settings?.largeCards ? 1.3 : 1.0;
+
     // Card width: must fit both 8 cascade columns AND top row (8 or 12 slots)
     const usableWidth = w * (1 - 2 * SIDE_MARGIN);
     const gapPx = w * GAP;
     const cols = Math.max(8, this.topRowSlots);
-    const cardWidthFromWidth = Math.floor((usableWidth - (cols - 1) * gapPx) / cols);
+    const cardWidthFromWidth = Math.floor((usableWidth - (cols - 1) * gapPx) / cols * largeCardsScale);
     const cardHeightFromWidth = Math.floor(cardWidthFromWidth * CARD_RATIO);
 
     if (this.isPortrait) {

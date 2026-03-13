@@ -1,0 +1,209 @@
+[     183ms] [ERROR] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="/Desktop/f...">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="en">
+                          <head>
+                            <meta>
+                            <meta>
+                            <meta>
+                            <meta>
+                            <meta>
+                            <link>
+                            <link>
+                            <link>
+                            <script>
+                            <script
++                             type="application/ld+json"
+-                             type={null}
+                              dangerouslySetInnerHTML={{
++                               __html: "{\"@context\":\"https://schema.org\",\"@type\":\"WebApplication\",\"name\":\"..."
+-                               __html: ""
+                              }}
+-                             src="https://pagead2.googlesyndication.com/pagead/managed/js/adsense/m202603030101/show_..."
+                            >
+                          ...
+                  ...
+ @ http://localhost:3099/_next/static/chunks/510e8_next_dist_90b1e5be._.js:3127
+[     309ms] [WARNING] <meta name="apple-mobile-web-app-capable" content="yes"> is deprecated. Please include <meta name="mobile-web-app-capable" content="yes"> @ http://localhost:3099/:0
+[   25204ms] [ERROR] WebSocket connection to 'ws://localhost:3099/_next/webpack-hmr?id=GW9FrTa9eP1B7fylFDsIS' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3099/_next/static/chunks/510e8_next_dist_client_9746ff76._.js:10878
+[   26208ms] [ERROR] WebSocket connection to 'ws://localhost:3099/_next/webpack-hmr?id=GW9FrTa9eP1B7fylFDsIS' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3099/_next/static/chunks/510e8_next_dist_client_9746ff76._.js:10878
+[   27229ms] [ERROR] WebSocket connection to 'ws://localhost:3099/_next/webpack-hmr?id=GW9FrTa9eP1B7fylFDsIS' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3099/_next/static/chunks/510e8_next_dist_client_9746ff76._.js:10878
+[   28235ms] [ERROR] WebSocket connection to 'ws://localhost:3099/_next/webpack-hmr?id=GW9FrTa9eP1B7fylFDsIS' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3099/_next/static/chunks/510e8_next_dist_client_9746ff76._.js:10878
+[   29236ms] [ERROR] WebSocket connection to 'ws://localhost:3099/_next/webpack-hmr?id=GW9FrTa9eP1B7fylFDsIS' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3099/_next/static/chunks/510e8_next_dist_client_9746ff76._.js:10878
+[   34242ms] [ERROR] WebSocket connection to 'ws://localhost:3099/_next/webpack-hmr?id=GW9FrTa9eP1B7fylFDsIS' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3099/_next/static/chunks/510e8_next_dist_client_9746ff76._.js:10878
+[   39261ms] [ERROR] WebSocket connection to 'ws://localhost:3099/_next/webpack-hmr?id=GW9FrTa9eP1B7fylFDsIS' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3099/_next/static/chunks/510e8_next_dist_client_9746ff76._.js:10878
+[   44262ms] [ERROR] WebSocket connection to 'ws://localhost:3099/_next/webpack-hmr?id=GW9FrTa9eP1B7fylFDsIS' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3099/_next/static/chunks/510e8_next_dist_client_9746ff76._.js:10878
+[   49265ms] [ERROR] WebSocket connection to 'ws://localhost:3099/_next/webpack-hmr?id=GW9FrTa9eP1B7fylFDsIS' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3099/_next/static/chunks/510e8_next_dist_client_9746ff76._.js:10878
+[   54267ms] [ERROR] WebSocket connection to 'ws://localhost:3099/_next/webpack-hmr?id=GW9FrTa9eP1B7fylFDsIS' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3099/_next/static/chunks/510e8_next_dist_client_9746ff76._.js:10878
+[   59269ms] [ERROR] WebSocket connection to 'ws://localhost:3099/_next/webpack-hmr?id=GW9FrTa9eP1B7fylFDsIS' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3099/_next/static/chunks/510e8_next_dist_client_9746ff76._.js:10878
+[   60316ms] [ERROR] [Error] Failed to update a ServiceWorker for scope ('http://localhost:3099/') with script ('http://localhost:3099/sw.js'): An unknown error occurred when fetching the script. {source: unhandledrejection} @ http://localhost:3099/_next/static/chunks/510e8_next_dist_90b1e5be._.js:3127
+[   60316ms] [ERROR] [Error] Failed to update a ServiceWorker for scope ('http://localhost:3099/') with script ('http://localhost:3099/sw.js'): An unknown error occurred when fetching the script. {source: unhandledrejection} @ http://localhost:3099/_next/static/chunks/510e8_next_dist_90b1e5be._.js:3127
+[   60317ms] Failed to update a ServiceWorker for scope ('http://localhost:3099/') with script ('http://localhost:3099/sw.js'): An unknown error occurred when fetching the script.
+[   60324ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3099/__nextjs_original-stack-frames:0
+[   60331ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3099/__nextjs_original-stack-frames:0
+[   64279ms] [ERROR] WebSocket connection to 'ws://localhost:3099/_next/webpack-hmr?id=GW9FrTa9eP1B7fylFDsIS' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3099/_next/static/chunks/510e8_next_dist_client_9746ff76._.js:10878
+[   64389ms] [ERROR] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="/Desktop/f...">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="en">
+                          <head>
+                            <meta>
+                            <meta>
+                            <meta>
+                            <meta>
+                            <meta>
+                            <link>
+                            <link>
+                            <link>
+                            <script>
+                            <script
++                             type="application/ld+json"
+-                             type={null}
+                              dangerouslySetInnerHTML={{
++                               __html: "{\"@context\":\"https://schema.org\",\"@type\":\"WebApplication\",\"name\":\"..."
+-                               __html: ""
+                              }}
+-                             src="https://pagead2.googlesyndication.com/pagead/managed/js/adsense/m202603030101/show_..."
+                            >
+                          ...
+                  ...
+ @ http://localhost:3099/_next/static/chunks/510e8_next_dist_90b1e5be._.js:3127
+[   64390ms] [ERROR] WebSocket connection to 'ws://localhost:3099/_next/webpack-hmr?id=GW9FrTa9eP1B7fylFDsIS' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3099/_next/static/chunks/510e8_next_dist_client_9746ff76._.js:10878
+[   64395ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3099/__nextjs_original-stack-frames:0
+[   64496ms] [WARNING] <meta name="apple-mobile-web-app-capable" content="yes"> is deprecated. Please include <meta name="mobile-web-app-capable" content="yes"> @ http://localhost:3099/:0
+[   65398ms] [ERROR] WebSocket connection to 'ws://localhost:3099/_next/webpack-hmr?id=GW9FrTa9eP1B7fylFDsIS' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3099/_next/static/chunks/510e8_next_dist_client_9746ff76._.js:10878
+[   66415ms] [ERROR] WebSocket connection to 'ws://localhost:3099/_next/webpack-hmr?id=GW9FrTa9eP1B7fylFDsIS' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3099/_next/static/chunks/510e8_next_dist_client_9746ff76._.js:10878
+[   67430ms] [ERROR] WebSocket connection to 'ws://localhost:3099/_next/webpack-hmr?id=GW9FrTa9eP1B7fylFDsIS' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3099/_next/static/chunks/510e8_next_dist_client_9746ff76._.js:10878
+[   68467ms] [ERROR] WebSocket connection to 'ws://localhost:3099/_next/webpack-hmr?id=GW9FrTa9eP1B7fylFDsIS' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3099/_next/static/chunks/510e8_next_dist_client_9746ff76._.js:10878
+[   69503ms] [ERROR] WebSocket connection to 'ws://localhost:3099/_next/webpack-hmr?id=GW9FrTa9eP1B7fylFDsIS' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3099/_next/static/chunks/510e8_next_dist_client_9746ff76._.js:10878
+[   74584ms] [ERROR] WebSocket connection to 'ws://localhost:3099/_next/webpack-hmr?id=GW9FrTa9eP1B7fylFDsIS' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3099/_next/static/chunks/510e8_next_dist_client_9746ff76._.js:10878
+[   79634ms] [ERROR] WebSocket connection to 'ws://localhost:3099/_next/webpack-hmr?id=GW9FrTa9eP1B7fylFDsIS' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3099/_next/static/chunks/510e8_next_dist_client_9746ff76._.js:10878
+[   84730ms] [ERROR] WebSocket connection to 'ws://localhost:3099/_next/webpack-hmr?id=GW9FrTa9eP1B7fylFDsIS' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3099/_next/static/chunks/510e8_next_dist_client_9746ff76._.js:10878
+[   89805ms] [ERROR] WebSocket connection to 'ws://localhost:3099/_next/webpack-hmr?id=GW9FrTa9eP1B7fylFDsIS' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3099/_next/static/chunks/510e8_next_dist_client_9746ff76._.js:10878
+[   95117ms] [ERROR] WebSocket connection to 'ws://localhost:3099/_next/webpack-hmr?id=GW9FrTa9eP1B7fylFDsIS' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3099/_next/static/chunks/510e8_next_dist_client_9746ff76._.js:10878
+[  100234ms] [ERROR] WebSocket connection to 'ws://localhost:3099/_next/webpack-hmr?id=GW9FrTa9eP1B7fylFDsIS' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3099/_next/static/chunks/510e8_next_dist_client_9746ff76._.js:10878
+[  105717ms] [ERROR] WebSocket connection to 'ws://localhost:3099/_next/webpack-hmr?id=GW9FrTa9eP1B7fylFDsIS' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3099/_next/static/chunks/510e8_next_dist_client_9746ff76._.js:10878
+[  105804ms] [ERROR] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="/Desktop/f...">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="en">
+                          <head>
+                            <meta>
+                            <meta>
+                            <meta>
+                            <meta>
+                            <meta>
+                            <link>
+                            <link>
+                            <link>
+                            <script>
+                            <script
++                             type="application/ld+json"
+-                             type={null}
+                              dangerouslySetInnerHTML={{
++                               __html: "{\"@context\":\"https://schema.org\",\"@type\":\"WebApplication\",\"name\":\"..."
+-                               __html: ""
+                              }}
+-                             src="https://pagead2.googlesyndication.com/pagead/managed/js/adsense/m202603030101/show_..."
+                            >
+                          ...
+                  ...
+ @ http://localhost:3099/_next/static/chunks/510e8_next_dist_90b1e5be._.js:3127
+[  105809ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3099/__nextjs_original-stack-frames:0
+[  105909ms] [WARNING] <meta name="apple-mobile-web-app-capable" content="yes"> is deprecated. Please include <meta name="mobile-web-app-capable" content="yes"> @ http://localhost:3099/:0
+[  106108ms] [ERROR] WebSocket connection to 'ws://localhost:3099/_next/webpack-hmr?id=GW9FrTa9eP1B7fylFDsIS' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3099/_next/static/chunks/510e8_next_dist_client_9746ff76._.js:10878
+[  107952ms] [ERROR] WebSocket connection to 'ws://localhost:3099/_next/webpack-hmr?id=GW9FrTa9eP1B7fylFDsIS' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3099/_next/static/chunks/510e8_next_dist_client_9746ff76._.js:10878
+[  109967ms] [ERROR] WebSocket connection to 'ws://localhost:3099/_next/webpack-hmr?id=GW9FrTa9eP1B7fylFDsIS' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3099/_next/static/chunks/510e8_next_dist_client_9746ff76._.js:10878
+[  113359ms] [ERROR] WebSocket connection to 'ws://localhost:3099/_next/webpack-hmr?id=GW9FrTa9eP1B7fylFDsIS' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3099/_next/static/chunks/510e8_next_dist_client_9746ff76._.js:10878
+[  116526ms] [ERROR] WebSocket connection to 'ws://localhost:3099/_next/webpack-hmr?id=GW9FrTa9eP1B7fylFDsIS' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3099/_next/static/chunks/510e8_next_dist_client_9746ff76._.js:10878
+[  120192ms] [ERROR] WebSocket connection to 'ws://localhost:3099/_next/webpack-hmr?id=GW9FrTa9eP1B7fylFDsIS' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3099/_next/static/chunks/510e8_next_dist_client_9746ff76._.js:10878
+[  126556ms] [ERROR] WebSocket connection to 'ws://localhost:3099/_next/webpack-hmr?id=GW9FrTa9eP1B7fylFDsIS' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3099/_next/static/chunks/510e8_next_dist_client_9746ff76._.js:10878
+[  133505ms] [ERROR] WebSocket connection to 'ws://localhost:3099/_next/webpack-hmr?id=GW9FrTa9eP1B7fylFDsIS' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3099/_next/static/chunks/510e8_next_dist_client_9746ff76._.js:10878
+[  142229ms] [ERROR] WebSocket connection to 'ws://localhost:3099/_next/webpack-hmr?id=GW9FrTa9eP1B7fylFDsIS' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3099/_next/static/chunks/510e8_next_dist_client_9746ff76._.js:10878
+[  152117ms] [ERROR] WebSocket connection to 'ws://localhost:3099/_next/webpack-hmr?id=GW9FrTa9eP1B7fylFDsIS' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3099/_next/static/chunks/510e8_next_dist_client_9746ff76._.js:10878
+[  161410ms] [ERROR] WebSocket connection to 'ws://localhost:3099/_next/webpack-hmr?id=GW9FrTa9eP1B7fylFDsIS' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3099/_next/static/chunks/510e8_next_dist_client_9746ff76._.js:10878
+[  165921ms] [ERROR] [Error] Failed to update a ServiceWorker for scope ('http://localhost:3099/') with script ('http://localhost:3099/sw.js'): An unknown error occurred when fetching the script. {source: unhandledrejection} @ http://localhost:3099/_next/static/chunks/510e8_next_dist_90b1e5be._.js:3127
+[  165921ms] [ERROR] [Error] Failed to update a ServiceWorker for scope ('http://localhost:3099/') with script ('http://localhost:3099/sw.js'): An unknown error occurred when fetching the script. {source: unhandledrejection} @ http://localhost:3099/_next/static/chunks/510e8_next_dist_90b1e5be._.js:3127
+[  165922ms] Failed to update a ServiceWorker for scope ('http://localhost:3099/') with script ('http://localhost:3099/sw.js'): An unknown error occurred when fetching the script.
+[  165922ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3099/__nextjs_original-stack-frames:0
+[  165922ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3099/__nextjs_original-stack-frames:0
+[  169212ms] [ERROR] WebSocket connection to 'ws://localhost:3099/_next/webpack-hmr?id=GW9FrTa9eP1B7fylFDsIS' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3099/_next/static/chunks/510e8_next_dist_client_9746ff76._.js:10878
+[  175771ms] [ERROR] WebSocket connection to 'ws://localhost:3099/_next/webpack-hmr?id=GW9FrTa9eP1B7fylFDsIS' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3099/_next/static/chunks/510e8_next_dist_client_9746ff76._.js:10878

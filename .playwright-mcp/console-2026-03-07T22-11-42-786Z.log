@@ -1,0 +1,13 @@
+[     968ms] [WARNING] document.domain mutation is ignored because the surrounding agent cluster is origin-keyed. @ https://online-solitaire.com/client.c73b7629.js:0
+[     970ms] undefined
+[     971ms] undefined
+[     971ms] undefined
+[    1017ms] [WARNING] Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently @ https://online-solitaire.com/solitaire.fc691dd7.chunk.js:0
+[    1025ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://playsolitaireonline.com/favicon.ico:0
+[    1042ms] undefined
+[    2077ms] [WARNING] [2026-03-07T22:11:44.862Z]  @firebase/database: FIREBASE WARNING: update at /embedded_websites/playsolitaireonline-com failed: permission_denied  @ https://online-solitaire.com/344.b74174d1.chunk.js:0
+[    4751ms] [WARNING] The resource https://online-solitaire.com/images/arrow_down@2x.png was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ https://online-solitaire.com/play-solitaire-online:0
+[    4751ms] [WARNING] The resource https://online-solitaire.com/images/download_button.svg was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ https://online-solitaire.com/play-solitaire-online:0
+[    4751ms] [WARNING] The resource https://online-solitaire.com/images/playing_button.svg was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ https://online-solitaire.com/play-solitaire-online:0
+[    4751ms] [WARNING] The resource https://online-solitaire.com/images/checkmark_button.svg was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ https://online-solitaire.com/play-solitaire-online:0
+[    4751ms] [WARNING] The resource https://online-solitaire.com/images/bookmark_button.svg was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ https://online-solitaire.com/play-solitaire-online:0

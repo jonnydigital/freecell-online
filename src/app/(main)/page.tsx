@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import FreecellHomeClient from '@/components/FreecellHomeClient';
 import DomFreecellClient from '@/components/DomFreecellClient';
 import SolitaireHubHome from '@/components/SolitaireHubHome';
+import FreecellBelowFold from '@/components/FreecellBelowFold';
 import { absoluteUrl, isHubSite, siteConfig } from '@/lib/siteConfig';
 import { shouldUseDomEngine } from '@/lib/useDomEngine';
 
@@ -80,6 +81,7 @@ export default function Home() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteJsonLd) }} />
       {useDom ? <DomFreecellClient /> : <FreecellHomeClient />}
+      <FreecellBelowFold />
     </>
   );
 }

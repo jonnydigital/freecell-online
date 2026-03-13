@@ -32,20 +32,20 @@
 }
 
 .dom-board-surface {
-  --card-width: 120px;
-  --card-height: 168px;
-  --card-border-radius: 10px;
-  --cascade-overlap: 36px;
-  --pile-gap: 8px;
-  --board-padding-x: 14px;
-  --board-padding-y: 18px;
-  --board-max-width: 1120px;
-  --card-corner-offset-y: 7px;
-  --card-corner-offset-x: 8px;
-  --card-rank-size: 18px;
-  --card-suit-small-size: 16px;
-  --card-center-suit-size: 44px;
-  --slot-label-size: 28px;
+  --card-width: clamp(86px, calc((100vw - 420px) / 8.3), 120px);
+  --card-height: calc(var(--card-width) * 1.4);
+  --card-border-radius: clamp(8px, calc(var(--card-width) * 0.085), 10px);
+  --cascade-overlap: clamp(24px, calc(var(--card-width) * 0.3), 36px);
+  --pile-gap: clamp(4px, calc(var(--card-width) * 0.06), 10px);
+  --board-padding-x: clamp(8px, calc(var(--card-width) * 0.1), 16px);
+  --board-padding-y: clamp(12px, calc(var(--card-width) * 0.14), 22px);
+  --board-max-width: 100%;
+  --card-corner-offset-y: clamp(5px, calc(var(--card-width) * 0.06), 7px);
+  --card-corner-offset-x: clamp(6px, calc(var(--card-width) * 0.065), 8px);
+  --card-rank-size: clamp(14px, calc(var(--card-width) * 0.15), 18px);
+  --card-suit-small-size: clamp(13px, calc(var(--card-width) * 0.135), 16px);
+  --card-center-suit-size: clamp(34px, calc(var(--card-width) * 0.37), 44px);
+  --slot-label-size: clamp(22px, calc(var(--card-width) * 0.24), 28px);
 }
 
 @media (max-width: 767px) {

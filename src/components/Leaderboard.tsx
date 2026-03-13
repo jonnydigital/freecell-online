@@ -319,9 +319,10 @@ interface CompactLeaderboardProps {
   yourRank?: number;
   playerId: string;
   loading?: boolean;
+  showHeader?: boolean;
 }
 
-export function CompactLeaderboard({ entries, yourRank, playerId, loading }: CompactLeaderboardProps) {
+export function CompactLeaderboard({ entries, yourRank, playerId, loading, showHeader = true }: CompactLeaderboardProps) {
   const top5 = entries.slice(0, 5);
   const yourEntry = entries.find((e) => e.playerId === playerId);
   const showYourEntry = yourEntry && yourEntry.rank > 5;
@@ -338,11 +339,13 @@ export function CompactLeaderboard({ entries, yourRank, playerId, loading }: Com
 
   return (
     <div className="w-full">
-      <div className="flex items-center gap-1.5 mb-2">
-        <Trophy size={12} className="text-yellow-500/60" />
-        <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">Today&apos;s Leaderboard</span>
-      </div>
-      <div className="bg-black/20 rounded-lg border border-white/5 overflow-hidden">
+      {showHeader && (
+        <div className="flex items-center gap-1.5 mb-2">
+          <Trophy size={12} className="text-yellow-500/60" />
+          <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">Today&apos;s Leaderboard</span>
+        </div>
+      )}
+      <div className="overflow-hidden rounded-[18px] border border-white/8 bg-black/[0.18]">
         {top5.map((entry) => {
           const isYou = entry.playerId === playerId;
           return (

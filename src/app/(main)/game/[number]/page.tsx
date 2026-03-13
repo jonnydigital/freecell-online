@@ -6,14 +6,17 @@ import { dealLookup, sitemapGameNumbers } from '@/lib/curatedDeals';
 import GamePage from './GamePage';
 import GameDealInfo from './GameDealInfo';
 import DomFreecellClient from '@/components/DomFreecellClient';
+import ScrollUnlock from '@/components/ScrollUnlock';
 
 interface Props {
   params: Promise<{ number: string }>;
 }
 
+const MAX_GAME_NUMBER = 9_999_999;
+
 function parseGameNumber(raw: string): number | null {
   const num = parseInt(raw, 10);
-  if (isNaN(num) || num < 1 || num > 1000000 || String(num) !== raw) return null;
+  if (isNaN(num) || num < 1 || num > MAX_GAME_NUMBER || String(num) !== raw) return null;
   return num;
 }
 
@@ -96,6 +99,7 @@ export default async function Page({ params }: Props) {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       {useDom ? <DomFreecellClient initialGameNumber={gameNum} /> : <GamePage gameNumber={gameNum} />}
+      <ScrollUnlock />
       <GameDealInfo gameNum={gameNum} deal={deal} />
     </>
   );

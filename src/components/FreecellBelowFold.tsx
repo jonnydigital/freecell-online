@@ -1,8 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import AdUnit from '@/components/AdUnit';
+import ScrollUnlock from '@/components/ScrollUnlock';
 import { absoluteUrl } from '@/lib/siteConfig';
 
 const faqItems = [
@@ -87,21 +88,6 @@ const variantGames = [
 export default function FreecellBelowFold() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
-  useEffect(() => {
-    // Override global overflow:hidden so the page can scroll past the game
-    document.documentElement.style.overflow = 'auto';
-    document.body.style.overflow = 'auto';
-    document.documentElement.style.height = 'auto';
-    document.body.style.height = 'auto';
-
-    return () => {
-      document.documentElement.style.overflow = '';
-      document.body.style.overflow = '';
-      document.documentElement.style.height = '';
-      document.body.style.height = '';
-    };
-  }, []);
-
   const faqJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
@@ -117,6 +103,7 @@ export default function FreecellBelowFold() {
 
   return (
     <>
+      <ScrollUnlock />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}

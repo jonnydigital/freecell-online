@@ -28,6 +28,10 @@ import { announceToScreenReader } from '@/lib/accessibility';
 import AdUnit from '@/components/AdUnit';
 import Link from 'next/link';
 import { isHubSite } from '@/lib/siteConfig';
+import SidebarDailyChallenge from '../sidebar/SidebarDailyChallenge';
+import SidebarLeaderboard from '../sidebar/SidebarLeaderboard';
+import SidebarAchievements from '../sidebar/SidebarAchievements';
+import Leaderboard from '../Leaderboard';
 
 // Game picker dropdown data
 const GAME_PICKER_SOLITAIRE = [
@@ -128,6 +132,7 @@ export default function DomGameShell({ initialGameNumber }: DomGameShellProps) {
   const [streakMilestone, setStreakMilestone] = useState<number | null>(null);
   const [showReplay, setShowReplay] = useState(false);
   const [showGamePicker, setShowGamePicker] = useState(false);
+  const [showLeaderboard, setShowLeaderboard] = useState(false);
   const gamePickerRef = useRef<HTMLDivElement>(null);
 
   // Close game picker on outside click
@@ -462,6 +467,11 @@ export default function DomGameShell({ initialGameNumber }: DomGameShellProps) {
     submit();
   }, [isWon, isDailyGame, gameNumber, moveCount, timerSeconds]);
 
+  // ── Fetch leaderboard on mount for sidebar ──
+  useEffect(() => {
+    fetchDailyLeaderboard().then(setLeaderboardEntries).catch(() => {});
+  }, []);
+
   // ── Deadlock announcement ──
   useEffect(() => {
     if (noMovesAvailable && !isWon) {
@@ -695,18 +705,31 @@ export default function DomGameShell({ initialGameNumber }: DomGameShellProps) {
 
   // ── Render ──
   return (
-    <div className="flex w-full h-dvh" style={{ backgroundColor: 'var(--theme-base, #0d2e0d)' }}>
-    <div className="flex w-full h-full max-w-[1320px] mx-auto relative overflow-hidden">
+    <div
+      className="w-full min-h-dvh"
+      style={{
+        background:
+          'radial-gradient(circle at top, color-mix(in srgb, var(--theme-mid, #1b5a24) 54%, #7aa25a 46%) 0%, color-mix(in srgb, var(--theme-base, #0d2e0d) 92%, black) 56%, #061406 100%)',
+      }}
+    >
+    <div className="mx-auto flex min-h-dvh w-full max-w-[1540px] flex-col lg:flex-row lg:items-start lg:gap-4 lg:px-4 xl:px-6">
     {/* Game Container */}
-    <div className="flex flex-col flex-1 h-full" style={{ backgroundColor: 'var(--theme-base, #0d2e0d)' }}>
+    <div
+      className="flex min-w-0 flex-1 flex-col min-[1180px]:sticky min-[1180px]:top-4 min-[1180px]:my-4 min-[1180px]:h-[calc(100dvh-2rem)] min-[1180px]:overflow-hidden min-[1180px]:rounded-[30px] min-[1180px]:border min-[1180px]:border-white/10"
+      style={{
+        background:
+          'linear-gradient(180deg, color-mix(in srgb, var(--theme-base, #0d2e0d) 86%, #214f1d 14%) 0%, color-mix(in srgb, var(--theme-base, #0d2e0d) 94%, black) 100%)',
+        boxShadow: '0 22px 54px rgba(0, 0, 0, 0.24)',
+      }}
+    >
 
       {/* ── Desktop Top Bar ── */}
       <div
         className="hidden md:flex items-center justify-between z-20"
         style={{
-          padding: '12px 28px',
-          background: 'linear-gradient(180deg, var(--theme-dark, #051e05) 0%, var(--theme-base, #072907) 100%)',
-          borderBottom: '1px solid rgba(255,255,255,0.06)',
+          padding: '12px 24px',
+          background: 'linear-gradient(180deg, color-mix(in srgb, var(--theme-dark, #051e05) 74%, #1f4f1d 26%) 0%, color-mix(in srgb, var(--theme-base, #072907) 88%, #173e16 12%) 100%)',
+          borderBottom: '1px solid rgba(255,255,255,0.08)',
         }}
       >
         {/* Left: Game picker dropdown */}
@@ -864,9 +887,9 @@ export default function DomGameShell({ initialGameNumber }: DomGameShellProps) {
       <div
         className="hidden md:flex items-center justify-center z-20"
         style={{
-          padding: '6px 28px',
-          background: 'rgba(5,20,5,0.5)',
-          borderBottom: '1px solid rgba(255,255,255,0.03)',
+          padding: '7px 24px',
+          background: 'rgba(7, 27, 9, 0.38)',
+          borderBottom: '1px solid rgba(255,255,255,0.04)',
           gap: '4px',
         }}
       >
@@ -950,8 +973,12 @@ export default function DomGameShell({ initialGameNumber }: DomGameShellProps) {
       {/* ── Board Area ── */}
       <div ref={boardContainerRef} className={`relative flex-1 overflow-hidden${isIdleHint ? ' dom-board--idle-hint' : ''}`} role="main" aria-label="FreeCell game board">
         <div
-          className="absolute inset-0 overflow-hidden px-2 py-2 sm:px-4 sm:py-4"
-          style={{ backgroundColor: 'var(--theme-mid, #0d2e0d)' }}
+          className="absolute inset-0 overflow-hidden px-2 py-2 sm:px-4 sm:py-4 lg:px-5 lg:py-5"
+          style={{
+            background:
+              'radial-gradient(circle at top center, rgba(132, 187, 112, 0.17) 0%, transparent 42%), linear-gradient(180deg, color-mix(in srgb, var(--theme-mid, #0d2e0d) 78%, #2d6c2c 22%) 0%, color-mix(in srgb, var(--theme-base, #0d2e0d) 88%, #173917 12%) 100%)',
+            boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04)',
+          }}
         >
           <DomBoard hint={hint} />
         </div>
@@ -1363,21 +1390,58 @@ export default function DomGameShell({ initialGameNumber }: DomGameShellProps) {
         isOpen={showAchievements}
         onClose={() => setShowAchievements(false)}
       />
+
+      {/* ── Leaderboard Modal ── */}
+      <Leaderboard
+        isOpen={showLeaderboard}
+        onClose={() => setShowLeaderboard(false)}
+      />
     </div>
 
-    {/* Right Ad Sidebar (desktop only, after 1+ games played) */}
-    {stats.gamesPlayed >= 1 && (
-      <div className="hidden lg:flex flex-col w-[300px] shrink-0 items-center gap-4 py-4 px-2 border-l border-white/10 bg-black/10">
-        <div className="w-[300px] h-[250px]">
+    {/* Right Sidebar (desktop only) */}
+    <aside className="hidden min-[1180px]:flex w-[320px] shrink-0 flex-col py-4">
+      <div className="flex flex-col gap-4">
+        <SidebarDailyChallenge onPlayDaily={handlePlayDaily} />
+        <SidebarLeaderboard
+          entries={leaderboardEntries}
+          playerId={getPlayerId()}
+          loading={leaderboardLoading}
+          onShowFull={() => setShowLeaderboard(true)}
+        />
+        <SidebarAdSlot label="Advertisement" height={250}>
           <AdUnit slot="5697552640" width={300} height={250} format="rectangle" />
-        </div>
-        <div className="w-[300px] h-[600px]">
+        </SidebarAdSlot>
+        <SidebarAchievements
+          onShowFull={() => setShowAchievements(true)}
+          refreshKey={newAchievements.length}
+        />
+        <SidebarAdSlot label="Advertisement" height={600}>
           <AdUnit slot="1215382155" width={300} height={600} format="vertical" />
-        </div>
+        </SidebarAdSlot>
       </div>
-    )}
+    </aside>
     </div>
     </div>
+  );
+}
+
+function SidebarAdSlot({ children, height, label }: { children: React.ReactNode; height: number; label: string }) {
+  return (
+    <section
+      className="rounded-[26px] border border-white/10 bg-[linear-gradient(180deg,rgba(23,67,24,0.95),rgba(7,25,9,0.94))] p-2.5 shadow-[0_20px_40px_rgba(0,0,0,0.2)] backdrop-blur-sm"
+      aria-label={label}
+    >
+      <div className="mb-2 flex items-center justify-between px-0.5">
+        <span className="text-[10px] font-bold uppercase tracking-[0.24em] text-white/[0.32]">{label}</span>
+        <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#d9c07a]/[0.72]">Sponsored</span>
+      </div>
+      <div
+        className="flex items-center justify-center overflow-hidden rounded-[20px] border border-[#d9c07a]/12 bg-[linear-gradient(180deg,rgba(244,239,226,0.08),rgba(22,35,15,0.45))]"
+        style={{ minHeight: `${height}px` }}
+      >
+        {children}
+      </div>
+    </section>
   );
 }
 

@@ -23,7 +23,7 @@
 }
 
 html {
-  height: 100%;
+  min-height: 100%;
   overflow-y: auto;
   background-color: var(--felt-green);
   color: white;
@@ -43,9 +43,11 @@ body {
 }
 
 /* Prevent pull-to-refresh and overscroll on mobile */
-body {
-  overscroll-behavior: none;
-  touch-action: manipulation;
+@media (max-width: 767px) {
+  body {
+    overscroll-behavior: none;
+    touch-action: manipulation;
+  }
 }
 
 /* Game canvas should fill the available space */

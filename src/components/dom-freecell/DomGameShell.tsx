@@ -713,9 +713,12 @@ export default function DomGameShell({ initialGameNumber }: DomGameShellProps) {
       }}
     >
     <div className="mx-auto flex min-h-dvh w-full max-w-[1540px] flex-col lg:flex-row lg:items-start lg:gap-4 lg:px-4 xl:px-6">
-    {/* Game Container */}
+    {/* Keep sticky separate from clipping so desktop trackpad scroll reaches the document */}
     <div
-      className="flex min-w-0 flex-1 flex-col min-[1180px]:sticky min-[1180px]:top-4 min-[1180px]:my-2 min-[1180px]:h-[calc(100dvh-1rem)] min-[1180px]:overflow-clip min-[1180px]:rounded-[30px] min-[1180px]:border min-[1180px]:border-white/10"
+      className="min-w-0 flex-1 min-[1180px]:sticky min-[1180px]:top-4 min-[1180px]:my-2 min-[1180px]:h-[calc(100dvh-1rem)]"
+    >
+    <div
+      className="flex h-full min-w-0 flex-col min-[1180px]:overflow-clip min-[1180px]:rounded-[30px] min-[1180px]:border min-[1180px]:border-white/10"
       style={{
         background:
           'linear-gradient(180deg, color-mix(in srgb, var(--theme-base, #0d2e0d) 86%, #214f1d 14%) 0%, color-mix(in srgb, var(--theme-base, #0d2e0d) 94%, black) 100%)',
@@ -1396,6 +1399,7 @@ export default function DomGameShell({ initialGameNumber }: DomGameShellProps) {
         isOpen={showLeaderboard}
         onClose={() => setShowLeaderboard(false)}
       />
+    </div>
     </div>
 
     {/* Right Sidebar (desktop only) */}

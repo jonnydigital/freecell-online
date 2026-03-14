@@ -217,6 +217,15 @@
   }
 }
 
+/* ---- Selection highlight (click-to-move) ---- */
+
+.dom-card--selected {
+  box-shadow: 0 0 0 3px rgba(100, 180, 255, 0.9),
+    0 0 16px rgba(100, 180, 255, 0.4);
+  z-index: 100 !important;
+  transform: translateY(-4px);
+}
+
 /* ---- Hint highlight ---- */
 
 .dom-card--hint-source {

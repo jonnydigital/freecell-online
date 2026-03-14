@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useRef, useMemo, useCallback, useEffect, useState } from 'react';
-import { useDomFreecellStore } from '@/lib/dom-freecell/useDomFreecellStore';
+import { useDomFreecellStore, domFreecellStore } from '@/lib/dom-freecell/useDomFreecellStore';
 import { Suit, SUIT_SYMBOLS } from '@/engine/Card';
 import type { Location } from '@/engine/FreeCellEngine';
 import DomCard from './DomCard';
@@ -10,6 +10,7 @@ import { useDrag } from './useDrag';
 import { useSoundEffects } from './useSoundEffects';
 import type { HintHighlight } from './useHint';
 import { announceToScreenReader } from '@/lib/accessibility';
+import { playCardSelectSound, playInvalidMoveSound } from './useSoundEffects';
 
 // ---------------------------------------------------------------------------
 // Suit ordering for foundations
@@ -29,11 +30,12 @@ interface DraggableCardProps {
   style?: React.CSSProperties;
   zIndex?: number;
   isHintSource?: boolean;
+  isSelected?: boolean;
   onDoubleClick?: (e: React.MouseEvent) => void;
 }
 
 const DraggableCard: React.FC<DraggableCardProps> = React.memo(
-  ({ card, cardIds, sourceLocation, boardRef, style, zIndex, isHintSource, onDoubleClick }) => {
+  ({ card, cardIds, sourceLocation, boardRef, style, zIndex, isHintSource, isSelected, onDoubleClick }) => {
     const { onPointerDown, isDragging } = useDrag({
       cardIds,
       sourceLocation,
@@ -46,6 +48,7 @@ const DraggableCard: React.FC<DraggableCardProps> = React.memo(
         style={style}
         isDragging={isDragging}
         isHintSource={isHintSource}
+        isSelected={isSelected}
         onPointerDown={onPointerDown}
         onDoubleClick={onDoubleClick}
         zIndex={zIndex}
@@ -180,6 +183,39 @@ export default function DomBoard({ hint }: DomBoardProps) {
   const gameNumber = useDomFreecellStore((s) => s.gameNumber);
   const getEngine = useDomFreecellStore((s) => s.getEngine);
   const autoPlace = useDomFreecellStore((s) => s.autoPlace);
+  const selection = useDomFreecellStore((s) => s.selection);
+
+  // Build a Set of selected card IDs for O(1) visual lookups
+  const selectedCardIds = useMemo(() => {
+    if (!selection) return new Set<string>();
+    return new Set(selection.cardIds);
+  }, [selection]);
+
+  // Handle clicks on empty piles when a selection exists
+  const handleEmptyPileClick = useCallback(
+    (targetLoc: Location) => {
+      const store = domFreecellStore.getState();
+      const sel = store.selection;
+      if (!sel) return;
+      const moved = store.tryMove(sel.sourceLocation, targetLoc);
+      if (moved) {
+        store.clearSelection();
+        announceToScreenReader('Card moved');
+      } else {
+        playInvalidMoveSound();
+        store.clearSelection();
+      }
+    },
+    [],
+  );
+
+  // Deselect when clicking the board background
+  const handleBoardClick = useCallback((e: React.MouseEvent) => {
+    // Only deselect if clicking directly on the board surface (not a child)
+    if (e.target === e.currentTarget) {
+      domFreecellStore.getState().clearSelection();
+    }
+  }, []);
 
   // ---------------------------------------------------------------------------
   // Foundation sparkle: detect when a foundation pile grows
@@ -236,6 +272,7 @@ export default function DomBoard({ hint }: DomBoardProps) {
     <div
       className="dom-board-surface"
       ref={boardRef as React.RefObject<HTMLDivElement>}
+      onClick={handleBoardClick}
       style={{
         background: 'var(--felt-color, #0a3d0a)',
         borderRadius: 12,
@@ -265,7 +302,12 @@ export default function DomBoard({ hint }: DomBoardProps) {
               data-pile-index={i}
               style={{ position: 'relative', width: 'var(--card-width)', height: 'var(--card-height)' }}
             >
-              <DomPile type="freecell" label="FC" isHintTarget={isHintTarget('freecell', i)}>
+              <DomPile
+                type="freecell"
+                label="FC"
+                isHintTarget={isHintTarget('freecell', i)}
+                onClick={!card && selection ? () => handleEmptyPileClick({ type: 'freecell', index: i }) : undefined}
+              >
                 {card && (
                   <DraggableCard
                     card={card}
@@ -275,6 +317,7 @@ export default function DomBoard({ hint }: DomBoardProps) {
                     style={{ top: 0, left: 0 }}
                     zIndex={1}
                     isHintSource={hintSourceIds.has(card.id)}
+                    isSelected={selectedCardIds.has(card.id)}
                     onDoubleClick={() => handleDoubleClick(card.id)}
                   />
                 )}
@@ -295,7 +338,12 @@ export default function DomBoard({ hint }: DomBoardProps) {
                 data-pile-suit={suit}
                 style={{ position: 'relative', width: 'var(--card-width)', height: 'var(--card-height)' }}
               >
-                <DomPile type="foundation" label={SUIT_SYMBOLS[suit]} isHintTarget={isHintTarget('foundation', undefined, suit)}>
+                <DomPile
+                  type="foundation"
+                  label={SUIT_SYMBOLS[suit]}
+                  isHintTarget={isHintTarget('foundation', undefined, suit)}
+                  onClick={selection ? () => handleEmptyPileClick({ type: 'foundation', suit }) : undefined}
+                >
                   {topCard && (
                     <StaticCard
                       card={topCard}
@@ -353,7 +401,11 @@ export default function DomBoard({ hint }: DomBoardProps) {
                 height: cascadeHeight,
               }}
             >
-              <DomPile type="cascade" isHintTarget={isHintTarget('cascade', colIdx)}>
+              <DomPile
+                type="cascade"
+                isHintTarget={isHintTarget('cascade', colIdx)}
+                onClick={cascade.length === 0 && selection ? () => handleEmptyPileClick({ type: 'cascade', index: colIdx }) : undefined}
+              >
                 {/* Visual cards — rendered without pointer events */}
                 {cascade.map((card, rowIdx) => (
                   <DomCard
@@ -368,6 +420,7 @@ export default function DomBoard({ hint }: DomBoardProps) {
                     }}
                     zIndex={rowIdx + 1}
                     isHintSource={hintSourceIds.has(card.id)}
+                    isSelected={selectedCardIds.has(card.id)}
                   />
                 ))}
                 {/* Hit targets — transparent overlays sized to each card's

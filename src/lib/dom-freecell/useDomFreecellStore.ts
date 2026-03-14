@@ -60,6 +60,7 @@ export interface DomFreecellState {
 
   // Interaction
   dragState: DragState | null;
+  selection: { cardIds: string[]; sourceLocation: Location } | null;
 
   // Move history for undo
   moveHistory: Move[];
@@ -75,6 +76,8 @@ export interface DomFreecellState {
   undo: () => void;
   redo: () => void;
   tickTimer: () => void;
+  selectCards: (cardIds: string[], source: Location) => void;
+  clearSelection: () => void;
   startDrag: (cardIds: string[], source: Location) => void;
   updateDragPosition: (x: number, y: number) => void;
   endDrag: () => void;
@@ -128,6 +131,7 @@ export const domFreecellStore = create<DomFreecellState>()((set, get) => ({
   noMovesAvailable: false,
 
   dragState: null,
+  selection: null,
   moveHistory: [],
   redoStack: [],
 
@@ -139,6 +143,7 @@ export const domFreecellStore = create<DomFreecellState>()((set, get) => ({
     set({
       ...snapshotEngine(_engine),
       dragState: null,
+      selection: null,
       moveHistory: [],
       redoStack: [],
       timerStarted: false,
@@ -153,6 +158,7 @@ export const domFreecellStore = create<DomFreecellState>()((set, get) => ({
     set({
       ...snapshotEngine(_engine),
       dragState: null,
+      selection: null,
       moveHistory: [],
       redoStack: [],
       timerStarted: false,
@@ -329,10 +335,18 @@ export const domFreecellStore = create<DomFreecellState>()((set, get) => ({
     }
   },
 
+  selectCards: (cardIds: string[], source: Location) => {
+    set({ selection: { cardIds, sourceLocation: source } });
+  },
+
+  clearSelection: () => {
+    set({ selection: null });
+  },
+
   startDrag: (cardIds: string[], source: Location) => {
     _dragPos.currentX = 0;
     _dragPos.currentY = 0;
-    set({ dragState: { cardIds, sourceLocation: source } });
+    set({ dragState: { cardIds, sourceLocation: source }, selection: null });
   },
 
   // CRITICAL: writes to plain ref, does NOT call set()

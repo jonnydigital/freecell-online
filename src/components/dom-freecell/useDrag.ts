@@ -1,16 +1,18 @@
 /**
- * useDrag — pointer-locked card dragging for DOM FreeCell.
+ * useDrag — pointer-locked card dragging + click-to-select for DOM FreeCell.
  *
  * Design goals:
  *  1. Dragged cards stay pixel-locked to the pointer with zero lag.
  *  2. ZERO React re-renders during the drag (position updates go straight
  *     to the DOM via element.style.transform).
  *  3. No board jitter — only the dragged elements move.
+ *  4. Click-to-select: short taps (< threshold movement) select cards
+ *     instead of dragging, enabling tap-to-move on mobile.
  *
- * Approach: on pointerdown we "lift" the original card DOM elements by
- * bumping their z-index, switching them to fixed positioning, and then
- * driving their transform every frame.  On drop we either commit the move
- * (React re-renders both source and target piles) or animate a snap-back.
+ * Approach: on pointerdown we record the start position. If the pointer moves
+ * beyond DRAG_THRESHOLD we "lift" the cards and begin dragging. If the pointer
+ * is released without crossing the threshold, it's treated as a click for
+ * the select-and-place system.
  */
 
 import { useCallback, useRef } from 'react';
@@ -50,6 +52,9 @@ const DRAG_Z = 9999;
 /** Duration (ms) of the snap-back animation when a drop is rejected. */
 const SNAP_BACK_MS = 180;
 
+/** Minimum pointer movement (px) before a pointerdown becomes a drag. */
+const DRAG_THRESHOLD = 5;
+
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
@@ -59,15 +64,20 @@ function cardElement(id: string): HTMLElement | null {
   return document.querySelector(`[data-card-id="${id}"]`) as HTMLElement | null;
 }
 
+/** Check if two Locations refer to the same pile. */
+function samePile(a: Location, b: Location): boolean {
+  if (a.type !== b.type) return false;
+  if (a.type === 'foundation' && b.type === 'foundation') return a.suit === b.suit;
+  if ('index' in a && 'index' in b) return a.index === b.index;
+  return false;
+}
+
 // ---------------------------------------------------------------------------
 // Hook
 // ---------------------------------------------------------------------------
 
 export function useDrag({ cardIds, sourceLocation, boardRef }: UseDragOptions): UseDragResult {
   const draggingRef = useRef(false);
-  // We store whether we're dragging in a ref so the returned `isDragging`
-  // boolean causes a re-render only on drag start/end (via the store's
-  // dragState selector), NOT on every pointermove.
 
   const onPointerDown = useCallback(
     (e: React.PointerEvent) => {
@@ -80,6 +90,10 @@ export function useDrag({ cardIds, sourceLocation, boardRef }: UseDragOptions): 
 
       // Capture the pointer on the target so we get moves even outside the window.
       (e.target as HTMLElement).setPointerCapture(e.pointerId);
+
+      const startX = e.clientX;
+      const startY = e.clientY;
+      let dragStarted = false;
 
       // --- Gather card elements -------------------------------------------
       const els: HTMLElement[] = [];
@@ -104,10 +118,8 @@ export function useDrag({ cardIds, sourceLocation, boardRef }: UseDragOptions): 
         origLeft: string;
         origTop: string;
         origWidth: string;
-        /** Offset of this card relative to the first card in the run. */
         offsetX: number;
         offsetY: number;
-        /** Starting screen position (for snap-back). */
         startLeft: number;
         startTop: number;
       }
@@ -130,30 +142,26 @@ export function useDrag({ cardIds, sourceLocation, boardRef }: UseDragOptions): 
         };
       });
 
-      // --- Lift cards into fixed positioning --------------------------------
-      snapshots.forEach((snap, i) => {
-        snap.el.style.position = 'fixed';
-        snap.el.style.zIndex = String(DRAG_Z + i);
-        snap.el.style.left = `${snap.startLeft}px`;
-        snap.el.style.top = `${snap.startTop}px`;
-        snap.el.style.width = `${firstRect.width}px`;
-        snap.el.style.transform = 'none';
-        snap.el.style.pointerEvents = 'none';
-        snap.el.style.transition = 'none';
-        // Add a lifted shadow
-        snap.el.style.boxShadow = '0 8px 24px rgba(0,0,0,0.45)';
-      });
+      // --- Drag helpers (only used once threshold is crossed) ---------------
 
-      // --- Notify store (one render) ----------------------------------------
-      domFreecellStore.getState().startDrag(cardIds, sourceLocation);
-      draggingRef.current = true;
-      playCardSelectSound();
-
-      // --- rAF-driven position loop ----------------------------------------
       let rafId = 0;
       let lastPointerX = e.clientX;
       let lastPointerY = e.clientY;
       let needsUpdate = false;
+
+      function liftCards() {
+        snapshots.forEach((snap, i) => {
+          snap.el.style.position = 'fixed';
+          snap.el.style.zIndex = String(DRAG_Z + i);
+          snap.el.style.left = `${snap.startLeft}px`;
+          snap.el.style.top = `${snap.startTop}px`;
+          snap.el.style.width = `${firstRect.width}px`;
+          snap.el.style.transform = 'none';
+          snap.el.style.pointerEvents = 'none';
+          snap.el.style.transition = 'none';
+          snap.el.style.boxShadow = '0 8px 24px rgba(0,0,0,0.45)';
+        });
+      }
 
       function applyPosition(px: number, py: number) {
         const baseLeft = px - anchorX;
@@ -162,7 +170,6 @@ export function useDrag({ cardIds, sourceLocation, boardRef }: UseDragOptions): 
           snap.el.style.left = `${baseLeft + snap.offsetX}px`;
           snap.el.style.top = `${baseTop + snap.offsetY}px`;
         }
-        // Update store ref (non-reactive) so other systems can query position
         domFreecellStore.getState().updateDragPosition(px, py);
       }
 
@@ -173,18 +180,6 @@ export function useDrag({ cardIds, sourceLocation, boardRef }: UseDragOptions): 
           needsUpdate = false;
         }
         rafId = requestAnimationFrame(rafLoop);
-      }
-      rafId = requestAnimationFrame(rafLoop);
-
-      // Apply the initial position immediately so there's no flicker.
-      applyPosition(e.clientX, e.clientY);
-
-      // --- Pointer event handlers ------------------------------------------
-
-      function onMove(ev: PointerEvent) {
-        lastPointerX = ev.clientX;
-        lastPointerY = ev.clientY;
-        needsUpdate = true;
       }
 
       function restoreElements() {
@@ -215,6 +210,53 @@ export function useDrag({ cardIds, sourceLocation, boardRef }: UseDragOptions): 
         });
       }
 
+      function beginDrag() {
+        dragStarted = true;
+        liftCards();
+        domFreecellStore.getState().startDrag(cardIds, sourceLocation);
+        draggingRef.current = true;
+        playCardSelectSound();
+        applyPosition(lastPointerX, lastPointerY);
+        rafId = requestAnimationFrame(rafLoop);
+      }
+
+      // --- Click-to-select handler -----------------------------------------
+
+      function handleClick() {
+        const store = domFreecellStore.getState();
+        const selection = store.selection;
+
+        if (selection) {
+          // There's a current selection — try to move it to this card's pile
+          if (samePile(selection.sourceLocation, sourceLocation)) {
+            // Clicked the same pile — deselect
+            store.clearSelection();
+          } else {
+            // Try to move selection to the pile we clicked on
+            const targetLoc: Location =
+              sourceLocation.type === 'cascade'
+                ? { type: 'cascade', index: sourceLocation.index }
+                : sourceLocation;
+            const moved = store.tryMove(selection.sourceLocation, targetLoc);
+            if (moved) {
+              store.clearSelection();
+              announceToScreenReader('Card moved');
+            } else {
+              // Move failed — select the new card instead
+              playInvalidMoveSound();
+              store.selectCards(cardIds, sourceLocation);
+              playCardSelectSound();
+            }
+          }
+        } else {
+          // No selection — select this card/run
+          store.selectCards(cardIds, sourceLocation);
+          playCardSelectSound();
+        }
+      }
+
+      // --- Pointer event handlers ------------------------------------------
+
       function cleanup() {
         draggingRef.current = false;
         cancelAnimationFrame(rafId);
@@ -223,24 +265,41 @@ export function useDrag({ cardIds, sourceLocation, boardRef }: UseDragOptions): 
         window.removeEventListener('pointercancel', onCancel);
       }
 
+      function onMove(ev: PointerEvent) {
+        lastPointerX = ev.clientX;
+        lastPointerY = ev.clientY;
+
+        if (!dragStarted) {
+          const dx = ev.clientX - startX;
+          const dy = ev.clientY - startY;
+          if (Math.abs(dx) > DRAG_THRESHOLD || Math.abs(dy) > DRAG_THRESHOLD) {
+            beginDrag();
+          }
+          return;
+        }
+
+        needsUpdate = true;
+      }
+
       async function onUp(ev: PointerEvent) {
         cleanup();
 
-        // Hit-test for drop target.  Our cards have pointer-events:none so
-        // elementFromPoint will see through them.
+        if (!dragStarted) {
+          // Pointer didn't move enough — treat as click
+          handleClick();
+          return;
+        }
+
+        // --- Drag ended: resolve drop target ---
         const target = resolveDropTarget(ev.clientX, ev.clientY);
 
         let moved = false;
         if (target) {
-          // Build the source Location, including cardIndex for cascade runs.
           moved = domFreecellStore.getState().tryMove(sourceLocation, target);
         }
 
         if (moved) {
-          // The store re-rendered — cards are now in their new DOM positions.
-          // We need to clean up inline styles so React is back in control.
           restoreElements();
-          // Announce the move to screen readers
           const state = domFreecellStore.getState();
           if (state.isWon) {
             // Win announcement is handled by DomGameShell
@@ -250,7 +309,6 @@ export function useDrag({ cardIds, sourceLocation, boardRef }: UseDragOptions): 
             announceToScreenReader('Card moved');
           }
         } else {
-          // Invalid move — play error sound and animate back to origin.
           playInvalidMoveSound();
           announceToScreenReader('Invalid move', 'assertive');
           await snapBack();
@@ -261,18 +319,17 @@ export function useDrag({ cardIds, sourceLocation, boardRef }: UseDragOptions): 
 
       function onCancel() {
         cleanup();
-        // Fire-and-forget snap back
-        snapBack().then(() => {
-          domFreecellStore.getState().endDrag();
-        });
+        if (dragStarted) {
+          snapBack().then(() => {
+            domFreecellStore.getState().endDrag();
+          });
+        }
       }
 
       window.addEventListener('pointermove', onMove);
       window.addEventListener('pointerup', onUp);
       window.addEventListener('pointercancel', onCancel);
     },
-    // cardIds and sourceLocation are expected to be stable per-card.
-    // boardRef is a ref and never changes identity.
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [cardIds, sourceLocation, boardRef],
   );

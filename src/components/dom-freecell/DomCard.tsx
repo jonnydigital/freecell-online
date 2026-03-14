@@ -17,6 +17,7 @@ export interface DomCardProps {
   isDragging?: boolean;
   isDealing?: boolean;
   isHintSource?: boolean;
+  isSelected?: boolean;
   dealIndex?: number;
   onPointerDown?: (e: React.PointerEvent) => void;
   onDoubleClick?: (e: React.MouseEvent) => void;
@@ -29,6 +30,7 @@ const DomCard: React.FC<DomCardProps> = ({
   isDragging = false,
   isDealing = false,
   isHintSource = false,
+  isSelected = false,
   dealIndex = 0,
   onPointerDown,
   onDoubleClick,
@@ -44,6 +46,7 @@ const DomCard: React.FC<DomCardProps> = ({
     isDragging && 'dom-card--dragging',
     isDealing && 'dom-card-dealing',
     isHintSource && 'dom-card--hint-source',
+    isSelected && 'dom-card--selected',
     !isDragging && !isDealing && 'dom-card-settling',
   ]
     .filter(Boolean)

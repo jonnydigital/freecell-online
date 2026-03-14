@@ -13,6 +13,8 @@ export interface DomPileProps {
   /** Label shown in empty slot (e.g. suit symbol for foundation) */
   label?: string;
   style?: React.CSSProperties;
+  /** Click handler for empty pile (used by click-to-move) */
+  onClick?: (e: React.MouseEvent) => void;
 }
 
 const DomPile: React.FC<DomPileProps> = ({
@@ -22,6 +24,7 @@ const DomPile: React.FC<DomPileProps> = ({
   isHintTarget = false,
   label,
   style,
+  onClick,
 }) => {
   const hasChildren = React.Children.count(children) > 0;
 
@@ -35,7 +38,7 @@ const DomPile: React.FC<DomPileProps> = ({
     .join(' ');
 
   return (
-    <div className={className} style={style}>
+    <div className={className} style={style} onClick={onClick}>
       {/* Show empty slot outline for freecell/foundation when no cards */}
       {(type === 'freecell' || type === 'foundation') && !hasChildren && (
         <div className="dom-pile__slot">

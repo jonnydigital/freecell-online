@@ -229,6 +229,20 @@ export class KlondikeScene extends Phaser.Scene {
     });
     this.bridgeUnsubscribers.push(unsubThemeChanged);
 
+    const unsubUpdateSettings = gameBridge.on('updateSettings', (newSettings: unknown) => {
+      const prev = this.settings;
+      this.settings = newSettings as GameSettings;
+      if (prev?.largeCards !== this.settings.largeCards) {
+        this.calculateLayout();
+        this.invalidateOverlapCache();
+        this.refreshCanvasMetrics();
+        this.rebuildBoard();
+        this.recreateAllCardSprites();
+        this.repositionAllCards();
+      }
+    });
+    this.bridgeUnsubscribers.push(unsubUpdateSettings);
+
     if (this.isTouchDevice) {
       this.setupTouchInput();
     } else {
@@ -299,10 +313,13 @@ export class KlondikeScene extends Phaser.Scene {
     const h = this.scale.height;
     this.isPortrait = h > w * 1.1;
 
+    // Large Cards mode: scale up by 30%
+    const largeCardsScale = this.settings?.largeCards ? 1.3 : 1.0;
+
     // 7 columns for Klondike
     const usableWidth = w * (1 - 2 * SIDE_MARGIN);
     const gapPx = w * GAP;
-    const cardWidthFromWidth = Math.floor((usableWidth - 6 * gapPx) / 7);
+    const cardWidthFromWidth = Math.floor(((usableWidth - 6 * gapPx) / 7) * largeCardsScale);
     const cardHeightFromWidth = Math.floor(cardWidthFromWidth * CARD_RATIO);
 
     const topPad = Math.max(Math.floor(h * 0.005), 2);

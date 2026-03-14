@@ -267,6 +267,14 @@ export default function FreecellForSeniorsPage() {
                 </ul>
               </div>
               <p>
+                You can also enable{' '}
+                <Link href="/large-cards" className="text-[#D4AF37] hover:underline">
+                  Large Cards mode
+                </Link>{' '}
+                in Settings &gt; Accessibility to make the cards 30% bigger without changing screens.
+                This is especially helpful on tablets and smaller laptops.
+              </p>
+              <p>
                 Our game is browser-based, so there is nothing to install. Just open it in your
                 web browser and start playing. It saves your progress automatically.
               </p>

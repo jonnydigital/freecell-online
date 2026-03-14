@@ -202,6 +202,20 @@ export class SpiderScene extends Phaser.Scene {
     });
     this.bridgeUnsubscribers.push(unsubThemeChanged);
 
+    const unsubUpdateSettings = gameBridge.on('updateSettings', (newSettings: unknown) => {
+      const prev = this.settings;
+      this.settings = newSettings as GameSettings;
+      if (prev?.largeCards !== this.settings.largeCards) {
+        this.calculateLayout();
+        this.invalidateOverlapCache();
+        this.refreshCanvasMetrics();
+        this.rebuildBoard();
+        this.recreateAllCardSprites();
+        this.repositionAllCards();
+      }
+    });
+    this.bridgeUnsubscribers.push(unsubUpdateSettings);
+
     if (this.isTouchDevice) {
       this.setupTouchInput();
     } else {
@@ -271,10 +285,13 @@ export class SpiderScene extends Phaser.Scene {
     const h = this.scale.height;
     this.isPortrait = h > w * 1.1;
 
+    // Large Cards mode: scale up by 20% (smaller than 7-col games due to 10 columns)
+    const largeCardsScale = this.settings?.largeCards ? 1.2 : 1.0;
+
     // 10 columns for Spider
     const usableWidth = w * (1 - 2 * SIDE_MARGIN);
     const gapPx = w * GAP;
-    const cardWidthFromWidth = Math.floor((usableWidth - 9 * gapPx) / 10);
+    const cardWidthFromWidth = Math.floor(((usableWidth - 9 * gapPx) / 10) * largeCardsScale);
     const cardHeightFromWidth = Math.floor(cardWidthFromWidth * CARD_RATIO);
 
     const topPad = Math.max(Math.floor(h * 0.005), 2);

@@ -61,6 +61,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/klondike/draw-1-vs-draw-3', changeFrequency: 'monthly' as const, priority: 0.7 },
     { path: '/freecell-rules', changeFrequency: 'monthly' as const, priority: 0.7 },
     { path: '/freecell-for-seniors', changeFrequency: 'monthly' as const, priority: 0.7 },
+    { path: '/large-cards', changeFrequency: 'monthly' as const, priority: 0.7 },
     { path: '/freecell-cheat-sheet', changeFrequency: 'monthly' as const, priority: 0.7 },
     { path: '/freecell-probability', changeFrequency: 'monthly' as const, priority: 0.7 },
     { path: '/bakers-game/strategy', changeFrequency: 'monthly' as const, priority: 0.7 },

@@ -1403,8 +1403,8 @@ export default function DomGameShell({ initialGameNumber }: DomGameShellProps) {
     </div>
 
     {/* Right Sidebar (desktop only) */}
-    <aside className="flex w-[320px] shrink-0 flex-col py-4 max-[1179px]:hidden">
-      <div className="flex flex-col gap-4">
+    <aside className="sidebar-scroll w-[380px] shrink-0 max-[1179px]:hidden min-[1180px]:sticky min-[1180px]:top-2 min-[1180px]:h-[calc(100dvh-1rem)] min-[1180px]:overflow-y-auto min-[1180px]:overscroll-contain">
+      <div className="flex flex-col gap-4 py-4">
         <SidebarDailyChallenge onPlayDaily={handlePlayDaily} />
         <SidebarLeaderboard
           entries={leaderboardEntries}

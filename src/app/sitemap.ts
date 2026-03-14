@@ -49,6 +49,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/spider/strategy', changeFrequency: 'monthly' as const, priority: 0.7 },
     { path: '/spider/tips', changeFrequency: 'monthly' as const, priority: 0.7 },
     { path: '/spider/1-suit-vs-2-suit-vs-4-suit', changeFrequency: 'monthly' as const, priority: 0.7 },
+    { path: '/spider/is-spider-solitaire-winnable', changeFrequency: 'monthly' as const, priority: 0.7 },
     { path: '/freecell-hints-explained', changeFrequency: 'monthly' as const, priority: 0.7 },
     { path: '/freecell-world-records', changeFrequency: 'monthly' as const, priority: 0.7 },
     { path: '/klondike', changeFrequency: 'monthly' as const, priority: 0.8 },

@@ -57,7 +57,7 @@ const faqs = [
   {
     question: "Is it possible to win every Spider Solitaire game?",
     answer:
-      "No. Unlike FreeCell where 99.999% of deals are solvable, many Spider Solitaire deals are mathematically impossible to win. In 4-suit Spider, even a perfect player would only win around 33% of random deals. In 1-suit, the solvability rate is much higher but still not 100%. The hidden cards and random stock deals introduce unavoidable luck elements.",
+      "No. Unlike FreeCell where 99.999% of deals are solvable, many Spider Solitaire deals are mathematically impossible to win. In 4-suit Spider, even a perfect player would only win around 33% of random deals. In 1-suit, the solvability rate is much higher but still not 100%. The hidden cards and random stock deals introduce unavoidable luck elements. See our full guide on Spider Solitaire winnability for detailed stats by suit count.",
   },
   {
     question: "What is the biggest mistake beginners make in Spider Solitaire?",
@@ -795,6 +795,13 @@ export default function SpiderStrategyPage() {
               >
                 <span className="text-[#D4AF37] font-semibold">1-Suit vs 2-Suit vs 4-Suit</span>
                 <p className="text-sm text-white/40 mt-1">Compare Spider difficulty levels</p>
+              </Link>
+              <Link
+                href="/spider/is-spider-solitaire-winnable"
+                className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] hover:border-[#D4AF37]/30 transition-all"
+              >
+                <span className="text-[#D4AF37] font-semibold">Is Spider Winnable?</span>
+                <p className="text-sm text-white/40 mt-1">Win rates and solvability by suit count</p>
               </Link>
               <Link
                 href="/freecell-vs-spider"

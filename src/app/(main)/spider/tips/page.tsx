@@ -712,6 +712,16 @@ export default function SpiderTipsPage() {
             </p>
           </Link>
           <Link
+            href="/spider/is-spider-solitaire-winnable"
+            className="block p-4 bg-white/[0.03] border border-white/10 rounded-xl hover:border-[var(--gold)]/30 transition-colors"
+          >
+            <span className="text-[var(--gold)] text-sm font-medium">Winnability</span>
+            <p className="text-white/80 font-semibold mt-1">Is Spider Solitaire Winnable?</p>
+            <p className="text-white/40 text-sm mt-1">
+              Win rates and solvability stats by suit count
+            </p>
+          </Link>
+          <Link
             href="/freecell-vs-spider"
             className="block p-4 bg-white/[0.03] border border-white/10 rounded-xl hover:border-[var(--gold)]/30 transition-colors"
           >

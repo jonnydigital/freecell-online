@@ -76,6 +76,7 @@ export default function SiteFooter() {
           { href: '/famous-freecell-deals', label: 'Famous Deals' },
           { href: '/freecell-world-records', label: 'World Records' },
           { href: '/is-every-freecell-game-winnable', label: 'Is Every Game Winnable?' },
+          { href: '/spider/is-spider-solitaire-winnable', label: 'Spider Winnability' },
           { href: '/leaderboard', label: 'Leaderboard' },
           { href: '/achievements', label: 'Achievements' },
           { href: '/deals', label: 'Deal Explorer' },

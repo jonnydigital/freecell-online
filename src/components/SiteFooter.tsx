@@ -22,6 +22,9 @@ export default function SiteFooter() {
           { href: '/storm', label: 'Storm Mode' },
           { href: '/winning-deals', label: 'Winning Deals' },
           { href: '/daily-freecell/calendar', label: 'Challenge Calendar' },
+          { href: '/freecell/1-cell', label: '1-Cell FreeCell' },
+          { href: '/freecell/2-cell', label: '2-Cell FreeCell' },
+          { href: '/freecell/3-cell', label: '3-Cell FreeCell' },
         ];
 
   const learnLinks =
@@ -82,6 +85,7 @@ export default function SiteFooter() {
           { href: '/achievements', label: 'Achievements' },
           { href: '/deals', label: 'Deal Explorer' },
           { href: '/solver', label: 'Solver' },
+          { href: '/freecell-variants', label: 'All Variants' },
         ];
 
   return (

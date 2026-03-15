@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import AdUnit from "@/components/AdUnit";
 import ContentLayout from "@/components/ContentLayout";
+import { SectionHeading, CardSection, ContentBody, CtaSection, ContentLinkCard, JsonLd } from "@/components/content";
 
 export const metadata: Metadata = {
   title: "History of FreeCell | Who Invented FreeCell Solitaire?",
@@ -37,7 +38,6 @@ export const metadata: Metadata = {
   },
 };
 
-const CARD = "rounded-xl bg-white/[0.04] border border-white/[0.07] overflow-hidden";
 
 /* ── FAQ data ── */
 
@@ -218,50 +218,12 @@ const funFacts = [
 
 /* ── Helper components ── */
 
-function SectionHeading({
-  children,
-  id,
-  sub,
-  icon,
-}: {
-  children: React.ReactNode;
-  id?: string;
-  sub?: string;
-  icon?: string;
-}) {
-  return (
-    <div className="px-8 sm:px-10 md:px-12 pt-6 sm:pt-8 pb-0">
-      {sub && (
-        <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#D4AF37]/60 mb-1.5 block">
-          {sub}
-        </span>
-      )}
-      <h2
-        id={id}
-        className="text-2xl sm:text-3xl font-bold text-white"
-      >
-        {icon && <span className="mr-2 text-[#D4AF37]">{icon}</span>}
-        {children}
-      </h2>
-      <div className="mt-4 h-px bg-gradient-to-r from-[#D4AF37]/40 to-transparent" />
-    </div>
-  );
-}
 
 /* ══════════════════════════════════════════════════════════════
    Main Page
    ══════════════════════════════════════════════════════════════ */
 
 export default function HistoryPage() {
-  const breadcrumbJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl('/') },
-      { "@type": "ListItem", position: 2, name: "History", item: absoluteUrl('/history') },
-    ],
-  };
-
   const jsonLd = [
     {
       "@context": "https://schema.org",
@@ -297,18 +259,19 @@ export default function HistoryPage() {
         },
       })),
     },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl('/') },
+        { "@type": "ListItem", position: 2, name: "History", item: absoluteUrl('/history') },
+      ],
+    },
   ];
 
   return (
     <ContentLayout variant="dark">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
-      />
+      <JsonLd data={jsonLd} />
 
       {/* ── Hero ── */}
       <header className="relative pt-6 pb-12 sm:pt-8 sm:pb-16 px-6 text-center overflow-hidden">
@@ -332,7 +295,7 @@ export default function HistoryPage() {
         </div>
 
         <h1
-          className="text-4xl sm:text-5xl lg:text-6xl font-semibold text-[#D4AF37] mb-4 max-w-3xl mx-auto leading-tight"
+          className="text-4xl sm:text-5xl lg:text-6xl font-semibold text-[#8B6914] mb-4 max-w-3xl mx-auto leading-tight"
         >
           History of FreeCell
         </h1>
@@ -344,7 +307,7 @@ export default function HistoryPage() {
 
         <div className="mt-8 flex items-center justify-center gap-3">
           <div className="h-px w-12 bg-gradient-to-r from-transparent to-[#D4AF37]/50" />
-          <span className="text-[#D4AF37] text-sm">
+          <span className="text-[#8B6914] text-sm">
             {"\u2660"} {"\u2665"} {"\u2666"} {"\u2663"}
           </span>
           <div className="h-px w-12 bg-gradient-to-l from-transparent to-[#D4AF37]/50" />
@@ -370,7 +333,7 @@ export default function HistoryPage() {
             <a
               key={href}
               href={href}
-              className="rounded-full px-5 py-2 border border-[#D4AF37]/30 bg-transparent text-sm tracking-wide text-[#D4AF37] flex items-center gap-2 transition-all hover:bg-[#D4AF37]/10 hover:border-[#D4AF37]/50 whitespace-nowrap shrink-0"
+              className="rounded-full px-5 py-2 border border-[#D4AF37]/30 bg-transparent text-sm tracking-wide text-[#8B6914] flex items-center gap-2 transition-all hover:bg-[#D4AF37]/10 hover:border-[#D4AF37]/50 whitespace-nowrap shrink-0"
             >
               <span
                 className={`text-sm ${icon === "\u2665" || icon === "\u2666" ? "text-red-400" : ""}`}
@@ -384,10 +347,9 @@ export default function HistoryPage() {
       </nav>
 
       {/* ── Content ── */}
-      <main className="max-w-4xl mx-auto px-6 sm:px-10 lg:px-12 pb-20 flex flex-col gap-8">
+      <main className="max-w-4xl mx-auto px-6 sm:px-10 lg:px-12 pb-20 flex flex-col gap-6">
         {/* Section: Origins */}
-        <section id="origins" className="scroll-mt-6">
-          <div className={CARD}>
+        <CardSection id="origins" variant="dark">
             <SectionHeading
               sub="Where It All Began"
               id="origins-heading"
@@ -415,7 +377,7 @@ export default function HistoryPage() {
                 play perfectly and still lose because a critical card was buried
                 in an inaccessible position. Alfille wanted to eliminate that
                 hidden information entirely. He was familiar with{" "}
-                <a href="#bakers-game" className="text-[#D4AF37] hover:underline">
+                <a href="#bakers-game" className="text-[#8B6914] hover:underline">
                   Baker&apos;s Game
                 </a>
                 , an older solitaire variant that dealt all cards face-up, but
@@ -436,14 +398,14 @@ export default function HistoryPage() {
                 The game retained four temporary storage spaces — the{" "}
                 <Link
                   href="/glossary#free-cell"
-                  className="text-[#D4AF37] hover:underline"
+                  className="text-[#8B6914] hover:underline"
                 >
                   free cells
                 </Link>{" "}
                 — where any single card could be parked while you rearranged the{" "}
                 <Link
                   href="/glossary#tableau"
-                  className="text-[#D4AF37] hover:underline"
+                  className="text-[#8B6914] hover:underline"
                 >
                   tableau
                 </Link>
@@ -484,7 +446,7 @@ export default function HistoryPage() {
                 </h3>
                 <ul className="space-y-2 text-white/70">
                   <li className="flex items-start gap-2">
-                    <span className="text-[#D4AF37] mt-1 shrink-0">
+                    <span className="text-[#8B6914] mt-1 shrink-0">
                       {"\u2660"}
                     </span>
                     <span>
@@ -512,14 +474,14 @@ export default function HistoryPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-[#D4AF37] mt-1 shrink-0">
+                    <span className="text-[#8B6914] mt-1 shrink-0">
                       {"\u2663"}
                     </span>
                     <span>
                       <strong>Skill-based outcomes</strong> — your{" "}
                       <Link
                         href="/tips"
-                        className="text-[#D4AF37] hover:underline"
+                        className="text-[#8B6914] hover:underline"
                       >
                         win rate
                       </Link>{" "}
@@ -529,14 +491,12 @@ export default function HistoryPage() {
                 </ul>
               </div>
             </div>
-          </div>
-        </section>
+        </CardSection>
 
-        <AdUnit className="my-4" />
+        <AdUnit className="-my-1" />
 
         {/* Section: Baker's Game */}
-        <section id="bakers-game" className="scroll-mt-6">
-          <div className={CARD}>
+        <CardSection id="bakers-game" variant="dark">
             <SectionHeading
               sub="The Predecessor"
               id="bakers-game-heading"
@@ -556,14 +516,14 @@ export default function HistoryPage() {
                 four{" "}
                 <Link
                   href="/glossary#free-cell"
-                  className="text-[#D4AF37] hover:underline"
+                  className="text-[#8B6914] hover:underline"
                 >
                   free cells
                 </Link>{" "}
                 for temporary storage, and four{" "}
                 <Link
                   href="/glossary#foundation"
-                  className="text-[#D4AF37] hover:underline"
+                  className="text-[#8B6914] hover:underline"
                 >
                   foundation
                 </Link>{" "}
@@ -596,7 +556,7 @@ export default function HistoryPage() {
                 difficulty. Some{" "}
                 <Link
                   href="/solitaire-types"
-                  className="text-[#D4AF37] hover:underline"
+                  className="text-[#8B6914] hover:underline"
                 >
                   solitaire variants
                 </Link>{" "}
@@ -654,14 +614,12 @@ export default function HistoryPage() {
                 </div>
               </div>
             </div>
-          </div>
-        </section>
+        </CardSection>
 
-        <AdUnit className="my-4" />
+        <AdUnit className="-my-1" />
 
         {/* Section: Microsoft FreeCell */}
-        <section id="microsoft" className="scroll-mt-6">
-          <div className={CARD}>
+        <CardSection id="microsoft" variant="dark">
             <SectionHeading
               sub="From Niche to Worldwide"
               id="microsoft-heading"
@@ -691,7 +649,7 @@ export default function HistoryPage() {
                 compare notes on specific deals, debate{" "}
                 <Link
                   href="/strategy"
-                  className="text-[#D4AF37] hover:underline"
+                  className="text-[#8B6914] hover:underline"
                 >
                   strategies
                 </Link>{" "}
@@ -765,7 +723,7 @@ export default function HistoryPage() {
                 that exercises working memory and{" "}
                 <Link
                   href="/how-to-play"
-                  className="text-[#D4AF37] hover:underline"
+                  className="text-[#8B6914] hover:underline"
                 >
                   planning skills
                 </Link>{" "}
@@ -796,21 +754,19 @@ export default function HistoryPage() {
                 Collection model, and while the app itself is well-made, the
                 ad-supported model drove many dedicated FreeCell players to
                 seek alternatives — including the growing number of{" "}
-                <a href="#mobile-web" className="text-[#D4AF37] hover:underline">
+                <a href="#mobile-web" className="text-[#8B6914] hover:underline">
                   web-based and mobile versions
                 </a>{" "}
                 that recaptured the clean, distraction-free experience of the
                 original.
               </p>
             </div>
-          </div>
-        </section>
+        </CardSection>
 
-        <AdUnit className="my-4" />
+        <AdUnit className="-my-1" />
 
         {/* Section: Timeline */}
-        <section id="timeline" className="scroll-mt-6">
-          <div className={CARD}>
+        <CardSection id="timeline" variant="dark">
             <SectionHeading
               sub="Year by Year"
               id="timeline-heading"
@@ -832,7 +788,7 @@ export default function HistoryPage() {
 
                   {/* Content */}
                   <div className="pb-8">
-                    <span className="text-xs font-bold uppercase tracking-widest text-[#D4AF37]">
+                    <span className="text-xs font-bold uppercase tracking-widest text-[#8B6914]">
                       {entry.year}
                     </span>
                     <h3
@@ -847,14 +803,12 @@ export default function HistoryPage() {
                 </div>
               ))}
             </div>
-          </div>
-        </section>
+        </CardSection>
 
-        <AdUnit className="my-4" />
+        <AdUnit className="-my-1" />
 
         {/* Section: Game #11982 */}
-        <section id="11982" className="scroll-mt-6">
-          <div className={CARD}>
+        <CardSection id="11982" variant="dark">
             <SectionHeading
               sub="The Impossible Deal"
               id="11982-heading"
@@ -888,7 +842,7 @@ export default function HistoryPage() {
                 move sequences and sharing{" "}
                 <Link
                   href="/strategy"
-                  className="text-[#D4AF37] hover:underline"
+                  className="text-[#8B6914] hover:underline"
                 >
                   strategies
                 </Link>{" "}
@@ -904,7 +858,7 @@ export default function HistoryPage() {
                 every path leads to a dead end. No matter how brilliant your{" "}
                 <Link
                   href="/strategy"
-                  className="text-[#D4AF37] hover:underline"
+                  className="text-[#8B6914] hover:underline"
                 >
                   strategy
                 </Link>
@@ -923,7 +877,7 @@ export default function HistoryPage() {
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
                   <div>
                     <div
-                      className="text-3xl font-bold text-[#D4AF37]"
+                      className="text-3xl font-bold text-[#8B6914]"
                     >
                       32,000
                     </div>
@@ -933,7 +887,7 @@ export default function HistoryPage() {
                   </div>
                   <div>
                     <div
-                      className="text-3xl font-bold text-[#D4AF37]"
+                      className="text-3xl font-bold text-[#8B6914]"
                     >
                       31,999
                     </div>
@@ -943,7 +897,7 @@ export default function HistoryPage() {
                   </div>
                   <div>
                     <div
-                      className="text-3xl font-bold text-[#D4AF37]"
+                      className="text-3xl font-bold text-[#8B6914]"
                     >
                       1
                     </div>
@@ -959,7 +913,7 @@ export default function HistoryPage() {
                 unsolvable: #146, #455, #495, #512, #530,{" "}
                 <Link
                   href="/game/1941"
-                  className="text-[#D4AF37] hover:underline"
+                  className="text-[#8B6914] hover:underline"
                 >
                   #1941
                 </Link>
@@ -974,7 +928,7 @@ export default function HistoryPage() {
                 Want to try your hand at the impossible? You can{" "}
                 <Link
                   href="/game/11982"
-                  className="text-[#D4AF37] hover:underline"
+                  className="text-[#8B6914] hover:underline"
                 >
                   play Game #11982 here
                 </Link>{" "}
@@ -983,33 +937,31 @@ export default function HistoryPage() {
                 solvable) deals like{" "}
                 <Link
                   href="/game/169"
-                  className="text-[#D4AF37] hover:underline"
+                  className="text-[#8B6914] hover:underline"
                 >
                   #169
                 </Link>{" "}
                 or{" "}
                 <Link
                   href="/game/178"
-                  className="text-[#D4AF37] hover:underline"
+                  className="text-[#8B6914] hover:underline"
                 >
                   #178
                 </Link>{" "}
                 to test your{" "}
                 <Link
                   href="/tips"
-                  className="text-[#D4AF37] hover:underline"
+                  className="text-[#8B6914] hover:underline"
                 >
                   skills
                 </Link>
                 .
               </p>
             </div>
-          </div>
-        </section>
+        </CardSection>
 
         {/* Section: Mathematics */}
-        <section id="mathematics" className="scroll-mt-6">
-          <div className={CARD}>
+        <CardSection id="mathematics" variant="dark">
             <SectionHeading
               sub="The Numbers Behind the Game"
               id="mathematics-heading"
@@ -1098,7 +1050,7 @@ export default function HistoryPage() {
                 like column homogeneity, card accessibility, and{" "}
                 <Link
                   href="/glossary#foundation"
-                  className="text-[#D4AF37] hover:underline"
+                  className="text-[#8B6914] hover:underline"
                 >
                   foundation
                 </Link>{" "}
@@ -1124,7 +1076,7 @@ export default function HistoryPage() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="text-center p-3">
                     <div
-                      className="text-2xl font-bold text-[#D4AF37]"
+                      className="text-2xl font-bold text-[#8B6914]"
                     >
                       8.07 × 10<sup>67</sup>
                     </div>
@@ -1134,7 +1086,7 @@ export default function HistoryPage() {
                   </div>
                   <div className="text-center p-3">
                     <div
-                      className="text-2xl font-bold text-[#D4AF37]"
+                      className="text-2xl font-bold text-[#8B6914]"
                     >
                       99.999%
                     </div>
@@ -1144,7 +1096,7 @@ export default function HistoryPage() {
                   </div>
                   <div className="text-center p-3">
                     <div
-                      className="text-2xl font-bold text-[#D4AF37]"
+                      className="text-2xl font-bold text-[#8B6914]"
                     >
                       ~75%
                     </div>
@@ -1154,7 +1106,7 @@ export default function HistoryPage() {
                   </div>
                   <div className="text-center p-3">
                     <div
-                      className="text-2xl font-bold text-[#D4AF37]"
+                      className="text-2xl font-bold text-[#8B6914]"
                     >
                       NP-complete
                     </div>
@@ -1165,12 +1117,10 @@ export default function HistoryPage() {
                 </div>
               </div>
             </div>
-          </div>
-        </section>
+        </CardSection>
 
         {/* Section: Cultural Impact */}
-        <section id="cultural-impact" className="scroll-mt-6">
-          <div className={CARD}>
+        <CardSection id="cultural-impact" variant="dark">
             <SectionHeading
               sub="Beyond the Game"
               id="cultural-impact-heading"
@@ -1185,7 +1135,7 @@ export default function HistoryPage() {
                 As one of the three card games bundled with Windows (alongside{" "}
                 <Link
                   href="/solitaire-types"
-                  className="text-[#D4AF37] hover:underline"
+                  className="text-[#8B6914] hover:underline"
                 >
                   Klondike Solitaire
                 </Link>{" "}
@@ -1234,7 +1184,7 @@ export default function HistoryPage() {
                 Today, FreeCell remains one of the most popular{" "}
                 <Link
                   href="/solitaire-types"
-                  className="text-[#D4AF37] hover:underline"
+                  className="text-[#8B6914] hover:underline"
                 >
                   solitaire card games
                 </Link>{" "}
@@ -1247,12 +1197,10 @@ export default function HistoryPage() {
                 is its greatest achievement.
               </p>
             </div>
-          </div>
-        </section>
+        </CardSection>
 
         {/* Section: Speedrunning */}
-        <section id="speedrunning" className="scroll-mt-6">
-          <div className={CARD}>
+        <CardSection id="speedrunning" variant="dark">
             <SectionHeading
               sub="Competitive FreeCell"
               id="speedrunning-heading"
@@ -1281,7 +1229,7 @@ export default function HistoryPage() {
                 a deal, mentally mapping out the critical{" "}
                 <Link
                   href="/strategy"
-                  className="text-[#D4AF37] hover:underline"
+                  className="text-[#8B6914] hover:underline"
                 >
                   strategic decisions
                 </Link>{" "}
@@ -1296,7 +1244,7 @@ export default function HistoryPage() {
                 layouts. The{" "}
                 <Link
                   href="/streak"
-                  className="text-[#D4AF37] hover:underline"
+                  className="text-[#8B6914] hover:underline"
                 >
                   streak challenge
                 </Link>{" "}
@@ -1318,7 +1266,7 @@ export default function HistoryPage() {
                 improve their{" "}
                 <Link
                   href="/how-to-play"
-                  className="text-[#D4AF37] hover:underline"
+                  className="text-[#8B6914] hover:underline"
                 >
                   gameplay
                 </Link>
@@ -1334,7 +1282,7 @@ export default function HistoryPage() {
                 genuine study — learning{" "}
                 <Link
                   href="/tips"
-                  className="text-[#D4AF37] hover:underline"
+                  className="text-[#8B6914] hover:underline"
                 >
                   techniques
                 </Link>
@@ -1342,12 +1290,10 @@ export default function HistoryPage() {
                 a lesson.
               </p>
             </div>
-          </div>
-        </section>
+        </CardSection>
 
         {/* Section: Mobile & Web */}
-        <section id="mobile-web" className="scroll-mt-6">
-          <div className={CARD}>
+        <CardSection id="mobile-web" variant="dark">
             <SectionHeading
               sub="The Modern Era"
               id="mobile-web-heading"
@@ -1389,7 +1335,7 @@ export default function HistoryPage() {
                 statistics tracking, and{" "}
                 <Link
                   href="/glossary"
-                  className="text-[#D4AF37] hover:underline"
+                  className="text-[#8B6914] hover:underline"
                 >
                   customizable settings
                 </Link>
@@ -1420,12 +1366,10 @@ export default function HistoryPage() {
                 design: it needs no updating.
               </p>
             </div>
-          </div>
-        </section>
+        </CardSection>
 
         {/* Section: Fun Facts */}
-        <section id="fun-facts" className="scroll-mt-6">
-          <div className={CARD}>
+        <CardSection id="fun-facts" variant="dark">
             <SectionHeading
               sub="Things You Didn&apos;t Know"
               id="fun-facts-heading"
@@ -1434,7 +1378,7 @@ export default function HistoryPage() {
               FreeCell Fun Facts
             </SectionHeading>
 
-            <div className="px-8 sm:px-10 md:px-12 py-6">
+            <ContentBody variant="dark">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {funFacts.map((item, i) => {
                   const suits = ["\u2660", "\u2665", "\u2666", "\u2663"];
@@ -1447,7 +1391,7 @@ export default function HistoryPage() {
                     >
                       <div className="flex items-start gap-3">
                         <span
-                          className={`text-lg shrink-0 mt-0.5 ${isRed ? "text-red-500" : "text-[#D4AF37]"}`}
+                          className={`text-lg shrink-0 mt-0.5 ${isRed ? "text-red-500" : "text-[#8B6914]"}`}
                         >
                           {suit}
                         </span>
@@ -1464,13 +1408,11 @@ export default function HistoryPage() {
                   );
                 })}
               </div>
-            </div>
-          </div>
-        </section>
+            </ContentBody>
+        </CardSection>
 
         {/* Section: FAQ */}
-        <section id="faq" className="scroll-mt-6">
-          <div className={CARD}>
+        <CardSection id="faq" variant="dark">
             <SectionHeading
               sub="Common Questions"
               id="faq-heading"
@@ -1479,7 +1421,7 @@ export default function HistoryPage() {
               FreeCell History FAQ
             </SectionHeading>
 
-            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-6">
+            <ContentBody variant="dark" className="space-y-6">
               {historyFaqs.map((faq, i) => (
                 <div key={i}>
                   <h3 className="font-medium text-white text-lg mb-2">
@@ -1493,101 +1435,28 @@ export default function HistoryPage() {
                   )}
                 </div>
               ))}
-            </div>
-          </div>
-        </section>
+            </ContentBody>
+        </CardSection>
 
         {/* ── Related Guides ── */}
-        <section id="related-guides" className="scroll-mt-6">
-          <div className={CARD}>
-            <SectionHeading sub="Read Next" id="related-heading" icon={"\u2660"}>
+        <CardSection id="related-guides" variant="dark">
+            <SectionHeading variant="dark" sub="Read Next" id="related-heading" icon={"\u2660"}>
               Related Guides
             </SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 grid gap-4 md:grid-cols-2">
-              <Link href="/famous-freecell-deals" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                <h3 className="text-lg font-semibold text-white">Famous FreeCell Deals</h3>
-                <p className="mt-2 text-sm leading-7 text-white/70">
-                  Explore the most iconic game numbers in FreeCell history, from easy wins to the proven impossible.
-                </p>
-              </Link>
-              <Link href="/freecell-game-11982" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                <h3 className="text-lg font-semibold text-white">FreeCell Game #11982</h3>
-                <p className="mt-2 text-sm leading-7 text-white/70">
-                  The full story of the only proven unsolvable deal and why it became a cult classic.
-                </p>
-              </Link>
-              <Link href="/freecell-world-records" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                <h3 className="text-lg font-semibold text-white">FreeCell World Records</h3>
-                <p className="mt-2 text-sm leading-7 text-white/70">
-                  Fastest times, longest streaks, and community achievements from decades of competitive play.
-                </p>
-              </Link>
-              <Link href="/is-every-freecell-game-winnable" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                <h3 className="text-lg font-semibold text-white">Is Every FreeCell Game Winnable?</h3>
-                <p className="mt-2 text-sm leading-7 text-white/70">
-                  Why 99.999% of deals are solvable, what makes the rest impossible, and how to tell the difference.
-                </p>
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        {/* ── CTA ── */}
-        <section>
-          <div
-            className={CARD}
-            style={{
-              background:
-                "linear-gradient(135deg, rgba(10,74,42,0.6) 0%, rgba(6,37,22,0.8) 100%)",
-            }}
-          >
-            <div className="p-8 sm:p-10 text-center relative">
-              <div
-                className="absolute top-4 left-6 text-4xl text-white/[0.04] select-none"
-                aria-hidden="true"
-              >
-                {"\u2663"}
-              </div>
-              <div
-                className="absolute bottom-4 right-6 text-4xl text-white/[0.04] select-none"
-                aria-hidden="true"
-              >
-                {"\u2660"}
-              </div>
-
-              <h2
-                className="text-2xl sm:text-3xl font-semibold text-white mb-3"
-              >
-                Write Your Own FreeCell History
-              </h2>
-              <p className="text-white/40 mb-6 max-w-md mx-auto">
-                Join millions of players who have enjoyed FreeCell since 1978.
-                Start a game now and see how your strategy measures up.
-              </p>
-
-              <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                <Link
-                  href="/"
-                  className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl text-lg font-semibold transition-all duration-200 hover:scale-[1.03] active:scale-[0.98]"
-                  style={{
-                    background:
-                      "linear-gradient(110deg, #B8860B, #D4AF37, #F3E5AB, #D4AF37, #B8860B)",
-                    backgroundSize: "200% 100%",
-                    color: "#1a1a0a",
-                  }}
-                >
-                  Play Now
-                </Link>
-                <Link
-                  href="/strategy"
-                  className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl text-lg font-semibold border border-white/20 text-white/90 hover:bg-white/[0.08] transition-colors"
-                >
-                  Learn Strategy
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
+            <ContentBody variant="dark" className="grid gap-4 md:grid-cols-2">
+              <ContentLinkCard href="/famous-freecell-deals" title="Famous FreeCell Deals" description="Explore the most iconic game numbers in FreeCell history, from easy wins to the proven impossible." />
+              <ContentLinkCard href="/freecell-game-11982" title="FreeCell Game #11982" description="The full story of the only proven unsolvable deal and why it became a cult classic." />
+              <ContentLinkCard href="/freecell-world-records" title="FreeCell World Records" description="Fastest times, longest streaks, and community achievements from decades of competitive play." />
+              <ContentLinkCard href="/is-every-freecell-game-winnable" title="Is Every FreeCell Game Winnable?" description="Why 99.999% of deals are solvable, what makes the rest impossible, and how to tell the difference." />
+            </ContentBody>
+        </CardSection>        <CtaSection
+          heading="Write Your Own FreeCell History"
+          body="Join millions of players who have enjoyed FreeCell since 1978. Start a game now and see how your strategy measures up."
+          primaryLabel="Play Now"
+          primaryHref="/"
+          secondaryLabel="Learn Strategy"
+          secondaryHref="/strategy"
+        />
 
       </main>
     </ContentLayout>

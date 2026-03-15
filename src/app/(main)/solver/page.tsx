@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import ContentLayout from "@/components/ContentLayout";
+import { ContentHero, JsonLd, CtaSection, ContentLinkCard } from "@/components/content";
 import AdUnit from "@/components/AdUnit";
 import SolverWidget from "./SolverWidget";
 
@@ -121,63 +122,24 @@ export default function SolverPage() {
 
   return (
     <ContentLayout variant="dark">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(appJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
-      />
+      <JsonLd data={faqJsonLd} />
+      <JsonLd data={appJsonLd} />
+      <JsonLd data={breadcrumbJsonLd} />
 
-      {/* Hero */}
-      <header className="relative pt-6 pb-12 sm:pt-8 sm:pb-16 px-6 text-center overflow-hidden">
-        <div
-          className="absolute top-10 left-[10%] text-6xl sm:text-8xl text-white/[0.03] select-none pointer-events-none"
-          aria-hidden="true"
-        >
-          {"\u2663"}
-        </div>
-        <div
-          className="absolute top-16 right-[8%] text-5xl sm:text-7xl text-red-500/[0.04] select-none pointer-events-none"
-          aria-hidden="true"
-        >
-          {"\u2666"}
-        </div>
-
-        <h1
-          className="text-4xl sm:text-5xl lg:text-6xl font-semibold text-[#D4AF37] mb-4 max-w-3xl mx-auto leading-tight"
-          style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
-        >
-          FreeCell Solver
-        </h1>
-        <p className="text-white/50 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
-          Enter any game number and get an instant step-by-step solution powered
-          by our A* search algorithm.
-        </p>
-
-        <div className="mt-8 flex items-center justify-center gap-3">
-          <div className="h-px w-12 bg-gradient-to-r from-transparent to-[#D4AF37]/50" />
-          <span className="text-[#D4AF37] text-sm">
-            {"\u2660"} {"\u2665"} {"\u2666"} {"\u2663"}
-          </span>
-          <div className="h-px w-12 bg-gradient-to-l from-transparent to-[#D4AF37]/50" />
-        </div>
-      </header>
+      <ContentHero
+        title="FreeCell Solver"
+        subtitle="Enter any game number and get an instant step-by-step solution powered by our A* search algorithm."
+      />
 
       {/* Main Content */}
-      <main className="max-w-4xl mx-auto px-6 sm:px-10 lg:px-12 pb-20 flex flex-col gap-8">
+      <main className="max-w-4xl mx-auto px-6 sm:px-10 lg:px-12 pb-20 flex flex-col gap-6">
         {/* Interactive Solver */}
         <SolverWidget />
 
-        <AdUnit format="horizontal" className="my-4" />
+        <AdUnit format="horizontal" className="-my-1" />
 
         {/* Article Content */}
-        <article className="space-y-10">
+        <article className="space-y-6">
           {/* Section 1: What is a FreeCell Solver? */}
           <section>
             <h2
@@ -292,7 +254,7 @@ export default function SolverPage() {
             </div>
           </section>
 
-          <AdUnit format="auto" className="my-4" />
+          <AdUnit format="auto" className="-my-1" />
 
           {/* Section 3: The Mathematics of FreeCell */}
           <section>
@@ -398,7 +360,7 @@ export default function SolverPage() {
             </div>
           </section>
 
-          <AdUnit format="auto" className="my-4" />
+          <AdUnit format="auto" className="-my-1" />
 
           {/* Section 5: Solver Algorithms Compared */}
           <section>
@@ -531,7 +493,7 @@ export default function SolverPage() {
             </div>
           </section>
 
-          <AdUnit format="auto" className="my-4" />
+          <AdUnit format="auto" className="-my-1" />
 
           {/* Section 7: Using a Solver to Improve Your Play */}
           <section>
@@ -615,59 +577,20 @@ export default function SolverPage() {
             </div>
           </section>
 
-          <AdUnit format="horizontal" className="my-4" />
+          <AdUnit format="horizontal" className="-my-1" />
 
           {/* Cross-links */}
           <section className="bg-white/[0.03] border border-white/10 rounded-xl p-6 sm:p-8">
-            <h2
-              className="text-xl font-bold text-white/90 mb-4"
-              style={{ fontFamily: "var(--font-playfair)" }}
-            >
+            <h2 className="text-xl font-bold text-white/90 mb-4" style={{ fontFamily: "var(--font-playfair)" }}>
               Related Pages
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <Link
-                href="/statistics"
-                className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] hover:border-[#D4AF37]/30 transition-all"
-              >
-                <span className="text-[#D4AF37] font-semibold">Statistics</span>
-                <p className="text-sm text-white/40 mt-1">Win rates, solvability data &amp; analysis</p>
-              </Link>
-              <Link
-                href="/strategy"
-                className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] hover:border-[#D4AF37]/30 transition-all"
-              >
-                <span className="text-[#D4AF37] font-semibold">Strategy Guide</span>
-                <p className="text-sm text-white/40 mt-1">Advanced techniques for tough deals</p>
-              </Link>
-              <Link
-                href="/tips"
-                className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] hover:border-[#D4AF37]/30 transition-all"
-              >
-                <span className="text-[#D4AF37] font-semibold">Tips &amp; Tricks</span>
-                <p className="text-sm text-white/40 mt-1">Quick tips to improve your game</p>
-              </Link>
-              <Link
-                href="/deals"
-                className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] hover:border-[#D4AF37]/30 transition-all"
-              >
-                <span className="text-[#D4AF37] font-semibold">Deal Explorer</span>
-                <p className="text-sm text-white/40 mt-1">Browse famous &amp; notable deals</p>
-              </Link>
-              <Link
-                href="/game/11982"
-                className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] hover:border-[#D4AF37]/30 transition-all"
-              >
-                <span className="text-[#D4AF37] font-semibold">Deal #11982</span>
-                <p className="text-sm text-white/40 mt-1">The most famous unsolvable deal</p>
-              </Link>
-              <Link
-                href="/history"
-                className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] hover:border-[#D4AF37]/30 transition-all"
-              >
-                <span className="text-[#D4AF37] font-semibold">FreeCell History</span>
-                <p className="text-sm text-white/40 mt-1">Origins and evolution of the game</p>
-              </Link>
+              <ContentLinkCard href="/statistics" title="Statistics" description="Win rates, solvability data & analysis" />
+              <ContentLinkCard href="/strategy" title="Strategy Guide" description="Advanced techniques for tough deals" />
+              <ContentLinkCard href="/tips" title="Tips & Tricks" description="Quick tips to improve your game" />
+              <ContentLinkCard href="/deals" title="Deal Explorer" description="Browse famous & notable deals" />
+              <ContentLinkCard href="/game/11982" title="Deal #11982" description="The most famous unsolvable deal" />
+              <ContentLinkCard href="/history" title="FreeCell History" description="Origins and evolution of the game" />
             </div>
           </section>
         </article>

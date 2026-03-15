@@ -1,9 +1,11 @@
+import { Suspense } from "react";
 import Script from "next/script";
 import Analytics from "@/components/Analytics";
 import CookieConsent from "@/components/CookieConsent";
 import ThemeInitializer from "@/components/ThemeInitializer";
 import AccessibilityInitializer from "@/components/AccessibilityInitializer";
 import SiteFooter from "@/components/SiteFooter";
+import ScrollDebugOverlay from "@/components/ScrollDebugOverlay";
 import { siteConfig } from "@/lib/siteConfig";
 
 export default function MainLayout({
@@ -52,6 +54,7 @@ export default function MainLayout({
       />
       {children}
       <SiteFooter />
+      <Suspense fallback={null}><ScrollDebugOverlay /></Suspense>
       <CookieConsent />
       <script
         dangerouslySetInnerHTML={{

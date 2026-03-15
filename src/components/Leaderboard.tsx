@@ -346,12 +346,18 @@ export function CompactLeaderboard({ entries, yourRank, playerId, loading, showH
         </div>
       )}
       <div className="overflow-hidden rounded-[18px] border border-white/8 bg-black/[0.18]">
+        <div className="grid grid-cols-[2rem_1fr_3.5rem_3rem] px-3 py-1.5 text-[10px] text-white/25 uppercase tracking-wider border-b border-white/5">
+          <span>#</span>
+          <span>Player</span>
+          <span className="text-right">Time</span>
+          <span className="text-right">Moves</span>
+        </div>
         {top5.map((entry) => {
           const isYou = entry.playerId === playerId;
           return (
             <div
               key={`compact-${entry.playerId}-${entry.rank}`}
-              className={`grid grid-cols-[1.5rem_1fr_3rem_2.5rem] px-2.5 py-1.5 text-xs items-center ${
+              className={`grid grid-cols-[2rem_1fr_3.5rem_3rem] px-3 py-2 text-sm items-center ${
                 isYou ? 'bg-yellow-500/10 text-yellow-300' : 'text-white/50'
               } ${entry.rank < 5 ? 'border-b border-white/5' : ''}`}
             >
@@ -362,22 +368,22 @@ export function CompactLeaderboard({ entries, yourRank, playerId, loading, showH
                 {entry.playerName}
                 {isYou && <span className="text-yellow-500/40 ml-1 text-[9px]">(you)</span>}
               </span>
-              <span className="text-right font-mono text-[10px]">{formatLeaderboardTime(entry.time)}</span>
-              <span className="text-right font-mono text-[10px]">{entry.moves}</span>
+              <span className="text-right font-mono text-xs">{formatLeaderboardTime(entry.time)}</span>
+              <span className="text-right font-mono text-xs">{entry.moves}</span>
             </div>
           );
         })}
         {showYourEntry && yourEntry && (
           <>
-            <div className="px-2.5 py-0.5 text-center text-white/10 text-[9px]">...</div>
-            <div className="grid grid-cols-[1.5rem_1fr_3rem_2.5rem] px-2.5 py-1.5 text-xs items-center bg-yellow-500/10 text-yellow-300 border-t border-white/5">
+            <div className="px-3 py-0.5 text-center text-white/10 text-[9px]">...</div>
+            <div className="grid grid-cols-[2rem_1fr_3.5rem_3rem] px-3 py-2 text-sm items-center bg-yellow-500/10 text-yellow-300 border-t border-white/5">
               <span className="font-bold">{yourEntry.rank}</span>
               <span className="truncate font-medium">
                 {yourEntry.playerName}
                 <span className="text-yellow-500/40 ml-1 text-[9px]">(you)</span>
               </span>
-              <span className="text-right font-mono text-[10px]">{formatLeaderboardTime(yourEntry.time)}</span>
-              <span className="text-right font-mono text-[10px]">{yourEntry.moves}</span>
+              <span className="text-right font-mono text-xs">{formatLeaderboardTime(yourEntry.time)}</span>
+              <span className="text-right font-mono text-xs">{yourEntry.moves}</span>
             </div>
           </>
         )}

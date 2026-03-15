@@ -146,14 +146,14 @@ export default function SolitaireHubHome() {
       />
 
       {/* Game above the fold */}
-      <div className="h-dvh overflow-hidden relative">
+      <div className="h-dvh relative" data-scroll-role="hub-game-viewport">
         <GameErrorBoundary>
           <DomGameShell />
         </GameErrorBoundary>
       </div>
 
       {/* SEO content below the fold */}
-      <div className="felt-bg relative z-10">
+      <div className="felt-bg relative z-10" data-scroll-role="hub-below-fold-content">
         <div className="mx-auto max-w-4xl px-4 py-16 sm:px-6">
 
           {/* ── Intro + personal story ── */}

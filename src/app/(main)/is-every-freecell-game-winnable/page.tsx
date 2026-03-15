@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { absoluteUrl, siteConfig } from '@/lib/siteConfig';
 import AdUnit from '@/components/AdUnit';
 import ContentLayout from '@/components/ContentLayout';
+import { SectionHeading, CardSection, ContentBody, CtaSection, ContentLinkCard, JsonLd } from '@/components/content';
 
 export const metadata: Metadata = {
   title: 'Is Every FreeCell Game Winnable? The Real Answer',
@@ -29,7 +30,6 @@ export const metadata: Metadata = {
   },
 };
 
-const CARD = 'rounded-xl bg-white/[0.04] border border-white/[0.07] overflow-hidden';
 
 const faqs = [
   {
@@ -59,32 +59,6 @@ const faqs = [
   },
 ];
 
-function SectionHeading({
-  children,
-  id,
-  sub,
-}: {
-  children: React.ReactNode;
-  id?: string;
-  sub?: string;
-}) {
-  return (
-    <div className="px-8 sm:px-10 md:px-12 pt-6 sm:pt-8 pb-0">
-      {sub && (
-        <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#D4AF37]/60 mb-1.5 block">
-          {sub}
-        </span>
-      )}
-      <h2
-        id={id}
-        className="text-2xl sm:text-3xl font-bold text-white scroll-mt-6"
-      >
-        {children}
-      </h2>
-      <div className="mt-4 h-px bg-gradient-to-r from-[#D4AF37]/40 to-transparent" />
-    </div>
-  );
-}
 
 export default function IsEveryFreecellGameWinnablePage() {
   const jsonLd = [
@@ -143,11 +117,10 @@ export default function IsEveryFreecellGameWinnablePage() {
 
   return (
     <ContentLayout variant="dark">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <JsonLd data={jsonLd} />
 
       <main className="max-w-5xl mx-auto px-4 sm:px-6 pt-6 pb-20 space-y-6">
-        <section>
-          <div className={CARD}>
+        <CardSection variant="dark">
             <div className="px-8 sm:px-10 md:px-12 pt-6 sm:pt-8 pb-6">
               <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#D4AF37]/60 block mb-3">
                 FreeCell Solvability
@@ -194,13 +167,11 @@ export default function IsEveryFreecellGameWinnablePage() {
                 </div>
               </div>
             </div>
-          </div>
-        </section>
+        </CardSection>
 
-        <section id="why-freecell-is-so-solvable" className="scroll-mt-6">
-          <div className={CARD}>
-            <SectionHeading sub="Why It Feels Different">Why FreeCell Is So Solvable</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 grid gap-6 lg:grid-cols-3">
+        <CardSection id="why-freecell-is-so-solvable" variant="dark">
+            <SectionHeading variant="dark" sub="Why It Feels Different">Why FreeCell Is So Solvable</SectionHeading>
+            <ContentBody variant="dark" className="grid gap-6 lg:grid-cols-3">
               <div className="bg-white/[0.05] border border-white/[0.07] rounded-xl p-5">
                 <h3 className="text-lg font-semibold text-white mb-2">All cards are visible</h3>
                 <p className="text-white/70 leading-7 text-sm">
@@ -225,16 +196,14 @@ export default function IsEveryFreecellGameWinnablePage() {
                   keeps difficult deals alive.
                 </p>
               </div>
-            </div>
-          </div>
-        </section>
+            </ContentBody>
+        </CardSection>
 
-        <AdUnit className="my-4" />
+        <AdUnit className="-my-1" />
 
-        <section id="hard-vs-impossible" className="scroll-mt-6">
-          <div className={CARD}>
-            <SectionHeading sub="The Real Distinction">Hard Does Not Mean Impossible</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-5 text-white/70 leading-8">
+        <CardSection id="hard-vs-impossible" variant="dark">
+            <SectionHeading variant="dark" sub="The Real Distinction">Hard Does Not Mean Impossible</SectionHeading>
+            <ContentBody variant="dark" className="space-y-5">
               <p>
                 Most players only ask whether a deal is winnable after they have already spent
                 themselves into a corner. That matters. A solvable deal can become practically
@@ -255,14 +224,12 @@ export default function IsEveryFreecellGameWinnablePage() {
                   <li>You are trying to finish a stack before improving board mobility.</li>
                 </ul>
               </div>
-            </div>
-          </div>
-        </section>
+            </ContentBody>
+        </CardSection>
 
-        <section id="what-to-do-when-stuck" className="scroll-mt-6">
-          <div className={CARD}>
-            <SectionHeading sub="Practical Recovery">What To Do When a Deal Feels Impossible</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 grid gap-4 md:grid-cols-2">
+        <CardSection id="what-to-do-when-stuck" variant="dark">
+            <SectionHeading variant="dark" sub="Practical Recovery">What To Do When a Deal Feels Impossible</SectionHeading>
+            <ContentBody variant="dark" className="grid gap-4 md:grid-cols-2">
               <div className="rounded-xl border border-white/[0.07] p-5">
                 <h3 className="text-lg font-semibold text-white mb-2">1. Reopen the board</h3>
                 <p className="text-white/70 text-sm leading-7">
@@ -295,52 +262,23 @@ export default function IsEveryFreecellGameWinnablePage() {
                   were undervaluing.
                 </p>
               </div>
-            </div>
-          </div>
-        </section>
+            </ContentBody>
+        </CardSection>
 
-        <section id="related-guides" className="scroll-mt-6">
-          <div className={CARD}>
-            <SectionHeading sub="Read Next">Related FreeCell Guides</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 grid gap-4 md:grid-cols-2">
-              <Link href="/freecell-game-11982" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                <h3 className="text-lg font-semibold text-white">FreeCell Game #11982</h3>
-                <p className="mt-2 text-sm leading-7 text-white/70">
-                  The full story of the only proven unsolvable deal — history, analysis, and why players still try it.
-                </p>
-              </Link>
-              <Link href="/easy-freecell-games" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                <h3 className="text-lg font-semibold text-white">Easy FreeCell Games</h3>
-                <p className="mt-2 text-sm leading-7 text-white/70">
-                  Learn what makes a beginner-friendly deal and where to practice lower-pressure games.
-                </p>
-              </Link>
-              <Link href="/hard-freecell-games" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                <h3 className="text-lg font-semibold text-white">Hard FreeCell Games</h3>
-                <p className="mt-2 text-sm leading-7 text-white/70">
-                  See the board patterns that turn a clean puzzle into a narrow tactical fight.
-                </p>
-              </Link>
-              <Link href="/strategy" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                <h3 className="text-lg font-semibold text-white">Strategy Guide</h3>
-                <p className="mt-2 text-sm leading-7 text-white/70">
-                  Go deeper on free cells, empty columns, supermoves, and disciplined board management.
-                </p>
-              </Link>
-              <Link href="/freecell-probability" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                <h3 className="text-lg font-semibold text-white">FreeCell Probability & Math</h3>
-                <p className="mt-2 text-sm leading-7 text-white/70">
-                  The numbers behind winnability -- deal distributions, supermove calculations, and statistical analysis.
-                </p>
-              </Link>
-            </div>
-          </div>
-        </section>
+        <CardSection id="related-guides" variant="dark">
+            <SectionHeading variant="dark" sub="Read Next">Related FreeCell Guides</SectionHeading>
+            <ContentBody variant="dark" className="grid gap-4 md:grid-cols-2">
+              <ContentLinkCard href="/freecell-game-11982" title="FreeCell Game #11982" description="The full story of the only proven unsolvable deal — history, analysis, and why players still try it." />
+              <ContentLinkCard href="/easy-freecell-games" title="Easy FreeCell Games" description="Learn what makes a beginner-friendly deal and where to practice lower-pressure games." />
+              <ContentLinkCard href="/hard-freecell-games" title="Hard FreeCell Games" description="See the board patterns that turn a clean puzzle into a narrow tactical fight." />
+              <ContentLinkCard href="/strategy" title="Strategy Guide" description="Go deeper on free cells, empty columns, supermoves, and disciplined board management." />
+              <ContentLinkCard href="/freecell-probability" title="FreeCell Probability & Math" description="The numbers behind winnability -- deal distributions, supermove calculations, and statistical analysis." />
+            </ContentBody>
+        </CardSection>
 
-        <section id="faq" className="scroll-mt-6">
-          <div className={CARD}>
-            <SectionHeading sub="Common Questions">FreeCell Winnability FAQ</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-6">
+        <CardSection id="faq" variant="dark">
+            <SectionHeading variant="dark" sub="Common Questions">FreeCell Winnability FAQ</SectionHeading>
+            <ContentBody variant="dark" className="space-y-6">
               {faqs.map((faq, index) => (
                 <div key={faq.question}>
                   <h3 className="font-medium text-white text-lg mb-2">{faq.question}</h3>
@@ -348,49 +286,13 @@ export default function IsEveryFreecellGameWinnablePage() {
                   {index < faqs.length - 1 && <div className="mt-6 border-b border-white/[0.07]" />}
                 </div>
               ))}
-            </div>
-          </div>
-        </section>
-
-        <section>
-          <div
-            className={CARD}
-            style={{
-              background: 'linear-gradient(135deg, rgba(10,74,42,0.6) 0%, rgba(6,37,22,0.8) 100%)',
-            }}
-          >
-            <div className="p-8 sm:p-10 text-center relative">
-              <h2
-                className="text-2xl sm:text-3xl font-semibold text-white mb-3"
-              >
-                Test the Theory on a Real Deal
-              </h2>
-              <p className="text-white/40 mb-6 max-w-2xl mx-auto">
-                Play a fresh game, keep your free cells clean, and see how often a deal that first
-                looked hopeless opens up once you create space.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                <Link
-                  href="/"
-                  className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl text-lg font-semibold transition-all duration-200 hover:scale-[1.03] active:scale-[0.98]"
-                  style={{
-                    background: 'linear-gradient(110deg, #B8860B, #D4AF37, #F3E5AB, #D4AF37, #B8860B)',
-                    backgroundSize: '200% 100%',
-                    color: '#1a1a0a',
-                  }}
-                >
-                  Play FreeCell Now
-                </Link>
-                <Link
-                  href="/solver"
-                  className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl text-lg font-semibold border border-white/20 text-white/90 hover:bg-white/[0.08] transition-colors"
-                >
-                  Open the Solver
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
+            </ContentBody>
+        </CardSection>        <CtaSection
+          heading="Test the Theory on a Real Deal"
+          body="Play a fresh game, keep your free cells clean, and see how often a deal that first looked hopeless opens up once you create space."
+          secondaryLabel="Open the Solver"
+          secondaryHref="/solver"
+        />
       </main>
     </ContentLayout>
   );

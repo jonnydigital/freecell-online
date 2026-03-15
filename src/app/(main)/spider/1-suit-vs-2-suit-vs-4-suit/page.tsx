@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { absoluteUrl, siteConfig } from '@/lib/siteConfig';
 import AdUnit from '@/components/AdUnit';
 import ContentLayout from '@/components/ContentLayout';
+import { SectionHeading, CardSection, ContentBody, CtaSection, ContentLinkCard, JsonLd } from '@/components/content';
 
 export const metadata: Metadata = {
   title: 'Spider Solitaire: 1-Suit vs 2-Suit vs 4-Suit Compared',
@@ -28,11 +29,6 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
   },
-};
-
-const CARD = 'card-panel';
-const CARD_TOP: React.CSSProperties = {
-  borderTop: '1px solid rgba(184, 134, 11, 0.08)',
 };
 
 const faqs = [
@@ -68,33 +64,6 @@ const faqs = [
   },
 ];
 
-function SectionHeading({
-  children,
-  id,
-  sub,
-}: {
-  children: React.ReactNode;
-  id?: string;
-  sub?: string;
-}) {
-  return (
-    <div className="px-6 sm:px-8 md:px-10 pt-8 sm:pt-10 pb-0">
-      {sub && (
-        <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#B8860B]/60 mb-1.5 block">
-          {sub}
-        </span>
-      )}
-      <h2
-        id={id}
-        className="text-2xl sm:text-3xl font-bold text-[#2a2522] scroll-mt-6"
-        style={{ fontFamily: 'var(--font-playfair), Georgia, serif' }}
-      >
-        {children}
-      </h2>
-      <div className="card-title-separator mt-5" />
-    </div>
-  );
-}
 
 export default function SpiderSuitComparisonPage() {
   const jsonLd = [
@@ -159,22 +128,21 @@ export default function SpiderSuitComparisonPage() {
 
   return (
     <ContentLayout variant="dark">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <JsonLd data={jsonLd} />
 
       <main className="max-w-5xl mx-auto px-4 sm:px-6 pt-6 pb-20 space-y-6">
-        <section>
-          <div className={CARD}>
+        <CardSection variant="dark">
             <div className="px-6 sm:px-8 md:px-10 pt-8 sm:pt-10 pb-8">
-              <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#B8860B]/60 block mb-3">
+              <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#D4AF37]/60 block mb-3">
                 Spider Solitaire Guide
               </span>
               <h1
-                className="text-4xl sm:text-5xl font-bold text-[#2a2522] leading-tight"
+                className="text-4xl sm:text-5xl font-bold text-white leading-tight"
                 style={{ fontFamily: 'var(--font-playfair), Georgia, serif' }}
               >
                 1-Suit vs 2-Suit vs 4-Suit Spider Solitaire
               </h1>
-              <p className="mt-5 text-lg leading-8 text-[#444444] max-w-3xl">
+              <p className="mt-5 text-lg leading-8 text-white/70 max-w-3xl">
                 Spider Solitaire comes in three difficulty levels, all using the same basic rules
                 but with a dramatically different feel. The number of suits changes everything:
                 how you stack, how you plan, how often you win, and how much patience the game
@@ -182,11 +150,11 @@ export default function SpiderSuitComparisonPage() {
               </p>
 
               <div className="mt-8 grid gap-4 md:grid-cols-[1.15fr,0.85fr]">
-                <div className="card-inset rounded-xl p-6">
-                  <div className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#B8860B]/65 mb-3">
+                <div className="bg-white/[0.05] border border-white/[0.07] rounded-xl p-6">
+                  <div className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#D4AF37]/65 mb-3">
                     The core difference
                   </div>
-                  <p className="text-[#2a2522] leading-7">
+                  <p className="text-white leading-7">
                     In 1-suit mode, every card is the same suit so stacking conflicts never arise.
                     In 2-suit mode, you manage two colors. In 4-suit mode, all four suits are in
                     play and only same-suit sequences can be moved as a group or completed. More
@@ -207,13 +175,11 @@ export default function SpiderSuitComparisonPage() {
                 </div>
               </div>
             </div>
-          </div>
-        </section>
+        </CardSection>
 
-        <section id="rules-comparison" className="scroll-mt-6">
-          <div className={CARD} style={CARD_TOP}>
-            <SectionHeading sub="How They Differ">Rules Across All Three Modes</SectionHeading>
-            <div className="px-6 sm:px-8 md:px-10 py-8 space-y-5 text-[#444444] leading-8">
+        <CardSection id="rules-comparison" variant="dark">
+            <SectionHeading variant="dark" sub="How They Differ">Rules Across All Three Modes</SectionHeading>
+            <ContentBody variant="dark" className="space-y-5">
               <p>
                 The basic{' '}
                 <Link href="/spider/how-to-play" className="text-[#D4AF37] hover:underline">
@@ -224,27 +190,27 @@ export default function SpiderSuitComparisonPage() {
                 are removed from the board. The difference is in the suits.
               </p>
               <div className="grid gap-4 md:grid-cols-3">
-                <div className="rounded-xl border border-[#e5e0d8] p-5">
-                  <h3 className="text-lg font-semibold text-[#2a2522] mb-2">1-Suit (Spades only)</h3>
-                  <p className="text-[#444444] text-sm leading-7">
+                <div className="rounded-xl border border-white/[0.07] p-5">
+                  <h3 className="text-lg font-semibold text-white mb-2">1-Suit (Spades only)</h3>
+                  <p className="text-white/70 text-sm leading-7">
                     All 104 cards are Spades. Every card stacks on every higher card. Every
                     sequence is automatically same-suit, so every sequence can be moved as a group.
                     Completing a King-to-Ace run is straightforward because suit conflicts do not
                     exist.
                   </p>
                 </div>
-                <div className="rounded-xl border border-[#e5e0d8] p-5">
-                  <h3 className="text-lg font-semibold text-[#2a2522] mb-2">2-Suit (Spades + Hearts)</h3>
-                  <p className="text-[#444444] text-sm leading-7">
+                <div className="rounded-xl border border-white/[0.07] p-5">
+                  <h3 className="text-lg font-semibold text-white mb-2">2-Suit (Spades + Hearts)</h3>
+                  <p className="text-white/70 text-sm leading-7">
                     The deck uses two suits. You can still stack any card on a higher card regardless
                     of suit, but only same-suit sequences can be moved together. This means
                     mixed-suit stacks become immovable dead weight unless you break them apart
                     card by card.
                   </p>
                 </div>
-                <div className="rounded-xl border border-[#e5e0d8] p-5">
-                  <h3 className="text-lg font-semibold text-[#2a2522] mb-2">4-Suit (all four)</h3>
-                  <p className="text-[#444444] text-sm leading-7">
+                <div className="rounded-xl border border-white/[0.07] p-5">
+                  <h3 className="text-lg font-semibold text-white mb-2">4-Suit (all four)</h3>
+                  <p className="text-white/70 text-sm leading-7">
                     All four suits are in play. The odds of two adjacent cards being the same suit
                     drop to 25%, so natural same-suit sequences are rare. Building a complete
                     same-suit run from King to Ace requires careful planning and extensive
@@ -257,23 +223,21 @@ export default function SpiderSuitComparisonPage() {
                 mode this is trivially satisfied. In 4-suit mode it is the central strategic
                 constraint that shapes every decision.
               </p>
-            </div>
-          </div>
-        </section>
+            </ContentBody>
+        </CardSection>
 
-        <AdUnit className="my-2" />
+        <AdUnit className="-my-1" />
 
-        <section id="strategy-differences" className="scroll-mt-6">
-          <div className={CARD} style={CARD_TOP}>
-            <SectionHeading sub="Different Games, Different Thinking">Strategy by Difficulty Level</SectionHeading>
-            <div className="px-6 sm:px-8 md:px-10 py-8 space-y-5 text-[#444444] leading-8">
+        <CardSection id="strategy-differences" variant="dark">
+            <SectionHeading variant="dark" sub="Different Games, Different Thinking">Strategy by Difficulty Level</SectionHeading>
+            <ContentBody variant="dark" className="space-y-5">
               <p>
                 Strategy shifts dramatically as you add suits. What works in 1-suit can actively
                 hurt you in 4-suit. Here is how your thinking needs to change at each level.
               </p>
 
-              <div className="card-inset rounded-xl p-6">
-                <h3 className="text-lg font-semibold text-[#2a2522] mb-3">1-Suit Strategy</h3>
+              <div className="bg-white/[0.05] border border-white/[0.07] rounded-xl p-6">
+                <h3 className="text-lg font-semibold text-white mb-3">1-Suit Strategy</h3>
                 <p className="text-sm leading-7 mb-3">
                   Focus on creating empty columns and building long sequences. Since every stack is
                   same-suit by default, your main concern is sequencing — getting cards in the right
@@ -287,8 +251,8 @@ export default function SpiderSuitComparisonPage() {
                 </ul>
               </div>
 
-              <div className="card-inset rounded-xl p-6">
-                <h3 className="text-lg font-semibold text-[#2a2522] mb-3">2-Suit Strategy</h3>
+              <div className="bg-white/[0.05] border border-white/[0.07] rounded-xl p-6">
+                <h3 className="text-lg font-semibold text-white mb-3">2-Suit Strategy</h3>
                 <p className="text-sm leading-7 mb-3">
                   Suit awareness becomes essential. You can still stack mixed suits when needed, but
                   every mixed-suit stack costs you mobility. The key skill is knowing when a
@@ -302,8 +266,8 @@ export default function SpiderSuitComparisonPage() {
                 </ul>
               </div>
 
-              <div className="card-inset rounded-xl p-6">
-                <h3 className="text-lg font-semibold text-[#2a2522] mb-3">4-Suit Strategy</h3>
+              <div className="bg-white/[0.05] border border-white/[0.07] rounded-xl p-6">
+                <h3 className="text-lg font-semibold text-white mb-3">4-Suit Strategy</h3>
                 <p className="text-sm leading-7 mb-3">
                   This is where Spider Solitaire becomes a serious puzzle. With four suits, natural
                   same-suit sequences are rare. You need to think several moves ahead, manage
@@ -321,40 +285,38 @@ export default function SpiderSuitComparisonPage() {
                   <li>Accept a lower win rate. Even strong players lose most 4-suit games.</li>
                 </ul>
               </div>
-            </div>
-          </div>
-        </section>
+            </ContentBody>
+        </CardSection>
 
-        <section id="win-rates" className="scroll-mt-6">
-          <div className={CARD} style={CARD_TOP}>
-            <SectionHeading sub="What To Expect">Win Rates by Difficulty Level</SectionHeading>
-            <div className="px-6 sm:px-8 md:px-10 py-8 space-y-5 text-[#444444] leading-8">
+        <CardSection id="win-rates" variant="dark">
+            <SectionHeading variant="dark" sub="What To Expect">Win Rates by Difficulty Level</SectionHeading>
+            <ContentBody variant="dark" className="space-y-5">
               <p>
                 Win rates are the most dramatic difference between the three modes. The numbers
                 below are approximate and based on community reports and solver analyses.
               </p>
               <div className="grid gap-4 md:grid-cols-3">
-                <div className="rounded-xl border border-[#e5e0d8] p-5 text-center">
-                  <div className="text-3xl font-bold text-[#2a2522] mb-1" style={{ fontFamily: 'var(--font-playfair), Georgia, serif' }}>~90%+</div>
-                  <div className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#B8860B]/65 mb-2">1-Suit Win Rate</div>
-                  <p className="text-[#444444] text-sm leading-7">
+                <div className="rounded-xl border border-white/[0.07] p-5 text-center">
+                  <div className="text-3xl font-bold text-white mb-1" style={{ fontFamily: 'var(--font-playfair), Georgia, serif' }}>~90%+</div>
+                  <div className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#D4AF37]/65 mb-2">1-Suit Win Rate</div>
+                  <p className="text-white/70 text-sm leading-7">
                     Most 1-suit deals are solvable and forgiving. Experienced players can sustain
                     win rates above 90%. Beginners typically win 60% to 80% of games.
                   </p>
                 </div>
-                <div className="rounded-xl border border-[#e5e0d8] p-5 text-center">
-                  <div className="text-3xl font-bold text-[#2a2522] mb-1" style={{ fontFamily: 'var(--font-playfair), Georgia, serif' }}>~40-60%</div>
-                  <div className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#B8860B]/65 mb-2">2-Suit Win Rate</div>
-                  <p className="text-[#444444] text-sm leading-7">
+                <div className="rounded-xl border border-white/[0.07] p-5 text-center">
+                  <div className="text-3xl font-bold text-white mb-1" style={{ fontFamily: 'var(--font-playfair), Georgia, serif' }}>~40-60%</div>
+                  <div className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#D4AF37]/65 mb-2">2-Suit Win Rate</div>
+                  <p className="text-white/70 text-sm leading-7">
                     A significant step up. Skilled players report win rates in the 40% to 60%
                     range. The suit-matching requirement filters out many otherwise clean
                     positions.
                   </p>
                 </div>
-                <div className="rounded-xl border border-[#e5e0d8] p-5 text-center">
-                  <div className="text-3xl font-bold text-[#2a2522] mb-1" style={{ fontFamily: 'var(--font-playfair), Georgia, serif' }}>~10-35%</div>
-                  <div className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#B8860B]/65 mb-2">4-Suit Win Rate</div>
-                  <p className="text-[#444444] text-sm leading-7">
+                <div className="rounded-xl border border-white/[0.07] p-5 text-center">
+                  <div className="text-3xl font-bold text-white mb-1" style={{ fontFamily: 'var(--font-playfair), Georgia, serif' }}>~10-35%</div>
+                  <div className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#D4AF37]/65 mb-2">4-Suit Win Rate</div>
+                  <p className="text-white/70 text-sm leading-7">
                     The hardest mode. Even experienced players report win rates between 10% and
                     35%. Many deals are theoretically solvable but practically beyond human reach.
                   </p>
@@ -365,40 +327,38 @@ export default function SpiderSuitComparisonPage() {
                 levels can feel like completely different games. If you are winning 90% of your
                 1-suit games, do not expect to carry that rate into 4-suit.
               </p>
-            </div>
-          </div>
-        </section>
+            </ContentBody>
+        </CardSection>
 
-        <section id="which-to-play" className="scroll-mt-6">
-          <div className={CARD} style={CARD_TOP}>
-            <SectionHeading sub="Choose Your Level">Which Mode Should You Play?</SectionHeading>
-            <div className="px-6 sm:px-8 md:px-10 py-8 space-y-5 text-[#444444] leading-8">
+        <CardSection id="which-to-play" variant="dark">
+            <SectionHeading variant="dark" sub="Choose Your Level">Which Mode Should You Play?</SectionHeading>
+            <ContentBody variant="dark" className="space-y-5">
               <p>
                 There is no wrong answer. Each mode serves a different purpose and appeals to a
                 different mindset. Here is a quick guide to help you choose.
               </p>
               <div className="grid gap-4 md:grid-cols-3">
-                <div className="card-inset rounded-xl p-5">
-                  <h3 className="text-lg font-semibold text-[#2a2522] mb-2">Play 1-suit if...</h3>
-                  <ul className="space-y-2 text-sm leading-7 text-[#444444]">
+                <div className="bg-white/[0.05] border border-white/[0.07] rounded-xl p-5">
+                  <h3 className="text-lg font-semibold text-white mb-2">Play 1-suit if...</h3>
+                  <ul className="space-y-2 text-sm leading-7 text-white/70">
                     <li>You are new to Spider Solitaire</li>
                     <li>You want a relaxing session with high win odds</li>
                     <li>You are learning the basic mechanics</li>
                     <li>You enjoy the satisfaction of completing runs often</li>
                   </ul>
                 </div>
-                <div className="card-inset rounded-xl p-5">
-                  <h3 className="text-lg font-semibold text-[#2a2522] mb-2">Play 2-suit if...</h3>
-                  <ul className="space-y-2 text-sm leading-7 text-[#444444]">
+                <div className="bg-white/[0.05] border border-white/[0.07] rounded-xl p-5">
+                  <h3 className="text-lg font-semibold text-white mb-2">Play 2-suit if...</h3>
+                  <ul className="space-y-2 text-sm leading-7 text-white/70">
                     <li>1-suit feels too easy and you want more challenge</li>
                     <li>You want to develop suit-management skills</li>
                     <li>You prefer a balanced win rate (not too easy, not brutal)</li>
                     <li>You are preparing for the jump to 4-suit</li>
                   </ul>
                 </div>
-                <div className="card-inset rounded-xl p-5">
-                  <h3 className="text-lg font-semibold text-[#2a2522] mb-2">Play 4-suit if...</h3>
-                  <ul className="space-y-2 text-sm leading-7 text-[#444444]">
+                <div className="bg-white/[0.05] border border-white/[0.07] rounded-xl p-5">
+                  <h3 className="text-lg font-semibold text-white mb-2">Play 4-suit if...</h3>
+                  <ul className="space-y-2 text-sm leading-7 text-white/70">
                     <li>You want the hardest version of the game</li>
                     <li>You enjoy strategic depth over quick wins</li>
                     <li>You are comfortable with a low win rate</li>
@@ -411,106 +371,41 @@ export default function SpiderSuitComparisonPage() {
                 up, a 4-suit game when you want a real fight. There is no rule that says you have
                 to pick one and stick with it.
               </p>
-            </div>
-          </div>
-        </section>
+            </ContentBody>
+        </CardSection>
 
-        <AdUnit className="my-2" />
+        <AdUnit className="-my-1" />
 
-        <section id="related" className="scroll-mt-6">
-          <div className={CARD} style={CARD_TOP}>
-            <SectionHeading sub="Keep Reading">Related Guides</SectionHeading>
-            <div className="px-6 sm:px-8 md:px-10 py-8 grid gap-4 md:grid-cols-3">
-              <Link href="/spider" className="rounded-xl border border-[#e5e0d8] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                <h3 className="text-lg font-semibold text-[#2a2522]">Play Spider Solitaire</h3>
-                <p className="mt-2 text-sm leading-7 text-[#444444]">
-                  Jump into a game and put these comparisons to the test.
-                </p>
-              </Link>
-              <Link href="/spider/how-to-play" className="rounded-xl border border-[#e5e0d8] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                <h3 className="text-lg font-semibold text-[#2a2522]">How To Play Spider</h3>
-                <p className="mt-2 text-sm leading-7 text-[#444444]">
-                  Learn the full rules, mechanics, and terminology.
-                </p>
-              </Link>
-              <Link href="/spider/strategy" className="rounded-xl border border-[#e5e0d8] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                <h3 className="text-lg font-semibold text-[#2a2522]">Spider Strategy Guide</h3>
-                <p className="mt-2 text-sm leading-7 text-[#444444]">
-                  Advanced techniques for 1-suit, 2-suit, and 4-suit games.
-                </p>
-              </Link>
-              <Link href="/spider/tips" className="rounded-xl border border-[#e5e0d8] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                <h3 className="text-lg font-semibold text-[#2a2522]">Spider Tips & Tricks</h3>
-                <p className="mt-2 text-sm leading-7 text-[#444444]">
-                  Quick practical advice to improve your win rate.
-                </p>
-              </Link>
-              <Link href="/freecell-vs-spider" className="rounded-xl border border-[#e5e0d8] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                <h3 className="text-lg font-semibold text-[#2a2522]">FreeCell vs Spider</h3>
-                <p className="mt-2 text-sm leading-7 text-[#444444]">
-                  See how Spider compares to FreeCell in rules, strategy, and feel.
-                </p>
-              </Link>
-            </div>
-          </div>
-        </section>
+        <CardSection id="related" variant="dark">
+            <SectionHeading variant="dark" sub="Keep Reading">Related Guides</SectionHeading>
+            <ContentBody variant="dark" className="grid gap-4 md:grid-cols-3">
+              <ContentLinkCard href="/spider" title="Play Spider Solitaire" description="Jump into a game and put these comparisons to the test." />
+              <ContentLinkCard href="/spider/how-to-play" title="How To Play Spider" description="Learn the full rules, mechanics, and terminology." />
+              <ContentLinkCard href="/spider/strategy" title="Spider Strategy Guide" description="Advanced techniques for 1-suit, 2-suit, and 4-suit games." />
+              <ContentLinkCard href="/spider/tips" title="Spider Tips & Tricks" description="Quick practical advice to improve your win rate." />
+              <ContentLinkCard href="/freecell-vs-spider" title="FreeCell vs Spider" description="See how Spider compares to FreeCell in rules, strategy, and feel." />
+            </ContentBody>
+        </CardSection>
 
-        <section id="faq" className="scroll-mt-6">
-          <div className={CARD} style={CARD_TOP}>
-            <SectionHeading sub="Common Questions">Spider Solitaire Difficulty FAQ</SectionHeading>
-            <div className="px-6 sm:px-8 md:px-10 py-8 space-y-6">
+        <CardSection id="faq" variant="dark">
+            <SectionHeading variant="dark" sub="Common Questions">Spider Solitaire Difficulty FAQ</SectionHeading>
+            <ContentBody variant="dark" className="space-y-6">
               {faqs.map((faq, index) => (
                 <div key={faq.question}>
-                  <h3 className="font-medium text-[#2a2522] text-lg mb-2">{faq.question}</h3>
-                  <p className="text-[#444444] leading-relaxed">{faq.answer}</p>
-                  {index < faqs.length - 1 && <div className="mt-6 border-b border-[#e5e0d8]" />}
+                  <h3 className="font-medium text-white text-lg mb-2">{faq.question}</h3>
+                  <p className="text-white/70 leading-relaxed">{faq.answer}</p>
+                  {index < faqs.length - 1 && <div className="mt-6 border-b border-white/[0.07]" />}
                 </div>
               ))}
-            </div>
-          </div>
-        </section>
-
-        <section>
-          <div
-            className={CARD}
-            style={{
-              ...CARD_TOP,
-              background: 'linear-gradient(135deg, rgba(10,74,42,0.6) 0%, rgba(6,37,22,0.8) 100%)',
-            }}
-          >
-            <div className="p-8 sm:p-10 text-center relative">
-              <h2
-                className="text-2xl sm:text-3xl font-semibold text-white mb-3"
-                style={{ fontFamily: 'var(--font-playfair), Georgia, serif' }}
-              >
-                Pick Your Difficulty and Play
-              </h2>
-              <p className="text-[#6B7280] mb-6 max-w-2xl mx-auto">
-                Start with 1-suit to learn the ropes, or jump straight into 4-suit if you want the
-                full challenge. The same game, three very different experiences.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                <Link
-                  href="/spider"
-                  className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl text-lg font-semibold transition-all duration-200 hover:scale-[1.03] active:scale-[0.98]"
-                  style={{
-                    background: 'linear-gradient(110deg, #B8860B, #D4AF37, #F3E5AB, #D4AF37, #B8860B)',
-                    backgroundSize: '200% 100%',
-                    color: '#1a1a0a',
-                  }}
-                >
-                  Play Spider Solitaire
-                </Link>
-                <Link
-                  href="/spider/strategy"
-                  className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl text-lg font-semibold border border-white/20 text-white/90 hover:bg-white/[0.08] transition-colors"
-                >
-                  Read Spider Strategy
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
+            </ContentBody>
+        </CardSection>        <CtaSection
+          heading="Pick Your Difficulty and Play"
+          body="Start with 1-suit to learn the ropes, or jump straight into 4-suit if you want the full challenge. The same game, three very different experiences."
+          primaryLabel="Play Spider Solitaire"
+          primaryHref="/spider"
+          secondaryLabel="Read Spider Strategy"
+          secondaryHref="/spider/strategy"
+        />
       </main>
     </ContentLayout>
   );

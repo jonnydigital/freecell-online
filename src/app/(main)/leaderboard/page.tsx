@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { absoluteUrl } from '@/lib/siteConfig';
+import ContentLayout from '@/components/ContentLayout';
+import { ContentHero, JsonLd } from '@/components/content';
 import LeaderboardFullView from './LeaderboardFullView';
 
 export const metadata: Metadata = {
@@ -11,41 +13,23 @@ export const metadata: Metadata = {
 };
 
 export default function LeaderboardPage() {
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: absoluteUrl('/') },
+      { '@type': 'ListItem', position: 2, name: 'Leaderboard', item: absoluteUrl('/leaderboard') },
+    ],
+  };
+
   return (
-    <div className="min-h-screen bg-[#072907] text-white selection:bg-[#D4AF37] selection:text-white">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'BreadcrumbList',
-            itemListElement: [
-              { '@type': 'ListItem', position: 1, name: 'Home', item: absoluteUrl('/') },
-              { '@type': 'ListItem', position: 2, name: 'Leaderboard', item: absoluteUrl('/leaderboard') },
-            ],
-          }),
-        }}
+    <ContentLayout variant="dark">
+      <JsonLd data={breadcrumbJsonLd} />
+
+      <ContentHero
+        title="Leaderboard"
+        subtitle="Compete with players around the world. Win the daily challenge to claim your rank."
       />
-      {/* Header */}
-      <header className="py-16 px-6 border-b border-white/5">
-        <div className="max-w-3xl mx-auto flex flex-col items-center text-center">
-          <Link
-            href="/"
-            className="text-xl font-black uppercase tracking-tighter mb-10 hover:opacity-80 transition-opacity"
-          >
-            Freecell<span className="text-[#D4AF37]">.</span>
-          </Link>
-          <h1
-            className="text-4xl md:text-6xl font-extrabold tracking-tight mb-4"
-            style={{ fontFamily: 'var(--font-playfair)' }}
-          >
-            Leaderboard
-          </h1>
-          <p className="text-white/40 text-lg max-w-xl leading-relaxed">
-            Compete with players around the world. Win the daily challenge to claim your rank.
-          </p>
-        </div>
-      </header>
 
       {/* Main */}
       <main className="max-w-3xl mx-auto px-4 py-10">
@@ -58,6 +42,6 @@ export default function LeaderboardPage() {
           &larr; Back to game
         </Link>
       </footer>
-    </div>
+    </ContentLayout>
   );
 }

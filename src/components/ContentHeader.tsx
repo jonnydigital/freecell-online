@@ -26,7 +26,7 @@ export default function ContentHeader({ variant = "dark" }: ContentHeaderProps) 
 
   return (
     <nav
-      className={`sticky top-0 z-50 backdrop-blur-md border-b px-4 py-3 flex items-center justify-between ${
+      className={`sticky top-0 z-50 backdrop-blur-md border-b px-4 py-3.5 sm:py-4 flex items-center justify-between shadow-[0_1px_3px_rgba(0,0,0,0.15)] ${
         isDark
           ? "bg-[#072907]/95 border-[#1a5c1a]/30"
           : "bg-white/95 border-gray-200"
@@ -42,7 +42,7 @@ export default function ContentHeader({ variant = "dark" }: ContentHeaderProps) 
       </Link>
 
       <div
-        className={`hidden md:flex gap-6 text-[11px] font-bold uppercase tracking-wider ${
+        className={`hidden md:flex gap-6 text-xs font-bold uppercase tracking-wider ${
           isDark ? "text-white/60" : "text-gray-500"
         }`}
       >

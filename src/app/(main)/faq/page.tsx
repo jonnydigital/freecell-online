@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { absoluteUrl } from "@/lib/siteConfig";
 import AdUnit from "@/components/AdUnit";
 import ContentLayout from "@/components/ContentLayout";
+import { ContentHero, SectionHeading, CardSection, ContentBody, TocPills, CtaSection, JsonLd } from "@/components/content";
 
 export const metadata: Metadata = {
   title: "FreeCell FAQ | Answers to Every Question About FreeCell Solitaire",
@@ -16,11 +17,6 @@ export const metadata: Metadata = {
     "freecell rules questions",
     "freecell how to win",
   ],
-};
-
-const CARD = "card-panel";
-const CARD_TOP: React.CSSProperties = {
-  borderTop: "1px solid rgba(184, 134, 11, 0.08)",
 };
 
 interface FaqItem {
@@ -61,7 +57,7 @@ const faqCategories: FaqCategory[] = [
             a deeper walkthrough, see our{" "}
             <Link
               href="/how-to-play"
-              className="text-[#D4AF37] hover:underline"
+              className="text-[#8B6914] hover:underline"
             >
               How to Play guide
             </Link>
@@ -99,7 +95,7 @@ const faqCategories: FaqCategory[] = [
             time. But most computer versions allow{" "}
             <Link
               href="/glossary#supermove"
-              className="text-[#D4AF37] hover:underline"
+              className="text-[#8B6914] hover:underline"
             >
               supermoves
             </Link>{" "}
@@ -127,7 +123,7 @@ const faqCategories: FaqCategory[] = [
             The four spaces in the top-left are{" "}
             <Link
               href="/glossary#free-cell"
-              className="text-[#D4AF37] hover:underline"
+              className="text-[#8B6914] hover:underline"
             >
               free cells
             </Link>{" "}
@@ -135,7 +131,7 @@ const faqCategories: FaqCategory[] = [
             you breathing room to reorganize the tableau. But fill them all and
             you&apos;re nearly paralyzed — keeping them empty is one of the most
             important{" "}
-            <Link href="/strategy" className="text-[#D4AF37] hover:underline">
+            <Link href="/strategy" className="text-[#8B6914] hover:underline">
               strategic principles
             </Link>
             .
@@ -163,7 +159,7 @@ const faqCategories: FaqCategory[] = [
             Look for exposed Aces, buried low cards, and natural sequences
             already in place. Your first move should usually uncover a buried Ace
             or create space. Our{" "}
-            <Link href="/strategy" className="text-[#D4AF37] hover:underline">
+            <Link href="/strategy" className="text-[#8B6914] hover:underline">
               Strategy Guide
             </Link>{" "}
             covers opening play in depth.
@@ -179,7 +175,7 @@ const faqCategories: FaqCategory[] = [
             3\u20135 moves ahead instead of making obvious moves. Use the undo
             button to explore different lines. Most players see major improvement
             within 20\u201330 games of deliberate practice. See our{" "}
-            <Link href="/tips" className="text-[#D4AF37] hover:underline">
+            <Link href="/tips" className="text-[#8B6914] hover:underline">
               25 Tips & Tricks
             </Link>{" "}
             for specific actionable advice.
@@ -198,7 +194,7 @@ const faqCategories: FaqCategory[] = [
             in our{" "}
             <Link
               href="/how-to-play#supermoves"
-              className="text-[#D4AF37] hover:underline"
+              className="text-[#8B6914] hover:underline"
             >
               How to Play guide
             </Link>
@@ -219,37 +215,6 @@ const faqCategories: FaqCategory[] = [
     ],
   },
 ];
-
-function SectionHeading({
-  children,
-  id,
-  sub,
-  icon,
-}: {
-  children: React.ReactNode;
-  id?: string;
-  sub?: string;
-  icon?: string;
-}) {
-  return (
-    <div className="px-6 sm:px-8 md:px-10 pt-8 sm:pt-10 pb-0">
-      {sub && (
-        <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#B8860B]/60 mb-1.5 block">
-          {sub}
-        </span>
-      )}
-      <h2
-        id={id}
-        className="text-2xl sm:text-3xl font-bold text-[#2a2522]"
-        style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
-      >
-        {icon && <span className="mr-2 text-[#c9a84c]">{icon}</span>}
-        {children}
-      </h2>
-      <div className="card-title-separator mt-5" />
-    </div>
-  );
-}
 
 export default function FAQPage() {
   const breadcrumbJsonLd = {
@@ -278,81 +243,29 @@ export default function FAQPage() {
 
   return (
     <ContentLayout variant="dark">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
-      />
+      <JsonLd data={faqJsonLd} />
+      <JsonLd data={breadcrumbJsonLd} />
 
       {/* ── Hero ── */}
-      <header className="relative pt-6 pb-12 sm:pt-8 sm:pb-16 px-6 text-center overflow-hidden">
-        <div
-          className="absolute top-10 left-[10%] text-6xl sm:text-8xl text-white/[0.03] select-none pointer-events-none"
-          aria-hidden="true"
-        >
-          {"\u2663"}
-        </div>
-        <div
-          className="absolute top-16 right-[8%] text-5xl sm:text-7xl text-red-500/[0.04] select-none pointer-events-none"
-          aria-hidden="true"
-        >
-          {"\u2666"}
-        </div>
-        <div
-          className="absolute bottom-4 left-[18%] text-5xl sm:text-6xl text-white/[0.03] select-none pointer-events-none"
-          aria-hidden="true"
-        >
-          {"\u2660"}
-        </div>
-
-        <h1
-          className="text-4xl sm:text-5xl lg:text-6xl font-semibold text-[#D4AF37] mb-4 max-w-3xl mx-auto leading-tight"
-          style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
-        >
-          FreeCell FAQ
-        </h1>
-        <p className="text-[#6B7280] text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
-          Everything you need to know about the mechanics, rules, and strategy
-          of FreeCell.
-        </p>
-
-        <div className="mt-8 flex items-center justify-center gap-3">
-          <div className="h-px w-12 bg-gradient-to-r from-transparent to-[#D4AF37]/50" />
-          <span className="text-[#D4AF37] text-sm">
-            {"\u2660"} {"\u2665"} {"\u2666"} {"\u2663"}
-          </span>
-          <div className="h-px w-12 bg-gradient-to-l from-transparent to-[#D4AF37]/50" />
-        </div>
-      </header>
+      <ContentHero
+        title="FreeCell FAQ"
+        subtitle="Everything you need to know about the mechanics, rules, and strategy of FreeCell."
+      />
 
       {/* ── TOC Pills ── */}
-      <nav className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-10 mb-12">
-        <div className="flex md:flex-wrap md:justify-center gap-3 overflow-x-auto no-scrollbar pb-1">
-          {faqCategories.map((cat) => (
-            <a
-              key={cat.id}
-              href={`#${cat.id}`}
-              className="rounded-full px-5 py-2 border border-[#D4AF37]/30 bg-transparent text-sm tracking-wide text-[#D4AF37] flex items-center gap-2 transition-all hover:bg-[#D4AF37]/10 hover:border-[#D4AF37]/50 whitespace-nowrap shrink-0"
-            >
-              <span
-                className={`text-sm ${cat.icon === "\u2665" || cat.icon === "\u2666" ? "text-red-400" : ""}`}
-              >
-                {cat.icon}
-              </span>
-              {cat.title}
-            </a>
-          ))}
-        </div>
-      </nav>
+      <TocPills
+        items={faqCategories.map((cat) => ({
+          href: `#${cat.id}`,
+          icon: cat.icon,
+          label: cat.title,
+        }))}
+      />
 
       {/* ── Content ── */}
-      <main className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-10 pb-20 flex flex-col gap-12">
+      <main className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-10 pb-20 flex flex-col gap-6">
         {faqCategories.map((category, catIndex) => (
           <section key={category.id} id={category.id} className="scroll-mt-6">
-            <div className={CARD} style={CARD_TOP}>
+            <CardSection>
               <SectionHeading
                 sub={`${category.items.length} Questions`}
                 id={`${category.id}-heading`}
@@ -361,11 +274,11 @@ export default function FAQPage() {
                 {category.title}
               </SectionHeading>
 
-              <div className="px-6 sm:px-8 md:px-10 py-8 space-y-4">
+              <ContentBody className="space-y-4">
                 {category.items.map((faq, i) => (
                   <div key={i} className="card-inset rounded-lg p-5">
                     <div className="flex items-start gap-3">
-                      <span className="text-[#D4AF37] font-bold text-lg shrink-0 mt-0.5">
+                      <span className="text-[#8B6914] font-bold text-lg shrink-0 mt-0.5">
                         Q
                       </span>
                       <div className="flex-1">
@@ -385,71 +298,24 @@ export default function FAQPage() {
                     </div>
                   </div>
                 ))}
-              </div>
-            </div>
+              </ContentBody>
+            </CardSection>
 
             {catIndex === 1 && <AdUnit className="mt-8" />}
           </section>
         ))}
 
         {/* ── CTA ── */}
-        <section>
-          <div
-            className={CARD}
-            style={{
-              ...CARD_TOP,
-              background:
-                "linear-gradient(135deg, rgba(10,74,42,0.6) 0%, rgba(6,37,22,0.8) 100%)",
-            }}
-          >
-            <div className="p-8 sm:p-10 text-center relative">
-              <div
-                className="absolute top-4 left-6 text-4xl text-white/[0.04] select-none"
-                aria-hidden="true"
-              >
-                {"\u2663"}
-              </div>
-              <div
-                className="absolute bottom-4 right-6 text-4xl text-white/[0.04] select-none"
-                aria-hidden="true"
-              >
-                {"\u2660"}
-              </div>
-
-              <h2
-                className="text-2xl sm:text-3xl font-semibold text-white mb-3"
-                style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
-              >
-                Ready to Play?
-              </h2>
-              <p className="text-[#6B7280] mb-6 max-w-md mx-auto">
-                Now that you have the answers, put your knowledge to work at the
-                table.
-              </p>
-
-              <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                <Link
-                  href="/"
-                  className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl text-lg font-semibold transition-all duration-200 hover:scale-[1.03] active:scale-[0.98]"
-                  style={{
-                    background:
-                      "linear-gradient(110deg, #B8860B, #D4AF37, #F3E5AB, #D4AF37, #B8860B)",
-                    backgroundSize: "200% 100%",
-                    color: "#1a1a0a",
-                  }}
-                >
-                  Play FreeCell Now
-                </Link>
-                <Link
-                  href="/strategy"
-                  className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl text-lg font-semibold border border-white/20 text-white/90 hover:bg-white/[0.08] transition-colors"
-                >
-                  Learn Strategy
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
+        <CtaSection
+          body={
+            <>
+              Now that you have the answers, put your knowledge to work at the
+              table.
+            </>
+          }
+          secondaryLabel="Learn Strategy"
+          secondaryHref="/strategy"
+        />
       </main>
     </ContentLayout>
   );

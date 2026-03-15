@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { absoluteUrl, siteConfig } from '@/lib/siteConfig';
 import AdUnit from '@/components/AdUnit';
 import ContentLayout from '@/components/ContentLayout';
+import { SectionHeading, CardSection, ContentBody, CtaSection, ContentLinkCard, JsonLd } from '@/components/content';
 
 export const metadata: Metadata = {
   title: 'Is Spider Solitaire Winnable? Win Rates by Suit Count',
@@ -30,7 +31,6 @@ export const metadata: Metadata = {
   },
 };
 
-const CARD = 'rounded-xl bg-white/[0.04] border border-white/[0.07] overflow-hidden';
 
 const faqs = [
   {
@@ -60,32 +60,6 @@ const faqs = [
   },
 ];
 
-function SectionHeading({
-  children,
-  id,
-  sub,
-}: {
-  children: React.ReactNode;
-  id?: string;
-  sub?: string;
-}) {
-  return (
-    <div className="px-8 sm:px-10 md:px-12 pt-6 sm:pt-8 pb-0">
-      {sub && (
-        <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#D4AF37]/60 mb-1.5 block">
-          {sub}
-        </span>
-      )}
-      <h2
-        id={id}
-        className="text-2xl sm:text-3xl font-bold text-white scroll-mt-6"
-      >
-        {children}
-      </h2>
-      <div className="mt-4 h-px bg-gradient-to-r from-[#D4AF37]/40 to-transparent" />
-    </div>
-  );
-}
 
 export default function IsSpiderSolitaireWinnablePage() {
   const jsonLd = [
@@ -150,12 +124,11 @@ export default function IsSpiderSolitaireWinnablePage() {
 
   return (
     <ContentLayout variant="dark">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <JsonLd data={jsonLd} />
 
       <main className="max-w-5xl mx-auto px-4 sm:px-6 pt-6 pb-20 space-y-6">
         {/* Hero / Short Answer */}
-        <section>
-          <div className={CARD}>
+        <CardSection variant="dark">
             <div className="px-8 sm:px-10 md:px-12 pt-6 sm:pt-8 pb-6">
               <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#D4AF37]/60 block mb-3">
                 Spider Solitaire Solvability
@@ -203,14 +176,12 @@ export default function IsSpiderSolitaireWinnablePage() {
                 </div>
               </div>
             </div>
-          </div>
-        </section>
+        </CardSection>
 
         {/* 1-Suit Spider */}
-        <section id="1-suit-spider" className="scroll-mt-6">
-          <div className={CARD}>
-            <SectionHeading sub="Beginner Friendly">1-Suit Spider: Nearly Always Winnable</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-5 text-white/70 leading-8">
+        <CardSection id="1-suit-spider" variant="dark">
+            <SectionHeading variant="dark" sub="Beginner Friendly">1-Suit Spider: Nearly Always Winnable</SectionHeading>
+            <ContentBody variant="dark" className="space-y-5">
               <p>
                 1-suit Spider uses only spades, which means every card can stack on every other card
                 regardless of suit. This removes the biggest obstacle in Spider Solitaire: suit
@@ -232,15 +203,13 @@ export default function IsSpiderSolitaireWinnablePage() {
                   move order.
                 </p>
               </div>
-            </div>
-          </div>
-        </section>
+            </ContentBody>
+        </CardSection>
 
         {/* 2-Suit Spider */}
-        <section id="2-suit-spider" className="scroll-mt-6">
-          <div className={CARD}>
-            <SectionHeading sub="The Sweet Spot">2-Suit Spider: Challenging but Fair</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-5 text-white/70 leading-8">
+        <CardSection id="2-suit-spider" variant="dark">
+            <SectionHeading variant="dark" sub="The Sweet Spot">2-Suit Spider: Challenging but Fair</SectionHeading>
+            <ContentBody variant="dark" className="space-y-5">
               <p>
                 2-suit Spider uses hearts and spades (or two suits of your choice). This is where
                 Spider gets interesting. You can stack any card on any other of the next higher
@@ -263,17 +232,15 @@ export default function IsSpiderSolitaireWinnablePage() {
                 </Link>{' '}
                 for a deeper breakdown.
               </p>
-            </div>
-          </div>
-        </section>
+            </ContentBody>
+        </CardSection>
 
-        <AdUnit className="my-4" />
+        <AdUnit className="-my-1" />
 
         {/* 4-Suit Spider */}
-        <section id="4-suit-spider" className="scroll-mt-6">
-          <div className={CARD}>
-            <SectionHeading sub="Expert Territory">4-Suit Spider: The Ultimate Challenge</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-5 text-white/70 leading-8">
+        <CardSection id="4-suit-spider" variant="dark">
+            <SectionHeading variant="dark" sub="Expert Territory">4-Suit Spider: The Ultimate Challenge</SectionHeading>
+            <ContentBody variant="dark" className="space-y-5">
               <p>
                 4-suit Spider is the full, uncompromising version of the game. All four suits are in
                 play, and only perfectly suited runs of King through Ace can be cleared to the
@@ -301,15 +268,13 @@ export default function IsSpiderSolitaireWinnablePage() {
                   <div className="text-sm text-white/50">4-suit solvable (perfect play)</div>
                 </div>
               </div>
-            </div>
-          </div>
-        </section>
+            </ContentBody>
+        </CardSection>
 
         {/* Why Spider Is Harder Than FreeCell */}
-        <section id="spider-vs-freecell-difficulty" className="scroll-mt-6">
-          <div className={CARD}>
-            <SectionHeading sub="Structural Differences">Why Spider Is Harder to Solve Than FreeCell</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 grid gap-6 lg:grid-cols-3">
+        <CardSection id="spider-vs-freecell-difficulty" variant="dark">
+            <SectionHeading variant="dark" sub="Structural Differences">Why Spider Is Harder to Solve Than FreeCell</SectionHeading>
+            <ContentBody variant="dark" className="grid gap-6 lg:grid-cols-3">
               <div className="bg-white/[0.05] border border-white/[0.07] rounded-xl p-5">
                 <h3 className="text-lg font-semibold text-white mb-2">Hidden cards</h3>
                 <p className="text-white/70 leading-7 text-sm">
@@ -343,15 +308,13 @@ export default function IsSpiderSolitaireWinnablePage() {
                   explores this in detail.
                 </p>
               </div>
-            </div>
-          </div>
-        </section>
+            </ContentBody>
+        </CardSection>
 
         {/* Tips for Winning More */}
-        <section id="tips-for-winning" className="scroll-mt-6">
-          <div className={CARD}>
-            <SectionHeading sub="Practical Advice">Tips for Winning More Spider Games</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 grid gap-4 md:grid-cols-2">
+        <CardSection id="tips-for-winning" variant="dark">
+            <SectionHeading variant="dark" sub="Practical Advice">Tips for Winning More Spider Games</SectionHeading>
+            <ContentBody variant="dark" className="grid gap-4 md:grid-cols-2">
               <div className="rounded-xl border border-white/[0.07] p-5">
                 <h3 className="text-lg font-semibold text-white mb-2">1. Uncover hidden cards first</h3>
                 <p className="text-white/70 text-sm leading-7">
@@ -410,15 +373,13 @@ export default function IsSpiderSolitaireWinnablePage() {
                   locked after two stock draws, it may be time for a new deal.
                 </p>
               </div>
-            </div>
-          </div>
-        </section>
+            </ContentBody>
+        </CardSection>
 
         {/* FAQ */}
-        <section id="faq" className="scroll-mt-6">
-          <div className={CARD}>
-            <SectionHeading sub="Common Questions">Spider Solitaire Winnability FAQ</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-6">
+        <CardSection id="faq" variant="dark">
+            <SectionHeading variant="dark" sub="Common Questions">Spider Solitaire Winnability FAQ</SectionHeading>
+            <ContentBody variant="dark" className="space-y-6">
               {faqs.map((faq, index) => (
                 <div key={faq.question}>
                   <h3 className="font-medium text-white text-lg mb-2">{faq.question}</h3>
@@ -426,95 +387,28 @@ export default function IsSpiderSolitaireWinnablePage() {
                   {index < faqs.length - 1 && <div className="mt-6 border-b border-white/[0.07]" />}
                 </div>
               ))}
-            </div>
-          </div>
-        </section>
+            </ContentBody>
+        </CardSection>
 
         {/* Related guides */}
-        <section id="related-guides" className="scroll-mt-6">
-          <div className={CARD}>
-            <SectionHeading sub="Read Next">Related Spider Guides</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 grid gap-4 md:grid-cols-2">
-              <Link href="/spider" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                <h3 className="text-lg font-semibold text-white">Play Spider Solitaire</h3>
-                <p className="mt-2 text-sm leading-7 text-white/70">
-                  Put the theory to the test — play 1-suit, 2-suit, or 4-suit Spider online for free.
-                </p>
-              </Link>
-              <Link href="/spider/strategy" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                <h3 className="text-lg font-semibold text-white">Spider Strategy Guide</h3>
-                <p className="mt-2 text-sm leading-7 text-white/70">
-                  Deep-dive into column management, suit building, and stock-draw timing.
-                </p>
-              </Link>
-              <Link href="/spider/tips" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                <h3 className="text-lg font-semibold text-white">Spider Tips & Tricks</h3>
-                <p className="mt-2 text-sm leading-7 text-white/70">
-                  Quick tactical advice to immediately improve your win rate.
-                </p>
-              </Link>
-              <Link href="/spider/how-to-play" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                <h3 className="text-lg font-semibold text-white">How to Play Spider</h3>
-                <p className="mt-2 text-sm leading-7 text-white/70">
-                  Complete rules and setup guide for all Spider Solitaire variants.
-                </p>
-              </Link>
-              <Link href="/freecell-vs-spider" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                <h3 className="text-lg font-semibold text-white">FreeCell vs Spider</h3>
-                <p className="mt-2 text-sm leading-7 text-white/70">
-                  How these two classics differ in difficulty, strategy, and the role of luck.
-                </p>
-              </Link>
-              <Link href="/is-every-freecell-game-winnable" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                <h3 className="text-lg font-semibold text-white">Is Every FreeCell Game Winnable?</h3>
-                <p className="mt-2 text-sm leading-7 text-white/70">
-                  The companion article — see how FreeCell solvability compares to Spider.
-                </p>
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        {/* CTA */}
-        <section>
-          <div
-            className={CARD}
-            style={{
-              background: 'linear-gradient(135deg, rgba(10,74,42,0.6) 0%, rgba(6,37,22,0.8) 100%)',
-            }}
-          >
-            <div className="p-8 sm:p-10 text-center relative">
-              <h2
-                className="text-2xl sm:text-3xl font-semibold text-white mb-3"
-              >
-                Ready to Test Your Skills?
-              </h2>
-              <p className="text-white/40 mb-6 max-w-2xl mx-auto">
-                Start with 1-suit to build confidence, then work your way up to 4-suit.
-                Every variant teaches you something different about card sequencing and risk.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                <Link
-                  href="/spider"
-                  className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl text-lg font-semibold transition-all duration-200 hover:scale-[1.03] active:scale-[0.98]"
-                  style={{
-                    background: 'linear-gradient(110deg, #B8860B, #D4AF37, #F3E5AB, #D4AF37, #B8860B)',
-                    backgroundSize: '200% 100%',
-                    color: '#1a1a0a',
-                  }}
-                >
-                  Play Spider Solitaire
-                </Link>
-                <Link
-                  href="/spider/strategy"
-                  className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl text-lg font-semibold border border-white/20 text-white/90 hover:bg-white/[0.08] transition-colors"
-                >
-                  Read the Strategy Guide
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
+        <CardSection id="related-guides" variant="dark">
+            <SectionHeading variant="dark" sub="Read Next">Related Spider Guides</SectionHeading>
+            <ContentBody variant="dark" className="grid gap-4 md:grid-cols-2">
+              <ContentLinkCard href="/spider" title="Play Spider Solitaire" description="Put the theory to the test — play 1-suit, 2-suit, or 4-suit Spider online for free." />
+              <ContentLinkCard href="/spider/strategy" title="Spider Strategy Guide" description="Deep-dive into column management, suit building, and stock-draw timing." />
+              <ContentLinkCard href="/spider/tips" title="Spider Tips & Tricks" description="Quick tactical advice to immediately improve your win rate." />
+              <ContentLinkCard href="/spider/how-to-play" title="How to Play Spider" description="Complete rules and setup guide for all Spider Solitaire variants." />
+              <ContentLinkCard href="/freecell-vs-spider" title="FreeCell vs Spider" description="How these two classics differ in difficulty, strategy, and the role of luck." />
+              <ContentLinkCard href="/is-every-freecell-game-winnable" title="Is Every FreeCell Game Winnable?" description="The companion article — see how FreeCell solvability compares to Spider." />
+            </ContentBody>
+        </CardSection>        <CtaSection
+          heading="Ready to Test Your Skills?"
+          body="Start with 1-suit to build confidence, then work your way up to 4-suit. Every variant teaches you something different about card sequencing and risk."
+          primaryLabel="Play Spider Solitaire"
+          primaryHref="/spider"
+          secondaryLabel="Read the Strategy Guide"
+          secondaryHref="/spider/strategy"
+        />
       </main>
     </ContentLayout>
   );

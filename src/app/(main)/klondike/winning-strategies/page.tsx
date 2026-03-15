@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import ContentLayout from "@/components/ContentLayout";
+import { ContentHero, JsonLd, CtaSection, ContentLinkCard } from "@/components/content";
 import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
@@ -137,64 +138,18 @@ export default function KlondikeWinningStrategiesPage() {
 
   return (
     <ContentLayout variant="dark">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
-      />
+      <JsonLd data={faqJsonLd} />
+      <JsonLd data={breadcrumbJsonLd} />
+      <JsonLd data={articleJsonLd} />
 
-      {/* Hero */}
-      <header className="relative pt-6 pb-12 sm:pt-8 sm:pb-16 px-6 text-center overflow-hidden">
-        <div
-          className="absolute top-10 left-[10%] text-6xl sm:text-8xl text-white/[0.03] select-none pointer-events-none"
-          aria-hidden="true"
-        >
-          {"\u2660"}
-        </div>
-        <div
-          className="absolute top-16 right-[8%] text-5xl sm:text-7xl text-red-500/[0.04] select-none pointer-events-none"
-          aria-hidden="true"
-        >
-          {"\u2666"}
-        </div>
-
-        <p className="text-sm uppercase tracking-[0.2em] text-[var(--gold)] mb-3 font-medium">
-          <Link href="/klondike" className="hover:text-white transition-colors">
-            Klondike Solitaire
-          </Link>{" "}
-          / Winning Strategies
-        </p>
-        <h1
-          className="text-4xl sm:text-5xl lg:text-6xl font-semibold text-[#D4AF37] mb-4 max-w-3xl mx-auto leading-tight"
-          style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
-        >
-          Can You Win Solitaire Every Time?
-        </h1>
-        <p className="text-white/50 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
-          The statistics behind Klondike solvability, the decision trees that
-          separate winners from losers, and the advanced strategies that push win
-          rates past 80%.
-        </p>
-
-        <div className="mt-8 flex items-center justify-center gap-3">
-          <div className="h-px w-12 bg-gradient-to-r from-transparent to-[#D4AF37]/50" />
-          <span className="text-[#D4AF37] text-sm">
-            {"\u2660"} {"\u2665"} {"\u2666"} {"\u2663"}
-          </span>
-          <div className="h-px w-12 bg-gradient-to-l from-transparent to-[#D4AF37]/50" />
-        </div>
-      </header>
+      <ContentHero
+        title="How to Win Klondike Solitaire Every Time"
+        subtitle="Statistical analysis, advanced decision trees, and the strategies that push win rates above 80%."
+      />
 
       {/* Main Content */}
-      <main className="max-w-4xl mx-auto px-6 sm:px-10 lg:px-12 pb-20 flex flex-col gap-8">
-        <article className="space-y-10">
+      <main className="max-w-4xl mx-auto px-6 sm:px-10 lg:px-12 pb-20 flex flex-col gap-6">
+        <article className="space-y-6">
           {/* The Numbers */}
           <section>
             <h2
@@ -333,7 +288,7 @@ export default function KlondikeWinningStrategiesPage() {
             </div>
           </section>
 
-          <AdUnit format="horizontal" className="my-4" />
+          <AdUnit format="horizontal" className="-my-1" />
 
           {/* The Decision Tree */}
           <section>
@@ -516,7 +471,7 @@ export default function KlondikeWinningStrategiesPage() {
             </div>
           </section>
 
-          <AdUnit format="auto" className="my-4" />
+          <AdUnit format="auto" className="-my-1" />
 
           {/* Advanced Draw 3 Strategy */}
           <section>
@@ -719,7 +674,7 @@ export default function KlondikeWinningStrategiesPage() {
             </div>
           </section>
 
-          <AdUnit format="auto" className="my-4" />
+          <AdUnit format="auto" className="-my-1" />
 
           {/* Common Strategic Errors */}
           <section>
@@ -888,7 +843,7 @@ export default function KlondikeWinningStrategiesPage() {
             </div>
           </section>
 
-          <AdUnit format="horizontal" className="my-4" />
+          <AdUnit format="horizontal" className="-my-1" />
 
           {/* Klondike vs FreeCell comparison */}
           <section>
@@ -984,37 +939,16 @@ export default function KlondikeWinningStrategiesPage() {
             </div>
           </section>
 
-          <AdUnit format="horizontal" className="my-4" />
+          <AdUnit format="horizontal" className="-my-1" />
 
-          {/* CTA */}
-          <section className="text-center">
-            <div className="bg-gradient-to-br from-emerald-900/30 to-emerald-900/10 border border-emerald-500/20 rounded-xl p-8">
-              <h2
-                className="text-2xl font-bold mb-3"
-                style={{ fontFamily: "var(--font-playfair)" }}
-              >
-                Test Your Strategy
-              </h2>
-              <p className="text-white/60 mb-6 max-w-md mx-auto">
-                The best way to improve is deliberate practice. Apply these
-                strategies to your next 50 games and track your progress.
-              </p>
-              <div className="flex flex-wrap justify-center gap-3">
-                <Link
-                  href="/klondike"
-                  className="px-6 py-3 bg-emerald-700 hover:bg-emerald-600 text-white font-bold rounded-lg transition-colors"
-                >
-                  Play Klondike Solitaire →
-                </Link>
-                <Link
-                  href="/klondike/strategy"
-                  className="px-6 py-3 bg-white/10 hover:bg-white/20 text-white/80 font-medium rounded-lg transition-colors"
-                >
-                  Strategy Guide
-                </Link>
-              </div>
-            </div>
-          </section>
+          <CtaSection
+            heading="Test Your Strategy"
+            body="The best way to improve is deliberate practice. Apply these strategies to your next 50 games and track your progress."
+            primaryLabel="Play Klondike Solitaire"
+            primaryHref="/klondike"
+            secondaryLabel="Strategy Guide"
+            secondaryHref="/klondike/strategy"
+          />
 
           {/* Cross-links */}
           <section className="bg-white/[0.03] border border-white/10 rounded-xl p-6 sm:p-8">
@@ -1025,105 +959,15 @@ export default function KlondikeWinningStrategiesPage() {
               Related Pages
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <Link
-                href="/klondike"
-                className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] hover:border-[#D4AF37]/30 transition-all"
-              >
-                <span className="text-[#D4AF37] font-semibold">
-                  Play Klondike Solitaire
-                </span>
-                <p className="text-sm text-white/40 mt-1">
-                  Play online for free, no download
-                </p>
-              </Link>
-              <Link
-                href="/klondike/how-to-play"
-                className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] hover:border-[#D4AF37]/30 transition-all"
-              >
-                <span className="text-[#D4AF37] font-semibold">
-                  How to Play Klondike
-                </span>
-                <p className="text-sm text-white/40 mt-1">
-                  Complete rules and setup guide
-                </p>
-              </Link>
-              <Link
-                href="/klondike/strategy"
-                className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] hover:border-[#D4AF37]/30 transition-all"
-              >
-                <span className="text-[#D4AF37] font-semibold">
-                  Strategy Guide
-                </span>
-                <p className="text-sm text-white/40 mt-1">
-                  Core principles and tactical frameworks
-                </p>
-              </Link>
-              <Link
-                href="/klondike/tips"
-                className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] hover:border-[#D4AF37]/30 transition-all"
-              >
-                <span className="text-[#D4AF37] font-semibold">
-                  Tips & Tricks
-                </span>
-                <p className="text-sm text-white/40 mt-1">
-                  Quick, practical tips for all levels
-                </p>
-              </Link>
-              <Link
-                href="/freecell-vs-klondike"
-                className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] hover:border-[#D4AF37]/30 transition-all"
-              >
-                <span className="text-[#D4AF37] font-semibold">
-                  FreeCell vs Klondike
-                </span>
-                <p className="text-sm text-white/40 mt-1">
-                  Head-to-head comparison
-                </p>
-              </Link>
-              <Link
-                href="/spider/strategy"
-                className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] hover:border-[#D4AF37]/30 transition-all"
-              >
-                <span className="text-[#D4AF37] font-semibold">
-                  Spider Strategy
-                </span>
-                <p className="text-sm text-white/40 mt-1">
-                  Strategy guide for Spider Solitaire
-                </p>
-              </Link>
-              <Link
-                href="/strategy"
-                className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] hover:border-[#D4AF37]/30 transition-all"
-              >
-                <span className="text-[#D4AF37] font-semibold">
-                  FreeCell Strategy
-                </span>
-                <p className="text-sm text-white/40 mt-1">
-                  FreeCell tips and techniques
-                </p>
-              </Link>
-              <Link
-                href="/solitaire-types"
-                className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] hover:border-[#D4AF37]/30 transition-all"
-              >
-                <span className="text-[#D4AF37] font-semibold">
-                  Types of Solitaire
-                </span>
-                <p className="text-sm text-white/40 mt-1">
-                  20 solitaire variants compared
-                </p>
-              </Link>
-              <Link
-                href="/"
-                className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] hover:border-[#D4AF37]/30 transition-all"
-              >
-                <span className="text-[#D4AF37] font-semibold">
-                  Play FreeCell
-                </span>
-                <p className="text-sm text-white/40 mt-1">
-                  The classic strategic solitaire
-                </p>
-              </Link>
+              <ContentLinkCard href="/klondike" title="Play Klondike Solitaire" description="Play online for free, no download" />
+              <ContentLinkCard href="/klondike/how-to-play" title="How to Play Klondike" description="Complete rules and setup guide" />
+              <ContentLinkCard href="/klondike/strategy" title="Strategy Guide" description="Core principles and tactical frameworks" />
+              <ContentLinkCard href="/klondike/tips" title="Tips & Tricks" description="Quick, practical tips for all levels" />
+              <ContentLinkCard href="/freecell-vs-klondike" title="FreeCell vs Klondike" description="Head-to-head comparison" />
+              <ContentLinkCard href="/spider/strategy" title="Spider Strategy" description="Strategy guide for Spider Solitaire" />
+              <ContentLinkCard href="/strategy" title="FreeCell Strategy" description="FreeCell tips and techniques" />
+              <ContentLinkCard href="/solitaire-types" title="Types of Solitaire" description="20 solitaire variants compared" />
+              <ContentLinkCard href="/" title="Play FreeCell" description="The classic strategic solitaire" />
             </div>
           </section>
         </article>

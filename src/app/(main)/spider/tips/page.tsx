@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import ContentLayout from "@/components/ContentLayout";
 import AdUnit from "@/components/AdUnit";
+import { ContentHero, JsonLd, CtaSection, ContentLinkCard } from "@/components/content";
 
 export const metadata: Metadata = {
   title: "Spider Solitaire Tips & Tricks | Win More Games in 2026",
@@ -59,97 +60,40 @@ const faqs = [
 export default function SpiderTipsPage() {
   return (
     <ContentLayout>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "BreadcrumbList",
-            itemListElement: [
-              {
-                "@type": "ListItem",
-                position: 1,
-                name: "Home",
-                item: absoluteUrl("/"),
-              },
-              {
-                "@type": "ListItem",
-                position: 2,
-                name: "Spider Solitaire",
-                item: absoluteUrl("/spider"),
-              },
-              {
-                "@type": "ListItem",
-                position: 3,
-                name: "Tips & Tricks",
-                item: absoluteUrl("/spider/tips"),
-              },
-            ],
-          }),
-        }}
-      />
+      <JsonLd data={{
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
+          { "@type": "ListItem", position: 2, name: "Spider Solitaire", item: absoluteUrl("/spider") },
+          { "@type": "ListItem", position: 3, name: "Tips & Tricks", item: absoluteUrl("/spider/tips") },
+        ],
+      }} />
+      <JsonLd data={{
+        "@context": "https://schema.org",
+        "@type": "Article",
+        headline: "Spider Solitaire Tips & Tricks",
+        description: "Practical tips for winning more Spider Solitaire games at every difficulty level.",
+        author: { "@type": "Organization", name: siteConfig.siteName, url: absoluteUrl("/") },
+        publisher: { "@type": "Organization", name: siteConfig.siteName },
+        datePublished: "2026-03-11",
+        dateModified: "2026-03-11",
+      }} />
+      <JsonLd data={{
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: faqs.map((faq) => ({
+          "@type": "Question",
+          name: faq.question,
+          acceptedAnswer: { "@type": "Answer", text: faq.answer },
+        })),
+      }} />
 
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Article",
-            headline: "Spider Solitaire Tips & Tricks",
-            description:
-              "Practical tips for winning more Spider Solitaire games at every difficulty level.",
-            author: {
-              "@type": "Organization",
-              name: siteConfig.siteName,
-              url: absoluteUrl("/"),
-            },
-            publisher: {
-              "@type": "Organization",
-              name: siteConfig.siteName,
-            },
-            datePublished: "2026-03-11",
-            dateModified: "2026-03-11",
-          }),
-        }}
+      <ContentHero
+        title="Spider Solitaire Tips & Tricks"
+        kicker={<><Link href="/spider" className="hover:text-white transition-colors">Spider Solitaire</Link> / Tips</>}
+        subtitle="Practical advice that will immediately improve your win rate — whether you're playing 1-suit, 2-suit, or the full 4-suit challenge."
       />
-
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            mainEntity: faqs.map((faq) => ({
-              "@type": "Question",
-              name: faq.question,
-              acceptedAnswer: {
-                "@type": "Answer",
-                text: faq.answer,
-              },
-            })),
-          }),
-        }}
-      />
-
-      {/* Hero */}
-      <div className="text-center mb-12">
-        <p className="text-sm uppercase tracking-[0.2em] text-[var(--gold)] mb-3 font-medium">
-          <Link href="/spider" className="hover:text-white transition-colors">
-            Spider Solitaire
-          </Link>{" "}
-          / Tips
-        </p>
-        <h1
-          className="text-4xl sm:text-5xl font-black mb-4 leading-[1.1]"
-          style={{ fontFamily: "var(--font-playfair)" }}
-        >
-          Spider Solitaire Tips & Tricks
-        </h1>
-        <p className="text-white/50 max-w-2xl mx-auto text-lg leading-relaxed">
-          Practical advice that will immediately improve your win rate — whether
-          you&apos;re playing 1-suit, 2-suit, or the full 4-suit challenge.
-        </p>
-      </div>
 
       {/* Quick Summary */}
       <div className="bg-white/[0.04] border border-white/10 rounded-xl p-6 mb-10 max-w-3xl mx-auto">
@@ -244,7 +188,7 @@ export default function SpiderTipsPage() {
         </div>
       </section>
 
-      <AdUnit format="horizontal" className="my-8 max-w-3xl mx-auto" />
+      <AdUnit format="horizontal" className="-my-1 max-w-3xl mx-auto" />
 
       {/* Tip 3 */}
       <section className="mb-10 max-w-3xl mx-auto">
@@ -396,7 +340,7 @@ export default function SpiderTipsPage() {
         </p>
       </section>
 
-      <AdUnit format="horizontal" className="my-8 max-w-3xl mx-auto" />
+      <AdUnit format="horizontal" className="-my-1 max-w-3xl mx-auto" />
 
       {/* Tips by difficulty */}
       <section className="mb-10 max-w-3xl mx-auto">
@@ -601,37 +545,18 @@ export default function SpiderTipsPage() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="mb-10 max-w-3xl mx-auto text-center">
-        <div className="bg-gradient-to-br from-emerald-900/30 to-emerald-900/10 border border-emerald-500/20 rounded-xl p-8">
-          <h2
-            className="text-2xl font-bold mb-3"
-            style={{ fontFamily: "var(--font-playfair)" }}
-          >
-            Put These Tips Into Practice
-          </h2>
-          <p className="text-white/60 mb-6 max-w-md mx-auto">
-            The best way to improve is to play. Start with 1-suit to build habits,
-            then graduate to harder modes.
-          </p>
-          <div className="flex flex-wrap justify-center gap-3">
-            <Link
-              href="/spider"
-              className="px-6 py-3 bg-emerald-700 hover:bg-emerald-600 text-white font-bold rounded-lg transition-colors"
-            >
-              Play Spider Solitaire →
-            </Link>
-            <Link
-              href="/spider/strategy"
-              className="px-6 py-3 bg-white/10 hover:bg-white/20 text-white/80 font-medium rounded-lg transition-colors"
-            >
-              Read the Strategy Guide
-            </Link>
-          </div>
-        </div>
-      </section>
+      <div className="mb-10 max-w-3xl mx-auto">
+        <CtaSection
+          heading="Put These Tips Into Practice"
+          body="The best way to improve is to play. Start with 1-suit to build habits, then graduate to harder modes."
+          primaryLabel="Play Spider Solitaire"
+          primaryHref="/spider"
+          secondaryLabel="Read the Strategy Guide"
+          secondaryHref="/spider/strategy"
+        />
+      </div>
 
-      <AdUnit format="horizontal" className="my-8 max-w-3xl mx-auto" />
+      <AdUnit format="horizontal" className="-my-1 max-w-3xl mx-auto" />
 
       {/* FAQ */}
       <section className="mb-10 max-w-3xl mx-auto">
@@ -671,66 +596,12 @@ export default function SpiderTipsPage() {
           More Spider Solitaire Resources
         </h2>
         <div className="grid sm:grid-cols-2 gap-3">
-          <Link
-            href="/spider"
-            className="block p-4 bg-white/[0.03] border border-white/10 rounded-xl hover:border-[var(--gold)]/30 transition-colors"
-          >
-            <span className="text-[var(--gold)] text-sm font-medium">Play</span>
-            <p className="text-white/80 font-semibold mt-1">Play Spider Solitaire</p>
-            <p className="text-white/40 text-sm mt-1">
-              Put these tips into practice online for free
-            </p>
-          </Link>
-          <Link
-            href="/spider/how-to-play"
-            className="block p-4 bg-white/[0.03] border border-white/10 rounded-xl hover:border-[var(--gold)]/30 transition-colors"
-          >
-            <span className="text-[var(--gold)] text-sm font-medium">Guide</span>
-            <p className="text-white/80 font-semibold mt-1">How to Play Spider Solitaire</p>
-            <p className="text-white/40 text-sm mt-1">
-              Complete rules and setup for all difficulty levels
-            </p>
-          </Link>
-          <Link
-            href="/spider/strategy"
-            className="block p-4 bg-white/[0.03] border border-white/10 rounded-xl hover:border-[var(--gold)]/30 transition-colors"
-          >
-            <span className="text-[var(--gold)] text-sm font-medium">Strategy</span>
-            <p className="text-white/80 font-semibold mt-1">Spider Strategy Guide</p>
-            <p className="text-white/40 text-sm mt-1">
-              Advanced techniques for experienced players
-            </p>
-          </Link>
-          <Link
-            href="/spider/1-suit-vs-2-suit-vs-4-suit"
-            className="block p-4 bg-white/[0.03] border border-white/10 rounded-xl hover:border-[var(--gold)]/30 transition-colors"
-          >
-            <span className="text-[var(--gold)] text-sm font-medium">Comparison</span>
-            <p className="text-white/80 font-semibold mt-1">1-Suit vs 2-Suit vs 4-Suit</p>
-            <p className="text-white/40 text-sm mt-1">
-              How difficulty levels compare and when to graduate
-            </p>
-          </Link>
-          <Link
-            href="/spider/is-spider-solitaire-winnable"
-            className="block p-4 bg-white/[0.03] border border-white/10 rounded-xl hover:border-[var(--gold)]/30 transition-colors"
-          >
-            <span className="text-[var(--gold)] text-sm font-medium">Winnability</span>
-            <p className="text-white/80 font-semibold mt-1">Is Spider Solitaire Winnable?</p>
-            <p className="text-white/40 text-sm mt-1">
-              Win rates and solvability stats by suit count
-            </p>
-          </Link>
-          <Link
-            href="/freecell-vs-spider"
-            className="block p-4 bg-white/[0.03] border border-white/10 rounded-xl hover:border-[var(--gold)]/30 transition-colors"
-          >
-            <span className="text-[var(--gold)] text-sm font-medium">Versus</span>
-            <p className="text-white/80 font-semibold mt-1">FreeCell vs Spider</p>
-            <p className="text-white/40 text-sm mt-1">
-              How the two most popular solitaire games compare
-            </p>
-          </Link>
+          <ContentLinkCard href="/spider" title="Play Spider Solitaire" description="Put these tips into practice online for free" />
+          <ContentLinkCard href="/spider/how-to-play" title="How to Play Spider Solitaire" description="Complete rules and setup for all difficulty levels" />
+          <ContentLinkCard href="/spider/strategy" title="Spider Strategy Guide" description="Advanced techniques for experienced players" />
+          <ContentLinkCard href="/spider/1-suit-vs-2-suit-vs-4-suit" title="1-Suit vs 2-Suit vs 4-Suit" description="How difficulty levels compare and when to graduate" />
+          <ContentLinkCard href="/spider/is-spider-solitaire-winnable" title="Is Spider Solitaire Winnable?" description="Win rates and solvability stats by suit count" />
+          <ContentLinkCard href="/freecell-vs-spider" title="FreeCell vs Spider" description="How the two most popular solitaire games compare" />
         </div>
       </section>
     </ContentLayout>

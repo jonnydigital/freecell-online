@@ -38,7 +38,7 @@ export default function SidebarAchievements({ onShowFull, refreshKey }: SidebarA
     >
       <div className="mb-3 flex items-center gap-2">
         <Trophy size={14} className="text-[#D4AF37]" />
-        <h3 className="text-[11px] font-bold uppercase tracking-[0.22em] text-[#D4AF37]">Achievements</h3>
+        <h3 className="text-xs font-bold uppercase tracking-[0.18em] text-[#D4AF37]">Achievements</h3>
       </div>
 
       {/* Progress bar */}
@@ -47,7 +47,7 @@ export default function SidebarAchievements({ onShowFull, refreshKey }: SidebarA
           <span>{count}/{total} unlocked</span>
           <span>{Math.round(pct)}%</span>
         </div>
-        <div className="h-2 rounded-full bg-white/10">
+        <div className="h-2.5 rounded-full bg-white/10">
           <div
             className="h-full rounded-full bg-[#D4AF37]/75 transition-all"
             style={{ width: `${Math.max(pct, 2)}%` }}
@@ -57,19 +57,19 @@ export default function SidebarAchievements({ onShowFull, refreshKey }: SidebarA
 
       {/* Recent unlocks — or preview locked achievements if none */}
       {recent.length > 0 ? (
-        <div className="mb-3 space-y-2 rounded-[18px] border border-white/6 bg-white/[0.03] p-3">
+        <div className="mb-3 space-y-3 rounded-[18px] border border-white/6 bg-white/[0.03] p-3">
           {recent.map((a) => (
-            <div key={a.id} className="flex items-center gap-2">
-              <span className="text-base leading-none">{a.icon}</span>
+            <div key={a.id} className="flex items-center gap-3">
+              <span className="text-lg leading-none">{a.icon}</span>
               <span className="text-sm text-white/70 truncate">{a.name}</span>
             </div>
           ))}
         </div>
       ) : (
-        <div className="mb-3 space-y-2 rounded-[18px] border border-white/6 bg-white/[0.03] p-3">
+        <div className="mb-3 space-y-3 rounded-[18px] border border-white/6 bg-white/[0.03] p-3">
           {ACHIEVEMENT_DEFS.slice(0, 2).map((def) => (
-            <div key={def.id} className="flex items-center gap-2 opacity-35">
-              <span className="text-base leading-none grayscale">{def.icon}</span>
+            <div key={def.id} className="flex items-center gap-3 opacity-35">
+              <span className="text-lg leading-none grayscale">{def.icon}</span>
               <span className="text-sm text-white/50 truncate">{def.name}</span>
             </div>
           ))}
@@ -80,7 +80,7 @@ export default function SidebarAchievements({ onShowFull, refreshKey }: SidebarA
       <button
         type="button"
         onClick={onShowFull}
-        className="w-full rounded-full border border-white/8 bg-white/[0.04] px-4 py-2.5 text-sm font-semibold text-white/70 transition-colors hover:bg-white/[0.08] hover:text-white cursor-pointer"
+        className="w-full rounded-full border border-white/8 bg-white/[0.04] px-4 py-3 text-sm font-semibold text-white/70 transition-colors hover:bg-white/[0.08] hover:text-white cursor-pointer"
       >
         View All Achievements
       </button>

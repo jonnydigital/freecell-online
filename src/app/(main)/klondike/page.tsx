@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
+import { JsonLd } from "@/components/content";
 import KlondikeGamePage from "./KlondikeGamePage";
 import MoreGames from '@/components/MoreGames';
 
@@ -71,14 +72,8 @@ export default function Page() {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(appJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
-      />
+      <JsonLd data={appJsonLd} />
+      <JsonLd data={breadcrumbJsonLd} />
       <KlondikeGamePage />
       <article className="max-w-3xl mx-auto px-6 py-12 text-white/80 bg-[#072907]">
         <h2

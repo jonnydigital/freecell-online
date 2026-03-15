@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import ContentLayout from "@/components/ContentLayout";
+import { ContentHero, JsonLd, CtaSection, ContentLinkCard } from "@/components/content";
 import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
@@ -65,99 +66,48 @@ const faqs = [
 ];
 
 export default function KlondikeTipsPage() {
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
+      { "@type": "ListItem", position: 2, name: "Klondike Solitaire", item: absoluteUrl("/klondike") },
+      { "@type": "ListItem", position: 3, name: "Tips & Tricks", item: absoluteUrl("/klondike/tips") },
+    ],
+  };
+
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: "Klondike Solitaire Tips & Tricks",
+    description: "Practical tips for winning more Klondike Solitaire games at every skill level.",
+    author: { "@type": "Organization", name: siteConfig.siteName, url: absoluteUrl("/") },
+    publisher: { "@type": "Organization", name: siteConfig.siteName },
+    datePublished: "2026-03-12",
+    dateModified: "2026-03-12",
+  };
+
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: { "@type": "Answer", text: faq.answer },
+    })),
+  };
+
   return (
     <ContentLayout>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "BreadcrumbList",
-            itemListElement: [
-              {
-                "@type": "ListItem",
-                position: 1,
-                name: "Home",
-                item: absoluteUrl("/"),
-              },
-              {
-                "@type": "ListItem",
-                position: 2,
-                name: "Klondike Solitaire",
-                item: absoluteUrl("/klondike"),
-              },
-              {
-                "@type": "ListItem",
-                position: 3,
-                name: "Tips & Tricks",
-                item: absoluteUrl("/klondike/tips"),
-              },
-            ],
-          }),
-        }}
-      />
+      <JsonLd data={breadcrumbJsonLd} />
+      <JsonLd data={articleJsonLd} />
+      <JsonLd data={faqJsonLd} />
 
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Article",
-            headline: "Klondike Solitaire Tips & Tricks",
-            description:
-              "Practical tips for winning more Klondike Solitaire games at every skill level.",
-            author: {
-              "@type": "Organization",
-              name: siteConfig.siteName,
-              url: absoluteUrl("/"),
-            },
-            publisher: {
-              "@type": "Organization",
-              name: siteConfig.siteName,
-            },
-            datePublished: "2026-03-12",
-            dateModified: "2026-03-12",
-          }),
-        }}
+      <ContentHero
+        title="Klondike Solitaire Tips & Tricks"
+        kicker={<><Link href="/klondike" className="hover:text-white transition-colors">Klondike Solitaire</Link>{" "}/ Tips</>}
+        subtitle="Practical advice that will immediately improve your win rate — whether you're playing Draw 1 or Draw 3 Klondike."
       />
-
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            mainEntity: faqs.map((faq) => ({
-              "@type": "Question",
-              name: faq.question,
-              acceptedAnswer: {
-                "@type": "Answer",
-                text: faq.answer,
-              },
-            })),
-          }),
-        }}
-      />
-
-      {/* Hero */}
-      <div className="text-center mb-12">
-        <p className="text-sm uppercase tracking-[0.2em] text-[var(--gold)] mb-3 font-medium">
-          <Link href="/klondike" className="hover:text-white transition-colors">
-            Klondike Solitaire
-          </Link>{" "}
-          / Tips
-        </p>
-        <h1
-          className="text-4xl sm:text-5xl font-black mb-4 leading-[1.1]"
-          style={{ fontFamily: "var(--font-playfair)" }}
-        >
-          Klondike Solitaire Tips & Tricks
-        </h1>
-        <p className="text-white/50 max-w-2xl mx-auto text-lg leading-relaxed">
-          Practical advice that will immediately improve your win rate — whether
-          you&apos;re playing Draw 1 or Draw 3 Klondike.
-        </p>
-      </div>
 
       {/* Quick Summary */}
       <div className="bg-white/[0.04] border border-white/10 rounded-xl p-6 mb-10 max-w-3xl mx-auto">
@@ -311,7 +261,7 @@ export default function KlondikeTipsPage() {
         </div>
       </section>
 
-      <AdUnit format="horizontal" className="my-8 max-w-3xl mx-auto" />
+      <AdUnit format="horizontal" className="-my-1 max-w-3xl mx-auto" />
 
       {/* Advanced Tips Section Header */}
       <div className="max-w-3xl mx-auto mb-6">
@@ -451,7 +401,7 @@ export default function KlondikeTipsPage() {
         </p>
       </section>
 
-      <AdUnit format="horizontal" className="my-8 max-w-3xl mx-auto" />
+      <AdUnit format="horizontal" className="-my-1 max-w-3xl mx-auto" />
 
       {/* Draw 1 vs Draw 3 Tips */}
       <section className="mb-10 max-w-3xl mx-auto">
@@ -552,37 +502,16 @@ export default function KlondikeTipsPage() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="mb-10 max-w-3xl mx-auto text-center">
-        <div className="bg-gradient-to-br from-emerald-900/30 to-emerald-900/10 border border-emerald-500/20 rounded-xl p-8">
-          <h2
-            className="text-2xl font-bold mb-3"
-            style={{ fontFamily: "var(--font-playfair)" }}
-          >
-            Put These Tips Into Practice
-          </h2>
-          <p className="text-white/60 mb-6 max-w-md mx-auto">
-            The best way to improve is to play. Start with Draw 1 to build good habits,
-            then graduate to Draw 3 for the full challenge.
-          </p>
-          <div className="flex flex-wrap justify-center gap-3">
-            <Link
-              href="/klondike"
-              className="px-6 py-3 bg-emerald-700 hover:bg-emerald-600 text-white font-bold rounded-lg transition-colors"
-            >
-              Play Klondike Solitaire →
-            </Link>
-            <Link
-              href="/klondike/strategy"
-              className="px-6 py-3 bg-white/10 hover:bg-white/20 text-white/80 font-medium rounded-lg transition-colors"
-            >
-              Read the Strategy Guide
-            </Link>
-          </div>
-        </div>
-      </section>
+      <CtaSection
+        heading="Put These Tips Into Practice"
+        body="The best way to improve is to play. Start with Draw 1 to build good habits, then graduate to Draw 3 for the full challenge."
+        primaryLabel="Play Klondike Solitaire"
+        primaryHref="/klondike"
+        secondaryLabel="Read the Strategy Guide"
+        secondaryHref="/klondike/strategy"
+      />
 
-      <AdUnit format="horizontal" className="my-8 max-w-3xl mx-auto" />
+      <AdUnit format="horizontal" className="-my-1 max-w-3xl mx-auto" />
 
       {/* FAQ */}
       <section className="mb-10 max-w-3xl mx-auto">
@@ -622,46 +551,10 @@ export default function KlondikeTipsPage() {
           More Klondike Resources
         </h2>
         <div className="grid sm:grid-cols-2 gap-3">
-          <Link
-            href="/klondike/how-to-play"
-            className="block p-4 bg-white/[0.03] border border-white/10 rounded-xl hover:border-[var(--gold)]/30 transition-colors"
-          >
-            <span className="text-[var(--gold)] text-sm font-medium">Guide</span>
-            <p className="text-white/80 font-semibold mt-1">How to Play Klondike Solitaire</p>
-            <p className="text-white/40 text-sm mt-1">
-              Complete rules and setup for Draw 1 and Draw 3
-            </p>
-          </Link>
-          <Link
-            href="/klondike/strategy"
-            className="block p-4 bg-white/[0.03] border border-white/10 rounded-xl hover:border-[var(--gold)]/30 transition-colors"
-          >
-            <span className="text-[var(--gold)] text-sm font-medium">Strategy</span>
-            <p className="text-white/80 font-semibold mt-1">Klondike Strategy Guide</p>
-            <p className="text-white/40 text-sm mt-1">
-              In-depth strategies for winning more games
-            </p>
-          </Link>
-          <Link
-            href="/klondike/winning-strategies"
-            className="block p-4 bg-white/[0.03] border border-white/10 rounded-xl hover:border-[var(--gold)]/30 transition-colors"
-          >
-            <span className="text-[var(--gold)] text-sm font-medium">Advanced</span>
-            <p className="text-white/80 font-semibold mt-1">Winning Strategies</p>
-            <p className="text-white/40 text-sm mt-1">
-              Advanced tactics and statistical analysis
-            </p>
-          </Link>
-          <Link
-            href="/freecell-vs-klondike"
-            className="block p-4 bg-white/[0.03] border border-white/10 rounded-xl hover:border-[var(--gold)]/30 transition-colors"
-          >
-            <span className="text-[var(--gold)] text-sm font-medium">Versus</span>
-            <p className="text-white/80 font-semibold mt-1">FreeCell vs Klondike</p>
-            <p className="text-white/40 text-sm mt-1">
-              How the two most popular solitaire games compare
-            </p>
-          </Link>
+          <ContentLinkCard href="/klondike/how-to-play" title="How to Play Klondike Solitaire" description="Complete rules and setup for Draw 1 and Draw 3" />
+          <ContentLinkCard href="/klondike/strategy" title="Klondike Strategy Guide" description="In-depth strategies for winning more games" />
+          <ContentLinkCard href="/klondike/winning-strategies" title="Winning Strategies" description="Advanced tactics and statistical analysis" />
+          <ContentLinkCard href="/freecell-vs-klondike" title="FreeCell vs Klondike" description="How the two most popular solitaire games compare" />
         </div>
       </section>
     </ContentLayout>

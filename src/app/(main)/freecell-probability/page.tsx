@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { absoluteUrl, siteConfig } from '@/lib/siteConfig';
 import AdUnit from '@/components/AdUnit';
 import ContentLayout from '@/components/ContentLayout';
+import { SectionHeading, CardSection, ContentBody, CtaSection, ContentLinkCard, JsonLd } from '@/components/content';
 
 export const metadata: Metadata = {
   title: 'FreeCell Probability & Mathematics — The Numbers Behind the Game',
@@ -32,35 +33,6 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
   },
 };
-
-const CARD = 'rounded-xl bg-white/[0.04] border border-white/[0.07] overflow-hidden';
-
-function SectionHeading({
-  children,
-  id,
-  sub,
-}: {
-  children: React.ReactNode;
-  id?: string;
-  sub?: string;
-}) {
-  return (
-    <div className="px-8 sm:px-10 md:px-12 pt-6 sm:pt-8 pb-0">
-      {sub && (
-        <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#D4AF37]/60 mb-1.5 block">
-          {sub}
-        </span>
-      )}
-      <h2
-        id={id}
-        className="text-2xl sm:text-3xl font-bold text-white scroll-mt-6"
-      >
-        {children}
-      </h2>
-      <div className="mt-4 h-px bg-gradient-to-r from-[#D4AF37]/40 to-transparent" />
-    </div>
-  );
-}
 
 export default function FreecellProbabilityPage() {
   const jsonLd = [
@@ -107,13 +79,12 @@ export default function FreecellProbabilityPage() {
 
   return (
     <ContentLayout variant="dark">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <JsonLd data={jsonLd} />
 
       <main className="max-w-5xl mx-auto px-4 sm:px-6 pt-6 pb-20 space-y-6">
         {/* Hero */}
-        <section>
-          <div className={CARD}>
-            <div className="px-8 sm:px-10 md:px-12 pt-6 sm:pt-8 pb-6">
+        <CardSection variant="dark">
+          <div className="px-8 sm:px-10 md:px-12 pt-6 sm:pt-8 pb-6">
               <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#D4AF37]/60 block mb-3">
                 Mathematics
               </span>
@@ -150,14 +121,12 @@ export default function FreecellProbabilityPage() {
                 </div>
               </div>
             </div>
-          </div>
-        </section>
+        </CardSection>
 
         {/* Deterministic Deals */}
-        <section id="deal-generation" className="scroll-mt-6">
-          <div className={CARD}>
-            <SectionHeading sub="How Deals Work" id="deal-generation-heading">The 52-Card Deterministic Deal</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-5 text-white/70 leading-8">
+        <CardSection id="deal-generation" variant="dark">
+          <SectionHeading variant="dark" sub="How Deals Work" id="deal-generation-heading">The 52-Card Deterministic Deal</SectionHeading>
+          <ContentBody variant="dark" className="space-y-5">
               <p>
                 Every FreeCell deal is generated from a seed number using a pseudorandom number
                 generator (PRNG). The original Microsoft FreeCell used a simple 32-bit linear
@@ -183,17 +152,15 @@ export default function FreecellProbabilityPage() {
                   <li><strong className="text-white">Solvability research:</strong> Researchers can systematically test every deal in a range, proving which are solvable and which are not.</li>
                 </ul>
               </div>
-            </div>
-          </div>
-        </section>
+          </ContentBody>
+        </CardSection>
 
-        <AdUnit className="my-4" />
+        <AdUnit className="-my-1" />
 
         {/* Solvability */}
-        <section id="solvability" className="scroll-mt-6">
-          <div className={CARD}>
-            <SectionHeading sub="The Big Number" id="solvability-heading">Near-Universal Solvability</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-5 text-white/70 leading-8">
+        <CardSection id="solvability" variant="dark">
+            <SectionHeading variant="dark" sub="The Big Number" id="solvability-heading">Near-Universal Solvability</SectionHeading>
+            <ContentBody variant="dark" className="space-y-5">
               <p>
                 FreeCell&apos;s solvability rate is extraordinary. In the original Microsoft set
                 of 32,000 numbered deals, only one &mdash;{' '}
@@ -249,15 +216,13 @@ export default function FreecellProbabilityPage() {
                 mechanics create a game where the solution space is vast enough to accommodate
                 almost any starting arrangement.
               </p>
-            </div>
-          </div>
-        </section>
+          </ContentBody>
+        </CardSection>
 
         {/* Deal 11982 */}
-        <section id="deal-11982" className="scroll-mt-6">
-          <div className={CARD}>
-            <SectionHeading sub="The Exception" id="deal-11982-heading">Deal #11982: The Famous Outlier</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-5 text-white/70 leading-8">
+        <CardSection id="deal-11982" variant="dark">
+            <SectionHeading variant="dark" sub="The Exception" id="deal-11982-heading">Deal #11982: The Famous Outlier</SectionHeading>
+            <ContentBody variant="dark" className="space-y-5">
               <p>
                 Deal #11982 holds a unique place in FreeCell history. It is the only deal in
                 the original Microsoft set that no human and no computer algorithm has ever
@@ -284,17 +249,15 @@ export default function FreecellProbabilityPage() {
                   </Link>
                 </p>
               </div>
-            </div>
-          </div>
-        </section>
+          </ContentBody>
+        </CardSection>
 
-        <AdUnit className="my-4" />
+        <AdUnit className="-my-1" />
 
         {/* Player Win Rate vs Theoretical */}
-        <section id="win-rate-gap" className="scroll-mt-6">
-          <div className={CARD}>
-            <SectionHeading sub="Theory vs Practice" id="win-rate-heading">Player Win Rate vs Theoretical Solvability</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-5 text-white/70 leading-8">
+        <CardSection id="win-rate-gap" variant="dark">
+            <SectionHeading variant="dark" sub="Theory vs Practice" id="win-rate-heading">Player Win Rate vs Theoretical Solvability</SectionHeading>
+            <ContentBody variant="dark" className="space-y-5">
               <p>
                 If 99.999% of deals are solvable, why do most players win only 75&ndash;85% of
                 their games? The gap between theoretical solvability and practical win rate is
@@ -347,15 +310,13 @@ export default function FreecellProbabilityPage() {
                 This is why FreeCell&apos;s undo feature is so important &mdash; it transforms
                 the game from a single-shot attempt into a systematic search.
               </p>
-            </div>
-          </div>
-        </section>
+          </ContentBody>
+        </CardSection>
 
         {/* Free Cells and Move Space */}
-        <section id="move-space" className="scroll-mt-6">
-          <div className={CARD}>
-            <SectionHeading sub="The Formula" id="move-space-heading">Free Cells and the Move Space</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-5 text-white/70 leading-8">
+        <CardSection id="move-space" variant="dark">
+            <SectionHeading variant="dark" sub="The Formula" id="move-space-heading">Free Cells and the Move Space</SectionHeading>
+            <ContentBody variant="dark" className="space-y-5">
               <p>
                 The four free cells and the supermove mechanic are the mathematical heart of
                 FreeCell. The maximum number of cards you can move in a single sequence is
@@ -400,17 +361,15 @@ export default function FreecellProbabilityPage() {
                 But even one empty cascade makes a dramatic difference: it doubles your capacity
                 compared to having none.
               </p>
-            </div>
-          </div>
-        </section>
+          </ContentBody>
+        </CardSection>
 
-        <AdUnit className="my-4" />
+        <AdUnit className="-my-1" />
 
         {/* Perfect Information */}
-        <section id="perfect-information" className="scroll-mt-6">
-          <div className={CARD}>
-            <SectionHeading sub="Game Theory" id="perfect-info-heading">Perfect Information and Planning Depth</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-5 text-white/70 leading-8">
+        <CardSection id="perfect-information" variant="dark">
+            <SectionHeading variant="dark" sub="Game Theory" id="perfect-info-heading">Perfect Information and Planning Depth</SectionHeading>
+            <ContentBody variant="dark" className="space-y-5">
               <p>
                 In game theory, FreeCell is classified as a{' '}
                 <strong className="text-white">perfect information</strong> game. All 52 cards
@@ -454,93 +413,28 @@ export default function FreecellProbabilityPage() {
                 That accountability is what makes FreeCell endlessly compelling for players who
                 enjoy strategic depth.
               </p>
-            </div>
-          </div>
-        </section>
+          </ContentBody>
+        </CardSection>
 
         {/* Related Pages */}
-        <section id="related" className="scroll-mt-6">
-          <div className={CARD}>
-            <SectionHeading sub="Read More">Related Guides</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 grid gap-4 md:grid-cols-3">
-              <Link href="/is-every-freecell-game-winnable" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                <h3 className="text-lg font-semibold text-white">Is Every Game Winnable?</h3>
-                <p className="mt-2 text-sm leading-7 text-white/70">
-                  The practical answer to FreeCell&apos;s most common question, with advice for stuck positions.
-                </p>
-              </Link>
-              <Link href="/freecell-game-11982" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                <h3 className="text-lg font-semibold text-white">Deal #11982</h3>
-                <p className="mt-2 text-sm leading-7 text-white/70">
-                  The full history of the only proven unsolvable deal in the original Microsoft set.
-                </p>
-              </Link>
-              <Link href="/deals" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                <h3 className="text-lg font-semibold text-white">Browse Deals</h3>
-                <p className="mt-2 text-sm leading-7 text-white/70">
-                  Play specific numbered deals and track which ones you have solved.
-                </p>
-              </Link>
-              <Link href="/strategy" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                <h3 className="text-lg font-semibold text-white">Strategy Guide</h3>
-                <p className="mt-2 text-sm leading-7 text-white/70">
-                  Turn mathematical understanding into practical tactics for winning more games.
-                </p>
-              </Link>
-              <Link href="/statistics" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                <h3 className="text-lg font-semibold text-white">Statistics</h3>
-                <p className="mt-2 text-sm leading-7 text-white/70">
-                  Track your personal win rate and see how it compares to the theoretical maximum.
-                </p>
-              </Link>
-              <Link href="/" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                <h3 className="text-lg font-semibold text-white">Play FreeCell</h3>
-                <p className="mt-2 text-sm leading-7 text-white/70">
-                  Put the theory into practice with a free game.
-                </p>
-              </Link>
-            </div>
-          </div>
-        </section>
+        <CardSection id="related" variant="dark">
+          <SectionHeading variant="dark" sub="Read More">Related Guides</SectionHeading>
+          <ContentBody variant="dark" className="grid gap-4 md:grid-cols-3">
+            <ContentLinkCard href="/is-every-freecell-game-winnable" title="Is Every Game Winnable?" description="The practical answer to FreeCell's most common question, with advice for stuck positions." />
+            <ContentLinkCard href="/freecell-game-11982" title="Deal #11982" description="The full history of the only proven unsolvable deal in the original Microsoft set." />
+            <ContentLinkCard href="/deals" title="Browse Deals" description="Play specific numbered deals and track which ones you have solved." />
+            <ContentLinkCard href="/strategy" title="Strategy Guide" description="Turn mathematical understanding into practical tactics for winning more games." />
+            <ContentLinkCard href="/statistics" title="Statistics" description="Track your personal win rate and see how it compares to the theoretical maximum." />
+            <ContentLinkCard href="/" title="Play FreeCell" description="Put the theory into practice with a free game." />
+          </ContentBody>
+        </CardSection>
 
-        {/* CTA */}
-        <section>
-          <div
-            className={CARD}
-            style={{
-              background: 'linear-gradient(135deg, rgba(10,74,42,0.6) 0%, rgba(6,37,22,0.8) 100%)',
-            }}
-          >
-            <div className="p-8 sm:p-10 text-center relative">
-              <h2 className="text-2xl sm:text-3xl font-semibold text-white mb-3">
-                See the Numbers in Action
-              </h2>
-              <p className="text-white/40 mb-6 max-w-2xl mx-auto">
-                Play a game of FreeCell and watch your win rate build over time. Track your
-                statistics and see how close you can get to the theoretical limit.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                <Link
-                  href="/"
-                  className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl text-lg font-semibold transition-all duration-200 hover:scale-[1.03] active:scale-[0.98]"
-                  style={{
-                    background: 'linear-gradient(110deg, #B8860B, #D4AF37, #F3E5AB, #D4AF37, #B8860B)',
-                    backgroundSize: '200% 100%',
-                    color: '#1a1a0a',
-                  }}
-                >
-                  Play FreeCell Now
-                </Link>
-                <Link
-                  href="/freecell-game-11982"
-                  className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl text-lg font-semibold border border-white/20 text-white/90 hover:bg-white/[0.08] transition-colors"
-                >
-                  Try Deal #11982
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
+        <CtaSection
+          heading="See the Numbers in Action"
+          body="Play a game of FreeCell and watch your win rate build over time. Track your statistics and see how close you can get to the theoretical limit."
+          secondaryLabel="Try Deal #11982"
+          secondaryHref="/freecell-game-11982"
+        />
       </main>
     </ContentLayout>
   );

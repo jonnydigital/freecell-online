@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { absoluteUrl, siteConfig } from '@/lib/siteConfig';
 import AdUnit from '@/components/AdUnit';
 import ContentLayout from '@/components/ContentLayout';
+import { SectionHeading, CardSection, ContentBody, CtaSection, ContentLinkCard, JsonLd } from '@/components/content';
 
 export const metadata: Metadata = {
   title: 'FreeCell for Seniors — A Perfect Brain-Training Card Game',
@@ -33,34 +34,7 @@ export const metadata: Metadata = {
   },
 };
 
-const CARD = 'rounded-xl bg-white/[0.04] border border-white/[0.07] overflow-hidden';
 
-function SectionHeading({
-  children,
-  id,
-  sub,
-}: {
-  children: React.ReactNode;
-  id?: string;
-  sub?: string;
-}) {
-  return (
-    <div className="px-8 sm:px-10 md:px-12 pt-6 sm:pt-8 pb-0">
-      {sub && (
-        <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#D4AF37]/60 mb-1.5 block">
-          {sub}
-        </span>
-      )}
-      <h2
-        id={id}
-        className="text-2xl sm:text-3xl font-bold text-white scroll-mt-6"
-      >
-        {children}
-      </h2>
-      <div className="mt-4 h-px bg-gradient-to-r from-[#D4AF37]/40 to-transparent" />
-    </div>
-  );
-}
 
 export default function FreecellForSeniorsPage() {
   const jsonLd = [
@@ -107,12 +81,11 @@ export default function FreecellForSeniorsPage() {
 
   return (
     <ContentLayout variant="dark">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <JsonLd data={jsonLd} />
 
       <main className="max-w-5xl mx-auto px-4 sm:px-6 pt-6 pb-20 space-y-6">
         {/* Hero */}
-        <section>
-          <div className={CARD}>
+        <CardSection variant="dark">
             <div className="px-8 sm:px-10 md:px-12 pt-6 sm:pt-8 pb-6">
               <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#D4AF37]/60 block mb-3">
                 Brain Training
@@ -145,14 +118,12 @@ export default function FreecellForSeniorsPage() {
                 </div>
               </div>
             </div>
-          </div>
-        </section>
+        </CardSection>
 
         {/* Why FreeCell Suits Slower-Paced Play */}
-        <section id="why-freecell" className="scroll-mt-6">
-          <div className={CARD}>
-            <SectionHeading sub="The Right Fit" id="why-freecell-heading">Why FreeCell Suits a Thoughtful Pace</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-5 text-white/70 leading-8">
+        <CardSection id="why-freecell" variant="dark">
+            <SectionHeading variant="dark" sub="The Right Fit" id="why-freecell-heading">Why FreeCell Suits a Thoughtful Pace</SectionHeading>
+            <ContentBody variant="dark" className="space-y-5">
               <p>
                 Many digital games reward speed and reflexes. FreeCell rewards the opposite:
                 careful observation, patient planning, and the willingness to think several
@@ -172,17 +143,15 @@ export default function FreecellForSeniorsPage() {
                 always because of a choice you made &mdash; and you can always undo that choice
                 and try a different approach.
               </p>
-            </div>
-          </div>
-        </section>
+            </ContentBody>
+        </CardSection>
 
-        <AdUnit className="my-4" />
+        <AdUnit className="-my-1" />
 
         {/* Perfect Information */}
-        <section id="perfect-information" className="scroll-mt-6">
-          <div className={CARD}>
-            <SectionHeading sub="No Hidden Cards" id="perfect-information-heading">The Full-Information Advantage</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-5 text-white/70 leading-8">
+        <CardSection id="perfect-information" variant="dark">
+            <SectionHeading variant="dark" sub="No Hidden Cards" id="perfect-information-heading">The Full-Information Advantage</SectionHeading>
+            <ContentBody variant="dark" className="space-y-5">
               <p>
                 In FreeCell, all 52 cards are dealt face-up. You can see exactly what you are
                 working with from your very first move. This is what game designers call
@@ -203,15 +172,13 @@ export default function FreecellForSeniorsPage() {
                   <li>Wins feel genuinely earned because skill, not luck, determined the result.</li>
                 </ul>
               </div>
-            </div>
-          </div>
-        </section>
+            </ContentBody>
+        </CardSection>
 
         {/* Using Undo and Hints */}
-        <section id="undo-and-hints" className="scroll-mt-6">
-          <div className={CARD}>
-            <SectionHeading sub="Learning Tools" id="undo-hints-heading">Using Undo and Hints Effectively</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-5 text-white/70 leading-8">
+        <CardSection id="undo-and-hints" variant="dark">
+            <SectionHeading variant="dark" sub="Learning Tools" id="undo-hints-heading">Using Undo and Hints Effectively</SectionHeading>
+            <ContentBody variant="dark" className="space-y-5">
               <p>
                 Some players feel reluctant to use the undo button or the hint feature, as though
                 it diminishes the achievement. It does not. Undo and hints are learning tools,
@@ -241,17 +208,15 @@ export default function FreecellForSeniorsPage() {
                 There is no scoreboard penalty for using either feature. The goal is to enjoy
                 the puzzle and keep your mind active, not to prove anything to anyone.
               </p>
-            </div>
-          </div>
-        </section>
+            </ContentBody>
+        </CardSection>
 
-        <AdUnit className="my-4" />
+        <AdUnit className="-my-1" />
 
         {/* Playing on a Larger Screen */}
-        <section id="larger-screen" className="scroll-mt-6">
-          <div className={CARD}>
-            <SectionHeading sub="Comfort" id="larger-screen-heading">Playing on a Larger Screen</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-5 text-white/70 leading-8">
+        <CardSection id="larger-screen" variant="dark">
+            <SectionHeading variant="dark" sub="Comfort" id="larger-screen-heading">Playing on a Larger Screen</SectionHeading>
+            <ContentBody variant="dark" className="space-y-5">
               <p>
                 FreeCell works on phones, tablets, and desktop computers. If you find the cards
                 difficult to read on a small screen, consider playing on a tablet or laptop.
@@ -278,15 +243,13 @@ export default function FreecellForSeniorsPage() {
                 Our game is browser-based, so there is nothing to install. Just open it in your
                 web browser and start playing. It saves your progress automatically.
               </p>
-            </div>
-          </div>
-        </section>
+            </ContentBody>
+        </CardSection>
 
         {/* Building a Daily Routine */}
-        <section id="daily-routine" className="scroll-mt-6">
-          <div className={CARD}>
-            <SectionHeading sub="Healthy Habit" id="daily-routine-heading">Building a Daily Routine</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-5 text-white/70 leading-8">
+        <CardSection id="daily-routine" variant="dark">
+            <SectionHeading variant="dark" sub="Healthy Habit" id="daily-routine-heading">Building a Daily Routine</SectionHeading>
+            <ContentBody variant="dark" className="space-y-5">
               <p>
                 One of the most rewarding aspects of FreeCell is its suitability as a daily
                 habit. A single game takes 5 to 15 minutes, making it easy to fit into a
@@ -320,17 +283,15 @@ export default function FreecellForSeniorsPage() {
                 sequencing, and pattern recognition involved in each game exercise your working
                 memory and executive function.
               </p>
-            </div>
-          </div>
-        </section>
+            </ContentBody>
+        </CardSection>
 
-        <AdUnit className="my-4" />
+        <AdUnit className="-my-1" />
 
         {/* Accessibility Features */}
-        <section id="accessibility" className="scroll-mt-6">
-          <div className={CARD}>
-            <SectionHeading sub="For All Players" id="accessibility-heading">Accessibility Features</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-5 text-white/70 leading-8">
+        <CardSection id="accessibility" variant="dark">
+            <SectionHeading variant="dark" sub="For All Players" id="accessibility-heading">Accessibility Features</SectionHeading>
+            <ContentBody variant="dark" className="space-y-5">
               <p>
                 Our FreeCell game includes several features designed to make the experience
                 comfortable for all players.
@@ -362,15 +323,13 @@ export default function FreecellForSeniorsPage() {
                   </p>
                 </div>
               </div>
-            </div>
-          </div>
-        </section>
+            </ContentBody>
+        </CardSection>
 
         {/* Cognitive Benefits */}
-        <section id="cognitive-benefits" className="scroll-mt-6">
-          <div className={CARD}>
-            <SectionHeading sub="Mental Exercise" id="cognitive-heading">Cognitive Benefits of FreeCell</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-5 text-white/70 leading-8">
+        <CardSection id="cognitive-benefits" variant="dark">
+            <SectionHeading variant="dark" sub="Mental Exercise" id="cognitive-heading">Cognitive Benefits of FreeCell</SectionHeading>
+            <ContentBody variant="dark" className="space-y-5">
               <p>
                 FreeCell engages several cognitive skills simultaneously. While no card game is
                 a substitute for medical advice, research on puzzle-based activities suggests
@@ -410,87 +369,31 @@ export default function FreecellForSeniorsPage() {
                   </p>
                 </div>
               </div>
-            </div>
-          </div>
-        </section>
+            </ContentBody>
+        </CardSection>
 
-        <AdUnit className="my-4" />
+        <AdUnit className="-my-1" />
 
         {/* Getting Started */}
-        <section id="getting-started" className="scroll-mt-6">
-          <div className={CARD}>
-            <SectionHeading sub="First Steps" id="getting-started-heading">Getting Started</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-5 text-white/70 leading-8">
+        <CardSection id="getting-started" variant="dark">
+            <SectionHeading variant="dark" sub="First Steps" id="getting-started-heading">Getting Started</SectionHeading>
+            <ContentBody variant="dark" className="space-y-5">
               <p>
                 If you have never played FreeCell before, start with these resources:
               </p>
               <div className="grid gap-4 md:grid-cols-2">
-                <Link href="/how-to-play" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                  <h3 className="text-lg font-semibold text-white">How to Play</h3>
-                  <p className="mt-2 text-sm leading-7 text-white/70">
-                    A complete tutorial with diagrams, rules, and a step-by-step beginner walkthrough.
-                  </p>
-                </Link>
-                <Link href="/freecell-for-beginners" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                  <h3 className="text-lg font-semibold text-white">FreeCell for Beginners</h3>
-                  <p className="mt-2 text-sm leading-7 text-white/70">
-                    A gentler introduction for first-time players, covering the basics without overwhelm.
-                  </p>
-                </Link>
-                <Link href="/tips" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                  <h3 className="text-lg font-semibold text-white">Tips &amp; Tricks</h3>
-                  <p className="mt-2 text-sm leading-7 text-white/70">
-                    Practical advice for winning more games, one tip at a time.
-                  </p>
-                </Link>
-                <Link href="/daily-freecell" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                  <h3 className="text-lg font-semibold text-white">Daily Challenge</h3>
-                  <p className="mt-2 text-sm leading-7 text-white/70">
-                    A new puzzle every day &mdash; the same deal for everyone worldwide.
-                  </p>
-                </Link>
+                <ContentLinkCard href="/how-to-play" title="How to Play" description="A complete tutorial with diagrams, rules, and a step-by-step beginner walkthrough." />
+                <ContentLinkCard href="/freecell-for-beginners" title="FreeCell for Beginners" description="A gentler introduction for first-time players, covering the basics without overwhelm." />
+                <ContentLinkCard href="/tips" title="Tips &amp; Tricks" description="Practical advice for winning more games, one tip at a time." />
+                <ContentLinkCard href="/daily-freecell" title="Daily Challenge" description="A new puzzle every day &mdash; the same deal for everyone worldwide." />
               </div>
-            </div>
-          </div>
-        </section>
-
-        {/* CTA */}
-        <section>
-          <div
-            className={CARD}
-            style={{
-              background: 'linear-gradient(135deg, rgba(10,74,42,0.6) 0%, rgba(6,37,22,0.8) 100%)',
-            }}
-          >
-            <div className="p-8 sm:p-10 text-center relative">
-              <h2 className="text-2xl sm:text-3xl font-semibold text-white mb-3">
-                Start Your First Game
-              </h2>
-              <p className="text-white/40 mb-6 max-w-2xl mx-auto">
-                No download, no account, no time limit. Just open it and play at your own pace.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                <Link
-                  href="/"
-                  className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl text-lg font-semibold transition-all duration-200 hover:scale-[1.03] active:scale-[0.98]"
-                  style={{
-                    background: 'linear-gradient(110deg, #B8860B, #D4AF37, #F3E5AB, #D4AF37, #B8860B)',
-                    backgroundSize: '200% 100%',
-                    color: '#1a1a0a',
-                  }}
-                >
-                  Play FreeCell Now
-                </Link>
-                <Link
-                  href="/how-to-play"
-                  className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl text-lg font-semibold border border-white/20 text-white/90 hover:bg-white/[0.08] transition-colors"
-                >
-                  Learn the Rules First
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
+            </ContentBody>
+        </CardSection>        <CtaSection
+          heading="Start Your First Game"
+          body="No download, no account, no time limit. Just open it and play at your own pace."
+          secondaryLabel="Learn the Rules First"
+          secondaryHref="/how-to-play"
+        />
       </main>
     </ContentLayout>
   );

@@ -201,25 +201,26 @@ export default function Tutorial({ isOpen, onDismiss, highlightRect, onStepChang
                 animate="center"
                 exit="exit"
                 transition={{ type: 'spring', stiffness: 350, damping: 30 }}
-                className="pointer-events-auto mx-auto w-full max-w-sm"
+                className="pointer-events-auto mx-auto w-full max-w-md"
               >
                 <div
-                  className="rounded-2xl border-2 shadow-2xl p-6 backdrop-blur-sm"
+                  className="rounded-3xl border-2 shadow-2xl px-8 py-7 backdrop-blur-md"
                   style={{
                     backgroundColor: 'var(--theme-panel)',
                     borderColor: 'color-mix(in srgb, var(--gold) 40%, transparent)',
+                    boxShadow: '0 24px 64px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.05)',
                   }}
                 >
                   {/* Icon + Title */}
-                  <div className="flex items-center gap-3 mb-3">
+                  <div className="flex items-center gap-4 mb-4">
                     <div
-                      className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0"
-                      style={{ backgroundColor: 'var(--theme-accent)', color: 'var(--gold)' }}
+                      className="w-13 h-13 rounded-2xl flex items-center justify-center shrink-0"
+                      style={{ backgroundColor: 'var(--theme-accent)', color: 'var(--gold)', width: 52, height: 52 }}
                     >
                       {currentStep.icon}
                     </div>
                     <h2
-                      className="text-xl font-bold"
+                      className="text-2xl font-bold tracking-tight"
                       style={{ color: 'var(--gold)', fontFamily: 'var(--font-playfair)' }}
                     >
                       {currentStep.title}
@@ -227,40 +228,40 @@ export default function Tutorial({ isOpen, onDismiss, highlightRect, onStepChang
                   </div>
 
                   {/* Description */}
-                  <p className="text-sm leading-relaxed text-white/70 mb-5">
+                  <p className="text-[15px] leading-relaxed text-white/70 mb-6">
                     {currentStep.text}
                   </p>
 
                   {/* Step dots */}
-                  <div className="flex items-center justify-center gap-1.5 mb-4">
+                  <div className="flex items-center justify-center gap-2 mb-5">
                     {TUTORIAL_STEPS.map((_, i) => (
                       <div
                         key={i}
-                        className="h-1.5 rounded-full transition-all duration-300"
+                        className="h-2 rounded-full transition-all duration-300"
                         style={{
-                          width: i === step ? 20 : 6,
-                          backgroundColor: i === step ? 'var(--gold)' : 'rgba(255,255,255,0.15)',
+                          width: i === step ? 24 : 8,
+                          backgroundColor: i === step ? 'var(--gold)' : 'rgba(255,255,255,0.12)',
                         }}
                       />
                     ))}
                   </div>
 
                   {/* Buttons */}
-                  <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-center justify-between gap-3">
                     {/* Skip — always visible */}
                     <button
                       onClick={handleDismiss}
-                      className="px-4 py-2.5 text-xs font-medium text-white/40 hover:text-white/70 active:text-white transition-colors rounded-lg min-h-[44px]"
+                      className="px-4 py-2.5 text-sm font-medium text-white/40 hover:text-white/70 active:text-white transition-colors rounded-xl min-h-[44px]"
                     >
                       Skip
                     </button>
 
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2.5">
                       {/* Previous */}
                       {step > 0 && (
                         <button
                           onClick={handlePrev}
-                          className="px-4 py-2.5 text-xs font-medium text-white/50 hover:text-white/80 active:text-white transition-colors rounded-lg border border-white/10 min-h-[44px]"
+                          className="px-5 py-2.5 text-sm font-medium text-white/50 hover:text-white/80 active:text-white transition-colors rounded-xl border border-white/10 min-h-[44px]"
                         >
                           Back
                         </button>
@@ -269,7 +270,7 @@ export default function Tutorial({ isOpen, onDismiss, highlightRect, onStepChang
                       {/* Next / Got it! */}
                       <button
                         onClick={handleNext}
-                        className="px-6 py-2.5 text-sm font-bold rounded-lg transition-all active:scale-95 min-h-[44px]"
+                        className="px-7 py-3 text-sm font-bold rounded-xl transition-all active:scale-95 min-h-[44px]"
                         style={{
                           backgroundColor: 'var(--gold)',
                           color: '#000',

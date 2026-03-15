@@ -152,7 +152,7 @@ export default function DealsExplorer() {
         </button>
       </section>
 
-      <AdUnit className="my-8" />
+      <AdUnit className="-my-1" />
 
       {/* Curated Collections */}
       <section>
@@ -170,7 +170,7 @@ export default function DealsExplorer() {
         </div>
       </section>
 
-      <AdUnit className="my-8" />
+      <AdUnit className="-my-1" />
 
       {/* Browse by Range */}
       <section>
@@ -209,7 +209,7 @@ export default function DealsExplorer() {
         </div>
       </section>
 
-      <AdUnit className="my-8" />
+      <AdUnit className="-my-1" />
 
       {/* Random Deal CTA */}
       <section className="bg-white/[0.03] border border-white/10 rounded-xl p-8 text-center">

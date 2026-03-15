@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { absoluteUrl, siteConfig } from '@/lib/siteConfig';
+import ContentLayout from '@/components/ContentLayout';
+import { ContentHero, JsonLd, CtaSection, ContentLinkCard } from '@/components/content';
 import AdUnit from '@/components/AdUnit';
 
 export const metadata: Metadata = {
@@ -30,115 +32,91 @@ export const metadata: Metadata = {
 };
 
 export default function KlondikeHowToPlayPage() {
+  const articleJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'How to Play Klondike Solitaire — Complete Rules & Setup Guide',
+    description: 'Learn how to play Klondike Solitaire with complete rules, setup instructions, dealing variants, and beginner tips.',
+    author: { '@type': 'Organization', name: siteConfig.brandName },
+    publisher: { '@type': 'Organization', name: siteConfig.brandName },
+    mainEntityOfPage: absoluteUrl('/klondike/how-to-play'),
+  };
+
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: absoluteUrl('/') },
+      { '@type': 'ListItem', position: 2, name: 'Solitaire Types', item: absoluteUrl('/solitaire-types') },
+      { '@type': 'ListItem', position: 3, name: 'Klondike: How to Play', item: absoluteUrl('/klondike/how-to-play') },
+    ],
+  };
+
+  const faqJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: "What's the difference between Klondike and Solitaire?",
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'In the United States and Canada, "Solitaire" almost always refers to Klondike — they\'re the same game. Klondike is the proper name for the specific card game with 7 tableau columns, a stock pile, and 4 foundation piles. There are actually hundreds of different solitaire card games (FreeCell, Spider, Pyramid, etc.), but Klondike became so dominant that people dropped the specific name.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'How many cards do you deal in Klondike?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'You deal 28 cards across 7 columns. Column 1 gets 1 card, column 2 gets 2 cards, column 3 gets 3, and so on up to column 7 which gets 7 cards. Only the top card of each column is face-up; the rest are face-down. The remaining 24 cards form the stock pile.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Can you move any card to an empty column in Klondike?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'No — only Kings can be moved to empty columns in Klondike. This is one of the most common rules people get wrong. In FreeCell, any card can fill an empty column, but in Klondike, empty columns are reserved exclusively for Kings (and any cards built on top of them).',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'What are the odds of winning Klondike?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Win rates vary significantly by variant and skill. With Draw-1 (turning one card at a time from the stock), skilled players win around 40-50% of games, and computer analysis suggests a theoretical maximum around 79-82%. With Draw-3, win rates drop to 10-20% for most players. Vegas scoring with limited passes is even harder. Unlike FreeCell (which is 99.999% solvable), many Klondike deals are genuinely unwinnable regardless of play.',
+        },
+      },
+    ],
+  };
+
   return (
-    <div className="min-h-screen bg-[#072907] text-white selection:bg-[#D4AF37] selection:text-white">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'Article',
-            headline: 'How to Play Klondike Solitaire — Complete Rules & Setup Guide',
-            description:
-              'Learn how to play Klondike Solitaire with complete rules, setup instructions, dealing variants, and beginner tips.',
-            author: { '@type': 'Organization', name: siteConfig.brandName },
-            publisher: { '@type': 'Organization', name: siteConfig.brandName },
-            mainEntityOfPage: absoluteUrl('/klondike/how-to-play'),
-          }),
-        }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'BreadcrumbList',
-            itemListElement: [
-              { '@type': 'ListItem', position: 1, name: 'Home', item: absoluteUrl('/') },
-              { '@type': 'ListItem', position: 2, name: 'Solitaire Types', item: absoluteUrl('/solitaire-types') },
-              { '@type': 'ListItem', position: 3, name: 'Klondike: How to Play', item: absoluteUrl('/klondike/how-to-play') },
-            ],
-          }),
-        }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'FAQPage',
-            mainEntity: [
-              {
-                '@type': 'Question',
-                name: "What's the difference between Klondike and Solitaire?",
-                acceptedAnswer: {
-                  '@type': 'Answer',
-                  text: 'In the United States and Canada, "Solitaire" almost always refers to Klondike — they\'re the same game. Klondike is the proper name for the specific card game with 7 tableau columns, a stock pile, and 4 foundation piles. There are actually hundreds of different solitaire card games (FreeCell, Spider, Pyramid, etc.), but Klondike became so dominant that people dropped the specific name.',
-                },
-              },
-              {
-                '@type': 'Question',
-                name: 'How many cards do you deal in Klondike?',
-                acceptedAnswer: {
-                  '@type': 'Answer',
-                  text: 'You deal 28 cards across 7 columns. Column 1 gets 1 card, column 2 gets 2 cards, column 3 gets 3, and so on up to column 7 which gets 7 cards. Only the top card of each column is face-up; the rest are face-down. The remaining 24 cards form the stock pile.',
-                },
-              },
-              {
-                '@type': 'Question',
-                name: 'Can you move any card to an empty column in Klondike?',
-                acceptedAnswer: {
-                  '@type': 'Answer',
-                  text: 'No — only Kings can be moved to empty columns in Klondike. This is one of the most common rules people get wrong. In FreeCell, any card can fill an empty column, but in Klondike, empty columns are reserved exclusively for Kings (and any cards built on top of them).',
-                },
-              },
-              {
-                '@type': 'Question',
-                name: 'What are the odds of winning Klondike?',
-                acceptedAnswer: {
-                  '@type': 'Answer',
-                  text: 'Win rates vary significantly by variant and skill. With Draw-1 (turning one card at a time from the stock), skilled players win around 40-50% of games, and computer analysis suggests a theoretical maximum around 79-82%. With Draw-3, win rates drop to 10-20% for most players. Vegas scoring with limited passes is even harder. Unlike FreeCell (which is 99.999% solvable), many Klondike deals are genuinely unwinnable regardless of play.',
-                },
-              },
-            ],
-          }),
-        }}
+    <ContentLayout variant="dark">
+      <JsonLd data={articleJsonLd} />
+      <JsonLd data={breadcrumbJsonLd} />
+      <JsonLd data={faqJsonLd} />
+
+      <ContentHero
+        title="How to Play Klondike Solitaire"
+        kicker={<><Link href="/" className="hover:text-white/60 transition-colors">Home</Link>{" "}&rsaquo;{" "}<Link href="/solitaire-types" className="hover:text-white/60 transition-colors">Solitaire Types</Link>{" "}&rsaquo;{" "}Klondike: How to Play</>}
+        subtitle={'The classic card game everyone calls "Solitaire." Complete rules, setup, dealing variants, and everything you need to start playing.'}
       />
 
-      {/* Header */}
-      <header className="py-16 px-6 border-b border-white/5">
-        <div className="max-w-3xl mx-auto">
-          <nav className="text-sm text-white/30 mb-6">
-            <Link href="/" className="hover:text-white/60 transition-colors">Home</Link>
-            <span className="mx-2">›</span>
-            <Link href="/solitaire-types" className="hover:text-white/60 transition-colors">Solitaire Types</Link>
-            <span className="mx-2">›</span>
-            <span className="text-white/50">Klondike: How to Play</span>
-          </nav>
-          <h1 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: 'var(--font-playfair)' }}>
-            How to Play Klondike Solitaire
-          </h1>
-          <p className="text-lg text-white/60 max-w-2xl">
-            The classic card game everyone calls &quot;Solitaire.&quot; Complete rules, setup, dealing variants, and everything you need to start playing.
-          </p>
-        </div>
-      </header>
-
-      {/* Content */}
       <main className="max-w-3xl mx-auto px-6 py-12">
 
         {/* Table of Contents */}
         <nav className="mb-12 p-6 bg-white/[0.03] border border-white/10 rounded-xl">
           <h2 className="text-sm font-bold text-white/40 uppercase tracking-widest mb-4">Contents</h2>
           <ul className="space-y-2 text-sm">
-            <li><a href="#what-is-klondike" className="text-[#D4AF37] hover:text-[#e8c54a] transition-colors">What Is Klondike? (And Why You Call It &quot;Solitaire&quot;)</a></li>
-            <li><a href="#setup" className="text-[#D4AF37] hover:text-[#e8c54a] transition-colors">Setting Up the Game</a></li>
-            <li><a href="#how-to-play" className="text-[#D4AF37] hover:text-[#e8c54a] transition-colors">How to Play</a></li>
-            <li><a href="#dealing-variants" className="text-[#D4AF37] hover:text-[#e8c54a] transition-colors">Dealing Variants: Draw 1 vs. Draw 3</a></li>
-            <li><a href="#scoring" className="text-[#D4AF37] hover:text-[#e8c54a] transition-colors">Scoring Systems</a></li>
-            <li><a href="#klondike-vs-freecell" className="text-[#D4AF37] hover:text-[#e8c54a] transition-colors">Klondike vs. FreeCell</a></li>
-            <li><a href="#tips" className="text-[#D4AF37] hover:text-[#e8c54a] transition-colors">Tips for Your First Game</a></li>
-            <li><a href="#faq" className="text-[#D4AF37] hover:text-[#e8c54a] transition-colors">FAQ</a></li>
+            <li><a href="#what-is-klondike" className="text-[#8B6914] hover:text-[#e8c54a] transition-colors">What Is Klondike? (And Why You Call It &quot;Solitaire&quot;)</a></li>
+            <li><a href="#setup" className="text-[#8B6914] hover:text-[#e8c54a] transition-colors">Setting Up the Game</a></li>
+            <li><a href="#how-to-play" className="text-[#8B6914] hover:text-[#e8c54a] transition-colors">How to Play</a></li>
+            <li><a href="#dealing-variants" className="text-[#8B6914] hover:text-[#e8c54a] transition-colors">Dealing Variants: Draw 1 vs. Draw 3</a></li>
+            <li><a href="#scoring" className="text-[#8B6914] hover:text-[#e8c54a] transition-colors">Scoring Systems</a></li>
+            <li><a href="#klondike-vs-freecell" className="text-[#8B6914] hover:text-[#e8c54a] transition-colors">Klondike vs. FreeCell</a></li>
+            <li><a href="#tips" className="text-[#8B6914] hover:text-[#e8c54a] transition-colors">Tips for Your First Game</a></li>
+            <li><a href="#faq" className="text-[#8B6914] hover:text-[#e8c54a] transition-colors">FAQ</a></li>
           </ul>
         </nav>
 
@@ -155,8 +133,8 @@ export default function KlondikeHowToPlayPage() {
           </p>
           <p className="text-white/70 leading-relaxed mb-4">
             Here&apos;s the thing: &quot;solitaire&quot; actually refers to <em>any</em> card game played alone. There are{' '}
-            <Link href="/solitaire-types" className="text-[#D4AF37] hover:underline">hundreds of solitaire variants</Link>
-            {' '}— <Link href="/how-to-play" className="text-[#D4AF37] hover:underline">FreeCell</Link>, <Link href="/spider/how-to-play" className="text-[#D4AF37] hover:underline">Spider</Link>, Pyramid, Canfield, and many more. Klondike just became so dominant that people dropped the specific name.
+            <Link href="/solitaire-types" className="text-[#8B6914] hover:underline">hundreds of solitaire variants</Link>
+            {' '}— <Link href="/how-to-play" className="text-[#8B6914] hover:underline">FreeCell</Link>, <Link href="/spider/how-to-play" className="text-[#8B6914] hover:underline">Spider</Link>, Pyramid, Canfield, and many more. Klondike just became so dominant that people dropped the specific name.
           </p>
 
           <div className="bg-white/[0.03] border border-white/10 rounded-xl p-5 mb-4">
@@ -173,7 +151,7 @@ export default function KlondikeHowToPlayPage() {
           </div>
         </section>
 
-        <AdUnit className="my-8" />
+        <AdUnit className="-my-1" />
 
         {/* Setting Up the Game */}
         <section id="setup" className="mb-12">
@@ -258,11 +236,11 @@ export default function KlondikeHowToPlayPage() {
           <h3 className="text-xl font-semibold mb-3 text-white/90">Empty Columns: Kings Only</h3>
           <p className="text-white/70 leading-relaxed mb-4">
             When a tableau column becomes empty, <strong className="text-white/90">only a King</strong> (or a sequence starting with a King) can be placed there. This is one of the most commonly confused rules — in{' '}
-            <Link href="/how-to-play" className="text-[#D4AF37] hover:underline">FreeCell</Link>, any card can fill an empty column. In Klondike, it&apos;s Kings only.
+            <Link href="/how-to-play" className="text-[#8B6914] hover:underline">FreeCell</Link>, any card can fill an empty column. In Klondike, it&apos;s Kings only.
           </p>
         </section>
 
-        <AdUnit className="my-8" />
+        <AdUnit className="-my-1" />
 
         {/* Dealing Variants */}
         <section id="dealing-variants" className="mb-12">
@@ -352,7 +330,7 @@ export default function KlondikeHowToPlayPage() {
           </p>
         </section>
 
-        <AdUnit className="my-8" />
+        <AdUnit className="-my-1" />
 
         {/* Klondike vs FreeCell */}
         <section id="klondike-vs-freecell" className="mb-12">
@@ -417,9 +395,9 @@ export default function KlondikeHowToPlayPage() {
           </p>
           <p className="text-white/70 leading-relaxed">
             If you enjoy Klondike but want a game where skill matters more, give{' '}
-            <Link href="/" className="text-[#D4AF37] hover:underline">FreeCell</Link> a try.
+            <Link href="/" className="text-[#8B6914] hover:underline">FreeCell</Link> a try.
             For a deeper comparison, see our{' '}
-            <Link href="/freecell-vs-klondike" className="text-[#D4AF37] hover:underline">FreeCell vs. Klondike</Link> guide.
+            <Link href="/freecell-vs-klondike" className="text-[#8B6914] hover:underline">FreeCell vs. Klondike</Link> guide.
           </p>
         </section>
 
@@ -462,7 +440,7 @@ export default function KlondikeHowToPlayPage() {
           </div>
         </section>
 
-        <AdUnit className="my-8" />
+        <AdUnit className="-my-1" />
 
         {/* FAQ */}
         <section id="faq" className="mb-12">
@@ -492,7 +470,7 @@ export default function KlondikeHowToPlayPage() {
               </h3>
               <p className="text-white/60 leading-relaxed">
                 No — <strong className="text-white/80">only Kings</strong> can fill empty columns. This is one of the biggest rule differences between Klondike and{' '}
-                <Link href="/how-to-play" className="text-[#D4AF37] hover:underline">FreeCell</Link>,
+                <Link href="/how-to-play" className="text-[#8B6914] hover:underline">FreeCell</Link>,
                 {' '}where any card can go in an empty column.
               </p>
             </div>
@@ -502,30 +480,19 @@ export default function KlondikeHowToPlayPage() {
               </h3>
               <p className="text-white/60 leading-relaxed">
                 It depends on the variant. With Draw 1 and unlimited passes, skilled players win around 40-50% of games (computer analysis suggests a theoretical ceiling around 79-82%). Draw 3 drops to 10-20%. Vegas rules (single pass) can be as low as 5-10%. For comparison,{' '}
-                <Link href="/statistics" className="text-[#D4AF37] hover:underline">FreeCell is 99.999% solvable</Link>
+                <Link href="/statistics" className="text-[#8B6914] hover:underline">FreeCell is 99.999% solvable</Link>
                 {' '}— almost every deal can be won with perfect play.
               </p>
             </div>
           </div>
         </section>
 
-        {/* Strategy CTA */}
-        <section className="mb-12">
-          <div className="bg-gradient-to-br from-emerald-900/30 to-emerald-900/10 border border-emerald-500/20 rounded-xl p-6 text-center">
-            <h2 className="text-xl font-bold mb-2" style={{ fontFamily: 'var(--font-playfair)' }}>
-              Ready to Improve?
-            </h2>
-            <p className="text-white/60 mb-4 max-w-md mx-auto text-sm">
-              Now that you know the rules, learn the 7 strategies that separate consistent winners from casual players.
-            </p>
-            <Link
-              href="/klondike/strategy"
-              className="inline-block px-6 py-3 bg-emerald-700 hover:bg-emerald-600 text-white font-bold rounded-lg transition-colors"
-            >
-              Read the Klondike Strategy Guide →
-            </Link>
-          </div>
-        </section>
+        <CtaSection
+          heading="Ready to Improve?"
+          body="Now that you know the rules, learn the 7 strategies that separate consistent winners from casual players."
+          primaryLabel="Read the Klondike Strategy Guide"
+          primaryHref="/klondike/strategy"
+        />
 
         {/* Related Pages */}
         <section className="mb-8">
@@ -533,45 +500,20 @@ export default function KlondikeHowToPlayPage() {
             Related Guides
           </h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-            <Link href="/klondike" className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] transition-colors">
-              <span className="text-sm text-[#D4AF37]">Play Klondike Solitaire</span>
-            </Link>
-            <Link href="/klondike/strategy" className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] transition-colors">
-              <span className="text-sm text-[#D4AF37]">Klondike Strategy Guide</span>
-            </Link>
-            <Link href="/klondike/faq" className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] transition-colors">
-              <span className="text-sm text-[#D4AF37]">Klondike FAQ</span>
-            </Link>
-            <Link href="/freecell-vs-klondike" className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] transition-colors">
-              <span className="text-sm text-[#D4AF37]">FreeCell vs. Klondike</span>
-            </Link>
-            <Link href="/how-to-play" className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] transition-colors">
-              <span className="text-sm text-[#D4AF37]">How to Play FreeCell</span>
-            </Link>
-            <Link href="/spider/how-to-play" className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] transition-colors">
-              <span className="text-sm text-[#D4AF37]">How to Play Spider</span>
-            </Link>
-            <Link href="/solitaire-types" className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] transition-colors">
-              <span className="text-sm text-[#D4AF37]">Solitaire Types</span>
-            </Link>
-            <Link href="/klondike/strategy" className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] transition-colors">
-              <span className="text-sm text-[#D4AF37]">Klondike Strategy Guide</span>
-            </Link>
-            <Link href="/klondike/tips" className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] transition-colors">
-              <span className="text-sm text-[#D4AF37]">Klondike Tips & Tricks</span>
-            </Link>
-            <Link href="/klondike/winning-strategies" className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] transition-colors">
-              <span className="text-sm text-[#D4AF37]">Klondike Winning Strategies</span>
-            </Link>
-            <Link href="/strategy" className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] transition-colors">
-              <span className="text-sm text-[#D4AF37]">FreeCell Strategy</span>
-            </Link>
-            <Link href="/" className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] transition-colors">
-              <span className="text-sm text-[#D4AF37]">Play FreeCell Online</span>
-            </Link>
+            <ContentLinkCard href="/klondike" title="Play Klondike Solitaire" />
+            <ContentLinkCard href="/klondike/strategy" title="Klondike Strategy Guide" />
+            <ContentLinkCard href="/klondike/faq" title="Klondike FAQ" />
+            <ContentLinkCard href="/freecell-vs-klondike" title="FreeCell vs. Klondike" />
+            <ContentLinkCard href="/how-to-play" title="How to Play FreeCell" />
+            <ContentLinkCard href="/spider/how-to-play" title="How to Play Spider" />
+            <ContentLinkCard href="/solitaire-types" title="Solitaire Types" />
+            <ContentLinkCard href="/klondike/tips" title="Klondike Tips & Tricks" />
+            <ContentLinkCard href="/klondike/winning-strategies" title="Klondike Winning Strategies" />
+            <ContentLinkCard href="/strategy" title="FreeCell Strategy" />
+            <ContentLinkCard href="/" title="Play FreeCell Online" />
           </div>
         </section>
       </main>
-    </div>
+    </ContentLayout>
   );
 }

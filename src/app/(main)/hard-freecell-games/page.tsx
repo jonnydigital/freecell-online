@@ -4,6 +4,7 @@ import { absoluteUrl, siteConfig } from '@/lib/siteConfig';
 import { expertDeals } from '@/lib/curatedDeals';
 import AdUnit from '@/components/AdUnit';
 import ContentLayout from '@/components/ContentLayout';
+import { SectionHeading, CardSection, ContentBody, CtaSection, ContentLinkCard, JsonLd } from '@/components/content';
 
 export const metadata: Metadata = {
   title: 'Hard FreeCell Games: What Makes A Deal Difficult?',
@@ -29,7 +30,6 @@ export const metadata: Metadata = {
   },
 };
 
-const CARD = 'rounded-xl bg-white/[0.04] border border-white/[0.07] overflow-hidden';
 
 const faqs = [
   {
@@ -54,29 +54,6 @@ const faqs = [
   },
 ];
 
-function SectionHeading({
-  children,
-  sub,
-}: {
-  children: React.ReactNode;
-  sub?: string;
-}) {
-  return (
-    <div className="px-8 sm:px-10 md:px-12 pt-6 sm:pt-8 pb-0">
-      {sub && (
-        <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#D4AF37]/60 mb-1.5 block">
-          {sub}
-        </span>
-      )}
-      <h2
-        className="text-2xl sm:text-3xl font-bold text-white scroll-mt-6"
-      >
-        {children}
-      </h2>
-      <div className="mt-4 h-px bg-gradient-to-r from-[#D4AF37]/40 to-transparent" />
-    </div>
-  );
-}
 
 export default function HardFreecellGamesPage() {
   const jsonLd = [
@@ -135,11 +112,10 @@ export default function HardFreecellGamesPage() {
 
   return (
     <ContentLayout variant="dark">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <JsonLd data={jsonLd} />
 
       <main className="max-w-5xl mx-auto px-4 sm:px-6 pt-6 pb-20 space-y-6">
-        <section>
-          <div className={CARD}>
+        <CardSection variant="dark">
             <div className="px-8 sm:px-10 md:px-12 pt-6 sm:pt-8 pb-6">
               <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#D4AF37]/60 block mb-3">
                 Advanced FreeCell
@@ -179,13 +155,11 @@ export default function HardFreecellGamesPage() {
                 </div>
               </div>
             </div>
-          </div>
-        </section>
+        </CardSection>
 
-        <section>
-          <div className={CARD}>
-            <SectionHeading sub="The Patterns">What Makes A FreeCell Deal Difficult</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 grid gap-4 md:grid-cols-2">
+        <CardSection variant="dark">
+            <SectionHeading variant="dark" sub="The Patterns">What Makes A FreeCell Deal Difficult</SectionHeading>
+            <ContentBody variant="dark" className="grid gap-4 md:grid-cols-2">
               <div className="rounded-xl border border-white/[0.07] p-5">
                 <h3 className="text-lg font-semibold text-white mb-2">Buried low cards</h3>
                 <p className="text-white/70 text-sm leading-7">
@@ -214,16 +188,14 @@ export default function HardFreecellGamesPage() {
                   plausible starts, but only one preserves the board&apos;s future flexibility.
                 </p>
               </div>
-            </div>
-          </div>
-        </section>
+            </ContentBody>
+        </CardSection>
 
-        <AdUnit className="my-4" />
+        <AdUnit className="-my-1" />
 
-        <section>
-          <div className={CARD}>
-            <SectionHeading sub="Do Not Confuse Them">Hard Versus Impossible</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-5 text-white/70 leading-8">
+        <CardSection variant="dark">
+            <SectionHeading variant="dark" sub="Do Not Confuse Them">Hard Versus Impossible</SectionHeading>
+            <ContentBody variant="dark" className="space-y-5">
               <p>
                 A hard deal gives you a narrow path. An impossible deal gives you none. That
                 distinction matters because players routinely label a deal &quot;impossible&quot; after
@@ -246,14 +218,12 @@ export default function HardFreecellGamesPage() {
                   card again, or spent a free cell to make a move that looked active but reduced mobility.
                 </p>
               </div>
-            </div>
-          </div>
-        </section>
+            </ContentBody>
+        </CardSection>
 
-        <section>
-          <div className={CARD}>
-            <SectionHeading sub="Practical Tactics">How To Attack Hard Deals</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 grid gap-4 md:grid-cols-2">
+        <CardSection variant="dark">
+            <SectionHeading variant="dark" sub="Practical Tactics">How To Attack Hard Deals</SectionHeading>
+            <ContentBody variant="dark" className="grid gap-4 md:grid-cols-2">
               <div className="bg-white/[0.05] border border-white/[0.07] rounded-xl p-5">
                 <h3 className="text-lg font-semibold text-white mb-2">Scan longer before move one</h3>
                 <p className="text-white/70 text-sm leading-7">
@@ -286,14 +256,12 @@ export default function HardFreecellGamesPage() {
                   learning lives.
                 </p>
               </div>
-            </div>
-          </div>
-        </section>
+            </ContentBody>
+        </CardSection>
 
-        <section>
-          <div className={CARD}>
-            <SectionHeading sub="Test Your Skills">Try These Expert Challenge Deals</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6">
+        <CardSection variant="dark">
+            <SectionHeading variant="dark" sub="Test Your Skills">Try These Expert Challenge Deals</SectionHeading>
+            <ContentBody variant="dark">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {expertDeals.map((deal) => (
                   <Link
@@ -317,96 +285,38 @@ export default function HardFreecellGamesPage() {
                   Browse all deals &rarr;
                 </Link>
               </div>
-            </div>
-          </div>
-        </section>
+            </ContentBody>
+        </CardSection>
 
-        <section>
-          <div className={CARD}>
-            <SectionHeading sub="Read Next">Build The Full Difficulty Cluster</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 grid gap-4 md:grid-cols-2">
-              <Link href="/easy-freecell-games" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                <h3 className="text-lg font-semibold text-white">Easy FreeCell Games</h3>
-                <p className="mt-2 text-sm leading-7 text-white/70">
-                  Learn what a forgiving deal looks like and why easier boards are ideal for practice.
-                </p>
-              </Link>
-              <Link href="/is-every-freecell-game-winnable" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                <h3 className="text-lg font-semibold text-white">Is Every Game Winnable?</h3>
-                <p className="mt-2 text-sm leading-7 text-white/70">
-                  Separate truly impossible deals from solvable boards that only look dead.
-                </p>
-              </Link>
-              <Link href="/tips" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                <h3 className="text-lg font-semibold text-white">Tips and Tricks</h3>
-                <p className="mt-2 text-sm leading-7 text-white/70">
-                  Pair this page with a quicker tactical checklist you can use during live play.
-                </p>
-              </Link>
-              <Link href="/famous-freecell-deals" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                <h3 className="text-lg font-semibold text-white">Famous FreeCell Deals</h3>
-                <p className="mt-2 text-sm leading-7 text-white/70">
-                  Explore the iconic games that define FreeCell difficulty — from the notoriously hard to the proven impossible.
-                </p>
-              </Link>
-            </div>
-          </div>
-        </section>
+        <CardSection variant="dark">
+            <SectionHeading variant="dark" sub="Read Next">Build The Full Difficulty Cluster</SectionHeading>
+            <ContentBody variant="dark" className="grid gap-4 md:grid-cols-2">
+              <ContentLinkCard href="/easy-freecell-games" title="Easy FreeCell Games" description="Learn what a forgiving deal looks like and why easier boards are ideal for practice." />
+              <ContentLinkCard href="/is-every-freecell-game-winnable" title="Is Every Game Winnable?" description="Separate truly impossible deals from solvable boards that only look dead." />
+              <ContentLinkCard href="/tips" title="Tips and Tricks" description="Pair this page with a quicker tactical checklist you can use during live play." />
+              <ContentLinkCard href="/famous-freecell-deals" title="Famous FreeCell Deals" description="Explore the iconic games that define FreeCell difficulty — from the notoriously hard to the proven impossible." />
+            </ContentBody>
+        </CardSection>
 
-        <section id="faq">
-          <div className={CARD}>
-            <SectionHeading sub="Common Questions">Hard FreeCell Games FAQ</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-6">
-              {faqs.map((faq, index) => (
-                <div key={faq.question}>
-                  <h3 className="font-medium text-white text-lg mb-2">{faq.question}</h3>
-                  <p className="text-white/70 leading-relaxed">{faq.answer}</p>
-                  {index < faqs.length - 1 && <div className="mt-6 border-b border-white/[0.07]" />}
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section>
-          <div
-            className={CARD}
-            style={{
-              background: 'linear-gradient(135deg, rgba(10,74,42,0.6) 0%, rgba(6,37,22,0.8) 100%)',
-            }}
-          >
-            <div className="p-8 sm:p-10 text-center relative">
-              <h2
-                className="text-2xl sm:text-3xl font-semibold text-white mb-3"
-              >
-                Try A Deal That Makes You Think
-              </h2>
-              <p className="text-white/40 mb-6 max-w-2xl mx-auto">
-                Tough FreeCell games are where discipline shows up. Play one, lose with purpose,
-                and use the position to sharpen your next opening scan.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                <Link
-                  href="/"
-                  className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl text-lg font-semibold transition-all duration-200 hover:scale-[1.03] active:scale-[0.98]"
-                  style={{
-                    background: 'linear-gradient(110deg, #B8860B, #D4AF37, #F3E5AB, #D4AF37, #B8860B)',
-                    backgroundSize: '200% 100%',
-                    color: '#1a1a0a',
-                  }}
-                >
-                  Play FreeCell Now
-                </Link>
-                <Link
-                  href="/strategy"
-                  className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl text-lg font-semibold border border-white/20 text-white/90 hover:bg-white/[0.08] transition-colors"
-                >
-                  Study Full Strategy
-                </Link>
+        <CardSection id="faq" variant="dark">
+          <SectionHeading variant="dark" sub="Common Questions">Hard FreeCell Games FAQ</SectionHeading>
+          <ContentBody variant="dark" className="space-y-6">
+            {faqs.map((faq, index) => (
+              <div key={faq.question}>
+                <h3 className="font-medium text-white text-lg mb-2">{faq.question}</h3>
+                <p className="text-white/70 leading-relaxed">{faq.answer}</p>
+                {index < faqs.length - 1 && <div className="mt-6 border-b border-white/[0.07]" />}
               </div>
-            </div>
-          </div>
-        </section>
+            ))}
+          </ContentBody>
+        </CardSection>
+
+        <CtaSection
+          heading="Try A Deal That Makes You Think"
+          body="Tough FreeCell games are where discipline shows up. Play one, lose with purpose, and use the position to sharpen your next opening scan."
+          secondaryLabel="Study Full Strategy"
+          secondaryHref="/strategy"
+        />
       </main>
     </ContentLayout>
   );

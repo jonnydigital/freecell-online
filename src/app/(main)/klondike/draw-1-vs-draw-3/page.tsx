@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import ContentLayout from "@/components/ContentLayout";
+import { ContentHero, JsonLd, CtaSection, ContentLinkCard } from "@/components/content";
 import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
@@ -124,63 +125,19 @@ export default function Draw1VsDraw3Page() {
 
   return (
     <ContentLayout variant="dark">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
-      />
+      <JsonLd data={faqJsonLd} />
+      <JsonLd data={breadcrumbJsonLd} />
+      <JsonLd data={articleJsonLd} />
 
-      {/* Hero */}
-      <header className="relative pt-6 pb-12 sm:pt-8 sm:pb-16 px-6 text-center overflow-hidden">
-        <div
-          className="absolute top-10 left-[10%] text-6xl sm:text-8xl text-white/[0.03] select-none pointer-events-none"
-          aria-hidden="true"
-        >
-          {"\u2663"}
-        </div>
-        <div
-          className="absolute top-16 right-[8%] text-5xl sm:text-7xl text-red-500/[0.04] select-none pointer-events-none"
-          aria-hidden="true"
-        >
-          {"\u2665"}
-        </div>
-
-        <p className="text-sm uppercase tracking-[0.2em] text-[var(--gold)] mb-3 font-medium">
-          <Link href="/klondike" className="hover:text-white transition-colors">
-            Klondike Solitaire
-          </Link>{" "}
-          / Draw 1 vs Draw 3
-        </p>
-        <h1
-          className="text-4xl sm:text-5xl lg:text-6xl font-semibold text-[#D4AF37] mb-4 max-w-3xl mx-auto leading-tight"
-          style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
-        >
-          Draw 1 vs Draw 3 Solitaire
-        </h1>
-        <p className="text-white/50 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
-          A complete comparison of Klondike&apos;s two draw modes — win rates, rules,
-          strategy depth, and which one you should play.
-        </p>
-
-        <div className="mt-8 flex items-center justify-center gap-3">
-          <div className="h-px w-12 bg-gradient-to-r from-transparent to-[#D4AF37]/50" />
-          <span className="text-[#D4AF37] text-sm">
-            {"\u2660"} {"\u2665"} {"\u2666"} {"\u2663"}
-          </span>
-          <div className="h-px w-12 bg-gradient-to-l from-transparent to-[#D4AF37]/50" />
-        </div>
-      </header>
+      <ContentHero
+        title="Draw 1 vs Draw 3 Solitaire"
+        kicker={<><Link href="/klondike" className="hover:text-white transition-colors">Klondike Solitaire</Link> / Draw 1 vs Draw 3</>}
+        subtitle="A complete comparison of Klondike's two draw modes — win rates, rules, strategy depth, and which one you should play."
+      />
 
       {/* Main Content */}
-      <main className="max-w-4xl mx-auto px-6 sm:px-10 lg:px-12 pb-20 flex flex-col gap-8">
-        <article className="space-y-10">
+      <main className="max-w-4xl mx-auto px-6 sm:px-10 lg:px-12 pb-20 flex flex-col gap-6">
+        <article className="space-y-6">
           {/* Introduction */}
           <section>
             <h2
@@ -273,7 +230,7 @@ export default function Draw1VsDraw3Page() {
             </div>
           </section>
 
-          <AdUnit format="horizontal" className="my-4" />
+          <AdUnit format="horizontal" className="-my-1" />
 
           {/* Side-by-Side Comparison Table */}
           <section>
@@ -412,7 +369,7 @@ export default function Draw1VsDraw3Page() {
             </div>
           </section>
 
-          <AdUnit format="auto" className="my-4" />
+          <AdUnit format="auto" className="-my-1" />
 
           {/* Strategy Differences */}
           <section>
@@ -576,7 +533,7 @@ export default function Draw1VsDraw3Page() {
             </div>
           </section>
 
-          <AdUnit format="auto" className="my-4" />
+          <AdUnit format="auto" className="-my-1" />
 
           {/* Which Mode Should You Play? */}
           <section>
@@ -694,7 +651,7 @@ export default function Draw1VsDraw3Page() {
             </div>
           </section>
 
-          <AdUnit format="auto" className="my-4" />
+          <AdUnit format="auto" className="-my-1" />
 
           {/* FAQ Section */}
           <section className="bg-white/[0.03] border border-white/10 rounded-xl p-6 sm:p-8">
@@ -719,89 +676,29 @@ export default function Draw1VsDraw3Page() {
             </div>
           </section>
 
-          {/* CTA */}
-          <section className="text-center">
-            <div className="bg-gradient-to-br from-emerald-900/30 to-emerald-900/10 border border-emerald-500/20 rounded-xl p-8">
-              <h2
-                className="text-2xl font-bold mb-3"
-                style={{ fontFamily: "var(--font-playfair)" }}
-              >
-                Try Both Modes
-              </h2>
-              <p className="text-white/60 mb-6 max-w-md mx-auto">
-                Our Klondike game lets you switch between Draw 1 and Draw 3 with a single
-                click. Play a few games of each and see which mode fits your style.
-              </p>
-              <div className="flex flex-wrap justify-center gap-3">
-                <Link
-                  href="/klondike"
-                  className="px-6 py-3 bg-emerald-700 hover:bg-emerald-600 text-white font-bold rounded-lg transition-colors"
-                >
-                  Play Klondike Solitaire →
-                </Link>
-                <Link
-                  href="/klondike/strategy"
-                  className="px-6 py-3 bg-white/10 hover:bg-white/20 text-white/80 font-medium rounded-lg transition-colors"
-                >
-                  Read the Strategy Guide
-                </Link>
-              </div>
-            </div>
-          </section>
+          <CtaSection
+            heading="Try Both Modes"
+            body="Our Klondike game lets you switch between Draw 1 and Draw 3 with a single click. Play a few games of each and see which mode fits your style."
+            primaryLabel="Play Klondike Solitaire"
+            primaryHref="/klondike"
+            secondaryLabel="Read the Strategy Guide"
+            secondaryHref="/klondike/strategy"
+          />
 
-          <AdUnit format="horizontal" className="my-4" />
+          <AdUnit format="horizontal" className="-my-1" />
 
           {/* Cross-links */}
           <section className="bg-white/[0.03] border border-white/10 rounded-xl p-6 sm:p-8">
-            <h2
-              className="text-xl font-bold text-white/90 mb-4"
-              style={{ fontFamily: "var(--font-playfair)" }}
-            >
+            <h2 className="text-xl font-bold text-white/90 mb-4" style={{ fontFamily: "var(--font-playfair)" }}>
               Related Pages
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <Link
-                href="/klondike"
-                className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] hover:border-[#D4AF37]/30 transition-all"
-              >
-                <span className="text-[#D4AF37] font-semibold">Play Klondike Solitaire</span>
-                <p className="text-sm text-white/40 mt-1">Play online for free — Draw 1 or Draw 3</p>
-              </Link>
-              <Link
-                href="/klondike/how-to-play"
-                className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] hover:border-[#D4AF37]/30 transition-all"
-              >
-                <span className="text-[#D4AF37] font-semibold">How to Play Klondike</span>
-                <p className="text-sm text-white/40 mt-1">Complete rules and setup guide</p>
-              </Link>
-              <Link
-                href="/klondike/strategy"
-                className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] hover:border-[#D4AF37]/30 transition-all"
-              >
-                <span className="text-[#D4AF37] font-semibold">Klondike Strategy Guide</span>
-                <p className="text-sm text-white/40 mt-1">In-depth strategies for both modes</p>
-              </Link>
-              <Link
-                href="/klondike/tips"
-                className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] hover:border-[#D4AF37]/30 transition-all"
-              >
-                <span className="text-[#D4AF37] font-semibold">Klondike Tips & Tricks</span>
-                <p className="text-sm text-white/40 mt-1">Quick, practical tips for all levels</p>
-              </Link>
-              <Link
-                href="/klondike/winning-strategies"
-                className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] hover:border-[#D4AF37]/30 transition-all"
-              >
-                <span className="text-[#D4AF37] font-semibold">Winning Strategies</span>
-                <p className="text-sm text-white/40 mt-1">Advanced tactics for higher win rates</p>
-              </Link>
-              <Link
-                href="/solitaire-types"
-                className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] hover:border-[#D4AF37]/30 transition-all"
-              >
-                <span className="text-[#D4AF37] font-semibold">Types of Solitaire</span>
-                <p className="text-sm text-white/40 mt-1">20 solitaire variants compared</p>
-              </Link>
+              <ContentLinkCard href="/klondike" title="Play Klondike Solitaire" description="Play online for free — Draw 1 or Draw 3" />
+              <ContentLinkCard href="/klondike/how-to-play" title="How to Play Klondike" description="Complete rules and setup guide" />
+              <ContentLinkCard href="/klondike/strategy" title="Klondike Strategy Guide" description="In-depth strategies for both modes" />
+              <ContentLinkCard href="/klondike/tips" title="Klondike Tips & Tricks" description="Quick, practical tips for all levels" />
+              <ContentLinkCard href="/klondike/winning-strategies" title="Winning Strategies" description="Advanced tactics for higher win rates" />
+              <ContentLinkCard href="/solitaire-types" title="Types of Solitaire" description="20 solitaire variants compared" />
             </div>
           </section>
         </article>

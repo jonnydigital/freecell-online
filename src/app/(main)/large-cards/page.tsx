@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { absoluteUrl, siteConfig } from '@/lib/siteConfig';
 import AdUnit from '@/components/AdUnit';
 import ContentLayout from '@/components/ContentLayout';
+import { SectionHeading, CardSection, ContentBody, CtaSection, ContentLinkCard, JsonLd } from '@/components/content';
 
 export const metadata: Metadata = {
   title: 'Large Cards Mode — Bigger, Easier-to-Read Solitaire Cards',
@@ -33,34 +34,7 @@ export const metadata: Metadata = {
   },
 };
 
-const CARD = 'rounded-xl bg-white/[0.04] border border-white/[0.07] overflow-hidden';
 
-function SectionHeading({
-  children,
-  id,
-  sub,
-}: {
-  children: React.ReactNode;
-  id?: string;
-  sub?: string;
-}) {
-  return (
-    <div className="px-8 sm:px-10 md:px-12 pt-6 sm:pt-8 pb-0">
-      {sub && (
-        <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#D4AF37]/60 mb-1.5 block">
-          {sub}
-        </span>
-      )}
-      <h2
-        id={id}
-        className="text-2xl sm:text-3xl font-bold text-white scroll-mt-6"
-      >
-        {children}
-      </h2>
-      <div className="mt-4 h-px bg-gradient-to-r from-[#D4AF37]/40 to-transparent" />
-    </div>
-  );
-}
 
 export default function LargeCardsPage() {
   const jsonLd = [
@@ -153,12 +127,11 @@ export default function LargeCardsPage() {
 
   return (
     <ContentLayout variant="dark">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <JsonLd data={jsonLd} />
 
       <main className="max-w-5xl mx-auto px-4 sm:px-6 pt-6 pb-20 space-y-6">
         {/* Hero */}
-        <section>
-          <div className={CARD}>
+        <CardSection variant="dark">
             <div className="px-8 sm:px-10 md:px-12 pt-6 sm:pt-8 pb-6">
               <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#D4AF37]/60 block mb-3">
                 Accessibility
@@ -190,14 +163,12 @@ export default function LargeCardsPage() {
                 </div>
               </div>
             </div>
-          </div>
-        </section>
+        </CardSection>
 
         {/* Why Large Cards Matter */}
-        <section id="why-large-cards" className="scroll-mt-6">
-          <div className={CARD}>
-            <SectionHeading sub="Readability" id="why-large-cards-heading">Why Large Cards Matter</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-5 text-white/70 leading-8">
+        <CardSection id="why-large-cards" variant="dark">
+            <SectionHeading variant="dark" sub="Readability" id="why-large-cards-heading">Why Large Cards Matter</SectionHeading>
+            <ContentBody variant="dark" className="space-y-5">
               <p>
                 Standard card sizes in digital solitaire games are designed for sharp-eyed players
                 on large monitors. But many people play on tablets, older laptops, or smaller screens
@@ -219,17 +190,15 @@ export default function LargeCardsPage() {
                   <li><strong className="text-white">Casual players:</strong> If you play to relax, bigger cards simply feel more comfortable and less like work.</li>
                 </ul>
               </div>
-            </div>
-          </div>
-        </section>
+            </ContentBody>
+        </CardSection>
 
-        <AdUnit className="my-4" />
+        <AdUnit className="-my-1" />
 
         {/* How to Enable */}
-        <section id="how-to-enable" className="scroll-mt-6">
-          <div className={CARD}>
-            <SectionHeading sub="Setup" id="how-to-enable-heading">How to Enable Large Cards</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-5 text-white/70 leading-8">
+        <CardSection id="how-to-enable" variant="dark">
+            <SectionHeading variant="dark" sub="Setup" id="how-to-enable-heading">How to Enable Large Cards</SectionHeading>
+            <ContentBody variant="dark" className="space-y-5">
               <p>
                 Turning on Large Cards takes about three seconds. The setting persists across sessions,
                 so you only need to do it once.
@@ -258,15 +227,13 @@ export default function LargeCardsPage() {
                   </p>
                 </div>
               </div>
-            </div>
-          </div>
-        </section>
+            </ContentBody>
+        </CardSection>
 
         {/* Across All Game Modes */}
-        <section id="all-game-modes" className="scroll-mt-6">
-          <div className={CARD}>
-            <SectionHeading sub="Universal" id="all-game-modes-heading">Works Across All Game Modes</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-5 text-white/70 leading-8">
+        <CardSection id="all-game-modes" variant="dark">
+            <SectionHeading variant="dark" sub="Universal" id="all-game-modes-heading">Works Across All Game Modes</SectionHeading>
+            <ContentBody variant="dark" className="space-y-5">
               <p>
                 Large Cards is not limited to a single game. The setting applies to every solitaire
                 variant available on {siteConfig.siteName}.
@@ -294,17 +261,15 @@ export default function LargeCardsPage() {
                   </p>
                 </Link>
               </div>
-            </div>
-          </div>
-        </section>
+            </ContentBody>
+        </CardSection>
 
-        <AdUnit className="my-4" />
+        <AdUnit className="-my-1" />
 
         {/* Benefits by Audience */}
-        <section id="benefits" className="scroll-mt-6">
-          <div className={CARD}>
-            <SectionHeading sub="For You" id="benefits-heading">Benefits for Different Players</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-5 text-white/70 leading-8">
+        <CardSection id="benefits" variant="dark">
+            <SectionHeading variant="dark" sub="For You" id="benefits-heading">Benefits for Different Players</SectionHeading>
+            <ContentBody variant="dark" className="space-y-5">
               <div className="grid gap-4 md:grid-cols-2">
                 <div className="bg-white/[0.05] border border-white/[0.07] rounded-xl p-5">
                   <h3 className="text-lg font-semibold text-white mb-2">Seniors &amp; Older Adults</h3>
@@ -342,15 +307,13 @@ export default function LargeCardsPage() {
                   </p>
                 </div>
               </div>
-            </div>
-          </div>
-        </section>
+            </ContentBody>
+        </CardSection>
 
         {/* FAQ */}
-        <section id="faq" className="scroll-mt-6">
-          <div className={CARD}>
-            <SectionHeading sub="Common Questions" id="faq-heading">Frequently Asked Questions</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-4">
+        <CardSection id="faq" variant="dark">
+            <SectionHeading variant="dark" sub="Common Questions" id="faq-heading">Frequently Asked Questions</SectionHeading>
+            <ContentBody variant="dark" className="space-y-4">
               <div className="bg-white/[0.05] border border-white/[0.07] rounded-xl p-5">
                 <h3 className="text-lg font-semibold text-white mb-2">How do I make the cards bigger in FreeCell?</h3>
                 <p className="text-sm leading-7 text-white/70">
@@ -388,84 +351,28 @@ export default function LargeCardsPage() {
                   board, keeping everything else properly sized and positioned.
                 </p>
               </div>
-            </div>
-          </div>
-        </section>
+            </ContentBody>
+        </CardSection>
 
-        <AdUnit className="my-4" />
+        <AdUnit className="-my-1" />
 
         {/* Related Pages */}
-        <section id="related" className="scroll-mt-6">
-          <div className={CARD}>
-            <SectionHeading sub="Keep Reading" id="related-heading">Related Guides</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6">
+        <CardSection id="related" variant="dark">
+            <SectionHeading variant="dark" sub="Keep Reading" id="related-heading">Related Guides</SectionHeading>
+            <ContentBody variant="dark">
               <div className="grid gap-4 md:grid-cols-2">
-                <Link href="/freecell-for-seniors" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                  <h3 className="text-lg font-semibold text-white">FreeCell for Seniors</h3>
-                  <p className="mt-2 text-sm leading-7 text-white/70">
-                    Why FreeCell is the ideal brain-training card game for older adults, with tips on getting started.
-                  </p>
-                </Link>
-                <Link href="/how-to-play" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                  <h3 className="text-lg font-semibold text-white">How to Play FreeCell</h3>
-                  <p className="mt-2 text-sm leading-7 text-white/70">
-                    A complete tutorial covering the rules, mechanics, and strategies of FreeCell Solitaire.
-                  </p>
-                </Link>
-                <Link href="/strategy" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                  <h3 className="text-lg font-semibold text-white">Strategy Guide</h3>
-                  <p className="mt-2 text-sm leading-7 text-white/70">
-                    Advanced techniques for winning more games, from opening moves to endgame play.
-                  </p>
-                </Link>
-                <Link href="/tips" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                  <h3 className="text-lg font-semibold text-white">Tips &amp; Tricks</h3>
-                  <p className="mt-2 text-sm leading-7 text-white/70">
-                    Quick, practical advice to improve your game one tip at a time.
-                  </p>
-                </Link>
+                <ContentLinkCard href="/freecell-for-seniors" title="FreeCell for Seniors" description="Why FreeCell is the ideal brain-training card game for older adults, with tips on getting started." />
+                <ContentLinkCard href="/how-to-play" title="How to Play FreeCell" description="A complete tutorial covering the rules, mechanics, and strategies of FreeCell Solitaire." />
+                <ContentLinkCard href="/strategy" title="Strategy Guide" description="Advanced techniques for winning more games, from opening moves to endgame play." />
+                <ContentLinkCard href="/tips" title="Tips &amp; Tricks" description="Quick, practical advice to improve your game one tip at a time." />
               </div>
-            </div>
-          </div>
-        </section>
-
-        {/* CTA */}
-        <section>
-          <div
-            className={CARD}
-            style={{
-              background: 'linear-gradient(135deg, rgba(10,74,42,0.6) 0%, rgba(6,37,22,0.8) 100%)',
-            }}
-          >
-            <div className="p-8 sm:p-10 text-center relative">
-              <h2 className="text-2xl sm:text-3xl font-semibold text-white mb-3">
-                Try Large Cards Now
-              </h2>
-              <p className="text-white/40 mb-6 max-w-2xl mx-auto">
-                Open any game, flip one toggle, and see the difference immediately. No account needed.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                <Link
-                  href="/"
-                  className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl text-lg font-semibold transition-all duration-200 hover:scale-[1.03] active:scale-[0.98]"
-                  style={{
-                    background: 'linear-gradient(110deg, #B8860B, #D4AF37, #F3E5AB, #D4AF37, #B8860B)',
-                    backgroundSize: '200% 100%',
-                    color: '#1a1a0a',
-                  }}
-                >
-                  Play FreeCell Now
-                </Link>
-                <Link
-                  href="/how-to-play"
-                  className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl text-lg font-semibold border border-white/20 text-white/90 hover:bg-white/[0.08] transition-colors"
-                >
-                  Learn the Rules First
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
+            </ContentBody>
+        </CardSection>        <CtaSection
+          heading="Try Large Cards Now"
+          body="Open any game, flip one toggle, and see the difference immediately. No account needed."
+          secondaryLabel="Learn the Rules First"
+          secondaryHref="/how-to-play"
+        />
       </main>
     </ContentLayout>
   );

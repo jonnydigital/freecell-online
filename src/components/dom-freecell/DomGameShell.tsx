@@ -203,6 +203,7 @@ export default function DomGameShell({ initialGameNumber }: DomGameShellProps) {
     };
   }, [resetIdleTimer]);
 
+
   useEffect(() => {
     return () => {
       if (idleTimerRef.current) clearTimeout(idleTimerRef.current);
@@ -706,19 +707,22 @@ export default function DomGameShell({ initialGameNumber }: DomGameShellProps) {
   // ── Render ──
   return (
     <div
+      data-scroll-role="game-page-root"
       className="w-full min-h-dvh"
       style={{
         background:
           'radial-gradient(circle at top, color-mix(in srgb, var(--theme-mid, #1b5a24) 54%, #7aa25a 46%) 0%, color-mix(in srgb, var(--theme-base, #0d2e0d) 92%, black) 56%, #061406 100%)',
       }}
     >
-    <div className="mx-auto flex min-h-dvh w-full max-w-[1540px] flex-col lg:flex-row lg:items-start lg:gap-4 lg:px-4 xl:px-6">
-    {/* Keep sticky separate from clipping so desktop trackpad scroll reaches the document */}
+    <div className="mx-auto flex min-h-dvh w-full max-w-[1580px] flex-col lg:flex-row lg:items-start lg:gap-4 lg:px-4 xl:px-6">
+    {/* Game Container — sticky outer has NO overflow so scroll events pass through to document */}
     <div
+      data-scroll-role="game-sticky-shell"
       className="min-w-0 flex-1 min-[1180px]:sticky min-[1180px]:top-4 min-[1180px]:my-2 min-[1180px]:h-[calc(100dvh-1rem)]"
     >
     <div
-      className="flex h-full min-w-0 flex-col min-[1180px]:overflow-clip min-[1180px]:rounded-[30px] min-[1180px]:border min-[1180px]:border-white/10"
+      data-scroll-role="game-shell-inner"
+      className="flex h-full flex-col overflow-clip min-[1180px]:rounded-[30px] min-[1180px]:border min-[1180px]:border-white/10"
       style={{
         background:
           'linear-gradient(180deg, color-mix(in srgb, var(--theme-base, #0d2e0d) 86%, #214f1d 14%) 0%, color-mix(in srgb, var(--theme-base, #0d2e0d) 94%, black) 100%)',
@@ -974,9 +978,15 @@ export default function DomGameShell({ initialGameNumber }: DomGameShellProps) {
       )}
 
       {/* ── Board Area ── */}
-      <div ref={boardContainerRef} className={`relative flex-1 overflow-hidden${isIdleHint ? ' dom-board--idle-hint' : ''}`} role="main" aria-label="FreeCell game board">
+      <div
+        ref={boardContainerRef}
+        data-scroll-role="game-board-region"
+        className={`relative flex-1 overflow-clip${isIdleHint ? ' dom-board--idle-hint' : ''}`}
+        role="main"
+        aria-label="FreeCell game board"
+      >
         <div
-          className="absolute inset-0 overflow-hidden px-2 py-2 sm:px-4 sm:py-4 lg:px-5 lg:py-5"
+          className="absolute inset-0 overflow-clip px-2 py-2 sm:px-4 sm:py-4 lg:px-5 lg:py-5"
           style={{
             background:
               'radial-gradient(circle at top center, rgba(132, 187, 112, 0.17) 0%, transparent 42%), linear-gradient(180deg, color-mix(in srgb, var(--theme-mid, #0d2e0d) 78%, #2d6c2c 22%) 0%, color-mix(in srgb, var(--theme-base, #0d2e0d) 88%, #173917 12%) 100%)',
@@ -1216,7 +1226,7 @@ export default function DomGameShell({ initialGameNumber }: DomGameShellProps) {
 
         {/* ── Deadlock Overlay ── */}
         {noMovesAvailable && !isWon && (
-          <div className="absolute inset-0 z-50 flex items-center justify-center p-6 bg-black/40 backdrop-blur-[2px]">
+          <div className="absolute inset-0 z-[2000] flex items-center justify-center p-6 bg-black/40 backdrop-blur-[2px]">
             <div className="bg-white rounded-2xl p-8 sm:p-10 max-w-md w-[92%] shadow-2xl text-center flex flex-col items-center gap-7 animate-in fade-in zoom-in duration-300">
               <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center text-amber-600">
                 <AlertTriangle size={32} />
@@ -1399,22 +1409,25 @@ export default function DomGameShell({ initialGameNumber }: DomGameShellProps) {
         isOpen={showLeaderboard}
         onClose={() => setShowLeaderboard(false)}
       />
-    </div>
-    </div>
+    </div>{/* end inner visual clip */}
+    </div>{/* end outer sticky */}
 
     {/* Right Sidebar (desktop only) */}
-    <aside className="sidebar-scroll w-[380px] shrink-0 max-[1179px]:hidden min-[1180px]:sticky min-[1180px]:top-2 min-[1180px]:h-[calc(100dvh-1rem)] min-[1180px]:overflow-y-auto min-[1180px]:overscroll-contain">
+    <aside
+      data-scroll-role="sidebar-scroll"
+      className="sidebar-scroll w-[380px] shrink-0 max-[1179px]:hidden min-[1180px]:sticky min-[1180px]:top-2 min-[1180px]:h-[calc(100dvh-1rem)] min-[1180px]:overflow-y-auto min-[1180px]:overscroll-contain"
+    >
       <div className="flex flex-col gap-4 py-4">
-        <SidebarDailyChallenge onPlayDaily={handlePlayDaily} />
+        <SidebarAdSlot label="Advertisement" height={250} delayMs={3000}>
+          <AdUnit slot="5697552640" width={300} height={250} format="rectangle" />
+        </SidebarAdSlot>
         <SidebarLeaderboard
           entries={leaderboardEntries}
           playerId={getPlayerId()}
           loading={leaderboardLoading}
           onShowFull={() => setShowLeaderboard(true)}
         />
-        <SidebarAdSlot label="Advertisement" height={250}>
-          <AdUnit slot="5697552640" width={300} height={250} format="rectangle" />
-        </SidebarAdSlot>
+        <SidebarDailyChallenge onPlayDaily={handlePlayDaily} />
         <SidebarAchievements
           onShowFull={() => setShowAchievements(true)}
           refreshKey={newAchievements.length}
@@ -1429,15 +1442,25 @@ export default function DomGameShell({ initialGameNumber }: DomGameShellProps) {
   );
 }
 
-function SidebarAdSlot({ children, height, label }: { children: React.ReactNode; height: number; label: string }) {
+function SidebarAdSlot({ children, height, label, delayMs }: { children: React.ReactNode; height: number; label: string; delayMs?: number }) {
+  const [visible, setVisible] = useState(!delayMs);
+
+  useEffect(() => {
+    if (!delayMs) return;
+    const t = setTimeout(() => setVisible(true), delayMs);
+    return () => clearTimeout(t);
+  }, [delayMs]);
+
+  if (!visible) return null;
+
   return (
     <section
-      className="rounded-[26px] border border-white/10 bg-[linear-gradient(180deg,rgba(23,67,24,0.95),rgba(7,25,9,0.94))] p-2.5 shadow-[0_20px_40px_rgba(0,0,0,0.2)] backdrop-blur-sm"
+      className="rounded-[26px] border border-white/10 bg-[linear-gradient(180deg,rgba(23,67,24,0.95),rgba(7,25,9,0.94))] p-4 shadow-[0_20px_40px_rgba(0,0,0,0.2)] backdrop-blur-sm"
       aria-label={label}
     >
-      <div className="mb-2 flex items-center justify-between px-0.5">
-        <span className="text-[10px] font-bold uppercase tracking-[0.24em] text-white/[0.32]">{label}</span>
-        <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#d9c07a]/[0.72]">Sponsored</span>
+      <div className="mb-3 flex items-center justify-between px-2">
+        <span className="text-xs font-bold uppercase tracking-[0.24em] text-white/[0.32]">{label}</span>
+        <span className="text-xs font-semibold uppercase tracking-[0.16em] text-[#d9c07a]/[0.72]">Sponsored</span>
       </div>
       <div
         className="flex items-center justify-center overflow-hidden rounded-[20px] border border-[#d9c07a]/12 bg-[linear-gradient(180deg,rgba(244,239,226,0.08),rgba(22,35,15,0.45))]"

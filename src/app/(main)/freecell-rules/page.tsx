@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { absoluteUrl, siteConfig } from '@/lib/siteConfig';
 import AdUnit from '@/components/AdUnit';
 import ContentLayout from '@/components/ContentLayout';
+import { SectionHeading, CardSection, ContentBody, CtaSection, ContentLinkCard, JsonLd } from '@/components/content';
 
 export const metadata: Metadata = {
   title: 'FreeCell Rules — Quick Reference Guide',
@@ -31,7 +32,6 @@ export const metadata: Metadata = {
   },
 };
 
-const CARD = 'rounded-xl bg-white/[0.04] border border-white/[0.07] overflow-hidden';
 
 const faqs = [
   {
@@ -56,32 +56,6 @@ const faqs = [
   },
 ];
 
-function SectionHeading({
-  children,
-  id,
-  sub,
-}: {
-  children: React.ReactNode;
-  id?: string;
-  sub?: string;
-}) {
-  return (
-    <div className="px-8 sm:px-10 md:px-12 pt-6 sm:pt-8 pb-0">
-      {sub && (
-        <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#D4AF37]/60 mb-1.5 block">
-          {sub}
-        </span>
-      )}
-      <h2
-        id={id}
-        className="text-2xl sm:text-3xl font-bold text-white scroll-mt-6"
-      >
-        {children}
-      </h2>
-      <div className="mt-4 h-px bg-gradient-to-r from-[#D4AF37]/40 to-transparent" />
-    </div>
-  );
-}
 
 export default function FreecellRulesPage() {
   const jsonLd = [
@@ -140,12 +114,11 @@ export default function FreecellRulesPage() {
 
   return (
     <ContentLayout variant="dark">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <JsonLd data={jsonLd} />
 
       <main className="max-w-5xl mx-auto px-4 sm:px-6 pt-6 pb-20 space-y-6">
         {/* Hero */}
-        <section>
-          <div className={CARD}>
+        <CardSection variant="dark">
             <div className="px-8 sm:px-10 md:px-12 pt-6 sm:pt-8 pb-6">
               <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#D4AF37]/60 block mb-3">
                 Quick Reference
@@ -163,14 +136,12 @@ export default function FreecellRulesPage() {
                 .
               </p>
             </div>
-          </div>
-        </section>
+        </CardSection>
 
         {/* Game Setup */}
-        <section id="setup" className="scroll-mt-6">
-          <div className={CARD}>
-            <SectionHeading sub="The Deal" id="setup-heading">Game Setup</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-5 text-white/70 leading-8">
+        <CardSection id="setup" variant="dark">
+            <SectionHeading variant="dark" sub="The Deal" id="setup-heading">Game Setup</SectionHeading>
+            <ContentBody variant="dark" className="space-y-5">
               <p>
                 FreeCell uses a single standard 52-card deck. All cards are dealt face-up into
                 eight columns (called cascades). The first four cascades receive 7 cards each
@@ -194,16 +165,14 @@ export default function FreecellRulesPage() {
                   <p className="text-xs text-white/40 mt-2">The main play area. All 52 cards start here.</p>
                 </div>
               </div>
-            </div>
-          </div>
-        </section>
+            </ContentBody>
+        </CardSection>
 
-        <AdUnit className="my-4" />
+        <AdUnit className="-my-1" />
 
         {/* Legal Moves */}
-        <section id="legal-moves" className="scroll-mt-6">
-          <div className={CARD}>
-            <SectionHeading sub="What Goes Where" id="legal-moves-heading">Legal Moves</SectionHeading>
+        <CardSection id="legal-moves" variant="dark">
+            <SectionHeading variant="dark" sub="What Goes Where" id="legal-moves-heading">Legal Moves</SectionHeading>
             <div className="px-8 sm:px-10 md:px-12 py-6 space-y-5">
               <div className="space-y-4">
                 <div className="bg-white/[0.05] border border-white/[0.07] rounded-xl p-5">
@@ -243,14 +212,12 @@ export default function FreecellRulesPage() {
                 </div>
               </div>
             </div>
-          </div>
-        </section>
+        </CardSection>
 
         {/* The Supermove */}
-        <section id="supermove" className="scroll-mt-6">
-          <div className={CARD}>
-            <SectionHeading sub="Moving Multiple Cards" id="supermove-heading">The Supermove Rule</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-5 text-white/70 leading-8">
+        <CardSection id="supermove" variant="dark">
+            <SectionHeading variant="dark" sub="Moving Multiple Cards" id="supermove-heading">The Supermove Rule</SectionHeading>
+            <ContentBody variant="dark" className="space-y-5">
               <p>
                 Strictly, FreeCell only allows moving one card at a time. However, digital
                 implementations allow you to move an entire properly-ordered sequence in a
@@ -291,17 +258,15 @@ export default function FreecellRulesPage() {
                 they double the supermove capacity. This is why experienced players prioritize
                 creating empty cascades over keeping free cells available.
               </p>
-            </div>
-          </div>
-        </section>
+            </ContentBody>
+        </CardSection>
 
-        <AdUnit className="my-4" />
+        <AdUnit className="-my-1" />
 
         {/* Win Condition */}
-        <section id="win-condition" className="scroll-mt-6">
-          <div className={CARD}>
-            <SectionHeading sub="Objective" id="win-condition-heading">Win Condition</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-5 text-white/70 leading-8">
+        <CardSection id="win-condition" variant="dark">
+            <SectionHeading variant="dark" sub="Objective" id="win-condition-heading">Win Condition</SectionHeading>
+            <ContentBody variant="dark" className="space-y-5">
               <p>
                 You win when all 52 cards are moved to the four foundation piles, each built
                 from Ace to King in a single suit. Most digital versions trigger an
@@ -320,15 +285,13 @@ export default function FreecellRulesPage() {
                   If you lose, it is almost always because of a strategic misstep, not the deal itself.
                 </p>
               </div>
-            </div>
-          </div>
-        </section>
+            </ContentBody>
+        </CardSection>
 
         {/* Quick Summary Table */}
-        <section id="summary" className="scroll-mt-6">
-          <div className={CARD}>
-            <SectionHeading sub="At a Glance" id="summary-heading">Rules Summary</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6">
+        <CardSection id="summary" variant="dark">
+            <SectionHeading variant="dark" sub="At a Glance" id="summary-heading">Rules Summary</SectionHeading>
+            <ContentBody variant="dark">
               <div className="overflow-x-auto">
                 <table className="w-full text-sm text-left text-white/60 border-collapse">
                   <thead>
@@ -369,17 +332,15 @@ export default function FreecellRulesPage() {
                   </tbody>
                 </table>
               </div>
-            </div>
-          </div>
-        </section>
+            </ContentBody>
+        </CardSection>
 
-        <AdUnit className="my-4" />
+        <AdUnit className="-my-1" />
 
         {/* FAQ */}
-        <section id="faq" className="scroll-mt-6">
-          <div className={CARD}>
-            <SectionHeading sub="Common Questions" id="faq-heading">FreeCell Rules FAQ</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-6">
+        <CardSection id="faq" variant="dark">
+            <SectionHeading variant="dark" sub="Common Questions" id="faq-heading">FreeCell Rules FAQ</SectionHeading>
+            <ContentBody variant="dark" className="space-y-6">
               {faqs.map((faq, index) => (
                 <div key={faq.question}>
                   <h3 className="font-medium text-white text-lg mb-2">{faq.question}</h3>
@@ -387,86 +348,25 @@ export default function FreecellRulesPage() {
                   {index < faqs.length - 1 && <div className="mt-6 border-b border-white/[0.07]" />}
                 </div>
               ))}
-            </div>
-          </div>
-        </section>
+            </ContentBody>
+        </CardSection>
 
         {/* Related Pages */}
-        <section id="related" className="scroll-mt-6">
-          <div className={CARD}>
-            <SectionHeading sub="Learn More">Related Guides</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 grid gap-4 md:grid-cols-3">
-              <Link href="/how-to-play" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                <h3 className="text-lg font-semibold text-white">How to Play FreeCell</h3>
-                <p className="mt-2 text-sm leading-7 text-white/70">
-                  Full tutorial with diagrams, step-by-step walkthrough, and beginner tips.
-                </p>
-              </Link>
-              <Link href="/strategy" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                <h3 className="text-lg font-semibold text-white">Strategy Guide</h3>
-                <p className="mt-2 text-sm leading-7 text-white/70">
-                  Beginner to expert tactics for improving your FreeCell win rate.
-                </p>
-              </Link>
-              <Link href="/freecell-cheat-sheet" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                <h3 className="text-lg font-semibold text-white">Cheat Sheet</h3>
-                <p className="mt-2 text-sm leading-7 text-white/70">
-                  Move priorities, keyboard shortcuts, and what to avoid on one page.
-                </p>
-              </Link>
-              <Link href="/glossary" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                <h3 className="text-lg font-semibold text-white">Glossary</h3>
-                <p className="mt-2 text-sm leading-7 text-white/70">
-                  Definitions for every FreeCell term, from cascade to supermove.
-                </p>
-              </Link>
-              <Link href="/" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                <h3 className="text-lg font-semibold text-white">Play FreeCell</h3>
-                <p className="mt-2 text-sm leading-7 text-white/70">
-                  Play online for free with undo, hints, and thousands of deals.
-                </p>
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        {/* CTA */}
-        <section>
-          <div
-            className={CARD}
-            style={{
-              background: 'linear-gradient(135deg, rgba(10,74,42,0.6) 0%, rgba(6,37,22,0.8) 100%)',
-            }}
-          >
-            <div className="p-8 sm:p-10 text-center relative">
-              <h2 className="text-2xl sm:text-3xl font-semibold text-white mb-3">
-                Ready to Play?
-              </h2>
-              <p className="text-white/40 mb-6 max-w-2xl mx-auto">
-                You know the rules. Put them into practice with a free game of FreeCell.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                <Link
-                  href="/"
-                  className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl text-lg font-semibold transition-all duration-200 hover:scale-[1.03] active:scale-[0.98]"
-                  style={{
-                    background: 'linear-gradient(110deg, #B8860B, #D4AF37, #F3E5AB, #D4AF37, #B8860B)',
-                    backgroundSize: '200% 100%',
-                    color: '#1a1a0a',
-                  }}
-                >
-                  Play FreeCell Now
-                </Link>
-                <Link
-                  href="/how-to-play"
-                  className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl text-lg font-semibold border border-white/20 text-white/90 hover:bg-white/[0.08] transition-colors"
-                >
-                  Full Tutorial
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
+        <CardSection id="related" variant="dark">
+            <SectionHeading variant="dark" sub="Learn More">Related Guides</SectionHeading>
+            <ContentBody variant="dark" className="grid gap-4 md:grid-cols-3">
+              <ContentLinkCard href="/how-to-play" title="How to Play FreeCell" description="Full tutorial with diagrams, step-by-step walkthrough, and beginner tips." />
+              <ContentLinkCard href="/strategy" title="Strategy Guide" description="Beginner to expert tactics for improving your FreeCell win rate." />
+              <ContentLinkCard href="/freecell-cheat-sheet" title="Cheat Sheet" description="Move priorities, keyboard shortcuts, and what to avoid on one page." />
+              <ContentLinkCard href="/glossary" title="Glossary" description="Definitions for every FreeCell term, from cascade to supermove." />
+              <ContentLinkCard href="/" title="Play FreeCell" description="Play online for free with undo, hints, and thousands of deals." />
+            </ContentBody>
+        </CardSection>        <CtaSection
+          heading="Ready to Play?"
+          body="You know the rules. Put them into practice with a free game of FreeCell."
+          secondaryLabel="Full Tutorial"
+          secondaryHref="/how-to-play"
+        />
       </main>
     </ContentLayout>
   );

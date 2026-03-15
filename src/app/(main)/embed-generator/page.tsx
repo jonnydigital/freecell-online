@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import { absoluteUrl } from '@/lib/siteConfig';
+import ContentLayout from '@/components/ContentLayout';
+import { JsonLd, ContentLinkCard } from '@/components/content';
 import EmbedGeneratorClient from '@/components/embed/EmbedGeneratorClient';
 
 export const metadata: Metadata = {
@@ -17,32 +18,18 @@ export const metadata: Metadata = {
 };
 
 export default function EmbedGeneratorPage() {
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: absoluteUrl('/') },
+      { '@type': 'ListItem', position: 2, name: 'Embed Generator', item: absoluteUrl('/embed-generator') },
+    ],
+  };
+
   return (
-    <main className="min-h-screen felt-bg">
-      {/* Breadcrumb JSON-LD */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'BreadcrumbList',
-            itemListElement: [
-              {
-                '@type': 'ListItem',
-                position: 1,
-                name: 'Home',
-                item: absoluteUrl('/'),
-              },
-              {
-                '@type': 'ListItem',
-                position: 2,
-                name: 'Embed Generator',
-                item: absoluteUrl('/embed-generator'),
-              },
-            ],
-          }),
-        }}
-      />
+    <ContentLayout>
+      <JsonLd data={breadcrumbJsonLd} />
 
       <div className="max-w-4xl mx-auto px-4 py-12">
         {/* Header */}
@@ -134,22 +121,13 @@ export default function EmbedGeneratorPage() {
           <h2 className="text-xl font-bold text-[#D4AF37] mb-4">
             Learn More About FreeCell
           </h2>
-          <div className="grid sm:grid-cols-3 gap-4 text-white/80">
-            <Link href="/strategy" className="card-panel p-5 hover:border-[#D4AF37]/30 transition-colors block">
-              <h3 className="font-semibold text-white mb-1">Strategy Guide</h3>
-              <p className="text-sm text-white/60">Master the tactics behind every winning game.</p>
-            </Link>
-            <Link href="/freecell-probability" className="card-panel p-5 hover:border-[#D4AF37]/30 transition-colors block">
-              <h3 className="font-semibold text-white mb-1">Probability &amp; Math</h3>
-              <p className="text-sm text-white/60">The combinatorics that make FreeCell almost always solvable.</p>
-            </Link>
-            <Link href="/freecell-cheat-sheet" className="card-panel p-5 hover:border-[#D4AF37]/30 transition-colors block">
-              <h3 className="font-semibold text-white mb-1">Cheat Sheet</h3>
-              <p className="text-sm text-white/60">Quick-reference rules and tips for every skill level.</p>
-            </Link>
+          <div className="grid sm:grid-cols-3 gap-4">
+            <ContentLinkCard href="/strategy" title="Strategy Guide" description="Master the tactics behind every winning game." />
+            <ContentLinkCard href="/freecell-probability" title="Probability & Math" description="The combinatorics that make FreeCell almost always solvable." />
+            <ContentLinkCard href="/freecell-cheat-sheet" title="Cheat Sheet" description="Quick-reference rules and tips for every skill level." />
           </div>
         </section>
       </div>
-    </main>
+    </ContentLayout>
   );
 }

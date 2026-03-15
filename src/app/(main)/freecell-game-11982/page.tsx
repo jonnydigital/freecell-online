@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { absoluteUrl, siteConfig } from '@/lib/siteConfig';
 import AdUnit from '@/components/AdUnit';
 import ContentLayout from '@/components/ContentLayout';
+import { SectionHeading, CardSection, ContentBody, CtaSection, ContentLinkCard, JsonLd } from '@/components/content';
 
 export const metadata: Metadata = {
   title: 'FreeCell Game #11982 — The Only Proven Unsolvable Deal',
@@ -31,7 +32,6 @@ export const metadata: Metadata = {
   },
 };
 
-const CARD = 'rounded-xl bg-white/[0.04] border border-white/[0.07] overflow-hidden';
 
 const faqs = [
   {
@@ -56,32 +56,6 @@ const faqs = [
   },
 ];
 
-function SectionHeading({
-  children,
-  id,
-  sub,
-}: {
-  children: React.ReactNode;
-  id?: string;
-  sub?: string;
-}) {
-  return (
-    <div className="px-8 sm:px-10 md:px-12 pt-6 sm:pt-8 pb-0">
-      {sub && (
-        <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#D4AF37]/60 mb-1.5 block">
-          {sub}
-        </span>
-      )}
-      <h2
-        id={id}
-        className="text-2xl sm:text-3xl font-bold text-white scroll-mt-6"
-      >
-        {children}
-      </h2>
-      <div className="mt-4 h-px bg-gradient-to-r from-[#D4AF37]/40 to-transparent" />
-    </div>
-  );
-}
 
 export default function FreecellGame11982Page() {
   const jsonLd = [
@@ -140,12 +114,11 @@ export default function FreecellGame11982Page() {
 
   return (
     <ContentLayout variant="dark">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <JsonLd data={jsonLd} />
 
       <main className="max-w-5xl mx-auto px-4 sm:px-6 pt-6 pb-20 space-y-6">
         {/* Hero */}
-        <section>
-          <div className={CARD}>
+        <CardSection variant="dark">
             <div className="px-8 sm:px-10 md:px-12 pt-6 sm:pt-8 pb-6">
               <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#D4AF37]/60 block mb-3">
                 The Impossible Deal
@@ -188,14 +161,12 @@ export default function FreecellGame11982Page() {
                 </div>
               </div>
             </div>
-          </div>
-        </section>
+        </CardSection>
 
         {/* Why It Matters */}
-        <section id="why-it-matters" className="scroll-mt-6">
-          <div className={CARD}>
-            <SectionHeading id="why-it-matters-heading" sub="Context">Why Deal #11982 Matters</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-5 text-white/70 leading-8">
+        <CardSection id="why-it-matters" variant="dark">
+            <SectionHeading variant="dark" id="why-it-matters-heading" sub="Context">Why Deal #11982 Matters</SectionHeading>
+            <ContentBody variant="dark" className="space-y-5">
               <p>
                 FreeCell is one of the most solvable card games ever designed. Because all 52 cards
                 are visible from the first move, there is no hidden information and no draw-pile
@@ -217,17 +188,15 @@ export default function FreecellGame11982Page() {
                   is every FreeCell game winnable?
                 </Link>
               </p>
-            </div>
-          </div>
-        </section>
+            </ContentBody>
+        </CardSection>
 
-        <AdUnit className="my-4" />
+        <AdUnit className="-my-1" />
 
         {/* The History */}
-        <section id="history" className="scroll-mt-6">
-          <div className={CARD}>
-            <SectionHeading id="history-heading" sub="How It Was Found">The History of Deal #11982</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-5 text-white/70 leading-8">
+        <CardSection id="history" variant="dark">
+            <SectionHeading variant="dark" id="history-heading" sub="How It Was Found">The History of Deal #11982</SectionHeading>
+            <ContentBody variant="dark" className="space-y-5">
               <p>
                 Microsoft FreeCell debuted as part of the Win32 SDK in 1991 and became a standard
                 inclusion in Windows starting with Windows 95. The game shipped with 32,000 numbered
@@ -259,15 +228,13 @@ export default function FreecellGame11982Page() {
                   the deal&apos;s status shifted from &quot;unsolved&quot; to &quot;unsolvable.&quot;
                 </p>
               </div>
-            </div>
-          </div>
-        </section>
+            </ContentBody>
+        </CardSection>
 
         {/* Can You Play It? */}
-        <section id="play-it" className="scroll-mt-6">
-          <div className={CARD}>
-            <SectionHeading id="play-it-heading" sub="The Challenge">Can You Play Deal #11982?</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 grid gap-6 lg:grid-cols-[1.2fr,0.8fr]">
+        <CardSection id="play-it" variant="dark">
+            <SectionHeading variant="dark" id="play-it-heading" sub="The Challenge">Can You Play Deal #11982?</SectionHeading>
+            <ContentBody variant="dark" className="grid gap-6 lg:grid-cols-[1.2fr,0.8fr]">
               <div className="space-y-5 text-white/70 leading-8">
                 <p>
                   Yes &mdash; and you should. Knowing a deal is unsolvable does not remove the value
@@ -316,17 +283,15 @@ export default function FreecellGame11982Page() {
                   Play Deal #11982
                 </Link>
               </div>
-            </div>
-          </div>
-        </section>
+            </ContentBody>
+        </CardSection>
 
-        <AdUnit className="my-4" />
+        <AdUnit className="-my-1" />
 
         {/* Other Unsolvable Deals */}
-        <section id="other-unsolvable-deals" className="scroll-mt-6">
-          <div className={CARD}>
-            <SectionHeading id="other-unsolvable-heading" sub="Beyond 32,000">Other Unsolvable FreeCell Deals</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-5 text-white/70 leading-8">
+        <CardSection id="other-unsolvable-deals" variant="dark">
+            <SectionHeading variant="dark" id="other-unsolvable-heading" sub="Beyond 32,000">Other Unsolvable FreeCell Deals</SectionHeading>
+            <ContentBody variant="dark" className="space-y-5">
               <p>
                 Deal #11982 is the only unsolvable game in the original Microsoft set of 32,000, but
                 it is not the only unsolvable FreeCell deal that exists. When researchers extended
@@ -373,15 +338,13 @@ export default function FreecellGame11982Page() {
                   tangle.
                 </p>
               </div>
-            </div>
-          </div>
-        </section>
+            </ContentBody>
+        </CardSection>
 
         {/* FAQ */}
-        <section id="faq" className="scroll-mt-6">
-          <div className={CARD}>
-            <SectionHeading id="faq-heading" sub="Common Questions">Deal #11982 FAQ</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-6">
+        <CardSection id="faq" variant="dark">
+            <SectionHeading variant="dark" id="faq-heading" sub="Common Questions">Deal #11982 FAQ</SectionHeading>
+            <ContentBody variant="dark" className="space-y-6">
               {faqs.map((faq, index) => (
                 <div key={faq.question}>
                   <h3 className="font-medium text-white text-lg mb-2">{faq.question}</h3>
@@ -389,101 +352,29 @@ export default function FreecellGame11982Page() {
                   {index < faqs.length - 1 && <div className="mt-6 border-b border-white/[0.07]" />}
                 </div>
               ))}
-            </div>
-          </div>
-        </section>
+            </ContentBody>
+        </CardSection>
 
         {/* Related Guides */}
-        <section id="related-guides" className="scroll-mt-6">
-          <div className={CARD}>
-            <SectionHeading sub="Read Next">Related FreeCell Guides</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 grid gap-4 md:grid-cols-3">
-              <Link href="/strategy" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                <h3 className="text-lg font-semibold text-white">Strategy Guide</h3>
-                <p className="mt-2 text-sm leading-7 text-white/70">
-                  Master free cell management, supermoves, and the board-reading skills that win 99% of deals.
-                </p>
-              </Link>
-              <Link href="/tips" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                <h3 className="text-lg font-semibold text-white">Tips and Tricks</h3>
-                <p className="mt-2 text-sm leading-7 text-white/70">
-                  Quick tactical advice you can apply during live play to avoid dead-end positions.
-                </p>
-              </Link>
-              <Link href="/hard-freecell-games" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                <h3 className="text-lg font-semibold text-white">Hard FreeCell Games</h3>
-                <p className="mt-2 text-sm leading-7 text-white/70">
-                  Learn what makes a deal difficult and how to attack narrow positions without burning space.
-                </p>
-              </Link>
-              <Link href="/is-every-freecell-game-winnable" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                <h3 className="text-lg font-semibold text-white">Is Every Game Winnable?</h3>
-                <p className="mt-2 text-sm leading-7 text-white/70">
-                  The full answer to FreeCell&apos;s most common question, with practical advice for stuck positions.
-                </p>
-              </Link>
-              <Link href="/winning-deals" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                <h3 className="text-lg font-semibold text-white">Winning Deals</h3>
-                <p className="mt-2 text-sm leading-7 text-white/70">
-                  Browse deals with known solutions and study the move sequences that crack them open.
-                </p>
-              </Link>
-              <Link href="/freecell-probability" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                <h3 className="text-lg font-semibold text-white">Probability &amp; Math</h3>
-                <p className="mt-2 text-sm leading-7 text-white/70">
-                  The combinatorics behind FreeCell solvability and what makes Deal #11982 mathematically unique.
-                </p>
-              </Link>
-              <Link href="/statistics" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                <h3 className="text-lg font-semibold text-white">Statistics</h3>
-                <p className="mt-2 text-sm leading-7 text-white/70">
-                  Track your win rate, streaks, and performance across different deal difficulties.
-                </p>
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        {/* CTA */}
-        <section>
-          <div
-            className={CARD}
-            style={{
-              background: 'linear-gradient(135deg, rgba(10,74,42,0.6) 0%, rgba(6,37,22,0.8) 100%)',
-            }}
-          >
-            <div className="p-8 sm:p-10 text-center relative">
-              <h2
-                className="text-2xl sm:text-3xl font-semibold text-white mb-3"
-              >
-                Face the Impossible Deal
-              </h2>
-              <p className="text-white/40 mb-6 max-w-2xl mx-auto">
-                Thousands of players have tried deal #11982 knowing it cannot be won. Play it
-                yourself and see what an unsolvable FreeCell board actually feels like.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                <Link
-                  href="/game/11982"
-                  className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl text-lg font-semibold transition-all duration-200 hover:scale-[1.03] active:scale-[0.98]"
-                  style={{
-                    background: 'linear-gradient(110deg, #B8860B, #D4AF37, #F3E5AB, #D4AF37, #B8860B)',
-                    backgroundSize: '200% 100%',
-                    color: '#1a1a0a',
-                  }}
-                >
-                  Play Deal #11982
-                </Link>
-                <Link
-                  href="/"
-                  className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl text-lg font-semibold border border-white/20 text-white/90 hover:bg-white/[0.08] transition-colors"
-                >
-                  Play a Random Deal
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
+        <CardSection id="related-guides" variant="dark">
+            <SectionHeading variant="dark" sub="Read Next">Related FreeCell Guides</SectionHeading>
+            <ContentBody variant="dark" className="grid gap-4 md:grid-cols-3">
+              <ContentLinkCard href="/strategy" title="Strategy Guide" description="Master free cell management, supermoves, and the board-reading skills that win 99% of deals." />
+              <ContentLinkCard href="/tips" title="Tips and Tricks" description="Quick tactical advice you can apply during live play to avoid dead-end positions." />
+              <ContentLinkCard href="/hard-freecell-games" title="Hard FreeCell Games" description="Learn what makes a deal difficult and how to attack narrow positions without burning space." />
+              <ContentLinkCard href="/is-every-freecell-game-winnable" title="Is Every Game Winnable?" description="The full answer to FreeCell&apos;s most common question, with practical advice for stuck positions." />
+              <ContentLinkCard href="/winning-deals" title="Winning Deals" description="Browse deals with known solutions and study the move sequences that crack them open." />
+              <ContentLinkCard href="/freecell-probability" title="Probability &amp; Math" description="The combinatorics behind FreeCell solvability and what makes Deal #11982 mathematically unique." />
+              <ContentLinkCard href="/statistics" title="Statistics" description="Track your win rate, streaks, and performance across different deal difficulties." />
+            </ContentBody>
+        </CardSection>        <CtaSection
+          heading="Face the Impossible Deal"
+          body="Thousands of players have tried deal #11982 knowing it cannot be won. Play it yourself and see what an unsolvable FreeCell board actually feels like."
+          primaryLabel="Play Deal #11982"
+          primaryHref="/game/11982"
+          secondaryLabel="Play a Random Deal"
+          secondaryHref="/"
+        />
       </main>
     </ContentLayout>
   );

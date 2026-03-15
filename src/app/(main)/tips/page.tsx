@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import ContentLayout from "@/components/ContentLayout";
+import { ContentHero, SectionHeading, CardSection, ContentBody, TocPills, CtaSection, JsonLd } from "@/components/content";
 
 export const metadata: Metadata = {
   title: "25 FreeCell Tips & Tricks | Quick Ways to Win More Games",
@@ -27,11 +28,6 @@ export const metadata: Metadata = {
     siteName: siteConfig.siteName,
     type: "article",
   },
-};
-
-const CARD = "card-panel";
-const CARD_TOP: React.CSSProperties = {
-  borderTop: "1px solid rgba(184, 134, 11, 0.08)",
 };
 
 /* ── Tips data ── */
@@ -205,37 +201,6 @@ const tipsFaqs = [
 
 /* ── Helper components ── */
 
-function SectionHeading({
-  children,
-  id,
-  sub,
-  icon,
-}: {
-  children: React.ReactNode;
-  id?: string;
-  sub?: string;
-  icon?: string;
-}) {
-  return (
-    <div className="px-6 sm:px-8 md:px-10 pt-8 sm:pt-10 pb-0">
-      {sub && (
-        <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#B8860B]/60 mb-1.5 block">
-          {sub}
-        </span>
-      )}
-      <h2
-        id={id}
-        className="text-2xl sm:text-3xl font-bold text-[#2a2522]"
-        style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
-      >
-        {icon && <span className="mr-2 text-[#c9a84c]">{icon}</span>}
-        {children}
-      </h2>
-      <div className="card-title-separator mt-5" />
-    </div>
-  );
-}
-
 function TipCard({
   number,
   title,
@@ -371,451 +336,339 @@ export default function TipsPage() {
 
   return (
     <ContentLayout variant="dark">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
-      />
+      <JsonLd data={howToJsonLd} />
+      <JsonLd data={jsonLd} />
+      <JsonLd data={breadcrumbJsonLd} />
 
       {/* ── Hero ── */}
-      <header className="relative pt-6 pb-12 sm:pt-8 sm:pb-16 px-6 text-center overflow-hidden">
-        <div
-          className="absolute top-10 left-[10%] text-6xl sm:text-8xl text-white/[0.03] select-none pointer-events-none"
-          aria-hidden="true"
-        >
-          {"\u2663"}
-        </div>
-        <div
-          className="absolute top-16 right-[8%] text-5xl sm:text-7xl text-red-500/[0.04] select-none pointer-events-none"
-          aria-hidden="true"
-        >
-          {"\u2666"}
-        </div>
-        <div
-          className="absolute bottom-4 left-[18%] text-5xl sm:text-6xl text-white/[0.03] select-none pointer-events-none"
-          aria-hidden="true"
-        >
-          {"\u2660"}
-        </div>
-
-        <h1
-          className="text-4xl sm:text-5xl lg:text-6xl font-semibold text-[#D4AF37] mb-4 max-w-3xl mx-auto leading-tight"
-          style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
-        >
-          FreeCell Tips & Tricks
-        </h1>
-        <p className="text-[#6B7280] text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
-          25 quick, actionable tips to win more FreeCell games starting
-          today. No theory lectures — just practical advice you can use in
-          your next game.
-        </p>
-
-        <div className="mt-8 flex items-center justify-center gap-3">
-          <div className="h-px w-12 bg-gradient-to-r from-transparent to-[#D4AF37]/50" />
-          <span className="text-[#D4AF37] text-sm">
-            {"\u2660"} {"\u2665"} {"\u2666"} {"\u2663"}
-          </span>
-          <div className="h-px w-12 bg-gradient-to-l from-transparent to-[#D4AF37]/50" />
-        </div>
-      </header>
+      <ContentHero
+        title="FreeCell Tips & Tricks"
+        subtitle="25 quick, actionable tips to win more FreeCell games starting today. No theory lectures — just practical advice you can use in your next game."
+      />
 
       {/* ── Table of Contents ── */}
-      <nav className="max-w-4xl mx-auto px-6 sm:px-10 lg:px-12 mb-12">
-        <div className="flex md:flex-wrap md:justify-center gap-3 overflow-x-auto no-scrollbar pb-1">
-          {tipCategories.map((cat) => (
-            <a
-              key={cat.id}
-              href={`#${cat.id}`}
-              className="rounded-full px-5 py-2 border border-[#D4AF37]/30 bg-transparent text-sm tracking-wide text-[#D4AF37] flex items-center gap-2 transition-all hover:bg-[#D4AF37]/10 hover:border-[#D4AF37]/50 whitespace-nowrap shrink-0"
-            >
-              <span
-                className={`text-sm ${cat.icon === "\u2665" || cat.icon === "\u2666" ? "text-red-400" : ""}`}
-              >
-                {cat.icon}
-              </span>
-              {cat.label}
-            </a>
-          ))}
-          <a
-            href="#faq"
-            className="rounded-full px-5 py-2 border border-[#D4AF37]/30 bg-transparent text-sm tracking-wide text-[#D4AF37] flex items-center gap-2 transition-all hover:bg-[#D4AF37]/10 hover:border-[#D4AF37]/50 whitespace-nowrap shrink-0"
-          >
-            <span className="text-sm text-red-400">{"\u2665"}</span>
-            FAQ
-          </a>
-        </div>
-      </nav>
+      <TocPills
+        items={[
+          ...tipCategories.map((cat) => ({
+            href: `#${cat.id}`,
+            icon: cat.icon,
+            label: cat.label,
+          })),
+          { href: "#faq", icon: "\u2665", label: "FAQ" },
+        ]}
+      />
 
       {/* ── Content ── */}
-      <main className="max-w-4xl mx-auto px-6 sm:px-10 lg:px-12 pb-20 flex flex-col gap-12">
+      <main className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-10 pb-20 flex flex-col gap-6">
         {/* Quick-win callout */}
-        <section className="scroll-mt-6">
-          <div className={CARD} style={CARD_TOP}>
-            <div className="px-6 sm:px-8 md:px-10 py-8">
-              <div className="card-inset rounded-lg p-5">
-                <h2
-                  className="font-medium text-[#2a2522] text-lg mb-3"
-                  style={{
-                    fontFamily: "var(--font-playfair), Georgia, serif",
-                  }}
+        <CardSection>
+          <ContentBody>
+            <div className="card-inset rounded-lg p-5">
+              <h2
+                className="font-medium text-[#2a2522] text-lg mb-3"
+                style={{
+                  fontFamily: "var(--font-playfair), Georgia, serif",
+                }}
+              >
+                The 3 Tips That Matter Most
+              </h2>
+              <p className="text-[#444444] leading-relaxed mb-4">
+                If you only remember three things from this entire page,
+                make it these. They account for the biggest win-rate jump
+                for most players:
+              </p>
+              <ol className="space-y-2 text-[#444444]">
+                <li className="flex items-start gap-2">
+                  <span className="text-[#B8860B] font-bold shrink-0">
+                    1.
+                  </span>
+                  <span>
+                    <strong>Scan the board</strong> before your first move
+                    (
+                    <a
+                      href="#before"
+                      className="text-[#8B6914] hover:underline"
+                    >
+                      Tip #1
+                    </a>
+                    )
+                  </span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-[#B8860B] font-bold shrink-0">
+                    2.
+                  </span>
+                  <span>
+                    <strong>Keep free cells empty</strong> as long as
+                    possible (
+                    <a
+                      href="#cells"
+                      className="text-[#8B6914] hover:underline"
+                    >
+                      Tip #11
+                    </a>
+                    )
+                  </span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-[#B8860B] font-bold shrink-0">
+                    3.
+                  </span>
+                  <span>
+                    <strong>Create empty columns</strong> and protect them
+                    (
+                    <a
+                      href="#columns"
+                      className="text-[#8B6914] hover:underline"
+                    >
+                      Tip #16
+                    </a>
+                    )
+                  </span>
+                </li>
+              </ol>
+              <p className="text-[#6B7280] text-sm mt-4">
+                Want the deeper strategic framework? Check out our{" "}
+                <Link
+                  href="/strategy"
+                  className="text-[#8B6914] hover:underline"
                 >
-                  The 3 Tips That Matter Most
-                </h2>
-                <p className="text-[#444444] leading-relaxed mb-4">
-                  If you only remember three things from this entire page,
-                  make it these. They account for the biggest win-rate jump
-                  for most players:
-                </p>
-                <ol className="space-y-2 text-[#444444]">
-                  <li className="flex items-start gap-2">
-                    <span className="text-[#B8860B] font-bold shrink-0">
-                      1.
-                    </span>
-                    <span>
-                      <strong>Scan the board</strong> before your first move
-                      (
-                      <a
-                        href="#before"
-                        className="text-[#D4AF37] hover:underline"
-                      >
-                        Tip #1
-                      </a>
-                      )
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-[#B8860B] font-bold shrink-0">
-                      2.
-                    </span>
-                    <span>
-                      <strong>Keep free cells empty</strong> as long as
-                      possible (
-                      <a
-                        href="#cells"
-                        className="text-[#D4AF37] hover:underline"
-                      >
-                        Tip #11
-                      </a>
-                      )
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-[#B8860B] font-bold shrink-0">
-                      3.
-                    </span>
-                    <span>
-                      <strong>Create empty columns</strong> and protect them
-                      (
-                      <a
-                        href="#columns"
-                        className="text-[#D4AF37] hover:underline"
-                      >
-                        Tip #16
-                      </a>
-                      )
-                    </span>
-                  </li>
-                </ol>
-                <p className="text-[#6B7280] text-sm mt-4">
-                  Want the deeper strategic framework? Check out our{" "}
-                  <Link
-                    href="/strategy"
-                    className="text-[#D4AF37] hover:underline"
-                  >
-                    full Strategy Guide
-                  </Link>
-                  .
-                </p>
-              </div>
+                  full Strategy Guide
+                </Link>
+                .
+              </p>
             </div>
-          </div>
-        </section>
+          </ContentBody>
+        </CardSection>
 
         {/* Tip sections by category */}
         {tipCategories.map((cat) => {
           const categoryTips = tips.filter((t) => t.category === cat.id);
           return (
-            <section key={cat.id} id={cat.id} className="scroll-mt-6">
-              <div className={CARD} style={CARD_TOP}>
-                <SectionHeading
-                  sub={`Tips ${tipNumber + 1}–${tipNumber + categoryTips.length}`}
-                  id={`${cat.id}-heading`}
-                  icon={cat.icon}
-                >
-                  {cat.label}
-                </SectionHeading>
+            <CardSection key={cat.id} id={cat.id}>
+              <SectionHeading
+                sub={`Tips ${tipNumber + 1}–${tipNumber + categoryTips.length}`}
+                id={`${cat.id}-heading`}
+                icon={cat.icon}
+              >
+                {cat.label}
+              </SectionHeading>
 
-                <div className="px-6 sm:px-8 md:px-10 py-8 space-y-8">
-                  {categoryTips.map((tip) => {
-                    tipNumber++;
-                    const num = tipNumber;
-                    return (
-                      <TipCard key={num} number={num} title={tip.title}>
-                        <p>{tip.body}</p>
-                      </TipCard>
-                    );
-                  })}
-                </div>
-              </div>
-            </section>
+              <ContentBody className="space-y-8">
+                {categoryTips.map((tip) => {
+                  tipNumber++;
+                  const num = tipNumber;
+                  return (
+                    <TipCard key={num} number={num} title={tip.title}>
+                      <p>{tip.body}</p>
+                    </TipCard>
+                  );
+                })}
+              </ContentBody>
+            </CardSection>
           );
         })}
 
         {/* Quick reference card */}
-        <section className="scroll-mt-6">
-          <div className={CARD} style={CARD_TOP}>
-            <SectionHeading
-              sub="Cheat Sheet"
-              id="cheat-sheet-heading"
-              icon={"\u2666"}
-            >
-              FreeCell Quick Reference
-            </SectionHeading>
-
-            <div className="px-6 sm:px-8 md:px-10 py-8">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="card-inset rounded-lg p-5">
-                  <h3
-                    className="font-medium text-[#2a2522] mb-3"
-                    style={{
-                      fontFamily: "var(--font-playfair), Georgia, serif",
-                    }}
-                  >
-                    Supermove Formula
-                  </h3>
-                  <p className="text-[#444444] text-sm leading-relaxed mb-2">
-                    Max cards you can move at once:
-                  </p>
-                  <div className="bg-white/50 rounded-md p-3 text-center font-mono text-[#2a2522] text-sm border border-[#e5e0d8]">
-                    (1 + empty cells) &times; 2<sup>empty columns</sup>
-                  </div>
-                  <div className="mt-3 space-y-1 text-xs text-[#6B7280]">
-                    <p>0 cells, 0 columns = 1 card</p>
-                    <p>2 cells, 1 column = 6 cards</p>
-                    <p>4 cells, 0 columns = 5 cards</p>
-                    <p>4 cells, 2 columns = 20 cards</p>
-                  </div>
-                </div>
-
-                <div className="card-inset rounded-lg p-5">
-                  <h3
-                    className="font-medium text-[#2a2522] mb-3"
-                    style={{
-                      fontFamily: "var(--font-playfair), Georgia, serif",
-                    }}
-                  >
-                    Foundation Auto-Play Rule
-                  </h3>
-                  <p className="text-[#444444] text-sm leading-relaxed mb-3">
-                    Safe to auto-play to foundations when:
-                  </p>
-                  <ul className="space-y-1.5 text-sm text-[#444444]">
-                    <li className="flex items-start gap-2">
-                      <span className="text-[#B8860B] shrink-0">
-                        {"\u2713"}
-                      </span>
-                      Aces and 2s — always safe
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-[#B8860B] shrink-0">
-                        {"\u2713"}
-                      </span>
-                      3s through 6s — safe if both opposite-color cards of
-                      the rank below are already on foundations
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-[#B8860B] shrink-0">
-                        {"\u2713"}
-                      </span>
-                      7s and above — safe only when you&apos;re sure
-                      they won&apos;t be needed in the tableau
-                    </li>
-                  </ul>
-                </div>
-
-                <div className="card-inset rounded-lg p-5">
-                  <h3
-                    className="font-medium text-[#2a2522] mb-3"
-                    style={{
-                      fontFamily: "var(--font-playfair), Georgia, serif",
-                    }}
-                  >
-                    Win Rate Benchmarks
-                  </h3>
-                  <ul className="space-y-1.5 text-sm text-[#444444]">
-                    <li className="flex justify-between">
-                      <span>Beginner</span>
-                      <span className="text-[#6B7280]">30–50%</span>
-                    </li>
-                    <li className="flex justify-between">
-                      <span>Intermediate</span>
-                      <span className="text-[#6B7280]">65–80%</span>
-                    </li>
-                    <li className="flex justify-between">
-                      <span>Advanced</span>
-                      <span className="text-[#6B7280]">80–90%</span>
-                    </li>
-                    <li className="flex justify-between">
-                      <span>Expert</span>
-                      <span className="text-[#6B7280]">90–95%+</span>
-                    </li>
-                  </ul>
-                </div>
-
-                <div className="card-inset rounded-lg p-5">
-                  <h3
-                    className="font-medium text-[#2a2522] mb-3"
-                    style={{
-                      fontFamily: "var(--font-playfair), Georgia, serif",
-                    }}
-                  >
-                    Priority Order
-                  </h3>
-                  <ol className="space-y-1.5 text-sm text-[#444444]">
-                    <li className="flex items-start gap-2">
-                      <span className="text-[#B8860B] font-bold shrink-0">
-                        1.
-                      </span>
-                      Move Aces &amp; 2s to foundations
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-[#B8860B] font-bold shrink-0">
-                        2.
-                      </span>
-                      Uncover buried low cards
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-[#B8860B] font-bold shrink-0">
-                        3.
-                      </span>
-                      Create empty columns
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-[#B8860B] font-bold shrink-0">
-                        4.
-                      </span>
-                      Build long ordered sequences
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-[#B8860B] font-bold shrink-0">
-                        5.
-                      </span>
-                      Use free cells (last resort)
-                    </li>
-                  </ol>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQ */}
-        <section id="faq" className="scroll-mt-6">
-          <div className={CARD} style={CARD_TOP}>
-            <SectionHeading
-              sub="Common Questions"
-              id="faq-heading"
-              icon={"\u2665"}
-            >
-              FreeCell Tips FAQ
-            </SectionHeading>
-
-            <div className="px-6 sm:px-8 md:px-10 py-8 space-y-6">
-              {tipsFaqs.map((faq, i) => (
-                <div key={i}>
-                  <h3 className="font-medium text-[#2a2522] text-lg mb-2">
-                    {faq.question}
-                  </h3>
-                  <p className="text-[#444444] leading-relaxed">{faq.answer}</p>
-                  {i < tipsFaqs.length - 1 && (
-                    <div className="mt-6 border-b border-[#e5e0d8]" />
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* CTA */}
-        <section>
-          <div
-            className={CARD}
-            style={{
-              ...CARD_TOP,
-              background:
-                "linear-gradient(135deg, rgba(10,74,42,0.6) 0%, rgba(6,37,22,0.8) 100%)",
-            }}
+        <CardSection>
+          <SectionHeading
+            sub="Cheat Sheet"
+            id="cheat-sheet-heading"
+            icon={"\u2666"}
           >
-            <div className="p-8 sm:p-10 text-center relative">
-              <div
-                className="absolute top-4 left-6 text-4xl text-white/[0.04] select-none"
-                aria-hidden="true"
-              >
-                {"\u2663"}
-              </div>
-              <div
-                className="absolute bottom-4 right-6 text-4xl text-white/[0.04] select-none"
-                aria-hidden="true"
-              >
-                {"\u2660"}
-              </div>
+            FreeCell Quick Reference
+          </SectionHeading>
 
-              <h2
-                className="text-2xl sm:text-3xl font-semibold text-white mb-3"
-                style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
-              >
-                Put These Tips to the Test
-              </h2>
-              <p className="text-[#6B7280] mb-6 max-w-md mx-auto">
-                Pick 2-3 tips from this page and focus on them in your next
-                game. Small, deliberate changes lead to big improvements.
-              </p>
-              <p className="text-sm text-white/60 mb-6 max-w-2xl mx-auto leading-7">
-                If you want a gentler practice loop first, use our{" "}
-                <Link href="/easy-freecell-games" className="text-[#D4AF37] hover:underline">
-                  easy-games guide
-                </Link>
-                . If you want to understand why some boards collapse, read{" "}
-                <Link href="/hard-freecell-games" className="text-[#D4AF37] hover:underline">
-                  what makes a FreeCell deal hard
-                </Link>
-                . For a printable quick-reference, grab the{" "}
-                <Link href="/freecell-cheat-sheet" className="text-[#D4AF37] hover:underline">
-                  FreeCell cheat sheet
-                </Link>
-                .
-              </p>
-
-              <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                <Link
-                  href="/"
-                  className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl text-lg font-semibold transition-all duration-200 hover:scale-[1.03] active:scale-[0.98]"
+          <ContentBody>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="card-inset rounded-lg p-5">
+                <h3
+                  className="font-medium text-[#2a2522] mb-3"
                   style={{
-                    background:
-                      "linear-gradient(110deg, #B8860B, #D4AF37, #F3E5AB, #D4AF37, #B8860B)",
-                    backgroundSize: "200% 100%",
-                    color: "#1a1a0a",
+                    fontFamily: "var(--font-playfair), Georgia, serif",
                   }}
                 >
-                  Practice Now
-                </Link>
-                <Link
-                  href="/strategy"
-                  className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl text-lg font-semibold border border-white/20 text-white/90 hover:bg-white/[0.08] transition-colors"
+                  Supermove Formula
+                </h3>
+                <p className="text-[#444444] text-sm leading-relaxed mb-2">
+                  Max cards you can move at once:
+                </p>
+                <div className="bg-white/50 rounded-md p-3 text-center font-mono text-[#2a2522] text-sm border border-[#e5e0d8]">
+                  (1 + empty cells) &times; 2<sup>empty columns</sup>
+                </div>
+                <div className="mt-3 space-y-1 text-xs text-[#6B7280]">
+                  <p>0 cells, 0 columns = 1 card</p>
+                  <p>2 cells, 1 column = 6 cards</p>
+                  <p>4 cells, 0 columns = 5 cards</p>
+                  <p>4 cells, 2 columns = 20 cards</p>
+                </div>
+              </div>
+
+              <div className="card-inset rounded-lg p-5">
+                <h3
+                  className="font-medium text-[#2a2522] mb-3"
+                  style={{
+                    fontFamily: "var(--font-playfair), Georgia, serif",
+                  }}
                 >
-                  Full Strategy Guide
-                </Link>
+                  Foundation Auto-Play Rule
+                </h3>
+                <p className="text-[#444444] text-sm leading-relaxed mb-3">
+                  Safe to auto-play to foundations when:
+                </p>
+                <ul className="space-y-1.5 text-sm text-[#444444]">
+                  <li className="flex items-start gap-2">
+                    <span className="text-[#B8860B] shrink-0">
+                      {"\u2713"}
+                    </span>
+                    Aces and 2s — always safe
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-[#B8860B] shrink-0">
+                      {"\u2713"}
+                    </span>
+                    3s through 6s — safe if both opposite-color cards of
+                    the rank below are already on foundations
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-[#B8860B] shrink-0">
+                      {"\u2713"}
+                    </span>
+                    7s and above — safe only when you&apos;re sure
+                    they won&apos;t be needed in the tableau
+                  </li>
+                </ul>
+              </div>
+
+              <div className="card-inset rounded-lg p-5">
+                <h3
+                  className="font-medium text-[#2a2522] mb-3"
+                  style={{
+                    fontFamily: "var(--font-playfair), Georgia, serif",
+                  }}
+                >
+                  Win Rate Benchmarks
+                </h3>
+                <ul className="space-y-1.5 text-sm text-[#444444]">
+                  <li className="flex justify-between">
+                    <span>Beginner</span>
+                    <span className="text-[#6B7280]">30–50%</span>
+                  </li>
+                  <li className="flex justify-between">
+                    <span>Intermediate</span>
+                    <span className="text-[#6B7280]">65–80%</span>
+                  </li>
+                  <li className="flex justify-between">
+                    <span>Advanced</span>
+                    <span className="text-[#6B7280]">80–90%</span>
+                  </li>
+                  <li className="flex justify-between">
+                    <span>Expert</span>
+                    <span className="text-[#6B7280]">90–95%+</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="card-inset rounded-lg p-5">
+                <h3
+                  className="font-medium text-[#2a2522] mb-3"
+                  style={{
+                    fontFamily: "var(--font-playfair), Georgia, serif",
+                  }}
+                >
+                  Priority Order
+                </h3>
+                <ol className="space-y-1.5 text-sm text-[#444444]">
+                  <li className="flex items-start gap-2">
+                    <span className="text-[#B8860B] font-bold shrink-0">
+                      1.
+                    </span>
+                    Move Aces &amp; 2s to foundations
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-[#B8860B] font-bold shrink-0">
+                      2.
+                    </span>
+                    Uncover buried low cards
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-[#B8860B] font-bold shrink-0">
+                      3.
+                    </span>
+                    Create empty columns
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-[#B8860B] font-bold shrink-0">
+                      4.
+                    </span>
+                    Build long ordered sequences
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-[#B8860B] font-bold shrink-0">
+                      5.
+                    </span>
+                    Use free cells (last resort)
+                  </li>
+                </ol>
               </div>
             </div>
-          </div>
-        </section>
+          </ContentBody>
+        </CardSection>
+
+        {/* FAQ */}
+        <CardSection id="faq">
+          <SectionHeading
+            sub="Common Questions"
+            id="faq-heading"
+            icon={"\u2665"}
+          >
+            FreeCell Tips FAQ
+          </SectionHeading>
+
+          <ContentBody className="space-y-6">
+            {tipsFaqs.map((faq, i) => (
+              <div key={i}>
+                <h3 className="font-medium text-[#2a2522] text-lg mb-2">
+                  {faq.question}
+                </h3>
+                <p className="text-[#444444] leading-relaxed">{faq.answer}</p>
+                {i < tipsFaqs.length - 1 && (
+                  <div className="mt-6 border-b border-[#e5e0d8]" />
+                )}
+              </div>
+            ))}
+          </ContentBody>
+        </CardSection>
+
+        {/* CTA */}
+        <CtaSection
+          heading="Put These Tips to the Test"
+          body={
+            <>
+              Pick 2-3 tips from this page and focus on them in your next
+              game. Small, deliberate changes lead to big improvements.
+            </>
+          }
+          primaryLabel="Practice Now"
+          secondaryLabel="Full Strategy Guide"
+          secondaryHref="/strategy"
+        >
+          <p className="text-sm text-white/60 mb-6 max-w-2xl mx-auto leading-7">
+            If you want a gentler practice loop first, use our{" "}
+            <Link href="/easy-freecell-games" className="text-[#D4AF37] hover:underline">
+              easy-games guide
+            </Link>
+            . If you want to understand why some boards collapse, read{" "}
+            <Link href="/hard-freecell-games" className="text-[#D4AF37] hover:underline">
+              what makes a FreeCell deal hard
+            </Link>
+            . For a printable quick-reference, grab the{" "}
+            <Link href="/freecell-cheat-sheet" className="text-[#D4AF37] hover:underline">
+              FreeCell cheat sheet
+            </Link>
+            .
+          </p>
+        </CtaSection>
 
       </main>
     </ContentLayout>

@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import ContentLayout from "@/components/ContentLayout";
+import { ContentHero, JsonLd, CtaSection, ContentLinkCard } from "@/components/content";
 import DealsExplorer from "./DealsExplorer";
 
 export const metadata: Metadata = {
@@ -87,52 +88,16 @@ export default function DealsPage() {
 
   return (
     <ContentLayout variant="dark">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      <JsonLd data={jsonLd} />
+      <JsonLd data={breadcrumbJsonLd} />
+
+      <ContentHero
+        title="FreeCell Deal Explorer"
+        subtitle="Browse over a million unique FreeCell deals. Find famous games, discover easy wins, tackle expert challenges, or jump to any game number."
       />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
-      />
-
-      {/* Hero */}
-      <header className="relative pt-6 pb-12 sm:pt-8 sm:pb-16 px-6 text-center overflow-hidden">
-        <div
-          className="absolute top-10 left-[10%] text-6xl sm:text-8xl text-white/[0.03] select-none pointer-events-none"
-          aria-hidden="true"
-        >
-          {"\u2663"}
-        </div>
-        <div
-          className="absolute top-16 right-[8%] text-5xl sm:text-7xl text-red-500/[0.04] select-none pointer-events-none"
-          aria-hidden="true"
-        >
-          {"\u2666"}
-        </div>
-
-        <h1
-          className="text-4xl sm:text-5xl lg:text-6xl font-semibold text-[#D4AF37] mb-4 max-w-3xl mx-auto leading-tight"
-        >
-          FreeCell Deal Explorer
-        </h1>
-        <p className="text-white/50 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
-          Browse over a million unique FreeCell deals. Find famous games,
-          discover easy wins, tackle expert challenges, or jump to any game
-          number.
-        </p>
-
-        <div className="mt-8 flex items-center justify-center gap-3">
-          <div className="h-px w-12 bg-gradient-to-r from-transparent to-[#D4AF37]/50" />
-          <span className="text-[#D4AF37] text-sm">
-            {"\u2660"} {"\u2665"} {"\u2666"} {"\u2663"}
-          </span>
-          <div className="h-px w-12 bg-gradient-to-l from-transparent to-[#D4AF37]/50" />
-        </div>
-      </header>
 
       {/* Main Content */}
-      <main className="max-w-4xl mx-auto px-6 sm:px-10 lg:px-12 pb-20 flex flex-col gap-8">
+      <main className="max-w-4xl mx-auto px-6 sm:px-10 lg:px-12 pb-20 flex flex-col gap-6">
         <DealsExplorer />
 
         {/* FAQ */}
@@ -159,40 +124,12 @@ export default function DealsPage() {
 
         {/* Cross-links */}
         <section className="rounded-xl bg-white/[0.04] border border-white/[0.07] overflow-hidden p-6 sm:p-8">
-          <h2
-            className="text-xl font-bold text-white mb-4"
-          >
-            Related Pages
-          </h2>
+          <h2 className="text-xl font-bold text-white mb-4">Related Pages</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
-            <Link
-              href="/winning-deals"
-              className="bg-white/[0.05] border border-white/[0.07] rounded-lg p-4 hover:bg-white/[0.06] hover:border-[#D4AF37]/30 transition-all"
-            >
-              <span className="text-[#D4AF37] font-semibold">Winning Deals</span>
-              <p className="text-sm text-white/40 mt-1">Easiest &amp; hardest deals with detailed analysis</p>
-            </Link>
-            <Link
-              href="/freecell-game-11982"
-              className="bg-white/[0.05] border border-white/[0.07] rounded-lg p-4 hover:bg-white/[0.06] hover:border-[#D4AF37]/30 transition-all"
-            >
-              <span className="text-[#D4AF37] font-semibold">Deal #11982</span>
-              <p className="text-sm text-white/40 mt-1">The only proven unsolvable deal in the original set</p>
-            </Link>
-            <Link
-              href="/statistics"
-              className="bg-white/[0.05] border border-white/[0.07] rounded-lg p-4 hover:bg-white/[0.06] hover:border-[#D4AF37]/30 transition-all"
-            >
-              <span className="text-[#D4AF37] font-semibold">Statistics</span>
-              <p className="text-sm text-white/40 mt-1">Win rates, solvability data, and more</p>
-            </Link>
-            <Link
-              href="/strategy"
-              className="bg-white/[0.05] border border-white/[0.07] rounded-lg p-4 hover:bg-white/[0.06] hover:border-[#D4AF37]/30 transition-all"
-            >
-              <span className="text-[#D4AF37] font-semibold">Strategy Guide</span>
-              <p className="text-sm text-white/40 mt-1">Advanced techniques to beat tough deals</p>
-            </Link>
+            <ContentLinkCard href="/winning-deals" title="Winning Deals" description="Easiest & hardest deals with detailed analysis" />
+            <ContentLinkCard href="/freecell-game-11982" title="Deal #11982" description="The only proven unsolvable deal in the original set" />
+            <ContentLinkCard href="/statistics" title="Statistics" description="Win rates, solvability data, and more" />
+            <ContentLinkCard href="/strategy" title="Strategy Guide" description="Advanced techniques to beat tough deals" />
           </div>
         </section>
       </main>

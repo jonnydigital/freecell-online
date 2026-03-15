@@ -10,7 +10,7 @@ export default function ContentLayout({ children, variant = "dark" }: ContentLay
   const isDark = variant === "dark";
 
   return (
-    <div className={`h-screen overflow-y-auto scroll-smooth ${isDark ? "felt-bg" : "bg-white"}`}>
+    <div className={`min-h-screen ${isDark ? "felt-bg" : "bg-white"}`}>
       <ContentHeader variant={variant} />
       {children}
       <Footer variant={variant} />

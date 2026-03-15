@@ -4,6 +4,7 @@ import { absoluteUrl, siteConfig } from '@/lib/siteConfig';
 import { famousDeals, unsolvableDeals, expertDeals, beginnerDeals } from '@/lib/curatedDeals';
 import AdUnit from '@/components/AdUnit';
 import ContentLayout from '@/components/ContentLayout';
+import { SectionHeading, CardSection, ContentBody, CtaSection, ContentLinkCard, JsonLd } from '@/components/content';
 
 export const metadata: Metadata = {
   title: 'Famous FreeCell Deals: Iconic Games Worth Playing',
@@ -32,7 +33,6 @@ export const metadata: Metadata = {
   },
 };
 
-const CARD = 'rounded-xl bg-white/[0.04] border border-white/[0.07] overflow-hidden';
 
 /** Substantive descriptions for each famous deal */
 const famousDealDescriptions: Record<number, string> = {
@@ -60,29 +60,6 @@ const expertDealDescriptions: Record<number, string> = {
   10613: 'Often described as near-impossible, though it does have a solution. The winning line requires almost perfect play with virtually no room for wasted moves or idle free cells.',
 };
 
-function SectionHeading({
-  children,
-  sub,
-}: {
-  children: React.ReactNode;
-  sub?: string;
-}) {
-  return (
-    <div className="px-8 sm:px-10 md:px-12 pt-6 sm:pt-8 pb-0">
-      {sub && (
-        <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#D4AF37]/60 mb-1.5 block">
-          {sub}
-        </span>
-      )}
-      <h2
-        className="text-2xl sm:text-3xl font-bold text-white scroll-mt-6"
-      >
-        {children}
-      </h2>
-      <div className="mt-4 h-px bg-gradient-to-r from-[#D4AF37]/40 to-transparent" />
-    </div>
-  );
-}
 
 export default function FamousFreecellDealsPage() {
   const jsonLd = [
@@ -136,12 +113,11 @@ export default function FamousFreecellDealsPage() {
 
   return (
     <ContentLayout variant="dark">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <JsonLd data={jsonLd} />
 
       <main className="max-w-5xl mx-auto px-4 sm:px-6 pt-6 pb-20 space-y-6">
         {/* ── Hero ── */}
-        <section>
-          <div className={CARD}>
+        <CardSection variant="dark">
             <div className="px-8 sm:px-10 md:px-12 pt-6 sm:pt-8 pb-6">
               <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#D4AF37]/60 block mb-3">
                 Iconic Games
@@ -184,14 +160,12 @@ export default function FamousFreecellDealsPage() {
                 </div>
               </div>
             </div>
-          </div>
-        </section>
+        </CardSection>
 
         {/* ── Iconic / Non-impossible Famous Deals ── */}
-        <section>
-          <div className={CARD}>
-            <SectionHeading sub="Where It All Started">The Iconic Deals</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-4">
+        <CardSection variant="dark">
+            <SectionHeading variant="dark" sub="Where It All Started">The Iconic Deals</SectionHeading>
+            <ContentBody variant="dark" className="space-y-4">
               <p className="text-white/70 leading-8">
                 These are the deal numbers that most FreeCell players recognize on sight.
                 They shaped the game&rsquo;s early history and remain the most commonly
@@ -216,17 +190,15 @@ export default function FamousFreecellDealsPage() {
                   </Link>
                 ))}
               </div>
-            </div>
-          </div>
-        </section>
+            </ContentBody>
+        </CardSection>
 
-        <AdUnit className="my-4" />
+        <AdUnit className="-my-1" />
 
         {/* ── Unsolvable Deals ── */}
-        <section>
-          <div className={CARD}>
-            <SectionHeading sub="Mathematically Proven">The Impossible Deals</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-5 text-white/70 leading-8">
+        <CardSection variant="dark">
+            <SectionHeading variant="dark" sub="Mathematically Proven">The Impossible Deals</SectionHeading>
+            <ContentBody variant="dark" className="space-y-5">
               <p>
                 Out of the first 1,000,000 Microsoft FreeCell deals, only {unsolvableDeals.length} have been
                 confirmed impossible through exhaustive computer analysis. No legal sequence
@@ -268,17 +240,15 @@ export default function FamousFreecellDealsPage() {
                   . Every other deal in that range has at least one known solution.
                 </p>
               </div>
-            </div>
-          </div>
-        </section>
+            </ContentBody>
+        </CardSection>
 
-        <AdUnit className="my-4" />
+        <AdUnit className="-my-1" />
 
         {/* ── Expert Challenge Deals ── */}
-        <section>
-          <div className={CARD}>
-            <SectionHeading sub="Test Your Limits">The Hardest Solvable Deals</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-5 text-white/70 leading-8">
+        <CardSection variant="dark">
+            <SectionHeading variant="dark" sub="Test Your Limits">The Hardest Solvable Deals</SectionHeading>
+            <ContentBody variant="dark" className="space-y-5">
               <p>
                 These deals are solvable, but just barely. They represent the upper edge of
                 FreeCell difficulty: boards where the winning line is so narrow that most
@@ -305,15 +275,13 @@ export default function FamousFreecellDealsPage() {
                   </Link>
                 ))}
               </div>
-            </div>
-          </div>
-        </section>
+            </ContentBody>
+        </CardSection>
 
         {/* ── Beginner Warm-Ups ── */}
-        <section>
-          <div className={CARD}>
-            <SectionHeading sub="Start Here">Beginner-Friendly Famous Deals</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-5 text-white/70 leading-8">
+        <CardSection variant="dark">
+            <SectionHeading variant="dark" sub="Start Here">Beginner-Friendly Famous Deals</SectionHeading>
+            <ContentBody variant="dark" className="space-y-5">
               <p>
                 Not every notable deal is a grueling test. These beginner-friendly boards
                 are well-known because they offer clean openings, accessible aces, and
@@ -332,92 +300,29 @@ export default function FamousFreecellDealsPage() {
                   </Link>
                 ))}
               </div>
-            </div>
-          </div>
-        </section>
+            </ContentBody>
+        </CardSection>
 
-        <AdUnit className="my-4" />
+        <AdUnit className="-my-1" />
 
         {/* ── Related Guides ── */}
-        <section>
-          <div className={CARD}>
-            <SectionHeading sub="Keep Exploring">Related Guides</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 grid gap-4 md:grid-cols-3">
-              <Link href="/strategy" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                <h3 className="text-lg font-semibold text-white">Full Strategy Guide</h3>
-                <p className="mt-2 text-sm leading-7 text-white/70">
-                  Master the decision-making framework that separates intermediate players from experts.
-                </p>
-              </Link>
-              <Link href="/tips" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                <h3 className="text-lg font-semibold text-white">Tips and Tricks</h3>
-                <p className="mt-2 text-sm leading-7 text-white/70">
-                  Quick tactical advice you can apply mid-game to improve your win rate immediately.
-                </p>
-              </Link>
-              <Link href="/easy-freecell-games" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                <h3 className="text-lg font-semibold text-white">Easy FreeCell Games</h3>
-                <p className="mt-2 text-sm leading-7 text-white/70">
-                  Learn what makes a deal forgiving and find the best boards for building confidence.
-                </p>
-              </Link>
-              <Link href="/hard-freecell-games" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                <h3 className="text-lg font-semibold text-white">Hard FreeCell Games</h3>
-                <p className="mt-2 text-sm leading-7 text-white/70">
-                  Understand the board patterns that narrow your options and demand cleaner play.
-                </p>
-              </Link>
-              <Link href="/is-every-freecell-game-winnable" className="rounded-xl border border-white/[0.07] p-5 hover:border-[#D4AF37]/50 transition-colors">
-                <h3 className="text-lg font-semibold text-white">Is Every Game Winnable?</h3>
-                <p className="mt-2 text-sm leading-7 text-white/70">
-                  The full story on FreeCell solvability, from the original 32K set to the million-deal census.
-                </p>
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        {/* ── CTA ── */}
-        <section>
-          <div
-            className={CARD}
-            style={{
-              background: 'linear-gradient(135deg, rgba(10,74,42,0.6) 0%, rgba(6,37,22,0.8) 100%)',
-            }}
-          >
-            <div className="p-8 sm:p-10 text-center relative">
-              <h2
-                className="text-2xl sm:text-3xl font-semibold text-white mb-3"
-              >
-                Pick A Famous Deal And Play It
-              </h2>
-              <p className="text-white/40 mb-6 max-w-2xl mx-auto">
-                Whether you want a gentle warm-up, an expert-level gauntlet, or the strange
-                satisfaction of confirming an impossible board, every deal on this page is
-                one click away.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                <Link
-                  href="/game/11982"
-                  className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl text-lg font-semibold transition-all duration-200 hover:scale-[1.03] active:scale-[0.98]"
-                  style={{
-                    background: 'linear-gradient(110deg, #B8860B, #D4AF37, #F3E5AB, #D4AF37, #B8860B)',
-                    backgroundSize: '200% 100%',
-                    color: '#1a1a0a',
-                  }}
-                >
-                  Try The Impossible #11982
-                </Link>
-                <Link
-                  href="/game/169"
-                  className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl text-lg font-semibold border border-white/20 text-white/90 hover:bg-white/[0.08] transition-colors"
-                >
-                  Challenge #169
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
+        <CardSection variant="dark">
+            <SectionHeading variant="dark" sub="Keep Exploring">Related Guides</SectionHeading>
+            <ContentBody variant="dark" className="grid gap-4 md:grid-cols-3">
+              <ContentLinkCard href="/strategy" title="Full Strategy Guide" description="Master the decision-making framework that separates intermediate players from experts." />
+              <ContentLinkCard href="/tips" title="Tips and Tricks" description="Quick tactical advice you can apply mid-game to improve your win rate immediately." />
+              <ContentLinkCard href="/easy-freecell-games" title="Easy FreeCell Games" description="Learn what makes a deal forgiving and find the best boards for building confidence." />
+              <ContentLinkCard href="/hard-freecell-games" title="Hard FreeCell Games" description="Understand the board patterns that narrow your options and demand cleaner play." />
+              <ContentLinkCard href="/is-every-freecell-game-winnable" title="Is Every Game Winnable?" description="The full story on FreeCell solvability, from the original 32K set to the million-deal census." />
+            </ContentBody>
+        </CardSection>        <CtaSection
+          heading="Pick A Famous Deal And Play It"
+          body="Whether you want a gentle warm-up, an expert-level gauntlet, or the strange satisfaction of confirming an impossible board, every deal on this page is one click away."
+          primaryLabel="Try The Impossible #11982"
+          primaryHref="/game/11982"
+          secondaryLabel="Challenge #169"
+          secondaryHref="/game/169"
+        />
       </main>
     </ContentLayout>
   );

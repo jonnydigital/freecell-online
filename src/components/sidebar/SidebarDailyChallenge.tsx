@@ -59,7 +59,7 @@ export default function SidebarDailyChallenge({ onPlayDaily }: SidebarDailyChall
     >
       {/* Header */}
       <div className="mb-3 flex items-center justify-between">
-        <h3 className="text-[11px] font-bold uppercase tracking-[0.22em] text-[#D4AF37]">Daily Challenge</h3>
+        <h3 className="text-xs font-bold uppercase tracking-[0.18em] text-[#D4AF37]">Daily Challenge</h3>
         {streak > 0 && (
           <span className="text-sm text-orange-400 font-bold flex items-center gap-1" aria-label={`Current streak: ${streak} days`}>
             <span aria-hidden="true">&#x1F525;</span> {streak}d
@@ -70,7 +70,7 @@ export default function SidebarDailyChallenge({ onPlayDaily }: SidebarDailyChall
       {/* Today status */}
       <div className="mb-4 flex items-center justify-between rounded-[18px] border border-white/6 bg-white/[0.03] px-3 py-3">
         <div>
-          <div className="text-[10px] font-bold uppercase tracking-[0.18em] text-white/[0.32]">Today&apos;s Deal</div>
+          <div className="text-xs font-bold uppercase tracking-[0.18em] text-white/[0.32]">Today&apos;s Deal</div>
           <div className="mt-1 text-sm text-white/[0.68]">Game #{todaySeed}</div>
         </div>
         {todayCompleted ? (
@@ -93,7 +93,7 @@ export default function SidebarDailyChallenge({ onPlayDaily }: SidebarDailyChall
         <button
           type="button"
           onClick={prevMonth}
-          className="flex items-center justify-center w-8 h-8 text-white/40 hover:text-white/70 hover:bg-white/5 rounded-lg transition-colors cursor-pointer"
+          className="flex items-center justify-center w-9 h-9 text-white/40 hover:text-white/70 hover:bg-white/5 rounded-lg transition-colors cursor-pointer"
           aria-label="Previous month"
         >
           <ChevronLeft size={16} />
@@ -105,7 +105,7 @@ export default function SidebarDailyChallenge({ onPlayDaily }: SidebarDailyChall
           type="button"
           onClick={nextMonth}
           disabled={isCurrentMonth}
-          className="flex items-center justify-center w-8 h-8 text-white/40 hover:text-white/70 hover:bg-white/5 rounded-lg disabled:opacity-20 disabled:cursor-default transition-colors cursor-pointer"
+          className="flex items-center justify-center w-9 h-9 text-white/40 hover:text-white/70 hover:bg-white/5 rounded-lg disabled:opacity-20 disabled:cursor-default transition-colors cursor-pointer"
           aria-label="Next month"
         >
           <ChevronRight size={16} />
@@ -113,17 +113,17 @@ export default function SidebarDailyChallenge({ onPlayDaily }: SidebarDailyChall
       </div>
 
       {/* Calendar grid */}
-      <div className="grid grid-cols-7 gap-1 rounded-[18px] border border-white/6 bg-white/[0.03] p-3">
+      <div className="grid grid-cols-7 gap-1.5 rounded-[18px] border border-white/6 bg-white/[0.03] p-3">
         {/* Day headers */}
         {DAY_LABELS.map((d, i) => (
-          <div key={i} className="pb-1 text-center text-[11px] font-medium text-white/40">
+          <div key={i} className="pb-1.5 text-center text-xs font-semibold text-white/40">
             {d}
           </div>
         ))}
 
         {/* Empty leading cells */}
         {Array.from({ length: firstDow }).map((_, i) => (
-          <div key={`empty-${i}`} className="h-6 w-6 xl:h-7 xl:w-7" />
+          <div key={`empty-${i}`} className="aspect-square" />
         ))}
 
         {/* Day cells */}
@@ -136,7 +136,7 @@ export default function SidebarDailyChallenge({ onPlayDaily }: SidebarDailyChall
           return (
             <div
               key={dateStr}
-              className={`flex h-6 w-6 items-center justify-center rounded-full text-xs xl:h-7 xl:w-7 ${
+              className={`flex aspect-square items-center justify-center rounded-full text-sm ${
                 isToday
                   ? 'ring-1 ring-[#D4AF37]/60'
                   : ''

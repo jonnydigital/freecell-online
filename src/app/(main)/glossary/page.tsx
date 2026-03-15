@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import ContentLayout from "@/components/ContentLayout";
+import { ContentHero, CardSection, ContentBody, CtaSection, JsonLd } from "@/components/content";
 
 export const metadata: Metadata = {
   title: "FreeCell Glossary | Card Game Terms & Definitions",
@@ -30,11 +31,6 @@ export const metadata: Metadata = {
   },
 };
 
-const CARD = "card-panel";
-const CARD_TOP: React.CSSProperties = {
-  borderTop: "1px solid rgba(184, 134, 11, 0.08)",
-};
-
 /* ── Glossary data ── */
 
 interface Term {
@@ -50,7 +46,7 @@ const GLOSSARY: Term[] = [
     definition: (
       <>
         Cards arranged from lowest to highest rank: Ace, 2, 3, 4, 5, 6, 7, 8, 9, 10, Jack, Queen, King.{" "}
-        <Link href="/how-to-play" className="text-[#D4AF37] hover:underline">Foundation piles</Link> are always built in ascending order, starting with the Ace and ending with the King.
+        <Link href="/how-to-play" className="text-[#8B6914] hover:underline">Foundation piles</Link> are always built in ascending order, starting with the Ace and ending with the King.
       </>
     ),
   },
@@ -69,8 +65,8 @@ const GLOSSARY: Term[] = [
     definition: (
       <>
         The act of placing cards on top of each other in a valid sequence. In FreeCell, you build <em>down</em> by alternating colors in the tableau (e.g., a black 7 on a red 8) and <em>up</em> by suit on the{" "}
-        <Link href="/how-to-play" className="text-[#D4AF37] hover:underline">foundations</Link>. Building efficiently is the core of{" "}
-        <Link href="/strategy" className="text-[#D4AF37] hover:underline">FreeCell strategy</Link>.
+        <Link href="/how-to-play" className="text-[#8B6914] hover:underline">foundations</Link>. Building efficiently is the core of{" "}
+        <Link href="/strategy" className="text-[#8B6914] hover:underline">FreeCell strategy</Link>.
       </>
     ),
   },
@@ -80,7 +76,7 @@ const GLOSSARY: Term[] = [
     definition: (
       <>
         The overlapping column of face-up cards in the tableau. FreeCell starts with eight cascades. Only the bottom (exposed) card of each cascade can be moved individually, though{" "}
-        <a href="#supermove" className="text-[#D4AF37] hover:underline">supermoves</a> allow moving ordered sequences if enough empty spaces exist.
+        <a href="#supermove" className="text-[#8B6914] hover:underline">supermoves</a> allow moving ordered sequences if enough empty spaces exist.
       </>
     ),
   },
@@ -89,8 +85,8 @@ const GLOSSARY: Term[] = [
     id: "column",
     definition: (
       <>
-        Another name for a <a href="#cascade" className="text-[#D4AF37] hover:underline">cascade</a>. FreeCell has eight columns where cards are dealt at the start of the game. An empty column is extremely valuable — it functions like an extra free cell that can hold an entire sequence of cards. See our{" "}
-        <Link href="/strategy" className="text-[#D4AF37] hover:underline">strategy guide</Link> for tips on using empty columns.
+        Another name for a <a href="#cascade" className="text-[#8B6914] hover:underline">cascade</a>. FreeCell has eight columns where cards are dealt at the start of the game. An empty column is extremely valuable — it functions like an extra free cell that can hold an entire sequence of cards. See our{" "}
+        <Link href="/strategy" className="text-[#8B6914] hover:underline">strategy guide</Link> for tips on using empty columns.
       </>
     ),
   },
@@ -100,7 +96,7 @@ const GLOSSARY: Term[] = [
     definition: (
       <>
         A specific FreeCell deal that changes every day and is the same for all players. Daily challenges let you compete with others on the same board, track your streak, and compare solve times. Try today&apos;s{" "}
-        <Link href="/" className="text-[#D4AF37] hover:underline">daily challenge</Link> and see how you stack up.
+        <Link href="/" className="text-[#8B6914] hover:underline">daily challenge</Link> and see how you stack up.
       </>
     ),
   },
@@ -110,7 +106,7 @@ const GLOSSARY: Term[] = [
     definition: (
       <>
         The initial layout of cards on the board. In FreeCell, all 52 cards are dealt face-up into eight columns at the start — there are no hidden cards. Each unique deal is identified by a{" "}
-        <a href="#game-number" className="text-[#D4AF37] hover:underline">game number</a> (seed). Nearly all FreeCell deals are solvable, with only a handful of exceptions among the classic 32,000 deals.
+        <a href="#game-number" className="text-[#8B6914] hover:underline">game number</a> (seed). Nearly all FreeCell deals are solvable, with only a handful of exceptions among the classic 32,000 deals.
       </>
     ),
   },
@@ -129,8 +125,8 @@ const GLOSSARY: Term[] = [
     definition: (
       <>
         The four piles in the upper-right corner where you build each suit in ascending order from Ace to King. Moving all 52 cards to the foundations is the goal of the game. Also called{" "}
-        <a href="#home-cell" className="text-[#D4AF37] hover:underline">home cells</a>. Learn the basics in our{" "}
-        <Link href="/how-to-play" className="text-[#D4AF37] hover:underline">how to play guide</Link>.
+        <a href="#home-cell" className="text-[#8B6914] hover:underline">home cells</a>. Learn the basics in our{" "}
+        <Link href="/how-to-play" className="text-[#8B6914] hover:underline">how to play guide</Link>.
       </>
     ),
   },
@@ -140,7 +136,7 @@ const GLOSSARY: Term[] = [
     definition: (
       <>
         One of four temporary storage spaces in the upper-left corner of the board. Each free cell can hold exactly one card at a time. Free cells give FreeCell its name and its unique strategic depth — they&apos;re your most valuable resource. Keeping them empty is{" "}
-        <Link href="/strategy" className="text-[#D4AF37] hover:underline">strategy tip #1</Link> for beginners.
+        <Link href="/strategy" className="text-[#8B6914] hover:underline">strategy tip #1</Link> for beginners.
       </>
     ),
   },
@@ -150,7 +146,7 @@ const GLOSSARY: Term[] = [
     definition: (
       <>
         A unique number that identifies a specific card arrangement. Entering the same game number always produces the same deal, making it possible to share challenges, replay boards, and compare strategies with other players. See also{" "}
-        <a href="#seed" className="text-[#D4AF37] hover:underline">seed</a>.
+        <a href="#seed" className="text-[#8B6914] hover:underline">seed</a>.
       </>
     ),
   },
@@ -160,7 +156,7 @@ const GLOSSARY: Term[] = [
     definition: (
       <>
         An in-game feature that suggests a good next move when you&apos;re stuck. Our hint system uses a heuristic solver to find productive moves — it won&apos;t just show any legal move, it tries to show a <em>useful</em> one. Using hints is a great way to learn{" "}
-        <Link href="/strategy" className="text-[#D4AF37] hover:underline">strategy patterns</Link>.
+        <Link href="/strategy" className="text-[#8B6914] hover:underline">strategy patterns</Link>.
       </>
     ),
   },
@@ -169,7 +165,7 @@ const GLOSSARY: Term[] = [
     id: "home-cell",
     definition: (
       <>
-        Another name for a <a href="#foundation" className="text-[#D4AF37] hover:underline">foundation</a> pile. The term &quot;home cell&quot; emphasizes that these piles are where cards ultimately belong — their &quot;home.&quot; Used interchangeably with foundation in most FreeCell documentation.
+        Another name for a <a href="#foundation" className="text-[#8B6914] hover:underline">foundation</a> pile. The term &quot;home cell&quot; emphasizes that these piles are where cards ultimately belong — their &quot;home.&quot; Used interchangeably with foundation in most FreeCell documentation.
       </>
     ),
   },
@@ -179,8 +175,8 @@ const GLOSSARY: Term[] = [
     definition: (
       <>
         A run of cards that are both in order and share the same suit (e.g., 9♠ 8♠ 7♠). In-suit sequences are more valuable than mixed-color sequences because they can move directly to the{" "}
-        <a href="#foundation" className="text-[#D4AF37] hover:underline">foundation</a> without being taken apart. Building in-suit when possible is an{" "}
-        <Link href="/strategy#intermediate" className="text-[#D4AF37] hover:underline">intermediate strategy</Link>.
+        <a href="#foundation" className="text-[#8B6914] hover:underline">foundation</a> without being taken apart. Building in-suit when possible is an{" "}
+        <Link href="/strategy#intermediate" className="text-[#8B6914] hover:underline">intermediate strategy</Link>.
       </>
     ),
   },
@@ -190,7 +186,7 @@ const GLOSSARY: Term[] = [
     definition: (
       <>
         The act of transferring one or more cards from one location to another. In FreeCell, valid moves include: placing a card on a cascade (descending, alternating color), moving a card to a free cell, moving a card to a foundation, or using a{" "}
-        <a href="#supermove" className="text-[#D4AF37] hover:underline">supermove</a> to transfer a sequence. Your total move count is tracked as a measure of efficiency.
+        <a href="#supermove" className="text-[#8B6914] hover:underline">supermove</a> to transfer a sequence. Your total move count is tracked as a measure of efficiency.
       </>
     ),
   },
@@ -199,7 +195,7 @@ const GLOSSARY: Term[] = [
     id: "pile",
     definition: (
       <>
-        A general term for any stack of cards on the board. In FreeCell, you work with three types of piles: <a href="#cascade" className="text-[#D4AF37] hover:underline">cascades</a> (the main columns), <a href="#foundation" className="text-[#D4AF37] hover:underline">foundations</a> (the goal piles), and <a href="#free-cell" className="text-[#D4AF37] hover:underline">free cells</a> (single-card temporary storage).
+        A general term for any stack of cards on the board. In FreeCell, you work with three types of piles: <a href="#cascade" className="text-[#8B6914] hover:underline">cascades</a> (the main columns), <a href="#foundation" className="text-[#8B6914] hover:underline">foundations</a> (the goal piles), and <a href="#free-cell" className="text-[#8B6914] hover:underline">free cells</a> (single-card temporary storage).
       </>
     ),
   },
@@ -217,7 +213,7 @@ const GLOSSARY: Term[] = [
     id: "seed",
     definition: (
       <>
-        See <a href="#game-number" className="text-[#D4AF37] hover:underline">Game Number</a>. The seed is the number used by the random number generator to produce a specific deal. Same seed always equals the same card layout.
+        See <a href="#game-number" className="text-[#8B6914] hover:underline">Game Number</a>. The seed is the number used by the random number generator to produce a specific deal. Same seed always equals the same card layout.
       </>
     ),
   },
@@ -227,7 +223,7 @@ const GLOSSARY: Term[] = [
     definition: (
       <>
         A series of cards arranged in consecutive rank order. In FreeCell cascades, valid sequences alternate colors and descend in rank (e.g., red 9, black 8, red 7). An{" "}
-        <a href="#in-suit-sequence" className="text-[#D4AF37] hover:underline">in-suit sequence</a> is the same concept but with all cards sharing one suit.
+        <a href="#in-suit-sequence" className="text-[#8B6914] hover:underline">in-suit sequence</a> is the same concept but with all cards sharing one suit.
       </>
     ),
   },
@@ -246,7 +242,7 @@ const GLOSSARY: Term[] = [
     definition: (
       <>
         One of four categories in a standard deck: Spades (♠), Hearts (♥), Diamonds (♦), and Clubs (♣). Spades and clubs are black; hearts and diamonds are red. Each{" "}
-        <a href="#foundation" className="text-[#D4AF37] hover:underline">foundation</a> pile collects one complete suit from Ace to King.
+        <a href="#foundation" className="text-[#8B6914] hover:underline">foundation</a> pile collects one complete suit from Ace to King.
       </>
     ),
   },
@@ -256,7 +252,7 @@ const GLOSSARY: Term[] = [
     definition: (
       <>
         A convenience feature that lets you move an entire ordered sequence of cards in one action, rather than moving them one at a time through free cells and empty columns. The number of cards you can supermove equals (1 + empty free cells) × 2<sup>empty columns</sup>. Understanding supermoves is key to{" "}
-        <Link href="/strategy#advanced" className="text-[#D4AF37] hover:underline">advanced play</Link>.
+        <Link href="/strategy#advanced" className="text-[#8B6914] hover:underline">advanced play</Link>.
       </>
     ),
   },
@@ -265,8 +261,8 @@ const GLOSSARY: Term[] = [
     id: "tableau",
     definition: (
       <>
-        The main playing area consisting of all eight <a href="#cascade" className="text-[#D4AF37] hover:underline">cascades</a> (columns). The tableau is where most of the action happens — you rearrange cards here to uncover buried low cards and build sequences. In FreeCell, the entire tableau is visible from the start, giving you complete information to plan your{" "}
-        <Link href="/strategy" className="text-[#D4AF37] hover:underline">strategy</Link>.
+        The main playing area consisting of all eight <a href="#cascade" className="text-[#8B6914] hover:underline">cascades</a> (columns). The tableau is where most of the action happens — you rearrange cards here to uncover buried low cards and build sequences. In FreeCell, the entire tableau is visible from the start, giving you complete information to plan your{" "}
+        <Link href="/strategy" className="text-[#8B6914] hover:underline">strategy</Link>.
       </>
     ),
   },
@@ -276,7 +272,7 @@ const GLOSSARY: Term[] = [
     definition: (
       <>
         A feature that reverses your last move, letting you take back mistakes and try different approaches. In FreeCell, unlimited undo is standard and encouraged — it&apos;s not cheating, it&apos;s{" "}
-        <Link href="/strategy#beginner" className="text-[#D4AF37] hover:underline">one of the best learning tools</Link> available. Exploring and undoing multiple paths builds the intuition that separates beginners from experts.
+        <Link href="/strategy#beginner" className="text-[#8B6914] hover:underline">one of the best learning tools</Link> available. Exploring and undoing multiple paths builds the intuition that separates beginners from experts.
       </>
     ),
   },
@@ -285,7 +281,7 @@ const GLOSSARY: Term[] = [
     id: "waste-pile",
     definition: (
       <>
-        In solitaire games with a <a href="#stock" className="text-[#D4AF37] hover:underline">stock</a>, the waste pile is where drawn cards land face-up. FreeCell does not have a waste pile since all cards are dealt to the tableau at the start. You may encounter this term in other solitaire variants like Klondike.
+        In solitaire games with a <a href="#stock" className="text-[#8B6914] hover:underline">stock</a>, the waste pile is where drawn cards land face-up. FreeCell does not have a waste pile since all cards are dealt to the tableau at the start. You may encounter this term in other solitaire variants like Klondike.
       </>
     ),
   },
@@ -295,7 +291,7 @@ const GLOSSARY: Term[] = [
     definition: (
       <>
         The percentage of games you win out of total games played. Since nearly every FreeCell deal is solvable, win rate is a direct measure of skill. Beginners typically win 30–50%, while experts reach 90%+. Check our{" "}
-        <Link href="/strategy#benchmarks" className="text-[#D4AF37] hover:underline">win rate benchmarks</Link> to see where you stand.
+        <Link href="/strategy#benchmarks" className="text-[#8B6914] hover:underline">win rate benchmarks</Link> to see where you stand.
       </>
     ),
   },
@@ -341,67 +337,23 @@ export default function GlossaryPage() {
 
   return (
     <ContentLayout variant="dark">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
-      />
+      <JsonLd data={jsonLd} />
+      <JsonLd data={breadcrumbJsonLd} />
 
       {/* ── Hero ── */}
-      <header className="relative pt-6 pb-12 sm:pt-8 sm:pb-16 px-6 text-center overflow-hidden">
-        {/* Decorative suit watermarks */}
-        <div
-          className="absolute top-10 left-[10%] text-6xl sm:text-8xl text-white/[0.03] select-none pointer-events-none"
-          aria-hidden="true"
-        >
-          {"\u2663"}
-        </div>
-        <div
-          className="absolute top-16 right-[8%] text-5xl sm:text-7xl text-red-500/[0.04] select-none pointer-events-none"
-          aria-hidden="true"
-        >
-          {"\u2666"}
-        </div>
-        <div
-          className="absolute bottom-4 left-[18%] text-5xl sm:text-6xl text-white/[0.03] select-none pointer-events-none"
-          aria-hidden="true"
-        >
-          {"\u2660"}
-        </div>
-
-        {/* Title */}
-        <h1
-          className="text-4xl sm:text-5xl lg:text-6xl font-semibold text-[#D4AF37] mb-4 max-w-3xl mx-auto leading-tight"
-          style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
-        >
-          FreeCell Glossary
-        </h1>
-        <p className="text-[#6B7280] text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
-          Every card game term you need to know, from Ace to Win Rate.
-          Clear definitions with links to strategy and rules.
-        </p>
-
-        {/* Gold divider */}
-        <div className="mt-8 flex items-center justify-center gap-3">
-          <div className="h-px w-12 bg-gradient-to-r from-transparent to-[#D4AF37]/50" />
-          <span className="text-[#D4AF37] text-sm">
-            {"\u2660"} {"\u2665"} {"\u2666"} {"\u2663"}
-          </span>
-          <div className="h-px w-12 bg-gradient-to-l from-transparent to-[#D4AF37]/50" />
-        </div>
-      </header>
+      <ContentHero
+        title="FreeCell Glossary"
+        subtitle="Every card game term you need to know, from Ace to Win Rate. Clear definitions with links to strategy and rules."
+      />
 
       {/* ── Letter Navigation ── */}
-      <nav className="max-w-4xl mx-auto px-6 sm:px-10 lg:px-12 mb-12">
+      <nav className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-10 mb-12">
         <div className="flex flex-wrap justify-center gap-2">
           {letters.map((letter) => (
             <a
               key={letter}
               href={`#letter-${letter}`}
-              className="w-10 h-10 rounded-full border border-[#D4AF37]/30 bg-transparent text-sm font-bold text-[#D4AF37] flex items-center justify-center transition-all hover:bg-[#D4AF37]/10 hover:border-[#D4AF37]/50"
+              className="w-10 h-10 rounded-full border border-[#D4AF37]/30 bg-transparent text-sm font-bold text-[#8B6914] flex items-center justify-center transition-all hover:bg-[#D4AF37]/10 hover:border-[#D4AF37]/50"
             >
               {letter}
             </a>
@@ -410,96 +362,47 @@ export default function GlossaryPage() {
       </nav>
 
       {/* ── Content ── */}
-      <main className="max-w-4xl mx-auto px-6 sm:px-10 lg:px-12 pb-20 flex flex-col gap-10">
+      <main className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-10 pb-20 flex flex-col gap-6">
         {letters.map((letter) => (
-          <section key={letter} id={`letter-${letter}`} className="scroll-mt-6">
-            <div className={CARD} style={CARD_TOP}>
-              {/* Letter heading */}
-              <div className="px-6 sm:px-8 md:px-10 pt-8 pb-0">
-                <h2
-                  className="text-3xl sm:text-4xl font-bold text-[#D4AF37]"
-                  style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
-                >
-                  {letter}
-                </h2>
-                <div className="card-title-separator mt-4" />
-              </div>
-
-              <div className="px-6 sm:px-8 md:px-10 py-6 space-y-6">
-                {grouped.get(letter)!.map((t) => (
-                  <div key={t.id} id={t.id} className="scroll-mt-20">
-                    <h3
-                      className="text-lg font-semibold text-[#2a2522] mb-1.5"
-                      style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
-                    >
-                      {t.term}
-                    </h3>
-                    <p className="text-[#444444] leading-relaxed">{t.definition}</p>
-                  </div>
-                ))}
-              </div>
+          <CardSection key={letter} id={`letter-${letter}`}>
+            {/* Letter heading */}
+            <div className="px-6 sm:px-8 md:px-10 pt-8 pb-0">
+              <h2
+                className="text-3xl sm:text-4xl font-bold text-[#8B6914]"
+                style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
+              >
+                {letter}
+              </h2>
+              <div className="card-title-separator mt-4" />
             </div>
-          </section>
+
+            <div className="px-6 sm:px-8 md:px-10 py-6 space-y-6">
+              {grouped.get(letter)!.map((t) => (
+                <div key={t.id} id={t.id} className="scroll-mt-20">
+                  <h3
+                    className="text-lg font-semibold text-[#2a2522] mb-1.5"
+                    style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
+                  >
+                    {t.term}
+                  </h3>
+                  <p className="text-[#444444] leading-relaxed">{t.definition}</p>
+                </div>
+              ))}
+            </div>
+          </CardSection>
         ))}
 
         {/* ── CTA ── */}
-        <section>
-          <div
-            className={CARD}
-            style={{
-              ...CARD_TOP,
-              background:
-                "linear-gradient(135deg, rgba(10,74,42,0.6) 0%, rgba(6,37,22,0.8) 100%)",
-            }}
-          >
-            <div className="p-8 sm:p-10 text-center relative">
-              <div
-                className="absolute top-4 left-6 text-4xl text-white/[0.04] select-none"
-                aria-hidden="true"
-              >
-                {"\u2663"}
-              </div>
-              <div
-                className="absolute bottom-4 right-6 text-4xl text-white/[0.04] select-none"
-                aria-hidden="true"
-              >
-                {"\u2660"}
-              </div>
-
-              <h2
-                className="text-2xl sm:text-3xl font-semibold text-white mb-3"
-                style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
-              >
-                Ready to Play?
-              </h2>
-              <p className="text-[#6B7280] mb-6 max-w-md mx-auto">
-                Now that you know the terminology, put your knowledge to work.
-                Every term here comes alive once you&apos;re at the table.
-              </p>
-
-              <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                <Link
-                  href="/"
-                  className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl text-lg font-semibold transition-all duration-200 hover:scale-[1.03] active:scale-[0.98]"
-                  style={{
-                    background:
-                      "linear-gradient(110deg, #B8860B, #D4AF37, #F3E5AB, #D4AF37, #B8860B)",
-                    backgroundSize: "200% 100%",
-                    color: "#1a1a0a",
-                  }}
-                >
-                  Play FreeCell Now
-                </Link>
-                <Link
-                  href="/strategy"
-                  className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl text-lg font-semibold border border-white/20 text-white/90 hover:bg-white/[0.08] transition-colors"
-                >
-                  Learn Strategy
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
+        <CtaSection
+          body={
+            <>
+              Now that you know the terminology, put your knowledge to work.
+              Every term here comes alive once you&apos;re at the table.
+            </>
+          }
+          secondaryLabel="Learn Strategy"
+          secondaryHref="/strategy"
+        />
 
       </main>
     </ContentLayout>

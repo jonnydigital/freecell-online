@@ -22,7 +22,7 @@ export default function SidebarLeaderboard({ entries, playerId, loading, onShowF
     >
       <div className="mb-3 flex items-center gap-2">
         <Trophy size={14} className="text-[#D4AF37]" />
-        <h3 className="text-[11px] font-bold uppercase tracking-[0.22em] text-[#D4AF37]">Daily Leaderboard</h3>
+        <h3 className="text-xs font-bold uppercase tracking-[0.18em] text-[#D4AF37]">Daily Leaderboard</h3>
       </div>
 
       {loading && (
@@ -45,7 +45,7 @@ export default function SidebarLeaderboard({ entries, playerId, loading, onShowF
           <button
             type="button"
             onClick={onShowFull}
-            className="mt-3 w-full rounded-full border border-white/8 bg-white/[0.04] px-4 py-2.5 text-sm font-semibold text-white/70 transition-colors hover:bg-white/[0.08] hover:text-white cursor-pointer"
+            className="mt-3 w-full rounded-full border border-white/8 bg-white/[0.04] px-4 py-3 text-sm font-semibold text-white/70 transition-colors hover:bg-white/[0.08] hover:text-white cursor-pointer"
           >
             Show Full Leaderboard
           </button>

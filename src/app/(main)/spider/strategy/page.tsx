@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import ContentLayout from "@/components/ContentLayout";
+import { ContentHero, JsonLd, CtaSection, ContentLinkCard } from "@/components/content";
 import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
@@ -129,57 +130,18 @@ export default function SpiderStrategyPage() {
 
   return (
     <ContentLayout variant="dark">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
-      />
+      <JsonLd data={faqJsonLd} />
+      <JsonLd data={articleJsonLd} />
+      <JsonLd data={breadcrumbJsonLd} />
 
-      {/* Hero */}
-      <header className="relative pt-6 pb-12 sm:pt-8 sm:pb-16 px-6 text-center overflow-hidden">
-        <div
-          className="absolute top-10 left-[10%] text-6xl sm:text-8xl text-white/[0.03] select-none pointer-events-none"
-          aria-hidden="true"
-        >
-          {"\u2660"}
-        </div>
-        <div
-          className="absolute top-16 right-[8%] text-5xl sm:text-7xl text-red-500/[0.04] select-none pointer-events-none"
-          aria-hidden="true"
-        >
-          {"\u2666"}
-        </div>
-
-        <h1
-          className="text-4xl sm:text-5xl lg:text-6xl font-semibold text-[#D4AF37] mb-4 max-w-3xl mx-auto leading-tight"
-          style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
-        >
-          Spider Solitaire Strategy Guide
-        </h1>
-        <p className="text-white/50 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
-          Expert strategies, tips, and techniques for winning more games at every
-          difficulty level.
-        </p>
-
-        <div className="mt-8 flex items-center justify-center gap-3">
-          <div className="h-px w-12 bg-gradient-to-r from-transparent to-[#D4AF37]/50" />
-          <span className="text-[#D4AF37] text-sm">
-            {"\u2660"} {"\u2665"} {"\u2666"} {"\u2663"}
-          </span>
-          <div className="h-px w-12 bg-gradient-to-l from-transparent to-[#D4AF37]/50" />
-        </div>
-      </header>
+      <ContentHero
+        title="Spider Solitaire Strategy Guide"
+        subtitle="Expert strategies, tips, and techniques for winning more games at every difficulty level."
+      />
 
       {/* Main Content */}
-      <main className="max-w-4xl mx-auto px-6 sm:px-10 lg:px-12 pb-20 flex flex-col gap-8">
-        <article className="space-y-10">
+      <main className="max-w-4xl mx-auto px-6 sm:px-10 lg:px-12 pb-20 flex flex-col gap-6">
+        <article className="space-y-6">
           {/* Section 1: Core Principles */}
           <section>
             <h2
@@ -270,7 +232,7 @@ export default function SpiderStrategyPage() {
             </div>
           </section>
 
-          <AdUnit format="horizontal" className="my-4" />
+          <AdUnit format="horizontal" className="-my-1" />
 
           {/* Section 2: 1-Suit Strategy */}
           <section>
@@ -391,7 +353,7 @@ export default function SpiderStrategyPage() {
             </div>
           </section>
 
-          <AdUnit format="auto" className="my-4" />
+          <AdUnit format="auto" className="-my-1" />
 
           {/* Section 4: 4-Suit Strategy */}
           <section>
@@ -591,7 +553,7 @@ export default function SpiderStrategyPage() {
             </div>
           </section>
 
-          <AdUnit format="auto" className="my-4" />
+          <AdUnit format="auto" className="-my-1" />
 
           {/* Section 7: Advanced Techniques */}
           <section>
@@ -732,7 +694,7 @@ export default function SpiderStrategyPage() {
             </div>
           </section>
 
-          <AdUnit format="auto" className="my-4" />
+          <AdUnit format="auto" className="-my-1" />
 
           {/* FAQ Section */}
           <section className="bg-white/[0.03] border border-white/10 rounded-xl p-6 sm:p-8">
@@ -757,80 +719,20 @@ export default function SpiderStrategyPage() {
             </div>
           </section>
 
-          <AdUnit format="horizontal" className="my-4" />
+          <AdUnit format="horizontal" className="-my-1" />
 
           {/* Cross-links */}
           <section className="bg-white/[0.03] border border-white/10 rounded-xl p-6 sm:p-8">
-            <h2
-              className="text-xl font-bold text-white/90 mb-4"
-              style={{ fontFamily: "var(--font-playfair)" }}
-            >
+            <h2 className="text-xl font-bold text-white/90 mb-4" style={{ fontFamily: "var(--font-playfair)" }}>
               Related Pages
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <Link
-                href="/spider"
-                className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] hover:border-[#D4AF37]/30 transition-all"
-              >
-                <span className="text-[#D4AF37] font-semibold">Play Spider Solitaire</span>
-                <p className="text-sm text-white/40 mt-1">Play online for free, no download</p>
-              </Link>
-              <Link
-                href="/spider/how-to-play"
-                className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] hover:border-[#D4AF37]/30 transition-all"
-              >
-                <span className="text-[#D4AF37] font-semibold">How to Play Spider</span>
-                <p className="text-sm text-white/40 mt-1">Complete rules and setup guide</p>
-              </Link>
-              <Link
-                href="/spider/tips"
-                className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] hover:border-[#D4AF37]/30 transition-all"
-              >
-                <span className="text-[#D4AF37] font-semibold">Spider Tips & Tricks</span>
-                <p className="text-sm text-white/40 mt-1">Quick, practical tips for all levels</p>
-              </Link>
-              <Link
-                href="/spider/1-suit-vs-2-suit-vs-4-suit"
-                className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] hover:border-[#D4AF37]/30 transition-all"
-              >
-                <span className="text-[#D4AF37] font-semibold">1-Suit vs 2-Suit vs 4-Suit</span>
-                <p className="text-sm text-white/40 mt-1">Compare Spider difficulty levels</p>
-              </Link>
-              <Link
-                href="/spider/is-spider-solitaire-winnable"
-                className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] hover:border-[#D4AF37]/30 transition-all"
-              >
-                <span className="text-[#D4AF37] font-semibold">Is Spider Winnable?</span>
-                <p className="text-sm text-white/40 mt-1">Win rates and solvability by suit count</p>
-              </Link>
-              <Link
-                href="/freecell-vs-spider"
-                className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] hover:border-[#D4AF37]/30 transition-all"
-              >
-                <span className="text-[#D4AF37] font-semibold">FreeCell vs Spider</span>
-                <p className="text-sm text-white/40 mt-1">Head-to-head comparison</p>
-              </Link>
-              <Link
-                href="/solitaire-types"
-                className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] hover:border-[#D4AF37]/30 transition-all"
-              >
-                <span className="text-[#D4AF37] font-semibold">Types of Solitaire</span>
-                <p className="text-sm text-white/40 mt-1">20 solitaire variants compared</p>
-              </Link>
-              <Link
-                href="/"
-                className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] hover:border-[#D4AF37]/30 transition-all"
-              >
-                <span className="text-[#D4AF37] font-semibold">Play FreeCell</span>
-                <p className="text-sm text-white/40 mt-1">The classic strategic solitaire</p>
-              </Link>
-              <Link
-                href="/strategy"
-                className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] hover:border-[#D4AF37]/30 transition-all"
-              >
-                <span className="text-[#D4AF37] font-semibold">FreeCell Strategy</span>
-                <p className="text-sm text-white/40 mt-1">FreeCell tips and techniques</p>
-              </Link>
+              <ContentLinkCard href="/spider" title="Play Spider Solitaire" description="Play online for free, no download" />
+              <ContentLinkCard href="/spider/how-to-play" title="How to Play Spider" description="Complete rules and setup guide" />
+              <ContentLinkCard href="/spider/tips" title="Tips & Tricks" description="Quick tips for immediate improvement" />
+              <ContentLinkCard href="/spider/1-suit-vs-2-suit-vs-4-suit" title="1-Suit vs 2-Suit vs 4-Suit" description="Compare difficulty levels" />
+              <ContentLinkCard href="/freecell-vs-spider" title="FreeCell vs Spider" description="How the two games compare" />
+              <ContentLinkCard href="/" title="Play FreeCell" description="The classic strategic solitaire" />
             </div>
           </section>
         </article>

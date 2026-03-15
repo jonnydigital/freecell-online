@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { absoluteUrl, siteConfig } from '@/lib/siteConfig';
 import AdUnit from '@/components/AdUnit';
 import ContentLayout from '@/components/ContentLayout';
+import { SectionHeading, CardSection, ContentBody, CtaSection, ContentLinkCard, JsonLd } from '@/components/content';
 
 export const metadata: Metadata = {
   title: 'FreeCell World Records: Fastest Times, Longest Streaks, and Community Feats',
@@ -29,7 +30,6 @@ export const metadata: Metadata = {
   },
 };
 
-const CARD = 'rounded-xl bg-white/[0.04] border border-white/[0.07] overflow-hidden';
 
 const faqs = [
   {
@@ -64,32 +64,6 @@ const faqs = [
   },
 ];
 
-function SectionHeading({
-  children,
-  id,
-  sub,
-}: {
-  children: React.ReactNode;
-  id?: string;
-  sub?: string;
-}) {
-  return (
-    <div className="px-8 sm:px-10 md:px-12 pt-6 sm:pt-8 pb-0">
-      {sub && (
-        <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#D4AF37]/60 mb-1.5 block">
-          {sub}
-        </span>
-      )}
-      <h2
-        id={id}
-        className="text-2xl sm:text-3xl font-bold text-white scroll-mt-6"
-      >
-        {children}
-      </h2>
-      <div className="mt-4 h-px bg-gradient-to-r from-[#D4AF37]/40 to-transparent" />
-    </div>
-  );
-}
 
 export default function FreecellWorldRecordsPage() {
   const jsonLd = [
@@ -148,11 +122,10 @@ export default function FreecellWorldRecordsPage() {
 
   return (
     <ContentLayout variant="dark">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <JsonLd data={jsonLd} />
 
       <main className="max-w-5xl mx-auto px-4 sm:px-6 pt-6 pb-20 space-y-6">
-        <section>
-          <div className={CARD}>
+        <CardSection variant="dark">
             <div className="px-8 sm:px-10 md:px-12 pt-6 sm:pt-8 pb-6">
               <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#D4AF37]/60 block mb-3">
                 Community Achievements
@@ -195,13 +168,11 @@ export default function FreecellWorldRecordsPage() {
                 </div>
               </div>
             </div>
-          </div>
-        </section>
+        </CardSection>
 
-        <section id="speed-records" className="scroll-mt-6">
-          <div className={CARD}>
-            <SectionHeading sub="Against The Clock">Fastest FreeCell Completion Times</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-5 text-white/70 leading-8">
+        <CardSection id="speed-records" variant="dark">
+            <SectionHeading variant="dark" sub="Against The Clock">Fastest FreeCell Completion Times</SectionHeading>
+            <ContentBody variant="dark" className="space-y-5">
               <p>
                 Speed is the most visible FreeCell record category. Players compete to clear deals
                 as fast as possible, and reported times have dropped dramatically as interfaces
@@ -239,16 +210,14 @@ export default function FreecellWorldRecordsPage() {
                 leaderboards that track times server-side. Self-reported times without replay
                 verification are interesting but harder to confirm.
               </p>
-            </div>
-          </div>
-        </section>
+            </ContentBody>
+        </CardSection>
 
-        <AdUnit className="my-4" />
+        <AdUnit className="-my-1" />
 
-        <section id="win-streaks" className="scroll-mt-6">
-          <div className={CARD}>
-            <SectionHeading sub="Never Losing">Longest Win Streaks</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-5 text-white/70 leading-8">
+        <CardSection id="win-streaks" variant="dark">
+            <SectionHeading variant="dark" sub="Never Losing">Longest Win Streaks</SectionHeading>
+            <ContentBody variant="dark" className="space-y-5">
               <p>
                 Win streaks are FreeCell&apos;s endurance record. Because nearly every deal is
                 solvable, a skilled and patient player can theoretically win indefinitely. The
@@ -285,14 +254,12 @@ export default function FreecellWorldRecordsPage() {
                 </Link>
                 .
               </p>
-            </div>
-          </div>
-        </section>
+            </ContentBody>
+        </CardSection>
 
-        <section id="deal-11982" className="scroll-mt-6">
-          <div className={CARD}>
-            <SectionHeading sub="The Famous Exception">The Deal #11982 Story</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-5 text-white/70 leading-8">
+        <CardSection id="deal-11982" variant="dark">
+            <SectionHeading variant="dark" sub="The Famous Exception">The Deal #11982 Story</SectionHeading>
+            <ContentBody variant="dark" className="space-y-5">
               <p>
                 No discussion of FreeCell records is complete without{' '}
                 <Link href="/game/11982" className="text-[#D4AF37] hover:underline">
@@ -341,14 +308,12 @@ export default function FreecellWorldRecordsPage() {
                 </Link>{' '}
                 guide.
               </p>
-            </div>
-          </div>
-        </section>
+            </ContentBody>
+        </CardSection>
 
-        <section id="community-projects" className="scroll-mt-6">
-          <div className={CARD}>
-            <SectionHeading sub="Collective Effort">Community Solvability Projects</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-5 text-white/70 leading-8">
+        <CardSection id="community-projects" variant="dark">
+            <SectionHeading variant="dark" sub="Collective Effort">Community Solvability Projects</SectionHeading>
+            <ContentBody variant="dark" className="space-y-5">
               <p>
                 Some of the most impressive FreeCell achievements are not individual records but
                 community-wide projects. Groups of players have systematically worked through
@@ -381,52 +346,30 @@ export default function FreecellWorldRecordsPage() {
                 transformed a casual Windows game into one of the most thoroughly analyzed puzzles
                 in recreational mathematics.
               </p>
-            </div>
-          </div>
-        </section>
+            </ContentBody>
+        </CardSection>
 
-        <AdUnit className="my-4" />
+        <AdUnit className="-my-1" />
 
-        <section id="your-records" className="scroll-mt-6">
-          <div className={CARD}>
-            <SectionHeading sub="Start Tracking">Building Your Own Records</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-5 text-white/70 leading-8">
+        <CardSection id="your-records" variant="dark">
+            <SectionHeading variant="dark" sub="Start Tracking">Building Your Own Records</SectionHeading>
+            <ContentBody variant="dark" className="space-y-5">
               <p>
                 You do not need to chase world records to enjoy the competitive side of FreeCell.
                 Personal bests are just as satisfying. Here are the records worth tracking in your
                 own play.
               </p>
               <div className="grid gap-4 md:grid-cols-3">
-                <Link href="/statistics" className="bg-white/[0.05] border border-white/[0.07] rounded-xl p-5 hover:border-[#D4AF37]/40 transition-colors">
-                  <h3 className="text-lg font-semibold text-white">Win rate over time</h3>
-                  <p className="mt-2 text-sm leading-7 text-white/70">
-                    Track your win percentage across all games. A rising win rate is the clearest
-                    sign of improvement. Check your stats on the statistics page.
-                  </p>
-                </Link>
-                <Link href="/streak" className="bg-white/[0.05] border border-white/[0.07] rounded-xl p-5 hover:border-[#D4AF37]/40 transition-colors">
-                  <h3 className="text-lg font-semibold text-white">Current win streak</h3>
-                  <p className="mt-2 text-sm leading-7 text-white/70">
-                    See how many consecutive games you can win. Streak mode is designed for exactly
-                    this kind of focused practice.
-                  </p>
-                </Link>
-                <Link href="/storm" className="bg-white/[0.05] border border-white/[0.07] rounded-xl p-5 hover:border-[#D4AF37]/40 transition-colors">
-                  <h3 className="text-lg font-semibold text-white">Best timed session</h3>
-                  <p className="mt-2 text-sm leading-7 text-white/70">
-                    Storm mode lets you play under time pressure. Your fastest session is a
-                    personal speed record with built-in accountability.
-                  </p>
-                </Link>
+                <ContentLinkCard href="/statistics" title="Win rate over time" description="Track your win percentage across all games. A rising win rate is the clearest sign of improvement. Check your stats on the statistics page." />
+                <ContentLinkCard href="/streak" title="Current win streak" description="See how many consecutive games you can win. Streak mode is designed for exactly this kind of focused practice." />
+                <ContentLinkCard href="/storm" title="Best timed session" description="Storm mode lets you play under time pressure. Your fastest session is a personal speed record with built-in accountability." />
               </div>
-            </div>
-          </div>
-        </section>
+            </ContentBody>
+        </CardSection>
 
-        <section id="faq" className="scroll-mt-6">
-          <div className={CARD}>
-            <SectionHeading sub="Common Questions">FreeCell World Records FAQ</SectionHeading>
-            <div className="px-8 sm:px-10 md:px-12 py-6 space-y-6">
+        <CardSection id="faq" variant="dark">
+            <SectionHeading variant="dark" sub="Common Questions">FreeCell World Records FAQ</SectionHeading>
+            <ContentBody variant="dark" className="space-y-6">
               {faqs.map((faq, index) => (
                 <div key={faq.question}>
                   <h3 className="font-medium text-white text-lg mb-2">{faq.question}</h3>
@@ -434,49 +377,15 @@ export default function FreecellWorldRecordsPage() {
                   {index < faqs.length - 1 && <div className="mt-6 border-b border-white/[0.07]" />}
                 </div>
               ))}
-            </div>
-          </div>
-        </section>
-
-        <section>
-          <div
-            className={CARD}
-            style={{
-              background: 'linear-gradient(135deg, rgba(10,74,42,0.6) 0%, rgba(6,37,22,0.8) 100%)',
-            }}
-          >
-            <div className="p-8 sm:p-10 text-center relative">
-              <h2
-                className="text-2xl sm:text-3xl font-semibold text-white mb-3"
-              >
-                Start Building Your Own Record
-              </h2>
-              <p className="text-white/40 mb-6 max-w-2xl mx-auto">
-                Every record starts with a single game. Play a deal, beat your best time, extend
-                your streak, and track your progress.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                <Link
-                  href="/streak"
-                  className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl text-lg font-semibold transition-all duration-200 hover:scale-[1.03] active:scale-[0.98]"
-                  style={{
-                    background: 'linear-gradient(110deg, #B8860B, #D4AF37, #F3E5AB, #D4AF37, #B8860B)',
-                    backgroundSize: '200% 100%',
-                    color: '#1a1a0a',
-                  }}
-                >
-                  Play Streak Mode
-                </Link>
-                <Link
-                  href="/storm"
-                  className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl text-lg font-semibold border border-white/20 text-white/90 hover:bg-white/[0.08] transition-colors"
-                >
-                  Try Storm Mode
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
+            </ContentBody>
+        </CardSection>        <CtaSection
+          heading="Start Building Your Own Record"
+          body="Every record starts with a single game. Play a deal, beat your best time, extend your streak, and track your progress."
+          primaryLabel="Play Streak Mode"
+          primaryHref="/streak"
+          secondaryLabel="Try Storm Mode"
+          secondaryHref="/storm"
+        />
       </main>
     </ContentLayout>
   );

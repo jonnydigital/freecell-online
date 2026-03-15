@@ -432,11 +432,12 @@ export default function DomBoard({ hint }: DomBoardProps) {
                   if (!isInRun) return null;
 
                   const isBottomCard = rowIdx === cascade.length - 1;
-                  const dragCardIds = cascade.slice(rowIdx).map((c) => c.id);
+                  // Always pick up the full valid run — the run moves as a unit
+                  const dragCardIds = cascade.slice(runStartIndex).map((c) => c.id);
                   const srcLoc: Location = {
                     type: 'cascade',
                     index: colIdx,
-                    cardIndex: rowIdx,
+                    cardIndex: runStartIndex,
                   };
 
                   return (

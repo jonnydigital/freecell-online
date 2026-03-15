@@ -1,25 +1,27 @@
 @import "tailwindcss";
 
 :root {
-  --felt-green: #0a3d0a;
-  --felt-green-light: #1a5c1a;
-  --felt-color: #0a3d0a;
-  --felt-color-light: #1a5c1a;
+  --felt-green: #0e4020;
+  --felt-green-light: #1f6e22;
+  --felt-color: #0e4020;
+  --felt-color-light: #1f6e22;
   --card-shadow: rgba(0, 0, 0, 0.3);
   --gold: #d4a843;
   /* Theme UI variables (overridden by ThemeProvider at runtime) */
-  --theme-base: #0a351a;
-  --theme-dark: #072907;
-  --theme-mid: #0d4a22;
-  --theme-accent: #1a5c1a;
-  --theme-accent-hover: #257a25;
+  --theme-base: #0e4020;
+  --theme-dark: #0a3310;
+  --theme-mid: #125a2a;
+  --theme-accent: #1f6e22;
+  --theme-accent-hover: #2a8a2d;
   --theme-border: #2a7c2a;
   --theme-panel: #0d2f0d;
 }
 
-* {
-  box-sizing: border-box;
-  padding: 0;
+@layer base {
+  * {
+    box-sizing: border-box;
+    padding: 0;
+  }
 }
 
 html {
@@ -80,7 +82,7 @@ body {
   50% { transform: translateY(-10px); }
 }
 
-@keyframes shimmer {
+@keyframes splash-shimmer {
   0% { background-position: -200% center; }
   100% { background-position: 200% center; }
 }
@@ -139,7 +141,7 @@ body {
     #B8860B 100%
   );
   background-size: 200% 100%;
-  animation: shimmer 3s ease-in-out infinite;
+  animation: splash-shimmer 3s ease-in-out infinite;
 }
 
 .splash-sparkle {
@@ -192,30 +194,32 @@ body {
 }
 
 /* Card container — looks like a playing card resting on felt */
-.card-panel {
-  background: #faf6f0;
-  border-radius: 1.25rem;
-  border: 1px solid rgba(212, 197, 160, 0.7);
-  box-shadow:
-    0 2px 4px rgba(0, 0, 0, 0.2),
-    0 8px 20px rgba(0, 0, 0, 0.22),
-    0 20px 48px rgba(0, 0, 0, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  position: relative;
-  overflow: hidden;
-  z-index: 1;
-  padding: 0;
-}
+@layer base {
+  .card-panel {
+    background: #faf6f0;
+    border-radius: 1.25rem;
+    border: 1px solid rgba(212, 197, 160, 0.7);
+    box-shadow:
+      0 2px 4px rgba(0, 0, 0, 0.2),
+      0 8px 20px rgba(0, 0, 0, 0.22),
+      0 20px 48px rgba(0, 0, 0, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    padding: 0;
+  }
 
-/* Inner decorative border — mimics the printed border on real playing cards */
-.card-panel::after {
-  content: '';
-  position: absolute;
-  inset: 8px;
-  border: 1px solid rgba(201, 185, 122, 0.35);
-  border-radius: 1rem;
-  pointer-events: none;
-  z-index: 10;
+  /* Inner decorative border — mimics the printed border on real playing cards */
+  .card-panel::after {
+    content: '';
+    position: absolute;
+    inset: 8px;
+    border: 1px solid rgba(201, 185, 122, 0.35);
+    border-radius: 1rem;
+    pointer-events: none;
+    z-index: 0;
+  }
 }
 
 /* Gold separator for card section titles */

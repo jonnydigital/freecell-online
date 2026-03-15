@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import ContentLayout from "@/components/ContentLayout";
 import NetworkCrossLinks from "@/components/NetworkCrossLinks";
+import { ContentHero, SectionHeading, CardSection, ContentBody, TocPills, CtaSection, JsonLd } from "@/components/content";
 
 export const metadata: Metadata = {
   title: "Types of Solitaire Card Games | 20 Solitaire Variants Explained",
@@ -28,11 +29,6 @@ export const metadata: Metadata = {
     siteName: siteConfig.siteName,
     type: "article",
   },
-};
-
-const CARD = "card-panel";
-const CARD_TOP: React.CSSProperties = {
-  borderTop: "1px solid rgba(184, 134, 11, 0.08)",
 };
 
 /* ── Solitaire variants data ── */
@@ -345,37 +341,6 @@ const solitaireFaqs = [
 
 /* ── Helper components ── */
 
-function SectionHeading({
-  children,
-  id,
-  sub,
-  icon,
-}: {
-  children: React.ReactNode;
-  id?: string;
-  sub?: string;
-  icon?: string;
-}) {
-  return (
-    <div className="px-6 sm:px-8 md:px-10 pt-8 sm:pt-10 pb-0">
-      {sub && (
-        <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#B8860B]/60 mb-1.5 block">
-          {sub}
-        </span>
-      )}
-      <h2
-        id={id}
-        className="text-2xl sm:text-3xl font-bold text-[#2a2522]"
-        style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
-      >
-        {icon && <span className="mr-2 text-[#c9a84c]">{icon}</span>}
-        {children}
-      </h2>
-      <div className="card-title-separator mt-5" />
-    </div>
-  );
-}
-
 function DifficultyDots({ level }: { level: number }) {
   return (
     <div className="flex items-center gap-1" aria-label={`Difficulty: ${level} out of 5`}>
@@ -405,7 +370,7 @@ function VariantCard({ variant }: { variant: SolitaireVariant }) {
         >
           {variant.name}
           {isFreecell && (
-            <span className="ml-2 text-xs font-semibold uppercase tracking-wider text-[#D4AF37] bg-[#D4AF37]/10 px-2 py-0.5 rounded-full">
+            <span className="ml-2 text-xs font-semibold uppercase tracking-wider text-[#8B6914] bg-[#D4AF37]/10 px-2 py-0.5 rounded-full">
               Our Game
             </span>
           )}
@@ -467,7 +432,7 @@ export default function SolitaireTypesPage() {
     ],
   };
 
-  const jsonLd = [
+  const articleJsonLd = [
     {
       "@context": "https://schema.org",
       "@type": "Article",
@@ -504,133 +469,80 @@ export default function SolitaireTypesPage() {
 
   return (
     <ContentLayout variant="dark">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
-      />
+      <JsonLd data={articleJsonLd} />
+      <JsonLd data={breadcrumbJsonLd} />
 
       {/* ── Hero ── */}
-      <header className="relative pt-6 pb-12 sm:pt-8 sm:pb-16 px-6 text-center overflow-hidden">
-        <div
-          className="absolute top-10 left-[10%] text-6xl sm:text-8xl text-white/[0.03] select-none pointer-events-none"
-          aria-hidden="true"
-        >
-          {"\u2663"}
-        </div>
-        <div
-          className="absolute top-16 right-[8%] text-5xl sm:text-7xl text-red-500/[0.04] select-none pointer-events-none"
-          aria-hidden="true"
-        >
-          {"\u2666"}
-        </div>
-        <div
-          className="absolute bottom-4 left-[18%] text-5xl sm:text-6xl text-white/[0.03] select-none pointer-events-none"
-          aria-hidden="true"
-        >
-          {"\u2660"}
-        </div>
-
-        <h1
-          className="text-4xl sm:text-5xl lg:text-6xl font-semibold text-[#D4AF37] mb-4 max-w-3xl mx-auto leading-tight"
-          style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
-        >
-          Types of Solitaire Card Games
-        </h1>
-        <p className="text-[#6B7280] text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
-          From the classic Klondike everyone knows to obscure variants
-          you&apos;ve never tried — 20 solitaire games ranked by difficulty,
-          luck factor, and strategic depth.
-        </p>
-
-        <div className="mt-8 flex items-center justify-center gap-3">
-          <div className="h-px w-12 bg-gradient-to-r from-transparent to-[#D4AF37]/50" />
-          <span className="text-[#D4AF37] text-sm">
-            {"\u2660"} {"\u2665"} {"\u2666"} {"\u2663"}
-          </span>
-          <div className="h-px w-12 bg-gradient-to-l from-transparent to-[#D4AF37]/50" />
-        </div>
-      </header>
+      <ContentHero
+        title="Types of Solitaire Card Games"
+        subtitle={
+          <>
+            From the classic Klondike everyone knows to obscure variants
+            you&apos;ve never tried — 20 solitaire games ranked by difficulty,
+            luck factor, and strategic depth.
+          </>
+        }
+      />
 
       {/* ── Quick Nav ── */}
-      <nav className="max-w-4xl mx-auto px-6 sm:px-10 lg:px-12 mb-12">
-        <div className="flex md:flex-wrap md:justify-center gap-3 overflow-x-auto no-scrollbar pb-1">
-          {[
-            ["#overview", "\u2660", "Overview"],
-            ["#tableau-building", "\u2665", "Tableau Games"],
-            ["#pairing-matching", "\u2666", "Pairing Games"],
-            ["#calculation-arithmetic", "\u2663", "Arithmetic"],
-            ["#special-layout", "\u2660", "Special Layout"],
-            ["#comparison", "\u2665", "Comparison"],
-            ["#faq", "\u2666", "FAQ"],
-          ].map(([href, icon, label]) => (
-            <a
-              key={href}
-              href={href}
-              className="rounded-full px-5 py-2 border border-[#D4AF37]/30 bg-transparent text-sm tracking-wide text-[#D4AF37] flex items-center gap-2 transition-all hover:bg-[#D4AF37]/10 hover:border-[#D4AF37]/50 whitespace-nowrap shrink-0"
-            >
-              <span
-                className={`text-sm ${icon === "\u2665" || icon === "\u2666" ? "text-red-400" : ""}`}
-              >
-                {icon}
-              </span>
-              {label}
-            </a>
-          ))}
-        </div>
-      </nav>
+      <TocPills
+        items={[
+          { href: "#overview", icon: "\u2660", label: "Overview" },
+          { href: "#tableau-building", icon: "\u2665", label: "Tableau Games" },
+          { href: "#pairing-matching", icon: "\u2666", label: "Pairing Games" },
+          { href: "#calculation-arithmetic", icon: "\u2663", label: "Arithmetic" },
+          { href: "#special-layout", icon: "\u2660", label: "Special Layout" },
+          { href: "#comparison", icon: "\u2665", label: "Comparison" },
+          { href: "#faq", icon: "\u2666", label: "FAQ" },
+        ]}
+      />
 
       {/* ── Content ── */}
-      <main className="max-w-4xl mx-auto px-6 sm:px-10 lg:px-12 pb-20 flex flex-col gap-12">
+      <main className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-10 pb-20 flex flex-col gap-6">
         {/* Overview */}
-        <section id="overview" className="scroll-mt-6">
-          <div className={CARD} style={CARD_TOP}>
-            <SectionHeading
-              sub="The World of Solitaire"
-              id="overview-heading"
-              icon={"\u2660"}
-            >
-              What Is Solitaire?
-            </SectionHeading>
+        <CardSection id="overview">
+          <SectionHeading
+            sub="The World of Solitaire"
+            id="overview-heading"
+            icon={"\u2660"}
+          >
+            What Is Solitaire?
+          </SectionHeading>
 
-            <div className="px-6 sm:px-8 md:px-10 py-8 space-y-5 text-[#444444] leading-relaxed">
-              <p>
-                Solitaire isn&apos;t a single game — it&apos;s a family of
-                hundreds of card games designed for one player. The term comes
-                from the French word for &quot;alone,&quot; and solitaire
-                games have been documented since at least the late 18th
-                century. They were originally played with physical cards as a
-                form of meditative entertainment, and became a global
-                phenomenon when Microsoft began bundling them with Windows
-                in the 1990s.
-              </p>
-              <p>
-                The 20 variants on this page represent the most popular and
-                historically significant solitaire games. They range from
-                pure-luck games where you make no decisions (like{" "}
-                <a href="#clock" className="text-[#D4AF37] hover:underline">
-                  Clock Solitaire
-                </a>
-                ) to deep strategic puzzles where nearly every game is
-                winnable if you play perfectly (like{" "}
-                <a href="#freecell" className="text-[#D4AF37] hover:underline">
-                  FreeCell
-                </a>
-                ).
-              </p>
-              <p>
-                We&apos;ve organized them into four categories based on their
-                core mechanic: tableau-building games (arrange cards in
-                columns), pairing games (match and remove cards), arithmetic
-                games (use counting to build foundations), and special layout
-                games (unique formats that defy easy classification).
-              </p>
-            </div>
-          </div>
-        </section>
+          <ContentBody className="space-y-5">
+            <p>
+              Solitaire isn&apos;t a single game — it&apos;s a family of
+              hundreds of card games designed for one player. The term comes
+              from the French word for &quot;alone,&quot; and solitaire
+              games have been documented since at least the late 18th
+              century. They were originally played with physical cards as a
+              form of meditative entertainment, and became a global
+              phenomenon when Microsoft began bundling them with Windows
+              in the 1990s.
+            </p>
+            <p>
+              The 20 variants on this page represent the most popular and
+              historically significant solitaire games. They range from
+              pure-luck games where you make no decisions (like{" "}
+              <a href="#clock" className="text-[#8B6914] hover:underline">
+                Clock Solitaire
+              </a>
+              ) to deep strategic puzzles where nearly every game is
+              winnable if you play perfectly (like{" "}
+              <a href="#freecell" className="text-[#8B6914] hover:underline">
+                FreeCell
+              </a>
+              ).
+            </p>
+            <p>
+              We&apos;ve organized them into four categories based on their
+              core mechanic: tableau-building games (arrange cards in
+              columns), pairing games (match and remove cards), arithmetic
+              games (use counting to build foundations), and special layout
+              games (unique formats that defy easy classification).
+            </p>
+          </ContentBody>
+        </CardSection>
 
         {/* Category sections */}
         {categories.map((category) => {
@@ -653,185 +565,134 @@ export default function SolitaireTypesPage() {
           const icon = iconMap[category.id];
 
           return (
-            <section key={category.id} id={sectionId} className="scroll-mt-6">
-              <div className={CARD} style={CARD_TOP}>
-                <SectionHeading
-                  sub={`${categoryVariants.length} variants`}
-                  id={`${sectionId}-heading`}
-                  icon={icon}
-                >
-                  {category.name}
-                </SectionHeading>
+            <CardSection key={category.id} id={sectionId}>
+              <SectionHeading
+                sub={`${categoryVariants.length} variants`}
+                id={`${sectionId}-heading`}
+                icon={icon}
+              >
+                {category.name}
+              </SectionHeading>
 
-                <div className="px-6 sm:px-8 md:px-10 py-6">
-                  <p className="text-[#444444] leading-relaxed mb-6">
-                    {category.description}
-                  </p>
-                  <div className="space-y-4">
-                    {categoryVariants.map((variant) => (
-                      <VariantCard key={variant.id} variant={variant} />
-                    ))}
-                  </div>
+              <ContentBody>
+                <p className="mb-6">
+                  {category.description}
+                </p>
+                <div className="space-y-4">
+                  {categoryVariants.map((variant) => (
+                    <VariantCard key={variant.id} variant={variant} />
+                  ))}
                 </div>
-              </div>
-            </section>
+              </ContentBody>
+            </CardSection>
           );
         })}
 
         {/* Comparison Table */}
-        <section id="comparison" className="scroll-mt-6">
-          <div className={CARD} style={CARD_TOP}>
-            <SectionHeading
-              sub="Side by Side"
-              id="comparison-heading"
-              icon={"\u2665"}
-            >
-              Quick Comparison Chart
-            </SectionHeading>
+        <CardSection id="comparison">
+          <SectionHeading
+            sub="Side by Side"
+            id="comparison-heading"
+            icon={"\u2665"}
+          >
+            Quick Comparison Chart
+          </SectionHeading>
 
-            <div className="px-4 sm:px-10 md:px-12 py-8 overflow-x-auto">
-              <table className="w-full text-sm border-collapse min-w-[520px]">
-                <thead>
-                  <tr className="border-b-2 border-[#e5e0d8]">
-                    <th className="text-left py-3 px-2 text-[#2a2522] font-semibold">
-                      Game
-                    </th>
-                    <th className="text-center py-3 px-2 text-[#2a2522] font-semibold">
-                      Decks
-                    </th>
-                    <th className="text-center py-3 px-2 text-[#2a2522] font-semibold">
-                      Difficulty
-                    </th>
-                    <th className="text-center py-3 px-2 text-[#2a2522] font-semibold">
-                      Luck
-                    </th>
-                    <th className="text-center py-3 px-2 text-[#2a2522] font-semibold">
-                      Category
-                    </th>
+          <div className="px-4 sm:px-10 md:px-12 py-8 overflow-x-auto">
+            <table className="w-full text-sm border-collapse min-w-[520px]">
+              <thead>
+                <tr className="border-b-2 border-[#e5e0d8]">
+                  <th className="text-left py-3 px-2 text-[#2a2522] font-semibold">
+                    Game
+                  </th>
+                  <th className="text-center py-3 px-2 text-[#2a2522] font-semibold">
+                    Decks
+                  </th>
+                  <th className="text-center py-3 px-2 text-[#2a2522] font-semibold">
+                    Difficulty
+                  </th>
+                  <th className="text-center py-3 px-2 text-[#2a2522] font-semibold">
+                    Luck
+                  </th>
+                  <th className="text-center py-3 px-2 text-[#2a2522] font-semibold">
+                    Category
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {variants.map((v) => (
+                  <tr
+                    key={v.id}
+                    className={`border-b border-[#e5e0d8]/40 ${v.id === "freecell" ? "bg-[#D4AF37]/[0.06]" : ""}`}
+                  >
+                    <td className="py-2.5 px-2">
+                      <a
+                        href={`#${v.id}`}
+                        className="text-[#2a2522] font-medium hover:text-[#8B6914] transition-colors"
+                      >
+                        {v.name}
+                      </a>
+                    </td>
+                    <td className="text-center py-2.5 px-2 text-[#6B7280]">
+                      {v.decks}
+                    </td>
+                    <td className="py-2.5 px-2">
+                      <div className="flex justify-center">
+                        <DifficultyDots level={v.difficulty} />
+                      </div>
+                    </td>
+                    <td className="text-center py-2.5 px-2 text-[#6B7280]">
+                      {v.luckFactor}
+                    </td>
+                    <td className="text-center py-2.5 px-2 text-[#6B7280] capitalize">
+                      {v.category}
+                    </td>
                   </tr>
-                </thead>
-                <tbody>
-                  {variants.map((v) => (
-                    <tr
-                      key={v.id}
-                      className={`border-b border-[#e5e0d8]/40 ${v.id === "freecell" ? "bg-[#D4AF37]/[0.06]" : ""}`}
-                    >
-                      <td className="py-2.5 px-2">
-                        <a
-                          href={`#${v.id}`}
-                          className="text-[#2a2522] font-medium hover:text-[#D4AF37] transition-colors"
-                        >
-                          {v.name}
-                        </a>
-                      </td>
-                      <td className="text-center py-2.5 px-2 text-[#6B7280]">
-                        {v.decks}
-                      </td>
-                      <td className="py-2.5 px-2">
-                        <div className="flex justify-center">
-                          <DifficultyDots level={v.difficulty} />
-                        </div>
-                      </td>
-                      <td className="text-center py-2.5 px-2 text-[#6B7280]">
-                        {v.luckFactor}
-                      </td>
-                      <td className="text-center py-2.5 px-2 text-[#6B7280] capitalize">
-                        {v.category}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                ))}
+              </tbody>
+            </table>
           </div>
-        </section>
+        </CardSection>
 
         {/* FAQ */}
-        <section id="faq" className="scroll-mt-6">
-          <div className={CARD} style={CARD_TOP}>
-            <SectionHeading
-              sub="Common Questions"
-              id="faq-heading"
-              icon={"\u2666"}
-            >
-              Solitaire Types FAQ
-            </SectionHeading>
+        <CardSection id="faq">
+          <SectionHeading
+            sub="Common Questions"
+            id="faq-heading"
+            icon={"\u2666"}
+          >
+            Solitaire Types FAQ
+          </SectionHeading>
 
-            <div className="px-6 sm:px-8 md:px-10 py-8 space-y-6">
-              {solitaireFaqs.map((faq, i) => (
-                <div key={i}>
-                  <h3 className="font-medium text-[#2a2522] text-lg mb-2">
-                    {faq.question}
-                  </h3>
-                  <p className="text-[#444444] leading-relaxed">{faq.answer}</p>
-                  {i < solitaireFaqs.length - 1 && (
-                    <div className="mt-6 border-b border-[#e5e0d8]" />
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+          <ContentBody className="space-y-6">
+            {solitaireFaqs.map((faq, i) => (
+              <div key={i}>
+                <h3 className="font-medium text-[#2a2522] text-lg mb-2">
+                  {faq.question}
+                </h3>
+                <p className="text-[#444444] leading-relaxed">{faq.answer}</p>
+                {i < solitaireFaqs.length - 1 && (
+                  <div className="mt-6 border-b border-[#e5e0d8]" />
+                )}
+              </div>
+            ))}
+          </ContentBody>
+        </CardSection>
 
         {/* CTA */}
-        <section>
-          <div
-            className={CARD}
-            style={{
-              ...CARD_TOP,
-              background:
-                "linear-gradient(135deg, rgba(10,74,42,0.6) 0%, rgba(6,37,22,0.8) 100%)",
-            }}
-          >
-            <div className="p-8 sm:p-10 text-center relative">
-              <div
-                className="absolute top-4 left-6 text-4xl text-white/[0.04] select-none"
-                aria-hidden="true"
-              >
-                {"\u2663"}
-              </div>
-              <div
-                className="absolute bottom-4 right-6 text-4xl text-white/[0.04] select-none"
-                aria-hidden="true"
-              >
-                {"\u2660"}
-              </div>
-
-              <h2
-                className="text-2xl sm:text-3xl font-semibold text-white mb-3"
-                style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
-              >
-                Ready to Play the Best Solitaire?
-              </h2>
-              <p className="text-[#6B7280] mb-6 max-w-md mx-auto">
-                FreeCell is the most skill-intensive solitaire game ever
-                made. No luck, no hidden cards — just your strategy against
-                the cards.
-              </p>
-
-              <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                <Link
-                  href="/"
-                  className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl text-lg font-semibold transition-all duration-200 hover:scale-[1.03] active:scale-[0.98]"
-                  style={{
-                    background:
-                      "linear-gradient(110deg, #B8860B, #D4AF37, #F3E5AB, #D4AF37, #B8860B)",
-                    backgroundSize: "200% 100%",
-                    color: "#1a1a0a",
-                  }}
-                >
-                  Play FreeCell Now
-                </Link>
-                <Link
-                  href="/how-to-play"
-                  className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl text-lg font-semibold border border-white/20 text-white/90 hover:bg-white/[0.08] transition-colors"
-                >
-                  Learn the Rules
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
+        <CtaSection
+          heading="Ready to Play the Best Solitaire?"
+          body={
+            <>
+              FreeCell is the most skill-intensive solitaire game ever
+              made. No luck, no hidden cards — just your strategy against
+              the cards.
+            </>
+          }
+          primaryLabel="Play FreeCell Now"
+          secondaryLabel="Learn the Rules"
+          secondaryHref="/how-to-play"
+        />
 
         <NetworkCrossLinks />
       </main>

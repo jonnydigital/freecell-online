@@ -109,7 +109,7 @@ export default function FreecellBelowFold() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
 
-      <div className="felt-bg relative z-10">
+      <div className="felt-bg relative z-10" data-scroll-role="freecell-below-fold">
         <div className="mx-auto max-w-4xl px-4 py-16 sm:px-6">
 
           {/* ── H1 Hero ── */}
@@ -145,35 +145,37 @@ export default function FreecellBelowFold() {
             >
               How to Play FreeCell
             </h2>
-            <div className="card-panel mt-6 p-6 sm:p-8">
-              <ul className="space-y-3 text-sm leading-7 text-neutral-700">
-                <li>
-                  <strong>Goal:</strong> Move all 52 cards to the four foundation piles, building
-                  each suit from Ace up to King.
-                </li>
-                <li>
-                  <strong>Cascades:</strong> Eight columns of face-up cards form the tableau.
-                  Build columns downward in alternating colors (e.g., black 6 on red 7).
-                </li>
-                <li>
-                  <strong>Free Cells:</strong> Four temporary storage slots in the top-left. Each
-                  holds one card at a time — keep them open as long as possible.
-                </li>
-                <li>
-                  <strong>Moving Groups:</strong> You can move a sequence of cards if enough empty
-                  free cells and empty columns are available to support the move.
-                </li>
-                <li>
-                  <strong>Winning Tip:</strong> Empty columns are extremely valuable. Prioritize
-                  uncovering Aces and low cards early, and plan several moves ahead.
-                </li>
-              </ul>
-              <p className="mt-5 text-sm text-neutral-500">
-                Want the full walkthrough?{' '}
-                <Link href="/how-to-play" className="font-semibold text-[#8B6914] hover:text-[#D4AF37]">
-                  Read the complete FreeCell guide &rarr;
-                </Link>
-              </p>
+            <div className="card-panel mt-6">
+              <div className="relative z-[11] px-8 sm:px-10 md:px-12 py-8">
+                <ul className="space-y-3 text-sm leading-7 text-neutral-700">
+                  <li>
+                    <strong>Goal:</strong> Move all 52 cards to the four foundation piles, building
+                    each suit from Ace up to King.
+                  </li>
+                  <li>
+                    <strong>Cascades:</strong> Eight columns of face-up cards form the tableau.
+                    Build columns downward in alternating colors (e.g., black 6 on red 7).
+                  </li>
+                  <li>
+                    <strong>Free Cells:</strong> Four temporary storage slots in the top-left. Each
+                    holds one card at a time — keep them open as long as possible.
+                  </li>
+                  <li>
+                    <strong>Moving Groups:</strong> You can move a sequence of cards if enough empty
+                    free cells and empty columns are available to support the move.
+                  </li>
+                  <li>
+                    <strong>Winning Tip:</strong> Empty columns are extremely valuable. Prioritize
+                    uncovering Aces and low cards early, and plan several moves ahead.
+                  </li>
+                </ul>
+                <p className="mt-5 text-sm text-neutral-500">
+                  Want the full walkthrough?{' '}
+                  <Link href="/how-to-play" className="font-semibold text-[#8B6914] hover:text-[#D4AF37]">
+                    Read the complete FreeCell guide &rarr;
+                  </Link>
+                </p>
+              </div>
             </div>
           </section>
 

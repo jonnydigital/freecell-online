@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import ContentLayout from "@/components/ContentLayout";
+import { ContentHero, JsonLd, CtaSection, ContentLinkCard } from "@/components/content";
 import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
@@ -148,53 +149,17 @@ export default function KlondikeFaqPage() {
 
   return (
     <ContentLayout variant="dark">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      <JsonLd data={faqJsonLd} />
+      <JsonLd data={breadcrumbJsonLd} />
+
+      <ContentHero
+        title="Klondike Solitaire FAQ"
+        subtitle="Answers to the most common questions about Klondike Solitaire — rules, strategy, scoring, and more."
       />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
-      />
-
-      {/* Hero */}
-      <header className="relative pt-6 pb-12 sm:pt-8 sm:pb-16 px-6 text-center overflow-hidden">
-        <div
-          className="absolute top-10 left-[10%] text-6xl sm:text-8xl text-white/[0.03] select-none pointer-events-none"
-          aria-hidden="true"
-        >
-          {"\u2665"}
-        </div>
-        <div
-          className="absolute top-16 right-[8%] text-5xl sm:text-7xl text-red-500/[0.04] select-none pointer-events-none"
-          aria-hidden="true"
-        >
-          {"\u2663"}
-        </div>
-
-        <h1
-          className="text-4xl sm:text-5xl lg:text-6xl font-semibold text-[#D4AF37] mb-4 max-w-3xl mx-auto leading-tight"
-          style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
-        >
-          Klondike Solitaire FAQ
-        </h1>
-        <p className="text-white/50 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
-          Answers to the most common questions about Klondike Solitaire — rules,
-          strategy, scoring, and more.
-        </p>
-
-        <div className="mt-8 flex items-center justify-center gap-3">
-          <div className="h-px w-12 bg-gradient-to-r from-transparent to-[#D4AF37]/50" />
-          <span className="text-[#D4AF37] text-sm">
-            {"\u2660"} {"\u2665"} {"\u2666"} {"\u2663"}
-          </span>
-          <div className="h-px w-12 bg-gradient-to-l from-transparent to-[#D4AF37]/50" />
-        </div>
-      </header>
 
       {/* Main Content */}
-      <main className="max-w-4xl mx-auto px-6 sm:px-10 lg:px-12 pb-20 flex flex-col gap-8">
-        <article className="space-y-10">
+      <main className="max-w-4xl mx-auto px-6 sm:px-10 lg:px-12 pb-20 flex flex-col gap-6">
+        <article className="space-y-6">
           {/* FAQ Items */}
           {faqs.map((faq, i) => (
             <section key={i}>
@@ -215,79 +180,27 @@ export default function KlondikeFaqPage() {
             </section>
           ))}
 
-          <AdUnit format="horizontal" className="my-4" />
+          <AdUnit format="horizontal" className="-my-1" />
 
-          {/* CTA */}
-          <section className="text-center py-8">
-            <h2
-              className="text-2xl sm:text-3xl font-bold text-white/90 mb-4"
-              style={{ fontFamily: "var(--font-playfair)" }}
-            >
-              Ready to Play?
-            </h2>
-            <p className="text-white/50 mb-6 max-w-xl mx-auto">
-              Try Klondike Solitaire online for free with Draw 1 and Draw 3 modes,
-              unlimited undo, and instant new deals. No download required.
-            </p>
-            <Link
-              href="/klondike"
-              className="inline-block bg-[#D4AF37] text-[#072907] font-bold px-8 py-3 rounded-lg hover:bg-[#e8c54a] transition-colors text-lg"
-            >
-              Play Klondike Solitaire
-            </Link>
-          </section>
+          <CtaSection
+            heading="Ready to Play?"
+            body="Try Klondike Solitaire online for free with Draw 1 and Draw 3 modes, unlimited undo, and instant new deals. No download required."
+            primaryLabel="Play Klondike Solitaire"
+            primaryHref="/klondike"
+          />
 
           {/* Cross-links */}
           <section className="bg-white/[0.03] border border-white/10 rounded-xl p-6 sm:p-8">
-            <h2
-              className="text-xl font-bold text-white/90 mb-4"
-              style={{ fontFamily: "var(--font-playfair)" }}
-            >
+            <h2 className="text-xl font-bold text-white/90 mb-4" style={{ fontFamily: "var(--font-playfair)" }}>
               Related Pages
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <Link
-                href="/klondike"
-                className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] hover:border-[#D4AF37]/30 transition-all"
-              >
-                <span className="text-[#D4AF37] font-semibold">Play Klondike Solitaire</span>
-                <p className="text-sm text-white/40 mt-1">Play online for free, no download</p>
-              </Link>
-              <Link
-                href="/klondike/how-to-play"
-                className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] hover:border-[#D4AF37]/30 transition-all"
-              >
-                <span className="text-[#D4AF37] font-semibold">How to Play Klondike</span>
-                <p className="text-sm text-white/40 mt-1">Complete rules and setup guide</p>
-              </Link>
-              <Link
-                href="/klondike/strategy"
-                className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] hover:border-[#D4AF37]/30 transition-all"
-              >
-                <span className="text-[#D4AF37] font-semibold">Klondike Strategy</span>
-                <p className="text-sm text-white/40 mt-1">Tips and techniques to win more</p>
-              </Link>
-              <Link
-                href="/freecell-vs-klondike"
-                className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] hover:border-[#D4AF37]/30 transition-all"
-              >
-                <span className="text-[#D4AF37] font-semibold">FreeCell vs Klondike</span>
-                <p className="text-sm text-white/40 mt-1">Head-to-head comparison</p>
-              </Link>
-              <Link
-                href="/solitaire-types"
-                className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] hover:border-[#D4AF37]/30 transition-all"
-              >
-                <span className="text-[#D4AF37] font-semibold">Types of Solitaire</span>
-                <p className="text-sm text-white/40 mt-1">20 solitaire variants compared</p>
-              </Link>
-              <Link
-                href="/"
-                className="bg-white/[0.03] border border-white/10 rounded-lg p-4 hover:bg-white/[0.06] hover:border-[#D4AF37]/30 transition-all"
-              >
-                <span className="text-[#D4AF37] font-semibold">Play FreeCell</span>
-                <p className="text-sm text-white/40 mt-1">The classic strategic solitaire</p>
-              </Link>
+              <ContentLinkCard href="/klondike" title="Play Klondike Solitaire" description="Play online for free, no download" />
+              <ContentLinkCard href="/klondike/how-to-play" title="How to Play Klondike" description="Complete rules and setup guide" />
+              <ContentLinkCard href="/klondike/strategy" title="Klondike Strategy" description="Tips and techniques to win more" />
+              <ContentLinkCard href="/freecell-vs-klondike" title="FreeCell vs Klondike" description="Head-to-head comparison" />
+              <ContentLinkCard href="/solitaire-types" title="Types of Solitaire" description="20 solitaire variants compared" />
+              <ContentLinkCard href="/" title="Play FreeCell" description="The classic strategic solitaire" />
             </div>
           </section>
         </article>

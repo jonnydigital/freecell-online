@@ -59,6 +59,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/klondike/tips', changeFrequency: 'monthly' as const, priority: 0.7 },
     { path: '/klondike/winning-strategies', changeFrequency: 'monthly' as const, priority: 0.7 },
     { path: '/klondike/draw-1-vs-draw-3', changeFrequency: 'monthly' as const, priority: 0.7 },
+    { path: '/pyramid/how-to-play', changeFrequency: 'monthly' as const, priority: 0.8 },
+    { path: '/pyramid/strategy', changeFrequency: 'monthly' as const, priority: 0.7 },
     { path: '/freecell-rules', changeFrequency: 'monthly' as const, priority: 0.7 },
     { path: '/freecell-for-seniors', changeFrequency: 'monthly' as const, priority: 0.7 },
     { path: '/large-cards', changeFrequency: 'monthly' as const, priority: 0.7 },

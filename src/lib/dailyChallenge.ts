@@ -162,7 +162,7 @@ function getStarEmoji(moves: number): string {
   return '⭐';
 }
 
-/** Generate share text for a daily challenge completion */
+/** Generate Wordle-style share text for a daily challenge completion */
 export function getShareText(
   dateStr: string,
   moves: number,
@@ -174,16 +174,23 @@ export function getShareText(
   const stars = getStarEmoji(moves);
   const grid = getEmojiGrid(moves, time, hintsUsed ?? 0);
   const lines = [
-    `FreeCell Daily #${seed}`,
-    `${stars} | ${grid}`,
-    `${moves} moves · ${formatTime(time)}`,
+    `\u{1F0CF} FreeCell Daily #${seed} \u2705`,
+    `\u23F1\uFE0F ${formatTime(time)} | \u{1F504} ${moves} moves | ${stars}`,
+    `${grid} ${getSuitBlocks(moves)}`,
   ];
   if (streak && streak >= 2) {
-    lines.push(`🔥 ${streak}-day streak`);
+    lines.push(`\u{1F525} ${streak}-day streak`);
   }
   lines.push('');
-  lines.push('playfreecellonline.com/daily-freecell');
+  lines.push('Play at playfreecellonline.com/daily-freecell');
   return lines.join('\n');
+}
+
+/** Build suit completion blocks - always 4/4 on a win */
+function getSuitBlocks(moves: number): string {
+  // All 4 suits completed (you can't win without all 4)
+  const block = moves <= 90 ? '\u{1F7E9}' : '\u{1F7E8}';
+  return `${block}${block}${block}${block} (4/4 suits)`;
 }
 
 /** Get all days in a month as date strings */

@@ -34,6 +34,8 @@ export default function SiteFooter() {
           { href: '/spider/how-to-play', label: 'Spider Rules' },
           { href: '/spider/strategy', label: 'Spider Strategy' },
           { href: '/spider/tips', label: 'Spider Tips' },
+          { href: '/pyramid/how-to-play', label: 'Pyramid Rules' },
+          { href: '/pyramid/strategy', label: 'Pyramid Strategy' },
           { href: '/freecell-vs-klondike', label: 'FreeCell vs Klondike' },
           { href: '/solitaire-types', label: 'Solitaire Types' },
           { href: '/faq', label: 'FAQ' },
@@ -58,6 +60,8 @@ export default function SiteFooter() {
           { href: '/klondike/tips', label: 'Klondike Tips' },
           { href: '/klondike/winning-strategies', label: 'Klondike Winning Strategies' },
           { href: '/klondike/draw-1-vs-draw-3', label: 'Draw 1 vs Draw 3' },
+          { href: '/pyramid/how-to-play', label: 'Pyramid Rules' },
+          { href: '/pyramid/strategy', label: 'Pyramid Strategy' },
         ];
 
   const exploreLinks =

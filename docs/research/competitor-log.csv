@@ -29,3 +29,9 @@ date,site,spark_found,description,priority,implemented
 2026-03-12,google.com/search,yes,New related search: Original FreeCell game Free download no ads — keyword opportunity,medium,no
 2026-03-12,reddit/r/cardgames,yes,Freecellular Diffusion variant — creative FreeCell+Osmosis hybrid shows community appetite for novelty,low,no
 2026-03-12,google.com/search,no,SERP volatility positions 2-6 — window for new domain entry,info,no
+2026-03-15,playfreecellonline.com,yes,FIRST INDEXING — 3 pages indexed by Google 48 hours after domain launch,critical,n/a
+2026-03-15,playfreecellonline.com,yes,www/non-www both indexed separately — canonical redirect needed to prevent authority dilution,high,no
+2026-03-15,worldofsolitaire.com,yes,7+ day outage continues — unprecedented competitor failure creating user displacement,high,no
+2026-03-15,reddit/r/DailySolitaire,yes,Daily challenge result sharing community — Wordle-style share feature opportunity,medium,no
+2026-03-15,google.com/analytics,yes,GA4 recommending GSC link for playfreecellonline.com — first time this appeared,medium,no
+2026-03-15,google.com/search,no,SERP top 6 stable — positions 7-10 still churning. playfreecellonline.com not yet in top 100,info,no

@@ -67,6 +67,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/freecell-cheat-sheet', changeFrequency: 'monthly' as const, priority: 0.7 },
     { path: '/freecell-probability', changeFrequency: 'monthly' as const, priority: 0.7 },
     { path: '/freecell-variants', changeFrequency: 'monthly' as const, priority: 0.8 },
+    { path: '/microsoft-freecell', changeFrequency: 'monthly' as const, priority: 0.8 },
     { path: '/bakers-game/strategy', changeFrequency: 'monthly' as const, priority: 0.7 },
     { path: '/eight-off/strategy', changeFrequency: 'monthly' as const, priority: 0.7 },
     { path: '/freecell/1-cell', changeFrequency: 'monthly' as const, priority: 0.8 },

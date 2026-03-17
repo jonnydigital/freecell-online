@@ -9,6 +9,7 @@ import { getShareText as getDailyShareText } from '@/lib/dailyChallenge';
 import { getTodayStr } from '@/lib/dailyChallenge';
 import { CompactLeaderboard } from './Leaderboard';
 import { LeaderboardEntry } from '@/lib/leaderboardClient';
+import ShareResultCard from './ShareResultCard';
 
 const VARIANT_META: Record<string, { path: string; name: string }> = {
   'freecell-1cell': { path: '/freecell/1-cell', name: '1-Cell FreeCell' },
@@ -155,6 +156,22 @@ export default function WinScreen({
           </motion.div>
         )}
         {!isNewBest && <div className="mb-5" />}
+
+        {/* Daily Challenge Share Card */}
+        {isDailyGame && (
+          <div className="mb-5">
+            <ShareResultCard
+              dateStr={getTodayStr()}
+              moves={moves}
+              time={time}
+              hintsUsed={hintsUsed}
+              streak={streak}
+            />
+            <p className="text-white/30 text-[10px] mt-2 text-center">
+              Screenshot this card to share!
+            </p>
+          </div>
+        )}
 
         <div className="grid grid-cols-3 gap-6 mb-5">
           <div>

@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import ContentLayout from "@/components/ContentLayout";
-import { ContentHero, CardSection, ContentBody, CtaSection, JsonLd } from "@/components/content";
+import { ContentHero, CardSection, ContentBody, CtaSection, JsonLd, ContentLinkCard, SectionHeading } from "@/components/content";
 
 export const metadata: Metadata = {
   title: "FreeCell Glossary | Card Game Terms & Definitions",
@@ -391,6 +391,21 @@ export default function GlossaryPage() {
             </div>
           </CardSection>
         ))}
+
+        {/* Related Content */}
+        <CardSection>
+          <SectionHeading sub="Read Next" id="related" icon="♣">
+            Related Guides
+          </SectionHeading>
+          <ContentBody className="grid gap-4 md:grid-cols-3">
+            <ContentLinkCard variant="felt" href="/how-to-play" title="How to Play FreeCell" description="Put these terms into practice with our complete rules tutorial." />
+            <ContentLinkCard variant="felt" href="/freecell-rules" title="FreeCell Rules" description="Quick-reference rule card for the essential mechanics." />
+            <ContentLinkCard variant="felt" href="/freecell-cheat-sheet" title="Cheat Sheet" description="Move priorities and keyboard shortcuts at a glance." />
+            <ContentLinkCard variant="felt" href="/strategy" title="Strategy Guide" description="From beginner fundamentals to advanced endgame techniques." />
+            <ContentLinkCard variant="felt" href="/freecell-for-beginners" title="Beginner Guide" description="Step-by-step introduction for new FreeCell players." />
+            <ContentLinkCard variant="felt" href="/faq" title="FAQ" description="Quick answers to the most common FreeCell questions." />
+          </ContentBody>
+        </CardSection>
 
         {/* ── CTA ── */}
         <CtaSection

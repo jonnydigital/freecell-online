@@ -117,6 +117,17 @@ export default function FreecellGame11982Page() {
       <JsonLd data={jsonLd} />
 
       <main className="max-w-5xl mx-auto px-4 sm:px-6 pt-6 pb-20 space-y-6">
+        {/* Breadcrumb */}
+        <nav aria-label="Breadcrumb" className="text-sm text-[#6B7280] px-2">
+          <ol className="flex items-center gap-1.5 flex-wrap">
+            <li className="flex items-center gap-1.5">
+              <Link href="/" className="text-[#D4AF37]/70 hover:text-[#D4AF37] hover:underline transition-colors">Home</Link>
+              <span className="text-[#6B7280]/40" aria-hidden="true">/</span>
+            </li>
+            <li className="text-[#6B7280]/70">FreeCell Game #11982</li>
+          </ol>
+        </nav>
+
         {/* Hero */}
         <CardSection variant="dark">
             <div className="px-8 sm:px-10 md:px-12 pt-6 sm:pt-8 pb-6">

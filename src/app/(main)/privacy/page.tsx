@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import ContentLayout from "@/components/ContentLayout";
-import { ContentHero, SectionHeading, CardSection, ContentBody, CtaSection, JsonLd } from "@/components/content";
+import { ContentHero, SectionHeading, CardSection, ContentBody, CtaSection, JsonLd, ContentLinkCard } from "@/components/content";
 
 export const metadata: Metadata = {
   title: "Privacy Policy | PlayFreeCellOnline.com",
@@ -158,6 +158,18 @@ export default function PrivacyPage() {
                 Questions? Reach out at {siteConfig.privacyEmail}.
               </p>
             </div>
+          </ContentBody>
+        </CardSection>
+
+        {/* Related Content */}
+        <CardSection>
+          <SectionHeading sub="Explore" id="related" icon="♠">
+            More from {siteConfig.siteName}
+          </SectionHeading>
+          <ContentBody className="grid gap-4 md:grid-cols-3">
+            <ContentLinkCard variant="felt" href="/about" title="About Us" description="The story behind PlayFreeCellOnline.com and our mission." />
+            <ContentLinkCard variant="felt" href="/terms" title="Terms of Service" description="The formal agreement governing your use of our platform." />
+            <ContentLinkCard variant="felt" href="/how-to-play" title="How to Play" description="Learn FreeCell rules and start playing right away." />
           </ContentBody>
         </CardSection>
 

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { absoluteUrl } from "@/lib/siteConfig";
 import ContentLayout from "@/components/ContentLayout";
-import { ContentHero, SectionHeading, CardSection, ContentBody, CtaSection, JsonLd } from "@/components/content";
+import { ContentHero, SectionHeading, CardSection, ContentBody, CtaSection, JsonLd, ContentLinkCard } from "@/components/content";
 
 export const metadata: Metadata = {
   title: "Terms of Service | PlayFreeCellOnline.com",
@@ -140,6 +140,18 @@ export default function TermsPage() {
                 liable for any lost game data or interruptions.
               </p>
             </div>
+          </ContentBody>
+        </CardSection>
+
+        {/* Related Content */}
+        <CardSection>
+          <SectionHeading sub="Explore" id="related" icon="♠">
+            More from PlayFreeCellOnline.com
+          </SectionHeading>
+          <ContentBody className="grid gap-4 md:grid-cols-3">
+            <ContentLinkCard variant="felt" href="/about" title="About Us" description="The story behind PlayFreeCellOnline.com and our mission." />
+            <ContentLinkCard variant="felt" href="/privacy" title="Privacy Policy" description="How we handle data and protect your privacy." />
+            <ContentLinkCard variant="felt" href="/how-to-play" title="How to Play" description="Learn FreeCell rules and start playing right away." />
           </ContentBody>
         </CardSection>
 

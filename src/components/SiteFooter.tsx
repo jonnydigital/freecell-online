@@ -62,6 +62,11 @@ export default function SiteFooter() {
           { href: '/klondike/draw-1-vs-draw-3', label: 'Draw 1 vs Draw 3' },
           { href: '/pyramid/how-to-play', label: 'Pyramid Rules' },
           { href: '/pyramid/strategy', label: 'Pyramid Strategy' },
+          { href: '/spider/how-to-play', label: 'Spider Rules' },
+          { href: '/spider/strategy', label: 'Spider Strategy' },
+          { href: '/spider/tips', label: 'Spider Tips' },
+          { href: '/bakers-game/strategy', label: "Baker's Game Strategy" },
+          { href: '/eight-off/strategy', label: 'Eight Off Strategy' },
         ];
 
   const exploreLinks =
@@ -84,6 +89,8 @@ export default function SiteFooter() {
           { href: '/easy-freecell-games', label: 'Easy FreeCell Games' },
           { href: '/famous-freecell-deals', label: 'Famous Deals' },
           { href: '/freecell-world-records', label: 'World Records' },
+          { href: '/freecell-game-11982', label: 'Deal #11982' },
+          { href: '/freecell-probability', label: 'Probability & Math' },
           { href: '/is-every-freecell-game-winnable', label: 'Is Every Game Winnable?' },
           { href: '/spider/is-spider-solitaire-winnable', label: 'Spider Winnability' },
           { href: '/leaderboard', label: 'Leaderboard' },
@@ -157,6 +164,11 @@ export default function SiteFooter() {
                 </Link>
               </li>
               <li>
+                <Link href="/about" className="text-sm text-white/60 hover:text-white transition-colors">
+                  About
+                </Link>
+              </li>
+              <li>
                 <Link href="/privacy" className="text-sm text-white/60 hover:text-white transition-colors">
                   Privacy Policy
                 </Link>
@@ -164,6 +176,11 @@ export default function SiteFooter() {
               <li>
                 <Link href="/terms" className="text-sm text-white/60 hover:text-white transition-colors">
                   Terms of Use
+                </Link>
+              </li>
+              <li>
+                <Link href="/sitemap-page" className="text-sm text-white/60 hover:text-white transition-colors">
+                  Sitemap
                 </Link>
               </li>
             </ul>

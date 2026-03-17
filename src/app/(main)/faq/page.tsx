@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { absoluteUrl } from "@/lib/siteConfig";
 import AdUnit from "@/components/AdUnit";
 import ContentLayout from "@/components/ContentLayout";
-import { ContentHero, SectionHeading, CardSection, ContentBody, TocPills, CtaSection, JsonLd } from "@/components/content";
+import { ContentHero, SectionHeading, CardSection, ContentBody, TocPills, CtaSection, JsonLd, ContentLinkCard } from "@/components/content";
 
 export const metadata: Metadata = {
   title: "FreeCell FAQ | Answers to Every Question About FreeCell Solitaire",
@@ -304,6 +304,21 @@ export default function FAQPage() {
             {catIndex === 1 && <AdUnit className="mt-8" />}
           </section>
         ))}
+
+        {/* Related Content */}
+        <CardSection>
+          <SectionHeading sub="Read Next" id="related" icon="♦">
+            Related Guides
+          </SectionHeading>
+          <ContentBody className="grid gap-4 md:grid-cols-3">
+            <ContentLinkCard variant="felt" href="/how-to-play" title="How to Play" description="Complete rules tutorial for FreeCell solitaire." />
+            <ContentLinkCard variant="felt" href="/strategy" title="Strategy Guide" description="Beginner to expert strategy for winning more games." />
+            <ContentLinkCard variant="felt" href="/tips" title="Tips & Tricks" description="25 actionable tips you can use during live play." />
+            <ContentLinkCard variant="felt" href="/glossary" title="Glossary" description="Every card game term you need to know." />
+            <ContentLinkCard variant="felt" href="/freecell-mistakes-to-avoid" title="Common Mistakes" description="The errors that cost beginners the most games." />
+            <ContentLinkCard variant="felt" href="/is-every-freecell-game-winnable" title="Is Every Game Winnable?" description="The answer to FreeCell's most common question." />
+          </ContentBody>
+        </CardSection>
 
         {/* ── CTA ── */}
         <CtaSection

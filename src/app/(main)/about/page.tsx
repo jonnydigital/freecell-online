@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import AdUnit from "@/components/AdUnit";
 import ContentLayout from "@/components/ContentLayout";
-import { ContentHero, SectionHeading, CardSection, ContentBody, CtaSection, JsonLd } from "@/components/content";
+import { ContentHero, SectionHeading, CardSection, ContentBody, CtaSection, JsonLd, ContentLinkCard } from "@/components/content";
 
 export const metadata: Metadata = {
   title: "About PlayFreeCellOnline.com | Free Online Card Games",
@@ -496,6 +496,21 @@ export default function AboutPage() {
               note saying you enjoy the site &mdash; it all helps us make the
               experience better for everyone.
             </p>
+          </ContentBody>
+        </CardSection>
+
+        {/* Related Content */}
+        <CardSection>
+          <SectionHeading sub="Read Next" id="related" icon="♦">
+            Related Guides
+          </SectionHeading>
+          <ContentBody className="grid gap-4 md:grid-cols-3">
+            <ContentLinkCard variant="felt" href="/how-to-play" title="How to Play FreeCell" description="Learn the rules from scratch with our complete beginner-friendly tutorial." />
+            <ContentLinkCard variant="felt" href="/history" title="FreeCell History" description="From a 1978 university mainframe to every Windows PC — the full story." />
+            <ContentLinkCard variant="felt" href="/solitaire-types" title="Solitaire Types" description="Explore 20+ solitaire variants and find your next favorite card game." />
+            <ContentLinkCard variant="felt" href="/freecell-variants" title="FreeCell Variants" description="Baker's Game, Eight Off, and other ways to play FreeCell." />
+            <ContentLinkCard variant="felt" href="/microsoft-freecell" title="Microsoft FreeCell" description="The iconic Windows game that introduced millions to FreeCell." />
+            <ContentLinkCard variant="felt" href="/faq" title="FAQ" description="Quick answers to the most common FreeCell questions." />
           </ContentBody>
         </CardSection>
 

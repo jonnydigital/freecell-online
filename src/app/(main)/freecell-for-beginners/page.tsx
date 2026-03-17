@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import AdUnit from "@/components/AdUnit";
 import ContentLayout from "@/components/ContentLayout";
-import { ContentHero, SectionHeading, CardSection, ContentBody, TocPills, CtaSection, JsonLd } from "@/components/content";
+import { ContentHero, SectionHeading, CardSection, ContentBody, TocPills, CtaSection, JsonLd, ContentLinkCard } from "@/components/content";
 
 export const metadata: Metadata = {
   title: "FreeCell for Beginners | Easy Step-by-Step Guide to Your First Game",
@@ -676,6 +676,21 @@ export default function FreecellForBeginnersPage() {
                 our glossary defines every card game term you might need.
               </p>
             </div>
+          </ContentBody>
+        </CardSection>
+
+        {/* Related Content */}
+        <CardSection>
+          <SectionHeading sub="Read Next" id="related" icon="♣">
+            Keep Learning
+          </SectionHeading>
+          <ContentBody className="grid gap-4 md:grid-cols-3">
+            <ContentLinkCard variant="felt" href="/strategy" title="Strategy Guide" description="Level up from beginner to expert with advanced tactics." />
+            <ContentLinkCard variant="felt" href="/freecell-cheat-sheet" title="Cheat Sheet" description="Move priorities and keyboard shortcuts at a glance." />
+            <ContentLinkCard variant="felt" href="/easy-freecell-games" title="Easy Games" description="Curated deals that are perfect for building confidence." />
+            <ContentLinkCard variant="felt" href="/freecell-mistakes-to-avoid" title="Common Mistakes" description="Avoid the errors that trip up most new players." />
+            <ContentLinkCard variant="felt" href="/freecell-hints-explained" title="Hints Explained" description="Learn how to use the hint system to improve faster." />
+            <ContentLinkCard variant="felt" href="/glossary" title="Glossary" description="Every card game term defined clearly." />
           </ContentBody>
         </CardSection>
 

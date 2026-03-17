@@ -1,16 +1,51 @@
+import Link from "next/link";
+
+interface BreadcrumbItem {
+  label: string;
+  href: string;
+}
+
 interface ContentHeroProps {
   title: string;
   subtitle: React.ReactNode;
   kicker?: React.ReactNode;
+  breadcrumbs?: BreadcrumbItem[];
+  hideBreadcrumbs?: boolean;
 }
 
 export default function ContentHero({
   title,
   subtitle,
   kicker,
+  breadcrumbs,
+  hideBreadcrumbs,
 }: ContentHeroProps) {
+  const crumbs = breadcrumbs ?? [{ label: "Home", href: "/" }];
+
   return (
     <header className="relative pt-6 pb-12 sm:pt-8 sm:pb-16 px-6 text-center overflow-hidden">
+      {/* Visual breadcrumb */}
+      {!hideBreadcrumbs && (
+        <nav
+          aria-label="Breadcrumb"
+          className="max-w-3xl mx-auto mb-4 text-sm text-[#6B7280]"
+        >
+          <ol className="flex items-center justify-center gap-1.5 flex-wrap">
+            {crumbs.map((crumb, i) => (
+              <li key={crumb.href} className="flex items-center gap-1.5">
+                <Link
+                  href={crumb.href}
+                  className="text-[#D4AF37]/70 hover:text-[#D4AF37] hover:underline transition-colors"
+                >
+                  {crumb.label}
+                </Link>
+                <span className="text-[#6B7280]/40" aria-hidden="true">/</span>
+              </li>
+            ))}
+            <li className="text-[#6B7280]/70 truncate max-w-[200px] sm:max-w-none">{title}</li>
+          </ol>
+        </nav>
+      )}
       {/* Decorative suit symbols */}
       <div
         className="absolute top-10 left-[10%] text-6xl sm:text-8xl text-white/[0.03] select-none pointer-events-none"

@@ -388,7 +388,19 @@ export default function FreecellForSeniorsPage() {
                 <ContentLinkCard href="/daily-freecell" title="Daily Challenge" description="A new puzzle every day &mdash; the same deal for everyone worldwide." />
               </div>
             </ContentBody>
-        </CardSection>        <CtaSection
+        </CardSection>
+
+        {/* ── Related Guides ── */}
+        <CardSection variant="dark">
+          <SectionHeading variant="dark" sub="Continue Learning">Related Guides</SectionHeading>
+          <ContentBody variant="dark" className="grid gap-4 md:grid-cols-3">
+            <ContentLinkCard href="/how-to-play" title="How to Play FreeCell" description="A complete tutorial with diagrams, rules, and a step-by-step walkthrough." />
+            <ContentLinkCard href="/freecell-for-beginners" title="FreeCell for Beginners" description="A gentler introduction for first-time players covering the basics." />
+            <ContentLinkCard href="/large-cards" title="Large Cards Mode" description="Make the cards 30% bigger for a more comfortable playing experience." />
+          </ContentBody>
+        </CardSection>
+
+        <CtaSection
           heading="Start Your First Game"
           body="No download, no account, no time limit. Just open it and play at your own pace."
           secondaryLabel="Learn the Rules First"

@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import AdUnit from "@/components/AdUnit";
 import ContentLayout from "@/components/ContentLayout";
-import { ContentHero, SectionHeading, CardSection, ContentBody, TocPills, CtaSection, JsonLd } from "@/components/content";
+import { ContentHero, SectionHeading, CardSection, ContentBody, TocPills, CtaSection, ContentLinkCard, JsonLd } from "@/components/content";
 
 export const metadata: Metadata = {
   title: "FreeCell Statistics & Win Rates | Solvability, Difficulty & Math",
@@ -823,6 +823,16 @@ export default function StatisticsPage() {
                 )}
               </div>
             ))}
+          </ContentBody>
+        </CardSection>
+
+        {/* ── Related Guides ── */}
+        <CardSection variant="dark">
+          <SectionHeading variant="dark" sub="Continue Learning">Related Guides</SectionHeading>
+          <ContentBody variant="dark" className="grid gap-4 md:grid-cols-3">
+            <ContentLinkCard href="/strategy" title="Strategy Guide" description="Advanced techniques to push your win rate higher." />
+            <ContentLinkCard href="/freecell-probability" title="FreeCell Probability" description="The math behind solvability, deal distribution, and odds of winning." />
+            <ContentLinkCard href="/leaderboard" title="Leaderboard" description="See how your stats compare against top players worldwide." />
           </ContentBody>
         </CardSection>
 

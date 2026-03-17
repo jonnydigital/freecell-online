@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import ContentLayout from "@/components/ContentLayout";
-import { ContentHero, SectionHeading, CardSection, ContentBody, TocPills, CtaSection, JsonLd } from "@/components/content";
+import { ContentHero, SectionHeading, CardSection, ContentBody, TocPills, CtaSection, ContentLinkCard, JsonLd } from "@/components/content";
 
 export const metadata: Metadata = {
   title:
@@ -449,6 +449,16 @@ export default function WinningDealsPage() {
                 )}
               </div>
             ))}
+          </ContentBody>
+        </CardSection>
+
+        {/* ── Related Guides ── */}
+        <CardSection variant="dark">
+          <SectionHeading variant="dark" sub="Continue Learning">Related Guides</SectionHeading>
+          <ContentBody variant="dark" className="grid gap-4 md:grid-cols-3">
+            <ContentLinkCard href="/easy-freecell-games" title="Easy FreeCell Games" description="Curated list of beginner-friendly deals to build confidence." />
+            <ContentLinkCard href="/hard-freecell-games" title="Hard FreeCell Games" description="The toughest solvable deals for experienced players." />
+            <ContentLinkCard href="/deals" title="Deal Explorer" description="Browse, search, and play any of the 32,000 classic deals." />
           </ContentBody>
         </CardSection>
 

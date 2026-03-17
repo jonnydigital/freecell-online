@@ -378,7 +378,19 @@ export default function FreecellWorldRecordsPage() {
                 </div>
               ))}
             </ContentBody>
-        </CardSection>        <CtaSection
+        </CardSection>
+
+        {/* ── Related Guides ── */}
+        <CardSection variant="dark">
+          <SectionHeading variant="dark" sub="Continue Learning">Related Guides</SectionHeading>
+          <ContentBody variant="dark" className="grid gap-4 md:grid-cols-3">
+            <ContentLinkCard href="/famous-freecell-deals" title="Famous FreeCell Deals" description="Explore the most iconic games in FreeCell history." />
+            <ContentLinkCard href="/hard-freecell-games" title="Hard FreeCell Games" description="See the board patterns that make deals difficult and demand cleaner play." />
+            <ContentLinkCard href="/freecell-game-11982" title="Deal #11982" description="The full story of the only proven unsolvable FreeCell deal." />
+          </ContentBody>
+        </CardSection>
+
+        <CtaSection
           heading="Start Building Your Own Record"
           body="Every record starts with a single game. Play a deal, beat your best time, extend your streak, and track your progress."
           primaryLabel="Play Streak Mode"

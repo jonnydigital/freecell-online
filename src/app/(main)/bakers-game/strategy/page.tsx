@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import ContentLayout from "@/components/ContentLayout";
-import { ContentHero, JsonLd, CtaSection, ContentLinkCard } from "@/components/content";
+import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionHeading, ContentBody } from "@/components/content";
 import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
@@ -119,6 +119,7 @@ export default function BakersGameStrategyPage() {
       <ContentHero
         title="Baker&apos;s Game Strategy Guide"
         subtitle="Master same-suit building, free cell management, and the strategic mindset that separates Baker&apos;s Game from FreeCell."
+        breadcrumbs={[{ label: "Home", href: "/" }, { label: "Baker's Game", href: "/bakers-game" }]}
       />
 
       {/* Main Content */}
@@ -473,6 +474,16 @@ export default function BakersGameStrategyPage() {
           </section>
 
           <AdUnit format="horizontal" className="-my-1" />
+
+          {/* ── Related Guides ── */}
+          <CardSection variant="dark">
+            <SectionHeading variant="dark" sub="Continue Learning">Related Guides</SectionHeading>
+            <ContentBody variant="dark" className="grid gap-4 md:grid-cols-3">
+              <ContentLinkCard href="/bakers-game" title="Play Baker's Game" description="Play online for free, no download required." />
+              <ContentLinkCard href="/eight-off/strategy" title="Eight Off Strategy" description="Strategy for the 8-cell same-suit variant." />
+              <ContentLinkCard href="/strategy" title="FreeCell Strategy" description="Compare with alternating-color FreeCell tactics." />
+            </ContentBody>
+          </CardSection>
 
           <CtaSection
             heading="Ready to Play?"

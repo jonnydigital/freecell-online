@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import ContentLayout from "@/components/ContentLayout";
-import { ContentHero, JsonLd, CtaSection, ContentLinkCard } from "@/components/content";
+import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionHeading, ContentBody } from "@/components/content";
 import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
@@ -124,6 +124,7 @@ export default function KlondikeStrategyPage() {
       <ContentHero
         title="Klondike Solitaire Strategy Guide"
         subtitle="Proven strategies, tips, and techniques for winning more games in both Draw 1 and Draw 3 Klondike."
+        breadcrumbs={[{ label: "Home", href: "/" }, { label: "Klondike Solitaire", href: "/klondike" }]}
       />
 
       {/* Main Content */}
@@ -621,6 +622,16 @@ export default function KlondikeStrategyPage() {
           </section>
 
           <AdUnit format="horizontal" className="-my-1" />
+
+          {/* ── Related Guides ── */}
+          <CardSection variant="dark">
+            <SectionHeading variant="dark" sub="Continue Learning">Related Guides</SectionHeading>
+            <ContentBody variant="dark" className="grid gap-4 md:grid-cols-3">
+              <ContentLinkCard href="/klondike/tips" title="Klondike Tips & Tricks" description="Quick, practical tips for all skill levels." />
+              <ContentLinkCard href="/klondike/winning-strategies" title="Winning Strategies" description="Advanced tactics and statistical analysis." />
+              <ContentLinkCard href="/klondike/draw-1-vs-draw-3" title="Draw 1 vs Draw 3" description="Complete comparison of Klondike draw modes." />
+            </ContentBody>
+          </CardSection>
 
           <CtaSection
             heading="Ready to Put These Strategies to Work?"

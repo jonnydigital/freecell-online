@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { absoluteUrl, siteConfig } from '@/lib/siteConfig';
 import ContentLayout from '@/components/ContentLayout';
-import { ContentHero, JsonLd, CtaSection, ContentLinkCard } from '@/components/content';
+import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionHeading, ContentBody } from '@/components/content';
 import AdUnit from '@/components/AdUnit';
 
 export const metadata: Metadata = {
@@ -101,6 +101,7 @@ export default function KlondikeHowToPlayPage() {
         title="How to Play Klondike Solitaire"
         kicker={<><Link href="/" className="hover:text-white/60 transition-colors">Home</Link>{" "}&rsaquo;{" "}<Link href="/solitaire-types" className="hover:text-white/60 transition-colors">Solitaire Types</Link>{" "}&rsaquo;{" "}Klondike: How to Play</>}
         subtitle={'The classic card game everyone calls "Solitaire." Complete rules, setup, dealing variants, and everything you need to start playing.'}
+        breadcrumbs={[{ label: "Home", href: "/" }, { label: "Klondike Solitaire", href: "/klondike" }]}
       />
 
       <main className="max-w-3xl mx-auto px-6 py-12">
@@ -486,6 +487,16 @@ export default function KlondikeHowToPlayPage() {
             </div>
           </div>
         </section>
+
+        {/* ── Related Guides ── */}
+        <CardSection variant="dark">
+          <SectionHeading variant="dark" sub="Continue Learning">Related Guides</SectionHeading>
+          <ContentBody variant="dark" className="grid gap-4 md:grid-cols-3">
+            <ContentLinkCard href="/klondike/strategy" title="Klondike Strategy Guide" description="Proven strategies to win more games." />
+            <ContentLinkCard href="/klondike/tips" title="Klondike Tips & Tricks" description="Quick, practical tips for all skill levels." />
+            <ContentLinkCard href="/freecell-vs-klondike" title="FreeCell vs Klondike" description="How the two most popular solitaire games compare." />
+          </ContentBody>
+        </CardSection>
 
         <CtaSection
           heading="Ready to Improve?"

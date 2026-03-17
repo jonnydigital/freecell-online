@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import ContentLayout from "@/components/ContentLayout";
-import { ContentHero, JsonLd, CtaSection, ContentLinkCard } from "@/components/content";
+import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionHeading, ContentBody } from "@/components/content";
 import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
@@ -137,6 +137,7 @@ export default function SpiderStrategyPage() {
       <ContentHero
         title="Spider Solitaire Strategy Guide"
         subtitle="Expert strategies, tips, and techniques for winning more games at every difficulty level."
+        breadcrumbs={[{ label: "Home", href: "/" }, { label: "Spider Solitaire", href: "/spider" }]}
       />
 
       {/* Main Content */}
@@ -720,6 +721,16 @@ export default function SpiderStrategyPage() {
           </section>
 
           <AdUnit format="horizontal" className="-my-1" />
+
+          {/* ── Related Guides ── */}
+          <CardSection variant="dark">
+            <SectionHeading variant="dark" sub="Continue Learning">Related Guides</SectionHeading>
+            <ContentBody variant="dark" className="grid gap-4 md:grid-cols-3">
+              <ContentLinkCard href="/spider/how-to-play" title="How to Play Spider Solitaire" description="Complete rules and setup for all difficulty levels." />
+              <ContentLinkCard href="/spider/tips" title="Spider Tips & Tricks" description="Practical advice to immediately boost your win rate." />
+              <ContentLinkCard href="/spider/1-suit-vs-2-suit-vs-4-suit" title="1-Suit vs 2-Suit vs 4-Suit" description="Compare difficulty levels, win rates, and strategy." />
+            </ContentBody>
+          </CardSection>
 
           {/* Cross-links */}
           <section className="bg-white/[0.03] border border-white/10 rounded-xl p-6 sm:p-8">

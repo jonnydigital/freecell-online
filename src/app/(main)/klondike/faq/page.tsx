@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import ContentLayout from "@/components/ContentLayout";
-import { ContentHero, JsonLd, CtaSection, ContentLinkCard } from "@/components/content";
+import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionHeading, ContentBody } from "@/components/content";
 import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
@@ -155,6 +155,7 @@ export default function KlondikeFaqPage() {
       <ContentHero
         title="Klondike Solitaire FAQ"
         subtitle="Answers to the most common questions about Klondike Solitaire — rules, strategy, scoring, and more."
+        breadcrumbs={[{ label: "Home", href: "/" }, { label: "Klondike Solitaire", href: "/klondike" }]}
       />
 
       {/* Main Content */}
@@ -181,6 +182,16 @@ export default function KlondikeFaqPage() {
           ))}
 
           <AdUnit format="horizontal" className="-my-1" />
+
+          {/* ── Related Guides ── */}
+          <CardSection variant="dark">
+            <SectionHeading variant="dark" sub="Continue Learning">Related Guides</SectionHeading>
+            <ContentBody variant="dark" className="grid gap-4 md:grid-cols-3">
+              <ContentLinkCard href="/klondike/how-to-play" title="How to Play Klondike" description="Complete rules and setup guide." />
+              <ContentLinkCard href="/klondike/strategy" title="Klondike Strategy Guide" description="Proven strategies to win more games." />
+              <ContentLinkCard href="/klondike/tips" title="Klondike Tips & Tricks" description="Quick, practical tips for all skill levels." />
+            </ContentBody>
+          </CardSection>
 
           <CtaSection
             heading="Ready to Play?"

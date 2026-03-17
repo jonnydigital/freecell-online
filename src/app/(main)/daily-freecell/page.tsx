@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import AdUnit from "@/components/AdUnit";
 import ContentLayout from "@/components/ContentLayout";
-import { ContentHero, SectionHeading, CardSection, ContentBody, CtaSection, JsonLd } from "@/components/content";
+import { ContentHero, SectionHeading, CardSection, ContentBody, CtaSection, ContentLinkCard, JsonLd } from "@/components/content";
 
 export const metadata: Metadata = {
   title: "Daily FreeCell Challenge | A New Puzzle Every Day",
@@ -617,6 +617,16 @@ export default function DailyFreecellPage() {
                 )}
               </div>
             ))}
+          </ContentBody>
+        </CardSection>
+
+        {/* ── Related Guides ── */}
+        <CardSection variant="dark">
+          <SectionHeading variant="dark" sub="Continue Learning">Related Guides</SectionHeading>
+          <ContentBody variant="dark" className="grid gap-4 md:grid-cols-3">
+            <ContentLinkCard href="/streak" title="Winning Streaks" description="Track your daily streak and learn how to keep it alive." />
+            <ContentLinkCard href="/winning-deals" title="Winning Deals" description="Explore the easiest and hardest deals by the numbers." />
+            <ContentLinkCard href="/strategy" title="Strategy Guide" description="Master advanced techniques to beat any daily challenge." />
           </ContentBody>
         </CardSection>
 

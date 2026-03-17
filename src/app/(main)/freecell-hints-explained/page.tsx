@@ -457,7 +457,19 @@ export default function FreecellHintsExplainedPage() {
                 </div>
               ))}
             </ContentBody>
-        </CardSection>        <CtaSection
+        </CardSection>
+
+        {/* ── Related Guides ── */}
+        <CardSection variant="dark">
+          <SectionHeading variant="dark" sub="Continue Learning">Related Guides</SectionHeading>
+          <ContentBody variant="dark" className="grid gap-4 md:grid-cols-3">
+            <ContentLinkCard href="/strategy" title="Strategy Guide" description="Go deeper on free cells, supermoves, and disciplined board management." />
+            <ContentLinkCard href="/tips" title="Tips & Tricks" description="25 quick, actionable tips to boost your win rate starting today." />
+            <ContentLinkCard href="/freecell-for-beginners" title="FreeCell for Beginners" description="A gentler introduction for first-time players covering the basics." />
+          </ContentBody>
+        </CardSection>
+
+        <CtaSection
           heading="Ready To Play Without The Safety Net?"
           body="Start a game, read the board yourself, and see how far you get before you need a hint. You might surprise yourself."
           secondaryLabel="Read The Strategy Guide"

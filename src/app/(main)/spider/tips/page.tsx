@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import ContentLayout from "@/components/ContentLayout";
 import AdUnit from "@/components/AdUnit";
-import { ContentHero, JsonLd, CtaSection, ContentLinkCard } from "@/components/content";
+import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionHeading, ContentBody } from "@/components/content";
 
 export const metadata: Metadata = {
   title: "Spider Solitaire Tips & Tricks | Win More Games in 2026",
@@ -93,6 +93,7 @@ export default function SpiderTipsPage() {
         title="Spider Solitaire Tips & Tricks"
         kicker={<><Link href="/spider" className="hover:text-white transition-colors">Spider Solitaire</Link> / Tips</>}
         subtitle="Practical advice that will immediately improve your win rate — whether you're playing 1-suit, 2-suit, or the full 4-suit challenge."
+        breadcrumbs={[{ label: "Home", href: "/" }, { label: "Spider Solitaire", href: "/spider" }]}
       />
 
       {/* Quick Summary */}
@@ -544,6 +545,18 @@ export default function SpiderTipsPage() {
           </ol>
         </div>
       </section>
+
+      {/* ── Related Guides ── */}
+      <div className="max-w-3xl mx-auto">
+        <CardSection variant="dark">
+          <SectionHeading variant="dark" sub="Continue Learning">Related Guides</SectionHeading>
+          <ContentBody variant="dark" className="grid gap-4 md:grid-cols-3">
+            <ContentLinkCard href="/spider/strategy" title="Spider Strategy Guide" description="Expert strategies for 1-suit, 2-suit, and 4-suit games." />
+            <ContentLinkCard href="/spider/how-to-play" title="How to Play Spider" description="Complete rules and setup for all difficulty levels." />
+            <ContentLinkCard href="/spider/is-spider-solitaire-winnable" title="Is Spider Solitaire Winnable?" description="Win rates and solvability stats by suit count." />
+          </ContentBody>
+        </CardSection>
+      </div>
 
       <div className="mb-10 max-w-3xl mx-auto">
         <CtaSection

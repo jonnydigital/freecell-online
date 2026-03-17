@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     title: "Sitemap | PlayFreeCellOnline.com",
     description:
       "Complete directory of every page on PlayFreeCellOnline.com.",
-    url: absoluteUrl("/sitemap-page"),
+    url: absoluteUrl("/sitemap"),
     siteName: siteConfig.siteName,
     type: "website",
   },
@@ -29,6 +29,7 @@ const playLinks = [
   { href: "/easy-freecell", label: "Easy FreeCell", desc: "Curated beginner-friendly deals" },
   { href: "/streak", label: "Streak Mode", desc: "Daily challenge with win-streak tracking" },
   { href: "/storm", label: "Storm Mode", desc: "Five timed games — race the clock" },
+  { href: "/daily-freecell", label: "Daily FreeCell", desc: "A new deal every day" },
   { href: "/daily-freecell/calendar", label: "Challenge Calendar", desc: "Browse past daily challenges" },
   { href: "/freecell/1-cell", label: "1-Cell FreeCell", desc: "One free cell — expert difficulty" },
   { href: "/freecell/2-cell", label: "2-Cell FreeCell", desc: "Two free cells — advanced" },
@@ -39,19 +40,20 @@ const playLinks = [
   { href: "/solver", label: "FreeCell Solver", desc: "Get step-by-step solutions" },
   { href: "/leaderboard", label: "Leaderboard", desc: "Top times and scores" },
   { href: "/achievements", label: "Achievements", desc: "Unlock milestones and badges" },
-  { href: "/statistics", label: "Statistics", desc: "Track your win rate and performance" },
+  { href: "/stats", label: "Your Stats", desc: "Personal game statistics" },
+  { href: "/statistics", label: "Statistics & Win Rates", desc: "Track your win rate and performance" },
 ];
 
 const learnLinks = [
   { href: "/how-to-play", label: "How to Play FreeCell", desc: "Complete rules tutorial" },
   { href: "/freecell-rules", label: "FreeCell Rules", desc: "Quick-reference rule card" },
   { href: "/freecell-for-beginners", label: "FreeCell for Beginners", desc: "Step-by-step beginner guide" },
+  { href: "/freecell-for-seniors", label: "FreeCell for Seniors", desc: "Accessibility and cognitive benefits" },
   { href: "/strategy", label: "Strategy Guide", desc: "Beginner to expert strategy" },
   { href: "/tips", label: "Tips & Tricks", desc: "25 actionable FreeCell tips" },
   { href: "/freecell-cheat-sheet", label: "Cheat Sheet", desc: "Move priorities and shortcuts" },
   { href: "/freecell-mistakes-to-avoid", label: "Common Mistakes", desc: "Errors that cost you games" },
   { href: "/freecell-hints-explained", label: "Hints Explained", desc: "How the hint system works" },
-  { href: "/freecell-for-seniors", label: "FreeCell for Seniors", desc: "Accessibility and cognitive benefits" },
   { href: "/glossary", label: "Glossary", desc: "Card game terms and definitions" },
   { href: "/faq", label: "FAQ", desc: "Frequently asked questions" },
 ];
@@ -86,7 +88,9 @@ const variantGuides = [
   { href: "/klondike/faq", label: "Klondike FAQ", desc: "Common Klondike questions" },
   { href: "/pyramid/how-to-play", label: "Pyramid Rules", desc: "How to play Pyramid" },
   { href: "/pyramid/strategy", label: "Pyramid Strategy", desc: "Pyramid pairing techniques" },
+  { href: "/bakers-game", label: "Baker's Game", desc: "Play Baker's Game online" },
   { href: "/bakers-game/strategy", label: "Baker's Game Strategy", desc: "Suit-building strategy" },
+  { href: "/eight-off", label: "Eight Off", desc: "Play Eight Off online" },
   { href: "/eight-off/strategy", label: "Eight Off Strategy", desc: "Eight Off techniques" },
 ];
 
@@ -149,7 +153,7 @@ export default function SitemapPage() {
     "@type": "BreadcrumbList",
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
-      { "@type": "ListItem", position: 2, name: "Sitemap", item: absoluteUrl("/sitemap-page") },
+      { "@type": "ListItem", position: 2, name: "Sitemap", item: absoluteUrl("/sitemap") },
     ],
   };
 

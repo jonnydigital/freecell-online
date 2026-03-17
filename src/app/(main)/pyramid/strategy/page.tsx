@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import ContentLayout from "@/components/ContentLayout";
-import { ContentHero, JsonLd, CtaSection, ContentLinkCard } from "@/components/content";
+import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionHeading, ContentBody } from "@/components/content";
 import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
@@ -127,6 +127,7 @@ export default function PyramidStrategyPage() {
       <ContentHero
         title="Pyramid Solitaire Strategy Guide"
         subtitle="Proven strategies, card counting techniques, and decision frameworks for winning more games."
+        breadcrumbs={[{ label: "Home", href: "/" }, { label: "Pyramid Solitaire", href: "/pyramid" }]}
       />
 
       {/* Main Content */}
@@ -649,6 +650,16 @@ export default function PyramidStrategyPage() {
           </section>
 
           <AdUnit format="horizontal" className="-my-1" />
+
+          {/* ── Related Guides ── */}
+          <CardSection variant="dark">
+            <SectionHeading variant="dark" sub="Continue Learning">Related Guides</SectionHeading>
+            <ContentBody variant="dark" className="grid gap-4 md:grid-cols-3">
+              <ContentLinkCard href="/pyramid/how-to-play" title="How to Play Pyramid" description="Complete rules, setup, and card values." />
+              <ContentLinkCard href="/strategy" title="FreeCell Strategy Guide" description="Strategy for the classic solitaire game." />
+              <ContentLinkCard href="/solitaire-types" title="Types of Solitaire" description="Compare Pyramid, FreeCell, Klondike, and more." />
+            </ContentBody>
+          </CardSection>
 
           {/* CTA Section */}
           <CtaSection

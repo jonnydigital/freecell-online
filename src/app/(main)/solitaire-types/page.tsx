@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import ContentLayout from "@/components/ContentLayout";
 import NetworkCrossLinks from "@/components/NetworkCrossLinks";
-import { ContentHero, SectionHeading, CardSection, ContentBody, TocPills, CtaSection, JsonLd } from "@/components/content";
+import { ContentHero, SectionHeading, CardSection, ContentBody, TocPills, CtaSection, ContentLinkCard, JsonLd } from "@/components/content";
 
 export const metadata: Metadata = {
   title: "Types of Solitaire Card Games | 20 Solitaire Variants Explained",
@@ -676,6 +676,16 @@ export default function SolitaireTypesPage() {
                 )}
               </div>
             ))}
+          </ContentBody>
+        </CardSection>
+
+        {/* ── Related Guides ── */}
+        <CardSection variant="dark">
+          <SectionHeading variant="dark" sub="Continue Learning">Related Guides</SectionHeading>
+          <ContentBody variant="dark" className="grid gap-4 md:grid-cols-3">
+            <ContentLinkCard href="/freecell-variants" title="FreeCell Variants" description="Explore Baker's Game, Eight Off, Sea Towers, and other FreeCell spin-offs." />
+            <ContentLinkCard href="/freecell-vs-klondike" title="FreeCell vs Klondike" description="How FreeCell compares to the world's most popular solitaire game." />
+            <ContentLinkCard href="/freecell-vs-spider" title="FreeCell vs Spider" description="Side-by-side comparison of two fan-favorite solitaire games." />
           </ContentBody>
         </CardSection>
 

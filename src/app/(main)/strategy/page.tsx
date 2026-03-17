@@ -4,7 +4,7 @@ import { absoluteUrl } from "@/lib/siteConfig";
 import AdUnit from "@/components/AdUnit";
 import ContentLayout from "@/components/ContentLayout";
 import NetworkCrossLinks from "@/components/NetworkCrossLinks";
-import { ContentHero, SectionHeading, CardSection, ContentBody, TocPills, CtaSection, JsonLd } from '@/components/content';
+import { ContentHero, SectionHeading, CardSection, ContentBody, TocPills, CtaSection, ContentLinkCard, JsonLd } from '@/components/content';
 
 export const metadata: Metadata = {
   title: "FreeCell Strategy Guide | How to Win FreeCell — Beginner to Expert Tips",
@@ -690,6 +690,16 @@ export default function StrategyPage() {
                 )}
               </div>
             ))}
+          </ContentBody>
+        </CardSection>
+
+        {/* ── Related Guides ── */}
+        <CardSection>
+          <SectionHeading sub="Continue Learning">Related Guides</SectionHeading>
+          <ContentBody className="grid gap-4 md:grid-cols-3">
+            <ContentLinkCard href="/tips" title="Tips & Tricks" description="25 quick, actionable tips to boost your win rate starting today." />
+            <ContentLinkCard href="/freecell-mistakes-to-avoid" title="Mistakes to Avoid" description="The most common FreeCell errors and how to stop making them." />
+            <ContentLinkCard href="/freecell-cheat-sheet" title="FreeCell Cheat Sheet" description="A quick-reference card covering supermoves, foundation timing, and priority order." />
           </ContentBody>
         </CardSection>
 

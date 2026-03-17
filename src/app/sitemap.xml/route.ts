@@ -1,0 +1,104 @@
+import { absoluteUrl, isHubSite } from '@/lib/siteConfig';
+import { sitemapGameNumbers, isHighPriorityDeal } from '@/lib/curatedDeals';
+
+/**
+ * Dynamic XML sitemap served at /sitemap.xml via route handler.
+ * Moved from convention-based sitemap.ts to free up /sitemap for the HTML sitemap page.
+ */
+
+const contentPages = [
+  { path: '/', changeFrequency: 'daily', priority: 1.0 },
+  ...(isHubSite ? [{ path: '/freecell', changeFrequency: 'daily', priority: 0.9 }] : []),
+  { path: '/how-to-play', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/strategy', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/tips', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/glossary', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/history', changeFrequency: 'yearly', priority: 0.7 },
+  { path: '/faq', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/solitaire-types', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/winning-deals', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/bakers-game', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/eight-off', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/easy-freecell', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/spider', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/freecell-vs-spider', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/freecell-vs-klondike', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/statistics', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/deals', changeFrequency: 'weekly', priority: 0.7 },
+  { path: '/solver', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/streak', changeFrequency: 'daily', priority: 0.6 },
+  { path: '/storm', changeFrequency: 'daily', priority: 0.6 },
+  { path: '/stats', changeFrequency: 'weekly', priority: 0.5 },
+  { path: '/achievements', changeFrequency: 'weekly', priority: 0.5 },
+  { path: '/leaderboard', changeFrequency: 'daily', priority: 0.6 },
+  { path: '/about', changeFrequency: 'yearly', priority: 0.5 },
+  { path: '/daily-freecell', changeFrequency: 'daily', priority: 0.7 },
+  { path: '/daily-freecell/calendar', changeFrequency: 'daily', priority: 0.6 },
+  { path: '/freecell-for-beginners', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/is-every-freecell-game-winnable', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/easy-freecell-games', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/hard-freecell-games', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/freecell-mistakes-to-avoid', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/famous-freecell-deals', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/freecell-game-11982', changeFrequency: 'yearly', priority: 0.7 },
+  { path: '/spider/how-to-play', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/spider/strategy', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/spider/tips', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/spider/1-suit-vs-2-suit-vs-4-suit', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/spider/is-spider-solitaire-winnable', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/freecell-hints-explained', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/freecell-world-records', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/klondike', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/klondike/how-to-play', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/klondike/strategy', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/klondike/faq', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/klondike/tips', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/klondike/winning-strategies', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/klondike/draw-1-vs-draw-3', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/pyramid/how-to-play', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/pyramid/strategy', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/freecell-rules', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/freecell-for-seniors', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/large-cards', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/freecell-cheat-sheet', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/freecell-probability', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/freecell-variants', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/microsoft-freecell', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/bakers-game/strategy', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/eight-off/strategy', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/freecell/1-cell', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/freecell/2-cell', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/freecell/3-cell', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/embed-generator', changeFrequency: 'monthly', priority: 0.6 },
+  { path: '/sitemap', changeFrequency: 'weekly', priority: 0.5 },
+  { path: '/privacy', changeFrequency: 'yearly', priority: 0.2 },
+  { path: '/terms', changeFrequency: 'yearly', priority: 0.2 },
+];
+
+function buildXml(): string {
+  const now = new Date().toISOString();
+
+  const staticEntries = contentPages.map(
+    (p) =>
+      `  <url>\n    <loc>${absoluteUrl(p.path)}</loc>\n    <lastmod>${now}</lastmod>\n    <changefreq>${p.changeFrequency}</changefreq>\n    <priority>${p.priority}</priority>\n  </url>`
+  );
+
+  const gameEntries = sitemapGameNumbers.map(
+    (num) =>
+      `  <url>\n    <loc>${absoluteUrl(`/game/${num}`)}</loc>\n    <lastmod>${now}</lastmod>\n    <changefreq>yearly</changefreq>\n    <priority>${isHighPriorityDeal(num) ? 0.6 : 0.4}</priority>\n  </url>`
+  );
+
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${[...staticEntries, ...gameEntries].join('\n')}
+</urlset>`;
+}
+
+export async function GET() {
+  return new Response(buildXml(), {
+    headers: {
+      'Content-Type': 'application/xml',
+      'Cache-Control': 'public, max-age=3600, s-maxage=3600',
+    },
+  });
+}

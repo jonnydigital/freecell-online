@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import ContentLayout from "@/components/ContentLayout";
-import { ContentHero, JsonLd, CtaSection, ContentLinkCard } from "@/components/content";
+import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionHeading, ContentBody } from "@/components/content";
 import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
@@ -119,6 +119,7 @@ export default function EightOffStrategyPage() {
       <ContentHero
         title="Eight Off Strategy Guide"
         subtitle="How to manage 8 reserve cells, plan around opening cards, and master same-suit sequencing in this challenging FreeCell variant."
+        breadcrumbs={[{ label: "Home", href: "/" }, { label: "Eight Off", href: "/eight-off" }]}
       />
 
       {/* Main Content */}
@@ -514,6 +515,16 @@ export default function EightOffStrategyPage() {
           </section>
 
           <AdUnit format="horizontal" className="-my-1" />
+
+          {/* ── Related Guides ── */}
+          <CardSection variant="dark">
+            <SectionHeading variant="dark" sub="Continue Learning">Related Guides</SectionHeading>
+            <ContentBody variant="dark" className="grid gap-4 md:grid-cols-3">
+              <ContentLinkCard href="/eight-off" title="Play Eight Off" description="Play online for free, no download required." />
+              <ContentLinkCard href="/bakers-game/strategy" title="Baker's Game Strategy" description="Strategy for the 4-cell same-suit variant." />
+              <ContentLinkCard href="/strategy" title="FreeCell Strategy" description="Compare with alternating-color FreeCell tactics." />
+            </ContentBody>
+          </CardSection>
 
           <CtaSection
             heading="Ready to Play?"

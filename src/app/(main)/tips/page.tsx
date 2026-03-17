@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import ContentLayout from "@/components/ContentLayout";
-import { ContentHero, SectionHeading, CardSection, ContentBody, TocPills, CtaSection, JsonLd } from "@/components/content";
+import { ContentHero, SectionHeading, CardSection, ContentBody, TocPills, CtaSection, ContentLinkCard, JsonLd } from "@/components/content";
 
 export const metadata: Metadata = {
   title: "25 FreeCell Tips & Tricks | Quick Ways to Win More Games",
@@ -637,6 +637,16 @@ export default function TipsPage() {
                 )}
               </div>
             ))}
+          </ContentBody>
+        </CardSection>
+
+        {/* ── Related Guides ── */}
+        <CardSection>
+          <SectionHeading sub="Continue Learning">Related Guides</SectionHeading>
+          <ContentBody className="grid gap-4 md:grid-cols-3">
+            <ContentLinkCard href="/strategy" title="Full Strategy Guide" description="Go deeper on free cells, supermoves, and endgame technique." />
+            <ContentLinkCard href="/freecell-for-beginners" title="FreeCell for Beginners" description="A gentler introduction for first-time players covering the basics." />
+            <ContentLinkCard href="/freecell-mistakes-to-avoid" title="Mistakes to Avoid" description="The most common FreeCell errors and how to stop making them." />
           </ContentBody>
         </CardSection>
 

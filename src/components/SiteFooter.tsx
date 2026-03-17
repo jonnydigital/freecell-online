@@ -21,10 +21,13 @@ export default function SiteFooter() {
           { href: '/streak', label: 'Streak Mode' },
           { href: '/storm', label: 'Storm Mode' },
           { href: '/winning-deals', label: 'Winning Deals' },
+          { href: '/daily-freecell', label: 'Daily FreeCell' },
           { href: '/daily-freecell/calendar', label: 'Challenge Calendar' },
+          { href: '/large-cards', label: 'Large Cards' },
           { href: '/freecell/1-cell', label: '1-Cell FreeCell' },
           { href: '/freecell/2-cell', label: '2-Cell FreeCell' },
           { href: '/freecell/3-cell', label: '3-Cell FreeCell' },
+          { href: '/klondike', label: 'Klondike Solitaire' },
         ];
 
   const learnLinks =
@@ -93,6 +96,8 @@ export default function SiteFooter() {
           { href: '/freecell-probability', label: 'Probability & Math' },
           { href: '/is-every-freecell-game-winnable', label: 'Is Every Game Winnable?' },
           { href: '/spider/is-spider-solitaire-winnable', label: 'Spider Winnability' },
+          { href: '/spider/1-suit-vs-2-suit-vs-4-suit', label: 'Spider Suit Modes' },
+          { href: '/klondike/faq', label: 'Klondike FAQ' },
           { href: '/leaderboard', label: 'Leaderboard' },
           { href: '/achievements', label: 'Achievements' },
           { href: '/deals', label: 'Deal Explorer' },
@@ -179,7 +184,7 @@ export default function SiteFooter() {
                 </Link>
               </li>
               <li>
-                <Link href="/sitemap-page" className="text-sm text-white/60 hover:text-white transition-colors">
+                <Link href="/sitemap" className="text-sm text-white/60 hover:text-white transition-colors">
                   Sitemap
                 </Link>
               </li>

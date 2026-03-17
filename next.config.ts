@@ -4,6 +4,15 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ['lucide-react', 'framer-motion'],
   },
+  async redirects() {
+    return [
+      {
+        source: '/sitemap-page',
+        destination: '/sitemap',
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {

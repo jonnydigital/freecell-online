@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import ContentLayout from "@/components/ContentLayout";
-import { ContentHero, JsonLd, CtaSection, ContentLinkCard } from "@/components/content";
+import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionHeading, ContentBody } from "@/components/content";
 import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
@@ -186,6 +186,7 @@ export default function HowToPlaySpiderPage() {
       <ContentHero
         title="How to Play Spider Solitaire"
         subtitle="The complete guide to Spider Solitaire rules, setup, and gameplay for 1-suit, 2-suit, and 4-suit variants."
+        breadcrumbs={[{ label: "Home", href: "/" }, { label: "Spider Solitaire", href: "/spider" }]}
       />
 
       {/* Main Content */}
@@ -815,6 +816,16 @@ export default function HowToPlaySpiderPage() {
           </section>
 
           <AdUnit format="horizontal" className="-my-1" />
+
+          {/* ── Related Guides ── */}
+          <CardSection variant="dark">
+            <SectionHeading variant="dark" sub="Continue Learning">Related Guides</SectionHeading>
+            <ContentBody variant="dark" className="grid gap-4 md:grid-cols-3">
+              <ContentLinkCard href="/spider/strategy" title="Spider Strategy Guide" description="Expert strategies for 1-suit, 2-suit, and 4-suit games." />
+              <ContentLinkCard href="/spider/tips" title="Spider Tips & Tricks" description="Practical advice to immediately boost your win rate." />
+              <ContentLinkCard href="/spider/is-spider-solitaire-winnable" title="Is Spider Solitaire Winnable?" description="Win rates and solvability stats by suit count." />
+            </ContentBody>
+          </CardSection>
 
           {/* Cross-links */}
           <section className="bg-white/[0.03] border border-white/10 rounded-xl p-6 sm:p-8">

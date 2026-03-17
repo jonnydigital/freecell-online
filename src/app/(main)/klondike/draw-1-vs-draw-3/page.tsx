@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import ContentLayout from "@/components/ContentLayout";
-import { ContentHero, JsonLd, CtaSection, ContentLinkCard } from "@/components/content";
+import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionHeading, ContentBody } from "@/components/content";
 import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
@@ -133,6 +133,7 @@ export default function Draw1VsDraw3Page() {
         title="Draw 1 vs Draw 3 Solitaire"
         kicker={<><Link href="/klondike" className="hover:text-white transition-colors">Klondike Solitaire</Link> / Draw 1 vs Draw 3</>}
         subtitle="A complete comparison of Klondike's two draw modes — win rates, rules, strategy depth, and which one you should play."
+        breadcrumbs={[{ label: "Home", href: "/" }, { label: "Klondike Solitaire", href: "/klondike" }]}
       />
 
       {/* Main Content */}
@@ -675,6 +676,16 @@ export default function Draw1VsDraw3Page() {
               ))}
             </div>
           </section>
+
+          {/* ── Related Guides ── */}
+          <CardSection variant="dark">
+            <SectionHeading variant="dark" sub="Continue Learning">Related Guides</SectionHeading>
+            <ContentBody variant="dark" className="grid gap-4 md:grid-cols-3">
+              <ContentLinkCard href="/klondike/strategy" title="Klondike Strategy Guide" description="Core principles for Draw 1 and Draw 3." />
+              <ContentLinkCard href="/klondike/how-to-play" title="How to Play Klondike" description="Complete rules and setup guide." />
+              <ContentLinkCard href="/klondike/faq" title="Klondike FAQ" description="Common questions about Klondike Solitaire." />
+            </ContentBody>
+          </CardSection>
 
           <CtaSection
             heading="Try Both Modes"

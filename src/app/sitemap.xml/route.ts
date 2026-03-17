@@ -64,6 +64,7 @@ const contentPages = [
   { path: '/freecell-probability', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/freecell-variants', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/microsoft-freecell', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/download', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/bakers-game/strategy', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/eight-off/strategy', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/freecell/1-cell', changeFrequency: 'monthly', priority: 0.8 },

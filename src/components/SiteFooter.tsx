@@ -88,6 +88,7 @@ export default function SiteFooter() {
           { href: '/freecell-vs-spider', label: 'FreeCell vs Spider' },
           { href: '/freecell-vs-klondike', label: 'FreeCell vs Klondike' },
           { href: '/microsoft-freecell', label: 'Microsoft FreeCell' },
+          { href: '/download', label: 'Download FreeCell' },
           { href: '/hard-freecell-games', label: 'Hard FreeCell Games' },
           { href: '/easy-freecell-games', label: 'Easy FreeCell Games' },
           { href: '/famous-freecell-deals', label: 'Famous Deals' },

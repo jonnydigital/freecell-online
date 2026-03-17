@@ -1,5 +1,9 @@
 # FreeCell Online — Changelog
 
+## 2026-03-17 (Tuesday Evening Build)
+### Shipped
+- **📱 FreeCell Download / App SEO Page** (`/download`) — 654-line SEO content page targeting high-volume download-intent keywords: "freecell download", "freecell app", "free freecell download", "freecell for pc". Covers: Why our PWA beats app store apps, step-by-step install instructions for Chrome desktop/iPhone Safari/Android Chrome, feature overview (5 game modes, daily challenges, achievements, solver), comparison table (PWA vs native apps — free, no storage bloat, auto-updates, works on all platforms), 5-question FAQ. Article + BreadcrumbList + FAQPage JSON-LD schemas. AdUnit placements. Cross-linked to /how-to-play, /daily-freecell, /achievements, /solver, /microsoft-freecell. Added to sitemap (priority 0.7) and SiteFooter Explore column. 3 files changed, 656 insertions. (32nd consecutive night of shipping)
+
 ## 2026-03-17 (Tuesday Overnight Build)
 ### Shipped
 - **🔀 www→non-www Redirect Middleware** (`src/middleware.ts`) — Next.js middleware implementing 301 permanent redirect from `www.playfreecellonline.com` → `playfreecellonline.com`. Prevents page authority dilution caused by Google indexing both www and non-www homepage variants (detected in 03-15 research via `site:playfreecellonline.com`). Preserves full path and query string. Matcher config excludes `_next/static`, `_next/image`, API routes, and static assets for performance. Only triggers when host starts with `www.` — naturally skips localhost/dev. (Spark #30 from 03-15 research)

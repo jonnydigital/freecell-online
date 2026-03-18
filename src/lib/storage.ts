@@ -6,14 +6,16 @@ import { GameStats, createEmptyStats } from './stats';
 
 const STATS_KEY = 'freecell_stats';
 const KLONDIKE_STATS_KEY = 'klondike_stats';
+const PYRAMID_STATS_KEY = 'pyramid_stats';
 const SETTINGS_KEY = 'freecell_settings';
 const GAME_STATE_KEY = 'freecell_game_state';
 const STARS_KEY = 'freecell_stars';
 
-export type GameVariant = 'freecell' | 'bakers-game' | 'eight-off' | 'easy-freecell' | 'spider' | 'klondike';
+export type GameVariant = 'freecell' | 'bakers-game' | 'eight-off' | 'easy-freecell' | 'spider' | 'klondike' | 'pyramid';
 
 function getStatsKey(variant?: GameVariant): string {
   if (variant === 'klondike') return KLONDIKE_STATS_KEY;
+  if (variant === 'pyramid') return PYRAMID_STATS_KEY;
   return STATS_KEY;
 }
 

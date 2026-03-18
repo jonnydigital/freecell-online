@@ -7,6 +7,7 @@ const ALL_GAMES = [
   { slug: 'bakers-game', label: "Baker's Game", href: '/bakers-game', description: 'Build by suit instead of alternating color.' },
   { slug: 'eight-off', label: 'Eight Off', href: '/eight-off', description: 'Eight reserve cells for more storage options.' },
   { slug: 'klondike', label: 'Klondike', href: '/klondike', description: 'The classic draw-and-stack solitaire.' },
+  { slug: 'pyramid', label: 'Pyramid', href: '/pyramid', description: 'Match pairs that sum to 13 to clear the pyramid.' },
   { slug: 'easy-freecell', label: 'Easy FreeCell', href: '/easy-freecell', description: 'Aces and twos pre-placed for a gentler start.' },
   { slug: 'freecell-1cell', label: '1-Cell FreeCell', href: '/freecell/1-cell', description: 'Just one free cell. Extremely challenging.' },
   { slug: 'freecell-2cell', label: '2-Cell FreeCell', href: '/freecell/2-cell', description: 'Two free cells. Very challenging.' },

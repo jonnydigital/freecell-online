@@ -222,6 +222,54 @@ export function dealKlondikeGame(gameNumber: number): { cascades: Card[][]; stoc
   return { cascades, stock };
 }
 
+/**
+ * Deal a Pyramid Solitaire game
+ * 28 cards dealt in a 7-row pyramid (row 0 has 1 card, row 6 has 7 cards)
+ * All pyramid cards are face-up
+ * Remaining 24 cards go to stock (face-down)
+ */
+export function dealPyramidGame(gameNumber: number): { pyramid: Card[][]; stock: Card[] } {
+  if (gameNumber < 1 || gameNumber > 9999999 || !Number.isInteger(gameNumber)) {
+    throw new Error(`Invalid game number: ${gameNumber}. Must be integer 1-9999999.`);
+  }
+
+  const deck = createOrderedDeck();
+  const rng = new MSLCG(gameNumber);
+
+  // Shuffle using same MS algorithm
+  const dealt: Card[] = [];
+  let remaining = deck.length;
+  for (let i = 0; i < 52; i++) {
+    const j = rng.next() % remaining;
+    [deck[j], deck[remaining - 1]] = [deck[remaining - 1], deck[j]];
+    dealt.push(deck[remaining - 1]);
+    remaining--;
+  }
+
+  // Deal 28 cards to 7-row pyramid
+  const pyramid: Card[][] = [];
+  let cardIndex = 0;
+
+  for (let row = 0; row < 7; row++) {
+    const rowCards: Card[] = [];
+    for (let col = 0; col <= row; col++) {
+      const card = dealt[cardIndex++];
+      card.isFaceUp = true;
+      rowCards.push(card);
+    }
+    pyramid.push(rowCards);
+  }
+
+  // Remaining 24 cards go to stock (face-down)
+  const stock: Card[] = [];
+  for (let i = cardIndex; i < 52; i++) {
+    dealt[i].isFaceUp = false;
+    stock.push(dealt[i]);
+  }
+
+  return { pyramid, stock };
+}
+
 export function dealSpiderGame(gameNumber: number, difficulty: SpiderDifficulty) {
   const deck = createSpiderDeck(difficulty);
   const rng = new MSLCG(gameNumber);

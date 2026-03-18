@@ -28,6 +28,7 @@ export default function SiteFooter() {
           { href: '/freecell/2-cell', label: '2-Cell FreeCell' },
           { href: '/freecell/3-cell', label: '3-Cell FreeCell' },
           { href: '/klondike', label: 'Klondike Solitaire' },
+          { href: '/pyramid', label: 'Pyramid Solitaire' },
         ];
 
   const learnLinks =

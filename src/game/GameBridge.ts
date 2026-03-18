@@ -42,8 +42,8 @@ class GameBridge {
   private listeners: Map<string, Set<EventCallback>> = new Map();
   /** Set before Phaser init to start with a specific game number */
   initialGameNumber: number | null = null;
-  /** Game variant: 'freecell' (default), 'bakers-game'/'eight-off' (same-suit stacking), 'easy-freecell' (pre-placed aces+2s), restricted-cell variants, 'spider', or 'klondike' */
-  variant: 'freecell' | 'bakers-game' | 'eight-off' | 'easy-freecell' | 'freecell-1cell' | 'freecell-2cell' | 'freecell-3cell' | 'spider' | 'klondike' = 'freecell';
+  /** Game variant: 'freecell' (default), 'bakers-game'/'eight-off' (same-suit stacking), 'easy-freecell' (pre-placed aces+2s), restricted-cell variants, 'spider', 'klondike', or 'pyramid' */
+  variant: 'freecell' | 'bakers-game' | 'eight-off' | 'easy-freecell' | 'freecell-1cell' | 'freecell-2cell' | 'freecell-3cell' | 'spider' | 'klondike' | 'pyramid' = 'freecell';
   /** Spider difficulty level */
   spiderDifficulty: '1-suit' | '2-suit' | '4-suit' = '1-suit';
   /** Klondike draw mode */

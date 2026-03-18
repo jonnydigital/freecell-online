@@ -211,6 +211,13 @@ export default function HomeOverlay({
                     <Layers size={22} className="text-amber-400 shrink-0" />
                     <span className="text-base font-semibold text-amber-300">Klondike</span>
                   </a>
+                  <a
+                    href="/pyramid"
+                    className="flex items-center gap-3 py-4 px-4 rounded-xl bg-white/5 border border-yellow-500/20 hover:bg-yellow-500/10 active:scale-[0.97] transition-all"
+                  >
+                    <span className="text-yellow-400 shrink-0 text-xl leading-none">△</span>
+                    <span className="text-base font-semibold text-yellow-300">Pyramid</span>
+                  </a>
                 </div>
 
                 {/* 3. Stats row */}

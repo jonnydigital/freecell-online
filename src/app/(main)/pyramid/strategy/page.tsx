@@ -663,12 +663,12 @@ export default function PyramidStrategyPage() {
 
           {/* CTA Section */}
           <CtaSection
-            heading="Learn the Fundamentals First"
-            body="If you haven't read our complete Pyramid Solitaire rules guide, start there. Or try a game of FreeCell — a solitaire variant where nearly every deal is winnable."
-            primaryLabel="Pyramid Rules Guide"
-            primaryHref="/pyramid/how-to-play"
-            secondaryLabel="Play FreeCell Online"
-            secondaryHref="/"
+            heading="Ready to Play?"
+            body="Put these strategies into practice — play Pyramid Solitaire online right now, or brush up on the complete rules first."
+            primaryLabel="Play Pyramid Solitaire"
+            primaryHref="/pyramid"
+            secondaryLabel="Pyramid Rules Guide"
+            secondaryHref="/pyramid/how-to-play"
           />
 
           {/* Cross-links */}

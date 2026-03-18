@@ -43,7 +43,7 @@ const VARIANT_META: Record<string, { path: string; name: string }> = {
 
 interface GameShellProps {
   initialGameNumber?: number;
-  variant?: 'freecell' | 'bakers-game' | 'eight-off' | 'easy-freecell' | 'freecell-1cell' | 'freecell-2cell' | 'freecell-3cell' | 'spider' | 'klondike';
+  variant?: 'freecell' | 'bakers-game' | 'eight-off' | 'easy-freecell' | 'freecell-1cell' | 'freecell-2cell' | 'freecell-3cell' | 'spider' | 'klondike' | 'pyramid';
 }
 
 export default function GameShell({ initialGameNumber, variant = 'freecell' }: GameShellProps = {}) {
@@ -96,7 +96,7 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
   }, [timeElapsed]);
 
   // Determine stats variant key
-  const statsVariant: GameVariant | undefined = variant === 'klondike' ? 'klondike' : undefined;
+  const statsVariant: GameVariant | undefined = variant === 'klondike' ? 'klondike' : variant === 'pyramid' ? 'pyramid' : undefined;
 
   // Timer effect
   useEffect(() => {

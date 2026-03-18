@@ -752,11 +752,11 @@ export default function HowToPlayPyramidPage() {
           {/* CTA Section */}
           <CtaSection
             heading="Ready to Put Your Skills to the Test?"
-            body="Master Pyramid Solitaire strategy with our in-depth guide, or jump into a game of FreeCell — a solitaire variant where nearly every deal is winnable."
-            primaryLabel="Pyramid Strategy Guide"
-            primaryHref="/pyramid/strategy"
-            secondaryLabel="Play FreeCell Online"
-            secondaryHref="/"
+            body="Play Pyramid Solitaire online right now, or dive into our strategy guide to improve your win rate."
+            primaryLabel="Play Pyramid Solitaire"
+            primaryHref="/pyramid"
+            secondaryLabel="Pyramid Strategy Guide"
+            secondaryHref="/pyramid/strategy"
           />
 
           {/* Cross-links */}

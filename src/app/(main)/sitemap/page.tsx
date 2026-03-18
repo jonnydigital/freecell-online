@@ -86,6 +86,7 @@ const variantGuides = [
   { href: "/klondike/winning-strategies", label: "Klondike Winning Strategies", desc: "Advanced Klondike play" },
   { href: "/klondike/draw-1-vs-draw-3", label: "Draw 1 vs Draw 3", desc: "Which draw mode is better" },
   { href: "/klondike/faq", label: "Klondike FAQ", desc: "Common Klondike questions" },
+  { href: "/pyramid", label: "Pyramid Solitaire", desc: "Play Pyramid Solitaire online" },
   { href: "/pyramid/how-to-play", label: "Pyramid Rules", desc: "How to play Pyramid" },
   { href: "/pyramid/strategy", label: "Pyramid Strategy", desc: "Pyramid pairing techniques" },
   { href: "/bakers-game", label: "Baker's Game", desc: "Play Baker's Game online" },

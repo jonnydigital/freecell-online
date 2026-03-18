@@ -55,6 +55,7 @@ const contentPages = [
   { path: '/klondike/tips', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/klondike/winning-strategies', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/klondike/draw-1-vs-draw-3', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/pyramid', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/pyramid/how-to-play', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/pyramid/strategy', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/freecell-rules', changeFrequency: 'monthly', priority: 0.7 },

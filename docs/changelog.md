@@ -1,8 +1,10 @@
 # FreeCell Online — Changelog
 
-## 2026-03-17 (Tuesday Evening Build)
+## 2026-03-18 (Wednesday Overnight Build)
 ### Shipped
-- **📱 FreeCell Download / App SEO Page** (`/download`) — 654-line SEO content page targeting high-volume download-intent keywords: "freecell download", "freecell app", "free freecell download", "freecell for pc". Covers: Why our PWA beats app store apps, step-by-step install instructions for Chrome desktop/iPhone Safari/Android Chrome, feature overview (5 game modes, daily challenges, achievements, solver), comparison table (PWA vs native apps — free, no storage bloat, auto-updates, works on all platforms), 5-question FAQ. Article + BreadcrumbList + FAQPage JSON-LD schemas. AdUnit placements. Cross-linked to /how-to-play, /daily-freecell, /achievements, /solver, /microsoft-freecell. Added to sitemap (priority 0.7) and SiteFooter Explore column. 3 files changed, 656 insertions. (32nd consecutive night of shipping)
+- **🔺 Pyramid Solitaire — Complete New Game Mode** — Full Pyramid Solitaire implementation: PyramidEngine (472 lines) with 28-card pyramid layout, stock/waste pile, pair-to-13 matching logic; PhaserScene (1,038 lines) with drag-and-drop, touch support, pyramid spatial layout, card reveal animations; game page integrated into variant system with stats/settings; How to Play page (780 lines) with full rules, scoring, strategy intro, FAQPage schema; Strategy page (692 lines) with advanced tips, card counting, pyramid clearing order. Integrated into GameBridge, PhaserConfig, HomeOverlay, MoreGames, SiteFooter, and sitemap. 3,191 lines total. 6th game variant (FreeCell, Baker's, Eight Off, Spider, Easy FreeCell, Pyramid).
+- **📱 FreeCell Download / App SEO Page** (`/download`) — 654-line SEO content page targeting high-volume download-intent keywords. PWA install instructions for all platforms, comparison table vs native apps, 5-question FAQ. Article + BreadcrumbList + FAQPage JSON-LD schemas. Added to sitemap and footer.
+- 16 files changed, 1,799 insertions. (32nd consecutive night of shipping)
 
 ## 2026-03-17 (Tuesday Overnight Build)
 ### Shipped

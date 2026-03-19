@@ -1,5 +1,11 @@
 # FreeCell Online — Changelog
 
+## 2026-03-19 (Thursday Overnight Build)
+### Shipped
+- **🎮 Games Hub Page** (`/games`) — 510-line index page showcasing all 7+ solitaire games with difficulty ratings, descriptions, and play links. Targets "solitaire games online free", "free card games online" keywords. WebPage + BreadcrumbList JSON-LD. Added to sitemap and footer.
+- **🔺 Pyramid Tips & Tricks** (`/pyramid/tips`) — 584-line SEO content page with 8 practical tips (scan before matching, King removal priority, stock cycling, row-by-row clearing, pair counting). Win rate expectations, FAQ. Article + BreadcrumbList + FAQPage JSON-LD. Completes Pyramid content suite (how-to-play, strategy, tips).
+- 5 files changed, 1,115 insertions. (33rd consecutive night of shipping)
+
 ## 2026-03-18 (Wednesday Overnight Build)
 ### Shipped
 - **🔺 Pyramid Solitaire — Complete New Game Mode** — Full Pyramid Solitaire implementation: PyramidEngine (472 lines) with 28-card pyramid layout, stock/waste pile, pair-to-13 matching logic; PhaserScene (1,038 lines) with drag-and-drop, touch support, pyramid spatial layout, card reveal animations; game page integrated into variant system with stats/settings; How to Play page (780 lines) with full rules, scoring, strategy intro, FAQPage schema; Strategy page (692 lines) with advanced tips, card counting, pyramid clearing order. Integrated into GameBridge, PhaserConfig, HomeOverlay, MoreGames, SiteFooter, and sitemap. 3,191 lines total. 6th game variant (FreeCell, Baker's, Eight Off, Spider, Easy FreeCell, Pyramid).

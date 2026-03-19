@@ -1,15 +1,17 @@
 {
-  "date": "2026-03-04",
-  "note": "GA4 (G-988ZBJSKVJ) data collection just went active. No historical data yet — 1 realtime user at 8:02 AM. Metrics will start populating within 24-48 hours.",
-  "visitors": 0,
-  "sessions": 0,
-  "realtimeUsers": 1,
-  "feedbackCount": 0,
-  "errorsLogged": 0,
-  "featuresShipped": [
-    "Dynamic sitemap.xml (19 content pages + 24 game routes)",
-    "FreeCell vs Spider comparison page (1000+ words SEO)",
-    "Card shadow depth layering (visual polish)"
-  ],
-  "nextPriority": "Leaderboard backend (Vercel KV) — highest-impact retention feature remaining"
+  "date": "2026-03-18",
+  "ga4_7d": {
+    "activeUsers": 0,
+    "newUsers": 0,
+    "sessions": 0,
+    "pageViews": 0
+  },
+  "ga4_30d": {
+    "activeUsers": 1,
+    "trend": "flat"
+  },
+  "notes": "Domain live since 03-13 (5 days). Google indexing in progress (156 pages discovered via GSC). Zero organic traffic expected for first 2-4 weeks on new domain. Night 32 shipped Pyramid Solitaire + Download/App SEO page.",
+  "streak": 32,
+  "lastShip": "Night 32 — Pyramid Solitaire + Download/App SEO page",
+  "blockedItems": ["AdSense publisher ID", "Sentry DSN", "Vercel KV for leaderboard"]
 }

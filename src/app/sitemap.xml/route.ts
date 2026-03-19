@@ -58,6 +58,8 @@ const contentPages = [
   { path: '/pyramid', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/pyramid/how-to-play', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/pyramid/strategy', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/pyramid/tips', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/games', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/freecell-rules', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/freecell-for-seniors', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/large-cards', changeFrequency: 'monthly', priority: 0.7 },

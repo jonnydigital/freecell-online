@@ -11,6 +11,7 @@ export default function SiteFooter() {
           { href: '/eight-off', label: 'Eight Off' },
           { href: '/easy-freecell', label: 'Easy FreeCell' },
           { href: '/winning-deals', label: 'Winning Deals' },
+          { href: '/games', label: 'All Games' },
         ]
       : [
           { href: '/', label: 'FreeCell' },
@@ -29,6 +30,7 @@ export default function SiteFooter() {
           { href: '/freecell/3-cell', label: '3-Cell FreeCell' },
           { href: '/klondike', label: 'Klondike Solitaire' },
           { href: '/pyramid', label: 'Pyramid Solitaire' },
+          { href: '/games', label: 'All Games' },
         ];
 
   const learnLinks =
@@ -40,6 +42,7 @@ export default function SiteFooter() {
           { href: '/spider/tips', label: 'Spider Tips' },
           { href: '/pyramid/how-to-play', label: 'Pyramid Rules' },
           { href: '/pyramid/strategy', label: 'Pyramid Strategy' },
+          { href: '/pyramid/tips', label: 'Pyramid Tips' },
           { href: '/freecell-vs-klondike', label: 'FreeCell vs Klondike' },
           { href: '/solitaire-types', label: 'Solitaire Types' },
           { href: '/faq', label: 'FAQ' },
@@ -66,6 +69,7 @@ export default function SiteFooter() {
           { href: '/klondike/draw-1-vs-draw-3', label: 'Draw 1 vs Draw 3' },
           { href: '/pyramid/how-to-play', label: 'Pyramid Rules' },
           { href: '/pyramid/strategy', label: 'Pyramid Strategy' },
+          { href: '/pyramid/tips', label: 'Pyramid Tips' },
           { href: '/spider/how-to-play', label: 'Spider Rules' },
           { href: '/spider/strategy', label: 'Spider Strategy' },
           { href: '/spider/tips', label: 'Spider Tips' },

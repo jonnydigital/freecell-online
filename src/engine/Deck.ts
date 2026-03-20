@@ -342,6 +342,56 @@ export function dealTriPeaksGame(gameNumber: number): { tableau: (Card | null)[]
   return { tableau, stock, waste };
 }
 
+/**
+ * Deal a Golf Solitaire game
+ * 7 tableau columns of 5 cards each (35 cards), all face-up.
+ * Remaining 17 cards: 16 to stock (face-down), 1 drawn to start waste (face-up).
+ */
+export function dealGolfGame(gameNumber: number): { tableau: Card[][]; stock: Card[]; waste: Card[] } {
+  if (gameNumber < 1 || gameNumber > 9999999 || !Number.isInteger(gameNumber)) {
+    throw new Error(`Invalid game number: ${gameNumber}. Must be integer 1-9999999.`);
+  }
+
+  const deck = createOrderedDeck();
+  const rng = new MSLCG(gameNumber);
+
+  // Shuffle using same MS algorithm
+  const dealt: Card[] = [];
+  let remaining = deck.length;
+  for (let i = 0; i < 52; i++) {
+    const j = rng.next() % remaining;
+    [deck[j], deck[remaining - 1]] = [deck[remaining - 1], deck[j]];
+    dealt.push(deck[remaining - 1]);
+    remaining--;
+  }
+
+  // Deal 35 cards to 7 columns of 5
+  const tableau: Card[][] = Array.from({ length: 7 }, () => []);
+  let cardIndex = 0;
+
+  for (let row = 0; row < 5; row++) {
+    for (let col = 0; col < 7; col++) {
+      const card = dealt[cardIndex++];
+      card.isFaceUp = true; // All tableau cards are face-up in Golf
+      tableau[col].push(card);
+    }
+  }
+
+  // Remaining 17 cards: last one goes to waste (face-up), rest to stock (face-down)
+  const stock: Card[] = [];
+  for (let i = cardIndex; i < 51; i++) {
+    dealt[i].isFaceUp = false;
+    stock.push(dealt[i]);
+  }
+
+  // First waste card
+  const wasteCard = dealt[51];
+  wasteCard.isFaceUp = true;
+  const waste: Card[] = [wasteCard];
+
+  return { tableau, stock, waste };
+}
+
 export function dealSpiderGame(gameNumber: number, difficulty: SpiderDifficulty) {
   const deck = createSpiderDeck(difficulty);
   const rng = new MSLCG(gameNumber);

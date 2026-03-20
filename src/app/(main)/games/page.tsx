@@ -6,7 +6,7 @@ import AdUnit from "@/components/AdUnit";
 import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionHeading, ContentBody } from "@/components/content";
 
 export const metadata: Metadata = {
-  title: "Free Solitaire Games Online | Play 7+ Card Games for Free",
+  title: "Free Solitaire Games Online | Play 8+ Card Games for Free",
   description:
     "Play the best free solitaire games online — FreeCell, Spider Solitaire, Klondike, Pyramid, Baker's Game, Eight Off, and more. No download, no sign-up. Choose your game and start playing instantly.",
   keywords: [
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     "best solitaire games",
   ],
   openGraph: {
-    title: "Free Solitaire Games Online | 7+ Card Games to Play Now",
+    title: "Free Solitaire Games Online | 8+ Card Games to Play Now",
     description:
       "FreeCell, Spider, Klondike, Pyramid, and more — all free, no download required. Pick a game and start playing.",
     url: absoluteUrl("/games"),
@@ -125,6 +125,20 @@ const games = [
     stackingRule: "Pair to 13",
   },
   {
+    name: "TriPeaks Solitaire",
+    href: "/tripeaks",
+    emoji: "⛰",
+    difficulty: "Medium",
+    difficultyColor: "text-amber-400",
+    description:
+      "Clear three overlapping peaks by moving cards that are ±1 rank from the waste pile top. Kings wrap to Aces and vice versa. Build streaks of consecutive moves for bonus points — the longer your streak, the higher your score.",
+    stats: "Win rate: ~90% · Streak scoring · 3 peaks",
+    winRate: "~90%",
+    columns: 10,
+    freeCells: 0,
+    stackingRule: "±1 rank (wrapping)",
+  },
+  {
     name: "Easy FreeCell",
     href: "/easy-freecell",
     emoji: "🌟",
@@ -188,7 +202,7 @@ export default function GamesPage() {
         "@context": "https://schema.org",
         "@type": "Article",
         headline: "Free Solitaire Games Online",
-        description: "Play 7+ free solitaire card games online — FreeCell, Spider, Klondike, Pyramid, and more.",
+        description: "Play 8+ free solitaire card games online — FreeCell, Spider, Klondike, Pyramid, TriPeaks, and more.",
         author: { "@type": "Organization", name: siteConfig.siteName, url: absoluteUrl("/") },
         publisher: { "@type": "Organization", name: siteConfig.siteName },
         datePublished: "2026-03-19",

@@ -1,5 +1,12 @@
 # FreeCell Online — Changelog
 
+## 2026-03-19 (Thursday Night Build)
+### Shipped
+- **🔺 TriPeaks Solitaire** — Full game mode (2,220 lines, 13 files). Engine with ±1 rank matching, K↔A wrapping, streak scoring. Phaser scene with 3-peak layout, flip animations, confetti win. Integrated into GameBridge, PhaserConfig, GameShell, MoreGames, SiteFooter, sitemap.
+- **📖 TriPeaks How to Play** (`/tripeaks/how-to-play`) — 508-line SEO content page: rules, scoring table, strategies, 8 FAQs. Article + HowTo + BreadcrumbList + FAQPage JSON-LD.
+- **8th playable game variant** on the site (FreeCell, Spider, Klondike, Pyramid, Baker's Game, Eight Off, Easy FreeCell, TriPeaks)
+- (34th consecutive night of shipping)
+
 ## 2026-03-19 (Thursday Overnight Build)
 ### Shipped
 - **🎮 Games Hub Page** (`/games`) — 510-line index page showcasing all 7+ solitaire games with difficulty ratings, descriptions, and play links. Targets "solitaire games online free", "free card games online" keywords. WebPage + BreadcrumbList JSON-LD. Added to sitemap and footer.

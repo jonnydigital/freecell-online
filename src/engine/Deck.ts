@@ -270,6 +270,78 @@ export function dealPyramidGame(gameNumber: number): { pyramid: Card[][]; stock:
   return { pyramid, stock };
 }
 
+/**
+ * Deal a TriPeaks Solitaire game
+ * 28 cards dealt in 4 rows forming 3 overlapping peaks:
+ *   Row 0: 3 peak tops (cols 0, 3, 6)
+ *   Row 1: 6 cards (cols 0, 1, 3, 4, 6, 7)
+ *   Row 2: 9 cards (cols 0-8)
+ *   Row 3: 10 base cards (cols 0-9), all face-up
+ * Rows 0-2 are initially face-down (flipped when uncovered)
+ * Remaining 24 cards: 23 to stock (face-down), 1 drawn to start waste (face-up)
+ */
+export function dealTriPeaksGame(gameNumber: number): { tableau: (Card | null)[][]; stock: Card[]; waste: Card[] } {
+  if (gameNumber < 1 || gameNumber > 9999999 || !Number.isInteger(gameNumber)) {
+    throw new Error(`Invalid game number: ${gameNumber}. Must be integer 1-9999999.`);
+  }
+
+  const deck = createOrderedDeck();
+  const rng = new MSLCG(gameNumber);
+
+  // Shuffle using same MS algorithm
+  const dealt: Card[] = [];
+  let remaining = deck.length;
+  for (let i = 0; i < 52; i++) {
+    const j = rng.next() % remaining;
+    [deck[j], deck[remaining - 1]] = [deck[remaining - 1], deck[j]];
+    dealt.push(deck[remaining - 1]);
+    remaining--;
+  }
+
+  // Row layout: which columns exist in each row
+  const ROW_COLS = [
+    [0, 3, 6],                         // row 0: 3 peak tops
+    [0, 1, 3, 4, 6, 7],                // row 1: 6 cards
+    [0, 1, 2, 3, 4, 5, 6, 7, 8],       // row 2: 9 cards
+    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],    // row 3: 10 base cards
+  ];
+
+  // Max column count per row for array sizing
+  const ROW_MAX_COL = [7, 8, 9, 10];
+
+  const tableau: (Card | null)[][] = ROW_MAX_COL.map(maxCol =>
+    Array.from({ length: maxCol }, () => null)
+  );
+
+  let cardIndex = 0;
+
+  // Deal tableau cards row by row
+  for (let row = 0; row < 4; row++) {
+    for (const col of ROW_COLS[row]) {
+      const card = dealt[cardIndex++];
+      // Row 3 (base) is face-up; rows 0-2 start face-down
+      // But cards in rows 0-2 that are immediately available should be face-up
+      // In TriPeaks, only base row starts face-up
+      card.isFaceUp = (row === 3);
+      tableau[row][col] = card;
+    }
+  }
+
+  // Remaining 24 cards: last one goes to waste (face-up), rest to stock (face-down)
+  const stock: Card[] = [];
+  for (let i = cardIndex; i < 51; i++) {
+    dealt[i].isFaceUp = false;
+    stock.push(dealt[i]);
+  }
+
+  // First waste card
+  const wasteCard = dealt[51];
+  wasteCard.isFaceUp = true;
+  const waste: Card[] = [wasteCard];
+
+  return { tableau, stock, waste };
+}
+
 export function dealSpiderGame(gameNumber: number, difficulty: SpiderDifficulty) {
   const deck = createSpiderDeck(difficulty);
   const rng = new MSLCG(gameNumber);

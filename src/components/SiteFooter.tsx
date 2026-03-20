@@ -10,6 +10,7 @@ export default function SiteFooter() {
           { href: '/bakers-game', label: "Baker's Game" },
           { href: '/eight-off', label: 'Eight Off' },
           { href: '/easy-freecell', label: 'Easy FreeCell' },
+          { href: '/tripeaks', label: 'TriPeaks Solitaire' },
           { href: '/winning-deals', label: 'Winning Deals' },
           { href: '/games', label: 'All Games' },
         ]
@@ -30,6 +31,7 @@ export default function SiteFooter() {
           { href: '/freecell/3-cell', label: '3-Cell FreeCell' },
           { href: '/klondike', label: 'Klondike Solitaire' },
           { href: '/pyramid', label: 'Pyramid Solitaire' },
+          { href: '/tripeaks', label: 'TriPeaks Solitaire' },
           { href: '/games', label: 'All Games' },
         ];
 
@@ -43,6 +45,7 @@ export default function SiteFooter() {
           { href: '/pyramid/how-to-play', label: 'Pyramid Rules' },
           { href: '/pyramid/strategy', label: 'Pyramid Strategy' },
           { href: '/pyramid/tips', label: 'Pyramid Tips' },
+          { href: '/tripeaks/how-to-play', label: 'TriPeaks Rules' },
           { href: '/freecell-vs-klondike', label: 'FreeCell vs Klondike' },
           { href: '/solitaire-types', label: 'Solitaire Types' },
           { href: '/faq', label: 'FAQ' },
@@ -70,6 +73,7 @@ export default function SiteFooter() {
           { href: '/pyramid/how-to-play', label: 'Pyramid Rules' },
           { href: '/pyramid/strategy', label: 'Pyramid Strategy' },
           { href: '/pyramid/tips', label: 'Pyramid Tips' },
+          { href: '/tripeaks/how-to-play', label: 'TriPeaks Rules' },
           { href: '/spider/how-to-play', label: 'Spider Rules' },
           { href: '/spider/strategy', label: 'Spider Strategy' },
           { href: '/spider/tips', label: 'Spider Tips' },

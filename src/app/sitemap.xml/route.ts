@@ -59,6 +59,8 @@ const contentPages = [
   { path: '/pyramid/how-to-play', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/pyramid/strategy', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/pyramid/tips', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/tripeaks', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/tripeaks/how-to-play', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/games', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/freecell-rules', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/freecell-for-seniors', changeFrequency: 'monthly', priority: 0.7 },

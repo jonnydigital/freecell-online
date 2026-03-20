@@ -1,5 +1,13 @@
 # FreeCell Online — Changelog
 
+## 2026-03-20 (Friday Overnight Build)
+### Shipped
+- **⛳ Golf Solitaire** — Full game mode (1,939 lines, 14 files). Engine with ±1 rank matching, K↔A wrapping, streak scoring. 7 columns × 5 cards, 17-card stock. Phaser scene with column layout, animations, streak counter.
+- **📖 Golf How to Play** (`/golf/how-to-play`) — 393-line SEO content page: rules, golf-themed scoring table (hole-in-one/birdie/par/bogey), 5 strategy tips, Golf vs TriPeaks comparison, 8 FAQs. Article + BreadcrumbList + FAQPage JSON-LD.
+- **9th playable game variant** (FreeCell, Spider, Klondike, Pyramid, Baker's Game, Eight Off, Easy FreeCell, TriPeaks, Golf)
+- Games hub updated to 9+ variants
+- (35th consecutive night of shipping)
+
 ## 2026-03-19 (Thursday Night Build)
 ### Shipped
 - **🔺 TriPeaks Solitaire** — Full game mode (2,220 lines, 13 files). Engine with ±1 rank matching, K↔A wrapping, streak scoring. Phaser scene with 3-peak layout, flip animations, confetti win. Integrated into GameBridge, PhaserConfig, GameShell, MoreGames, SiteFooter, sitemap.

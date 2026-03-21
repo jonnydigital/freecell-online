@@ -1,5 +1,10 @@
 # FreeCell Online — Changelog
 
+## 2026-03-21 (Saturday Night Build)
+### Shipped
+- **📖 Baker's Game + Eight Off How to Play Pages** — Two SEO content pages completing how-to-play coverage for all 11 game variants. Baker's Game: same-suit stacking rules, ~75% solvability, comparison table vs FreeCell, 7 FAQs. Eight Off: 8 free cells, King-only empty fills, ~90-95% solvability, 3-way comparison table, 7 FAQs. Both pages: Article + BreadcrumbList + FAQPage JSON-LD, 3 AdUnit placements, CardSection cross-links. SiteFooter + sitemap updated. 759 lines across 4 files.
+- (39th consecutive night of shipping)
+
 ## 2026-03-21 (Saturday Evening Build)
 ### Shipped
 - **📝 4 Strategy/Tips SEO Content Pages** — TriPeaks Tips, Golf Tips, Yukon Tips, Canfield Tips. Each page: 8 practical tips, win rate tables, cheat sheets, 4-5 FAQs, Article + BreadcrumbList + FAQPage JSON-LD. Sitemap + SiteFooter updated. 2,370 lines across 6 files. Content-focused build completing the tips suite for all new game variants.

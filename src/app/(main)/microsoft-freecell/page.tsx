@@ -545,7 +545,7 @@ export default function MicrosoftFreecellPage() {
                         href="/freecell-variants"
                         className="text-[#D4AF37] hover:underline"
                       >
-                        9+ variants
+                        10+ variants
                       </Link>{" "}
                       including reduced-cell modes
                     </td>

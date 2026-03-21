@@ -12,6 +12,7 @@ export default function SiteFooter() {
           { href: '/easy-freecell', label: 'Easy FreeCell' },
           { href: '/tripeaks', label: 'TriPeaks Solitaire' },
           { href: '/golf', label: 'Golf Solitaire' },
+          { href: '/yukon', label: 'Yukon Solitaire' },
           { href: '/winning-deals', label: 'Winning Deals' },
           { href: '/games', label: 'All Games' },
         ]
@@ -34,6 +35,7 @@ export default function SiteFooter() {
           { href: '/pyramid', label: 'Pyramid Solitaire' },
           { href: '/tripeaks', label: 'TriPeaks Solitaire' },
           { href: '/golf', label: 'Golf Solitaire' },
+          { href: '/yukon', label: 'Yukon Solitaire' },
           { href: '/games', label: 'All Games' },
         ];
 
@@ -49,6 +51,7 @@ export default function SiteFooter() {
           { href: '/pyramid/tips', label: 'Pyramid Tips' },
           { href: '/tripeaks/how-to-play', label: 'TriPeaks Rules' },
           { href: '/golf/how-to-play', label: 'Golf Rules' },
+          { href: '/yukon/how-to-play', label: 'Yukon Rules' },
           { href: '/freecell-vs-klondike', label: 'FreeCell vs Klondike' },
           { href: '/solitaire-types', label: 'Solitaire Types' },
           { href: '/faq', label: 'FAQ' },
@@ -78,6 +81,7 @@ export default function SiteFooter() {
           { href: '/pyramid/tips', label: 'Pyramid Tips' },
           { href: '/tripeaks/how-to-play', label: 'TriPeaks Rules' },
           { href: '/golf/how-to-play', label: 'Golf Rules' },
+          { href: '/yukon/how-to-play', label: 'Yukon Rules' },
           { href: '/spider/how-to-play', label: 'Spider Rules' },
           { href: '/spider/strategy', label: 'Spider Strategy' },
           { href: '/spider/tips', label: 'Spider Tips' },

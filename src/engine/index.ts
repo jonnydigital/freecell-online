@@ -9,3 +9,6 @@ export { GameTimer } from './GameTimer';
 export { KlondikeEngine } from './KlondikeEngine';
 export type { KlondikeGameState, KlondikeLocation, KlondikeMove, KlondikeDrawMode } from './KlondikeEngine';
 export { dealKlondikeGame } from './Deck';
+export { YukonEngine } from './YukonEngine';
+export type { YukonGameState, YukonLocation, YukonMove } from './YukonEngine';
+export { dealYukonGame } from './Deck';

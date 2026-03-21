@@ -392,6 +392,57 @@ export function dealGolfGame(gameNumber: number): { tableau: Card[][]; stock: Ca
   return { tableau, stock, waste };
 }
 
+/**
+ * Deal a Yukon Solitaire game
+ * 7 tableau columns. Column 1: 1 card (face up).
+ * Columns 2-7: (col) face-down cards + 5 face-up cards on top,
+ * except col 2 which has 1 face-down + 5 face-up = 6 cards.
+ * Total: 1+6+7+8+9+10+11 = 52 (all cards dealt, no stock).
+ */
+export function dealYukonGame(gameNumber: number): { cascades: Card[][] } {
+  if (gameNumber < 1 || gameNumber > 9999999 || !Number.isInteger(gameNumber)) {
+    throw new Error(`Invalid game number: ${gameNumber}. Must be integer 1-9999999.`);
+  }
+
+  const deck = createOrderedDeck();
+  const rng = new MSLCG(gameNumber);
+
+  // Shuffle using same MS algorithm
+  const dealt: Card[] = [];
+  let remaining = deck.length;
+  for (let i = 0; i < 52; i++) {
+    const j = rng.next() % remaining;
+    [deck[j], deck[remaining - 1]] = [deck[remaining - 1], deck[j]];
+    dealt.push(deck[remaining - 1]);
+    remaining--;
+  }
+
+  // Deal into 7 cascades
+  // Col 0: 1 face-up
+  // Col 1: 1 face-down + 5 face-up = 6
+  // Col 2: 2 face-down + 5 face-up = 7
+  // Col 3: 3 face-down + 5 face-up = 8
+  // Col 4: 4 face-down + 5 face-up = 9
+  // Col 5: 5 face-down + 5 face-up = 10
+  // Col 6: 6 face-down + 5 face-up = 11
+  const cascades: Card[][] = Array.from({ length: 7 }, () => []);
+  let cardIndex = 0;
+
+  for (let col = 0; col < 7; col++) {
+    const faceDownCount = col === 0 ? 0 : col;
+    const faceUpCount = col === 0 ? 1 : 5;
+    const totalCards = faceDownCount + faceUpCount;
+
+    for (let c = 0; c < totalCards; c++) {
+      const card = dealt[cardIndex++];
+      card.isFaceUp = c >= faceDownCount;
+      cascades[col].push(card);
+    }
+  }
+
+  return { cascades };
+}
+
 export function dealSpiderGame(gameNumber: number, difficulty: SpiderDifficulty) {
   const deck = createSpiderDeck(difficulty);
   const rng = new MSLCG(gameNumber);

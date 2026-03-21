@@ -10,6 +10,7 @@ const ALL_GAMES = [
   { slug: 'pyramid', label: 'Pyramid', href: '/pyramid', description: 'Match pairs that sum to 13 to clear the pyramid.' },
   { slug: 'tripeaks', label: 'TriPeaks', href: '/tripeaks', description: 'Clear three peaks by playing cards ±1 from the waste.' },
   { slug: 'golf', label: 'Golf Solitaire', href: '/golf', description: 'Clear seven columns by playing cards ±1 from the waste.' },
+  { slug: 'yukon', label: 'Yukon Solitaire', href: '/yukon', description: 'Move any face-up card in this Klondike variant — no stock pile.' },
   { slug: 'easy-freecell', label: 'Easy FreeCell', href: '/easy-freecell', description: 'Aces and twos pre-placed for a gentler start.' },
   { slug: 'freecell-1cell', label: '1-Cell FreeCell', href: '/freecell/1-cell', description: 'Just one free cell. Extremely challenging.' },
   { slug: 'freecell-2cell', label: '2-Cell FreeCell', href: '/freecell/2-cell', description: 'Two free cells. Very challenging.' },

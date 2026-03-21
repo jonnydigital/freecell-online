@@ -374,7 +374,7 @@ export default function HowToPlayGolfPage() {
       <CardSection>
         <ContentLinkCard
           title="All Solitaire Games"
-          description="Browse our full collection of 8+ free solitaire games."
+          description="Browse our full collection of 10+ free solitaire games."
           href="/games"
         />
         <ContentLinkCard

@@ -8,17 +8,18 @@ import { KlondikeScene } from './KlondikeScene';
 import { PyramidScene } from './PyramidScene';
 import { TriPeaksScene } from './TriPeaksScene';
 import { GolfScene } from './GolfScene';
+import { YukonScene } from './YukonScene';
 import { getThemeById, themes } from '../lib/themes';
 
 export function createPhaserConfig(
   parent: HTMLElement,
-  variant: 'freecell' | 'bakers-game' | 'eight-off' | 'easy-freecell' | 'freecell-1cell' | 'freecell-2cell' | 'freecell-3cell' | 'spider' | 'klondike' | 'pyramid' | 'tripeaks' | 'golf' = 'freecell'
+  variant: 'freecell' | 'bakers-game' | 'eight-off' | 'easy-freecell' | 'freecell-1cell' | 'freecell-2cell' | 'freecell-3cell' | 'spider' | 'klondike' | 'pyramid' | 'tripeaks' | 'golf' | 'yukon' = 'freecell'
 ): Phaser.Types.Core.GameConfig {
   // Read stored theme for initial background color (avoids flash of wrong color)
   const storedId = typeof window !== 'undefined' ? localStorage.getItem('theme-id') : null;
   const theme = storedId ? getThemeById(storedId) : themes[0];
 
-  const initialScene = variant === 'golf' ? GolfScene : variant === 'tripeaks' ? TriPeaksScene : variant === 'pyramid' ? PyramidScene : variant === 'klondike' ? KlondikeScene : variant === 'spider' ? SpiderScene : FreeCellScene;
+  const initialScene = variant === 'yukon' ? YukonScene : variant === 'golf' ? GolfScene : variant === 'tripeaks' ? TriPeaksScene : variant === 'pyramid' ? PyramidScene : variant === 'klondike' ? KlondikeScene : variant === 'spider' ? SpiderScene : FreeCellScene;
 
   return {
     type: Phaser.AUTO, // WebGL with Canvas fallback

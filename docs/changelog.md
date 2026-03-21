@@ -1,5 +1,10 @@
 # FreeCell Online — Changelog
 
+## 2026-03-21 (Saturday Night Build #2)
+### Shipped
+- **🃏🃏 Forty Thieves Solitaire** — First 2-deck game mode (2,831 lines, 14 files). FortyThievesEngine (550 lines): 104 cards, 10 tableau columns, 8 foundation piles, same-suit-only tableau building, single-card moves, draw-1 stock with no recycling. FortyThievesScene (1,535 lines): responsive 10-column layout with tight margins, drag-and-drop, auto-move, deal animation, win celebration. How to Play page with rules, 2-deck setup, strategy tips, FAQ. 12th playable game variant. One of the hardest solitaire games (~10% win rate). Targets "forty thieves solitaire" keyword cluster.
+- (40th consecutive night of shipping)
+
 ## 2026-03-21 (Saturday Night Build)
 ### Shipped
 - **📖 Baker's Game + Eight Off How to Play Pages** — Two SEO content pages completing how-to-play coverage for all 11 game variants. Baker's Game: same-suit stacking rules, ~75% solvability, comparison table vs FreeCell, 7 FAQs. Eight Off: 8 free cells, King-only empty fills, ~90-95% solvability, 3-way comparison table, 7 FAQs. Both pages: Article + BreadcrumbList + FAQPage JSON-LD, 3 AdUnit placements, CardSection cross-links. SiteFooter + sitemap updated. 759 lines across 4 files.

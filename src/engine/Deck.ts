@@ -544,3 +544,46 @@ export function dealSpiderGame(gameNumber: number, difficulty: SpiderDifficulty)
 
   return { cascades, stock };
 }
+
+/**
+ * Deal a Forty Thieves Solitaire game
+ * 2 decks (104 cards). 40 cards dealt face-up to 10 tableau columns (4 each).
+ * Remaining 64 cards go to stock (face-down).
+ */
+export function dealFortyThievesGame(gameNumber: number): { tableau: Card[][]; stock: Card[] } {
+  if (gameNumber < 1 || gameNumber > 9999999 || !Number.isInteger(gameNumber)) {
+    throw new Error(`Invalid game number: ${gameNumber}. Must be integer 1-9999999.`);
+  }
+
+  const deck = createOrderedDeck(2); // 2 decks = 104 cards
+  const rng = new MSLCG(gameNumber);
+
+  const dealt: Card[] = [];
+  let remaining = deck.length;
+  for (let i = 0; i < 104; i++) {
+    const j = rng.next() % remaining;
+    [deck[j], deck[remaining - 1]] = [deck[remaining - 1], deck[j]];
+    dealt.push(deck[remaining - 1]);
+    remaining--;
+  }
+
+  // Deal 40 cards to 10 tableau columns (4 each, all face-up)
+  const tableau: Card[][] = Array.from({ length: 10 }, () => []);
+  let cardIndex = 0;
+  for (let row = 0; row < 4; row++) {
+    for (let col = 0; col < 10; col++) {
+      const card = dealt[cardIndex++];
+      card.isFaceUp = true;
+      tableau[col].push(card);
+    }
+  }
+
+  // Remaining 64 cards go to stock (face-down)
+  const stock: Card[] = [];
+  for (let i = cardIndex; i < 104; i++) {
+    dealt[i].isFaceUp = false;
+    stock.push(dealt[i]);
+  }
+
+  return { tableau, stock };
+}

@@ -65,6 +65,8 @@ const contentPages = [
   { path: '/golf/how-to-play', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/canfield', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/canfield/how-to-play', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/forty-thieves', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/forty-thieves/how-to-play', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/tripeaks/tips', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/golf/tips', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/yukon/tips', changeFrequency: 'monthly', priority: 0.7 },

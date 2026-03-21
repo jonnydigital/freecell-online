@@ -12,6 +12,7 @@ const ALL_GAMES = [
   { slug: 'golf', label: 'Golf Solitaire', href: '/golf', description: 'Clear seven columns by playing cards ±1 from the waste.' },
   { slug: 'yukon', label: 'Yukon Solitaire', href: '/yukon', description: 'Move any face-up card in this Klondike variant — no stock pile.' },
   { slug: 'canfield', label: 'Canfield Solitaire', href: '/canfield', description: 'Build from a random base rank with a 13-card reserve. Casino classic.' },
+  { slug: 'forty-thieves', label: 'Forty Thieves', href: '/forty-thieves', description: 'Two decks, same-suit building, single card moves. Brutally hard.' },
   { slug: 'easy-freecell', label: 'Easy FreeCell', href: '/easy-freecell', description: 'Aces and twos pre-placed for a gentler start.' },
   { slug: 'freecell-1cell', label: '1-Cell FreeCell', href: '/freecell/1-cell', description: 'Just one free cell. Extremely challenging.' },
   { slug: 'freecell-2cell', label: '2-Cell FreeCell', href: '/freecell/2-cell', description: 'Two free cells. Very challenging.' },

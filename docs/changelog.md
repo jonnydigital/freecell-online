@@ -1,5 +1,10 @@
 # FreeCell Online — Changelog
 
+## 2026-03-21 (Saturday Overnight Build)
+### Shipped
+- **🃏 Canfield Solitaire** — Full game mode (2,881 lines, 16 files). CanfieldEngine (614 lines): 4 foundations with wrapping build-up from dynamic base rank, 4 tableau columns with alternating-color wrapping, 13-card reserve with auto-fill, draw-3 stock with unlimited redeals. CanfieldScene (1,606 lines): drag-and-drop, single-tap auto-move, deal animation, win celebration, reserve/stock/waste layout. How to Play page (315 lines) with rules, setup, strategy, FAQ. 11th playable game variant. Games hub updated.
+- (37th consecutive night of shipping)
+
 ## 2026-03-20 (Friday Evening Build)
 ### Shipped
 - **🃏 Yukon Solitaire** — Full game mode (2,365 lines, 16 files). YukonEngine (300 lines): Klondike-like but move any face-up card regardless of sequence, no stock/waste. YukonScene (1,330 lines): 7-column tableau, card flip animations, drag any exposed card. How to Play page (412 lines) with rules, strategy tips, FAQ. 10th playable game variant. Games hub updated to 10+ variants.

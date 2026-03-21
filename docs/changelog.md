@@ -1,5 +1,10 @@
 # FreeCell Online — Changelog
 
+## 2026-03-20 (Friday Evening Build)
+### Shipped
+- **🃏 Yukon Solitaire** — Full game mode (2,365 lines, 16 files). YukonEngine (300 lines): Klondike-like but move any face-up card regardless of sequence, no stock/waste. YukonScene (1,330 lines): 7-column tableau, card flip animations, drag any exposed card. How to Play page (412 lines) with rules, strategy tips, FAQ. 10th playable game variant. Games hub updated to 10+ variants.
+- (36th consecutive night of shipping)
+
 ## 2026-03-20 (Friday Overnight Build)
 ### Shipped
 - **⛳ Golf Solitaire** — Full game mode (1,939 lines, 14 files). Engine with ±1 rank matching, K↔A wrapping, streak scoring. 7 columns × 5 cards, 17-card stock. Phaser scene with column layout, animations, streak counter.

@@ -1,5 +1,10 @@
 # FreeCell Online — Changelog
 
+## 2026-03-21 (Saturday Evening Build)
+### Shipped
+- **📝 4 Strategy/Tips SEO Content Pages** — TriPeaks Tips, Golf Tips, Yukon Tips, Canfield Tips. Each page: 8 practical tips, win rate tables, cheat sheets, 4-5 FAQs, Article + BreadcrumbList + FAQPage JSON-LD. Sitemap + SiteFooter updated. 2,370 lines across 6 files. Content-focused build completing the tips suite for all new game variants.
+- (38th consecutive night of shipping)
+
 ## 2026-03-21 (Saturday Overnight Build)
 ### Shipped
 - **🃏 Canfield Solitaire** — Full game mode (2,881 lines, 16 files). CanfieldEngine (614 lines): 4 foundations with wrapping build-up from dynamic base rank, 4 tableau columns with alternating-color wrapping, 13-card reserve with auto-fill, draw-3 stock with unlimited redeals. CanfieldScene (1,606 lines): drag-and-drop, single-tap auto-move, deal animation, win celebration, reserve/stock/waste layout. How to Play page (315 lines) with rules, setup, strategy, FAQ. 11th playable game variant. Games hub updated.

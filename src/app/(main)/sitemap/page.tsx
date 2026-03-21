@@ -93,6 +93,8 @@ const variantGuides = [
   { href: "/bakers-game/strategy", label: "Baker's Game Strategy", desc: "Suit-building strategy" },
   { href: "/eight-off", label: "Eight Off", desc: "Play Eight Off online" },
   { href: "/eight-off/strategy", label: "Eight Off Strategy", desc: "Eight Off techniques" },
+  { href: "/canfield", label: "Canfield Solitaire", desc: "Play Canfield Solitaire online" },
+  { href: "/canfield/how-to-play", label: "Canfield Rules", desc: "How to play Canfield" },
 ];
 
 const legalLinks = [

@@ -443,6 +443,71 @@ export function dealYukonGame(gameNumber: number): { cascades: Card[][] } {
   return { cascades };
 }
 
+/**
+ * Deal a Canfield Solitaire game
+ * 13 cards to reserve (top face-up, rest face-down).
+ * 1 card face-up to start the first foundation (determines base rank).
+ * 4 tableau columns with 1 card each (face-up).
+ * Rest goes to stock (face-down).
+ */
+export function dealCanfieldGame(gameNumber: number): {
+  reserve: Card[];
+  foundations: Card[][];
+  tableau: Card[][];
+  stock: Card[];
+  foundationBaseRank: Rank;
+} {
+  if (gameNumber < 1 || gameNumber > 9999999 || !Number.isInteger(gameNumber)) {
+    throw new Error(`Invalid game number: ${gameNumber}. Must be integer 1-9999999.`);
+  }
+
+  const deck = createOrderedDeck();
+  const rng = new MSLCG(gameNumber);
+
+  // Shuffle using same MS algorithm
+  const dealt: Card[] = [];
+  let remaining = deck.length;
+  for (let i = 0; i < 52; i++) {
+    const j = rng.next() % remaining;
+    [deck[j], deck[remaining - 1]] = [deck[remaining - 1], deck[j]];
+    dealt.push(deck[remaining - 1]);
+    remaining--;
+  }
+
+  let cardIndex = 0;
+
+  // 13 cards to reserve (face-down, top face-up)
+  const reserve: Card[] = [];
+  for (let i = 0; i < 13; i++) {
+    const card = dealt[cardIndex++];
+    card.isFaceUp = (i === 12); // only top card face-up
+    reserve.push(card);
+  }
+
+  // 1 card to first foundation (face-up)
+  const foundationCard = dealt[cardIndex++];
+  foundationCard.isFaceUp = true;
+  const foundationBaseRank = foundationCard.rank;
+  const foundations: Card[][] = [[foundationCard], [], [], []];
+
+  // 4 tableau columns, 1 card each (face-up)
+  const tableau: Card[][] = [];
+  for (let col = 0; col < 4; col++) {
+    const card = dealt[cardIndex++];
+    card.isFaceUp = true;
+    tableau.push([card]);
+  }
+
+  // Rest to stock (face-down)
+  const stock: Card[] = [];
+  for (let i = cardIndex; i < 52; i++) {
+    dealt[i].isFaceUp = false;
+    stock.push(dealt[i]);
+  }
+
+  return { reserve, foundations, tableau, stock, foundationBaseRank };
+}
+
 export function dealSpiderGame(gameNumber: number, difficulty: SpiderDifficulty) {
   const deck = createSpiderDeck(difficulty);
   const rng = new MSLCG(gameNumber);

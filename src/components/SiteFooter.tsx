@@ -59,6 +59,8 @@ export default function SiteFooter() {
           { href: '/yukon/tips', label: 'Yukon Tips' },
           { href: '/canfield/how-to-play', label: 'Canfield Rules' },
           { href: '/canfield/tips', label: 'Canfield Tips' },
+          { href: '/bakers-game/how-to-play', label: "Baker's Game Rules" },
+          { href: '/eight-off/how-to-play', label: 'Eight Off Rules' },
           { href: '/freecell-vs-klondike', label: 'FreeCell vs Klondike' },
           { href: '/solitaire-types', label: 'Solitaire Types' },
           { href: '/faq', label: 'FAQ' },
@@ -97,7 +99,9 @@ export default function SiteFooter() {
           { href: '/spider/how-to-play', label: 'Spider Rules' },
           { href: '/spider/strategy', label: 'Spider Strategy' },
           { href: '/spider/tips', label: 'Spider Tips' },
+          { href: '/bakers-game/how-to-play', label: "Baker's Game Rules" },
           { href: '/bakers-game/strategy', label: "Baker's Game Strategy" },
+          { href: '/eight-off/how-to-play', label: 'Eight Off Rules' },
           { href: '/eight-off/strategy', label: 'Eight Off Strategy' },
         ];
 

@@ -648,6 +648,50 @@ export function dealSeahavenGame(gameNumber: number): { tableau: Card[][]; freeC
   return { tableau, freeCellCards };
 }
 
+/**
+ * Deal a Beleaguered Castle game
+ * Remove all 4 aces and pre-place them on foundations.
+ * Remaining 48 cards dealt face-up into 8 columns of 6 cards each.
+ */
+export function dealBeleagueredCastleGame(gameNumber: number): { tableau: Card[][]; aces: Card[] } {
+  if (gameNumber < 1 || gameNumber > 9999999 || !Number.isInteger(gameNumber)) {
+    throw new Error(`Invalid game number: ${gameNumber}. Must be integer 1-9999999.`);
+  }
+
+  const deck = createOrderedDeck();
+  const rng = new MSLCG(gameNumber);
+
+  // Shuffle using same MS algorithm
+  const dealt: Card[] = [];
+  let remaining = deck.length;
+  for (let i = 0; i < 52; i++) {
+    const j = rng.next() % remaining;
+    [deck[j], deck[remaining - 1]] = [deck[remaining - 1], deck[j]];
+    dealt.push(deck[remaining - 1]);
+    remaining--;
+  }
+
+  // Separate aces from the rest
+  const aces: Card[] = [];
+  const nonAces: Card[] = [];
+  for (const card of dealt) {
+    card.isFaceUp = true;
+    if (card.rank === 1) {
+      aces.push(card);
+    } else {
+      nonAces.push(card);
+    }
+  }
+
+  // Deal 48 non-ace cards into 8 columns of 6
+  const tableau: Card[][] = Array.from({ length: 8 }, () => []);
+  for (let i = 0; i < 48; i++) {
+    tableau[i % 8].push(nonAces[i]);
+  }
+
+  return { tableau, aces };
+}
+
 export function dealFortyThievesGame(gameNumber: number): { tableau: Card[][]; stock: Card[] } {
   if (gameNumber < 1 || gameNumber > 9999999 || !Number.isInteger(gameNumber)) {
     throw new Error(`Invalid game number: ${gameNumber}. Must be integer 1-9999999.`);

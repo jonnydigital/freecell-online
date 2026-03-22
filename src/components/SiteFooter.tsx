@@ -17,6 +17,7 @@ export default function SiteFooter() {
           { href: '/forty-thieves', label: 'Forty Thieves' },
           { href: '/scorpion', label: 'Scorpion Solitaire' },
           { href: '/seahaven', label: 'Seahaven Towers' },
+          { href: '/beleaguered-castle', label: 'Beleaguered Castle' },
           { href: '/winning-deals', label: 'Winning Deals' },
           { href: '/games', label: 'All Games' },
         ]
@@ -44,6 +45,7 @@ export default function SiteFooter() {
           { href: '/forty-thieves', label: 'Forty Thieves' },
           { href: '/scorpion', label: 'Scorpion Solitaire' },
           { href: '/seahaven', label: 'Seahaven Towers' },
+          { href: '/beleaguered-castle', label: 'Beleaguered Castle' },
           { href: '/games', label: 'All Games' },
         ];
 
@@ -71,6 +73,7 @@ export default function SiteFooter() {
           { href: '/forty-thieves/tips', label: 'Forty Thieves Tips' },
           { href: '/scorpion/how-to-play', label: 'Scorpion Rules' },
           { href: '/seahaven/how-to-play', label: 'Seahaven Rules' },
+          { href: '/beleaguered-castle/how-to-play', label: 'Beleaguered Castle Rules' },
           { href: '/freecell-vs-klondike', label: 'FreeCell vs Klondike' },
           { href: '/solitaire-types', label: 'Solitaire Types' },
           { href: '/faq', label: 'FAQ' },
@@ -117,6 +120,7 @@ export default function SiteFooter() {
           { href: '/forty-thieves/tips', label: 'Forty Thieves Tips' },
           { href: '/scorpion/how-to-play', label: 'Scorpion Rules' },
           { href: '/seahaven/how-to-play', label: 'Seahaven Rules' },
+          { href: '/beleaguered-castle/how-to-play', label: 'Beleaguered Castle Rules' },
         ];
 
   const exploreLinks =

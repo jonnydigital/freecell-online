@@ -6,7 +6,7 @@ import AdUnit from "@/components/AdUnit";
 import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionHeading, ContentBody } from "@/components/content";
 
 export const metadata: Metadata = {
-  title: "Free Solitaire Games Online | Play 13+ Card Games for Free",
+  title: "Free Solitaire Games Online | Play 15+ Card Games for Free",
   description:
     "Play the best free solitaire games online — FreeCell, Spider Solitaire, Klondike, Pyramid, Baker's Game, Eight Off, and more. No download, no sign-up. Choose your game and start playing instantly.",
   keywords: [
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     "best solitaire games",
   ],
   openGraph: {
-    title: "Free Solitaire Games Online | 13+ Card Games to Play Now",
+    title: "Free Solitaire Games Online | 15+ Card Games to Play Now",
     description:
       "FreeCell, Spider, Klondike, Pyramid, and more — all free, no download required. Pick a game and start playing.",
     url: absoluteUrl("/games"),
@@ -221,6 +221,20 @@ const games = [
     columns: 10,
     freeCells: 4,
     stackingRule: "Same suit",
+  },
+  {
+    name: "Beleaguered Castle",
+    href: "/beleaguered-castle",
+    emoji: "\u{1f3f0}",
+    difficulty: "Very Hard",
+    difficultyColor: "text-red-500",
+    description:
+      "Zero free cells. Aces pre-placed on foundations, 48 cards in 8 cascades. Build up by suit with descending-rank stacking regardless of suit. One of the hardest single-deck solitaire games.",
+    stats: "Win rate: ~25% \u00b7 1 deck \u00b7 8 columns \u00b7 0 free cells",
+    winRate: "~25%",
+    columns: 8,
+    freeCells: 0,
+    stackingRule: "Down, any suit",
   },
   {
     name: "Easy FreeCell",

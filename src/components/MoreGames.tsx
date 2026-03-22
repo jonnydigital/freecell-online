@@ -15,6 +15,7 @@ const ALL_GAMES = [
   { slug: 'forty-thieves', label: 'Forty Thieves', href: '/forty-thieves', description: 'Two decks, same-suit building, single card moves. Brutally hard.' },
   { slug: 'scorpion', label: 'Scorpion Solitaire', href: '/scorpion', description: 'Move any face-up card. Build same-suit runs from King to Ace.' },
   { slug: 'seahaven', label: 'Seahaven Towers', href: '/seahaven', description: 'Same-suit stacking, 10 columns, 4 free cells, single-card moves.' },
+  { slug: 'beleaguered-castle', label: 'Beleaguered Castle', href: '/beleaguered-castle', description: 'Zero free cells. Aces pre-placed, descending rank stacking. Brutally hard.' },
   { slug: 'easy-freecell', label: 'Easy FreeCell', href: '/easy-freecell', description: 'Aces and twos pre-placed for a gentler start.' },
   { slug: 'freecell-1cell', label: '1-Cell FreeCell', href: '/freecell/1-cell', description: 'Just one free cell. Extremely challenging.' },
   { slug: 'freecell-2cell', label: '2-Cell FreeCell', href: '/freecell/2-cell', description: 'Two free cells. Very challenging.' },

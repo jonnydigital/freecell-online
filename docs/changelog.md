@@ -1,5 +1,10 @@
 # FreeCell Online — Changelog
 
+## 2026-03-22 (Sunday Overnight Build #2)
+### Shipped
+- **🏰 Seahaven Towers Solitaire** — Full game mode (2,768 lines, 14 files). SeahavenEngine (487 lines): 10 tableau columns of 5 cards, 4 free cells (2 start occupied), same-suit descending stacking, single-card moves only, Kings-only in empty columns, auto-move to foundations. SeahavenScene (1,488 lines): responsive 10-column layout, drag-and-drop, single-tap auto-move, deal animation, win celebration, sound effects, undo/redo. How to Play page (483 lines): rules, setup, 6 strategy tips, Seahaven vs FreeCell vs Baker's Game comparison table, 7 FAQs. Article + BreadcrumbList + FAQPage JSON-LD. 3 AdUnit placements. 14th playable game variant.
+- 14 files changed, 2,768 insertions. (42nd consecutive night of shipping)
+
 ## 2026-03-22 (Sunday Overnight Build)
 ### Shipped
 - **🦂 Scorpion Solitaire** — Full game mode (2,416 lines, 15 files). ScorpionEngine (393 lines): move any face-up card regardless of sequence, same-suit building, K→A completed runs vanish from tableau, 3-card reserve, King-only empty columns, face-down card reveals. ScorpionScene (1,498 lines): 7-column tableau with face-down cards, reserve dealing button, run completion animations, drag-and-drop. How to Play page (525 lines): rules, setup, strategy tips, Scorpion vs Spider vs Yukon comparison table, 7 FAQs. Article + BreadcrumbList + FAQPage JSON-LD. 13th playable game variant.

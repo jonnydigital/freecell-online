@@ -15,6 +15,7 @@ export default function SiteFooter() {
           { href: '/yukon', label: 'Yukon Solitaire' },
           { href: '/canfield', label: 'Canfield Solitaire' },
           { href: '/forty-thieves', label: 'Forty Thieves' },
+          { href: '/scorpion', label: 'Scorpion Solitaire' },
           { href: '/winning-deals', label: 'Winning Deals' },
           { href: '/games', label: 'All Games' },
         ]
@@ -40,6 +41,7 @@ export default function SiteFooter() {
           { href: '/yukon', label: 'Yukon Solitaire' },
           { href: '/canfield', label: 'Canfield Solitaire' },
           { href: '/forty-thieves', label: 'Forty Thieves' },
+          { href: '/scorpion', label: 'Scorpion Solitaire' },
           { href: '/games', label: 'All Games' },
         ];
 
@@ -64,6 +66,8 @@ export default function SiteFooter() {
           { href: '/bakers-game/how-to-play', label: "Baker's Game Rules" },
           { href: '/eight-off/how-to-play', label: 'Eight Off Rules' },
           { href: '/forty-thieves/how-to-play', label: 'Forty Thieves Rules' },
+          { href: '/forty-thieves/tips', label: 'Forty Thieves Tips' },
+          { href: '/scorpion/how-to-play', label: 'Scorpion Rules' },
           { href: '/freecell-vs-klondike', label: 'FreeCell vs Klondike' },
           { href: '/solitaire-types', label: 'Solitaire Types' },
           { href: '/faq', label: 'FAQ' },
@@ -107,6 +111,8 @@ export default function SiteFooter() {
           { href: '/eight-off/how-to-play', label: 'Eight Off Rules' },
           { href: '/eight-off/strategy', label: 'Eight Off Strategy' },
           { href: '/forty-thieves/how-to-play', label: 'Forty Thieves Rules' },
+          { href: '/forty-thieves/tips', label: 'Forty Thieves Tips' },
+          { href: '/scorpion/how-to-play', label: 'Scorpion Rules' },
         ];
 
   const exploreLinks =

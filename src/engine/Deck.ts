@@ -550,6 +550,59 @@ export function dealSpiderGame(gameNumber: number, difficulty: SpiderDifficulty)
  * 2 decks (104 cards). 40 cards dealt face-up to 10 tableau columns (4 each).
  * Remaining 64 cards go to stock (face-down).
  */
+/**
+ * Deal a Scorpion Solitaire game
+ * 7 tableau columns of 7 cards each (49 cards).
+ * Cols 0-3: top 3 face-down, bottom 4 face-up
+ * Cols 4-6: all 7 face-up
+ * Remaining 3 cards form the reserve (face-down)
+ */
+export function dealScorpionGame(gameNumber: number): { tableau: Card[][]; reserve: Card[] } {
+  if (gameNumber < 1 || gameNumber > 9999999 || !Number.isInteger(gameNumber)) {
+    throw new Error(`Invalid game number: ${gameNumber}. Must be integer 1-9999999.`);
+  }
+
+  const deck = createOrderedDeck();
+  const rng = new MSLCG(gameNumber);
+
+  // Shuffle using same MS algorithm
+  const dealt: Card[] = [];
+  let remaining = deck.length;
+  for (let i = 0; i < 52; i++) {
+    const j = rng.next() % remaining;
+    [deck[j], deck[remaining - 1]] = [deck[remaining - 1], deck[j]];
+    dealt.push(deck[remaining - 1]);
+    remaining--;
+  }
+
+  // Deal 49 cards to 7 columns of 7
+  const tableau: Card[][] = Array.from({ length: 7 }, () => []);
+  let cardIndex = 0;
+
+  for (let row = 0; row < 7; row++) {
+    for (let col = 0; col < 7; col++) {
+      const card = dealt[cardIndex++];
+      if (col < 4) {
+        // Cols 0-3: first 3 rows face-down, rows 3-6 face-up
+        card.isFaceUp = row >= 3;
+      } else {
+        // Cols 4-6: all face-up
+        card.isFaceUp = true;
+      }
+      tableau[col].push(card);
+    }
+  }
+
+  // Remaining 3 cards form the reserve (face-down)
+  const reserve: Card[] = [];
+  for (let i = cardIndex; i < 52; i++) {
+    dealt[i].isFaceUp = false;
+    reserve.push(dealt[i]);
+  }
+
+  return { tableau, reserve };
+}
+
 export function dealFortyThievesGame(gameNumber: number): { tableau: Card[][]; stock: Card[] } {
   if (gameNumber < 1 || gameNumber > 9999999 || !Number.isInteger(gameNumber)) {
     throw new Error(`Invalid game number: ${gameNumber}. Must be integer 1-9999999.`);

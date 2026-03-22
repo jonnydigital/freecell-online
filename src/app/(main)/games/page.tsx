@@ -195,6 +195,20 @@ const games = [
     stackingRule: "Same suit",
   },
   {
+    name: "Scorpion Solitaire",
+    href: "/scorpion",
+    emoji: "🦂",
+    difficulty: "Hard",
+    difficultyColor: "text-orange-400",
+    description:
+      "Move any face-up card and everything below it — no sequence required. Build same-suit runs from King to Ace. Completed runs vanish from the tableau.",
+    stats: "Win rate: ~50% · 1 deck · 7 columns · Same-suit stacking",
+    winRate: "~50%",
+    columns: 7,
+    freeCells: 0,
+    stackingRule: "Same suit",
+  },
+  {
     name: "Easy FreeCell",
     href: "/easy-freecell",
     emoji: "🌟",

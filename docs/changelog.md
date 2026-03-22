@@ -1,5 +1,11 @@
 # FreeCell Online — Changelog
 
+## 2026-03-22 (Sunday Overnight Build)
+### Shipped
+- **🦂 Scorpion Solitaire** — Full game mode (2,416 lines, 15 files). ScorpionEngine (393 lines): move any face-up card regardless of sequence, same-suit building, K→A completed runs vanish from tableau, 3-card reserve, King-only empty columns, face-down card reveals. ScorpionScene (1,498 lines): 7-column tableau with face-down cards, reserve dealing button, run completion animations, drag-and-drop. How to Play page (525 lines): rules, setup, strategy tips, Scorpion vs Spider vs Yukon comparison table, 7 FAQs. Article + BreadcrumbList + FAQPage JSON-LD. 13th playable game variant.
+- **📝 Forty Thieves Tips** (`/forty-thieves/tips`) — 655-line SEO content page completing the tips suite for the newest 2-deck game. 8 practical tips, win rate expectations, FAQ. Article + BreadcrumbList + FAQPage JSON-LD.
+- 15 files changed, 3,326 insertions. (41st consecutive night of shipping)
+
 ## 2026-03-21 (Saturday Night Build #2)
 ### Shipped
 - **🃏🃏 Forty Thieves Solitaire** — First 2-deck game mode (2,831 lines, 14 files). FortyThievesEngine (550 lines): 104 cards, 10 tableau columns, 8 foundation piles, same-suit-only tableau building, single-card moves, draw-1 stock with no recycling. FortyThievesScene (1,535 lines): responsive 10-column layout with tight margins, drag-and-drop, auto-move, deal animation, win celebration. How to Play page with rules, 2-deck setup, strategy tips, FAQ. 12th playable game variant. One of the hardest solitaire games (~10% win rate). Targets "forty thieves solitaire" keyword cluster.

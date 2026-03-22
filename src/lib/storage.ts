@@ -11,7 +11,7 @@ const SETTINGS_KEY = 'freecell_settings';
 const GAME_STATE_KEY = 'freecell_game_state';
 const STARS_KEY = 'freecell_stars';
 
-export type GameVariant = 'freecell' | 'bakers-game' | 'eight-off' | 'easy-freecell' | 'spider' | 'klondike' | 'pyramid' | 'tripeaks' | 'golf' | 'yukon' | 'canfield' | 'forty-thieves' | 'scorpion';
+export type GameVariant = 'freecell' | 'bakers-game' | 'eight-off' | 'easy-freecell' | 'spider' | 'klondike' | 'pyramid' | 'tripeaks' | 'golf' | 'yukon' | 'canfield' | 'forty-thieves' | 'scorpion' | 'seahaven';
 
 function getStatsKey(variant?: GameVariant): string {
   if (variant === 'klondike') return KLONDIKE_STATS_KEY;
@@ -22,6 +22,7 @@ function getStatsKey(variant?: GameVariant): string {
   if (variant === 'canfield') return 'canfield_stats';
   if (variant === 'forty-thieves') return 'forty_thieves_stats';
   if (variant === 'scorpion') return 'scorpion_stats';
+  if (variant === 'seahaven') return 'seahaven_stats';
   return STATS_KEY;
 }
 

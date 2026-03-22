@@ -603,6 +603,51 @@ export function dealScorpionGame(gameNumber: number): { tableau: Card[][]; reser
   return { tableau, reserve };
 }
 
+/**
+ * Deal a Seahaven Towers game
+ * 10 tableau columns of 5 cards each (50 cards), all face-up.
+ * Remaining 2 cards go to the first 2 free cells (face-up).
+ */
+export function dealSeahavenGame(gameNumber: number): { tableau: Card[][]; freeCellCards: Card[] } {
+  if (gameNumber < 1 || gameNumber > 9999999 || !Number.isInteger(gameNumber)) {
+    throw new Error(`Invalid game number: ${gameNumber}. Must be integer 1-9999999.`);
+  }
+
+  const deck = createOrderedDeck();
+  const rng = new MSLCG(gameNumber);
+
+  // Shuffle using same MS algorithm
+  const dealt: Card[] = [];
+  let remaining = deck.length;
+  for (let i = 0; i < 52; i++) {
+    const j = rng.next() % remaining;
+    [deck[j], deck[remaining - 1]] = [deck[remaining - 1], deck[j]];
+    dealt.push(deck[remaining - 1]);
+    remaining--;
+  }
+
+  // Deal 50 cards to 10 columns of 5
+  const tableau: Card[][] = Array.from({ length: 10 }, () => []);
+  let cardIndex = 0;
+
+  for (let row = 0; row < 5; row++) {
+    for (let col = 0; col < 10; col++) {
+      const card = dealt[cardIndex++];
+      card.isFaceUp = true;
+      tableau[col].push(card);
+    }
+  }
+
+  // Remaining 2 cards go to free cells (face-up)
+  const freeCellCards: Card[] = [];
+  for (let i = cardIndex; i < 52; i++) {
+    dealt[i].isFaceUp = true;
+    freeCellCards.push(dealt[i]);
+  }
+
+  return { tableau, freeCellCards };
+}
+
 export function dealFortyThievesGame(gameNumber: number): { tableau: Card[][]; stock: Card[] } {
   if (gameNumber < 1 || gameNumber > 9999999 || !Number.isInteger(gameNumber)) {
     throw new Error(`Invalid game number: ${gameNumber}. Must be integer 1-9999999.`);

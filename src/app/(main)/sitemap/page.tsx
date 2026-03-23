@@ -95,6 +95,8 @@ const variantGuides = [
   { href: "/eight-off/strategy", label: "Eight Off Strategy", desc: "Eight Off techniques" },
   { href: "/canfield", label: "Canfield Solitaire", desc: "Play Canfield Solitaire online" },
   { href: "/canfield/how-to-play", label: "Canfield Rules", desc: "How to play Canfield" },
+  { href: "/cruel", label: "Cruel Solitaire", desc: "Play Cruel Solitaire online" },
+  { href: "/cruel/how-to-play", label: "Cruel Rules", desc: "How to play Cruel Solitaire" },
 ];
 
 const legalLinks = [

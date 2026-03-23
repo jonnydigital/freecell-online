@@ -6,7 +6,7 @@ import AdUnit from "@/components/AdUnit";
 import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionHeading, ContentBody } from "@/components/content";
 
 export const metadata: Metadata = {
-  title: "Free Solitaire Games Online | Play 16+ Card Games for Free",
+  title: "Free Solitaire Games Online | Play 17+ Card Games for Free",
   description:
     "Play the best free solitaire games online — FreeCell, Spider Solitaire, Klondike, Pyramid, Baker's Game, Eight Off, and more. No download, no sign-up. Choose your game and start playing instantly.",
   keywords: [
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     "best solitaire games",
   ],
   openGraph: {
-    title: "Free Solitaire Games Online | 16+ Card Games to Play Now",
+    title: "Free Solitaire Games Online | 17+ Card Games to Play Now",
     description:
       "FreeCell, Spider, Klondike, Pyramid, and more — all free, no download required. Pick a game and start playing.",
     url: absoluteUrl("/games"),
@@ -249,6 +249,20 @@ const games = [
     columns: 7,
     freeCells: 1,
     stackingRule: "Same suit (wrapping)",
+  },
+  {
+    name: "Cruel Solitaire",
+    href: "/cruel",
+    emoji: "\u267B",
+    difficulty: "Hard",
+    difficultyColor: "text-red-400",
+    description:
+      "12 piles of 4 cards, same-suit building, and a unique redeal mechanic. Gather all tableau cards and re-deal in groups of 4 without shuffling. Aces pre-placed, unlimited redeals.",
+    stats: "Win rate: ~25\u201330% \u00b7 1 deck \u00b7 12 piles \u00b7 Unlimited redeals",
+    winRate: "~25\u201330%",
+    columns: 12,
+    freeCells: 0,
+    stackingRule: "Same suit",
   },
   {
     name: "Easy FreeCell",

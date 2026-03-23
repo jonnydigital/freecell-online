@@ -43,7 +43,7 @@ const VARIANT_META: Record<string, { path: string; name: string }> = {
 
 interface GameShellProps {
   initialGameNumber?: number;
-  variant?: 'freecell' | 'bakers-game' | 'eight-off' | 'easy-freecell' | 'freecell-1cell' | 'freecell-2cell' | 'freecell-3cell' | 'spider' | 'klondike' | 'pyramid' | 'tripeaks' | 'golf' | 'yukon' | 'canfield' | 'forty-thieves' | 'scorpion' | 'seahaven' | 'beleaguered-castle' | 'penguin' | 'cruel' | 'clock' | 'accordion';
+  variant?: 'freecell' | 'bakers-game' | 'eight-off' | 'easy-freecell' | 'freecell-1cell' | 'freecell-2cell' | 'freecell-3cell' | 'spider' | 'klondike' | 'pyramid' | 'tripeaks' | 'golf' | 'yukon' | 'canfield' | 'forty-thieves' | 'scorpion' | 'seahaven' | 'beleaguered-castle' | 'penguin' | 'cruel' | 'clock' | 'accordion' | 'la-belle-lucie';
 }
 
 export default function GameShell({ initialGameNumber, variant = 'freecell' }: GameShellProps = {}) {

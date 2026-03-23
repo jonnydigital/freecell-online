@@ -293,6 +293,20 @@ const games = [
     stackingRule: "Rank or suit match",
   },
   {
+    name: "La Belle Lucie",
+    href: "/la-belle-lucie",
+    emoji: "\uD83C\uDF3C",
+    difficulty: "Hard",
+    difficultyColor: "text-orange-500",
+    description:
+      "52 cards dealt into 18 fans of 3 (plus 1 of 1). Same-suit descending stacking, top card only. 2 shuffled redeals allowed. On the final deal, the Merci rule lets you draw one buried card. An elegant classic.",
+    stats: "Win rate: ~15\u201320% \u00b7 1 deck \u00b7 18 fans \u00b7 Same suit descending",
+    winRate: "~15\u201320%",
+    columns: 18,
+    freeCells: 0,
+    stackingRule: "Same suit descending",
+  },
+  {
     name: "Easy FreeCell",
     href: "/easy-freecell",
     emoji: "🌟",

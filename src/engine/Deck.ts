@@ -901,3 +901,39 @@ export function dealFortyThievesGame(gameNumber: number): { tableau: Card[][]; s
 
   return { tableau, stock };
 }
+
+/**
+ * Deal a La Belle Lucie (The Fan) game
+ * 52 cards dealt face-up into 17 fans of 3 cards + 1 fan of 1 card = 18 piles.
+ */
+export function dealLaBelleLucieGame(gameNumber: number): { tableau: Card[][] } {
+  if (gameNumber < 1 || gameNumber > 9999999 || !Number.isInteger(gameNumber)) {
+    throw new Error(`Invalid game number: ${gameNumber}. Must be integer 1-9999999.`);
+  }
+
+  const deck = createOrderedDeck();
+  const rng = new MSLCG(gameNumber);
+
+  // Shuffle using same MS algorithm
+  const dealt: Card[] = [];
+  let remaining = deck.length;
+  for (let i = 0; i < 52; i++) {
+    const j = rng.next() % remaining;
+    [deck[j], deck[remaining - 1]] = [deck[remaining - 1], deck[j]];
+    dealt.push(deck[remaining - 1]);
+    remaining--;
+  }
+
+  // All cards face-up
+  for (const card of dealt) {
+    card.isFaceUp = true;
+  }
+
+  // Deal into 18 piles: 17 piles of 3 + 1 pile of 1
+  const tableau: Card[][] = Array.from({ length: 18 }, () => []);
+  for (let i = 0; i < 52; i++) {
+    tableau[Math.floor(i / 3)].push(dealt[i]);
+  }
+
+  return { tableau };
+}

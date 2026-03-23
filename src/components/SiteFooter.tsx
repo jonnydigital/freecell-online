@@ -22,6 +22,7 @@ export default function SiteFooter() {
           { href: '/cruel', label: 'Cruel Solitaire' },
           { href: '/clock', label: 'Clock Solitaire' },
           { href: '/accordion', label: 'Accordion Solitaire' },
+          { href: '/la-belle-lucie', label: 'La Belle Lucie' },
           { href: '/winning-deals', label: 'Winning Deals' },
           { href: '/games', label: 'All Games' },
         ]
@@ -54,6 +55,7 @@ export default function SiteFooter() {
           { href: '/cruel', label: 'Cruel Solitaire' },
           { href: '/clock', label: 'Clock Solitaire' },
           { href: '/accordion', label: 'Accordion Solitaire' },
+          { href: '/la-belle-lucie', label: 'La Belle Lucie' },
           { href: '/games', label: 'All Games' },
         ];
 
@@ -86,6 +88,7 @@ export default function SiteFooter() {
           { href: '/cruel/how-to-play', label: 'Cruel Rules' },
           { href: '/clock/how-to-play', label: 'Clock Rules' },
           { href: '/accordion/how-to-play', label: 'Accordion Rules' },
+          { href: '/la-belle-lucie/how-to-play', label: 'La Belle Lucie Rules' },
           { href: '/freecell-vs-klondike', label: 'FreeCell vs Klondike' },
           { href: '/solitaire-types', label: 'Solitaire Types' },
           { href: '/faq', label: 'FAQ' },
@@ -137,6 +140,7 @@ export default function SiteFooter() {
           { href: '/cruel/how-to-play', label: 'Cruel Rules' },
           { href: '/clock/how-to-play', label: 'Clock Rules' },
           { href: '/accordion/how-to-play', label: 'Accordion Rules' },
+          { href: '/la-belle-lucie/how-to-play', label: 'La Belle Lucie Rules' },
         ];
 
   const exploreLinks =

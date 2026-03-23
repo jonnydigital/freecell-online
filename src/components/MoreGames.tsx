@@ -20,6 +20,7 @@ const ALL_GAMES = [
   { slug: 'cruel', label: 'Cruel Solitaire', href: '/cruel', description: '12 piles, same-suit building, and unlimited redeals. A classic patience game.' },
   { slug: 'clock', label: 'Clock Solitaire', href: '/clock', description: 'Place cards on the clock face matching their rank. A classic patience game.' },
   { slug: 'accordion', label: 'Accordion Solitaire', href: '/accordion', description: 'Compress 52 cards into one pile by matching rank or suit. A challenging patience game.' },
+  { slug: 'la-belle-lucie', label: 'La Belle Lucie', href: '/la-belle-lucie', description: 'Fan patience with same-suit building, shuffled redeals, and the Merci rule.' },
   { slug: 'easy-freecell', label: 'Easy FreeCell', href: '/easy-freecell', description: 'Aces and twos pre-placed for a gentler start.' },
   { slug: 'freecell-1cell', label: '1-Cell FreeCell', href: '/freecell/1-cell', description: 'Just one free cell. Extremely challenging.' },
   { slug: 'freecell-2cell', label: '2-Cell FreeCell', href: '/freecell/2-cell', description: 'Two free cells. Very challenging.' },

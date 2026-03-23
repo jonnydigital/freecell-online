@@ -1,22 +1,33 @@
 {
-  "date": "2026-03-20",
-  "ga4_7d": {
-    "activeUsers": 0,
-    "newUsers": 0,
-    "sessions": 0,
-    "pageViews": 0
-  },
-  "ga4_30d": {
+  "date": "2026-03-23",
+  "ga4_28d": {
     "activeUsers": 1,
-    "trend": "flat"
+    "eventCount": 6,
+    "keyEvents": 0,
+    "newUsers": 1,
+    "note": "Still showing 'No data received' banner. GA4 tag may need verification."
   },
-  "notes": "Domain live since 03-13 (7 days). GSC has 156 pages discovered. Still in Google sandbox period — zero organic traffic expected for 2-4 weeks on a new domain. Night 35 shipped Golf Solitaire (9th game variant). 35 consecutive nights of shipping. Remaining backlog is mostly nice-to-haves or blocked on Jonathan (AdSense, Vercel KV). solitaireblog.com submission now unblocked (domain is live) — needs Jonathan approval to send.",
-  "streak": 35,
-  "lastShip": "Night 35 — Golf Solitaire + How to Play SEO page",
+  "gsc_3mo": {
+    "totalClicks": 2,
+    "totalImpressions": 40,
+    "avgCTR": "5%",
+    "avgPosition": 56.3,
+    "topQueries": [
+      {"query": "freecell online", "clicks": 0, "impressions": 9},
+      {"query": "freecell free online", "clicks": 0, "impressions": 5},
+      {"query": "play freecell online", "clicks": 0, "impressions": 3}
+    ],
+    "totalQueries": 14,
+    "note": "Domain live since 03-13 (10 days). Impressions appearing at position 56 — Google sandbox still active. Expected 2-6 weeks before meaningful ranking."
+  },
+  "streak": 45,
+  "lastShip": "Night 45 — Cruel Solitaire",
+  "totalGameVariants": 15,
   "blockedItems": [
     "AdSense publisher ID",
     "Sentry DSN",
     "Vercel KV for leaderboard"
   ],
-  "nextPriority": "solitaireblog.com submission (backlink), or video tutorial (dwell time + rich snippets)"
+  "nextPriority": "Traffic acquisition — domain is in Google sandbox. Features are ahead of traffic. Consider: solitaireblog.com submission (backlink), Reddit posts, Product Hunt launch once sandbox lifts.",
+  "gaSanityCheck": "GA4 showing 'No data received' despite tag being configured. Verify gtag snippet is firing on playfreecellonline.com."
 }

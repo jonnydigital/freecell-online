@@ -800,6 +800,70 @@ export function dealCruelGame(gameNumber: number): { tableau: Card[][]; aces: Ca
   return { tableau, aces };
 }
 
+/**
+ * Deal a Clock Patience (Clock Solitaire) game
+ * 52 cards dealt face-down into 13 piles of 4 cards each.
+ * Piles 0-11 = clock positions (A=0, 2=1, 3=2... Q=11), pile 12 = center (Kings).
+ */
+export function dealClockGame(gameNumber: number): { piles: Card[][] } {
+  if (gameNumber < 1 || gameNumber > 9999999 || !Number.isInteger(gameNumber)) {
+    throw new Error(`Invalid game number: ${gameNumber}. Must be integer 1-9999999.`);
+  }
+
+  const deck = createOrderedDeck();
+  const rng = new MSLCG(gameNumber);
+
+  // Shuffle using same MS algorithm
+  const dealt: Card[] = [];
+  let remaining = deck.length;
+  for (let i = 0; i < 52; i++) {
+    const j = rng.next() % remaining;
+    [deck[j], deck[remaining - 1]] = [deck[remaining - 1], deck[j]];
+    dealt.push(deck[remaining - 1]);
+    remaining--;
+  }
+
+  // Deal 52 cards face-down into 13 piles of 4
+  const piles: Card[][] = Array.from({ length: 13 }, () => []);
+  for (let i = 0; i < 52; i++) {
+    const card = dealt[i];
+    card.isFaceUp = false;
+    piles[i % 13].push(card);
+  }
+
+  return { piles };
+}
+
+/**
+ * Deal an Accordion Solitaire game
+ * All 52 cards dealt face-up in a single row (left to right).
+ */
+export function dealAccordionGame(gameNumber: number): { cards: Card[] } {
+  if (gameNumber < 1 || gameNumber > 9999999 || !Number.isInteger(gameNumber)) {
+    throw new Error(`Invalid game number: ${gameNumber}. Must be integer 1-9999999.`);
+  }
+
+  const deck = createOrderedDeck();
+  const rng = new MSLCG(gameNumber);
+
+  // Shuffle using same MS algorithm
+  const dealt: Card[] = [];
+  let remaining = deck.length;
+  for (let i = 0; i < 52; i++) {
+    const j = rng.next() % remaining;
+    [deck[j], deck[remaining - 1]] = [deck[remaining - 1], deck[j]];
+    dealt.push(deck[remaining - 1]);
+    remaining--;
+  }
+
+  // All cards face-up
+  for (const card of dealt) {
+    card.isFaceUp = true;
+  }
+
+  return { cards: dealt };
+}
+
 export function dealFortyThievesGame(gameNumber: number): { tableau: Card[][]; stock: Card[] } {
   if (gameNumber < 1 || gameNumber > 9999999 || !Number.isInteger(gameNumber)) {
     throw new Error(`Invalid game number: ${gameNumber}. Must be integer 1-9999999.`);

@@ -43,7 +43,7 @@ class GameBridge {
   /** Set before Phaser init to start with a specific game number */
   initialGameNumber: number | null = null;
   /** Game variant: 'freecell' (default), 'bakers-game'/'eight-off' (same-suit stacking), 'easy-freecell' (pre-placed aces+2s), restricted-cell variants, 'spider', 'klondike', 'pyramid', 'tripeaks', or 'golf' */
-  variant: 'freecell' | 'bakers-game' | 'eight-off' | 'easy-freecell' | 'freecell-1cell' | 'freecell-2cell' | 'freecell-3cell' | 'spider' | 'klondike' | 'pyramid' | 'tripeaks' | 'golf' | 'yukon' | 'canfield' | 'forty-thieves' | 'scorpion' | 'seahaven' | 'beleaguered-castle' | 'penguin' | 'cruel' = 'freecell';
+  variant: 'freecell' | 'bakers-game' | 'eight-off' | 'easy-freecell' | 'freecell-1cell' | 'freecell-2cell' | 'freecell-3cell' | 'spider' | 'klondike' | 'pyramid' | 'tripeaks' | 'golf' | 'yukon' | 'canfield' | 'forty-thieves' | 'scorpion' | 'seahaven' | 'beleaguered-castle' | 'penguin' | 'cruel' | 'clock' | 'accordion' = 'freecell';
   /** Spider difficulty level */
   spiderDifficulty: '1-suit' | '2-suit' | '4-suit' = '1-suit';
   /** Klondike draw mode */

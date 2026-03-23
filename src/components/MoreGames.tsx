@@ -18,6 +18,8 @@ const ALL_GAMES = [
   { slug: 'beleaguered-castle', label: 'Beleaguered Castle', href: '/beleaguered-castle', description: 'Zero free cells. Aces pre-placed, descending rank stacking. Brutally hard.' },
   { slug: 'penguin', label: 'Penguin Solitaire', href: '/penguin', description: 'Random beak card sets the base. Same-suit building with wrapping foundations and 1 flipper cell.' },
   { slug: 'cruel', label: 'Cruel Solitaire', href: '/cruel', description: '12 piles, same-suit building, and unlimited redeals. A classic patience game.' },
+  { slug: 'clock', label: 'Clock Solitaire', href: '/clock', description: 'Place cards on the clock face matching their rank. A classic patience game.' },
+  { slug: 'accordion', label: 'Accordion Solitaire', href: '/accordion', description: 'Compress 52 cards into one pile by matching rank or suit. A challenging patience game.' },
   { slug: 'easy-freecell', label: 'Easy FreeCell', href: '/easy-freecell', description: 'Aces and twos pre-placed for a gentler start.' },
   { slug: 'freecell-1cell', label: '1-Cell FreeCell', href: '/freecell/1-cell', description: 'Just one free cell. Extremely challenging.' },
   { slug: 'freecell-2cell', label: '2-Cell FreeCell', href: '/freecell/2-cell', description: 'Two free cells. Very challenging.' },

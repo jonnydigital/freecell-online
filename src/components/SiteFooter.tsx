@@ -20,6 +20,8 @@ export default function SiteFooter() {
           { href: '/beleaguered-castle', label: 'Beleaguered Castle' },
           { href: '/penguin', label: 'Penguin Solitaire' },
           { href: '/cruel', label: 'Cruel Solitaire' },
+          { href: '/clock', label: 'Clock Solitaire' },
+          { href: '/accordion', label: 'Accordion Solitaire' },
           { href: '/winning-deals', label: 'Winning Deals' },
           { href: '/games', label: 'All Games' },
         ]
@@ -50,6 +52,8 @@ export default function SiteFooter() {
           { href: '/beleaguered-castle', label: 'Beleaguered Castle' },
           { href: '/penguin', label: 'Penguin Solitaire' },
           { href: '/cruel', label: 'Cruel Solitaire' },
+          { href: '/clock', label: 'Clock Solitaire' },
+          { href: '/accordion', label: 'Accordion Solitaire' },
           { href: '/games', label: 'All Games' },
         ];
 
@@ -80,6 +84,8 @@ export default function SiteFooter() {
           { href: '/beleaguered-castle/how-to-play', label: 'Beleaguered Castle Rules' },
           { href: '/penguin/how-to-play', label: 'Penguin Rules' },
           { href: '/cruel/how-to-play', label: 'Cruel Rules' },
+          { href: '/clock/how-to-play', label: 'Clock Rules' },
+          { href: '/accordion/how-to-play', label: 'Accordion Rules' },
           { href: '/freecell-vs-klondike', label: 'FreeCell vs Klondike' },
           { href: '/solitaire-types', label: 'Solitaire Types' },
           { href: '/faq', label: 'FAQ' },
@@ -129,6 +135,8 @@ export default function SiteFooter() {
           { href: '/beleaguered-castle/how-to-play', label: 'Beleaguered Castle Rules' },
           { href: '/penguin/how-to-play', label: 'Penguin Rules' },
           { href: '/cruel/how-to-play', label: 'Cruel Rules' },
+          { href: '/clock/how-to-play', label: 'Clock Rules' },
+          { href: '/accordion/how-to-play', label: 'Accordion Rules' },
         ];
 
   const exploreLinks =

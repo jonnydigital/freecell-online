@@ -6,7 +6,7 @@ import AdUnit from "@/components/AdUnit";
 import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionHeading, ContentBody } from "@/components/content";
 
 export const metadata: Metadata = {
-  title: "Free Solitaire Games Online | Play 15+ Card Games for Free",
+  title: "Free Solitaire Games Online | Play 16+ Card Games for Free",
   description:
     "Play the best free solitaire games online — FreeCell, Spider Solitaire, Klondike, Pyramid, Baker's Game, Eight Off, and more. No download, no sign-up. Choose your game and start playing instantly.",
   keywords: [
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     "best solitaire games",
   ],
   openGraph: {
-    title: "Free Solitaire Games Online | 15+ Card Games to Play Now",
+    title: "Free Solitaire Games Online | 16+ Card Games to Play Now",
     description:
       "FreeCell, Spider, Klondike, Pyramid, and more — all free, no download required. Pick a game and start playing.",
     url: absoluteUrl("/games"),
@@ -235,6 +235,20 @@ const games = [
     columns: 8,
     freeCells: 0,
     stackingRule: "Down, any suit",
+  },
+  {
+    name: "Penguin Solitaire",
+    href: "/penguin",
+    emoji: "\uD83D\uDC27",
+    difficulty: "Medium",
+    difficultyColor: "text-amber-400",
+    description:
+      "A random beak card sets the foundation base rank for all four suits. Build up by suit with wrapping (K\u2192A\u21922), build tableau down by same suit, and manage a single flipper cell. Every deal is unique.",
+    stats: "Win rate: ~90\u201395% \u00b7 1 deck \u00b7 7 columns \u00b7 1 flipper cell",
+    winRate: "~90\u201395%",
+    columns: 7,
+    freeCells: 1,
+    stackingRule: "Same suit (wrapping)",
   },
   {
     name: "Easy FreeCell",

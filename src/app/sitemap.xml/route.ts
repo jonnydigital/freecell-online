@@ -76,6 +76,8 @@ const contentPages = [
   { path: '/scorpion/how-to-play', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/seahaven', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/seahaven/how-to-play', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/penguin', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/penguin/how-to-play', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/games', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/freecell-rules', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/freecell-for-seniors', changeFrequency: 'monthly', priority: 0.7 },

@@ -692,6 +692,70 @@ export function dealBeleagueredCastleGame(gameNumber: number): { tableau: Card[]
   return { tableau, aces };
 }
 
+/**
+ * Deal a Penguin Solitaire game
+ * Pick the first shuffled card's rank as the "beak" rank.
+ * Remove all 4 cards of that rank → foundation cards.
+ * Remaining 48 cards: 47 dealt to 7 tableau columns (first 5 get 7, last 2 get 6),
+ * 1 card to the flipper cell. All face-up.
+ */
+export function dealPenguinGame(gameNumber: number): {
+  tableau: Card[][];
+  flipper: Card | null;
+  beakRank: Rank;
+  foundationCards: Card[];
+} {
+  if (gameNumber < 1 || gameNumber > 9999999 || !Number.isInteger(gameNumber)) {
+    throw new Error(`Invalid game number: ${gameNumber}. Must be integer 1-9999999.`);
+  }
+
+  const deck = createOrderedDeck();
+  const rng = new MSLCG(gameNumber);
+
+  // Shuffle using same MS algorithm
+  const dealt: Card[] = [];
+  let remaining = deck.length;
+  for (let i = 0; i < 52; i++) {
+    const j = rng.next() % remaining;
+    [deck[j], deck[remaining - 1]] = [deck[remaining - 1], deck[j]];
+    dealt.push(deck[remaining - 1]);
+    remaining--;
+  }
+
+  // First card determines beak rank
+  const beakRank = dealt[0].rank;
+
+  // Separate beak-rank cards from the rest
+  const foundationCards: Card[] = [];
+  const nonBeakCards: Card[] = [];
+  for (const card of dealt) {
+    card.isFaceUp = true;
+    if (card.rank === beakRank) {
+      foundationCards.push(card);
+    } else {
+      nonBeakCards.push(card);
+    }
+  }
+
+  // Deal 47 cards to 7 columns (first 5 get 7 cards, last 2 get 6)
+  const tableau: Card[][] = Array.from({ length: 7 }, () => []);
+  let cardIndex = 0;
+
+  for (let row = 0; row < 7; row++) {
+    const colsThisRow = row < 6 ? 7 : 5; // row 6 (7th row) only fills first 5 cols
+    for (let col = 0; col < colsThisRow; col++) {
+      if (cardIndex < nonBeakCards.length) {
+        tableau[col].push(nonBeakCards[cardIndex++]);
+      }
+    }
+  }
+
+  // Last card goes to flipper
+  const flipper = cardIndex < nonBeakCards.length ? nonBeakCards[cardIndex] : null;
+
+  return { tableau, flipper, beakRank, foundationCards };
+}
+
 export function dealFortyThievesGame(gameNumber: number): { tableau: Card[][]; stock: Card[] } {
   if (gameNumber < 1 || gameNumber > 9999999 || !Number.isInteger(gameNumber)) {
     throw new Error(`Invalid game number: ${gameNumber}. Must be integer 1-9999999.`);

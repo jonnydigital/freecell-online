@@ -23,6 +23,7 @@ const ALL_GAMES = [
   { slug: 'la-belle-lucie', label: 'La Belle Lucie', href: '/la-belle-lucie', description: 'Fan patience with same-suit building, shuffled redeals, and the Merci rule.' },
   { slug: 'bisley', label: 'Bisley Solitaire', href: '/bisley', description: 'Dual-direction foundations — aces build up, kings build down, meeting in the middle.' },
   { slug: 'aces-up', label: 'Aces Up', href: '/aces-up', description: "Discard lower-ranked same-suit cards until only four Aces remain. Also known as Idiot's Delight." },
+  { slug: 'flower-garden', label: 'Flower Garden', href: '/flower-garden', description: '16-card bouquet reserve — every card available. Build down regardless of suit across 6 columns.' },
   { slug: 'easy-freecell', label: 'Easy FreeCell', href: '/easy-freecell', description: 'Aces and twos pre-placed for a gentler start.' },
   { slug: 'freecell-1cell', label: '1-Cell FreeCell', href: '/freecell/1-cell', description: 'Just one free cell. Extremely challenging.' },
   { slug: 'freecell-2cell', label: '2-Cell FreeCell', href: '/freecell/2-cell', description: 'Two free cells. Very challenging.' },

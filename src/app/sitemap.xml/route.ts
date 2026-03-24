@@ -86,6 +86,8 @@ const contentPages = [
   { path: '/accordion/how-to-play', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/la-belle-lucie', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/la-belle-lucie/how-to-play', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/flower-garden', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/flower-garden/how-to-play', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/games', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/freecell-rules', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/freecell-for-seniors', changeFrequency: 'monthly', priority: 0.7 },

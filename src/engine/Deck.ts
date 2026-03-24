@@ -1022,3 +1022,43 @@ export function dealAcesUpGame(gameNumber: number): { tableau: Card[][]; stock: 
 
   return { tableau, stock };
 }
+
+/**
+ * Deal a Flower Garden game
+ * 6 tableau columns of 6 cards each (36 cards), all face-up.
+ * Remaining 16 cards form the bouquet (reserve).
+ */
+export function dealFlowerGardenGame(gameNumber: number): { tableau: Card[][]; bouquet: Card[] } {
+  if (gameNumber < 1 || gameNumber > 9999999 || !Number.isInteger(gameNumber)) {
+    throw new Error(`Invalid game number: ${gameNumber}. Must be integer 1-9999999.`);
+  }
+
+  const deck = createOrderedDeck();
+  const rng = new MSLCG(gameNumber);
+
+  // Shuffle using same MS algorithm
+  const dealt: Card[] = [];
+  let remaining = deck.length;
+  for (let i = 0; i < 52; i++) {
+    const j = rng.next() % remaining;
+    [deck[j], deck[remaining - 1]] = [deck[remaining - 1], deck[j]];
+    dealt.push(deck[remaining - 1]);
+    remaining--;
+  }
+
+  // All cards face-up
+  for (const card of dealt) {
+    card.isFaceUp = true;
+  }
+
+  // Deal 36 cards into 6 columns of 6
+  const tableau: Card[][] = Array.from({ length: 6 }, () => []);
+  for (let i = 0; i < 36; i++) {
+    tableau[i % 6].push(dealt[i]);
+  }
+
+  // Remaining 16 cards form the bouquet
+  const bouquet = dealt.slice(36);
+
+  return { tableau, bouquet };
+}

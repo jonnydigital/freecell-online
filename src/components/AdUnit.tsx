@@ -20,16 +20,31 @@ export default function AdUnit({ slot, format = 'auto', className = '', width, h
 
   useEffect(() => {
     if (pushed.current) return;
-    try {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const adsbygoogle = (window as any).adsbygoogle;
-      if (adsbygoogle && adRef.current) {
-        adsbygoogle.push({});
-        pushed.current = true;
+
+    let attempts = 0;
+    const maxAttempts = 20; // retry for up to ~10 seconds
+
+    const tryPush = () => {
+      if (pushed.current) return;
+      try {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const adsbygoogle = (window as any).adsbygoogle;
+        if (adsbygoogle && adRef.current) {
+          adsbygoogle.push({});
+          pushed.current = true;
+          return;
+        }
+      } catch {
+        // AdSense not loaded or blocked
       }
-    } catch {
-      // AdSense not loaded or blocked
-    }
+      attempts++;
+      if (attempts < maxAttempts) {
+        setTimeout(tryPush, 500);
+      }
+    };
+
+    // Small initial delay to let AdSense script load
+    setTimeout(tryPush, 200);
   }, []);
 
   const isFixedSize = width && height;

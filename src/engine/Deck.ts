@@ -937,3 +937,88 @@ export function dealLaBelleLucieGame(gameNumber: number): { tableau: Card[][] } 
 
   return { tableau };
 }
+
+/**
+ * Deal a Bisley game
+ * Remove all 4 aces and pre-place them on ace foundations.
+ * Remaining 48 cards dealt face-up into 13 columns (~4 cards each).
+ * First 9 columns get 4 cards, last 4 columns get 3 cards.
+ */
+export function dealBisleyGame(gameNumber: number): { tableau: Card[][]; aces: Card[] } {
+  if (gameNumber < 1 || gameNumber > 9999999 || !Number.isInteger(gameNumber)) {
+    throw new Error(`Invalid game number: ${gameNumber}. Must be integer 1-9999999.`);
+  }
+
+  const deck = createOrderedDeck();
+  const rng = new MSLCG(gameNumber);
+
+  // Shuffle using same MS algorithm
+  const dealt: Card[] = [];
+  let remaining = deck.length;
+  for (let i = 0; i < 52; i++) {
+    const j = rng.next() % remaining;
+    [deck[j], deck[remaining - 1]] = [deck[remaining - 1], deck[j]];
+    dealt.push(deck[remaining - 1]);
+    remaining--;
+  }
+
+  // Separate aces from the rest
+  const aces: Card[] = [];
+  const nonAces: Card[] = [];
+  for (const card of dealt) {
+    card.isFaceUp = true;
+    if (card.rank === 1) {
+      aces.push(card);
+    } else {
+      nonAces.push(card);
+    }
+  }
+
+  // Deal 48 non-ace cards into 13 columns
+  // First 9 columns get 4 cards, last 4 get 3 cards (9*4 + 4*3 = 48)
+  const tableau: Card[][] = Array.from({ length: 13 }, () => []);
+  for (let i = 0; i < 48; i++) {
+    tableau[i % 13].push(nonAces[i]);
+  }
+
+  return { tableau, aces };
+}
+
+/**
+ * Deal an Aces Up (Idiot's Delight) game
+ * 4 tableau piles, each starting with 1 card. Remaining 48 cards go to stock.
+ */
+export function dealAcesUpGame(gameNumber: number): { tableau: Card[][]; stock: Card[] } {
+  if (gameNumber < 1 || gameNumber > 9999999 || !Number.isInteger(gameNumber)) {
+    throw new Error(`Invalid game number: ${gameNumber}. Must be integer 1-9999999.`);
+  }
+
+  const deck = createOrderedDeck();
+  const rng = new MSLCG(gameNumber);
+
+  // Shuffle using same MS algorithm
+  const dealt: Card[] = [];
+  let remaining = deck.length;
+  for (let i = 0; i < 52; i++) {
+    const j = rng.next() % remaining;
+    [deck[j], deck[remaining - 1]] = [deck[remaining - 1], deck[j]];
+    dealt.push(deck[remaining - 1]);
+    remaining--;
+  }
+
+  // All cards face-up
+  for (const card of dealt) {
+    card.isFaceUp = true;
+  }
+
+  // First 4 cards go to tableau (one per pile), rest to stock
+  const tableau: Card[][] = [
+    [dealt[0]],
+    [dealt[1]],
+    [dealt[2]],
+    [dealt[3]],
+  ];
+  const stock = dealt.slice(4).reverse(); // reverse so we pop from the end
+
+  return { tableau, stock };
+}

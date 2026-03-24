@@ -21,6 +21,8 @@ const ALL_GAMES = [
   { slug: 'clock', label: 'Clock Solitaire', href: '/clock', description: 'Place cards on the clock face matching their rank. A classic patience game.' },
   { slug: 'accordion', label: 'Accordion Solitaire', href: '/accordion', description: 'Compress 52 cards into one pile by matching rank or suit. A challenging patience game.' },
   { slug: 'la-belle-lucie', label: 'La Belle Lucie', href: '/la-belle-lucie', description: 'Fan patience with same-suit building, shuffled redeals, and the Merci rule.' },
+  { slug: 'bisley', label: 'Bisley Solitaire', href: '/bisley', description: 'Dual-direction foundations — aces build up, kings build down, meeting in the middle.' },
+  { slug: 'aces-up', label: 'Aces Up', href: '/aces-up', description: "Discard lower-ranked same-suit cards until only four Aces remain. Also known as Idiot's Delight." },
   { slug: 'easy-freecell', label: 'Easy FreeCell', href: '/easy-freecell', description: 'Aces and twos pre-placed for a gentler start.' },
   { slug: 'freecell-1cell', label: '1-Cell FreeCell', href: '/freecell/1-cell', description: 'Just one free cell. Extremely challenging.' },
   { slug: 'freecell-2cell', label: '2-Cell FreeCell', href: '/freecell/2-cell', description: 'Two free cells. Very challenging.' },

@@ -23,6 +23,8 @@ export default function SiteFooter() {
           { href: '/clock', label: 'Clock Solitaire' },
           { href: '/accordion', label: 'Accordion Solitaire' },
           { href: '/la-belle-lucie', label: 'La Belle Lucie' },
+          { href: '/bisley', label: 'Bisley Solitaire' },
+          { href: '/aces-up', label: 'Aces Up' },
           { href: '/winning-deals', label: 'Winning Deals' },
           { href: '/games', label: 'All Games' },
         ]
@@ -56,6 +58,8 @@ export default function SiteFooter() {
           { href: '/clock', label: 'Clock Solitaire' },
           { href: '/accordion', label: 'Accordion Solitaire' },
           { href: '/la-belle-lucie', label: 'La Belle Lucie' },
+          { href: '/bisley', label: 'Bisley Solitaire' },
+          { href: '/aces-up', label: 'Aces Up' },
           { href: '/games', label: 'All Games' },
         ];
 
@@ -89,6 +93,8 @@ export default function SiteFooter() {
           { href: '/clock/how-to-play', label: 'Clock Rules' },
           { href: '/accordion/how-to-play', label: 'Accordion Rules' },
           { href: '/la-belle-lucie/how-to-play', label: 'La Belle Lucie Rules' },
+          { href: '/bisley/how-to-play', label: 'Bisley Rules' },
+          { href: '/aces-up/how-to-play', label: 'Aces Up Rules' },
           { href: '/freecell-vs-klondike', label: 'FreeCell vs Klondike' },
           { href: '/solitaire-types', label: 'Solitaire Types' },
           { href: '/faq', label: 'FAQ' },
@@ -141,6 +147,8 @@ export default function SiteFooter() {
           { href: '/clock/how-to-play', label: 'Clock Rules' },
           { href: '/accordion/how-to-play', label: 'Accordion Rules' },
           { href: '/la-belle-lucie/how-to-play', label: 'La Belle Lucie Rules' },
+          { href: '/bisley/how-to-play', label: 'Bisley Rules' },
+          { href: '/aces-up/how-to-play', label: 'Aces Up Rules' },
         ];
 
   const exploreLinks =

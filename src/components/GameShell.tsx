@@ -43,7 +43,7 @@ const VARIANT_META: Record<string, { path: string; name: string }> = {
 
 interface GameShellProps {
   initialGameNumber?: number;
-  variant?: 'freecell' | 'bakers-game' | 'eight-off' | 'easy-freecell' | 'freecell-1cell' | 'freecell-2cell' | 'freecell-3cell' | 'spider' | 'klondike' | 'pyramid' | 'tripeaks' | 'golf' | 'yukon' | 'canfield' | 'forty-thieves' | 'scorpion' | 'seahaven' | 'beleaguered-castle' | 'penguin' | 'cruel' | 'clock' | 'accordion' | 'la-belle-lucie';
+  variant?: 'freecell' | 'bakers-game' | 'eight-off' | 'easy-freecell' | 'freecell-1cell' | 'freecell-2cell' | 'freecell-3cell' | 'spider' | 'klondike' | 'pyramid' | 'tripeaks' | 'golf' | 'yukon' | 'canfield' | 'forty-thieves' | 'scorpion' | 'seahaven' | 'beleaguered-castle' | 'penguin' | 'cruel' | 'clock' | 'accordion' | 'la-belle-lucie' | 'bisley' | 'aces-up';
 }
 
 export default function GameShell({ initialGameNumber, variant = 'freecell' }: GameShellProps = {}) {
@@ -96,7 +96,7 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
   }, [timeElapsed]);
 
   // Determine stats variant key
-  const statsVariant: GameVariant | undefined = variant === 'klondike' ? 'klondike' : variant === 'pyramid' ? 'pyramid' : variant === 'tripeaks' ? 'tripeaks' : variant === 'golf' ? 'golf' : variant === 'yukon' ? 'yukon' : variant === 'canfield' ? 'canfield' : variant === 'forty-thieves' ? 'forty-thieves' : variant === 'scorpion' ? 'scorpion' : variant === 'seahaven' ? 'seahaven' : variant === 'beleaguered-castle' ? 'beleaguered-castle' : variant === 'penguin' ? 'penguin' : variant === 'cruel' ? 'cruel' : variant === 'clock' ? 'clock' : variant === 'accordion' ? 'accordion' : undefined;
+  const statsVariant: GameVariant | undefined = variant === 'klondike' ? 'klondike' : variant === 'pyramid' ? 'pyramid' : variant === 'tripeaks' ? 'tripeaks' : variant === 'golf' ? 'golf' : variant === 'yukon' ? 'yukon' : variant === 'canfield' ? 'canfield' : variant === 'forty-thieves' ? 'forty-thieves' : variant === 'scorpion' ? 'scorpion' : variant === 'seahaven' ? 'seahaven' : variant === 'beleaguered-castle' ? 'beleaguered-castle' : variant === 'penguin' ? 'penguin' : variant === 'cruel' ? 'cruel' : variant === 'clock' ? 'clock' : variant === 'accordion' ? 'accordion' : variant === 'bisley' ? 'bisley' : variant === 'aces-up' ? 'aces-up' : undefined;
 
   // Timer effect
   useEffect(() => {

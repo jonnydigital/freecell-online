@@ -307,6 +307,20 @@ const games = [
     stackingRule: "Same suit descending",
   },
   {
+    name: "Bisley Solitaire",
+    href: "/bisley",
+    emoji: "\u2195\uFE0F",
+    difficulty: "Medium",
+    difficultyColor: "text-yellow-400",
+    description:
+      "Dual-direction foundations \u2014 aces build up while kings build down, meeting in the middle. 48 cards dealt into 13 columns with flexible same-suit up-or-down stacking. Only top cards move, empty columns stay empty. A rewarding patience game.",
+    stats: "Win rate: ~70\u201380% \u00b7 1 deck \u00b7 13 columns \u00b7 Same suit up/down",
+    winRate: "~70\u201380%",
+    columns: 13,
+    freeCells: 0,
+    stackingRule: "Same suit up or down",
+  },
+  {
     name: "Easy FreeCell",
     href: "/easy-freecell",
     emoji: "🌟",

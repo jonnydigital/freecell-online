@@ -97,6 +97,8 @@ const variantGuides = [
   { href: "/canfield/how-to-play", label: "Canfield Rules", desc: "How to play Canfield" },
   { href: "/cruel", label: "Cruel Solitaire", desc: "Play Cruel Solitaire online" },
   { href: "/cruel/how-to-play", label: "Cruel Rules", desc: "How to play Cruel Solitaire" },
+  { href: "/bisley", label: "Bisley Solitaire", desc: "Play Bisley Solitaire online" },
+  { href: "/bisley/how-to-play", label: "Bisley Rules", desc: "How to play Bisley Solitaire" },
 ];
 
 const legalLinks = [

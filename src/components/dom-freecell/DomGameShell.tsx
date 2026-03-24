@@ -33,9 +33,20 @@ import SidebarLeaderboard from '../sidebar/SidebarLeaderboard';
 import SidebarAchievements from '../sidebar/SidebarAchievements';
 import Leaderboard from '../Leaderboard';
 
+// Variant display names
+const VARIANT_NAMES: Record<string, string> = {
+  'freecell': 'FreeCell',
+  'bakers-game': "Baker's Game",
+  'eight-off': 'Eight Off',
+  'easy-freecell': 'Easy FreeCell',
+  'freecell-1cell': '1-Cell FreeCell',
+  'freecell-2cell': '2-Cell FreeCell',
+  'freecell-3cell': '3-Cell FreeCell',
+};
+
 // Game picker dropdown data
 const GAME_PICKER_SOLITAIRE = [
-  { label: 'FreeCell', href: isHubSite ? '/freecell' : '/', icon: '♠', current: true },
+  { label: 'FreeCell', href: isHubSite ? '/freecell' : '/', icon: '♠' },
   { label: 'Spider Solitaire', href: '/spider', icon: '♣' },
   { label: 'Klondike', href: '/klondike', icon: '♦' },
   { label: "Baker's Game", href: '/bakers-game', icon: '♥' },
@@ -55,6 +66,7 @@ const GAME_PICKER_VARIANTS = [
 
 interface DomGameShellProps {
   initialGameNumber?: number;
+  variant?: import('@/engine/FreeCellEngine').GameVariant;
 }
 
 // ---------------------------------------------------------------------------
@@ -77,7 +89,7 @@ function getStarCount(moves: number): number {
 // DomGameShell
 // ---------------------------------------------------------------------------
 
-export default function DomGameShell({ initialGameNumber }: DomGameShellProps) {
+export default function DomGameShell({ initialGameNumber, variant }: DomGameShellProps) {
   // ── Zustand selectors ──
   const gameNumber = useDomFreecellStore((s) => s.gameNumber);
   const moveCount = useDomFreecellStore((s) => s.moveCount);
@@ -102,6 +114,9 @@ export default function DomGameShell({ initialGameNumber }: DomGameShellProps) {
   const replayNext = useDomFreecellStore((s) => s.replayNext);
   const replayPrev = useDomFreecellStore((s) => s.replayPrev);
   const stopReplay = useDomFreecellStore((s) => s.stopReplay);
+
+  const setVariant = useDomFreecellStore((s) => s.setVariant);
+  const storeVariant = useDomFreecellStore((s) => s.variant);
 
   const canUndo = moveHistory.length > 0;
   const canRedo = redoStack.length > 0;
@@ -327,8 +342,12 @@ export default function DomGameShell({ initialGameNumber }: DomGameShellProps) {
 
   // ── Init: start with specified game, load stats, first-visit tutorial ──
   useEffect(() => {
+    // Set variant before starting game
+    if (variant && variant !== storeVariant) {
+      setVariant(variant);
+    }
     setStats(loadStats());
-    recordModePlayed('freecell');
+    recordModePlayed(variant || 'freecell');
     // Check if starting game is a daily challenge
     if (initialGameNumber && initialGameNumber === getTodaysSeed()) {
       setIsDailyGame(true);
@@ -760,7 +779,7 @@ export default function DomGameShell({ initialGameNumber }: DomGameShellProps) {
               fontWeight: 700,
               color: 'rgba(255,255,255,0.7)',
               letterSpacing: '0.02em',
-            }}>FreeCell</span>
+            }}>{VARIANT_NAMES[variant || 'freecell'] || 'FreeCell'}</span>
             <ChevronDown size={14} style={{ color: 'rgba(255,255,255,0.4)' }} className={`transition-transform ${showGamePicker ? 'rotate-180' : ''}`} />
           </button>
           {showGamePicker && (
@@ -771,11 +790,14 @@ export default function DomGameShell({ initialGameNumber }: DomGameShellProps) {
               <div className="px-3 pt-1 pb-1.5">
                 <span className="text-[10px] font-bold uppercase tracking-widest text-white/30">Solitaire Games</span>
               </div>
-              {GAME_PICKER_SOLITAIRE.map((g) => (
-                <Link key={g.label} href={g.href} onClick={() => setShowGamePicker(false)} className={`flex items-center gap-3 px-4 py-2 text-sm transition-colors ${g.current ? 'text-[#D4AF37] font-semibold hover:bg-white/5' : 'text-white/70 hover:bg-white/5 hover:text-white'}`}>
-                  <span className="w-4 text-center">{g.icon}</span> {g.label}
-                </Link>
-              ))}
+              {GAME_PICKER_SOLITAIRE.map((g) => {
+                const isCurrent = g.label === (VARIANT_NAMES[variant || 'freecell'] || 'FreeCell');
+                return (
+                  <Link key={g.label} href={g.href} onClick={() => setShowGamePicker(false)} className={`flex items-center gap-3 px-4 py-2 text-sm transition-colors ${isCurrent ? 'text-[#D4AF37] font-semibold hover:bg-white/5' : 'text-white/70 hover:bg-white/5 hover:text-white'}`}>
+                    <span className="w-4 text-center">{g.icon}</span> {g.label}
+                  </Link>
+                );
+              })}
               <div className="my-1 mx-3 border-t border-white/[0.08]" />
               <div className="px-3 pt-1 pb-1.5">
                 <span className="text-[10px] font-bold uppercase tracking-widest text-white/30">FreeCell Variants</span>

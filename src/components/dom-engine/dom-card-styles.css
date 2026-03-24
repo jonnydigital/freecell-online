@@ -1,0 +1,370 @@
+/* ============================================
+   DOM FreeCell — Card & Pile Styles
+   Premium, crisp card rendering via CSS
+   ============================================ */
+
+:root {
+  /* Card dimensions */
+  --card-width: 105px;
+  --card-height: 147px;
+  --card-border-radius: 9px;
+
+  /* Card face */
+  --card-bg: #fafaf8;
+  --card-border: 1px solid rgba(0, 0, 0, 0.12);
+
+  /* Shadows */
+  --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.08);
+  --card-shadow-dragging: 0 8px 24px rgba(0, 0, 0, 0.2),
+    0 2px 8px rgba(0, 0, 0, 0.12);
+
+  /* Suit colors */
+  --suit-red: #d42a2a;
+  --suit-black: #1a1a1a;
+
+  /* Empty slot */
+  --slot-bg: rgba(255, 255, 255, 0.04);
+  --slot-border: 1px solid rgba(255, 255, 255, 0.12);
+  --slot-border-radius: 8px;
+
+  /* Cascade overlap — visible portion of each stacked card */
+  --cascade-overlap: 32px;
+}
+
+.dom-board-surface {
+  --card-width: clamp(86px, calc((100vw - 420px) / 8.3), 120px);
+  --card-height: calc(var(--card-width) * 1.4);
+  --card-border-radius: clamp(8px, calc(var(--card-width) * 0.085), 10px);
+  --cascade-overlap: clamp(24px, calc(var(--card-width) * 0.3), 36px);
+  --pile-gap: clamp(4px, calc(var(--card-width) * 0.06), 10px);
+  --board-padding-x: clamp(8px, calc(var(--card-width) * 0.1), 16px);
+  --board-padding-y: clamp(12px, calc(var(--card-width) * 0.14), 22px);
+  --board-max-width: 100%;
+  --card-corner-offset-y: clamp(5px, calc(var(--card-width) * 0.06), 7px);
+  --card-corner-offset-x: clamp(6px, calc(var(--card-width) * 0.065), 8px);
+  --card-rank-size: clamp(14px, calc(var(--card-width) * 0.15), 18px);
+  --card-suit-small-size: clamp(13px, calc(var(--card-width) * 0.135), 16px);
+  --card-center-suit-size: clamp(34px, calc(var(--card-width) * 0.37), 44px);
+  --slot-label-size: clamp(22px, calc(var(--card-width) * 0.24), 28px);
+}
+
+@media (max-width: 767px) {
+  .dom-board-surface {
+    --card-width: clamp(34px, calc((100vw - 44px) / 8), 54px);
+    --card-height: calc(var(--card-width) * 1.4);
+    --card-border-radius: clamp(4px, calc(var(--card-width) * 0.09), 9px);
+    --cascade-overlap: clamp(10px, calc(var(--card-width) * 0.32), 18px);
+    --pile-gap: clamp(3px, 1vw, 5px);
+    --board-padding-x: clamp(6px, 2vw, 10px);
+    --board-padding-y: clamp(8px, 2.5vw, 12px);
+    --board-max-width: 100%;
+    --card-corner-offset-y: clamp(3px, calc(var(--card-width) * 0.06), 5px);
+    --card-corner-offset-x: clamp(3px, calc(var(--card-width) * 0.07), 6px);
+    --card-rank-size: clamp(9px, calc(var(--card-width) * 0.18), 14px);
+    --card-suit-small-size: clamp(8px, calc(var(--card-width) * 0.16), 12px);
+    --card-center-suit-size: clamp(15px, calc(var(--card-width) * 0.36), 24px);
+    --slot-label-size: clamp(10px, calc(var(--card-width) * 0.24), 18px);
+  }
+}
+
+/* ---- Base card ---- */
+
+.dom-card {
+  position: absolute;
+  width: var(--card-width);
+  height: var(--card-height);
+  background: var(--card-bg);
+  border: var(--card-border);
+  border-radius: var(--card-border-radius);
+  box-shadow: var(--card-shadow);
+  user-select: none;
+  touch-action: none;
+  will-change: transform;
+  cursor: grab;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
+    Arial, sans-serif;
+}
+
+/* Smooth position transitions when not being dragged */
+.dom-card-settling {
+  transition: transform 0.18s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    box-shadow 0.15s ease;
+}
+
+.dom-card--dragging {
+  box-shadow: var(--card-shadow-dragging);
+  transform: scale(1.02);
+  pointer-events: none;
+  cursor: grabbing;
+}
+
+/* ---- Card inner layout ---- */
+
+.dom-card__inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Corner label (rank + suit) — top-left */
+.dom-card__corner {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1;
+}
+
+.dom-card__corner--tl {
+  top: var(--card-corner-offset-y);
+  left: var(--card-corner-offset-x);
+}
+
+.dom-card__corner--br {
+  bottom: var(--card-corner-offset-y);
+  right: var(--card-corner-offset-x);
+  transform: rotate(180deg);
+}
+
+.dom-card__rank {
+  font-size: var(--card-rank-size);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.dom-card__suit-small {
+  font-size: var(--card-suit-small-size);
+  line-height: 1.1;
+}
+
+/* Center suit symbol */
+.dom-card__center-suit {
+  font-size: var(--card-center-suit-size);
+  line-height: 1;
+  opacity: 0.85;
+}
+
+/* Suit color modifiers */
+.dom-card--red {
+  color: var(--suit-red);
+}
+
+.dom-card--black {
+  color: var(--suit-black);
+}
+
+/* ---- Pile / Zone ---- */
+
+.dom-pile {
+  position: relative;
+}
+
+.dom-pile--cascade {
+  /* Cascade is just a positioning container; cards are absolute inside */
+  width: var(--card-width);
+  min-height: var(--card-height);
+}
+
+/* Empty slot — shown for freecell & foundation when empty */
+.dom-pile__slot {
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--slot-border-radius);
+  background: var(--slot-bg);
+  border: var(--slot-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.dom-pile__slot-label {
+  font-size: var(--slot-label-size);
+  color: rgba(255, 255, 255, 0.18);
+  user-select: none;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
+    Arial, sans-serif;
+}
+
+/* Drop-target highlight */
+.dom-pile--highlighted .dom-pile__slot {
+  border-color: rgba(76, 175, 80, 0.5);
+  box-shadow: 0 0 12px rgba(76, 175, 80, 0.2);
+}
+
+.dom-pile--highlighted.dom-pile--cascade {
+  background: rgba(76, 175, 80, 0.06);
+  border-radius: var(--slot-border-radius);
+}
+
+/* ---- Deal animation ---- */
+
+.dom-card-dealing {
+  animation: deal-in 0.25s ease-out forwards;
+  animation-delay: calc(var(--deal-index) * 30ms);
+  opacity: 0;
+}
+
+@keyframes deal-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ---- Selection highlight (click-to-move) ---- */
+
+.dom-card--selected {
+  box-shadow: 0 0 0 3px rgba(100, 180, 255, 0.9),
+    0 0 16px rgba(100, 180, 255, 0.4);
+  z-index: 100 !important;
+  transform: translateY(-4px);
+}
+
+/* ---- Hint highlight ---- */
+
+.dom-card--hint-source {
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.8),
+    0 0 16px rgba(212, 175, 55, 0.4);
+  z-index: 100 !important;
+  animation: hint-pulse 1s ease-in-out infinite;
+}
+
+.dom-pile--hint-target .dom-pile__slot {
+  border-color: rgba(212, 175, 55, 0.6);
+  box-shadow: 0 0 16px rgba(212, 175, 55, 0.3);
+  animation: hint-pulse 1s ease-in-out infinite;
+}
+
+.dom-pile--hint-target.dom-pile--cascade {
+  background: rgba(212, 175, 55, 0.08);
+  border-radius: var(--slot-border-radius);
+  box-shadow: inset 0 0 12px rgba(212, 175, 55, 0.15);
+  animation: hint-pulse 1s ease-in-out infinite;
+}
+
+@keyframes hint-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+/* ---- Idle hint (fade-in wrapper) ---- */
+
+.dom-board--idle-hint .dom-card--hint-source,
+.dom-board--idle-hint .dom-pile--hint-target .dom-pile__slot,
+.dom-board--idle-hint .dom-pile--hint-target.dom-pile--cascade {
+  animation: idle-hint-fadein 0.6s ease-out forwards, hint-pulse 1s ease-in-out 0.6s infinite;
+  opacity: 0;
+}
+
+@keyframes idle-hint-fadein {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ---- Win confetti ---- */
+
+.dom-confetti-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100;
+  overflow: hidden;
+}
+
+.dom-confetti-piece {
+  position: absolute;
+  top: -10px;
+  width: var(--confetti-size, 8px);
+  height: var(--confetti-size, 8px);
+  background: var(--confetti-color, #ffd700);
+  opacity: 0;
+  animation: confetti-fall var(--confetti-duration, 3s) ease-in forwards;
+  animation-delay: var(--confetti-delay, 0s);
+}
+
+.dom-confetti-piece--rect {
+  border-radius: 2px;
+  transform: rotate(var(--confetti-rotate, 0deg));
+}
+
+.dom-confetti-piece--circle {
+  border-radius: 50%;
+}
+
+@keyframes confetti-fall {
+  0% {
+    opacity: 1;
+    transform: translateY(0) translateX(0) rotate(0deg) scale(1);
+  }
+  25% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(var(--confetti-fall-distance, 100vh))
+      translateX(var(--confetti-drift, 0px))
+      rotate(var(--confetti-spin, 720deg))
+      scale(0.5);
+  }
+}
+
+/* ---- Foundation sparkle / particle burst ---- */
+
+.foundation-sparkle-container {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 200;
+  overflow: visible;
+}
+
+.foundation-sparkle-dot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--dot-size, 5px);
+  height: var(--dot-size, 5px);
+  border-radius: 50%;
+  background: var(--dot-color, #ffd700);
+  opacity: 0;
+  animation: sparkle-burst 0.6s ease-out forwards;
+  animation-delay: var(--dot-delay, 0ms);
+}
+
+@keyframes sparkle-burst {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) translate(0px, 0px) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%)
+      translate(var(--dot-tx, 0px), var(--dot-ty, 0px))
+      scale(0.3);
+  }
+}
+
+/* Sidebar scrollbar */
+.sidebar-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+.sidebar-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.sidebar-scroll::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 3px;
+}
+.sidebar-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}

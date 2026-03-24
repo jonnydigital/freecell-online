@@ -7,7 +7,7 @@
  */
 
 import { create } from 'zustand';
-import { FreeCellEngine, GameState, Location, Move } from '@/engine/FreeCellEngine';
+import { FreeCellEngine, GameState, GameVariant, Location, Move } from '@/engine/FreeCellEngine';
 import { Card, Suit } from '@/engine/Card';
 import type { SolverMove } from '@/solver/FreeCellSolver';
 
@@ -83,6 +83,10 @@ export interface DomFreecellState {
   endDrag: () => void;
   getDragPosition: () => DragPosition;
 
+  // Variant
+  variant: GameVariant;
+  setVariant: (variant: GameVariant) => void;
+
   // Expose engine for advanced queries (e.g. getValidRun, hasLegalMoves)
   getEngine: () => FreeCellEngine;
 
@@ -101,7 +105,8 @@ export interface DomFreecellState {
 // Engine instance – kept outside store to avoid serialisation issues
 // ---------------------------------------------------------------------------
 
-let _engine: FreeCellEngine = new FreeCellEngine(1);
+let _variant: GameVariant = 'freecell';
+let _engine: FreeCellEngine = new FreeCellEngine(1, _variant);
 
 function snapshotEngine(engine: FreeCellEngine): Pick<
   DomFreecellState,
@@ -135,11 +140,30 @@ export const domFreecellStore = create<DomFreecellState>()((set, get) => ({
   moveHistory: [],
   redoStack: [],
 
+  variant: _variant,
+
   // ------- Actions -------
+
+  setVariant: (variant: GameVariant) => {
+    _variant = variant;
+    const num = Math.floor(Math.random() * 1_000_000) + 1;
+    _engine = new FreeCellEngine(num, _variant);
+    set({
+      ...snapshotEngine(_engine),
+      variant: _variant,
+      dragState: null,
+      selection: null,
+      moveHistory: [],
+      redoStack: [],
+      timerStarted: false,
+      timerSeconds: 0,
+      noMovesAvailable: false,
+    });
+  },
 
   newGame: (gameNumber?: number) => {
     const num = gameNumber ?? Math.floor(Math.random() * 1_000_000) + 1;
-    _engine = new FreeCellEngine(num);
+    _engine = new FreeCellEngine(num, _variant);
     set({
       ...snapshotEngine(_engine),
       dragState: null,
@@ -154,7 +178,7 @@ export const domFreecellStore = create<DomFreecellState>()((set, get) => ({
 
   restart: () => {
     const num = get().gameNumber;
-    _engine = new FreeCellEngine(num);
+    _engine = new FreeCellEngine(num, _variant);
     set({
       ...snapshotEngine(_engine),
       dragState: null,
@@ -374,7 +398,7 @@ export const domFreecellStore = create<DomFreecellState>()((set, get) => ({
   startReplay: (moves: SolverMove[]) => {
     const gameNum = get().gameNumber;
     // Reset the engine to the initial deal
-    _engine = new FreeCellEngine(gameNum);
+    _engine = new FreeCellEngine(gameNum, _variant);
     set({
       ...snapshotEngine(_engine),
       replayMode: true,
@@ -440,7 +464,7 @@ export const domFreecellStore = create<DomFreecellState>()((set, get) => ({
 
     // Rebuild from scratch up to replayIndex - 1
     const targetIndex = replayIndex - 1;
-    _engine = new FreeCellEngine(preReplayGameNumber);
+    _engine = new FreeCellEngine(preReplayGameNumber, _variant);
 
     const SUIT_ORDER = [Suit.Clubs, Suit.Diamonds, Suit.Hearts, Suit.Spades];
     const allMoves: Move[] = [];
@@ -485,7 +509,7 @@ export const domFreecellStore = create<DomFreecellState>()((set, get) => ({
   stopReplay: () => {
     // Restore the game to the current game number (fresh deal)
     const gameNum = get().gameNumber;
-    _engine = new FreeCellEngine(gameNum);
+    _engine = new FreeCellEngine(gameNum, _variant);
     set({
       ...snapshotEngine(_engine),
       replayMode: false,

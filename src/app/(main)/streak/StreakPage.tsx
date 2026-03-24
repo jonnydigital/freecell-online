@@ -1,24 +1,44 @@
 'use client';
 
-import dynamic from 'next/dynamic';
-import GameErrorBoundary from '@/components/GameErrorBoundary';
+import GenericGamePage from '@/components/dom-generic/createGamePage';
+import { FreeCellEngine } from '@/engine/FreeCellEngine';
+import { Card, Suit } from '@/engine/Card';
 
-const StreakGameShell = dynamic(() => import('@/components/StreakGameShell'), {
-  ssr: false,
-  loading: () => (
-    <div className="flex items-center justify-center h-screen bg-[#0a3d0a]">
-      <div className="text-center">
-        <div className="text-4xl mb-4">&#128293;</div>
-        <p className="text-white/60 text-lg">Loading Puzzle Streak...</p>
-      </div>
-    </div>
-  ),
-});
+const moveHistory: any[] = [];
+
+const adapter = {
+  createEngine: (gameNumber: number) => {
+    moveHistory.length = 0;
+    return new FreeCellEngine(gameNumber, 'freecell');
+  },
+  getState: (engine: FreeCellEngine) => {
+    const s = engine.getState();
+    return {
+      cascades: s.cascades as Card[][],
+      foundations: s.foundations as Map<Suit, Card[]>,
+      freeCells: s.freeCells as (Card | null)[],
+      gameNumber: s.gameNumber,
+      moveCount: s.moveCount,
+      isWon: s.isWon,
+    };
+  },
+  getValidRun: (engine: FreeCellEngine, i: number) => engine.getValidRun(i),
+  isLegalMove: (engine: FreeCellEngine, from: any, to: any) => engine.isLegalMove(from, to),
+  executeMove: (engine: FreeCellEngine, from: any, to: any) => {
+    const move = engine.executeMove(from, to);
+    moveHistory.push(move);
+  },
+  undo: (engine: FreeCellEngine) => {
+    const move = moveHistory.pop();
+    if (move) engine.undoMove(move);
+  },
+  autoPlace: (engine: FreeCellEngine, _cardId: string) => {
+    const moves = engine.autoMoveToFoundations();
+    moveHistory.push(...moves);
+    return moves.length > 0;
+  },
+};
 
 export default function StreakPage() {
-  return (
-    <GameErrorBoundary>
-      <StreakGameShell />
-    </GameErrorBoundary>
-  );
+  return <GenericGamePage gameName="Puzzle Streak" gameIcon="🔥" gameHref="/streak" adapter={adapter} />;
 }

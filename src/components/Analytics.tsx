@@ -1,15 +1,15 @@
 'use client';
 
 import Script from 'next/script';
+import { siteConfig } from '@/lib/siteConfig';
 
-const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+// Use site config first, fall back to env var for backward compatibility
+const GA_MEASUREMENT_ID = siteConfig.gaMeasurementId || process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 
 /**
  * Google Analytics 4 script component.
- * Only renders if NEXT_PUBLIC_GA_MEASUREMENT_ID is set.
- *
- * Uses beforeInteractive for the external gtag.js so it loads early,
- * and a load callback to ensure config runs AFTER gtag.js is ready.
+ * Uses the measurement ID from siteConfig (per-site) or NEXT_PUBLIC_GA_MEASUREMENT_ID env var.
+ * Each site deployment (playfreecellonline.com, solitairestack.com) can have its own GA4 property.
  */
 export default function Analytics() {
   if (!GA_MEASUREMENT_ID) return null;

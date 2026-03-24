@@ -12,6 +12,7 @@ export interface SiteConfig {
   defaultDescription: string;
   privacyEmail: string;
   appleWebAppTitle: string;
+  gaMeasurementId: string;
 }
 
 const SITE_CONFIGS: Record<SiteKey, SiteConfig> = {
@@ -28,6 +29,7 @@ const SITE_CONFIGS: Record<SiteKey, SiteConfig> = {
       'Play FreeCell Solitaire online for free. No download, no signup. Classic Microsoft FreeCell deals, hints, undo, and more. Works on desktop and mobile.',
     privacyEmail: 'privacy@playfreecellonline.com',
     appleWebAppTitle: 'FreeCell',
+    gaMeasurementId: 'G-988ZBJSKVJ',
   },
   solitairestack: {
     key: 'solitairestack',
@@ -42,6 +44,7 @@ const SITE_CONFIGS: Record<SiteKey, SiteConfig> = {
       'Play solitaire games online for free. FreeCell, Spider Solitaire, and more with no download required.',
     privacyEmail: 'privacy@solitairestack.com',
     appleWebAppTitle: 'Solitaire',
+    gaMeasurementId: 'G-988ZBJSKVJ',
   },
 };
 

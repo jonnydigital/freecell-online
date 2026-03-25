@@ -1194,3 +1194,48 @@ export function dealCalculationGame(gameNumber: number): { stock: Card[] } {
 
   return { stock: dealt };
 }
+
+/**
+ * Deal a Monte Carlo Solitaire game.
+ * Shuffle 52 cards, first 25 go to a 5×5 grid (all face-up),
+ * remaining 27 are the stock.
+ */
+export function dealMonteCarloGame(gameNumber: number): { grid: (Card | null)[][]; stock: Card[] } {
+  if (gameNumber < 1 || gameNumber > 9999999 || !Number.isInteger(gameNumber)) {
+    throw new Error(`Invalid game number: ${gameNumber}. Must be integer 1-9999999.`);
+  }
+
+  const deck = createOrderedDeck();
+  const rng = new MSLCG(gameNumber);
+
+  // Shuffle using same MS algorithm
+  const dealt: Card[] = [];
+  let remaining = deck.length;
+  for (let i = 0; i < 52; i++) {
+    const j = rng.next() % remaining;
+    [deck[j], deck[remaining - 1]] = [deck[remaining - 1], deck[j]];
+    dealt.push(deck[remaining - 1]);
+    remaining--;
+  }
+
+  // All cards face-up
+  for (const card of dealt) {
+    card.isFaceUp = true;
+  }
+
+  // First 25 cards go to 5×5 grid
+  const grid: (Card | null)[][] = [];
+  let idx = 0;
+  for (let r = 0; r < 5; r++) {
+    const row: (Card | null)[] = [];
+    for (let c = 0; c < 5; c++) {
+      row.push(dealt[idx++]);
+    }
+    grid.push(row);
+  }
+
+  // Remaining 27 cards are the stock
+  const stock = dealt.slice(25);
+
+  return { grid, stock };
+}

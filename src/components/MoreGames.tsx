@@ -27,6 +27,7 @@ const ALL_GAMES = [
   { slug: 'bakers-dozen', label: "Baker's Dozen", href: '/bakers-dozen', description: '13 columns, Kings buried to the bottom. Build down regardless of suit. No free cells.' },
   { slug: 'gaps', label: 'Gaps (Montana)', href: '/gaps', description: 'Slide cards into gaps to arrange suit sequences in a 4×13 grid. A classic patience puzzle.' },
   { slug: 'calculation', label: 'Calculation', href: '/calculation', description: 'Math-based solitaire — build four foundations by counting in intervals of 1, 2, 3, and 4. Suit doesn\'t matter.' },
+  { slug: 'monte-carlo', label: 'Monte Carlo', href: '/monte-carlo', description: 'Match and remove adjacent same-rank pairs from a 5×5 grid. Consolidate and deal to clear all 52 cards.' },
   { slug: 'easy-freecell', label: 'Easy FreeCell', href: '/easy-freecell', description: 'Aces and twos pre-placed for a gentler start.' },
   { slug: 'freecell-1cell', label: '1-Cell FreeCell', href: '/freecell/1-cell', description: 'Just one free cell. Extremely challenging.' },
   { slug: 'freecell-2cell', label: '2-Cell FreeCell', href: '/freecell/2-cell', description: 'Two free cells. Very challenging.' },

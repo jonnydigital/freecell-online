@@ -102,6 +102,8 @@ const contentPages = [
   { path: '/flower-garden/how-to-play', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/calculation', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/calculation/how-to-play', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/monte-carlo', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/monte-carlo/how-to-play', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/games', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/freecell-rules', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/freecell-for-seniors', changeFrequency: 'monthly', priority: 0.7 },

@@ -321,6 +321,20 @@ const games = [
     stackingRule: "Same suit up or down",
   },
   {
+    name: "Baker's Dozen",
+    href: "/bakers-dozen",
+    emoji: "🃏",
+    difficulty: "Medium",
+    difficultyColor: "text-yellow-400",
+    description:
+      "All 52 cards dealt face-up into 13 columns of 4. Kings are moved to the bottom of their columns before play begins. Build down regardless of suit, single cards only. Empty columns can't be filled. A classic patience game with perfect information.",
+    stats: "Win rate: ~65\u201375% \u00b7 1 deck \u00b7 13 columns \u00b7 Any suit descending",
+    winRate: "~65\u201375%",
+    columns: 13,
+    freeCells: 0,
+    stackingRule: "Any suit descending",
+  },
+  {
     name: "Easy FreeCell",
     href: "/easy-freecell",
     emoji: "🌟",

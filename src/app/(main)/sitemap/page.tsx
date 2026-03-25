@@ -99,6 +99,8 @@ const variantGuides = [
   { href: "/cruel/how-to-play", label: "Cruel Rules", desc: "How to play Cruel Solitaire" },
   { href: "/bisley", label: "Bisley Solitaire", desc: "Play Bisley Solitaire online" },
   { href: "/bisley/how-to-play", label: "Bisley Rules", desc: "How to play Bisley Solitaire" },
+  { href: "/bakers-dozen", label: "Baker's Dozen Solitaire", desc: "Play Baker's Dozen Solitaire online" },
+  { href: "/bakers-dozen/how-to-play", label: "Baker's Dozen Rules", desc: "How to play Baker's Dozen Solitaire" },
 ];
 
 const legalLinks = [

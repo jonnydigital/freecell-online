@@ -11,7 +11,7 @@ const SETTINGS_KEY = 'freecell_settings';
 const GAME_STATE_KEY = 'freecell_game_state';
 const STARS_KEY = 'freecell_stars';
 
-export type GameVariant = 'freecell' | 'bakers-game' | 'eight-off' | 'easy-freecell' | 'spider' | 'klondike' | 'pyramid' | 'tripeaks' | 'golf' | 'yukon' | 'canfield' | 'forty-thieves' | 'scorpion' | 'seahaven' | 'beleaguered-castle' | 'penguin' | 'cruel' | 'clock' | 'accordion' | 'la-belle-lucie' | 'bisley' | 'aces-up' | 'flower-garden';
+export type GameVariant = 'freecell' | 'bakers-game' | 'eight-off' | 'easy-freecell' | 'spider' | 'klondike' | 'pyramid' | 'tripeaks' | 'golf' | 'yukon' | 'canfield' | 'forty-thieves' | 'scorpion' | 'seahaven' | 'beleaguered-castle' | 'penguin' | 'cruel' | 'clock' | 'accordion' | 'la-belle-lucie' | 'bisley' | 'aces-up' | 'flower-garden' | 'bakers-dozen';
 
 function getStatsKey(variant?: GameVariant): string {
   if (variant === 'klondike') return KLONDIKE_STATS_KEY;
@@ -29,6 +29,7 @@ function getStatsKey(variant?: GameVariant): string {
   if (variant === 'accordion') return 'accordion_stats';
   if (variant === 'bisley') return 'bisley_stats';
   if (variant === 'flower-garden') return 'flower_garden_stats';
+  if (variant === 'bakers-dozen') return 'bakers_dozen_stats';
   return STATS_KEY;
 }
 

@@ -1062,3 +1062,56 @@ export function dealFlowerGardenGame(gameNumber: number): { tableau: Card[][]; b
 
   return { tableau, bouquet };
 }
+
+/**
+ * Deal a Baker's Dozen game
+ * 52 cards dealt face-up into 13 columns of 4 cards each.
+ * After dealing, any Kings found in the tableau are moved to the
+ * BOTTOM of their respective column — this is the defining mechanic.
+ */
+export function dealBakersDozenGame(gameNumber: number): { tableau: Card[][] } {
+  if (gameNumber < 1 || gameNumber > 9999999 || !Number.isInteger(gameNumber)) {
+    throw new Error(`Invalid game number: ${gameNumber}. Must be integer 1-9999999.`);
+  }
+
+  const deck = createOrderedDeck();
+  const rng = new MSLCG(gameNumber);
+
+  // Shuffle using same MS algorithm
+  const dealt: Card[] = [];
+  let remaining = deck.length;
+  for (let i = 0; i < 52; i++) {
+    const j = rng.next() % remaining;
+    [deck[j], deck[remaining - 1]] = [deck[remaining - 1], deck[j]];
+    dealt.push(deck[remaining - 1]);
+    remaining--;
+  }
+
+  // All cards face-up
+  for (const card of dealt) {
+    card.isFaceUp = true;
+  }
+
+  // Deal 52 cards into 13 columns of 4
+  const tableau: Card[][] = Array.from({ length: 13 }, () => []);
+  for (let i = 0; i < 52; i++) {
+    tableau[i % 13].push(dealt[i]);
+  }
+
+  // Kings-to-bottom rule: move any Kings to the bottom of their column
+  for (let col = 0; col < 13; col++) {
+    const kings: Card[] = [];
+    const nonKings: Card[] = [];
+    for (const card of tableau[col]) {
+      if (card.rank === 13) {
+        kings.push(card);
+      } else {
+        nonKings.push(card);
+      }
+    }
+    // Kings go to bottom, non-kings on top
+    tableau[col] = [...kings, ...nonKings];
+  }
+
+  return { tableau };
+}

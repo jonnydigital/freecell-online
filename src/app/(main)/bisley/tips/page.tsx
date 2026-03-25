@@ -8,12 +8,12 @@ import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionH
 export const metadata: Metadata = {
   title: "Bisley Solitaire Tips & Tricks | Master Dual-Direction Foundations",
   description:
-    "Master Bisley Solitaire with practical tips on dual-direction foundation building, same-suit tableau sequencing, king foundation timing, meeting point planning, and leveraging the 70-80% win rate.",
+    "Master Bisley Solitaire with practical tips on dual-direction foundation building, meeting-point planning, flexible tableau building, and King foundation timing. ~70-80% winnable.",
   keywords: [
     "bisley solitaire tips",
     "bisley solitaire strategy",
     "bisley solitaire tricks",
-    "bisley solitaire tips and tricks",
+    "bisley tips and tricks",
     "how to win bisley solitaire",
     "bisley solitaire help",
     "bisley card game tips",
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Bisley Solitaire Tips & Tricks | Master Dual-Direction Foundations",
     description:
-      "Practical tips for mastering dual-direction foundation building in Bisley Solitaire. Learn king foundation timing, meeting point strategy, same-suit building, and how to leverage the 70-80% win rate.",
+      "Practical tips for coordinating ascending and descending foundations in Bisley Solitaire. Learn meeting-point planning and flexible tableau building.",
     url: absoluteUrl("/bisley/tips"),
     siteName: siteConfig.siteName,
     type: "article",
@@ -39,27 +39,27 @@ const faqs = [
   {
     question: "What is the most important tip for Bisley Solitaire?",
     answer:
-      "Plan the meeting point for each suit from the very beginning. Since ace foundations build up and king foundations build down, the two sequences for each suit will eventually meet at consecutive ranks. Knowing roughly where that meeting point will be — and working both directions toward it — is the key to clearing all four suits efficiently.",
+      "Coordinate both directions of your foundations from the start. Bisley's unique mechanic has Ace foundations building up and King foundations building down, meeting in the middle. Plan early where each suit's ascending and descending piles will meet — this 'meeting point' determines your strategy for that suit. Cards near the meeting rank should be prioritized for whichever direction reaches them first.",
   },
   {
     question: "How often can you win Bisley Solitaire?",
     answer:
-      "Bisley Solitaire has a generous win rate of roughly 70-80% with expert play. The combination of all cards being face-up, flexible same-suit tableau building in both directions, and dual-direction foundations gives skilled players many paths to victory. Most losses come from avoidable blocking mistakes rather than unwinnable deals.",
+      "Bisley has a generous win rate of approximately 70-80% with expert play. The flexible tableau building (up or down by suit) and dual-direction foundations give you lots of options. All cards are visible from the start, so you can plan ahead with complete information. With practice, most deals are solvable.",
   },
   {
-    question: "When should I move Kings to the king foundations in Bisley Solitaire?",
+    question: "Can I build up AND down on the tableau in Bisley?",
     answer:
-      "Move Kings to their foundation slots as early as possible. Kings sitting in the tableau block the cards beneath them, and since king foundations build down by suit, getting Kings onto their foundations immediately opens up those columns and gives you a second direction to build. There is no strategic reason to delay moving a King to its foundation.",
+      "Yes — this is one of Bisley's most powerful features. Tableau columns can build either up or down by same suit. This means a column can have ascending sequences, descending sequences, or a mix. This flexibility is essential for maneuvering cards toward the correct foundation direction without getting stuck.",
   },
   {
-    question: "Can I fill empty columns in Bisley Solitaire?",
+    question: "When should I start the King foundations in Bisley?",
     answer:
-      "No — empty columns cannot be filled in Bisley Solitaire. Once a column is cleared, it stays empty for the rest of the game. This is a critical constraint that makes column preservation important. Avoid emptying columns unless the cards moving out are going directly to foundations, since you permanently lose that tableau workspace.",
+      "Move Kings to the King foundations as soon as they become available. Early King placement opens up the descending direction for each suit, giving you twice as many foundation destinations. Don't hold Kings on the tableau hoping to use them for building — their highest value is on the foundation.",
   },
   {
-    question: "Should I build up or down on the tableau in Bisley Solitaire?",
+    question: "What happens when the ascending and descending piles meet in Bisley?",
     answer:
-      "The answer depends on which direction moves cards toward their destination foundation. Since tableau building must follow the same suit, think about whether each card ultimately needs to go to the ace foundation (building up) or the king foundation (building down). Build in the direction that keeps your sequences aligned with their target foundation to avoid needing to reverse later.",
+      "When the ascending (from Ace) and descending (from King) foundation piles of the same suit have consecutive ranks — for example, the ascending pile reaches 7 and the descending pile reaches 8 — that suit is complete. The two piles effectively merge. Planning where this meeting point falls is a core strategic decision.",
   },
 ];
 
@@ -79,7 +79,7 @@ export default function BisleyTipsPage() {
         "@context": "https://schema.org",
         "@type": "Article",
         headline: "Bisley Solitaire Tips & Tricks",
-        description: "Practical tips for mastering dual-direction foundation building in Bisley Solitaire.",
+        description: "Practical tips for coordinating dual-direction foundations in Bisley Solitaire.",
         author: { "@type": "Organization", name: siteConfig.siteName, url: absoluteUrl("/") },
         publisher: { "@type": "Organization", name: siteConfig.siteName },
         datePublished: "2026-03-25",
@@ -98,7 +98,7 @@ export default function BisleyTipsPage() {
       <ContentHero
         title="Bisley Solitaire Tips & Tricks"
         kicker={<><Link href="/bisley" className="hover:text-white transition-colors">Bisley Solitaire</Link> / Tips</>}
-        subtitle="Practical strategies for mastering dual-direction foundations — from king foundation timing and meeting point planning to same-suit building, column preservation, and leveraging the 70-80% win rate."
+        subtitle="Practical strategies for dual-direction foundations — from meeting-point planning and flexible tableau building to King timing and empty column management."
         breadcrumbs={[{ label: "Home", href: "/" }, { label: "Bisley Solitaire", href: "/bisley" }]}
       />
 
@@ -108,11 +108,10 @@ export default function BisleyTipsPage() {
           The 5-Second Summary
         </h2>
         <p className="text-white/70 leading-relaxed">
-          If you only remember one thing: <strong className="text-white">plan where each suit&apos;s ace and king foundations will meet</strong>.
-          Bisley Solitaire&apos;s dual-direction foundation building is its defining mechanic. Aces build up,
-          Kings build down, and a suit is complete when the two sequences reach consecutive ranks.
-          Players who plan these meeting points from the start win far more often than those who build
-          reactively. With a 70-80% expert win rate, good strategy goes a long way.
+          If you only remember one thing: <strong className="text-white">plan where each suit&apos;s foundations will meet</strong>.
+          Bisley&apos;s signature mechanic — Aces building up and Kings building down — means you need to
+          think in both directions simultaneously. The players who win most often are the ones who identify
+          the optimal meeting rank for each suit early and route cards accordingly.
         </p>
       </div>
 
@@ -129,27 +128,21 @@ export default function BisleyTipsPage() {
           <Link href="/bisley" className="text-[var(--gold)] hover:text-white transition-colors">
             Bisley Solitaire
           </Link>
-          , four empty king-foundation slots sit waiting at the start of the game. Your first priority
-          should be getting Kings out of the tableau and onto these foundations as quickly as possible.
-          Kings sitting in columns block every card beneath them, and since empty columns cannot be
-          refilled, a trapped King is a serious liability.
+          , the Ace foundations are pre-placed, but King foundations only appear when you move a King there.
+          Every King sitting on the tableau is a suit whose descending foundation isn&apos;t active yet —
+          that&apos;s half your building capacity for that suit being wasted.
         </p>
         <p className="text-white/70 leading-relaxed mb-4">
-          Moving a King to its foundation accomplishes two things simultaneously: it frees the column
-          for accessing buried cards, and it opens a second building direction for that suit. With the
-          King on its foundation, you can immediately start building down by suit (K, Q, J, 10...)
-          while the ace foundation for the same suit builds up (A, 2, 3, 4...).
-        </p>
-        <p className="text-white/70 leading-relaxed mb-4">
-          Since the four Aces are already pre-placed on their foundations at the start, getting all
-          four Kings onto their foundations means you have eight active foundations — two per suit —
-          working simultaneously. This dramatically increases your options on every turn.
+          <strong className="text-white/90">Prioritize exposing and playing Kings.</strong> As soon as a
+          King is available on top of a column, move it to create a King foundation. This immediately
+          lets you start building down (Q, J, 10...) from the top, giving you a second destination for
+          that suit&apos;s cards.
         </p>
         <div className="bg-emerald-900/20 border border-emerald-500/20 rounded-lg p-4">
           <p className="text-emerald-300/80 text-sm">
-            <strong>Pro tip:</strong> If a King is buried under other cards, prioritize uncovering it.
-            Move the cards above it to other tableau columns or directly to foundations. Every turn a
-            King stays in the tableau is a turn you&apos;re playing with fewer foundation options.
+            <strong>Pro tip:</strong> If a King is buried just one card deep, uncover it before
+            working on other suits. Having all four King foundations active early transforms the game
+            from a single-direction to a dual-direction puzzle, dramatically increasing your options.
           </p>
         </div>
       </section>
@@ -160,33 +153,24 @@ export default function BisleyTipsPage() {
           className="text-2xl sm:text-3xl font-bold mb-4"
           style={{ fontFamily: "var(--font-playfair)" }}
         >
-          Tip #2: Build from Both Directions Simultaneously
+          Tip #2: Plan the Meeting Point for Each Suit
         </h2>
         <p className="text-white/70 leading-relaxed mb-4">
-          Bisley&apos;s signature mechanic is dual-direction foundation building. The ace foundations
-          build up by suit (A, 2, 3, 4...) while the king foundations build down by suit (K, Q, J,
-          10...). Too many beginners focus almost exclusively on the ace foundations, treating the king
-          foundations as an afterthought. This is a mistake.
+          Bisley is won when each suit&apos;s ascending pile (from Ace) and descending pile (from King)
+          meet with consecutive ranks. For example, if Spades go up to 7 and down to 8, that suit is
+          complete. The rank where they meet is flexible — it could be anywhere from 4 to 10.
         </p>
         <p className="text-white/70 leading-relaxed mb-4">
-          <strong className="text-white/90">Balance your building between both directions.</strong> If
-          you&apos;ve built the ace foundation for Hearts up to the 5, but the king foundation for
-          Hearts is still sitting on just the King, you&apos;re leaving half your building power
-          unused. Actively look for opportunities to play Queens, Jacks, and 10s onto king foundations
-          just as eagerly as you play 2s, 3s, and 4s onto ace foundations.
+          <strong className="text-white/90">Look at where cards are positioned.</strong> If most low
+          Spades are accessible but high Spades are buried, plan for the ascending pile to go further
+          (say to 8 or 9) while the descending pile stays short (K-Q-J-10-9). Adapt the meeting point
+          to the cards available.
         </p>
-        <p className="text-white/70 leading-relaxed mb-4">
-          Building from both directions creates a pincer effect that rapidly clears the tableau. Cards
-          in the middle ranks (6, 7, 8, 9) will naturally be the last to find their foundations, but
-          the faster you build from both ends, the sooner those middle cards have a home.
+        <p className="text-white/70 leading-relaxed">
+          Don&apos;t commit rigidly to a meeting point. As the game evolves, you might discover that
+          a different split works better. The key is to always be thinking about both directions for
+          each suit rather than focusing on just one.
         </p>
-        <div className="bg-amber-900/20 border border-amber-500/20 rounded-lg p-4">
-          <p className="text-amber-300/80 text-sm">
-            <strong>Key insight:</strong> After every move, glance at all eight foundations and ask:
-            &ldquo;Can I play the next card onto any of these?&rdquo; It&apos;s easy to tunnel-vision
-            on one suit or one direction. A quick scan prevents missed opportunities.
-          </p>
-        </div>
       </section>
 
       <AdUnit format="horizontal" className="-my-1 max-w-3xl mx-auto" />
@@ -197,41 +181,37 @@ export default function BisleyTipsPage() {
           className="text-2xl sm:text-3xl font-bold mb-4"
           style={{ fontFamily: "var(--font-playfair)" }}
         >
-          Tip #3: Plan the Meeting Point for Each Suit
+          Tip #3: Exploit Flexible Tableau Building
         </h2>
         <p className="text-white/70 leading-relaxed mb-4">
-          A suit is complete in Bisley Solitaire when the ace foundation and king foundation for that
-          suit reach consecutive ranks — for example, the ace foundation reaches 7 and the king
-          foundation reaches 8, or the ace foundation reaches 10 and the king foundation reaches Jack.
-          The exact meeting point varies by suit and depends on the card distribution in the tableau.
+          Bisley&apos;s tableau allows building up OR down by same suit on columns. This is incredibly
+          powerful. A column can hold the 5-6-7 of Hearts (ascending) or the 10-9-8 of Hearts
+          (descending), and you can even have sequences that change direction within the same column.
         </p>
         <p className="text-white/70 leading-relaxed mb-4">
-          At the start of the game, survey the tableau and identify where each suit&apos;s cards are
-          positioned. If most of a suit&apos;s low cards (2-6) are accessible but the high cards
-          (8-Q) are buried, you&apos;ll likely build the ace foundation further before the king
-          foundation catches up — the meeting point will be higher (around 8-9). Conversely, if the
-          high cards are accessible, the king foundation will advance faster and meet lower (around
-          5-6).
+          Use this to create &ldquo;staging areas&rdquo; where you consolidate a suit&apos;s cards
+          before sending them to foundations. If you build a run of 4-5-6-7 of Clubs on the tableau,
+          you can then feed them to the Ace foundation in sequence.
         </p>
         <ul className="list-disc list-inside text-white/70 space-y-2 mb-4 ml-4">
           <li>
-            <strong className="text-white/90">Low meeting point (4-6):</strong> King foundation does
-            most of the work — focus on clearing high cards first
+            <strong className="text-white/90">Building up:</strong> Creates ascending runs ready for
+            the Ace foundation
           </li>
           <li>
-            <strong className="text-white/90">High meeting point (8-10):</strong> Ace foundation does
-            most of the work — focus on clearing low cards first
+            <strong className="text-white/90">Building down:</strong> Creates descending runs ready
+            for the King foundation
           </li>
           <li>
-            <strong className="text-white/90">Middle meeting point (7):</strong> Balanced building
-            from both directions — the ideal scenario
+            <strong className="text-white/90">Mixed direction:</strong> Useful for temporary parking
+            when you need to move cards out of the way
           </li>
         </ul>
-        <div className="bg-emerald-900/20 border border-emerald-500/20 rounded-lg p-4">
-          <p className="text-emerald-300/80 text-sm">
-            <strong>Pro tip:</strong> You don&apos;t need to predict the exact meeting rank. Just
-            having a rough sense of &ldquo;this suit will meet high&rdquo; or &ldquo;this suit will
-            meet low&rdquo; is enough to guide your building priorities and avoid wasted moves.
+        <div className="bg-amber-900/20 border border-amber-500/20 rounded-lg p-4">
+          <p className="text-amber-300/80 text-sm">
+            <strong>Key insight:</strong> Remember that tableau building is same-suit only. You can&apos;t
+            mix suits in a column. This means each column is effectively dedicated to one suit at a time,
+            making column allocation an important decision.
           </p>
         </div>
       </section>
@@ -242,44 +222,22 @@ export default function BisleyTipsPage() {
           className="text-2xl sm:text-3xl font-bold mb-4"
           style={{ fontFamily: "var(--font-playfair)" }}
         >
-          Tip #4: Preserve Your Column Count
+          Tip #4: Preserve Empty Columns
         </h2>
         <p className="text-white/70 leading-relaxed mb-4">
-          In{" "}
-          <Link href="/bisley" className="text-[var(--gold)] hover:text-white transition-colors">
-            Bisley Solitaire
-          </Link>
-          , empty columns cannot be filled. Once a column is cleared, that workspace is gone
-          permanently. This makes column preservation one of the most important strategic
-          considerations in the game.
+          Empty columns cannot be refilled in Bisley — once a column is cleared, it&apos;s gone forever.
+          With only 13 columns to start and no free cells, every column is a precious workspace. Clearing
+          a column means permanently losing a place to maneuver cards.
         </p>
         <p className="text-white/70 leading-relaxed mb-4">
-          <strong className="text-white/90">Every column is a workspace.</strong> With 13 tableau
-          columns, you have 13 places to reorganize cards. Each time a column empties, you lose
-          flexibility. While clearing columns is sometimes unavoidable (and even necessary to free
-          Kings or critical cards), doing so carelessly shrinks your maneuvering room.
+          Only clear a column when every card in it goes directly to a foundation or when it&apos;s the
+          only way to access a critical blocked card. Even then, consider whether moving cards between
+          other columns might achieve the same goal without the permanent loss.
         </p>
-        <p className="text-white/70 leading-relaxed mb-4">
-          The best strategy is to consolidate cards within columns rather than spreading them thin.
-          When you move a card from column A to column B, column A gets shorter — one step closer to
-          empty. Ask yourself: &ldquo;Do I really need this card on column B, or can I send it
-          directly to a foundation instead?&rdquo; Keeping cards out of the tableau entirely (by
-          routing them to foundations) is always better than rearranging between columns.
+        <p className="text-white/70 leading-relaxed">
+          Late in the game, when most cards are on foundations and few remain on the tableau, empty columns
+          matter less. But in the early and middle game, treat column count as a vital resource.
         </p>
-        <ul className="list-disc list-inside text-white/70 space-y-2 mb-4 ml-4">
-          <li>
-            <strong className="text-white/90">Avoid needless emptying.</strong> Don&apos;t clear a
-            column just because you can — only do it when the cards are heading to foundations
-          </li>
-          <li>
-            <strong className="text-white/90">Stack same-suit sequences.</strong> When you must
-            rearrange, build neat same-suit runs that you can later move to foundations efficiently
-          </li>
-          <li>
-            <strong className="text-white/90">Count your columns.</strong> If you&apos;re down to
-            8-9 active columns, be extra cautious about emptying more
-          </li>
-        </ul>
       </section>
 
       {/* Tip 5 */}
@@ -288,38 +246,27 @@ export default function BisleyTipsPage() {
           className="text-2xl sm:text-3xl font-bold mb-4"
           style={{ fontFamily: "var(--font-playfair)" }}
         >
-          Tip #5: Use Flexible Same-Suit Building Wisely
+          Tip #5: Advance Both Foundation Directions Simultaneously
         </h2>
         <p className="text-white/70 leading-relaxed mb-4">
-          Bisley&apos;s tableau allows building up or down by the same suit — a rare flexibility among
-          solitaire games. A 7 of Spades can go on either a 6 of Spades or an 8 of Spades. This
-          two-way building is powerful but requires deliberate decision-making about direction.
+          Don&apos;t neglect one direction in favor of the other. If you only build Ace foundations up
+          without working on King foundations down, you&apos;ll eventually hit cards that need to go on
+          the descending piles and have nowhere to put them.
         </p>
         <p className="text-white/70 leading-relaxed mb-4">
-          <strong className="text-white/90">Build in the direction of the target foundation.</strong> If
-          a card will ultimately go to the ace foundation (building up from Ace), stack it on top of
-          the next lower card of the same suit. If it&apos;s heading for the king foundation (building
-          down from King), stack it on the next higher card. This way, when you&apos;re ready to move
-          cards to the foundation, they&apos;re already in the correct order — you can peel them off
-          one by one without needing to reverse the sequence.
+          After each move, glance at both the ascending and descending foundations. Is there a card on
+          the tableau that can extend either direction? Keeping both sides progressing prevents the
+          common mistake of running out of moves because one direction stalled.
         </p>
-        <p className="text-white/70 leading-relaxed mb-4">
-          Building in the wrong direction creates a problem: you end up with a descending sequence
-          that needs to go to an ascending foundation (or vice versa). Since only single cards can
-          move, you&apos;d need to disassemble the entire sequence — requiring temporary workspace in
-          other columns — before rebuilding in the correct order.
-        </p>
-        <div className="bg-amber-900/20 border border-amber-500/20 rounded-lg p-4">
-          <p className="text-amber-300/80 text-sm">
-            <strong>Key insight:</strong> Before placing a card on a tableau column, ask: &ldquo;Which
-            foundation is this card heading toward?&rdquo; If the 7 of Hearts will end up on the ace
-            foundation (because the ace foundation is already at 5 of Hearts), build it on the 6 of
-            Hearts. If it&apos;s heading for the king foundation, build it on the 8 of Hearts.
+        <div className="bg-emerald-900/20 border border-emerald-500/20 rounded-lg p-4">
+          <p className="text-emerald-300/80 text-sm">
+            <strong>Pro tip:</strong> Middle-rank cards (6, 7, 8) are the most flexible — they could go
+            to either the ascending or descending foundation depending on which reaches them first.
+            Keep these cards accessible rather than burying them, since you&apos;ll need them for
+            whichever direction is running behind.
           </p>
         </div>
       </section>
-
-      <AdUnit format="horizontal" className="-my-1 max-w-3xl mx-auto" />
 
       {/* Tip 6 */}
       <section className="mb-10 max-w-3xl mx-auto">
@@ -327,34 +274,26 @@ export default function BisleyTipsPage() {
           className="text-2xl sm:text-3xl font-bold mb-4"
           style={{ fontFamily: "var(--font-playfair)" }}
         >
-          Tip #6: Focus on the Most Constrained Suits First
+          Tip #6: Consolidate Same-Suit Cards on Columns
         </h2>
         <p className="text-white/70 leading-relaxed mb-4">
-          Not all four suits are equally easy to clear in a given deal. Some suits will have their
-          cards nicely distributed across accessible positions, while others will have critical cards
-          buried deep in columns or blocked by cards from other suits. Identify the most constrained
-          suit early and give it priority.
+          Since tableau building is same-suit only, try to group cards of the same suit together on
+          columns. A column with Hearts 4-5-6-7 is far more useful than four scattered Hearts across
+          four different columns — the consolidated run can be fed to a foundation in sequence.
         </p>
         <p className="text-white/70 leading-relaxed mb-4">
-          A suit is &ldquo;constrained&rdquo; when its cards are concentrated in a few columns,
-          stacked in an unhelpful order, or blocked by many other cards. These suits are the ones
-          most likely to cause a loss if neglected — by the time you get to them, you may not have
-          enough column space to maneuver.
+          When you have a choice of where to build, prefer columns that already have cards of the same
+          suit. This naturally creates organized runs that accelerate your foundation building when
+          the time comes.
         </p>
-        <p className="text-white/70 leading-relaxed mb-4">
-          Conversely, a suit with accessible cards spread across multiple columns is &ldquo;flexible&rdquo;
-          — you can clear it later without difficulty. Leaving flexible suits for later gives you more
-          options in the endgame, while tackling constrained suits first removes the biggest threats
-          to your win.
+        <p className="text-white/70 leading-relaxed">
+          Be careful not to create overly long runs that block access to cards underneath, though.
+          If a column has 8 cards of one suit, the bottom cards are effectively trapped until you
+          work through the entire sequence. Balance consolidation with accessibility.
         </p>
-        <div className="bg-emerald-900/20 border border-emerald-500/20 rounded-lg p-4">
-          <p className="text-emerald-300/80 text-sm">
-            <strong>Pro tip:</strong> At the start of the game, scan the tableau and rank the four
-            suits from most constrained to least. Focus your first 10-15 moves on freeing the most
-            constrained suit&apos;s key cards. This front-loaded effort prevents late-game deadlocks.
-          </p>
-        </div>
       </section>
+
+      <AdUnit format="horizontal" className="-my-1 max-w-3xl mx-auto" />
 
       {/* Tip 7 */}
       <section className="mb-10 max-w-3xl mx-auto">
@@ -362,128 +301,54 @@ export default function BisleyTipsPage() {
           className="text-2xl sm:text-3xl font-bold mb-4"
           style={{ fontFamily: "var(--font-playfair)" }}
         >
-          Tip #7: Avoid Blocking Cards You Need Soon
+          Tip #7: Use Undo to Test Foundation Routing
         </h2>
         <p className="text-white/70 leading-relaxed mb-4">
-          With only single-card moves and no ability to fill empty columns, blocking is the primary
-          way games are lost in{" "}
-          <Link href="/bisley" className="text-[var(--gold)] hover:text-white transition-colors">
-            Bisley Solitaire
-          </Link>
-          . A &ldquo;block&rdquo; occurs when you place a card on top of another card that you need
-          to access soon — forcing you to move the blocking card again before you can reach the one
-          underneath.
+          Bisley&apos;s dual-direction system means many cards could theoretically go to either the
+          ascending or descending foundation. Use undo to test both paths and see which one leads to
+          a better board state.
         </p>
         <p className="text-white/70 leading-relaxed mb-4">
-          Before placing any card on a tableau column, check what&apos;s at the bottom of that column
-          and ask: &ldquo;Will I need this card in the next few moves?&rdquo; If the next card needed
-          for any foundation is sitting at the top of a column, don&apos;t stack something on top of
-          it unless you have no other choice.
-        </p>
-        <p className="text-white/70 leading-relaxed mb-4">
-          A good rule of thumb: look at your eight foundations and identify the next card each one
-          needs. Those eight cards are your &ldquo;hot list.&rdquo; Never bury a hot-list card under
-          another card unless doing so immediately frees a different hot-list card that&apos;s even
-          more critical. This simple check prevents the majority of avoidable losses.
+          For example, the 7 of Diamonds might fit on both the ascending pile (at 6) and the descending
+          pile (at 8). Playing it on the ascending side means the ascending pile now reaches 7 and needs
+          only the 8 to meet the descending pile. Playing it on the descending side means the descending
+          pile goes to 7 and needs only the 6 from the ascending side. Which path frees more cards?
         </p>
         <div className="bg-red-900/20 border border-red-500/20 rounded-lg p-4">
           <p className="text-red-300/80 text-sm">
-            <strong>Common mistake:</strong> Moving a card to a column &ldquo;temporarily&rdquo; and
-            then forgetting that the card underneath was needed. In Bisley, temporary placements have
-            a habit of becoming permanent blocks. Always have a plan for removing any card you place
-            on a column.
+            <strong>Watch out:</strong> Once a card goes to a foundation in Bisley, it&apos;s permanent.
+            There&apos;s no moving cards back from foundations. Make sure you&apos;re sending each card
+            in the right direction before committing.
           </p>
         </div>
       </section>
 
-      {/* Tip 8 */}
+      {/* Win rate context */}
       <section className="mb-10 max-w-3xl mx-auto">
         <h2
           className="text-2xl sm:text-3xl font-bold mb-4"
           style={{ fontFamily: "var(--font-playfair)" }}
         >
-          Tip #8: Leverage the High Win Rate to Experiment
+          A Strategic Game with Generous Win Rates
         </h2>
         <p className="text-white/70 leading-relaxed mb-4">
-          Bisley Solitaire has one of the highest win rates among{" "}
-          <Link href="/solitaire-types" className="text-[var(--gold)] hover:text-white transition-colors">
-            solitaire variants
-          </Link>
-          {" "}— roughly 70-80% of deals are winnable with expert play. Compare that to{" "}
-          <Link href="/" className="text-[var(--gold)] hover:text-white transition-colors">
-            FreeCell
-          </Link>
-          {" "}(~99%), and Bisley is slightly harder, but compare it to{" "}
-          <Link href="/klondike" className="text-[var(--gold)] hover:text-white transition-colors">
-            Klondike
-          </Link>
-          {" "}(~30%) or{" "}
-          <Link href="/accordion" className="text-[var(--gold)] hover:text-white transition-colors">
-            Accordion
-          </Link>
-          {" "}(~2%), and Bisley is remarkably generous.
-        </p>
-        <p className="text-white/70 leading-relaxed mb-4">
-          This high win rate means you can afford to experiment. If you&apos;re not sure whether to
-          build a particular sequence up or down on the tableau, try one direction and see what
-          happens. If you hit a dead end, restart the same deal and try the other direction. The fact
-          that most deals are winnable means there&apos;s usually a solution waiting to be found — you
-          just need to discover the right move order.
-        </p>
-        <p className="text-white/70 leading-relaxed mb-4">
-          Use this generous win rate as a learning opportunity. Each deal is a puzzle with a likely
-          solution, and finding that solution teaches you patterns you can apply to future games.
-          Over time, you&apos;ll develop an intuition for which building direction to choose, when to
-          prioritize king foundations over ace foundations, and how to navigate the mid-game when
-          multiple suits are competing for limited column space.
-        </p>
-        <div className="bg-emerald-900/20 border border-emerald-500/20 rounded-lg p-4">
-          <p className="text-emerald-300/80 text-sm">
-            <strong>Pro tip:</strong> If you lose a deal, replay it. Unlike low-win-rate games where
-            a loss often means an unwinnable deal, a Bisley loss usually means a solvable puzzle you
-            haven&apos;t cracked yet. Replaying losses is the fastest way to improve your Bisley
-            skills.
-          </p>
-        </div>
-      </section>
-
-      {/* Strategy and Patience */}
-      <section className="mb-10 max-w-3xl mx-auto">
-        <h2
-          className="text-2xl sm:text-3xl font-bold mb-4"
-          style={{ fontFamily: "var(--font-playfair)" }}
-        >
-          Strategy and Patience
-        </h2>
-        <p className="text-white/70 leading-relaxed mb-4">
-          Bisley Solitaire rewards strategic thinking over speed. With all 48 tableau cards dealt
-          face-up from the start, every piece of information is available to you — there are no
-          hidden cards, no luck-of-the-draw moments, no surprises. Victory comes down to planning
-          and execution.
-        </p>
-        <p className="text-white/70 leading-relaxed mb-4">
-          The dual-direction foundation system is what makes Bisley special among solitaire games.
-          Most variants give you one direction to build (up from Ace). Bisley gives you two, which
-          doubles your options but also doubles the decisions you need to make. Take your time with
-          each move — a few seconds of thought about which foundation a card is heading toward will
-          save you from minutes of frustrating backtracking.
+          Bisley is one of the more winnable solitaire variants at approximately 70-80% with expert play.
+          The combination of dual-direction foundations, flexible same-suit tableau building, and complete
+          visibility makes it deeply strategic while remaining achievable. Compare that to{" "}
+          <Link href="/calculation" className="text-[var(--gold)] hover:text-white transition-colors">
+            Calculation
+          </Link>{" "}
+          (~35%) or{" "}
+          <Link href="/gaps" className="text-[var(--gold)] hover:text-white transition-colors">
+            Gaps
+          </Link>{" "}
+          (~15%) and you can see why Bisley is a favorite among solitaire enthusiasts who enjoy
+          strategic depth without brutal difficulty.
         </p>
         <p className="text-white/70 leading-relaxed">
-          This strategic depth transfers to other solitaire games too. The meeting-point planning
-          you learn in Bisley applies to any game with multiple foundation types. The column
-          preservation skills carry over to games like{" "}
-          <Link href="/beleaguered-castle" className="text-[var(--gold)] hover:text-white transition-colors">
-            Beleaguered Castle
-          </Link>
-          {" "}and{" "}
-          <Link href="/seahaven" className="text-[var(--gold)] hover:text-white transition-colors">
-            Seahaven Towers
-          </Link>
-          , where empty columns are equally precious. And the discipline of{" "}
-          <Link href="/bisley/how-to-play" className="text-[var(--gold)] hover:text-white transition-colors">
-            understanding the rules deeply
-          </Link>
-          {" "}will serve you well in any card game.
+          The dual-direction mechanic gives Bisley a unique rhythm. Early game focuses on activating
+          King foundations. Mid-game is about routing cards efficiently to both directions. Late game
+          becomes a satisfying convergence as ascending and descending piles close in on each other.
         </p>
       </section>
 
@@ -498,36 +363,32 @@ export default function BisleyTipsPage() {
         <div className="bg-white/[0.04] border border-white/10 rounded-xl p-5">
           <ol className="list-decimal list-inside text-white/80 space-y-3 ml-2">
             <li>
-              <strong>Move Kings to foundations immediately.</strong> Free the columns and open up
-              the king-direction building lanes.
+              <strong>Play Kings to foundations immediately.</strong> Activate descending building for
+              each suit as early as possible.
             </li>
             <li>
-              <strong>Build from both directions.</strong> Balance ace foundations (up) and king
-              foundations (down) for maximum efficiency.
+              <strong>Plan meeting points.</strong> Decide where each suit&apos;s ascending and
+              descending piles will converge.
             </li>
             <li>
-              <strong>Plan the meeting point.</strong> Know roughly where each suit&apos;s two
-              foundations will converge.
+              <strong>Build up or down by suit on tableau.</strong> Use same-suit flexibility to create
+              organized runs.
             </li>
             <li>
-              <strong>Preserve column count.</strong> Empty columns can&apos;t be refilled — avoid
-              clearing them unnecessarily.
+              <strong>Preserve columns.</strong> Empty columns can&apos;t be refilled — don&apos;t clear
+              them unnecessarily.
             </li>
             <li>
-              <strong>Build toward the target foundation.</strong> Same-suit tableau sequences should
-              match the direction of their destination.
+              <strong>Advance both directions.</strong> Don&apos;t neglect ascending or descending
+              foundations.
             </li>
             <li>
-              <strong>Tackle constrained suits first.</strong> Free the hardest suit early before
-              column space runs low.
+              <strong>Consolidate suits.</strong> Group same-suit cards on columns for efficient
+              foundation feeding.
             </li>
             <li>
-              <strong>Never bury hot-list cards.</strong> Track the next card each foundation needs
-              and keep those cards accessible.
-            </li>
-            <li>
-              <strong>Experiment freely.</strong> With a 70-80% win rate, most deals are solvable —
-              replay losses to find the solution.
+              <strong>Test with undo.</strong> Try both foundation directions for ambiguous cards to
+              find the better path.
             </li>
           </ol>
         </div>
@@ -538,7 +399,7 @@ export default function BisleyTipsPage() {
         <CardSection variant="dark">
           <SectionHeading variant="dark" sub="Continue Learning">Related Guides</SectionHeading>
           <ContentBody variant="dark" className="grid gap-4 md:grid-cols-3">
-            <ContentLinkCard href="/bisley/how-to-play" title="How to Play Bisley Solitaire" description="Complete rules, setup, and dual-direction foundation mechanics explained." />
+            <ContentLinkCard href="/bisley/how-to-play" title="How to Play Bisley" description="Complete rules, setup, and card mechanics explained." />
             <ContentLinkCard href="/bisley" title="Play Bisley Solitaire" description="Put these tips into practice online for free." />
             <ContentLinkCard href="/solitaire-types" title="All Solitaire Types" description="Explore 20+ solitaire variants and find your next game." />
           </ContentBody>
@@ -548,7 +409,7 @@ export default function BisleyTipsPage() {
       <div className="mb-10 max-w-3xl mx-auto">
         <CtaSection
           heading="Put These Tips Into Practice"
-          body="The best way to improve is to play. Apply these tips one at a time and watch your Bisley win rate climb toward that 70-80% expert level."
+          body="The best way to improve is to play. With ~75% of deals winnable, Bisley rewards patience and dual-direction planning."
           primaryLabel="Play Bisley Solitaire"
           primaryHref="/bisley"
           secondaryLabel="Learn the Rules"
@@ -597,8 +458,8 @@ export default function BisleyTipsPage() {
         </h2>
         <div className="grid sm:grid-cols-2 gap-3">
           <ContentLinkCard href="/bisley" title="Play Bisley Solitaire" description="Put these tips into practice online for free" />
-          <ContentLinkCard href="/bisley/how-to-play" title="How to Play Bisley Solitaire" description="Complete rules, setup, and strategy explained" />
-          <ContentLinkCard href="/beleaguered-castle/tips" title="Beleaguered Castle Tips" description="Tips for another column-based solitaire with no refills" />
+          <ContentLinkCard href="/bisley/how-to-play" title="How to Play Bisley" description="Complete rules, setup, and strategy explained" />
+          <ContentLinkCard href="/beleaguered-castle/tips" title="Beleaguered Castle Tips" description="Tips for another open-information solitaire" />
           <ContentLinkCard href="/tips" title="FreeCell Tips" description="Tips and tricks for the classic FreeCell game" />
           <ContentLinkCard href="/strategy" title="FreeCell Strategy" description="Strategy guide for the classic FreeCell game" />
           <ContentLinkCard href="/solitaire-types" title="All Solitaire Types" description="Explore 20+ solitaire variants and find your next game" />

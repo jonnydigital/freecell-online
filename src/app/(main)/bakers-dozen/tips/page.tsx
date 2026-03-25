@@ -6,9 +6,9 @@ import AdUnit from "@/components/AdUnit";
 import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionHeading, ContentBody } from "@/components/content";
 
 export const metadata: Metadata = {
-  title: "Baker's Dozen Solitaire Tips & Tricks | Master the 13-Column Challenge",
+  title: "Baker's Dozen Solitaire Tips & Tricks | Win More with 13 Columns",
   description:
-    "8 expert tips to win Baker's Dozen Solitaire. Master Kings-to-bottom strategy, any-suit building, foundation feeding order, and deadlock prevention to reach the 65-75% win rate.",
+    "Boost your Baker's Dozen Solitaire win rate with practical tips on foundation building, column management, Kings-to-bottom strategy, and maintaining access to low cards. ~65-75% winnable.",
   keywords: [
     "bakers dozen solitaire tips",
     "bakers dozen solitaire strategy",
@@ -23,9 +23,9 @@ export const metadata: Metadata = {
     "bakers dozen solitaire guide",
   ],
   openGraph: {
-    title: "Baker's Dozen Solitaire Tips & Tricks | Master the 13-Column Challenge",
+    title: "Baker's Dozen Solitaire Tips & Tricks | Win More with 13 Columns",
     description:
-      "8 expert tips to win Baker's Dozen Solitaire. Master Kings-to-bottom, any-suit building, and foundation order to reach the 65-75% win rate.",
+      "Practical tips to build foundations more effectively in Baker's Dozen. Learn column management, low-card access, and how to achieve the 65-75% win rate.",
     url: absoluteUrl("/bakers-dozen/tips"),
     siteName: siteConfig.siteName,
     type: "article",
@@ -37,29 +37,29 @@ export const metadata: Metadata = {
 
 const faqs = [
   {
-    question: "What is the best strategy for Baker's Dozen Solitaire?",
+    question: "What is the most important tip for Baker's Dozen Solitaire?",
     answer:
-      "The best strategy focuses on three priorities: (1) uncover and play Aces and low cards to the foundations as early as possible, (2) use any-suit building flexibility to rearrange the tableau efficiently, and (3) plan your foundation feeds in order so you don't strand cards you need later. Since empty columns cannot be filled, every column you empty is permanently lost as workspace — so avoid emptying columns unless all remaining cards in that column can go straight to the foundations.",
+      "Prioritize uncovering and playing Aces and 2s to the foundations as early as possible. Since you can only move single cards and can't fill empty columns, getting your low cards stuck beneath higher cards is often game-ending. Scan all 13 columns at the start and plan your first several moves around freeing low cards.",
   },
   {
-    question: "What is the win rate for Baker's Dozen Solitaire?",
+    question: "How often can you win Baker's Dozen Solitaire?",
     answer:
-      "Baker's Dozen Solitaire has a win rate of approximately 65-75% with expert play, making it one of the more forgiving solitaire variants. Casual players can expect to win around 40-50% of games. The high win rate comes from the combination of all cards being face-up, any-suit building, and the Kings-to-bottom rule that prevents Kings from blocking critical low cards.",
+      "Baker's Dozen has a generous win rate of approximately 65-75% with expert play. All 52 cards are visible from the start, giving you complete information to plan with. The Kings-to-bottom setup rule also prevents the worst blocking scenarios. With practice and careful planning, most deals are solvable.",
   },
   {
-    question: "Why are Kings moved to the bottom of columns in Baker's Dozen?",
+    question: "Why are Kings moved to the bottom in Baker's Dozen?",
     answer:
-      "Kings are moved to the bottom of their columns during the deal as a signature rule of Baker's Dozen. This prevents Kings from sitting on top of columns and blocking access to the cards beneath them. Since nothing can be built on top of a King in the tableau (Kings are the highest rank), a King on top would create an immovable obstacle. Placing them at the bottom ensures every column's top card is always playable.",
+      "The Kings-to-bottom rule is Baker's Dozen's signature mechanic. Before play begins, all Kings are pushed to the bottom of their columns. This prevents Kings from permanently blocking access to lower cards, since Kings are the last cards needed on foundations and would otherwise create impassable obstacles.",
   },
   {
-    question: "Can you move sequences of cards in Baker's Dozen Solitaire?",
+    question: "Can I fill empty columns in Baker's Dozen Solitaire?",
     answer:
-      "No. Baker's Dozen only allows single card moves — you cannot move a sequence or stack of cards together. Each move involves taking the top card from one column and placing it either on a foundation (building up by suit from Ace to King) or on another column's top card (building down by any suit). This single-card restriction makes planning ahead critical, since you can't rearrange entire sequences at once.",
+      "No — empty columns cannot be filled in Baker's Dozen. Once a column is cleared, it's permanently empty. This makes empty columns useless as temporary storage (unlike FreeCell or Flower Garden). Avoid emptying columns unless it's your only path to a needed card, since you lose a workspace.",
   },
   {
-    question: "What happens when a column is emptied in Baker's Dozen?",
+    question: "How does Baker's Dozen compare to FreeCell?",
     answer:
-      "When a column is emptied in Baker's Dozen Solitaire, it stays empty permanently. Unlike FreeCell or many other solitaire variants, empty columns cannot be filled with any card. This means emptying a column reduces your available workspace. You should only empty a column when every card in it can be played directly to the foundations, never just to create temporary space.",
+      "Baker's Dozen is simpler in some ways (no suit restriction on tableau building) but harder in others (no free cells, no column refilling, single-card moves only). FreeCell has a higher win rate (~82% vs ~70%) and more maneuverability. Baker's Dozen compensates with its Kings-to-bottom rule and the flexibility of any-suit building on the tableau.",
   },
 ];
 
@@ -79,7 +79,7 @@ export default function BakersDozenTipsPage() {
         "@context": "https://schema.org",
         "@type": "Article",
         headline: "Baker's Dozen Solitaire Tips & Tricks",
-        description: "8 expert tips for winning more Baker's Dozen Solitaire games — the 13-column patience game with Kings-to-bottom and any-suit building.",
+        description: "Practical tips for building foundations more effectively in Baker's Dozen Solitaire.",
         author: { "@type": "Organization", name: siteConfig.siteName, url: absoluteUrl("/") },
         publisher: { "@type": "Organization", name: siteConfig.siteName },
         datePublished: "2026-03-25",
@@ -98,7 +98,7 @@ export default function BakersDozenTipsPage() {
       <ContentHero
         title="Baker&apos;s Dozen Solitaire Tips & Tricks"
         kicker={<><Link href="/bakers-dozen" className="hover:text-white transition-colors">Baker&apos;s Dozen Solitaire</Link> / Tips</>}
-        subtitle="Master the 13-column challenge with 8 practical tips. From understanding Kings-to-bottom to exploiting any-suit building, these strategies will help you reach the 65-75% expert win rate."
+        subtitle="Practical strategies for the 13-column patience game — from foundation building and low-card access to leveraging the Kings-to-bottom rule for a ~70% win rate."
         breadcrumbs={[{ label: "Home", href: "/" }, { label: "Baker's Dozen Solitaire", href: "/bakers-dozen" }]}
       />
 
@@ -108,11 +108,10 @@ export default function BakersDozenTipsPage() {
           The 5-Second Summary
         </h2>
         <p className="text-white/70 leading-relaxed">
-          If you only remember one thing: <strong className="text-white">uncover Aces and low cards before anything else</strong>.
-          Baker&apos;s Dozen deals all 52 cards face-up across 13 columns with Kings tucked to the bottom.
-          Your job is to feed cards to the four foundations in order (Ace through King, by suit). The
-          any-suit building rule gives you enormous flexibility on the tableau — use it to dig out
-          the low cards that fuel your foundation progress.
+          If you only remember one thing: <strong className="text-white">free your Aces and 2s immediately</strong>.
+          Baker&apos;s Dozen gives you complete information (all cards face-up) and flexible building (any suit
+          on any suit), but single-card-only moves and no empty column refills mean buried low cards are
+          deadly. Scan all 13 columns at the start and plan your opening around getting foundations started.
         </p>
       </div>
 
@@ -122,38 +121,28 @@ export default function BakersDozenTipsPage() {
           className="text-2xl sm:text-3xl font-bold mb-4"
           style={{ fontFamily: "var(--font-playfair)" }}
         >
-          Tip #1: Understand the Kings-to-Bottom Rule
+          Tip #1: Scan for Aces and 2s First
         </h2>
         <p className="text-white/70 leading-relaxed mb-4">
-          In{" "}
+          Before making any move in{" "}
           <Link href="/bakers-dozen" className="text-[var(--gold)] hover:text-white transition-colors">
             Baker&apos;s Dozen Solitaire
           </Link>
-          , Kings are automatically moved to the bottom of their columns during the deal. This
-          is the game&apos;s signature mechanic and it fundamentally shapes how you approach
-          every hand. Understanding why it exists — and how to exploit it — is the foundation
-          of strong play.
+          , scan all 13 columns to locate every Ace and 2. These are the cards that start your foundation
+          piles and enable all future building. An Ace on top of a column should go to the foundation
+          immediately. An Ace buried one card deep should be your first priority to uncover.
         </p>
         <p className="text-white/70 leading-relaxed mb-4">
-          <strong className="text-white/90">Why Kings go to the bottom.</strong> In most solitaire
-          games, a King sitting on top of a column is a dead weight — nothing can be built on top
-          of it in the tableau, so it blocks everything beneath it. By moving Kings to the bottom,
-          Baker&apos;s Dozen ensures that every column&apos;s top card is always a playable card,
-          not a roadblock.
-        </p>
-        <p className="text-white/70 leading-relaxed mb-4">
-          <strong className="text-white/90">How to exploit it.</strong> Since Kings are at the
-          bottom, you know that every column has at most 3 non-King cards above the King (in a
-          4-card column). This means you never need to dig deep to reach useful cards. Your
-          planning horizon is short — focus on the top 2-3 cards of each column and you&apos;ll
-          have a clear picture of what&apos;s available.
+          <strong className="text-white/90">Plan multi-step uncovering sequences.</strong> If the Ace of
+          Spades is beneath a 7, you need somewhere to put that 7. Look for a column with an 8, 9, or 10
+          on top (remember: any suit can go on any suit). Each move to uncover a low card is worth multiple
+          moves elsewhere.
         </p>
         <div className="bg-emerald-900/20 border border-emerald-500/20 rounded-lg p-4">
           <p className="text-emerald-300/80 text-sm">
-            <strong>Pro tip:</strong> Kings will be the last cards played to the foundations
-            (they&apos;re rank 13 and foundations build A through K). Don&apos;t worry about
-            them until the endgame. Focus entirely on the cards above them — the Aces through
-            Queens that actually drive your foundation progress.
+            <strong>Pro tip:</strong> If multiple Aces are accessible, play them all to the foundations
+            before doing anything else. Then look for 2s. Getting foundations started early opens up
+            options throughout the game.
           </p>
         </div>
       </section>
@@ -164,41 +153,23 @@ export default function BakersDozenTipsPage() {
           className="text-2xl sm:text-3xl font-bold mb-4"
           style={{ fontFamily: "var(--font-playfair)" }}
         >
-          Tip #2: Prioritize Uncovering Aces and Low Cards
+          Tip #2: Exploit Any-Suit Building
         </h2>
         <p className="text-white/70 leading-relaxed mb-4">
-          Foundations build up by suit starting from Ace, so every foundation is stalled until
-          its Ace is played. At the start of every game, your first priority should be locating
-          all four Aces and planning how to free them. An Ace buried under even one or two
-          cards needs immediate attention.
+          Unlike most solitaire games that require alternating colors or same-suit building, Baker&apos;s
+          Dozen lets you place any card on any card of the next higher rank, regardless of suit. A 5 of
+          Hearts can go on a 6 of any suit. This is enormously flexible.
         </p>
         <p className="text-white/70 leading-relaxed mb-4">
-          After the Aces, focus on Twos, Threes, and Fours. These low cards are the pipeline
-          that feeds your foundations. A played Ace with a buried Two is wasted progress — the
-          foundation stalls at Ace until the Two surfaces. The faster you can chain Ace-Two-Three
-          onto a foundation, the more momentum you build.
+          Use this flexibility to create &ldquo;parking spots&rdquo; for cards you need to move out of
+          the way. If you need to uncover an Ace beneath a Jack, you don&apos;t need to find a specific
+          red or black Queen — any Queen will do. This dramatically increases your options.
         </p>
-        <ul className="list-disc list-inside text-white/70 space-y-2 mb-4 ml-4">
-          <li>
-            <strong className="text-white/90">Scan for all four Aces before your first move.</strong> Know
-            exactly where they are and how many cards cover each one.
-          </li>
-          <li>
-            <strong className="text-white/90">Prioritize the most buried Ace.</strong> An Ace
-            on top of a column plays itself; an Ace under three cards needs a plan.
-          </li>
-          <li>
-            <strong className="text-white/90">Chain low cards.</strong> If moving a card to
-            uncover an Ace also reveals a Two of another suit, that&apos;s a double win.
-          </li>
-        </ul>
-        <div className="bg-amber-900/20 border border-amber-500/20 rounded-lg p-4">
-          <p className="text-amber-300/80 text-sm">
-            <strong>Key insight:</strong> Because all cards are face-up, you have perfect
-            information. Use it. Before your first move, map the locations of every Ace, Two,
-            Three, and Four. This 10-second scan sets up your entire game plan.
-          </p>
-        </div>
+        <p className="text-white/70 leading-relaxed">
+          However, be strategic about where you park cards. Placing a 5 on a 6 that covers a 3 you need
+          soon is counterproductive. Think two or three moves ahead and choose the parking spot that
+          blocks the fewest future moves.
+        </p>
       </section>
 
       <AdUnit format="horizontal" className="-my-1 max-w-3xl mx-auto" />
@@ -209,36 +180,23 @@ export default function BakersDozenTipsPage() {
           className="text-2xl sm:text-3xl font-bold mb-4"
           style={{ fontFamily: "var(--font-playfair)" }}
         >
-          Tip #3: Never Empty a Column Without Purpose
+          Tip #3: Understand the Kings-to-Bottom Rule
         </h2>
         <p className="text-white/70 leading-relaxed mb-4">
-          This is one of the most critical rules in Baker&apos;s Dozen: <strong className="text-white/90">empty
-          columns cannot be filled</strong>. Unlike{" "}
-          <Link href="/" className="text-[var(--gold)] hover:text-white transition-colors">
-            FreeCell
-          </Link>{" "}
-          where empty columns serve as valuable temporary storage, in Baker&apos;s Dozen an
-          empty column is dead space — permanently unusable for the rest of the game.
+          Baker&apos;s Dozen&apos;s signature rule moves all Kings to the bottom of their columns before
+          play begins. This is a huge advantage: it means Kings will naturally be the last cards you deal
+          with in each column, which is exactly when you need them (Kings are the last rank on foundations).
         </p>
         <p className="text-white/70 leading-relaxed mb-4">
-          This means you should only empty a column when every card in it (including the King
-          at the bottom) can be played directly to the foundations. If you empty a column with
-          a stranded King that has no foundation home yet, you&apos;ve lost a workspace for
-          nothing — that King is stuck with nowhere to go.
+          <strong className="text-white/90">Don&apos;t waste moves on Kings.</strong> Since Kings are
+          already at the bottom and can only go to foundations when the Q is already there, there&apos;s
+          rarely a reason to move a King during normal play. Focus on the cards above them.
         </p>
-        <p className="text-white/70 leading-relaxed mb-4">
-          In practice, columns typically empty naturally in the endgame as you feed cards to
-          the foundations. If you find yourself emptying columns in the early or mid-game,
-          pause and reconsider — you may be making a strategic error that will cost you later.
+        <p className="text-white/70 leading-relaxed">
+          The Kings-to-bottom rule also means that no column starts with a King on top, so you always have
+          at least some cards available to move from the very beginning. Appreciate this advantage — in
+          many other solitaire games, a King on top with no empty column is a permanent roadblock.
         </p>
-        <div className="bg-red-900/20 border border-red-500/20 rounded-lg p-4">
-          <p className="text-red-300/80 text-sm">
-            <strong>Warning:</strong> Every empty column reduces your tableau from 13 active
-            columns to 12, then 11, and so on. Fewer columns means fewer places to build
-            and fewer options for rearranging cards. Only empty a column when you&apos;re
-            certain every card in it is heading straight to a foundation.
-          </p>
-        </div>
       </section>
 
       {/* Tip 4 */}
@@ -247,39 +205,32 @@ export default function BakersDozenTipsPage() {
           className="text-2xl sm:text-3xl font-bold mb-4"
           style={{ fontFamily: "var(--font-playfair)" }}
         >
-          Tip #4: Use Any-Suit Building to Your Advantage
+          Tip #4: Avoid Creating Empty Columns
         </h2>
         <p className="text-white/70 leading-relaxed mb-4">
-          Baker&apos;s Dozen uses any-suit building on the tableau — you can place any card
-          on any card of the next higher rank, regardless of suit or color. A 7 of Hearts can
-          go on an 8 of Hearts, 8 of Spades, 8 of Diamonds, or 8 of Clubs. This gives you
-          four times the building options compared to same-suit games and double the options
-          of alternating-color games.
+          In Baker&apos;s Dozen, empty columns cannot be refilled. Once a column is cleared, that space
+          is permanently lost. This is the opposite of games like{" "}
+          <Link href="/" className="text-[var(--gold)] hover:text-white transition-colors">
+            FreeCell
+          </Link>{" "}
+          or{" "}
+          <Link href="/flower-garden" className="text-[var(--gold)] hover:text-white transition-colors">
+            Flower Garden
+          </Link>
+          , where empty spaces are valuable.
         </p>
         <p className="text-white/70 leading-relaxed mb-4">
-          This flexibility is your most powerful tool for rearranging the tableau. When you
-          need to move a card off the top of one column, you have up to four potential
-          destination columns (any column topped by a card one rank higher). Use this freedom
-          to move cards strategically — not just to the first available spot, but to the
-          column where they&apos;ll do the most good.
+          Clearing a column means you lose one of your 13 &ldquo;landing pads&rdquo; for rearranging
+          cards. With 13 columns and only 4 cards each (after Kings-to-bottom), columns empty out quickly
+          if you&apos;re not careful. Try to keep cards distributed across as many columns as possible.
         </p>
-        <ul className="list-disc list-inside text-white/70 space-y-2 mb-4 ml-4">
-          <li>
-            <strong className="text-white/90">Choose your destination wisely.</strong> If a 5
-            can go on any of three different 6s, pick the column where placing it exposes
-            the most useful card or sets up a future foundation feed.
-          </li>
-          <li>
-            <strong className="text-white/90">Consolidate strategically.</strong> Use any-suit
-            building to stack cards onto columns you plan to feed to the foundations in order,
-            keeping other columns clear for different sequences.
-          </li>
-          <li>
-            <strong className="text-white/90">Don&apos;t waste the flexibility.</strong> Just
-            because you can place a card somewhere doesn&apos;t mean you should. Every move
-            should serve your foundation-building plan.
-          </li>
-        </ul>
+        <div className="bg-amber-900/20 border border-amber-500/20 rounded-lg p-4">
+          <p className="text-amber-300/80 text-sm">
+            <strong>Key insight:</strong> The only time emptying a column is acceptable is when every card
+            from that column goes directly to a foundation or is part of a sequence that frees a critical
+            blocked card elsewhere.
+          </p>
+        </div>
       </section>
 
       {/* Tip 5 */}
@@ -288,38 +239,25 @@ export default function BakersDozenTipsPage() {
           className="text-2xl sm:text-3xl font-bold mb-4"
           style={{ fontFamily: "var(--font-playfair)" }}
         >
-          Tip #5: Plan Your Foundation Feeds in Order
+          Tip #5: Build Foundations Evenly
         </h2>
         <p className="text-white/70 leading-relaxed mb-4">
-          Foundations in Baker&apos;s Dozen build strictly in order: Ace, Two, Three, Four, all
-          the way up to King, each by suit. You cannot skip a rank. This means the order in
-          which you feed cards matters enormously — sending the wrong card to the tableau when
-          the foundation needs it next can stall your progress.
+          Resist the temptation to rush one foundation pile far ahead of the others. If your Spade
+          foundation is at 8 while the others are at 2 or 3, you&apos;ve likely buried cards that the
+          other foundations need. Even building keeps all four foundations advancing together and prevents
+          bottlenecks.
         </p>
         <p className="text-white/70 leading-relaxed mb-4">
-          The best approach is to keep all four foundations advancing at roughly the same pace.
-          If Hearts is at 6 while Spades is still at Ace, you have an imbalance. Low Spades
-          cards are clogging the tableau while high Hearts cards you&apos;ve already played
-          are no longer available as building spots. Balanced foundations mean a cleaner tableau.
+          A good rule of thumb: don&apos;t advance any foundation more than 2-3 ranks ahead of the
+          lowest foundation. If the lowest is at 3, the highest should be at 6 or below. This keeps
+          options open and prevents situations where you need a card that&apos;s already buried on
+          another foundation.
         </p>
-        <p className="text-white/70 leading-relaxed mb-4">
-          Before playing a card to the foundation, ask: &ldquo;Do I need this card as a
-          building target on the tableau?&rdquo; A 10 on the tableau can accept any 9. Once
-          it goes to the foundation, that landing pad vanishes. In the mid-game, keeping
-          some higher cards on the tableau as building targets can be more valuable than
-          rushing them to the foundations.
+        <p className="text-white/70 leading-relaxed">
+          That said, if playing a card to the foundation frees a critical card beneath it, do it regardless
+          of how far ahead that foundation gets. Context always trumps rules of thumb.
         </p>
-        <div className="bg-emerald-900/20 border border-emerald-500/20 rounded-lg p-4">
-          <p className="text-emerald-300/80 text-sm">
-            <strong>Pro tip:</strong> In the early game, send everything you can to the
-            foundations — Aces, Twos, Threes, and Fours rarely serve as useful building
-            targets. In the mid-game, be more selective about cards ranked 7 and above.
-            In the endgame, rush everything home.
-          </p>
-        </div>
       </section>
-
-      <AdUnit format="horizontal" className="-my-1 max-w-3xl mx-auto" />
 
       {/* Tip 6 */}
       <section className="mb-10 max-w-3xl mx-auto">
@@ -327,45 +265,29 @@ export default function BakersDozenTipsPage() {
           className="text-2xl sm:text-3xl font-bold mb-4"
           style={{ fontFamily: "var(--font-playfair)" }}
         >
-          Tip #6: Build Longer Columns Strategically
+          Tip #6: Plan Several Moves Ahead
         </h2>
         <p className="text-white/70 leading-relaxed mb-4">
-          Since you can only move single cards (no sequences), the order of cards within a
-          column matters immensely. A column with cards in perfect descending order (like
-          Q-J-10-9-8) is a thing of beauty — you can feed those cards to the foundation one
-          at a time when their suit&apos;s turn comes, or use them as a reliable chain of
-          building targets.
+          With all 52 cards visible from the start, Baker&apos;s Dozen is a pure information game.
+          There&apos;s nothing hidden, no stock to draw from, no randomness after the initial deal.
+          This means every game is either solvable or it isn&apos;t, and planning ahead is the only
+          way to determine which.
         </p>
         <p className="text-white/70 leading-relaxed mb-4">
-          When you have a choice about where to place a card, prefer building onto columns
-          that are already in descending order. Adding a 7 to a column topped by an 8 that
-          sits above a 9 creates a neat descending run. Adding that same 7 to a column
-          topped by an 8 above a 3 creates disorder that will be harder to untangle later.
+          Before each move, trace the consequences forward: &ldquo;If I move this 7 onto that 8, it
+          exposes the 4 beneath it. The 4 goes to the foundation, which then lets me play the 5 from
+          column 9...&rdquo; The best Baker&apos;s Dozen players think 4-6 moves deep.
         </p>
-        <ul className="list-disc list-inside text-white/70 space-y-2 mb-4 ml-4">
-          <li>
-            <strong className="text-white/90">Favor ordered columns.</strong> Place cards where
-            they extend existing descending sequences.
-          </li>
-          <li>
-            <strong className="text-white/90">Avoid burying useful cards.</strong> Placing a
-            high card on top of a low card you&apos;ll need soon creates a bottleneck.
-          </li>
-          <li>
-            <strong className="text-white/90">Think about extraction order.</strong> Cards can
-            only leave a column from the top, so the card you need soonest should be closest
-            to the top.
-          </li>
-        </ul>
-        <div className="bg-amber-900/20 border border-amber-500/20 rounded-lg p-4">
-          <p className="text-amber-300/80 text-sm">
-            <strong>Key insight:</strong> Because only single cards move in Baker&apos;s Dozen,
-            you can&apos;t rearrange a messy column after the fact. Every card placement is
-            essentially permanent until that card is played to the foundation. Build your
-            columns with intention from the start.
+        <div className="bg-emerald-900/20 border border-emerald-500/20 rounded-lg p-4">
+          <p className="text-emerald-300/80 text-sm">
+            <strong>Pro tip:</strong> Use undo liberally to test different move sequences. Baker&apos;s
+            Dozen&apos;s deterministic nature means you can always backtrack and try a different approach
+            without losing information.
           </p>
         </div>
       </section>
+
+      <AdUnit format="horizontal" className="-my-1 max-w-3xl mx-auto" />
 
       {/* Tip 7 */}
       <section className="mb-10 max-w-3xl mx-auto">
@@ -373,129 +295,51 @@ export default function BakersDozenTipsPage() {
           className="text-2xl sm:text-3xl font-bold mb-4"
           style={{ fontFamily: "var(--font-playfair)" }}
         >
-          Tip #7: Watch for Deadlock Patterns Early
+          Tip #7: Keep Columns Tall
         </h2>
         <p className="text-white/70 leading-relaxed mb-4">
-          Deadlock in Baker&apos;s Dozen occurs when cards are arranged in a circular dependency
-          — each card you need is buried under another card you also need. Because you can&apos;t
-          fill empty columns and can only move single cards, deadlocks are often fatal and
-          impossible to escape once they form.
+          Since empty columns are useless in Baker&apos;s Dozen, tall columns are actually advantageous.
+          A column with 6 or 7 cards means more potential destinations for cards you need to move. Think
+          of each column as a stack of landing pads — the more pads, the more flexibility you have.
         </p>
         <p className="text-white/70 leading-relaxed mb-4">
-          The most common deadlock pattern involves two columns where each one&apos;s top card
-          needs to go to the foundation, but the next foundation card for each suit is trapped
-          in the other column. For example: Column A has 6 of Hearts on top (but foundation
-          needs 5 of Hearts, which is in Column B), and Column B has 8 of Spades on top (but
-          foundation needs 7 of Spades, which is in Column A).
-        </p>
-        <p className="text-white/70 leading-relaxed mb-4">
-          To avoid deadlocks, always ask before making a move: &ldquo;Am I creating a situation
-          where two or more columns depend on each other?&rdquo; If moving a card onto Column A
-          means Column A now needs Column B to unblock first, and Column B needs Column A — stop.
-          Find another path.
-        </p>
-        <ul className="list-disc list-inside text-white/70 space-y-2 mb-4 ml-4">
-          <li>
-            <strong className="text-white/90">Check for circular dependencies.</strong> Before
-            placing a card, verify it won&apos;t create a mutual blockage between columns.
-          </li>
-          <li>
-            <strong className="text-white/90">Keep foundation feeds independent.</strong> Ideally,
-            each column should be able to feed its cards to the foundations without depending on
-            another column to unblock first.
-          </li>
-          <li>
-            <strong className="text-white/90">Use the undo button.</strong> If you spot a deadlock
-            forming, undo immediately and try an alternative sequence of moves.
-          </li>
-        </ul>
-      </section>
-
-      {/* Tip 8 */}
-      <section className="mb-10 max-w-3xl mx-auto">
-        <h2
-          className="text-2xl sm:text-3xl font-bold mb-4"
-          style={{ fontFamily: "var(--font-playfair)" }}
-        >
-          Tip #8: Use the High Win Rate to Experiment
-        </h2>
-        <p className="text-white/70 leading-relaxed mb-4">
-          Baker&apos;s Dozen has one of the highest win rates of any{" "}
-          <Link href="/solitaire-types" className="text-[var(--gold)] hover:text-white transition-colors">
-            solitaire variant
-          </Link>{" "}
-          — roughly 65-75% with skilled play. Compare that to{" "}
-          <Link href="/" className="text-[var(--gold)] hover:text-white transition-colors">
-            FreeCell
-          </Link>{" "}
-          (~82%),{" "}
-          <Link href="/klondike" className="text-[var(--gold)] hover:text-white transition-colors">
-            Klondike
-          </Link>{" "}
-          (~80% with draw-1), or{" "}
-          <Link href="/forty-thieves" className="text-[var(--gold)] hover:text-white transition-colors">
-            Forty Thieves
-          </Link>{" "}
-          (~10%), and you can see that Baker&apos;s Dozen sits in a comfortable sweet spot —
-          challenging enough to be interesting, forgiving enough to be fun.
-        </p>
-        <p className="text-white/70 leading-relaxed mb-4">
-          This high win rate means you can afford to experiment. Try different opening strategies
-          — sometimes prioritize one suit&apos;s foundation over balanced building, or try
-          aggressively consolidating cards into fewer columns. Because most deals are winnable,
-          you have room to learn from mistakes without constant frustration.
-        </p>
-        <p className="text-white/70 leading-relaxed mb-4">
-          Use each game as a laboratory. Try a new approach, see how it plays out, and refine
-          your strategy over time. The generous win rate provides enough positive reinforcement
-          to keep you motivated while you develop deeper pattern recognition and planning skills.
-        </p>
-        <div className="bg-emerald-900/20 border border-emerald-500/20 rounded-lg p-4">
-          <p className="text-emerald-300/80 text-sm">
-            <strong>Pro tip:</strong> If you&apos;re winning less than 50% of your Baker&apos;s
-            Dozen games, revisit tips #2 and #3 above. The most common mistakes are ignoring
-            buried Aces and carelessly emptying columns. Fixing those two habits alone can
-            boost your win rate by 20% or more.
-          </p>
-        </div>
-      </section>
-
-      {/* Strategy and Patience */}
-      <section className="mb-10 max-w-3xl mx-auto">
-        <h2
-          className="text-2xl sm:text-3xl font-bold mb-4"
-          style={{ fontFamily: "var(--font-playfair)" }}
-        >
-          Strategy and Patience
-        </h2>
-        <p className="text-white/70 leading-relaxed mb-4">
-          Baker&apos;s Dozen rewards a balanced combination of strategic thinking and patience.
-          The strategic element comes from choosing where to place cards, which foundations to
-          prioritize, and how to avoid deadlocks. The patience element comes from resisting the
-          urge to make the first available move and instead scanning all 13 columns for the
-          optimal play.
-        </p>
-        <p className="text-white/70 leading-relaxed mb-4">
-          Because all 52 cards are dealt face-up, Baker&apos;s Dozen is a game of perfect
-          information — there are no hidden cards, no luck of the draw, no surprises. Every win
-          and every loss is a direct result of your decisions. This makes it an excellent game
-          for developing analytical thinking skills that transfer to other{" "}
-          <Link href="/solitaire-types" className="text-[var(--gold)] hover:text-white transition-colors">
-            solitaire variants
-          </Link>
-          .
+          When you have a choice between two columns for placing a card, prefer the one that&apos;s shorter
+          (to balance things out) unless the taller column has a more favorable top card for future building.
+          The goal is to keep as many active columns as possible for as long as possible.
         </p>
         <p className="text-white/70 leading-relaxed">
-          The skills you build in Baker&apos;s Dozen — reading the full tableau, planning
-          foundation feeds, and avoiding deadlocks — will make you better at{" "}
-          <Link href="/" className="text-[var(--gold)] hover:text-white transition-colors">
-            FreeCell
-          </Link>
-          ,{" "}
-          <Link href="/beleaguered-castle" className="text-[var(--gold)] hover:text-white transition-colors">
-            Beleaguered Castle
-          </Link>
-          , and any other patience game that rewards careful analysis over quick reflexes.
+          This is the opposite of most solitaire games where you&apos;re trying to clear columns. In
+          Baker&apos;s Dozen, think of it as &ldquo;column conservation&rdquo; — every column you keep
+          alive is one more option for rearranging cards.
+        </p>
+      </section>
+
+      {/* Win rate context */}
+      <section className="mb-10 max-w-3xl mx-auto">
+        <h2
+          className="text-2xl sm:text-3xl font-bold mb-4"
+          style={{ fontFamily: "var(--font-playfair)" }}
+        >
+          A Forgiving Game That Rewards Patience
+        </h2>
+        <p className="text-white/70 leading-relaxed mb-4">
+          Baker&apos;s Dozen is one of the more winnable solitaire variants, with roughly 65-75% of deals
+          being solvable with expert play. The combination of all cards visible, any-suit building, and
+          the Kings-to-bottom rule makes it considerably more forgiving than games like{" "}
+          <Link href="/cruel" className="text-[var(--gold)] hover:text-white transition-colors">
+            Cruel Solitaire
+          </Link>{" "}
+          (~25%) or{" "}
+          <Link href="/accordion" className="text-[var(--gold)] hover:text-white transition-colors">
+            Accordion
+          </Link>{" "}
+          (~2%).
+        </p>
+        <p className="text-white/70 leading-relaxed">
+          This makes Baker&apos;s Dozen an excellent game for developing planning skills. The full
+          visibility means you can always analyze what went wrong after a loss, and the high win rate
+          means your improvements show up in your results quickly. It&apos;s a game that rewards
+          patience and methodical thinking above all else.
         </p>
       </section>
 
@@ -510,36 +354,30 @@ export default function BakersDozenTipsPage() {
         <div className="bg-white/[0.04] border border-white/10 rounded-xl p-5">
           <ol className="list-decimal list-inside text-white/80 space-y-3 ml-2">
             <li>
-              <strong>Understand Kings-to-bottom.</strong> Kings are at the base of every
-              column — ignore them until the endgame and focus on the cards above.
+              <strong>Free Aces and 2s first.</strong> Getting foundations started early is the top
+              priority every game.
             </li>
             <li>
-              <strong>Uncover Aces and low cards first.</strong> Map all Aces, Twos, Threes,
-              and Fours before your first move.
+              <strong>Use any-suit building flexibly.</strong> Park cards on any column with the right
+              rank — no color restrictions.
             </li>
             <li>
-              <strong>Never empty a column carelessly.</strong> Empty columns are dead space
-              — only empty them when every card goes straight to a foundation.
+              <strong>Ignore Kings until late.</strong> They&apos;re at the bottom already — focus on
+              the cards above them.
             </li>
             <li>
-              <strong>Exploit any-suit building.</strong> Four possible targets for every
-              card — choose the placement that serves your plan best.
+              <strong>Don&apos;t empty columns.</strong> Empty columns can&apos;t be refilled and are
+              permanently wasted space.
             </li>
             <li>
-              <strong>Feed foundations in balanced order.</strong> Keep all four suits within
-              2-3 ranks of each other.
+              <strong>Build foundations evenly.</strong> Keep all four within 2-3 ranks of each other.
             </li>
             <li>
-              <strong>Build ordered columns.</strong> Place cards to extend descending
-              sequences, not create disorder.
+              <strong>Plan ahead.</strong> All cards are visible — think 4-6 moves deep before committing.
             </li>
             <li>
-              <strong>Watch for deadlocks.</strong> Avoid circular dependencies between
-              columns — check before every move.
-            </li>
-            <li>
-              <strong>Experiment freely.</strong> The 65-75% win rate gives you room to try
-              new strategies without constant frustration.
+              <strong>Keep columns alive.</strong> More active columns means more flexibility for
+              rearranging cards.
             </li>
           </ol>
         </div>
@@ -550,9 +388,9 @@ export default function BakersDozenTipsPage() {
         <CardSection variant="dark">
           <SectionHeading variant="dark" sub="Continue Learning">Related Guides</SectionHeading>
           <ContentBody variant="dark" className="grid gap-4 md:grid-cols-3">
-            <ContentLinkCard href="/bakers-dozen/how-to-play" title="How to Play Baker's Dozen" description="Complete rules, setup, and gameplay mechanics explained step by step." />
-            <ContentLinkCard href="/bakers-dozen" title="Play Baker's Dozen" description="Put these tips into practice with free online Baker's Dozen." />
-            <ContentLinkCard href="/beleaguered-castle/tips" title="Beleaguered Castle Tips" description="Tips for another challenging no-free-cell solitaire variant." />
+            <ContentLinkCard href="/bakers-dozen/how-to-play" title="How to Play Baker's Dozen" description="Complete rules, setup, and card mechanics explained." />
+            <ContentLinkCard href="/bakers-dozen" title="Play Baker's Dozen" description="Put these tips into practice online for free." />
+            <ContentLinkCard href="/solitaire-types" title="All Solitaire Types" description="Explore 20+ solitaire variants and find your next game." />
           </ContentBody>
         </CardSection>
       </div>
@@ -560,7 +398,7 @@ export default function BakersDozenTipsPage() {
       <div className="mb-10 max-w-3xl mx-auto">
         <CtaSection
           heading="Put These Tips Into Practice"
-          body="The best way to improve at Baker's Dozen is to play. Apply these tips one at a time — start with low-card prioritization and deadlock avoidance, then layer in the rest."
+          body="The best way to improve is to play. With a ~70% win rate, most deals are solvable — apply these tips and watch your results climb."
           primaryLabel="Play Baker's Dozen"
           primaryHref="/bakers-dozen"
           secondaryLabel="Learn the Rules"
@@ -609,8 +447,8 @@ export default function BakersDozenTipsPage() {
         </h2>
         <div className="grid sm:grid-cols-2 gap-3">
           <ContentLinkCard href="/bakers-dozen" title="Play Baker's Dozen" description="Put these tips into practice online for free" />
-          <ContentLinkCard href="/bakers-dozen/how-to-play" title="How to Play Baker's Dozen" description="Complete rules, setup, and strategy guide" />
-          <ContentLinkCard href="/beleaguered-castle/tips" title="Beleaguered Castle Tips" description="Tips for another no-free-cell solitaire variant" />
+          <ContentLinkCard href="/bakers-dozen/how-to-play" title="How to Play Baker's Dozen" description="Complete rules, setup, and strategy explained" />
+          <ContentLinkCard href="/flower-garden/tips" title="Flower Garden Tips" description="Tips for another no-stock patience game" />
           <ContentLinkCard href="/tips" title="FreeCell Tips" description="Tips and tricks for the classic FreeCell game" />
           <ContentLinkCard href="/strategy" title="FreeCell Strategy" description="Strategy guide for the classic FreeCell game" />
           <ContentLinkCard href="/solitaire-types" title="All Solitaire Types" description="Explore 20+ solitaire variants and find your next game" />

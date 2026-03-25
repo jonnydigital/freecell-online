@@ -101,6 +101,8 @@ const variantGuides = [
   { href: "/bisley/how-to-play", label: "Bisley Rules", desc: "How to play Bisley Solitaire" },
   { href: "/bakers-dozen", label: "Baker's Dozen Solitaire", desc: "Play Baker's Dozen Solitaire online" },
   { href: "/bakers-dozen/how-to-play", label: "Baker's Dozen Rules", desc: "How to play Baker's Dozen Solitaire" },
+  { href: "/gaps", label: "Gaps (Montana) Solitaire", desc: "Play Gaps Solitaire online" },
+  { href: "/gaps/how-to-play", label: "Gaps Rules", desc: "How to play Gaps Solitaire" },
 ];
 
 const legalLinks = [

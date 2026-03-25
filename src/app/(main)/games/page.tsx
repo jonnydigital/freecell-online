@@ -335,6 +335,20 @@ const games = [
     stackingRule: "Any suit descending",
   },
   {
+    name: "Gaps (Montana)",
+    href: "/gaps",
+    emoji: "🔲",
+    difficulty: "Hard",
+    difficultyColor: "text-red-400",
+    description:
+      "All 52 cards dealt face-up into a 4×13 grid. Remove the Aces to create gaps, then slide cards into gaps — each must be one rank higher and the same suit as the card to its left. 2 redeals allowed. A challenging grid-based patience puzzle.",
+    stats: "Win rate: ~10\u201320% \u00b7 1 deck \u00b7 4×13 grid \u00b7 Same suit ascending",
+    winRate: "~10\u201320%",
+    columns: 13,
+    freeCells: 0,
+    stackingRule: "Same suit ascending",
+  },
+  {
     name: "Easy FreeCell",
     href: "/easy-freecell",
     emoji: "🌟",

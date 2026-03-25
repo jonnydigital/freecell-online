@@ -1115,3 +1115,51 @@ export function dealBakersDozenGame(gameNumber: number): { tableau: Card[][] } {
 
   return { tableau };
 }
+
+/**
+ * Deal a Gaps (Montana) game
+ * All 52 cards dealt face-up into a 4×13 grid.
+ * After dealing, all 4 Aces are removed, creating 4 gaps (null positions).
+ */
+export function dealGapsGame(gameNumber: number): { grid: (Card | null)[][] } {
+  if (gameNumber < 1 || gameNumber > 9999999 || !Number.isInteger(gameNumber)) {
+    throw new Error(`Invalid game number: ${gameNumber}. Must be integer 1-9999999.`);
+  }
+
+  const deck = createOrderedDeck();
+  const rng = new MSLCG(gameNumber);
+
+  // Shuffle using same MS algorithm
+  const dealt: Card[] = [];
+  let remaining = deck.length;
+  for (let i = 0; i < 52; i++) {
+    const j = rng.next() % remaining;
+    [deck[j], deck[remaining - 1]] = [deck[remaining - 1], deck[j]];
+    dealt.push(deck[remaining - 1]);
+    remaining--;
+  }
+
+  // All cards face-up
+  for (const card of dealt) {
+    card.isFaceUp = true;
+  }
+
+  // Deal into 4 rows × 13 columns
+  const grid: (Card | null)[][] = Array.from({ length: 4 }, () => Array(13).fill(null));
+  for (let i = 0; i < 52; i++) {
+    const row = Math.floor(i / 13);
+    const col = i % 13;
+    grid[row][col] = dealt[i];
+  }
+
+  // Remove all 4 Aces (replace with null = gaps)
+  for (let r = 0; r < 4; r++) {
+    for (let c = 0; c < 13; c++) {
+      if (grid[r][c] && grid[r][c]!.rank === 1) {
+        grid[r][c] = null;
+      }
+    }
+  }
+
+  return { grid };
+}

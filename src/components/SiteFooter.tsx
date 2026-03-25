@@ -28,6 +28,7 @@ export default function SiteFooter() {
           { href: '/flower-garden', label: 'Flower Garden' },
           { href: '/bakers-dozen', label: "Baker's Dozen" },
           { href: '/gaps', label: 'Gaps (Montana)' },
+          { href: '/calculation', label: 'Calculation' },
           { href: '/winning-deals', label: 'Winning Deals' },
           { href: '/games', label: 'All Games' },
         ]
@@ -66,6 +67,7 @@ export default function SiteFooter() {
           { href: '/flower-garden', label: 'Flower Garden' },
           { href: '/bakers-dozen', label: "Baker's Dozen" },
           { href: '/gaps', label: 'Gaps (Montana)' },
+          { href: '/calculation', label: 'Calculation' },
           { href: '/games', label: 'All Games' },
         ];
 
@@ -114,6 +116,7 @@ export default function SiteFooter() {
           { href: '/flower-garden/how-to-play', label: 'Flower Garden Rules' },
           { href: '/bakers-dozen/how-to-play', label: "Baker's Dozen Rules" },
           { href: '/gaps/how-to-play', label: 'Gaps Rules' },
+          { href: '/calculation/how-to-play', label: 'Calculation Rules' },
           { href: '/solitaire-for-beginners', label: 'Solitaire for Beginners' },
           { href: '/freecell-vs-klondike', label: 'FreeCell vs Klondike' },
           { href: '/solitaire-types', label: 'Solitaire Types' },
@@ -182,6 +185,7 @@ export default function SiteFooter() {
           { href: '/flower-garden/how-to-play', label: 'Flower Garden Rules' },
           { href: '/bakers-dozen/how-to-play', label: "Baker's Dozen Rules" },
           { href: '/gaps/how-to-play', label: 'Gaps Rules' },
+          { href: '/calculation/how-to-play', label: 'Calculation Rules' },
           { href: '/solitaire-for-beginners', label: 'Solitaire for Beginners' },
         ];
 

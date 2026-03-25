@@ -349,6 +349,20 @@ const games = [
     stackingRule: "Same suit ascending",
   },
   {
+    name: "Calculation",
+    href: "/calculation",
+    emoji: "🔢",
+    difficulty: "Medium",
+    difficultyColor: "text-yellow-400",
+    description:
+      "A math-based solitaire where suit doesn't matter — only rank. Build four foundations using counting intervals of 1, 2, 3, and 4, wrapping around from King to Ace. Strategic waste pile management is the key to winning.",
+    stats: "Win rate: ~30\u201340% \u00b7 1 deck \u00b7 4 foundations \u00b7 Rank only (no suit)",
+    winRate: "~30\u201340%",
+    columns: 4,
+    freeCells: 0,
+    stackingRule: "Rank only (intervals)",
+  },
+  {
     name: "Easy FreeCell",
     href: "/easy-freecell",
     emoji: "🌟",

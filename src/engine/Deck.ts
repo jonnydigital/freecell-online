@@ -1163,3 +1163,34 @@ export function dealGapsGame(gameNumber: number): { grid: (Card | null)[][] } {
 
   return { grid };
 }
+
+/**
+ * Deal a Calculation Solitaire game
+ * Shuffle 52 cards. The engine will extract base cards (A, 2, 3, 4) for foundations.
+ * All 52 cards returned as shuffled stock, face-up (suit doesn't matter in Calculation).
+ */
+export function dealCalculationGame(gameNumber: number): { stock: Card[] } {
+  if (gameNumber < 1 || gameNumber > 9999999 || !Number.isInteger(gameNumber)) {
+    throw new Error(`Invalid game number: ${gameNumber}. Must be integer 1-9999999.`);
+  }
+
+  const deck = createOrderedDeck();
+  const rng = new MSLCG(gameNumber);
+
+  // Shuffle using same MS algorithm
+  const dealt: Card[] = [];
+  let remaining = deck.length;
+  for (let i = 0; i < 52; i++) {
+    const j = rng.next() % remaining;
+    [deck[j], deck[remaining - 1]] = [deck[remaining - 1], deck[j]];
+    dealt.push(deck[remaining - 1]);
+    remaining--;
+  }
+
+  // All cards face-up (suit doesn't matter in Calculation)
+  for (const card of dealt) {
+    card.isFaceUp = true;
+  }
+
+  return { stock: dealt };
+}

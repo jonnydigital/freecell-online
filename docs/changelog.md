@@ -1,5 +1,19 @@
 # FreeCell Online — Changelog
 
+## 2026-03-26 (Thursday Evening Build)
+### Shipped
+- **📝 4 SEO Content Pages** — Bristol how-to-play (589 lines), Bristol tips (593 lines), FreeCell how-to-play (581 lines), FreeCell tips (667 lines). Bristol was the last game variant with zero content pages. FreeCell now has dedicated route-level how-to-play and tips pages (flagship game). Each page: 10+ keywords, Article + BreadcrumbList + FAQPage JSON-LD, 3 AdUnit placements, CardSection cross-links, CtaSection. SiteFooter + sitemap updated. 2,450 lines across 7 files.
+- (53rd consecutive night of shipping)
+
+## 2026-03-26 (Thursday Evening Build)
+### Shipped
+- **📖 Bristol Solitaire How to Play** (`/bristol/how-to-play`) — Rules, setup, strategy overview for Bristol's 8-fan tableau + 3 reserve piles + draw-3 stock. Article + BreadcrumbList + FAQPage JSON-LD. 3 AdUnit placements.
+- **📝 Bristol Solitaire Tips** (`/bristol/tips`) — 8 practical tips, FAQ section. Bristol was the only game variant with zero content pages — now fully covered.
+- **📖 FreeCell How to Play** (`/freecell/how-to-play`) — Dedicated route-level how-to-play for the flagship game. Comprehensive guide with supermove math, setup instructions, visual walkthrough.
+- **📝 FreeCell Tips** (`/freecell/tips`) — 8+ expert-level tips with supermove calculations, strategy depth. The core game now has its own tips route.
+- Sitemap + SiteFooter updated. 4 files, ~130K lines total.
+- (53rd consecutive night of shipping) 🔥
+
 ## 2026-03-22 (Sunday Overnight Build #2)
 ### Shipped
 - **🏰 Seahaven Towers Solitaire** — Full game mode (2,768 lines, 14 files). SeahavenEngine (487 lines): 10 tableau columns of 5 cards, 4 free cells (2 start occupied), same-suit descending stacking, single-card moves only, Kings-only in empty columns, auto-move to foundations. SeahavenScene (1,488 lines): responsive 10-column layout, drag-and-drop, single-tap auto-move, deal animation, win celebration, sound effects, undo/redo. How to Play page (483 lines): rules, setup, 6 strategy tips, Seahaven vs FreeCell vs Baker's Game comparison table, 7 FAQs. Article + BreadcrumbList + FAQPage JSON-LD. 3 AdUnit placements. 14th playable game variant.

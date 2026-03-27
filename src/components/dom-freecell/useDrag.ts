@@ -242,16 +242,31 @@ export function useDrag({ cardIds, sourceLocation, boardRef }: UseDragOptions): 
               store.clearSelection();
               announceToScreenReader('Card moved');
             } else {
-              // Move failed — select the new card instead
-              playInvalidMoveSound();
-              store.selectCards(cardIds, sourceLocation);
-              playCardSelectSound();
+              // Move failed — try auto-placing the tapped card instead
+              const autoMoved = store.autoPlace(cardIds[0]);
+              if (autoMoved) {
+                store.clearSelection();
+                announceToScreenReader('Card moved');
+              } else {
+                // No auto-move either — select the new card
+                playInvalidMoveSound();
+                store.selectCards(cardIds, sourceLocation);
+                playCardSelectSound();
+              }
             }
           }
         } else {
-          // No selection — select this card/run
-          store.selectCards(cardIds, sourceLocation);
-          playCardSelectSound();
+          // No selection — single-tap auto-move!
+          // Try to auto-place the card to the best destination.
+          // Falls back to select-and-place if no move is available.
+          const moved = store.autoPlace(cardIds[0]);
+          if (moved) {
+            announceToScreenReader('Card moved');
+          } else {
+            // No auto-move available — select for manual placement
+            store.selectCards(cardIds, sourceLocation);
+            playCardSelectSound();
+          }
         }
       }
 

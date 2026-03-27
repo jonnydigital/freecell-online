@@ -257,13 +257,29 @@ export const domFreecellStore = create<DomFreecellState>()((set, get) => ({
       }
     }
 
-    // Priority 2: Non-empty cascade (proper stacking)
-    for (let j = 0; j < 8; j++) {
-      if (from.type === 'cascade' && from.index === j) continue;
-      if (state.cascades[j].length === 0) continue;
-      const dest: Location = { type: 'cascade', index: j };
-      if (_engine.isLegalMove(from, dest)) {
-        return get().tryMove(from, dest);
+    // Priority 2: Non-empty cascade (pick best — prefer same-suit sequences)
+    if (card) {
+      let bestCascade: Location | null = null;
+      let bestScore = -Infinity;
+      for (let j = 0; j < 8; j++) {
+        if (from.type === 'cascade' && from.index === j) continue;
+        if (state.cascades[j].length === 0) continue;
+        const dest: Location = { type: 'cascade', index: j };
+        if (!_engine.isLegalMove(from, dest)) continue;
+        // Score this cascade: same suit > different suit, longer runs > shorter
+        const topCard = state.cascades[j][state.cascades[j].length - 1];
+        let score = 0;
+        if (topCard.suit === card.suit) score += 10; // Same suit — builds toward foundation
+        if (topCard.rank === card.rank + 1) score += 5; // Direct stack (always true for legal move)
+        // Prefer cascades with longer existing runs (more organized)
+        score += Math.min(state.cascades[j].length, 5);
+        if (score > bestScore) {
+          bestScore = score;
+          bestCascade = dest;
+        }
+      }
+      if (bestCascade) {
+        return get().tryMove(from, bestCascade);
       }
     }
 

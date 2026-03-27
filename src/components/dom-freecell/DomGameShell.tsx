@@ -150,16 +150,16 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
   const [showLeaderboard, setShowLeaderboard] = useState(false);
   const gamePickerRef = useRef<HTMLDivElement>(null);
 
-  // Close game picker on outside click
+  // Close game picker on outside click — use capture phase so card drag stopPropagation doesn't block it
   useEffect(() => {
     if (!showGamePicker) return;
-    const handler = (e: MouseEvent) => {
+    const handler = (e: Event) => {
       if (gamePickerRef.current && !gamePickerRef.current.contains(e.target as Node)) {
         setShowGamePicker(false);
       }
     };
-    document.addEventListener('mousedown', handler);
-    return () => document.removeEventListener('mousedown', handler);
+    document.addEventListener('pointerdown', handler, true);
+    return () => document.removeEventListener('pointerdown', handler, true);
   }, [showGamePicker]);
 
   // Game number input state
@@ -737,7 +737,7 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
     {/* Game Container — sticky outer has NO overflow so scroll events pass through to document */}
     <div
       data-scroll-role="game-sticky-shell"
-      className="min-w-0 flex-1 min-[1180px]:sticky min-[1180px]:top-4 min-[1180px]:my-2 min-[1180px]:h-[calc(100dvh-1rem)]"
+      className="min-w-0 flex-1 h-[100dvh] md:h-auto min-[1180px]:sticky min-[1180px]:top-4 min-[1180px]:my-2 min-[1180px]:h-[calc(100dvh-1rem)]"
     >
     <div
       data-scroll-role="game-shell-inner"
@@ -1466,12 +1466,30 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
 
 function SidebarAdSlot({ children, height, label, delayMs }: { children: React.ReactNode; height: number; label: string; delayMs?: number }) {
   const [visible, setVisible] = useState(!delayMs);
+  const [adFilled, setAdFilled] = useState(false);
+  const slotRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!delayMs) return;
     const t = setTimeout(() => setVisible(true), delayMs);
     return () => clearTimeout(t);
   }, [delayMs]);
+
+  // Watch for ad fill status — check periodically if AdSense has filled the slot
+  useEffect(() => {
+    if (!visible || !slotRef.current) return;
+    const check = () => {
+      const ins = slotRef.current?.querySelector('ins.adsbygoogle');
+      if (ins) {
+        const status = ins.getAttribute('data-ad-status');
+        if (status === 'filled') setAdFilled(true);
+      }
+    };
+    const interval = setInterval(check, 2000);
+    // Check immediately too
+    check();
+    return () => clearInterval(interval);
+  }, [visible]);
 
   if (!visible) return null;
 
@@ -1480,13 +1498,17 @@ function SidebarAdSlot({ children, height, label, delayMs }: { children: React.R
       className="rounded-[26px] border border-white/10 bg-[linear-gradient(180deg,rgba(23,67,24,0.95),rgba(7,25,9,0.94))] p-4 shadow-[0_20px_40px_rgba(0,0,0,0.2)] backdrop-blur-sm"
       aria-label={label}
     >
-      <div className="mb-3 flex items-center justify-between px-2">
-        <span className="text-xs font-bold uppercase tracking-[0.24em] text-white/[0.32]">{label}</span>
-        <span className="text-xs font-semibold uppercase tracking-[0.16em] text-[#d9c07a]/[0.72]">Sponsored</span>
-      </div>
+      {/* Only show Advertisement/Sponsored labels when an ad is actually filled */}
+      {adFilled && (
+        <div className="mb-3 flex items-center justify-between px-2">
+          <span className="text-xs font-bold uppercase tracking-[0.24em] text-white/[0.32]">{label}</span>
+          <span className="text-xs font-semibold uppercase tracking-[0.16em] text-[#d9c07a]/[0.72]">Sponsored</span>
+        </div>
+      )}
       <div
+        ref={slotRef}
         className="flex items-center justify-center overflow-hidden rounded-[20px] border border-[#d9c07a]/12 bg-[linear-gradient(180deg,rgba(244,239,226,0.08),rgba(22,35,15,0.45))]"
-        style={{ minHeight: `${height}px` }}
+        style={{ minHeight: adFilled ? `${height}px` : '0px', transition: 'min-height 0.3s ease' }}
       >
         {children}
       </div>

@@ -1,5 +1,4 @@
 import { Suspense } from "react";
-import Script from "next/script";
 import Analytics from "@/components/Analytics";
 import CookieConsent from "@/components/CookieConsent";
 import ThemeInitializer from "@/components/ThemeInitializer";
@@ -21,10 +20,11 @@ export default function MainLayout({
       <ThemeInitializer />
       <AccessibilityInitializer />
       <Analytics />
-      <Script
+      {/* AdSense — use plain script to avoid Next.js data-nscript attribute warning */}
+      <script
+        async
         src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3083538874906149"
         crossOrigin="anonymous"
-        strategy="afterInteractive"
       />
       <script
         type="application/ld+json"

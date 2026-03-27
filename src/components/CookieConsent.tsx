@@ -24,9 +24,9 @@ export default function CookieConsent() {
         };
         // Small initial delay to avoid flicker
         setTimeout(checkSplash, 300);
-      } else if (consent === 'accepted') {
-        loadAdSense();
       }
+      // Note: AdSense is now loaded unconditionally via layout.tsx script tag.
+      // Cookie consent controls personalization, not script loading.
     } catch {
       // localStorage blocked
     }

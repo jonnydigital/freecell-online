@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { absoluteUrl } from "@/lib/siteConfig";
 import AdUnit from "@/components/AdUnit";
+import InContentAd from "@/components/InContentAd";
 import ContentLayout from "@/components/ContentLayout";
 import NetworkCrossLinks from "@/components/NetworkCrossLinks";
 import { ContentHero, SectionHeading, CardSection, ContentBody, TocPills, CtaSection, JsonLd } from '@/components/content';
@@ -501,6 +502,8 @@ export default function HowToPlayPage() {
           </ContentBody>
         </CardSection>
 
+        <InContentAd />
+
         {/* ── Card 4: Quick Start Steps ── */}
         <CardSection id="quick-start">
           <SectionHeading
@@ -597,7 +600,7 @@ export default function HowToPlayPage() {
           </ContentBody>
         </CardSection>
 
-        <AdUnit className="-my-1" />
+        <InContentAd />
 
         {/* ── Card 6: FAQ ── */}
         <CardSection id="htp-faq">

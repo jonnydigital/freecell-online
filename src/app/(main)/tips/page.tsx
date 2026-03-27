@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
+import InContentAd from "@/components/InContentAd";
 import ContentLayout from "@/components/ContentLayout";
 import { ContentHero, SectionHeading, CardSection, ContentBody, TocPills, CtaSection, ContentLinkCard, JsonLd } from "@/components/content";
 
@@ -468,6 +469,8 @@ export default function TipsPage() {
             </CardSection>
           );
         })}
+
+        <InContentAd />
 
         {/* Quick reference card */}
         <CardSection>

@@ -2,6 +2,7 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import { absoluteUrl, siteConfig } from '@/lib/siteConfig';
 import AdUnit from '@/components/AdUnit';
+import InContentAd from '@/components/InContentAd';
 import ContentLayout from '@/components/ContentLayout';
 import { SectionHeading, CardSection, ContentBody, CtaSection, ContentLinkCard, JsonLd } from '@/components/content';
 
@@ -214,6 +215,8 @@ export default function FreecellRulesPage() {
             </div>
         </CardSection>
 
+        <InContentAd />
+
         {/* The Supermove */}
         <CardSection id="supermove" variant="dark">
             <SectionHeading variant="dark" sub="Moving Multiple Cards" id="supermove-heading">The Supermove Rule</SectionHeading>
@@ -261,7 +264,7 @@ export default function FreecellRulesPage() {
             </ContentBody>
         </CardSection>
 
-        <AdUnit className="-my-1" />
+        <InContentAd />
 
         {/* Win Condition */}
         <CardSection id="win-condition" variant="dark">

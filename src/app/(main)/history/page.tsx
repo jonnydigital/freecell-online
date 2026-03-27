@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import AdUnit from "@/components/AdUnit";
+import InContentAd from "@/components/InContentAd";
 import ContentLayout from "@/components/ContentLayout";
 import { SectionHeading, CardSection, ContentBody, CtaSection, ContentLinkCard, JsonLd } from "@/components/content";
 
@@ -763,7 +764,7 @@ export default function HistoryPage() {
             </div>
         </CardSection>
 
-        <AdUnit className="-my-1" />
+        <InContentAd />
 
         {/* Section: Timeline */}
         <CardSection id="timeline" variant="dark">

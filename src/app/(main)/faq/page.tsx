@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { absoluteUrl } from "@/lib/siteConfig";
 import AdUnit from "@/components/AdUnit";
+import InContentAd from "@/components/InContentAd";
 import ContentLayout from "@/components/ContentLayout";
 import { ContentHero, SectionHeading, CardSection, ContentBody, TocPills, CtaSection, JsonLd, ContentLinkCard } from "@/components/content";
 
@@ -301,7 +302,7 @@ export default function FAQPage() {
               </ContentBody>
             </CardSection>
 
-            {catIndex === 1 && <AdUnit className="mt-8" />}
+            {catIndex === 1 && <InContentAd className="mt-8" />}
           </section>
         ))}
 

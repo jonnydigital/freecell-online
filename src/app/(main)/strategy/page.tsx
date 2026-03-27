@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { absoluteUrl } from "@/lib/siteConfig";
 import AdUnit from "@/components/AdUnit";
+import InContentAd from "@/components/InContentAd";
 import ContentLayout from "@/components/ContentLayout";
 import NetworkCrossLinks from "@/components/NetworkCrossLinks";
 import { ContentHero, SectionHeading, CardSection, ContentBody, TocPills, CtaSection, ContentLinkCard, JsonLd } from '@/components/content';
@@ -410,7 +411,7 @@ export default function StrategyPage() {
           </ContentBody>
         </CardSection>
 
-        <AdUnit className="-my-1" />
+        <InContentAd />
 
         {/* ── Card 4: Advanced Techniques ── */}
         <CardSection id="advanced">
@@ -518,7 +519,7 @@ export default function StrategyPage() {
           </ContentBody>
         </CardSection>
 
-        <AdUnit className="-my-1" />
+        <InContentAd />
 
         {/* ── Card 5: Common Mistakes ── */}
         <CardSection id="mistakes">

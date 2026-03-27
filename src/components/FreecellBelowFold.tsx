@@ -180,7 +180,7 @@ export default function FreecellBelowFold() {
           </section>
 
           {/* ── Why Play Here? ── */}
-          <section className="mt-16">
+          <section className="mt-10">
             <h2
               className="text-2xl font-bold text-[#D4AF37] sm:text-3xl"
               style={{ fontFamily: 'var(--font-playfair), Georgia, serif' }}
@@ -226,7 +226,7 @@ export default function FreecellBelowFold() {
           </section>
 
           {/* ── FAQ ── */}
-          <section className="mt-16" itemScope itemType="https://schema.org/FAQPage">
+          <section className="mt-10" itemScope itemType="https://schema.org/FAQPage">
             <h2
               className="text-2xl font-bold text-[#D4AF37] sm:text-3xl"
               style={{ fontFamily: 'var(--font-playfair), Georgia, serif' }}
@@ -278,7 +278,7 @@ export default function FreecellBelowFold() {
           <AdUnit className="my-8" />
 
           {/* ── Variant Games ── */}
-          <section className="mt-12">
+          <section className="mt-10">
             <h2
               className="text-2xl font-bold text-[#D4AF37] sm:text-3xl"
               style={{ fontFamily: 'var(--font-playfair), Georgia, serif' }}
@@ -300,6 +300,11 @@ export default function FreecellBelowFold() {
                 </Link>
               ))}
             </div>
+            <p className="mt-4 text-center text-sm text-white/40">
+              <Link href="/games" className="font-semibold text-[#8B6914] hover:text-[#D4AF37]">
+                Browse all 25+ solitaire games &rarr;
+              </Link>
+            </p>
           </section>
         </div>
       </div>

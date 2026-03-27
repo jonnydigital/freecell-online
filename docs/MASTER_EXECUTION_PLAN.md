@@ -76,7 +76,7 @@ A brutally honest audit of every problem across the entire network, organized by
 | M4 | No anchor/sticky mobile ad | Mobile | Competitor uses bottom sticky ad on mobile. We have none (mobile has no ads at all). | 1-2 hours |
 | M5 | Sidebar space wasted on empty widgets | Desktop | Dead leaderboard + daily challenge take sidebar space that could be ad units. | Depends on B5 fix |
 | M6 | No ad refresh during gameplay | Both sites | Freestar refreshes sidebar ads while users play long sessions. We serve one impression then done. | Blocked on ad network |
-| M7 | Missing specific ad slot IDs | Both sites | Some AdUnit instances have `slot` prop, some don't. All should have specific slot IDs configured in AdSense. | 1 hour |
+| M7 | Missing specific ad slot IDs | Both sites | Most AdUnit instances run in auto-ad mode (no slot prop). Jonathan: create specific ad units in AdSense dashboard and assign slot IDs to each placement for better tracking. | ACTION REQUIRED (Jonathan in AdSense dashboard) |
 
 ### NETWORK & MULTI-SITE ISSUES
 
@@ -230,8 +230,8 @@ Effort estimates: S = <1hr, M = 1-3hrs, L = 3-6hrs, XL = 6+ hrs
 **Day 4 (March 30):**
 - [x] Increase card size on desktop ~10-15% (D1) [M] — DONE (commit ebe7aa0)
 - [x] Improve foundation pile suit icon visibility (D2) [S] — DONE (commit ebe7aa0)
-- [ ] Add in-content AdSense ads on SEO pages between sections (M3) [M]
-- [ ] Verify canonical tags on all pages (C5) [S]
+- [x] Add in-content AdSense ads on SEO pages between sections (M3) [M] — DONE (commit cb79f3c)
+- [x] Verify canonical tags on all pages (C5) [S] — DONE (root layout sets metadataBase + canonical: './' for all pages)
 
 **Day 5 (March 31):**
 - [x] Implement single-tap auto-move as default interaction (D6) [L] — DONE (commit 5b9dba4)

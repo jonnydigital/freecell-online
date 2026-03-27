@@ -25,9 +25,9 @@ A brutally honest audit of every problem across the entire network, organized by
 |---|-------|-------|---------|----------|
 | B1 | Game dropdown doesn't close on outside click | Both sites, game picker | Menu stays open overlapping game board. Can interact with cards behind menu. | FIXED (commit aa729b6) |
 | B2 | "ADVERTISEMENT / SPONSORED" label shows on empty slots | Both sites, sidebar | Shows a labeled empty box when ads don't fill. Looks broken and amateur. | FIXED (commit aa729b6) — SidebarAdSlot now hides label when unfilled |
-| B3 | Hint button gives no visible feedback | Both sites | Clicking hint icon does nothing visible — no toast, no highlight, no animation. Users don't know if it worked. | 1 hour |
+| B3 | Hint button gives no visible feedback | Both sites | Clicking hint icon does nothing visible — no toast, no highlight, no animation. Users don't know if it worked. | FIXED (commit f27c497) |
 | B4 | Cookie consent loads AdSense redundantly | Both sites | CookieConsent.tsx still has `loadAdSense()` function even though layout.tsx loads it unconditionally. Dead code path. | FIXED (commit aa729b6) |
-| B5 | Leaderboard shows "No scores yet" permanently | Both sites | Empty leaderboard with placeholder text. No social proof. Makes site look dead/unused. | 2-3 hours (seed data or fix API) |
+| B5 | Leaderboard shows "No scores yet" permanently | Both sites | Empty leaderboard with placeholder text. No social proof. Makes site look dead/unused. | FIXED (commit f27c497) — seeded with bot data |
 | B6 | Daily challenge calendar missing on playfreecellonline.com | playfreecellonline.com | solitairestack.com has a calendar widget, but the primary money site doesn't. | 1-2 hours |
 | B7 | Service worker update loop potential | Both sites | SW checks for updates every 60 seconds and auto-reloads. Could cause disruptive reloads mid-game. | 1 hour |
 
@@ -35,16 +35,16 @@ A brutally honest audit of every problem across the entire network, organized by
 
 | # | Issue | Where | Details | Est. Fix |
 |---|-------|-------|---------|----------|
-| D1 | Cards too small on desktop | Both sites, game board | Cards appear ~15% smaller than competitor. Competitor uses more viewport for the game. | 2-3 hours |
-| D2 | Foundation pile suit icons too faint | Both sites, game board | FC/suit placeholders are barely visible. Competitor uses colored, bold suit icons. | 1 hour |
+| D1 | Cards too small on desktop | Both sites, game board | Cards appear ~15% smaller than competitor. Competitor uses more viewport for the game. | FIXED (commit ebe7aa0) — increased ~12% |
+| D2 | Foundation pile suit icons too faint | Both sites, game board | FC/suit placeholders are barely visible. Competitor uses colored, bold suit icons. | FIXED (commit ebe7aa0) — opacity 0.18→0.32 |
 | D3 | ~200px empty gaps between content sections | Both sites, homepage below fold | Dead space between "Play FreeCell Online" intro and "How to Play" section. Another gap before "More Games". | 1-2 hours |
 | D4 | Right sidebar lacks visual weight | Both sites, desktop sidebar | Leaderboard and daily challenge cards look thin and unimportant. Competitor sidebar is dense with content. | 2-3 hours |
 | D5 | No loading state for game board | Both sites | If game takes time to initialize, user sees nothing — no spinner, no skeleton, no progress indicator. | 1 hour |
-| D6 | Two-tap card move (select then place) | Both sites | Competitor: single tap auto-moves card to best destination. Ours: tap to select, see highlights, tap destination. Double the interaction. | 4-6 hours |
-| D7 | Animation timing too slow | Both sites | Our moves: 100-300ms with Back.easeOut overshoot. Competitor: 80-120ms crisp moves. Power users feel sluggish. | 2-3 hours |
-| D8 | No cascade settling stagger | Both sites | When card removed, remaining cards reposition simultaneously. Competitor staggers 15-20ms per card with subtle bounce. | 2-3 hours |
-| D9 | Card drag lacks physicality | Both sites | Our drag: 1.05x scale only. Competitor: 1.08x scale + deeper shadow + slight rotation toward touch point. | 2-3 hours |
-| D10 | Auto-complete too slow | Both sites | Our auto-complete: 50ms per card. Competitor: 25-30ms rapid flourish. Should feel like a victory cascade. | 1 hour |
+| D6 | Two-tap card move (select then place) | Both sites | Competitor: single tap auto-moves card to best destination. Ours: tap to select, see highlights, tap destination. Double the interaction. | FIXED (commit 5b9dba4) — single-tap auto-move |
+| D7 | Animation timing too slow | Both sites | Our moves: 100-300ms with Back.easeOut overshoot. Competitor: 80-120ms crisp moves. Power users feel sluggish. | FIXED (commit ebe7aa0) — 120ms settling |
+| D8 | No cascade settling stagger | Both sites | When card removed, remaining cards reposition simultaneously. Competitor staggers 15-20ms per card with subtle bounce. | FIXED — 15ms stagger per card |
+| D9 | Card drag lacks physicality | Both sites | Our drag: 1.05x scale only. Competitor: 1.08x scale + deeper shadow + slight rotation toward touch point. | FIXED — 1.06x scale + deeper shadow + rotation |
+| D10 | Auto-complete too slow | Both sites | Our auto-complete: 50ms per card. Competitor: 25-30ms rapid flourish. Should feel like a victory cascade. | FIXED (commit ebe7aa0) — 28ms stagger |
 | D11 | No animation speed setting | Both sites | cardgames.io has slow/medium/fast slider. Power users want FAST. No way to adjust. | 2-3 hours |
 | D12 | Sound effects lack depth | Both sites | Same sound for every action. No pitch variation by card rank. No layered audio cues. | 3-4 hours |
 | D13 | Splash screen blocks cookie consent | Both sites | Cookie banner waits for splash dismiss, but splash has no timer — could delay consent indefinitely. | 30 min |
@@ -64,7 +64,7 @@ A brutally honest audit of every problem across the entire network, organized by
 | C7 | About page is generic | Both sites | Competitor has personal story ("my grandmother taught me FreeCell") as trust signal. Ours is generic. | 2 hours |
 | C8 | No /embed info page for backlinks | playfreecellonline.com | Have /embed-generator tool but no SEO landing page explaining the embed offering. Embed pages generate backlinks. | 2-3 hours |
 | C9 | Cross-linking between content pages is weak | Both sites | solitaired.com has deep internal linking from every game page to related variants, guides, tips. | 4-6 hours audit + fix |
-| C10 | No structured FAQ schema | Both sites | FAQ page exists but may not have FAQ schema markup for Google rich results. | 1-2 hours |
+| C10 | No structured FAQ schema | Both sites | FAQ page exists but may not have FAQ schema markup for Google rich results. | FIXED (commit b3d1d90) — FAQPage schema added |
 
 ### MONETIZATION PROBLEMS
 
@@ -216,8 +216,8 @@ Effort estimates: S = <1hr, M = 1-3hrs, L = 3-6hrs, XL = 6+ hrs
 - [ ] Jonathan: Check AdSense account at adsense.google.com — is account approved? Are sites added? (ACTION REQUIRED)
 
 **Day 2 (March 28):**
-- [ ] Add visible hint feedback — toast notification or card glow when hint fires (B3) [M]
-- [ ] Fix leaderboard — seed with realistic bot data so it's not empty (B5) [M]
+- [x] Add visible hint feedback — toast notification or card glow when hint fires (B3) [M] — DONE (commit f27c497)
+- [x] Fix leaderboard — seed with realistic bot data so it's not empty (B5) [M] — DONE (commit f27c497)
 - [ ] Add daily challenge calendar widget to playfreecellonline.com (B6) [M]
 - [ ] Verify all AdUnit instances have proper slot IDs configured (M7) [S]
 
@@ -228,19 +228,19 @@ Effort estimates: S = <1hr, M = 1-3hrs, L = 3-6hrs, XL = 6+ hrs
 - [ ] Remove dead loadAdSense function from CookieConsent.tsx [S]
 
 **Day 4 (March 30):**
-- [ ] Increase card size on desktop ~10-15% (D1) [M]
-- [ ] Improve foundation pile suit icon visibility (D2) [S]
+- [x] Increase card size on desktop ~10-15% (D1) [M] — DONE (commit ebe7aa0)
+- [x] Improve foundation pile suit icon visibility (D2) [S] — DONE (commit ebe7aa0)
 - [ ] Add in-content AdSense ads on SEO pages between sections (M3) [M]
 - [ ] Verify canonical tags on all pages (C5) [S]
 
 **Day 5 (March 31):**
-- [ ] Implement single-tap auto-move as default interaction (D6) [L]
-- [ ] Reduce animation timing to 80-150ms range (D7) [M]
-- [ ] Speed up auto-complete to 25-30ms per card (D10) [S]
+- [x] Implement single-tap auto-move as default interaction (D6) [L] — DONE (commit 5b9dba4)
+- [x] Reduce animation timing to 80-150ms range (D7) [M] — DONE (commit ebe7aa0)
+- [x] Speed up auto-complete to 25-30ms per card (D10) [S] — DONE (commit ebe7aa0)
 
 **Day 6-7 (April 1-2):**
-- [ ] Add cascade settling stagger animation (D8) [M]
-- [ ] Improve card drag physicality — deeper shadow + rotation (D9) [M]
+- [x] Add cascade settling stagger animation (D8) [M] — DONE
+- [x] Improve card drag physicality — deeper shadow + rotation (D9) [M] — DONE
 - [ ] Add animation speed setting (slow/medium/fast) (D11) [M]
 - [ ] Weekly review: re-test all fixes, compare against competitor
 

@@ -156,19 +156,26 @@ export function useDrag({ cardIds, sourceLocation, boardRef }: UseDragOptions): 
           snap.el.style.left = `${snap.startLeft}px`;
           snap.el.style.top = `${snap.startTop}px`;
           snap.el.style.width = `${firstRect.width}px`;
-          snap.el.style.transform = 'none';
+          snap.el.style.transform = 'scale(1.06)';
           snap.el.style.pointerEvents = 'none';
           snap.el.style.transition = 'none';
-          snap.el.style.boxShadow = '0 8px 24px rgba(0,0,0,0.45)';
+          snap.el.style.boxShadow = '0 12px 32px rgba(0,0,0,0.35), 0 4px 12px rgba(0,0,0,0.18)';
         });
       }
+
+      let prevPx = startX;
 
       function applyPosition(px: number, py: number) {
         const baseLeft = px - anchorX;
         const baseTop = py - anchorY;
+        // Subtle rotation based on horizontal movement (max ±3 degrees)
+        const dx = px - prevPx;
+        const rotation = Math.max(-3, Math.min(3, dx * 0.3));
+        prevPx = px;
         for (const snap of snapshots) {
           snap.el.style.left = `${baseLeft + snap.offsetX}px`;
           snap.el.style.top = `${baseTop + snap.offsetY}px`;
+          snap.el.style.transform = `scale(1.06) rotate(${rotation}deg)`;
         }
         domFreecellStore.getState().updateDragPosition(px, py);
       }

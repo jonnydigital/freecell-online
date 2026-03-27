@@ -417,6 +417,7 @@ export default function DomBoard({ hint }: DomBoardProps) {
                       transform: `translateY(calc(${rowIdx} * var(--cascade-overlap)))`,
                       pointerEvents: 'none',
                       cursor: 'default',
+                      transitionDelay: `${rowIdx * 15}ms`,
                     }}
                     zIndex={rowIdx + 1}
                     isHintSource={hintSourceIds.has(card.id)}

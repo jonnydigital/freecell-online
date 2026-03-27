@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export function AccordionItem({
   question,
@@ -9,15 +9,24 @@ export function AccordionItem({
   question: string;
   answer: string;
 }) {
-  const [open, setOpen] = useState(false);
+  // Start open for SSR so crawlers see all content, then collapse client-side
+  const [open, setOpen] = useState(true);
+  const [hydrated, setHydrated] = useState(false);
+
+  useEffect(() => {
+    setHydrated(true);
+    setOpen(false);
+  }, []);
 
   return (
-    <div className="border-b border-[#d4c5a0]/40 last:border-b-0">
+    <div className="border-b border-[#d4c5a0]/40 last:border-b-0" itemScope itemProp="mainEntity" itemType="https://schema.org/Question">
       <button
         onClick={() => setOpen(!open)}
-        className="py-5 px-10 sm:px-12 flex justify-between items-center w-full text-left transition-colors duration-200 hover:bg-[#f4edd8]/50"
+        aria-expanded={open}
+        className="py-5 px-10 sm:px-12 flex justify-between items-center w-full text-left transition-colors duration-200 hover:bg-[#f4edd8]/50 cursor-pointer"
       >
         <span
+          itemProp="name"
           className={`font-medium text-lg tracking-wide transition-colors duration-200 ${
             open ? "text-[#B8860B]" : "text-[#2a2522]"
           }`}
@@ -32,6 +41,7 @@ export function AccordionItem({
           viewBox="0 0 24 24"
           stroke="currentColor"
           strokeWidth={2}
+          aria-hidden="true"
         >
           <path
             strokeLinecap="round"
@@ -41,12 +51,13 @@ export function AccordionItem({
         </svg>
       </button>
       <div
+        itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer"
         className="grid transition-[grid-template-rows] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]"
-        style={{ gridTemplateRows: open ? "1fr" : "0fr" }}
+        style={{ gridTemplateRows: open || !hydrated ? "1fr" : "0fr" }}
       >
         <div className="overflow-hidden">
           <div className="px-10 sm:px-12 pb-8 pt-1">
-            <p className="text-[#3a3a3a] leading-[1.75] tracking-[0.01em] max-w-prose">{answer}</p>
+            <p itemProp="text" className="text-[#3a3a3a] leading-[1.75] tracking-[0.01em] max-w-prose">{answer}</p>
           </div>
         </div>
       </div>

@@ -747,11 +747,12 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
     {/* Game Container — sticky outer has NO overflow so scroll events pass through to document */}
     <div
       data-scroll-role="game-sticky-shell"
-      className="min-w-0 flex-1 h-[100dvh] md:h-auto min-[1180px]:sticky min-[1180px]:top-4 min-[1180px]:my-2 min-[1180px]:h-[calc(100dvh-1rem)]"
+      className="min-w-0 flex-1 h-[100dvh] lg:sticky lg:top-4 lg:my-2"
+      style={{ height: 'calc(100dvh - 1rem)' }}
     >
     <div
       data-scroll-role="game-shell-inner"
-      className="flex h-full flex-col overflow-clip min-[1180px]:rounded-[30px] min-[1180px]:border min-[1180px]:border-white/10"
+      className="flex h-full flex-col overflow-clip lg:rounded-[30px] lg:border lg:border-white/10"
       style={{
         background:
           'linear-gradient(180deg, color-mix(in srgb, var(--theme-base, #0d2e0d) 86%, #214f1d 14%) 0%, color-mix(in srgb, var(--theme-base, #0d2e0d) 94%, black) 100%)',
@@ -1462,7 +1463,8 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
     {/* Right Sidebar (desktop only) */}
     <aside
       data-scroll-role="sidebar-scroll"
-      className="sidebar-scroll w-[380px] shrink-0 max-[1179px]:hidden min-[1180px]:sticky min-[1180px]:top-2 min-[1180px]:h-[calc(100dvh-1rem)] min-[1180px]:overflow-y-auto min-[1180px]:overscroll-contain"
+      className="sidebar-scroll w-[380px] shrink-0 hidden lg:block lg:sticky lg:top-2 lg:overflow-y-auto lg:overscroll-contain"
+      style={{ height: 'calc(100dvh - 1rem)' }}
     >
       <div className="flex flex-col gap-4 py-4">
         <SidebarAdSlot label="Advertisement" height={250} delayMs={3000}>

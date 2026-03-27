@@ -226,7 +226,7 @@ export default function FreecellBelowFold() {
           </section>
 
           {/* ── FAQ ── */}
-          <section className="mt-16">
+          <section className="mt-16" itemScope itemType="https://schema.org/FAQPage">
             <h2
               className="text-2xl font-bold text-[#D4AF37] sm:text-3xl"
               style={{ fontFamily: 'var(--font-playfair), Georgia, serif' }}
@@ -238,6 +238,9 @@ export default function FreecellBelowFold() {
                 <div
                   key={item.q}
                   className="rounded-xl border border-white/10 bg-white/[0.03]"
+                  itemScope
+                  itemProp="mainEntity"
+                  itemType="https://schema.org/Question"
                 >
                   <button
                     className="w-full cursor-pointer px-5 py-4 text-left text-base font-semibold text-white hover:text-[#f5df97]"
@@ -245,7 +248,7 @@ export default function FreecellBelowFold() {
                     aria-expanded={openFaq === index}
                   >
                     <span className="flex items-center justify-between">
-                      {item.q}
+                      <span itemProp="name">{item.q}</span>
                       <span
                         className={`ml-3 text-white/40 transition-transform ${openFaq === index ? 'rotate-45' : ''}`}
                       >
@@ -253,11 +256,19 @@ export default function FreecellBelowFold() {
                       </span>
                     </span>
                   </button>
-                  {openFaq === index && (
-                    <div className="px-5 pb-4 text-sm leading-7 text-white/60">
-                      {item.a}
+                  <div
+                    itemScope
+                    itemProp="acceptedAnswer"
+                    itemType="https://schema.org/Answer"
+                    className="grid transition-[grid-template-rows] duration-300"
+                    style={{ gridTemplateRows: openFaq === index ? '1fr' : '0fr' }}
+                  >
+                    <div className="overflow-hidden">
+                      <div className="px-5 pb-4 text-sm leading-7 text-white/60">
+                        <p itemProp="text">{item.a}</p>
+                      </div>
                     </div>
-                  )}
+                  </div>
                 </div>
               ))}
             </div>

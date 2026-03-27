@@ -139,6 +139,8 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
   const [isAutoCompletable, setIsAutoCompletable] = useState(false);
   const [isDailyGame, setIsDailyGame] = useState(false);
   const [hintsUsed, setHintsUsed] = useState(0);
+  const [hintToast, setHintToast] = useState<string | null>(null);
+  const hintToastTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [undosUsed, setUndosUsed] = useState(0);
   const [leaderboardEntries, setLeaderboardEntries] = useState<LeaderboardEntry[]>([]);
   const [leaderboardRank, setLeaderboardRank] = useState<number | undefined>();
@@ -601,9 +603,17 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
   }, [redo]);
 
   const handleHint = useCallback(() => {
-    requestHint();
+    const found = requestHint();
     setHintsUsed((prev) => prev + 1);
-    announceToScreenReader('Hint shown');
+    if (hintToastTimerRef.current) clearTimeout(hintToastTimerRef.current);
+    if (found) {
+      setHintToast('💡 Try this move!');
+      announceToScreenReader('Hint shown');
+    } else {
+      setHintToast('No hints available — try undoing a move');
+      announceToScreenReader('No hints available');
+    }
+    hintToastTimerRef.current = setTimeout(() => setHintToast(null), 2500);
   }, [requestHint]);
 
   // ── Tutorial highlight resolution ──
@@ -1205,6 +1215,21 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
                 } as React.CSSProperties}
               />
             ))}
+          </div>
+        )}
+
+        {/* ── Hint Toast ── */}
+        {hintToast && (
+          <div className="fixed top-14 left-1/2 -translate-x-1/2 z-[90] pointer-events-none animate-in fade-in slide-in-from-top-2 duration-200">
+            <div
+              className="px-4 py-2 rounded-xl text-sm font-medium shadow-lg border border-[#D4AF37]/30"
+              style={{
+                background: 'linear-gradient(135deg, #1a2b0d 0%, #0d2b0d 100%)',
+                color: hintToast.startsWith('💡') ? '#D4AF37' : '#ff9966',
+              }}
+            >
+              {hintToast}
+            </div>
           </div>
         )}
 

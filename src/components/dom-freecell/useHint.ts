@@ -45,12 +45,12 @@ export function useHint(durationMs = 3000) {
     };
   }, []);
 
-  const requestHint = useCallback(() => {
+  const requestHint = useCallback((): boolean => {
     const engine = getEngine();
     const best = getHint(engine);
     if (!best) {
       setHint(null);
-      return;
+      return false;
     }
 
     const cardIds = best.cards.map((c) => c.id);
@@ -63,6 +63,7 @@ export function useHint(durationMs = 3000) {
     // Auto-clear after duration
     if (timerRef.current) clearTimeout(timerRef.current);
     timerRef.current = setTimeout(() => setHint(null), durationMs);
+    return true;
   }, [getEngine, durationMs]);
 
   const clearHint = useCallback(() => {

@@ -35,7 +35,6 @@ export default function CookieConsent() {
   const handleAccept = () => {
     try { localStorage.setItem(CONSENT_KEY, 'accepted'); } catch {}
     setVisible(false);
-    loadAdSense();
   };
 
   const handleDecline = () => {
@@ -71,15 +70,4 @@ export default function CookieConsent() {
       </div>
     </div>
   );
-}
-
-function loadAdSense() {
-  if (typeof window === 'undefined') return;
-  if (document.querySelector('script[src*="adsbygoogle"]')) return;
-
-  const script = document.createElement('script');
-  script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3083538874906149';
-  script.async = true;
-  script.crossOrigin = 'anonymous';
-  document.head.appendChild(script);
 }

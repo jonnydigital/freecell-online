@@ -101,9 +101,57 @@ function localSubmit(
   return { rank, totalEntries: data.entries[date].length };
 }
 
+/**
+ * Generate realistic seed entries so the leaderboard never looks empty.
+ * Uses the date as a seed so the same day always shows the same names.
+ */
+function generateSeedEntries(date: string): LeaderboardEntry[] {
+  const names = [
+    'SolitaireKing', 'CardShark42', 'FreeCellFan', 'AcePlayer',
+    'DailyDealer', 'GreenFelt', 'StackMaster', 'QuietSolver',
+    'LuckyDraw', 'PatienceQueen', 'Shuffler99', 'TopDeck',
+  ];
+  // Simple deterministic hash from date string
+  let hash = 0;
+  for (let i = 0; i < date.length; i++) {
+    hash = ((hash << 5) - hash + date.charCodeAt(i)) | 0;
+  }
+  const abs = Math.abs(hash);
+  const count = 5 + (abs % 4); // 5-8 entries
+  const entries: LeaderboardEntry[] = [];
+  for (let i = 0; i < count; i++) {
+    const seed = abs + i * 7919; // vary per entry
+    const nameIdx = ((seed >>> 0) % names.length);
+    const moves = 55 + ((seed >>> 3) % 80);     // 55-134 moves
+    const time = 90 + ((seed >>> 7) % 420);      // 1:30 - 8:30
+    const gameNum = 1 + ((seed >>> 11) % 50000);
+    entries.push({
+      rank: i + 1,
+      playerName: names[nameIdx],
+      playerId: `seed_${nameIdx}_${i}`,
+      moves,
+      time,
+      gameNumber: gameNum,
+      date,
+      timestamp: new Date(date + 'T12:00:00').getTime() + i * 60000,
+    });
+  }
+  // Sort by composite score
+  entries.sort((a, b) => {
+    const scoreA = a.moves * 10000 + a.time;
+    const scoreB = b.moves * 10000 + b.time;
+    return scoreA - scoreB;
+  });
+  entries.forEach((e, i) => (e.rank = i + 1));
+  return entries;
+}
+
 function localFetch(date: string): LeaderboardEntry[] {
   const data = loadLocalData();
-  return data.entries[date] || [];
+  const entries = data.entries[date] || [];
+  // Return seed data if no real entries exist
+  if (entries.length === 0) return generateSeedEntries(date);
+  return entries;
 }
 
 function localFetchAllTime(): LeaderboardEntry[] {
@@ -112,6 +160,27 @@ function localFetchAllTime(): LeaderboardEntry[] {
   for (const entries of Object.values(data.entries)) {
     all.push(...entries);
   }
+
+  // If no real data exists, generate all-time seed entries
+  if (all.length === 0) {
+    const allTimeNames = [
+      'SolitaireKing', 'CardShark42', 'FreeCellFan', 'AcePlayer',
+      'DailyDealer', 'GreenFelt', 'StackMaster', 'QuietSolver',
+      'LuckyDraw', 'PatienceQueen', 'Shuffler99', 'TopDeck',
+      'WildCard', 'DeckRunner', 'RoyalFlush',
+    ];
+    return allTimeNames.slice(0, 10).map((name, i) => ({
+      rank: i + 1,
+      playerName: name,
+      playerId: `seed_alltime_${i}`,
+      moves: 48 + i * 7,
+      time: 72 + i * 35,
+      gameNumber: 1000 + i * 3117,
+      date: '2026-03-01',
+      timestamp: Date.now() - i * 86400000,
+    }));
+  }
+
   // Sort by composite score, take top 50
   all.sort((a, b) => {
     const scoreA = a.moves * 10000 + a.time;

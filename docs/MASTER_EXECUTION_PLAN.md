@@ -28,7 +28,7 @@ A brutally honest audit of every problem across the entire network, organized by
 | B3 | Hint button gives no visible feedback | Both sites | Clicking hint icon does nothing visible — no toast, no highlight, no animation. Users don't know if it worked. | FIXED (commit f27c497) |
 | B4 | Cookie consent loads AdSense redundantly | Both sites | CookieConsent.tsx still has `loadAdSense()` function even though layout.tsx loads it unconditionally. Dead code path. | FIXED (commit aa729b6) |
 | B5 | Leaderboard shows "No scores yet" permanently | Both sites | Empty leaderboard with placeholder text. No social proof. Makes site look dead/unused. | FIXED (commit f27c497) — seeded with bot data |
-| B6 | Daily challenge calendar missing on playfreecellonline.com | playfreecellonline.com | solitairestack.com has a calendar widget, but the primary money site doesn't. | 1-2 hours |
+| B6 | Daily challenge calendar missing on playfreecellonline.com | playfreecellonline.com | solitairestack.com has a calendar widget, but the primary money site doesn't. | VERIFIED PRESENT — SidebarDailyChallenge renders on both sites |
 | B7 | Service worker update loop potential | Both sites | SW checks for updates every 60 seconds and auto-reloads. Could cause disruptive reloads mid-game. | 1 hour |
 
 ### DESIGN & UX PROBLEMS
@@ -222,10 +222,10 @@ Effort estimates: S = <1hr, M = 1-3hrs, L = 3-6hrs, XL = 6+ hrs
 - [ ] Verify all AdUnit instances have proper slot IDs configured (M7) [S]
 
 **Day 3 (March 29):**
-- [ ] Add Settings icon to bottom toolbar (D15) [M]
+- [x] Add Settings + Stats icons to desktop toolbar (D15) [M] — DONE
 - [ ] Add Bookmark game feature to toolbar (D15) [M]
-- [ ] Fill empty content gaps on homepage with cross-links or ad units (D3) [M]
-- [ ] Remove dead loadAdSense function from CookieConsent.tsx [S]
+- [x] Fill empty content gaps on homepage with cross-links or ad units (D3) [M] — DONE (tightened spacing + games CTA)
+- [x] Remove dead loadAdSense function from CookieConsent.tsx [S] — DONE (commit aa729b6)
 
 **Day 4 (March 30):**
 - [x] Increase card size on desktop ~10-15% (D1) [M] — DONE (commit ebe7aa0)

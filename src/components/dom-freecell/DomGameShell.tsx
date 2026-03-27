@@ -972,6 +972,16 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
         >
           <Ghost size={15} />
         </SubBarBtn>
+
+        <div style={{ width: '1px', height: '16px', background: 'rgba(255,255,255,0.06)', margin: '0 8px' }} />
+
+        <SubBarBtn onClick={() => setShowStats(true)} title="Statistics">
+          <Trophy size={15} />
+        </SubBarBtn>
+
+        <SubBarBtn onClick={() => setShowSettings(true)} title="Settings">
+          <Settings size={15} />
+        </SubBarBtn>
       </div>
 
       {/* ── Mobile Top Bar ── */}

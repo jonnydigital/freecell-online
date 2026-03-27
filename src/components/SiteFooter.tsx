@@ -30,6 +30,7 @@ export default function SiteFooter() {
           { href: '/gaps', label: 'Gaps (Montana)' },
           { href: '/calculation', label: 'Calculation' },
           { href: '/monte-carlo', label: 'Monte Carlo' },
+          { href: '/bristol', label: 'Bristol Solitaire' },
           { href: '/winning-deals', label: 'Winning Deals' },
           { href: '/games', label: 'All Games' },
         ]
@@ -70,6 +71,7 @@ export default function SiteFooter() {
           { href: '/gaps', label: 'Gaps (Montana)' },
           { href: '/calculation', label: 'Calculation' },
           { href: '/monte-carlo', label: 'Monte Carlo' },
+          { href: '/bristol', label: 'Bristol Solitaire' },
           { href: '/games', label: 'All Games' },
         ];
 
@@ -129,6 +131,10 @@ export default function SiteFooter() {
           { href: '/calculation/tips', label: 'Calculation Tips' },
           { href: '/monte-carlo/how-to-play', label: 'Monte Carlo Rules' },
           { href: '/monte-carlo/tips', label: 'Monte Carlo Tips' },
+          { href: '/bristol/how-to-play', label: 'Bristol Rules' },
+          { href: '/bristol/tips', label: 'Bristol Tips' },
+          { href: '/freecell/how-to-play', label: 'FreeCell How to Play' },
+          { href: '/freecell/tips', label: 'FreeCell Tips' },
           { href: '/solitaire-for-beginners', label: 'Solitaire for Beginners' },
           { href: '/freecell-vs-klondike', label: 'FreeCell vs Klondike' },
           { href: '/solitaire-types', label: 'Solitaire Types' },
@@ -208,6 +214,10 @@ export default function SiteFooter() {
           { href: '/calculation/tips', label: 'Calculation Tips' },
           { href: '/monte-carlo/how-to-play', label: 'Monte Carlo Rules' },
           { href: '/monte-carlo/tips', label: 'Monte Carlo Tips' },
+          { href: '/bristol/how-to-play', label: 'Bristol Rules' },
+          { href: '/bristol/tips', label: 'Bristol Tips' },
+          { href: '/freecell/how-to-play', label: 'FreeCell How to Play' },
+          { href: '/freecell/tips', label: 'FreeCell Tips' },
           { href: '/solitaire-for-beginners', label: 'Solitaire for Beginners' },
         ];
 

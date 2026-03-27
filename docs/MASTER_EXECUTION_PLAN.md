@@ -198,6 +198,46 @@ Don't lose sight of our advantages:
 
 ---
 
+## PART 3.5: DAILY STANDUP PROTOCOL
+
+**Every session begins with these two checks before any feature work:**
+
+### 1. Competitor Review (online-solitaire.com)
+Browse the live competitor site and note any changes since last review:
+- New features, UI changes, or layout shifts
+- New game variants added
+- Ad placement changes (new units, new networks, video ads)
+- Blog posts or content updates
+- Performance/speed changes
+- Mobile UX changes
+- Any A/B tests visible (different layouts across visits)
+
+**How:** Use Chrome extension tools to load online-solitaire.com, take screenshots, compare against previous session notes. Log findings in `docs/competitor-reviews/YYYY-MM-DD.md`.
+
+### 2. QA Playtest (playfreecellonline.com)
+Play an actual game on the live production site using computer-use tools (real clicks and drags, not just code review):
+- Deal loads correctly, cards render at proper size
+- Single-tap auto-move works (tap a card → it moves to best spot)
+- Drag-and-drop works (drag a card between cascades)
+- Undo/redo function correctly
+- Hint button shows visible feedback
+- Auto-complete triggers and animates when game is near-won
+- Mobile layout renders (resize browser or check on phone)
+- Sidebar widgets load (leaderboard, daily challenge, achievements)
+- Ads render (or at least don't break layout if unfilled)
+- No console errors visible
+- Test on both playfreecellonline.com AND solitairestack.com
+
+**How:** Use computer-use tools to interact with the live site as a real user would. Log any bugs found directly into this document's issue tables above, or fix them immediately if trivial.
+
+### 3. Log & Prioritize
+After both checks, update this document:
+- Add any new issues found to the tables in Part 1
+- Update competitor comparison in Part 2 if they shipped something new
+- Adjust daily plan priorities if a new bug is more urgent than planned work
+
+---
+
 ## PART 4: DAILY EXECUTION PLAN
 
 Each day focuses on a specific category. Items are ordered by impact within each day.

@@ -32,7 +32,7 @@
 }
 
 .dom-board-surface {
-  --card-width: clamp(86px, calc((100vw - 420px) / 8.3), 120px);
+  --card-width: clamp(96px, calc((100vw - 380px) / 7.8), 135px);
   --card-height: calc(var(--card-width) * 1.4);
   --card-border-radius: clamp(8px, calc(var(--card-width) * 0.085), 10px);
   --cascade-overlap: clamp(24px, calc(var(--card-width) * 0.3), 36px);
@@ -87,8 +87,8 @@
 
 /* Smooth position transitions when not being dragged */
 .dom-card-settling {
-  transition: transform 0.18s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-    box-shadow 0.15s ease;
+  transition: transform 0.12s cubic-bezier(0.22, 0.61, 0.36, 1),
+    box-shadow 0.1s ease;
 }
 
 .dom-card--dragging {
@@ -183,7 +183,7 @@
 
 .dom-pile__slot-label {
   font-size: var(--slot-label-size);
-  color: rgba(255, 255, 255, 0.18);
+  color: rgba(255, 255, 255, 0.32);
   user-select: none;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
     Arial, sans-serif;
@@ -203,8 +203,8 @@
 /* ---- Deal animation ---- */
 
 .dom-card-dealing {
-  animation: deal-in 0.25s ease-out forwards;
-  animation-delay: calc(var(--deal-index) * 30ms);
+  animation: deal-in 0.2s ease-out forwards;
+  animation-delay: calc(var(--deal-index) * 22ms);
   opacity: 0;
 }
 

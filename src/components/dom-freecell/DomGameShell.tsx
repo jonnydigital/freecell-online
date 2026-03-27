@@ -634,26 +634,37 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
   }, []);
 
   const handleAutoComplete = useCallback(() => {
-    const engine = getEngine();
-    const store = useDomFreecellStore.getState();
-    let moved = true;
-    while (moved) {
-      moved = false;
+    announceToScreenReader('Auto-completing game');
+    setIsAutoCompletable(false);
+
+    const STEP_MS = 28; // ms between each card moving to foundation
+
+    function stepOnce(): boolean {
+      const engine = getEngine();
+      const store = useDomFreecellStore.getState();
       const state = engine.getState();
+      // Try free cells first
       for (let i = 0; i < state.freeCells.length; i++) {
         const card = state.freeCells[i];
-        if (card && store.autoPlace(card.id)) { moved = true; }
+        if (card && store.autoPlace(card.id)) return true;
       }
+      // Then cascades
       for (let col = 0; col < state.cascades.length; col++) {
         const cascade = state.cascades[col];
         if (cascade.length > 0) {
           const topCard = cascade[cascade.length - 1];
-          if (store.autoPlace(topCard.id)) { moved = true; }
+          if (store.autoPlace(topCard.id)) return true;
         }
       }
+      return false;
     }
-    setIsAutoCompletable(false);
-    announceToScreenReader('Auto-completing game');
+
+    function tick() {
+      if (stepOnce()) {
+        setTimeout(tick, STEP_MS);
+      }
+    }
+    tick();
   }, [getEngine]);
 
   const handleShareGame = useCallback(async () => {

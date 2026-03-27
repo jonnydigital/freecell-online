@@ -31,6 +31,7 @@ import { isHubSite } from '@/lib/siteConfig';
 import SidebarDailyChallenge from '../sidebar/SidebarDailyChallenge';
 import SidebarLeaderboard from '../sidebar/SidebarLeaderboard';
 import SidebarAchievements from '../sidebar/SidebarAchievements';
+import SidebarStats from '../sidebar/SidebarStats';
 import Leaderboard from '../Leaderboard';
 
 // Variant display names
@@ -1502,6 +1503,7 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
           onShowFull={() => setShowAchievements(true)}
           refreshKey={newAchievements.length}
         />
+        <SidebarStats />
         <SidebarAdSlot label="Advertisement" height={600}>
           <AdUnit slot="1215382155" width={300} height={600} format="vertical" />
         </SidebarAdSlot>

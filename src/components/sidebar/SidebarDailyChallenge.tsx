@@ -10,6 +10,7 @@ import {
   getMonthDays,
   getFirstDayOfWeek,
 } from '@/lib/dailyChallenge';
+import { getMonthlyProgress } from '@/lib/monthlyMilestones';
 
 interface SidebarDailyChallengeProps {
   onPlayDaily: (seed: number) => void;
@@ -51,6 +52,12 @@ export default function SidebarDailyChallenge({ onPlayDaily }: SidebarDailyChall
 
   const isCurrentMonth = viewYear === new Date().getFullYear() && viewMonth === new Date().getMonth();
 
+  // Monthly milestone progress
+  const progress = getMonthlyProgress(viewYear, viewMonth);
+  const progressPercent = progress.nextMilestone
+    ? Math.round((progress.completedCount / progress.nextMilestone.threshold) * 100)
+    : 100;
+
   return (
     <div
       className="rounded-[26px] border border-white/10 bg-[linear-gradient(180deg,rgba(27,73,29,0.95),rgba(8,28,10,0.94))] p-4 shadow-[0_20px_40px_rgba(0,0,0,0.2)] backdrop-blur-sm"
@@ -86,6 +93,71 @@ export default function SidebarDailyChallenge({ onPlayDaily }: SidebarDailyChall
             Play Today
           </button>
         )}
+      </div>
+
+      {/* Monthly milestone progress */}
+      <div className="mb-4 rounded-[18px] border border-white/6 bg-white/[0.03] px-3 py-3">
+        <div className="flex items-center justify-between mb-2">
+          <span className="text-xs font-semibold text-white/50">
+            {progress.monthName} Wins
+          </span>
+          <span className="text-xs font-bold text-white/70">
+            {progress.completedCount}/{progress.totalDays}
+          </span>
+        </div>
+
+        {/* Progress bar */}
+        <div className="relative h-2 rounded-full bg-white/10 overflow-hidden mb-2">
+          <div
+            className="absolute inset-y-0 left-0 rounded-full transition-all duration-500"
+            style={{
+              width: `${Math.min(progressPercent, 100)}%`,
+              background: progress.nextMilestone
+                ? progress.nextMilestone.level === 'bronze'
+                  ? '#CD7F32'
+                  : progress.nextMilestone.level === 'silver'
+                  ? '#C0C0C0'
+                  : '#D4AF37'
+                : '#D4AF37',
+            }}
+          />
+          {/* Milestone markers */}
+          {progress.milestones.map((m) => (
+            <div
+              key={m.level}
+              className="absolute top-1/2 -translate-y-1/2 w-0.5 h-3 bg-white/20"
+              style={{ left: `${(m.threshold / progress.totalDays) * 100}%` }}
+            />
+          ))}
+        </div>
+
+        {/* Trophy badges + next target */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-1">
+            {progress.milestones.map((m) => {
+              const earned = progress.completedCount >= m.threshold;
+              return (
+                <span
+                  key={m.level}
+                  className={`text-sm ${earned ? '' : 'opacity-25 grayscale'}`}
+                  title={`${m.label} (${m.threshold} wins)${earned ? ' - Earned!' : ''}`}
+                >
+                  {m.icon}
+                </span>
+              );
+            })}
+          </div>
+          {progress.nextMilestone && progress.winsToNext > 0 && (
+            <span className="text-xs text-white/40">
+              {progress.winsToNext} more to {progress.nextMilestone.label}!
+            </span>
+          )}
+          {!progress.nextMilestone && (
+            <span className="text-xs text-[#D4AF37] font-semibold">
+              Perfect month!
+            </span>
+          )}
+        </div>
       </div>
 
       {/* Month navigation */}

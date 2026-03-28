@@ -1,5 +1,12 @@
 # FreeCell Online — Changelog
 
+## 2026-03-28 (Saturday Evening Build)
+### Shipped
+- **🔗 Embed FreeCell SEO Landing Page** (`/embed`) — Dedicated content page for the embed offering: quick-start iframe code, platform-specific instructions (WordPress, Squarespace, Wix, Notion, plain HTML), 4 use case cards (gaming blogs, corporate intranets, educational sites, senior communities), technical details (performance, privacy, responsive, accessibility, CDN), 8 FAQs. Article + BreadcrumbList + FAQPage JSON-LD. 3 AdUnit placements. 15 keywords. Backlink magnet — every site that embeds our game links back to us. Execution plan item C8.
+- **📝 Execution Plan Updates** — Marked C2 (solver page), C3 (statistics page), C6 (GSC submission), C10 (FAQ schema) as already shipped from prior nights.
+- Sitemap + SiteFooter updated with `/embed` link.
+- (57th consecutive night of shipping) 🔥
+
 ## 2026-03-28 (Saturday Overnight Build #2)
 ### Shipped
 - **📝 Baker's Game Tips** (`/bakers-game/tips`) — 8 practical tips for same-suit stacking mastery: FreeCell habit-breaking, suit sequence scanning, free cell discipline (2-cell rule), suit prioritization, empty cascade value, dead-end recognition, foundation pacing, undo as laboratory. FreeCell player adjustment guide. 5 FAQs. Article + BreadcrumbList + FAQPage JSON-LD. 3 AdUnit placements. 15 keywords. ~500 lines.

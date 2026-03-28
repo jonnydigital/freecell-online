@@ -326,7 +326,7 @@ Effort estimates: S = <1hr, M = 1-3hrs, L = 3-6hrs, XL = 6+ hrs
 - [x] Build /freecell-statistics deep dive page (C3) [L] — ALREADY SHIPPED (Night 22, 2026-03-06)
 
 **Day 16:**
-- [ ] Build /embed SEO landing page explaining the embed offering for backlinks (C8) [M]
+- [x] Build /embed SEO landing page explaining the embed offering for backlinks (C8) [M] — SHIPPED Night 57 (2026-03-28)
 - [ ] Improve embed generator UX and make it more discoverable [M]
 
 **Day 17:**

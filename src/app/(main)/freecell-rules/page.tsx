@@ -360,9 +360,10 @@ export default function FreecellRulesPage() {
             <ContentBody variant="dark" className="grid gap-4 md:grid-cols-3">
               <ContentLinkCard href="/how-to-play" title="How to Play FreeCell" description="Full tutorial with diagrams, step-by-step walkthrough, and beginner tips." />
               <ContentLinkCard href="/strategy" title="Strategy Guide" description="Beginner to expert tactics for improving your FreeCell win rate." />
+              <ContentLinkCard href="/tips" title="Tips & Tricks" description="25 quick tactical patterns you can apply during live play." />
               <ContentLinkCard href="/freecell-cheat-sheet" title="Cheat Sheet" description="Move priorities, keyboard shortcuts, and what to avoid on one page." />
               <ContentLinkCard href="/glossary" title="Glossary" description="Definitions for every FreeCell term, from cascade to supermove." />
-              <ContentLinkCard href="/" title="Play FreeCell" description="Play online for free with undo, hints, and thousands of deals." />
+              <ContentLinkCard href="/faq" title="FreeCell FAQ" description="Answers to the most frequently asked questions about FreeCell rules and gameplay." />
             </ContentBody>
         </CardSection>        <CtaSection
           heading="Ready to Play?"

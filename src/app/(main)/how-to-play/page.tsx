@@ -682,6 +682,18 @@ export default function HowToPlayPage() {
                 </Link>
                 <span className="text-[#444444]"> — Key formulas, move priorities, and at-a-glance reminders for mid-game.</span>
               </li>
+              <li>
+                <Link href="/freecell-mistakes-to-avoid" className="text-[#8B6914] hover:underline font-medium">
+                  Mistakes to Avoid
+                </Link>
+                <span className="text-[#444444]"> — The most common errors that trip up new players and how to fix them.</span>
+              </li>
+              <li>
+                <Link href="/faq" className="text-[#8B6914] hover:underline font-medium">
+                  FreeCell FAQ
+                </Link>
+                <span className="text-[#444444]"> — Answers to the most frequently asked questions about FreeCell.</span>
+              </li>
             </ul>
           </ContentBody>
         </CardSection>

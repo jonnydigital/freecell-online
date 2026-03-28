@@ -313,9 +313,12 @@ export default function FAQPage() {
           </SectionHeading>
           <ContentBody className="grid gap-4 md:grid-cols-3">
             <ContentLinkCard variant="felt" href="/how-to-play" title="How to Play" description="Complete rules tutorial for FreeCell solitaire." />
+            <ContentLinkCard variant="felt" href="/freecell-rules" title="Rules Quick Reference" description="A concise summary of every FreeCell rule on one page." />
             <ContentLinkCard variant="felt" href="/strategy" title="Strategy Guide" description="Beginner to expert strategy for winning more games." />
             <ContentLinkCard variant="felt" href="/tips" title="Tips & Tricks" description="25 actionable tips you can use during live play." />
+            <ContentLinkCard variant="felt" href="/freecell-cheat-sheet" title="Cheat Sheet" description="Move priorities and decision flowcharts for quick reference." />
             <ContentLinkCard variant="felt" href="/glossary" title="Glossary" description="Every card game term you need to know." />
+            <ContentLinkCard variant="felt" href="/freecell-for-beginners" title="FreeCell for Beginners" description="A gentler introduction for first-time players." />
             <ContentLinkCard variant="felt" href="/freecell-mistakes-to-avoid" title="Common Mistakes" description="The errors that cost beginners the most games." />
             <ContentLinkCard variant="felt" href="/is-every-freecell-game-winnable" title="Is Every Game Winnable?" description="The answer to FreeCell's most common question." />
           </ContentBody>

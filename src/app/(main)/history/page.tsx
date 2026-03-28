@@ -1445,6 +1445,8 @@ export default function HistoryPage() {
               Related Guides
             </SectionHeading>
             <ContentBody variant="dark" className="grid gap-4 md:grid-cols-2">
+              <ContentLinkCard href="/how-to-play" title="How to Play FreeCell" description="Learn the rules and master the interface — from your first deal to confident play." />
+              <ContentLinkCard href="/strategy" title="Strategy Guide" description="Go deeper on free cells, empty columns, supermoves, and disciplined board management." />
               <ContentLinkCard href="/famous-freecell-deals" title="Famous FreeCell Deals" description="Explore the most iconic game numbers in FreeCell history, from easy wins to the proven impossible." />
               <ContentLinkCard href="/freecell-game-11982" title="FreeCell Game #11982" description="The full story of the only proven unsolvable deal and why it became a cult classic." />
               <ContentLinkCard href="/freecell-world-records" title="FreeCell World Records" description="Fastest times, longest streaks, and community achievements from decades of competitive play." />

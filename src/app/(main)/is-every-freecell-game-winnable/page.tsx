@@ -272,6 +272,8 @@ export default function IsEveryFreecellGameWinnablePage() {
               <ContentLinkCard href="/easy-freecell-games" title="Easy FreeCell Games" description="Learn what makes a beginner-friendly deal and where to practice lower-pressure games." />
               <ContentLinkCard href="/hard-freecell-games" title="Hard FreeCell Games" description="See the board patterns that turn a clean puzzle into a narrow tactical fight." />
               <ContentLinkCard href="/strategy" title="Strategy Guide" description="Go deeper on free cells, empty columns, supermoves, and disciplined board management." />
+              <ContentLinkCard href="/tips" title="Tips & Tricks" description="Quick tactical patterns you can apply during live play to improve your win rate." />
+              <ContentLinkCard href="/how-to-play" title="How to Play FreeCell" description="Learn the rules and master the interface — from your first deal to confident play." />
               <ContentLinkCard href="/freecell-probability" title="FreeCell Probability & Math" description="The numbers behind winnability -- deal distributions, supermove calculations, and statistical analysis." />
             </ContentBody>
         </CardSection>

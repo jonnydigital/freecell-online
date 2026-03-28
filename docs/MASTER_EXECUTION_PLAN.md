@@ -46,9 +46,9 @@ A brutally honest audit of every problem across the entire network, organized by
 | D9 | Card drag lacks physicality | Both sites | Our drag: 1.05x scale only. Competitor: 1.08x scale + deeper shadow + slight rotation toward touch point. | FIXED — 1.06x scale + deeper shadow + rotation |
 | D10 | Auto-complete too slow | Both sites | Our auto-complete: 50ms per card. Competitor: 25-30ms rapid flourish. Should feel like a victory cascade. | FIXED (commit ebe7aa0) — 28ms stagger |
 | D11 | No animation speed setting | Both sites | cardgames.io has slow/medium/fast slider. Power users want FAST. No way to adjust. | FIXED (commit 0273d78) — CSS custom props driven by data-animation-speed |
-| D12 | Sound effects lack depth | Both sites | Same sound for every action. No pitch variation by card rank. No layered audio cues. | 3-4 hours |
+| D12 | Sound effects lack depth | Both sites | Same sound for every action. No pitch variation by card rank. No layered audio cues. | ALREADY FIXED — 9 distinct sounds, rank-based pitch variation, combo detection |
 | D13 | Splash screen blocks cookie consent | Both sites | Cookie banner waits for splash dismiss, but splash has no timer — could delay consent indefinitely. | 30 min |
-| D14 | Win screen could be more celebratory | Both sites | Basic win overlay. MobilityWare has confetti, fireworks, score breakdown with star rating. | 3-4 hours |
+| D14 | Win screen could be more celebratory | Both sites | Basic win overlay. MobilityWare has confetti, fireworks, score breakdown with star rating. | FIXED — score system with animated counter, move/time/hint breakdown |
 | D15 | No visible Settings or Bookmark buttons in toolbar | Both sites | Competitor has prominent Settings + Bookmark in bottom toolbar. Ours: settings buried in menu only. | FIXED — Settings, Stats, Bookmark all in toolbar |
 
 ### CONTENT & SEO GAPS
@@ -63,7 +63,7 @@ A brutally honest audit of every problem across the entire network, organized by
 | C6 | No Google Search Console submission verified | Both sites | Need to confirm sitemap.xml is submitted and all pages are being indexed. | 1 hour |
 | C7 | About page is generic | Both sites | Competitor has personal story ("my grandmother taught me FreeCell") as trust signal. Ours is generic. | 2 hours |
 | C8 | No /embed info page for backlinks | playfreecellonline.com | Have /embed-generator tool but no SEO landing page explaining the embed offering. Embed pages generate backlinks. | 2-3 hours |
-| C9 | Cross-linking between content pages is weak | Both sites | solitaired.com has deep internal linking from every game page to related variants, guides, tips. | 4-6 hours audit + fix |
+| C9 | Cross-linking between content pages is weak | Both sites | solitaired.com has deep internal linking from every game page to related variants, guides, tips. | FIXED — audited and added 20+ cross-links across 7 content pages |
 | C10 | No structured FAQ schema | Both sites | FAQ page exists but may not have FAQ schema markup for Google rich results. | FIXED (commit b3d1d90) — FAQPage schema added |
 
 ### MONETIZATION PROBLEMS
@@ -298,12 +298,12 @@ Effort estimates: S = <1hr, M = 1-3hrs, L = 3-6hrs, XL = 6+ hrs
 - [x] Improve right sidebar visual weight and density (D4) [M] — DONE (commit 0273d78)
 
 **Day 10:**
-- [ ] Add sound pitch variation by card rank (D12) [M]
-- [ ] Add different sounds for different actions (pickup, place, foundation, invalid) [M]
-- [ ] Improve win screen with confetti, score breakdown, star rating (D14) [L]
+- [x] Add sound pitch variation by card rank (D12) [M] — ALREADY DONE (SoundManager has rank-based pitch)
+- [x] Add different sounds for different actions (pickup, place, foundation, invalid) [M] — ALREADY DONE (9 distinct sounds)
+- [x] Improve win screen with confetti, score breakdown, star rating (D14) [L] — DONE (score system with animated counter)
 
 **Day 11:**
-- [ ] Add Turn 1 / Turn 3 toggle for Klondike [M]
+- [x] Add Turn 1 / Turn 3 toggle for Klondike [M] — ALREADY DONE (DomKlondikeShell + localStorage)
 - [x] Add loading skeleton/spinner for game board initialization (D5) [S] — DONE (commit 0273d78)
 - [x] Fix service worker update to not reload mid-game (B7) [S] — DONE (commit 0273d78)
 
@@ -313,7 +313,7 @@ Effort estimates: S = <1hr, M = 1-3hrs, L = 3-6hrs, XL = 6+ hrs
 - [ ] Submit sitemaps to Google Search Console, verify indexing (C6) [S]
 
 **Day 13-14:**
-- [ ] Deep internal link audit — ensure every content page cross-links to related pages (C9) [L]
+- [x] Deep internal link audit — ensure every content page cross-links to related pages (C9) [L] — DONE (20+ links added across 7 pages)
 - [ ] Weekly competitive re-browse of online-solitaire.com for changes
 - [ ] Test all Week 2 features on mobile + desktop
 

@@ -281,9 +281,11 @@ export default function EasyFreecellGamesPage() {
         <CardSection variant="dark">
             <SectionHeading variant="dark" sub="Related Reading">Where To Go After You Outgrow Easy Deals</SectionHeading>
             <ContentBody variant="dark" className="grid gap-4 md:grid-cols-2">
-              <ContentLinkCard href="/is-every-freecell-game-winnable" title="Is Every FreeCell Game Winnable?" description="Learn why almost every deal is solvable and why some positions only look impossible." />
-              <ContentLinkCard href="/hard-freecell-games" title="Hard FreeCell Games" description="See which board patterns narrow your options and demand much cleaner play." />
+              <ContentLinkCard href="/how-to-play" title="How to Play FreeCell" description="Learn the rules and master the interface — from your first deal to confident play." />
+              <ContentLinkCard href="/hard-freecell-games" title="Hard FreeCell Games" description="Ready for a challenge? See which board patterns demand much cleaner play." />
               <ContentLinkCard href="/strategy" title="Full Strategy Guide" description="Move from forgiving practice boards into serious decision-making and deeper planning." />
+              <ContentLinkCard href="/freecell-cheat-sheet" title="FreeCell Cheat Sheet" description="Move priorities and quick-reference decision flowcharts to keep beside your game." />
+              <ContentLinkCard href="/is-every-freecell-game-winnable" title="Is Every FreeCell Game Winnable?" description="Learn why almost every deal is solvable and why some positions only look impossible." />
               <ContentLinkCard href="/famous-freecell-deals" title="Famous FreeCell Deals" description="Explore the most iconic games in FreeCell history, from the easiest wins to the impossible." />
             </ContentBody>
         </CardSection>

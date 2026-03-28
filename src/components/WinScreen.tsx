@@ -1,8 +1,8 @@
 'use client';
 
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Shuffle, Calendar, Trophy, Share2, Eye } from 'lucide-react';
+import { Shuffle, Calendar, Trophy, Share2, Eye, Zap } from 'lucide-react';
 import { saveStarRating } from '@/lib/storage';
 import { absoluteUrl, siteConfig } from '@/lib/siteConfig';
 import { getShareText as getDailyShareText } from '@/lib/dailyChallenge';
@@ -42,6 +42,42 @@ function getStarCount(moves: number): number {
   return 1;
 }
 
+/** Calculate a score: base 500 + time bonus (faster = more) + move efficiency bonus - hint penalty */
+function calculateScore(moves: number, time: number, hintsUsed: number): { total: number; moveBonus: number; timeBonus: number; hintPenalty: number } {
+  const BASE = 500;
+  // Move bonus: 60 moves (perfect) = 300 pts, 120+ moves = 0
+  const moveBonus = Math.max(0, Math.round(300 * (1 - Math.max(0, moves - 60) / 60)));
+  // Time bonus: under 2 min = 200 pts, over 10 min = 0
+  const timeBonus = Math.max(0, Math.round(200 * (1 - Math.max(0, time - 120) / 480)));
+  // Hint penalty: -15 per hint used
+  const hintPenalty = hintsUsed * 15;
+  return { total: BASE + moveBonus + timeBonus - hintPenalty, moveBonus, timeBonus, hintPenalty };
+}
+
+/** Animated counter hook — counts from 0 to target over duration ms */
+function useAnimatedCounter(target: number, duration: number, delay: number): number {
+  const [value, setValue] = useState(0);
+  const startTimeRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      const animate = (ts: number) => {
+        if (!startTimeRef.current) startTimeRef.current = ts;
+        const elapsed = ts - startTimeRef.current;
+        const progress = Math.min(elapsed / duration, 1);
+        // Ease-out cubic for satisfying deceleration
+        const eased = 1 - Math.pow(1 - progress, 3);
+        setValue(Math.round(eased * target));
+        if (progress < 1) requestAnimationFrame(animate);
+      };
+      requestAnimationFrame(animate);
+    }, delay);
+    return () => clearTimeout(timeout);
+  }, [target, duration, delay]);
+
+  return value;
+}
+
 function formatTime(seconds: number): string {
   const m = Math.floor(seconds / 60);
   const s = seconds % 60;
@@ -70,6 +106,8 @@ export default function WinScreen({
   const [shareStatus, setShareStatus] = useState<'idle' | 'copying' | 'copied'>('idle');
 
   const starCount = getStarCount(moves);
+  const score = useMemo(() => calculateScore(moves, time, hintsUsed), [moves, time, hintsUsed]);
+  const animatedScore = useAnimatedCounter(score.total, 1200, 1000);
 
   const isNewBest = useMemo(() => {
     return saveStarRating(gameNumber, starCount);
@@ -93,7 +131,7 @@ export default function WinScreen({
       const gameUrl = meta
         ? absoluteUrl(`${meta.path}?game=${gameNumber}`)
         : absoluteUrl(`/game/${gameNumber}`);
-      shareText = `I solved ${gameName} Game #${gameNumber} in ${moves} moves (${formatTime(time)})! ${starEmoji}\nCan you beat it? ${gameUrl}`;
+      shareText = `I solved ${gameName} Game #${gameNumber} in ${moves} moves (${formatTime(time)})! ${starEmoji}\nScore: ${score.total.toLocaleString()} pts\nCan you beat it? ${gameUrl}`;
     }
 
     if (navigator.share) {
@@ -124,7 +162,7 @@ export default function WinScreen({
       <div className="bg-[#0d2f0d]/95 border border-[#2a7c2a]/60 rounded-2xl shadow-2xl p-8 sm:p-10 max-w-md w-[92%] text-center backdrop-blur-sm my-auto">
         <Trophy size={52} className="mx-auto text-yellow-400 mb-4" />
         <h2 className="text-3xl font-bold text-yellow-400 mb-1.5">You Win!</h2>
-        <p className="text-white/50 text-sm mb-5">Congratulations!</p>
+        <p className="text-white/50 text-sm mb-1">Game #{gameNumber}</p>
 
         {/* Star Rating */}
         <div className="flex items-center justify-center gap-2 mb-2">
@@ -150,12 +188,31 @@ export default function WinScreen({
             initial={{ opacity: 0, y: -5 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.0 }}
-            className="text-xs font-bold text-yellow-300 mb-5"
+            className="text-xs font-bold text-yellow-300 mb-3"
           >
             New Best!
           </motion.div>
         )}
-        {!isNewBest && <div className="mb-5" />}
+        {!isNewBest && <div className="mb-3" />}
+
+        {/* Score Breakdown */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.8, duration: 0.4 }}
+          className="mb-5 py-3 px-4 bg-white/[0.04] border border-white/[0.08] rounded-xl"
+        >
+          <div className="flex items-center justify-center gap-2 mb-2">
+            <Zap size={16} className="text-yellow-400" />
+            <span className="text-3xl font-black text-white tabular-nums">{animatedScore.toLocaleString()}</span>
+            <span className="text-xs text-white/40 mt-1.5">pts</span>
+          </div>
+          <div className="flex justify-center gap-4 text-[10px] text-white/40">
+            {score.moveBonus > 0 && <span>Moves +{score.moveBonus}</span>}
+            {score.timeBonus > 0 && <span>Speed +{score.timeBonus}</span>}
+            {score.hintPenalty > 0 && <span>Hints -{score.hintPenalty}</span>}
+          </div>
+        </motion.div>
 
         {/* Daily Challenge Share Card */}
         {isDailyGame && (

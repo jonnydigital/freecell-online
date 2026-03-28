@@ -406,9 +406,12 @@ export default function FreecellMistakesToAvoidPage() {
         {/* ── Read Next ── */}
         <CardSection variant="dark">
             <SectionHeading variant="dark" sub="Read Next">Keep Improving Your Game</SectionHeading>
-            <ContentBody variant="dark" className="grid gap-4 md:grid-cols-3">
+            <ContentBody variant="dark" className="grid gap-4 md:grid-cols-2">
               <ContentLinkCard href="/strategy" title="Strategy Guide" description="The complete strategic framework — opening principles, midgame tactics, and endgame technique." />
               <ContentLinkCard href="/tips" title="Tips & Tricks" description="Quick tactical patterns you can apply during live play without pausing to think." />
+              <ContentLinkCard href="/freecell-cheat-sheet" title="FreeCell Cheat Sheet" description="Move priorities and decision flowcharts for quick reference during play." />
+              <ContentLinkCard href="/glossary" title="FreeCell Glossary" description="Every term defined — from supermoves to cascades, foundations, and free cells." />
+              <ContentLinkCard href="/hard-freecell-games" title="Hard FreeCell Games" description="See which board patterns narrow your options and demand much cleaner play." />
               <ContentLinkCard href="/freecell-for-beginners" title="FreeCell for Beginners" description="Start from the basics — rules, interface walkthrough, and your first winning strategy." />
             </ContentBody>
         </CardSection>

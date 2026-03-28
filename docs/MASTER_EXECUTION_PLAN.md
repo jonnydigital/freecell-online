@@ -55,7 +55,7 @@ A brutally honest audit of every problem across the entire network, organized by
 
 | # | Issue | Where | Details | Est. Fix |
 |---|-------|-------|---------|----------|
-| C1 | No blog | Both sites | Competitor runs Ghost CMS blog at /blog with ongoing content. Zero ongoing content freshness signal. | 4-8 hours setup, ongoing |
+| C1 | No blog | Both sites | Competitor runs Ghost CMS blog at /blog with ongoing content. Zero ongoing content freshness signal. | FIXED (commit 79bc278) — MDX blog with 2 initial posts |
 | C2 | No /freecell-solver SEO page | playfreecellonline.com | Have the solver tool at /solver, but no dedicated SEO content page explaining how FreeCell solvers work. High search intent keyword. | 3-4 hours |
 | C3 | No /freecell-statistics deep page | playfreecellonline.com | Have /statistics route but it's player stats. No dedicated page on FreeCell probability, win rates, mathematical analysis. | 3-4 hours |
 | C4 | No video content anywhere | Both sites | solitaired.com embeds Vimeo instructional videos. Video embeds boost dwell time and engagement metrics. | 4-6 hours to produce + embed |

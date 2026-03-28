@@ -1,8 +1,22 @@
 # FreeCell Online — Changelog
 
+## 2026-03-28 (Saturday Night Build #2)
+### Shipped
+- **📝 3 New Blog Posts** — Expanding blog content library to 5 posts total:
+  - "FreeCell vs Klondike: Which Solitaire Game Is Better?" (~1,100 words) — comparison piece targeting "freecell vs klondike" keyword
+  - "Is Every FreeCell Game Winnable? The Truth About Deal #11982" (~1,000 words) — targets "is every freecell game winnable" + "freecell deal 11982"
+  - "7 Best Solitaire Games for Brain Training" (~1,300 words) — targets "solitaire brain training" + "best solitaire games for brain", links to 7 game variants
+- All posts: internal links to game pages, solver, and content pages. Auto-rendered via MDX blog system.
+- (59th consecutive night of shipping) 🔥
+
 ## 2026-03-28 (Saturday Night Build)
+### Shipped
+- **📝 Blog Infrastructure** (C1) — Full MDX-based blog system: `/blog` index page, `/blog/[slug]` dynamic routes with SSG, `gray-matter` + `next-mdx-remote` for markdown rendering, Article + BreadcrumbList JSON-LD on each post, 3 AdUnit placements per post, styled typography matching site design. Added blog to ContentHeader nav + SiteFooter. Auto-included in sitemap.
+- **📝 2 Initial Blog Posts:**
+  - "5 FreeCell Strategies That Actually Work" (~1,200 words, practical tips)
+  - "The History of FreeCell: From PLATO to Your Browser" (~1,500 words, engaging history)
 ### Fixed
-- **🍪 Cookie Consent GDPR Fix** (D13) — Cookie consent banner was blocked by splash screen (polled `skipSplash` localStorage key that required user to click "Play Now"). Now shows after 1-second delay independent of splash state. Z-index bumped to `z-60` to render above splash (`z-50`). GDPR compliance improvement.
+- **🍪 Cookie Consent GDPR Fix** (D13) — Cookie consent banner was blocked by splash screen. Now shows after 1-second delay independent of splash state. Z-index bumped to `z-60` above splash (`z-50`).
 - (58th consecutive night of shipping) 🔥
 
 ## 2026-03-28 (Saturday Evening Build)

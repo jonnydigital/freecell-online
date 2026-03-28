@@ -47,7 +47,7 @@ A brutally honest audit of every problem across the entire network, organized by
 | D10 | Auto-complete too slow | Both sites | Our auto-complete: 50ms per card. Competitor: 25-30ms rapid flourish. Should feel like a victory cascade. | FIXED (commit ebe7aa0) — 28ms stagger |
 | D11 | No animation speed setting | Both sites | cardgames.io has slow/medium/fast slider. Power users want FAST. No way to adjust. | FIXED (commit 0273d78) — CSS custom props driven by data-animation-speed |
 | D12 | Sound effects lack depth | Both sites | Same sound for every action. No pitch variation by card rank. No layered audio cues. | ALREADY FIXED — 9 distinct sounds, rank-based pitch variation, combo detection |
-| D13 | Splash screen blocks cookie consent | Both sites | Cookie banner waits for splash dismiss, but splash has no timer — could delay consent indefinitely. | 30 min |
+| D13 | Splash screen blocks cookie consent | Both sites | Cookie banner waits for splash dismiss, but splash has no timer — could delay consent indefinitely. | FIXED (commit e735290) |
 | D14 | Win screen could be more celebratory | Both sites | Basic win overlay. MobilityWare has confetti, fireworks, score breakdown with star rating. | FIXED — score system with animated counter, move/time/hint breakdown |
 | D15 | No visible Settings or Bookmark buttons in toolbar | Both sites | Competitor has prominent Settings + Bookmark in bottom toolbar. Ours: settings buried in menu only. | FIXED — Settings, Stats, Bookmark all in toolbar |
 

@@ -21,7 +21,7 @@ export default function ContentHeader({ variant = "dark" }: ContentHeaderProps) 
           { href: "/strategy", label: "Strategy" },
           { href: "/tips", label: "Tips" },
           { href: "/faq", label: "FAQ" },
-          { href: "/glossary", label: "Glossary" },
+          { href: "/blog", label: "Blog" },
         ];
 
   return (

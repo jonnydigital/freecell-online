@@ -1,5 +1,10 @@
 # FreeCell Online — Changelog
 
+## 2026-03-28 (Saturday Night Build)
+### Fixed
+- **🍪 Cookie Consent GDPR Fix** (D13) — Cookie consent banner was blocked by splash screen (polled `skipSplash` localStorage key that required user to click "Play Now"). Now shows after 1-second delay independent of splash state. Z-index bumped to `z-60` to render above splash (`z-50`). GDPR compliance improvement.
+- (58th consecutive night of shipping) 🔥
+
 ## 2026-03-28 (Saturday Evening Build)
 ### Shipped
 - **🔗 Embed FreeCell SEO Landing Page** (`/embed`) — Dedicated content page for the embed offering: quick-start iframe code, platform-specific instructions (WordPress, Squarespace, Wix, Notion, plain HTML), 4 use case cards (gaming blogs, corporate intranets, educational sites, senior communities), technical details (performance, privacy, responsive, accessibility, CDN), 8 FAQs. Article + BreadcrumbList + FAQPage JSON-LD. 3 AdUnit placements. 15 keywords. Backlink magnet — every site that embeds our game links back to us. Execution plan item C8.

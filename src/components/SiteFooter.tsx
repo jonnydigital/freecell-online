@@ -139,6 +139,7 @@ export default function SiteFooter() {
           { href: '/freecell-vs-klondike', label: 'FreeCell vs Klondike' },
           { href: '/solitaire-types', label: 'Solitaire Types' },
           { href: '/faq', label: 'FAQ' },
+          { href: '/blog', label: 'Blog' },
         ]
       : [
           { href: '/how-to-play', label: 'How to Play' },
@@ -221,6 +222,7 @@ export default function SiteFooter() {
           { href: '/freecell/how-to-play', label: 'FreeCell How to Play' },
           { href: '/freecell/tips', label: 'FreeCell Tips' },
           { href: '/solitaire-for-beginners', label: 'Solitaire for Beginners' },
+          { href: '/blog', label: 'Blog' },
         ];
 
   const exploreLinks =

@@ -1,5 +1,6 @@
 import { absoluteUrl, isHubSite } from '@/lib/siteConfig';
 import { sitemapGameNumbers, isHighPriorityDeal } from '@/lib/curatedDeals';
+import { getAllPosts } from '@/lib/blog';
 
 /**
  * Dynamic XML sitemap served at /sitemap.xml via route handler.
@@ -167,9 +168,18 @@ function buildXml(): string {
       `  <url>\n    <loc>${absoluteUrl(`/game/${num}`)}</loc>\n    <lastmod>${now}</lastmod>\n    <changefreq>yearly</changefreq>\n    <priority>${isHighPriorityDeal(num) ? 0.6 : 0.4}</priority>\n  </url>`
   );
 
+  const blogPosts = getAllPosts();
+  const blogEntries = [
+    `  <url>\n    <loc>${absoluteUrl('/blog')}</loc>\n    <lastmod>${now}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>0.7</priority>\n  </url>`,
+    ...blogPosts.map(
+      (post) =>
+        `  <url>\n    <loc>${absoluteUrl(`/blog/${post.slug}`)}</loc>\n    <lastmod>${now}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.6</priority>\n  </url>`
+    ),
+  ];
+
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${[...staticEntries, ...gameEntries].join('\n')}
+${[...staticEntries, ...blogEntries, ...gameEntries].join('\n')}
 </urlset>`;
 }
 

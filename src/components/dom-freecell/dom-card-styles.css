@@ -32,7 +32,7 @@
 }
 
 .dom-board-surface {
-  --card-width: clamp(96px, calc((100vw - 380px) / 7.8), 135px);
+  --card-width: clamp(96px, calc((100vw - 380px) / 8.6), 125px);
   --card-height: calc(var(--card-width) * 1.4);
   --card-border-radius: clamp(8px, calc(var(--card-width) * 0.085), 10px);
   --cascade-overlap: clamp(24px, calc(var(--card-width) * 0.3), 36px);
@@ -85,9 +85,26 @@
     Arial, sans-serif;
 }
 
+/* Animation speed multipliers — set via data-animation-speed on game container */
+:root {
+  --settle-duration: 0.12s;
+  --deal-duration: 0.2s;
+  --deal-stagger: 22ms;
+}
+[data-animation-speed="slow"] {
+  --settle-duration: 0.22s;
+  --deal-duration: 0.35s;
+  --deal-stagger: 40ms;
+}
+[data-animation-speed="fast"] {
+  --settle-duration: 0.06s;
+  --deal-duration: 0.1s;
+  --deal-stagger: 10ms;
+}
+
 /* Smooth position transitions when not being dragged */
 .dom-card-settling {
-  transition: transform 0.12s cubic-bezier(0.22, 0.61, 0.36, 1),
+  transition: transform var(--settle-duration, 0.12s) cubic-bezier(0.22, 0.61, 0.36, 1),
     box-shadow 0.1s ease;
 }
 
@@ -203,8 +220,8 @@
 /* ---- Deal animation ---- */
 
 .dom-card-dealing {
-  animation: deal-in 0.2s ease-out forwards;
-  animation-delay: calc(var(--deal-index) * 22ms);
+  animation: deal-in var(--deal-duration, 0.2s) ease-out forwards;
+  animation-delay: calc(var(--deal-index) * var(--deal-stagger, 22ms));
   opacity: 0;
 }
 

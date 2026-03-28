@@ -4,7 +4,8 @@ import { useEffect, useRef, useState } from 'react';
 
 interface AdUnitProps {
   slot?: string;
-  format?: 'auto' | 'horizontal' | 'vertical' | 'rectangle';
+  format?: 'auto' | 'horizontal' | 'vertical' | 'rectangle' | 'fluid';
+  layout?: 'in-article';
   className?: string;
   width?: number;
   height?: number;
@@ -15,7 +16,7 @@ interface AdUnitProps {
  * (loaded via CookieConsent after user accepts). Falls back to nothing if blocked.
  * Collapses gracefully when no ad fills the slot.
  */
-export default function AdUnit({ slot, format = 'auto', className = '', width, height }: AdUnitProps) {
+export default function AdUnit({ slot, format = 'auto', layout, className = '', width, height }: AdUnitProps) {
   const adRef = useRef<HTMLModElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const pushed = useRef(false);
@@ -81,9 +82,12 @@ export default function AdUnit({ slot, format = 'auto', className = '', width, h
   if (collapsed) return null;
 
   const isFixedSize = width && height;
+  const isFluid = format === 'fluid';
   const insStyle: React.CSSProperties = isFixedSize
     ? { display: 'inline-block', width: `${width}px`, height: `${height}px` }
-    : { display: 'block' };
+    : isFluid
+      ? { display: 'block', textAlign: 'center' as const }
+      : { display: 'block' };
 
   return (
     <div ref={containerRef} className={`ad-container overflow-hidden transition-all duration-300 ${className}`} style={!isFixedSize ? { minHeight: '90px' } : undefined}>
@@ -93,7 +97,8 @@ export default function AdUnit({ slot, format = 'auto', className = '', width, h
         data-ad-client="ca-pub-3083538874906149"
         data-ad-format={format}
         {...(slot ? { 'data-ad-slot': slot } : {})}
-        {...(!isFixedSize ? { 'data-full-width-responsive': 'true' } : {})}
+        {...(layout ? { 'data-ad-layout': layout } : {})}
+        {...(!isFixedSize && !isFluid ? { 'data-full-width-responsive': 'true' } : {})}
         ref={adRef}
       />
     </div>

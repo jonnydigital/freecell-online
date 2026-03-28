@@ -308,9 +308,9 @@ Effort estimates: S = <1hr, M = 1-3hrs, L = 3-6hrs, XL = 6+ hrs
 - [x] Fix service worker update to not reload mid-game (B7) [S] — DONE (commit 0273d78)
 
 **Day 12:**
-- [ ] Write personal trust story for /about page (C7) [M]
-- [ ] Add FAQ schema markup for Google rich results (C10) [M]
-- [ ] Submit sitemaps to Google Search Console, verify indexing (C6) [S]
+- [ ] Write personal trust story for /about page (C7) [M] — needs Jonathan's input
+- [x] Add FAQ schema markup for Google rich results (C10) [M] — ALREADY DONE (FAQPage JSON-LD on all 50+ content pages)
+- [x] Submit sitemaps to Google Search Console, verify indexing (C6) [S] — DONE 2026-03-13 (156 pages discovered)
 
 **Day 13-14:**
 - [x] Deep internal link audit — ensure every content page cross-links to related pages (C9) [L] — DONE (20+ links added across 7 pages)
@@ -322,8 +322,8 @@ Effort estimates: S = <1hr, M = 1-3hrs, L = 3-6hrs, XL = 6+ hrs
 ### WEEK 3: Content & SEO Expansion
 
 **Day 15:**
-- [ ] Build /freecell-solver SEO content page (C2) [L]
-- [ ] Build /freecell-statistics deep dive page on win rates, probabilities (C3) [L]
+- [x] Build /freecell-solver SEO content page (C2) [L] — ALREADY SHIPPED (Night 25, 2026-03-07)
+- [x] Build /freecell-statistics deep dive page (C3) [L] — ALREADY SHIPPED (Night 22, 2026-03-06)
 
 **Day 16:**
 - [ ] Build /embed SEO landing page explaining the embed offering for backlinks (C8) [M]

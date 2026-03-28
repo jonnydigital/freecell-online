@@ -1239,3 +1239,48 @@ export function dealMonteCarloGame(gameNumber: number): { grid: (Card | null)[][
 
   return { grid, stock };
 }
+
+/**
+ * Deal a Bristol Solitaire game.
+ * Shuffle 52 cards, first 24 go to 8 fans of 3 cards (all face-up),
+ * remaining 28 are the stock.
+ */
+export function dealBristolGame(gameNumber: number): { fans: Card[][]; stock: Card[] } {
+  if (gameNumber < 1 || gameNumber > 9999999 || !Number.isInteger(gameNumber)) {
+    throw new Error(`Invalid game number: ${gameNumber}. Must be integer 1-9999999.`);
+  }
+
+  const deck = createOrderedDeck();
+  const rng = new MSLCG(gameNumber);
+
+  // Shuffle using same MS algorithm
+  const dealt: Card[] = [];
+  let remaining = deck.length;
+  for (let i = 0; i < 52; i++) {
+    const j = rng.next() % remaining;
+    [deck[j], deck[remaining - 1]] = [deck[remaining - 1], deck[j]];
+    dealt.push(deck[remaining - 1]);
+    remaining--;
+  }
+
+  // All cards face-up
+  for (const card of dealt) {
+    card.isFaceUp = true;
+  }
+
+  // First 24 cards go to 8 fans of 3
+  const fans: Card[][] = [];
+  let idx = 0;
+  for (let f = 0; f < 8; f++) {
+    const fan: Card[] = [];
+    for (let c = 0; c < 3; c++) {
+      fan.push(dealt[idx++]);
+    }
+    fans.push(fan);
+  }
+
+  // Remaining 28 cards are the stock
+  const stock = dealt.slice(24);
+
+  return { fans, stock };
+}

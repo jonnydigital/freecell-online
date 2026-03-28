@@ -1,33 +1,35 @@
 {
-  "date": "2026-03-23",
-  "ga4_28d": {
-    "activeUsers": 1,
-    "eventCount": 6,
-    "keyEvents": 0,
-    "newUsers": 1,
-    "note": "Still showing 'No data received' banner. GA4 tag may need verification."
-  },
-  "gsc_3mo": {
-    "totalClicks": 2,
-    "totalImpressions": 40,
-    "avgCTR": "5%",
-    "avgPosition": 56.3,
-    "topQueries": [
-      {"query": "freecell online", "clicks": 0, "impressions": 9},
-      {"query": "freecell free online", "clicks": 0, "impressions": 5},
-      {"query": "play freecell online", "clicks": 0, "impressions": 3}
+  "date": "2026-03-26",
+  "ga4_7d": {
+    "activeUsers": 20,
+    "newUsers": 18,
+    "sessions": 34,
+    "pageViews": 83,
+    "gameStarts": 9,
+    "topPages": [
+      {"page": "FreeCell Solver", "views": 17},
+      {"page": "Play FreeCell Online", "views": 16},
+      {"page": "Solitaire Stack (Home)", "views": 12},
+      {"page": "Spider Solitaire", "views": 8},
+      {"page": "Eight Off Solitaire", "views": 7}
     ],
-    "totalQueries": 14,
-    "note": "Domain live since 03-13 (10 days). Impressions appearing at position 56 — Google sandbox still active. Expected 2-6 weeks before meaningful ranking."
+    "sessionsByChannel": {
+      "direct": 13,
+      "unassigned": 11,
+      "organicSearch": 10
+    },
+    "note": "Traffic improving. 20 active users (7d) vs 1 on 03-23. GA4 appears to be tracking now."
   },
-  "streak": 45,
-  "lastShip": "Night 45 — Cruel Solitaire",
-  "totalGameVariants": 15,
+  "gsc_status": "Domain in Google sandbox (live since 03-13, 13 days). Avg position ~56. Expect meaningful rankings in 2-6 weeks.",
+  "streak": 52,
+  "lastShip": "Night 52 — 9 tips pages + Monte Carlo Solitaire (2026-03-25)",
+  "totalGameVariants": 19,
+  "totalContentPages": "50+",
   "blockedItems": [
     "AdSense publisher ID",
-    "Sentry DSN",
+    "Sentry DSN", 
     "Vercel KV for leaderboard"
   ],
-  "nextPriority": "Traffic acquisition — domain is in Google sandbox. Features are ahead of traffic. Consider: solitaireblog.com submission (backlink), Reddit posts, Product Hunt launch once sandbox lifts.",
-  "gaSanityCheck": "GA4 showing 'No data received' despite tag being configured. Verify gtag snippet is firing on playfreecellonline.com."
+  "nextPriority": "Traffic acquisition. Features are far ahead of traffic. Domain still in Google sandbox. Best moves: (1) solitaireblog.com submission for backlink, (2) Reddit/community seeding, (3) Product Hunt launch once sandbox lifts, (4) video tutorial for YouTube SEO.",
+  "competitorCheck": "Due for monthly competitor scan (last: 2026-02-26)"
 }

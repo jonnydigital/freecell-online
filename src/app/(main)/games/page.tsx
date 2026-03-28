@@ -6,7 +6,7 @@ import AdUnit from "@/components/AdUnit";
 import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionHeading, ContentBody } from "@/components/content";
 
 export const metadata: Metadata = {
-  title: "Free Solitaire Games Online | Play 17+ Card Games for Free",
+  title: "Free Solitaire Games Online | Play 26+ Card Games for Free",
   description:
     "Play the best free solitaire games online — FreeCell, Spider Solitaire, Klondike, Pyramid, Baker's Game, Eight Off, and more. No download, no sign-up. Choose your game and start playing instantly.",
   keywords: [
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     "best solitaire games",
   ],
   openGraph: {
-    title: "Free Solitaire Games Online | 17+ Card Games to Play Now",
+    title: "Free Solitaire Games Online | 26+ Card Games to Play Now",
     description:
       "FreeCell, Spider, Klondike, Pyramid, and more — all free, no download required. Pick a game and start playing.",
     url: absoluteUrl("/games"),

@@ -231,6 +231,7 @@ export default function SiteFooter() {
           { href: '/leaderboard', label: 'Leaderboard' },
           { href: '/deals', label: 'Deal Explorer' },
           { href: '/solver', label: 'Solver' },
+          { href: '/solitaire-difficulty-ranking', label: 'Difficulty Ranking' },
         ]
       : [
           { href: '/history', label: 'FreeCell History' },
@@ -255,6 +256,7 @@ export default function SiteFooter() {
           { href: '/deals', label: 'Deal Explorer' },
           { href: '/solver', label: 'Solver' },
           { href: '/freecell-variants', label: 'All Variants' },
+          { href: '/solitaire-difficulty-ranking', label: 'Difficulty Ranking' },
         ];
 
   return (

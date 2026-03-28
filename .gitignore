@@ -42,3 +42,10 @@ next-env.d.ts
 
 # feedback data
 /data
+
+# playwright MCP logs
+.playwright-mcp/
+
+# screenshots (dev artifacts)
+*.png
+!public/**/*.png

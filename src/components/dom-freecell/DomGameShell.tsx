@@ -3,13 +3,13 @@
 import React, { useEffect, useState, useCallback, useMemo, useRef } from 'react';
 import { useDomFreecellStore } from '@/lib/dom-freecell/useDomFreecellStore';
 import { GameStats, createEmptyStats, recordWin, recordLoss, getWinPercent } from '@/lib/stats';
-import { loadStats, saveStats, saveStarRating, GameSettings, loadSettings, saveSettings } from '@/lib/storage';
+import { loadStats, saveStats, saveStarRating, GameSettings, loadSettings, saveSettings, toggleBookmark, isBookmarked } from '@/lib/storage';
 import { recordGameResult } from '@/lib/gameHistory';
 import { getTodaysSeed, getTodayStr, isTodayCompleted, getCurrentStreak, recordDailyCompletion } from '@/lib/dailyChallenge';
 import { soundManager } from '@/lib/sounds';
 import { useSolver } from '@/hooks/useSolver';
 import { describeSolution } from '@/solver/FreeCellSolver';
-import { RotateCcw, RotateCw, Lightbulb, Settings, AlertTriangle, ChevronLeft, ChevronRight, ChevronDown, Volume2, VolumeX, X, Share2, Home, Shuffle, HelpCircle, Swords, Trophy, Play, Pause, Ghost, Layers } from 'lucide-react';
+import { RotateCcw, RotateCw, Lightbulb, Settings, AlertTriangle, ChevronLeft, ChevronRight, ChevronDown, Volume2, VolumeX, X, Share2, Home, Shuffle, HelpCircle, Swords, Trophy, Play, Pause, Ghost, Layers, Bookmark } from 'lucide-react';
 import { cardBackDesigns, getSelectedCardBack, setSelectedCardBack, type CardBackDesign } from '@/game/CardBacks';
 import { checkWinAchievements, recordModePlayed, recordUniqueGame } from '@/lib/achievementTracker';
 import type { Achievement } from '@/lib/achievements';
@@ -141,6 +141,7 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
   const [isDailyGame, setIsDailyGame] = useState(false);
   const [hintsUsed, setHintsUsed] = useState(0);
   const [hintToast, setHintToast] = useState<string | null>(null);
+  const [bookmarked, setBookmarked] = useState(false);
   const hintToastTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [undosUsed, setUndosUsed] = useState(0);
   const [leaderboardEntries, setLeaderboardEntries] = useState<LeaderboardEntry[]>([]);
@@ -357,6 +358,7 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
     }
     if (initialGameNumber) {
       newGame(initialGameNumber);
+      setBookmarked(isBookmarked(initialGameNumber, variant || 'freecell'));
     }
     // Show tutorial on first visit
     try {
@@ -568,6 +570,7 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
     setShowHome(false);
     setIsAutoCompletable(false);
     setIsDailyGame(false);
+    setBookmarked(false);
     setHintsUsed(0);
     setUndosUsed(0);
     setStreakMilestone(null);
@@ -626,6 +629,14 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
     const muted = soundManager.toggleMute();
     setIsMuted(muted);
   }, []);
+
+  const handleBookmark = useCallback(() => {
+    const added = toggleBookmark(gameNumber, storeVariant);
+    setBookmarked(added);
+    setHintToast(added ? `Game #${gameNumber} bookmarked` : 'Bookmark removed');
+    if (hintToastTimerRef.current) clearTimeout(hintToastTimerRef.current);
+    hintToastTimerRef.current = setTimeout(() => setHintToast(null), 2000);
+  }, [gameNumber, storeVariant]);
 
   const handleUpdateSettings = useCallback((newSettings: GameSettings) => {
     setSettings(newSettings);
@@ -702,6 +713,7 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
     setShowReplay(false);
     setIsAutoCompletable(false);
     setIsDailyGame(false);
+    setBookmarked(false);
     setHintsUsed(0);
     setUndosUsed(0);
     setStreakMilestone(null);
@@ -749,6 +761,7 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
   return (
     <div
       data-scroll-role="game-page-root"
+      data-animation-speed={settings.animationSpeed}
       className="w-full min-h-dvh"
       style={{
         background:
@@ -972,6 +985,10 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
           disabled={replayMode || solver.status === 'solving'}
         >
           <Ghost size={15} />
+        </SubBarBtn>
+
+        <SubBarBtn onClick={handleBookmark} title={bookmarked ? 'Remove Bookmark' : 'Bookmark Game'}>
+          <Bookmark size={15} fill={bookmarked ? '#D4AF37' : 'none'} color={bookmarked ? '#D4AF37' : 'currentColor'} />
         </SubBarBtn>
 
         <div style={{ width: '1px', height: '16px', background: 'rgba(255,255,255,0.06)', margin: '0 8px' }} />
@@ -1488,7 +1505,7 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
       className="sidebar-scroll w-[380px] shrink-0 hidden lg:block lg:sticky lg:top-2 lg:overflow-y-auto lg:overscroll-contain"
       style={{ height: 'calc(100dvh - 1rem)' }}
     >
-      <div className="flex flex-col gap-4 py-4">
+      <div className="flex flex-col gap-3 py-4">
         <SidebarAdSlot label="Advertisement" height={250} delayMs={3000}>
           <AdUnit slot="5697552640" width={300} height={250} format="rectangle" />
         </SidebarAdSlot>

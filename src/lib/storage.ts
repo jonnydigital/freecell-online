@@ -10,6 +10,7 @@ const PYRAMID_STATS_KEY = 'pyramid_stats';
 const SETTINGS_KEY = 'freecell_settings';
 const GAME_STATE_KEY = 'freecell_game_state';
 const STARS_KEY = 'freecell_stars';
+const BOOKMARKS_KEY = 'freecell_bookmarks';
 
 export type GameVariant = 'freecell' | 'bakers-game' | 'eight-off' | 'easy-freecell' | 'spider' | 'klondike' | 'pyramid' | 'tripeaks' | 'golf' | 'yukon' | 'canfield' | 'forty-thieves' | 'scorpion' | 'seahaven' | 'beleaguered-castle' | 'penguin' | 'cruel' | 'clock' | 'accordion' | 'la-belle-lucie' | 'bisley' | 'aces-up' | 'flower-garden' | 'bakers-dozen' | 'gaps' | 'calculation';
 
@@ -183,4 +184,43 @@ export function saveStarRating(gameNumber: number, stars: number): boolean {
   } catch {
     return false;
   }
+}
+
+// ── Bookmark System ──
+
+export interface BookmarkedGame {
+  gameNumber: number;
+  variant: string;
+  savedAt: number;
+}
+
+export function loadBookmarks(): BookmarkedGame[] {
+  if (!isBrowser()) return [];
+  try {
+    const data = localStorage.getItem(BOOKMARKS_KEY);
+    return data ? JSON.parse(data) : [];
+  } catch {
+    return [];
+  }
+}
+
+export function toggleBookmark(gameNumber: number, variant: string): boolean {
+  if (!isBrowser()) return false;
+  const bookmarks = loadBookmarks();
+  const idx = bookmarks.findIndex(b => b.gameNumber === gameNumber && b.variant === variant);
+  if (idx >= 0) {
+    bookmarks.splice(idx, 1);
+    localStorage.setItem(BOOKMARKS_KEY, JSON.stringify(bookmarks));
+    return false; // removed
+  } else {
+    bookmarks.unshift({ gameNumber, variant, savedAt: Date.now() });
+    // Keep max 20 bookmarks
+    if (bookmarks.length > 20) bookmarks.length = 20;
+    localStorage.setItem(BOOKMARKS_KEY, JSON.stringify(bookmarks));
+    return true; // added
+  }
+}
+
+export function isBookmarked(gameNumber: number, variant: string): boolean {
+  return loadBookmarks().some(b => b.gameNumber === gameNumber && b.variant === variant);
 }

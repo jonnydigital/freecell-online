@@ -60,18 +60,28 @@ export default function MainLayout({
         dangerouslySetInnerHTML={{
           __html: `
             if ('serviceWorker' in navigator) {
-              window.addEventListener('load', () => {
+              window.addEventListener('load', function() {
                 navigator.serviceWorker.register('/sw.js').then(function(reg) {
-                  // Check for updates every 60 seconds
-                  setInterval(function() { reg.update(); }, 60000);
+                  // Check for updates every 10 minutes (not 60s — avoids mid-game reloads)
+                  setInterval(function() { reg.update(); }, 600000);
                 }).catch(function() {});
 
-                // Listen for SW_UPDATED message — auto-reload when new version lands
+                // Listen for SW_UPDATED message — defer reload until user is idle
+                var updatePending = false;
                 navigator.serviceWorker.addEventListener('message', function(event) {
                   if (event.data && event.data.type === 'SW_UPDATED') {
+                    updatePending = true;
+                    // Only auto-reload on next page navigation or when tab becomes visible after being hidden
+                  }
+                });
+                // Reload on visibility change (user returns to tab) if update is pending
+                document.addEventListener('visibilitychange', function() {
+                  if (updatePending && document.visibilityState === 'visible') {
                     window.location.reload();
                   }
                 });
+                // Also reload on New Deal click or route change (natural break points)
+                window.__swUpdatePending = function() { return updatePending; };
               });
             }
           `,

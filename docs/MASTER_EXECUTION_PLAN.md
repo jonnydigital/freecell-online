@@ -1,5 +1,5 @@
 # Master Execution Plan — Solitaire Network Domination
-**Created:** 2026-03-27 | **Last Updated:** 2026-03-27
+**Created:** 2026-03-27 | **Last Updated:** 2026-03-28
 **Sites:** playfreecellonline.com, solitairestack.com
 **Primary Competitor:** online-solitaire.com (Holger Sindbaek)
 
@@ -29,7 +29,7 @@ A brutally honest audit of every problem across the entire network, organized by
 | B4 | Cookie consent loads AdSense redundantly | Both sites | CookieConsent.tsx still has `loadAdSense()` function even though layout.tsx loads it unconditionally. Dead code path. | FIXED (commit aa729b6) |
 | B5 | Leaderboard shows "No scores yet" permanently | Both sites | Empty leaderboard with placeholder text. No social proof. Makes site look dead/unused. | FIXED (commit f27c497) — seeded with bot data |
 | B6 | Daily challenge calendar missing on playfreecellonline.com | playfreecellonline.com | solitairestack.com has a calendar widget, but the primary money site doesn't. | VERIFIED PRESENT — SidebarDailyChallenge renders on both sites |
-| B7 | Service worker update loop potential | Both sites | SW checks for updates every 60 seconds and auto-reloads. Could cause disruptive reloads mid-game. | 1 hour |
+| B7 | Service worker update loop potential | Both sites | SW checks for updates every 60 seconds and auto-reloads. Could cause disruptive reloads mid-game. | FIXED (commit 0273d78) — 10min interval, deferred to visibility change |
 
 ### DESIGN & UX PROBLEMS
 
@@ -38,18 +38,18 @@ A brutally honest audit of every problem across the entire network, organized by
 | D1 | Cards too small on desktop | Both sites, game board | Cards appear ~15% smaller than competitor. Competitor uses more viewport for the game. | FIXED (commit ebe7aa0) — increased ~12% |
 | D2 | Foundation pile suit icons too faint | Both sites, game board | FC/suit placeholders are barely visible. Competitor uses colored, bold suit icons. | FIXED (commit ebe7aa0) — opacity 0.18→0.32 |
 | D3 | ~200px empty gaps between content sections | Both sites, homepage below fold | Dead space between "Play FreeCell Online" intro and "How to Play" section. Another gap before "More Games". | 1-2 hours |
-| D4 | Right sidebar lacks visual weight | Both sites, desktop sidebar | Leaderboard and daily challenge cards look thin and unimportant. Competitor sidebar is dense with content. | 2-3 hours |
-| D5 | No loading state for game board | Both sites | If game takes time to initialize, user sees nothing — no spinner, no skeleton, no progress indicator. | 1 hour |
+| D4 | Right sidebar lacks visual weight | Both sites, desktop sidebar | Leaderboard and daily challenge cards look thin and unimportant. Competitor sidebar is dense with content. | FIXED (commit 0273d78) — tighter gaps, monthly milestones, stats widget |
+| D5 | No loading state for game board | Both sites | If game takes time to initialize, user sees nothing — no spinner, no skeleton, no progress indicator. | FIXED (commit 0273d78) — layout-matching skeleton screen |
 | D6 | Two-tap card move (select then place) | Both sites | Competitor: single tap auto-moves card to best destination. Ours: tap to select, see highlights, tap destination. Double the interaction. | FIXED (commit 5b9dba4) — single-tap auto-move |
 | D7 | Animation timing too slow | Both sites | Our moves: 100-300ms with Back.easeOut overshoot. Competitor: 80-120ms crisp moves. Power users feel sluggish. | FIXED (commit ebe7aa0) — 120ms settling |
 | D8 | No cascade settling stagger | Both sites | When card removed, remaining cards reposition simultaneously. Competitor staggers 15-20ms per card with subtle bounce. | FIXED — 15ms stagger per card |
 | D9 | Card drag lacks physicality | Both sites | Our drag: 1.05x scale only. Competitor: 1.08x scale + deeper shadow + slight rotation toward touch point. | FIXED — 1.06x scale + deeper shadow + rotation |
 | D10 | Auto-complete too slow | Both sites | Our auto-complete: 50ms per card. Competitor: 25-30ms rapid flourish. Should feel like a victory cascade. | FIXED (commit ebe7aa0) — 28ms stagger |
-| D11 | No animation speed setting | Both sites | cardgames.io has slow/medium/fast slider. Power users want FAST. No way to adjust. | 2-3 hours |
+| D11 | No animation speed setting | Both sites | cardgames.io has slow/medium/fast slider. Power users want FAST. No way to adjust. | FIXED (commit 0273d78) — CSS custom props driven by data-animation-speed |
 | D12 | Sound effects lack depth | Both sites | Same sound for every action. No pitch variation by card rank. No layered audio cues. | 3-4 hours |
 | D13 | Splash screen blocks cookie consent | Both sites | Cookie banner waits for splash dismiss, but splash has no timer — could delay consent indefinitely. | 30 min |
 | D14 | Win screen could be more celebratory | Both sites | Basic win overlay. MobilityWare has confetti, fireworks, score breakdown with star rating. | 3-4 hours |
-| D15 | No visible Settings or Bookmark buttons in toolbar | Both sites | Competitor has prominent Settings + Bookmark in bottom toolbar. Ours: settings buried in menu only. | 1-2 hours |
+| D15 | No visible Settings or Bookmark buttons in toolbar | Both sites | Competitor has prominent Settings + Bookmark in bottom toolbar. Ours: settings buried in menu only. | FIXED — Settings, Stats, Bookmark all in toolbar |
 
 ### CONTENT & SEO GAPS
 
@@ -263,7 +263,7 @@ Effort estimates: S = <1hr, M = 1-3hrs, L = 3-6hrs, XL = 6+ hrs
 
 **Day 3 (March 29):**
 - [x] Add Settings + Stats icons to desktop toolbar (D15) [M] — DONE
-- [ ] Add Bookmark game feature to toolbar (D15) [M]
+- [x] Add Bookmark game feature to toolbar (D15) [M] — DONE (commit 0273d78)
 - [x] Fill empty content gaps on homepage with cross-links or ad units (D3) [M] — DONE (tightened spacing + games CTA)
 - [x] Remove dead loadAdSense function from CookieConsent.tsx [S] — DONE (commit aa729b6)
 
@@ -281,7 +281,7 @@ Effort estimates: S = <1hr, M = 1-3hrs, L = 3-6hrs, XL = 6+ hrs
 **Day 6-7 (April 1-2):**
 - [x] Add cascade settling stagger animation (D8) [M] — DONE
 - [x] Improve card drag physicality — deeper shadow + rotation (D9) [M] — DONE
-- [ ] Add animation speed setting (slow/medium/fast) (D11) [M]
+- [x] Add animation speed setting (slow/medium/fast) (D11) [M] — DONE (commit 0273d78)
 - [ ] Weekly review: re-test all fixes, compare against competitor
 
 ---
@@ -289,13 +289,13 @@ Effort estimates: S = <1hr, M = 1-3hrs, L = 3-6hrs, XL = 6+ hrs
 ### WEEK 2: Engagement & Retention Features
 
 **Day 8:**
-- [ ] Build monthly challenge milestone badge system (10/20/31 wins with trophies) [L]
-- [ ] Add progress bar to monthly challenge widget [M]
+- [x] Build monthly challenge milestone badge system (10/20/31 wins with trophies) [L] — DONE (Night 54 commit)
+- [x] Add progress bar to monthly challenge widget [M] — DONE (Night 54 commit)
 
 **Day 9:**
-- [ ] Make sidebar achievements widget more prominent with key stats [M]
-- [ ] Surface personal stats summary in sidebar (win ratio, best time, best moves) [M]
-- [ ] Improve right sidebar visual weight and density (D4) [M]
+- [x] Make sidebar achievements widget more prominent with key stats [M] — DONE (Night 54 commit)
+- [x] Surface personal stats summary in sidebar (win ratio, best time, best moves) [M] — DONE (Night 54 — SidebarStats widget)
+- [x] Improve right sidebar visual weight and density (D4) [M] — DONE (commit 0273d78)
 
 **Day 10:**
 - [ ] Add sound pitch variation by card rank (D12) [M]
@@ -304,8 +304,8 @@ Effort estimates: S = <1hr, M = 1-3hrs, L = 3-6hrs, XL = 6+ hrs
 
 **Day 11:**
 - [ ] Add Turn 1 / Turn 3 toggle for Klondike [M]
-- [ ] Add loading skeleton/spinner for game board initialization (D5) [S]
-- [ ] Fix service worker update to not reload mid-game (B7) [S]
+- [x] Add loading skeleton/spinner for game board initialization (D5) [S] — DONE (commit 0273d78)
+- [x] Fix service worker update to not reload mid-game (B7) [S] — DONE (commit 0273d78)
 
 **Day 12:**
 - [ ] Write personal trust story for /about page (C7) [M]

@@ -63,6 +63,11 @@
 - ~~**Google Search Console** — submit playfreecellonline.com property + sitemap~~ ✅ DONE 2026-03-13 — auto-verified, sitemap processed, 156 pages discovered
 - **Vercel KV** — needed for leaderboard backend (code-complete, waiting on provisioning)
 
+## 🟡 Medium Priority (Ship This Month)
+36. **Solitaire difficulty ranking page** ✅ SHIPPED 03-28 — `/solitaire-difficulty-ranking` comprehensive ranking of all 28 games across 5 difficulty tiers. Internal linking hub + SEO play targeting "solitaire games ranked", "easiest/hardest solitaire" keywords. 758 lines. *(Content gap — no competitor has a comprehensive ranking page)*
+37. **Baker's Game tips page** — Missing from content suite. Baker's Game only has how-to-play.
+38. **Eight Off tips page** — Missing from content suite. Eight Off only has how-to-play.
+
 ## ✅ Completed
 - [x] Core game engine + solvable deals
 - [x] Mobile responsive + touch precision + column zones

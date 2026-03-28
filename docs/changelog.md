@@ -1,5 +1,12 @@
 # FreeCell Online — Changelog
 
+## 2026-03-28 (Saturday Overnight Build)
+### Shipped
+- **📊 Solitaire Difficulty Ranking Page** (`/solitaire-difficulty-ranking`) — 758-line comprehensive SEO content page ranking all 28 solitaire games from easiest to hardest across 5 difficulty tiers (Beginner, Easy, Intermediate, Advanced, Expert). Each game: win rate, skill-vs-luck analysis, deck count, unique description, key trait. Targets "solitaire games ranked by difficulty", "easiest solitaire games", "hardest solitaire games" keyword cluster. 8 FAQs. Article + BreadcrumbList + FAQPage JSON-LD. 3 AdUnit placements. Major internal linking hub connecting all 28 game variants. Added to sitemap + SiteFooter Explore column.
+- **🔄 Games Hub Update** — Updated games hub metadata from "17+" to "26+" games to reflect actual game count.
+- **🧹 Bristol Engine** — Committed previously unstaged BristolEngine.ts (437 lines) and dealBristolGame() function from Night 53.
+- (55th consecutive night of shipping) 🔥
+
 ## 2026-03-26 (Thursday Evening Build)
 ### Shipped
 - **📝 4 SEO Content Pages** — Bristol how-to-play (589 lines), Bristol tips (593 lines), FreeCell how-to-play (581 lines), FreeCell tips (667 lines). Bristol was the last game variant with zero content pages. FreeCell now has dedicated route-level how-to-play and tips pages (flagship game). Each page: 10+ keywords, Article + BreadcrumbList + FAQPage JSON-LD, 3 AdUnit placements, CardSection cross-links, CtaSection. SiteFooter + sitemap updated. 2,450 lines across 7 files.

@@ -1525,6 +1525,8 @@ function SidebarAdSlot({ children, height, label, delayMs }: { children: React.R
     return () => clearTimeout(t);
   }, [delayMs]);
 
+  const [collapsed, setCollapsed] = useState(false);
+
   // Watch for ad fill status — check periodically if AdSense has filled the slot
   useEffect(() => {
     if (!visible || !slotRef.current) return;
@@ -1533,15 +1535,20 @@ function SidebarAdSlot({ children, height, label, delayMs }: { children: React.R
       if (ins) {
         const status = ins.getAttribute('data-ad-status');
         if (status === 'filled') setAdFilled(true);
+        else if (status === 'unfilled') setCollapsed(true);
       }
     };
     const interval = setInterval(check, 2000);
     // Check immediately too
     check();
-    return () => clearInterval(interval);
-  }, [visible]);
+    // Collapse entirely if no ad fills after 15 seconds
+    const fallback = setTimeout(() => {
+      if (!adFilled) setCollapsed(true);
+    }, 15000);
+    return () => { clearInterval(interval); clearTimeout(fallback); };
+  }, [visible, adFilled]);
 
-  if (!visible) return null;
+  if (!visible || collapsed) return null;
 
   return (
     <section

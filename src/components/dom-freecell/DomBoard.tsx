@@ -378,6 +378,8 @@ export default function DomBoard({ hint }: DomBoardProps) {
           display: 'flex',
           justifyContent: 'center',
           gap: 'var(--pile-gap)',
+          flexWrap: 'nowrap',
+          overflow: 'hidden',
         }}
       >
         {cascades.map((cascade, colIdx) => {
@@ -397,6 +399,8 @@ export default function DomBoard({ hint }: DomBoardProps) {
               style={{
                 position: 'relative',
                 width: 'var(--card-width)',
+                minWidth: 'var(--card-width)',
+                flexShrink: 0,
                 minHeight: 'var(--card-height)',
                 height: cascadeHeight,
               }}

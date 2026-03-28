@@ -1,5 +1,13 @@
 # FreeCell Online — Changelog
 
+## 2026-03-28 (Saturday Overnight Build #2)
+### Shipped
+- **📝 Baker's Game Tips** (`/bakers-game/tips`) — 8 practical tips for same-suit stacking mastery: FreeCell habit-breaking, suit sequence scanning, free cell discipline (2-cell rule), suit prioritization, empty cascade value, dead-end recognition, foundation pacing, undo as laboratory. FreeCell player adjustment guide. 5 FAQs. Article + BreadcrumbList + FAQPage JSON-LD. 3 AdUnit placements. 15 keywords. ~500 lines.
+- **📝 Eight Off Tips** (`/eight-off/tips`) — 8 tips for 8-cell reserve management: clearing starting cells, 3-cell rule, same-suit thinking, King-as-cascade-currency, foundation pacing, supermove math reference table, opening analysis, cell exit strategies. FreeCell family comparison (FreeCell vs Eight Off vs Baker's Game). 5 FAQs. Article + BreadcrumbList + FAQPage JSON-LD. 3 AdUnit placements. 15 keywords. ~500 lines.
+- Sitemap + SiteFooter updated with both new tips pages.
+- Backlog items #37 and #38 complete.
+- 4 files changed, 1,006 insertions. (56th consecutive night of shipping) 🔥
+
 ## 2026-03-28 (Saturday Overnight Build)
 ### Shipped
 - **📊 Solitaire Difficulty Ranking Page** (`/solitaire-difficulty-ranking`) — 758-line comprehensive SEO content page ranking all 28 solitaire games from easiest to hardest across 5 difficulty tiers (Beginner, Easy, Intermediate, Advanced, Expert). Each game: win rate, skill-vs-luck analysis, deck count, unique description, key trait. Targets "solitaire games ranked by difficulty", "easiest solitaire games", "hardest solitaire games" keyword cluster. 8 FAQs. Article + BreadcrumbList + FAQPage JSON-LD. 3 AdUnit placements. Major internal linking hub connecting all 28 game variants. Added to sitemap + SiteFooter Explore column.

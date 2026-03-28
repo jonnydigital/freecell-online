@@ -65,8 +65,8 @@
 
 ## 🟡 Medium Priority (Ship This Month)
 36. **Solitaire difficulty ranking page** ✅ SHIPPED 03-28 — `/solitaire-difficulty-ranking` comprehensive ranking of all 28 games across 5 difficulty tiers. Internal linking hub + SEO play targeting "solitaire games ranked", "easiest/hardest solitaire" keywords. 758 lines. *(Content gap — no competitor has a comprehensive ranking page)*
-37. **Baker's Game tips page** — Missing from content suite. Baker's Game only has how-to-play.
-38. **Eight Off tips page** — Missing from content suite. Eight Off only has how-to-play.
+37. ~~**Baker's Game tips page**~~ ✅ SHIPPED 03-28 — `/bakers-game/tips` SEO content page: 8 tips for same-suit stacking, FreeCell habit-breaking guide, dead-end recognition, 5 FAQs. Article + BreadcrumbList + FAQPage JSON-LD. 3 AdUnit placements. *(Backlog item — content suite completion)*
+38. ~~**Eight Off tips page**~~ ✅ SHIPPED 03-28 — `/eight-off/tips` SEO content page: 8 tips for 8-cell management, supermove math, King placement, FreeCell family comparison, 5 FAQs. Article + BreadcrumbList + FAQPage JSON-LD. 3 AdUnit placements. *(Backlog item — content suite completion)*
 
 ## ✅ Completed
 - [x] Core game engine + solvable deals

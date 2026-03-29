@@ -49,3 +49,4 @@ next-env.d.ts
 # screenshots (dev artifacts)
 *.png
 !public/**/*.png
+.env*.local

@@ -1,5 +1,19 @@
 # FreeCell Online — Changelog
 
+## 2026-03-29 (Sunday Overnight Build #2)
+### Shipped
+- **🏆 Leaderboard Goes Live!** — Vercel KV store provisioned by Jonathan (~14h ago). The leaderboard backend has been code-complete since March 15 but was blocked on KV env vars. Now LIVE with:
+  - `/api/leaderboard/submit` — POST scores with rate limiting (10/hr per IP), composite scoring (moves × 10000 + time), daily + all-time sorted sets
+  - `/api/leaderboard/daily` — GET top 50, supports `?date=YYYY-MM-DD` and `?alltime=1`
+  - `/leaderboard` — Full leaderboard page with Today/All-Time tabs, nickname editing
+  - Client library with graceful localStorage fallback when API is unavailable
+  - Auto-submit on daily challenge wins via WinScreen integration
+  - Seed data generation so leaderboard never looks empty for new visitors
+  - 7-day TTL on daily entries, per-player deduplication (keeps best score)
+- **Blocker resolved**: This was the last item in the "⏳ Blocked (Needs Jonathan)" section.
+- Build verified, env vars pulled.
+- (62nd consecutive night of shipping) 🔥
+
 ## 2026-03-29 (Sunday Overnight Build)
 ### Shipped
 - **📝 3 More Blog Posts** — Blog library now at 14 posts total:

@@ -21,7 +21,7 @@
 12. ~~**FreeCell variants** — Eight Off as additional mode.~~ ✅ SHIPPED 03-04 — Eight Off with 8 free cells, same-suit stacking, dynamic engine + scene layout *(NYT Games spark — game portfolio as retention moat)*
 13. ~~**SEO: FreeCell history page**~~ ✅ SHIPPED 03-02 — 1600-line rich content page covering Alfille, PLATO, Windows, Game #11982, structured data
 14. ~~**SEO: Solitaire types taxonomy**~~ ✅ SHIPPED — `/solitaire-types` page with 20 variants classified, difficulty ratings, internal links
-15. ~~**Leaderboard backend**~~ ✅ CODE-COMPLETE — API routes (`/api/leaderboard/submit`, `/api/leaderboard/daily`), Vercel KV sorted sets with rate limiting, localStorage fallback, client library, full page UI with today/all-time tabs, nickname editing, auto-submit on daily challenge win, compact widget in WinScreen. **Needs: Vercel KV provisioned (env: KV_REST_API_URL)** *(blocked on Jonathan)*
+15. ~~**Leaderboard backend**~~ ✅ LIVE 03-29 — Vercel KV provisioned! API routes (`/api/leaderboard/submit`, `/api/leaderboard/daily`), Vercel KV sorted sets with rate limiting, localStorage fallback, client library, full page UI with today/all-time tabs, nickname editing, auto-submit on daily challenge win, compact widget in WinScreen.
 16. ~~**Achievements/badges**~~ ✅ SHIPPED 03-02 — 20 badges across 6 categories with unlock animations
 17. ~~**Tutorial/onboarding**~~ ✅ SHIPPED — First-visit walkthrough with spotlight highlights, triggered automatically on first play, replayable from Settings
 18. **Video tutorial** — screen-recorded walkthrough, embed on game page *(Solitaire Bliss has YouTube embed. Huge for dwell time + rich snippets)*
@@ -61,7 +61,7 @@
 - **AdSense publisher ID** — code ready, needs ca-pub-XXXXXXXXXX
 - **Sentry DSN** — error tracking env var
 - ~~**Google Search Console** — submit playfreecellonline.com property + sitemap~~ ✅ DONE 2026-03-13 — auto-verified, sitemap processed, 156 pages discovered
-- **Vercel KV** — needed for leaderboard backend (code-complete, waiting on provisioning)
+- ~~**Vercel KV**~~ ✅ PROVISIONED 03-28 — KV store connected, env vars live in all environments
 
 ## 🟡 Medium Priority (Ship This Month)
 36. **Solitaire difficulty ranking page** ✅ SHIPPED 03-28 — `/solitaire-difficulty-ranking` comprehensive ranking of all 28 games across 5 difficulty tiers. Internal linking hub + SEO play targeting "solitaire games ranked", "easiest/hardest solitaire" keywords. 758 lines. *(Content gap — no competitor has a comprehensive ranking page)*

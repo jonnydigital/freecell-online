@@ -42,6 +42,9 @@
 24. ~~**WebApplication JSON-LD**~~ ✅ SHIPPED 03-07 — Schema.org structured data on root layout for rich search results.
 25. ~~**FreeCell Solver page**~~ ✅ SHIPPED 03-07 — Interactive solver widget + 2000+ word SEO content. Web worker solver, step-by-step solutions, algorithm explainer, famous unsolvable deals, FAQPage schema.
 
+## 🟡 Medium Priority (Ship This Month) — Continued
+39. ~~**Bristol Solitaire game page**~~ ✅ SHIPPED 03-29 — Playable game page for Bristol, the last variant without one. BristolGamePage DOM adapter (8 fans + 3 reserves), full SEO page with FAQPage + WebApplication + BreadcrumbList schema, 6 FAQs, any-suit building, Kings restriction, stock dealing, auto-place, hints, undo. All 25 variants now playable. *(Gap analysis — Bristol had engine + content but no game page, dead-end links from tips/how-to-play)*
+
 ## 🟢 Nice to Have
 14. **Multiplayer daily challenge** — compete on same seed
 15. **Offline mode polish** — better offline UX

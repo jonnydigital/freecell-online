@@ -1,5 +1,17 @@
 # FreeCell Online — Changelog
 
+## 2026-03-29 (Sunday Overnight Build #3)
+### Shipped
+- **🏴 Bristol Solitaire — Playable Game Page** — The last missing playable variant! Bristol had a full engine (`BristolEngine.ts`), deal function, tips page, and how-to-play page, but no actual game page. Users clicking "Play Bristol Solitaire" from content pages hit a dead end. Now live with:
+  - `BristolGamePage.tsx` — DOM adapter mapping 8 fans + 3 reserve piles to the generic cascade board
+  - Full SEO page with WebApplication + BreadcrumbList + FAQPage JSON-LD schema
+  - 6 FAQs, 10 keywords, canonical URL, rich content section
+  - Stock dealing (3 cards → 3 reserves), any-suit building, Kings restriction enforced
+  - Auto-place aces/2s, foundation-priority hints, undo support
+  - Already in sitemap, SiteFooter, and cross-linked from tips/how-to-play pages
+- **All 25 solitaire variants now have playable game pages.** Zero dead-end links remain.
+- (63rd consecutive night of shipping) 🔥
+
 ## 2026-03-29 (Sunday Overnight Build #2)
 ### Shipped
 - **🏆 Leaderboard Goes Live!** — Vercel KV store provisioned by Jonathan (~14h ago). The leaderboard backend has been code-complete since March 15 but was blocked on KV env vars. Now LIVE with:

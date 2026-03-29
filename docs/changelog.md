@@ -1,5 +1,14 @@
 # FreeCell Online — Changelog
 
+## 2026-03-29 (Sunday Night Build #2)
+### Shipped
+- **📄 Below-Fold SEO Content for Klondike & Spider Spoke Homepages** — Both spoke site homepages now have rich below-fold content matching FreeCell's pattern:
+  - `KlondikeBelowFold.tsx` (~310 lines): FAQPage JSON-LD (6 FAQs), H1 hero, How to Play summary, 6 feature cards, 8 popular page links, PlayerTestimonials, expandable FAQ accordion, 6 related games, 3 AdUnit placements
+  - `SpiderBelowFold.tsx` (~310 lines): FAQPage JSON-LD (6 FAQs), H1 hero, How to Play summary, 6 feature cards, 7 popular page links, PlayerTestimonials, expandable FAQ accordion, 6 related games, 3 AdUnit placements
+  - Integrated into `page.tsx` — renders after game shells for Klondike/Spider site keys
+- **All code-side work for spoke site launch is now complete.** Blocked only on Vercel project creation + DNS.
+- (66th consecutive night of shipping) 🔥
+
 ## 2026-03-29 (Sunday Evening Build)
 ### Shipped
 - **📝 3 Blog Posts for Klondike/Spider Network Launch** — Blog library now at 17 posts total:

@@ -1,5 +1,14 @@
 # FreeCell Online — Changelog
 
+## 2026-03-29 (Sunday Evening Build)
+### Shipped
+- **📝 3 Blog Posts for Klondike/Spider Network Launch** — Blog library now at 17 posts total:
+  - "Klondike Solitaire: The Complete Guide to the World's Most Popular Card Game" — rules, Draw 1 vs Draw 3, strategy, FreeCell/Spider comparison. 8 internal links.
+  - "Spider Solitaire Difficulty Levels Explained: 1-Suit vs 2-Suit vs 4-Suit" — win rates by difficulty, strategy per level, when to level up. 8 internal links.
+  - "The 5 Best Free Solitaire Games to Play Online in 2026" — hub post ranking FreeCell, Klondike, Spider, Pyramid, TriPeaks. Links to all game pages. Comparison table.
+- These posts seed the content foundation for playklondikeonline.com and playspidersolitaireonline.com launches.
+- (65th consecutive night of shipping) 🔥
+
 ## 2026-03-29 (Sunday Early Morning Build)
 ### Shipped
 - **🗺️ Deal Sitemap Expansion (1,200+ → 1,394 game numbers)** — Massively expanded sitemap indexing for individual game deal pages. Previously ~100 game numbers were in the sitemap; now 1,394 unique deal URLs are indexed:

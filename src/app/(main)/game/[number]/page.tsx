@@ -29,9 +29,26 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const title = deal
     ? `FreeCell Game #${gameNum} - ${deal.label} Deal`
     : `FreeCell Game #${gameNum} - Play Deal ${gameNum.toLocaleString()} Online Free`;
+
+  function variedDescription(num: number): string {
+    if (num <= 100) {
+      return `Play classic FreeCell Game #${num} online for free. One of the original 100 deals — a favorite among FreeCell enthusiasts. Same layout every time, no download required.`;
+    } else if (num <= 1000) {
+      return `Play FreeCell puzzle #${num} online for free. This specific card layout is the same every time — challenge yourself or share with friends. No download needed.`;
+    } else if (num <= 10000) {
+      return `Try FreeCell deal #${num.toLocaleString()} — a unique card layout you can replay anytime. Compare your strategy with other players. Free online, no download required.`;
+    } else if (num <= 50000) {
+      return `FreeCell Game #${num.toLocaleString()} — play this specific deal online for free. Every deal has a fixed layout, so you can retry and perfect your strategy.`;
+    } else if (num <= 100000) {
+      return `Play FreeCell deal #${num.toLocaleString()} online. This high-numbered deal offers a unique challenge — 99.999% of FreeCell deals are solvable. Can you beat this one?`;
+    } else {
+      return `FreeCell deal #${num.toLocaleString()} — a unique FreeCell puzzle to play online for free. Test your skills on this specific card layout. Same deal every time, no download required.`;
+    }
+  }
+
   const description = deal
     ? `Play FreeCell Game #${gameNum} online for free — ${deal.label.toLowerCase()}${deal.difficulty ? ` (${deal.difficulty})` : ''}. Share this specific deal with friends. No download required.`
-    : `Play FreeCell deal #${gameNum} online. This specific card layout is the same every time — share it with friends, retry after a loss, or compare strategies. 99.999% of deals are solvable.`;
+    : variedDescription(gameNum);
 
   return {
     title,

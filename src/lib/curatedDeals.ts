@@ -80,22 +80,24 @@ export const dealLookup: Map<number, DealInfo> = new Map(
 /* ── Milestone numbers for sitemap/static params ── */
 function generateMilestones(): number[] {
   const milestones = new Set<number>();
-  // Individual small numbers (heavily searched)
-  for (let n = 1; n <= 10; n++) milestones.add(n);
-  // Tens up to 100
-  for (let n = 20; n <= 100; n += 10) milestones.add(n);
-  // Fifties up to 1000
-  for (let n = 100; n <= 1000; n += 50) milestones.add(n);
-  // Five-hundreds up to 10K
-  for (let n = 1000; n <= 10000; n += 500) milestones.add(n);
-  // Twenty-five-hundreds up to 50K
-  for (let n = 10000; n <= 50000; n += 2500) milestones.add(n);
+  // Every number 1-100 (heavily searched: 'freecell game 42', etc.)
+  for (let n = 1; n <= 100; n++) milestones.add(n);
+  // Every 10th from 100-1,000
+  for (let n = 110; n <= 1000; n += 10) milestones.add(n);
+  // Every 50th from 1,000-10,000
+  for (let n = 1050; n <= 10000; n += 50) milestones.add(n);
+  // Every 100th from 10,000-50,000
+  for (let n = 10100; n <= 50000; n += 100) milestones.add(n);
+  // Every 250th from 50,000-100,000
+  for (let n = 50250; n <= 100000; n += 250) milestones.add(n);
+  // Every 1,000th from 100,000-500,000
+  for (let n = 101000; n <= 500000; n += 1000) milestones.add(n);
   return Array.from(milestones).sort((a, b) => a - b);
 }
 
 /**
  * All game numbers that should appear in the sitemap and be pre-rendered.
- * Derived from curated deals + milestone numbers. ~100 total.
+ * Derived from curated deals + milestone numbers. ~1,200 total.
  */
 export const sitemapGameNumbers: number[] = (() => {
   const nums = new Set<number>();

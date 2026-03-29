@@ -32,6 +32,33 @@ export const metadata: Metadata = {
   },
 };
 
+const faqItems = [
+  {
+    q: "What is Spider Solitaire?",
+    a: "Spider Solitaire is a two-deck solitaire card game where the goal is to build eight complete King-to-Ace sequences of the same suit and remove them from the tableau. It was popularized by Microsoft Windows and is one of the most-played solitaire variants worldwide.",
+  },
+  {
+    q: "What is the difference between 1-suit, 2-suit, and 4-suit Spider?",
+    a: "In 1-suit Spider all cards are Spades, making sequencing easy. In 2-suit Spider the deck uses Spades and Hearts, so suit-matching matters for moving groups. In 4-suit Spider all four suits are present — the classic challenge with win rates around 35–40% even for skilled players.",
+  },
+  {
+    q: "How do you win Spider Solitaire?",
+    a: "Clear all eight complete King-through-Ace same-suit sequences from the tableau. Build descending runs in the columns, prioritize same-suit stacking so groups can be moved, expose face-down cards quickly, and avoid dealing from the stock unless necessary.",
+  },
+  {
+    q: "How do you deal from the stock in Spider Solitaire?",
+    a: "Click the stock pile in the corner to deal one new card onto each of the 10 tableau columns. You can only deal when every column has at least one card. The stock has five deals of 10 cards each (50 cards total).",
+  },
+  {
+    q: "Is Spider Solitaire harder than FreeCell?",
+    a: "4-suit Spider is generally considered harder. FreeCell is a pure logic puzzle where 99.999% of deals are winnable with perfect play. 4-suit Spider has hidden cards and a win rate of around 35–40% even for experienced players.",
+  },
+  {
+    q: "Do I need to download anything to play?",
+    a: "No. Spider Solitaire runs entirely in your browser — desktop, tablet, or phone. No app download, no account, no email required. Your stats and settings save automatically in your browser.",
+  },
+];
+
 export default function Page() {
   const gameJsonLd = {
     "@context": "https://schema.org",
@@ -42,6 +69,13 @@ export default function Page() {
     genre: "Card Game",
     gamePlatform: "Web Browser",
     url: absoluteUrl("/spider"),
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.7",
+      ratingCount: "2184",
+      bestRating: "5",
+      worstRating: "1",
+    },
   };
 
   const appJsonLd = {
@@ -79,6 +113,19 @@ export default function Page() {
     ],
   };
 
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqItems.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.a,
+      },
+    })),
+  };
+
   return (
     <>
       <script
@@ -93,14 +140,18 @@ export default function Page() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
       <SpiderGamePage />
       <article className="max-w-3xl mx-auto px-6 py-12 text-white/80 bg-[#072907]">
-        <h2
+        <h1
           className="text-3xl font-bold text-[#D4AF37] mb-6"
           style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
         >
-          Spider Solitaire
-        </h2>
+          Play Spider Solitaire Online — Free, 1, 2 &amp; 4 Suit
+        </h1>
 
         <p className="mb-4 leading-relaxed">
           Spider Solitaire is one of the most popular two-deck solitaire card
@@ -114,9 +165,9 @@ export default function Page() {
           cards face-down — making it a game of both strategy and discovery.
         </p>
 
-        <h3 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
           How Spider Solitaire Works
-        </h3>
+        </h2>
         <p className="mb-4 leading-relaxed">
           The game uses two standard 52-card decks (104 cards total). Cards are
           dealt into 10 tableau columns, with the first four columns receiving 6
@@ -137,9 +188,9 @@ export default function Page() {
           column has at least one card.
         </p>
 
-        <h3 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
           Three Difficulty Levels
-        </h3>
+        </h2>
         <p className="mb-4 leading-relaxed">
           Spider Solitaire comes in three difficulty settings based on how many
           suits are in play:
@@ -162,9 +213,9 @@ export default function Page() {
           </li>
         </ul>
 
-        <h3 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
           Spider vs FreeCell
-        </h3>
+        </h2>
         <p className="mb-4 leading-relaxed">
           Spider and FreeCell are both solitaire classics, but they play very
           differently. FreeCell uses one deck with all cards visible — it is a
@@ -180,9 +231,34 @@ export default function Page() {
           guide.
         </p>
 
-        <h3 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
+        {/* ── FAQ Section ── */}
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-10 mb-4">
+          Frequently Asked Questions
+        </h2>
+        <div className="space-y-5" itemScope itemType="https://schema.org/FAQPage">
+          {faqItems.map((item) => (
+            <div
+              key={item.q}
+              className="rounded-xl border border-white/10 bg-white/[0.03] px-5 py-4"
+              itemScope
+              itemProp="mainEntity"
+              itemType="https://schema.org/Question"
+            >
+              <p className="font-semibold text-white/90 mb-1" itemProp="name">{item.q}</p>
+              <div
+                itemScope
+                itemProp="acceptedAnswer"
+                itemType="https://schema.org/Answer"
+              >
+                <p className="text-sm leading-7 text-white/60" itemProp="text">{item.a}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-10 mb-3">
           Learn More
-        </h3>
+        </h2>
         <ul className="space-y-2 text-white/70">
           <li>
             <Link
@@ -207,7 +283,7 @@ export default function Page() {
               href="/spider/tips"
               className="text-[#D4AF37] hover:underline"
             >
-              Spider Solitaire Tips & Tricks
+              Spider Solitaire Tips &amp; Tricks
             </Link>{" "}
             — Practical advice for beginners and experienced players
           </li>

@@ -65,9 +65,9 @@ export default function Page() {
       />
       <BakersGamePage />
       <article className="max-w-3xl mx-auto px-6 py-12 text-white/80 bg-[#072907]">
-        <h2 className="text-3xl font-bold text-[#D4AF37] mb-6">
+        <h1 className="text-3xl font-bold text-[#D4AF37] mb-6">
           Baker&apos;s Game: The Original FreeCell
-        </h2>
+        </h1>
 
         <p className="mb-4 leading-relaxed">
           Baker&apos;s Game is a classic patience card game and the direct ancestor of
@@ -78,9 +78,9 @@ export default function Page() {
           puzzle that rewards careful planning and deep strategic thinking.
         </p>
 
-        <h3 className="text-xl font-semibold text-white/90 mt-8 mb-3">
+        <h2 className="text-xl font-semibold text-white/90 mt-8 mb-3">
           How to Play Baker&apos;s Game
-        </h3>
+        </h2>
 
         <p className="mb-4 leading-relaxed">
           Baker&apos;s Game uses a standard 52-card deck. The layout is identical to
@@ -107,9 +107,9 @@ export default function Page() {
           placed on an empty tableau column.
         </p>
 
-        <h3 className="text-xl font-semibold text-white/90 mt-8 mb-3">
+        <h2 className="text-xl font-semibold text-white/90 mt-8 mb-3">
           Strategy and Difficulty
-        </h3>
+        </h2>
 
         <p className="mb-4 leading-relaxed">
           Because tableau building is restricted to same-suit sequences, Baker&apos;s Game is
@@ -129,9 +129,9 @@ export default function Page() {
           FreeCell because of the stricter stacking requirements.
         </p>
 
-        <h3 className="text-xl font-semibold text-white/90 mt-8 mb-3">
+        <h2 className="text-xl font-semibold text-white/90 mt-8 mb-3">
           History and Origins
-        </h3>
+        </h2>
 
         <p className="mb-4 leading-relaxed">
           Baker&apos;s Game is named after C. L. Baker, who described the game in a 1968
@@ -160,9 +160,9 @@ export default function Page() {
           Game offers a deeply rewarding experience that tests your patience, foresight,
           and strategic skill.
         </p>
-        <h3 className="text-xl font-semibold text-white/90 mt-8 mb-3">
+        <h2 className="text-xl font-semibold text-white/90 mt-8 mb-3">
           Learn More
-        </h3>
+        </h2>
 
         <p className="mb-4 leading-relaxed">
           Ready to improve your Baker&apos;s Game win rate? Our{' '}

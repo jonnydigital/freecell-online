@@ -80,24 +80,21 @@ export const dealLookup: Map<number, DealInfo> = new Map(
 /* ── Milestone numbers for sitemap/static params ── */
 function generateMilestones(): number[] {
   const milestones = new Set<number>();
-  // Every number 1-100 (heavily searched: 'freecell game 42', etc.)
-  for (let n = 1; n <= 100; n++) milestones.add(n);
-  // Every 10th from 100-1,000
-  for (let n = 110; n <= 1000; n += 10) milestones.add(n);
-  // Every 50th from 1,000-10,000
-  for (let n = 1050; n <= 10000; n += 50) milestones.add(n);
-  // Every 100th from 10,000-50,000
-  for (let n = 10100; n <= 50000; n += 100) milestones.add(n);
-  // Every 250th from 50,000-100,000
-  for (let n = 50250; n <= 100000; n += 250) milestones.add(n);
-  // Every 1,000th from 100,000-500,000
-  for (let n = 101000; n <= 500000; n += 1000) milestones.add(n);
+  // Every single deal 1–10,000 (most-searched range: 'freecell game 42', 'freecell deal 5000', etc.)
+  for (let n = 1; n <= 10000; n++) milestones.add(n);
+  // Every 10th from 10,000–50,000
+  for (let n = 10010; n <= 50000; n += 10) milestones.add(n);
+  // Every 50th from 50,000–100,000
+  for (let n = 50050; n <= 100000; n += 50) milestones.add(n);
+  // Every 250th from 100,000–500,000
+  for (let n = 100250; n <= 500000; n += 250) milestones.add(n);
   return Array.from(milestones).sort((a, b) => a - b);
 }
 
 /**
  * All game numbers that should appear in the sitemap and be pre-rendered.
- * Derived from curated deals + milestone numbers. ~1,200 total.
+ * 1–10,000: every deal; 10,000–50,000: every 10th; 50,000–500,000: sparser.
+ * ~14,000+ URLs for long-tail "freecell game N" search coverage.
  */
 export const sitemapGameNumbers: number[] = (() => {
   const nums = new Set<number>();

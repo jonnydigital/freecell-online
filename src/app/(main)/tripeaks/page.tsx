@@ -124,12 +124,12 @@ export default function Page() {
       <JsonLd data={faqJsonLd} />
       <TriPeaksGamePage />
       <article className="max-w-3xl mx-auto px-6 py-12 text-white/80 bg-[#072907]">
-        <h2
+        <h1
           className="text-3xl font-bold text-[#D4AF37] mb-6"
           style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
         >
           TriPeaks Solitaire
-        </h2>
+        </h1>
 
         <p className="mb-4 leading-relaxed">
           TriPeaks Solitaire (also known as Tri Peaks or Triple Peaks) is a fast-paced
@@ -139,9 +139,9 @@ export default function Page() {
           waste pile card — and ranks wrap around, so Kings connect to Aces.
         </p>
 
-        <h3 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
           How It Works
-        </h3>
+        </h2>
         <p className="mb-4 leading-relaxed">
           A standard 52-card deck is dealt into three peaks. The peaks share a base
           row of 10 face-up cards. Above the base, 18 cards are dealt face-down in
@@ -156,9 +156,9 @@ export default function Page() {
           or when no moves remain and the stock is empty.
         </p>
 
-        <h3 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
           Scoring & Streaks
-        </h3>
+        </h2>
         <p className="mb-4 leading-relaxed">
           TriPeaks features a streak-based scoring system. Each consecutive card you
           play without drawing from the stock increases your streak multiplier. The
@@ -167,9 +167,9 @@ export default function Page() {
           chains of consecutive plays is the key to achieving high scores.
         </p>
 
-        <h3 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
           Tips for Winning
-        </h3>
+        </h2>
         <ul className="list-disc pl-6 mb-4 space-y-1">
           <li>Plan runs of cards to build long streaks for maximum points</li>
           <li>Prioritize uncovering peak tops — clearing a peak opens many cards</li>
@@ -178,9 +178,9 @@ export default function Page() {
           <li>Remember that Kings and Aces connect — use wrapping to extend streaks</li>
         </ul>
 
-        <h3 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
           Learn More
-        </h3>
+        </h2>
         <ul className="space-y-2 text-white/70">
           <li>
             <Link

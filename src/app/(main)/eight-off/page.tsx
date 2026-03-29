@@ -67,9 +67,9 @@ export default function Page() {
       />
       <EightOffPage />
       <article className="max-w-3xl mx-auto px-6 py-12 text-white/80 bg-[#072907]">
-        <h2 className="text-3xl font-bold text-[#D4AF37] mb-6">
+        <h1 className="text-3xl font-bold text-[#D4AF37] mb-6">
           Eight Off Solitaire: The 8 Free Cell Challenge
-        </h2>
+        </h1>
 
         <p className="mb-4 leading-relaxed">
           Eight Off is a classic patience card game and a close relative of FreeCell.
@@ -80,9 +80,9 @@ export default function Page() {
           and precise execution.
         </p>
 
-        <h3 className="text-xl font-semibold text-white/90 mt-8 mb-3">
+        <h2 className="text-xl font-semibold text-white/90 mt-8 mb-3">
           How to Play Eight Off
-        </h3>
+        </h2>
 
         <p className="mb-4 leading-relaxed">
           Eight Off uses a standard 52-card deck. The layout consists of 8 tableau
@@ -110,9 +110,9 @@ export default function Page() {
           in an empty free cell or on an empty tableau column.
         </p>
 
-        <h3 className="text-xl font-semibold text-white/90 mt-8 mb-3">
+        <h2 className="text-xl font-semibold text-white/90 mt-8 mb-3">
           Strategy Tips
-        </h3>
+        </h2>
 
         <p className="mb-4 leading-relaxed">
           Despite having 8 free cells, Eight Off is harder than standard FreeCell
@@ -147,9 +147,9 @@ export default function Page() {
           </li>
         </ul>
 
-        <h3 className="text-xl font-semibold text-white/90 mt-8 mb-3">
+        <h2 className="text-xl font-semibold text-white/90 mt-8 mb-3">
           Eight Off vs FreeCell vs Baker&apos;s Game
-        </h3>
+        </h2>
 
         <p className="mb-4 leading-relaxed">
           Eight Off sits between FreeCell and Baker&apos;s Game in difficulty.
@@ -162,9 +162,9 @@ export default function Page() {
           roughly 99.999% for FreeCell and about 75% for Baker&apos;s Game.
         </p>
 
-        <h3 className="text-xl font-semibold text-white/90 mt-8 mb-3">
+        <h2 className="text-xl font-semibold text-white/90 mt-8 mb-3">
           History and Origins
-        </h3>
+        </h2>
 
         <p className="mb-4 leading-relaxed">
           Eight Off has roots in the family of reserve-cell patience games that
@@ -175,9 +175,9 @@ export default function Page() {
           among solitaire enthusiasts who enjoy a challenging yet solvable patience
           game that tests strategic thinking without relying on luck.
         </p>
-        <h3 className="text-xl font-semibold text-white/90 mt-8 mb-3">
+        <h2 className="text-xl font-semibold text-white/90 mt-8 mb-3">
           Learn More
-        </h3>
+        </h2>
 
         <p className="mb-4 leading-relaxed">
           Want to sharpen your Eight Off skills? Our{' '}

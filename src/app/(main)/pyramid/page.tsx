@@ -76,12 +76,12 @@ export default function Page() {
       <JsonLd data={breadcrumbJsonLd} />
       <PyramidGamePage />
       <article className="max-w-3xl mx-auto px-6 py-12 text-white/80 bg-[#072907]">
-        <h2
+        <h1
           className="text-3xl font-bold text-[#D4AF37] mb-6"
           style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
         >
           Pyramid Solitaire
-        </h2>
+        </h1>
 
         <p className="mb-4 leading-relaxed">
           Pyramid Solitaire is a classic card game where the goal is to remove
@@ -90,9 +90,9 @@ export default function Page() {
           be matched: Queen + Ace, Jack + 2, 10 + 3, 9 + 4, 8 + 5, and 7 + 6.
         </p>
 
-        <h3 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
           How It Works
-        </h3>
+        </h2>
         <p className="mb-4 leading-relaxed">
           A standard 52-card deck is dealt into a pyramid of 7 rows. Row 1 has
           1 card, row 2 has 2 cards, and so on down to 7 cards in the bottom
@@ -107,9 +107,9 @@ export default function Page() {
           game.
         </p>
 
-        <h3 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
           Card Values
-        </h3>
+        </h2>
         <ul className="list-disc pl-6 mb-4 space-y-1">
           <li><strong className="text-white/90">Ace</strong> = 1</li>
           <li><strong className="text-white/90">2–10</strong> = face value</li>
@@ -118,9 +118,9 @@ export default function Page() {
           <li><strong className="text-white/90">King</strong> = 13 (removed alone)</li>
         </ul>
 
-        <h3 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
           Tips for Winning
-        </h3>
+        </h2>
         <ul className="list-disc pl-6 mb-4 space-y-1">
           <li>Remove Kings immediately — they&apos;re free plays</li>
           <li>Prioritize uncovering cards near the top of the pyramid</li>
@@ -129,9 +129,9 @@ export default function Page() {
           <li>Use the hint button when you&apos;re stuck</li>
         </ul>
 
-        <h3 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
           Learn More
-        </h3>
+        </h2>
         <ul className="space-y-2 text-white/70">
           <li>
             <Link

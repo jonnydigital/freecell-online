@@ -123,12 +123,12 @@ export default function Page() {
       <JsonLd data={faqJsonLd} />
       <GolfGamePage />
       <article className="max-w-3xl mx-auto px-6 py-12 text-white/80 bg-[#072907]">
-        <h2
+        <h1
           className="text-3xl font-bold text-[#D4AF37] mb-6"
           style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
         >
           Golf Solitaire
-        </h2>
+        </h1>
 
         <p className="mb-4 leading-relaxed">
           Golf Solitaire is a fast-paced solitaire card game where the goal is to clear
@@ -137,9 +137,9 @@ export default function Page() {
           card — and ranks wrap around, so Kings connect to Aces.
         </p>
 
-        <h3 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
           How It Works
-        </h3>
+        </h2>
         <p className="mb-4 leading-relaxed">
           A standard 52-card deck is dealt into seven columns of five face-up cards
           (35 total). The remaining 17 cards form the stock pile, with one card drawn
@@ -153,9 +153,9 @@ export default function Page() {
           moves remain and the stock is empty.
         </p>
 
-        <h3 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
           Scoring & Streaks
-        </h3>
+        </h2>
         <p className="mb-4 leading-relaxed">
           Golf Solitaire features a streak-based scoring system. Each consecutive card
           you play without drawing from the stock increases your streak multiplier. The
@@ -164,9 +164,9 @@ export default function Page() {
           chains of consecutive plays is the key to achieving high scores.
         </p>
 
-        <h3 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
           Tips for Winning
-        </h3>
+        </h2>
         <ul className="list-disc pl-6 mb-4 space-y-1">
           <li>Scan all seven columns before making a move — plan your streak</li>
           <li>Look for zigzag runs (up-down-up) to extend streaks</li>
@@ -175,9 +175,9 @@ export default function Page() {
           <li>Balance play across columns — emptying one column frees up space</li>
         </ul>
 
-        <h3 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
           Learn More
-        </h3>
+        </h2>
         <ul className="space-y-2 text-white/70">
           <li>
             <Link

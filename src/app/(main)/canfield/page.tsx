@@ -124,12 +124,12 @@ export default function Page() {
       <JsonLd data={faqJsonLd} />
       <CanfieldGamePage />
       <article className="max-w-3xl mx-auto px-6 py-12 text-white/80 bg-[#072907]">
-        <h2
+        <h1
           className="text-3xl font-bold text-[#D4AF37] mb-6"
           style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
         >
           Canfield Solitaire
-        </h2>
+        </h1>
 
         <p className="mb-4 leading-relaxed">
           Canfield Solitaire (also called Demon Patience in the UK) is one of the most
@@ -138,9 +138,9 @@ export default function Page() {
           each card placed on the foundations — the house almost always won.
         </p>
 
-        <h3 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
           How It Works
-        </h3>
+        </h2>
         <p className="mb-4 leading-relaxed">
           Thirteen cards are dealt face-down to the reserve pile with only the top card
           face-up. One card is placed on the first foundation, establishing the base rank
@@ -155,9 +155,9 @@ export default function Page() {
           (unlimited redeals).
         </p>
 
-        <h3 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
           Tips for Winning
-        </h3>
+        </h2>
         <ul className="list-disc pl-6 mb-4 space-y-1">
           <li>Empty tableau columns are auto-filled from the reserve — use this to reveal hidden reserve cards</li>
           <li>Focus on depleting the reserve pile early for more flexibility</li>
@@ -166,9 +166,9 @@ export default function Page() {
           <li>Use the unlimited redeal wisely — track which cards cycle through the waste</li>
         </ul>
 
-        <h3 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
           Learn More
-        </h3>
+        </h2>
         <ul className="space-y-2 text-white/70">
           <li>
             <Link

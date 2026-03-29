@@ -3,11 +3,14 @@ import FreecellHomeClient from '@/components/FreecellHomeClient';
 import DomFreecellClient from '@/components/DomFreecellClient';
 import SolitaireHubHome from '@/components/SolitaireHubHome';
 import FreecellBelowFold from '@/components/FreecellBelowFold';
-import { absoluteUrl, isHubSite, siteConfig } from '@/lib/siteConfig';
+import KlondikeGamePage from './klondike/KlondikeGamePage';
+import SpiderGamePage from './spider/SpiderGamePage';
+import { absoluteUrl, isHubSite, isKlondikeSite, isSpiderSite, siteConfig } from '@/lib/siteConfig';
 import { shouldUseDomEngine } from '@/lib/useDomEngine';
 
-export const metadata: Metadata = isHubSite
-  ? {
+function buildMetadata(): Metadata {
+  if (isHubSite) {
+    return {
       title: 'Solitaire Stack | Play FreeCell, Spider Solitaire, and More',
       description:
         'A growing solitaire hub with live FreeCell, Spider Solitaire, open-information variants, and strategy content built to support the portfolio.',
@@ -27,19 +30,22 @@ export const metadata: Metadata = isHubSite
         siteName: siteConfig.siteName,
         type: 'website',
       },
-      twitter: {
-        card: 'summary_large_image',
-      },
-    }
-  : {
+      twitter: { card: 'summary_large_image' },
+    };
+  }
+
+  if (isKlondikeSite) {
+    return {
       title: siteConfig.defaultTitle,
       description: siteConfig.defaultDescription,
       keywords: [
-        'freecell',
-        'freecell online',
-        'play freecell',
-        'freecell solitaire',
-        'free card game',
+        'klondike solitaire',
+        'klondike solitaire online',
+        'play klondike solitaire',
+        'klondike draw 1',
+        'klondike draw 3',
+        'classic solitaire',
+        'free solitaire online',
       ],
       openGraph: {
         title: siteConfig.defaultTitle,
@@ -48,10 +54,56 @@ export const metadata: Metadata = isHubSite
         siteName: siteConfig.siteName,
         type: 'website',
       },
-      twitter: {
-        card: 'summary_large_image',
-      },
+      twitter: { card: 'summary_large_image' },
     };
+  }
+
+  if (isSpiderSite) {
+    return {
+      title: siteConfig.defaultTitle,
+      description: siteConfig.defaultDescription,
+      keywords: [
+        'spider solitaire',
+        'spider solitaire online',
+        'play spider solitaire',
+        'spider solitaire 1 suit',
+        'spider solitaire 4 suits',
+        'free spider solitaire',
+      ],
+      openGraph: {
+        title: siteConfig.defaultTitle,
+        description: siteConfig.defaultDescription,
+        url: absoluteUrl('/'),
+        siteName: siteConfig.siteName,
+        type: 'website',
+      },
+      twitter: { card: 'summary_large_image' },
+    };
+  }
+
+  // Default: FreeCell
+  return {
+    title: siteConfig.defaultTitle,
+    description: siteConfig.defaultDescription,
+    keywords: [
+      'freecell',
+      'freecell online',
+      'play freecell',
+      'freecell solitaire',
+      'free card game',
+    ],
+    openGraph: {
+      title: siteConfig.defaultTitle,
+      description: siteConfig.defaultDescription,
+      url: absoluteUrl('/'),
+      siteName: siteConfig.siteName,
+      type: 'website',
+    },
+    twitter: { card: 'summary_large_image' },
+  };
+}
+
+export const metadata: Metadata = buildMetadata();
 
 export default function Home() {
   const webSiteJsonLd = {
@@ -67,28 +119,7 @@ export default function Home() {
     },
   };
 
-  const gameJsonLd = !isHubSite ? {
-    '@context': 'https://schema.org',
-    '@type': 'Game',
-    name: 'FreeCell Solitaire',
-    description: siteConfig.defaultDescription,
-    url: siteConfig.url,
-    applicationCategory: 'Game',
-    operatingSystem: 'Web Browser',
-    offers: {
-      '@type': 'Offer',
-      price: '0',
-      priceCurrency: 'USD',
-    },
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: '4.8',
-      ratingCount: '3241',
-      bestRating: '5',
-      worstRating: '1',
-    },
-  } : null;
-
+  // Hub
   if (isHubSite) {
     return (
       <>
@@ -98,11 +129,86 @@ export default function Home() {
     );
   }
 
+  // Klondike spoke
+  if (isKlondikeSite) {
+    const gameJsonLd = {
+      '@context': 'https://schema.org',
+      '@type': 'Game',
+      name: 'Klondike Solitaire',
+      description: siteConfig.defaultDescription,
+      url: siteConfig.url,
+      applicationCategory: 'Game',
+      operatingSystem: 'Web Browser',
+      offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+      aggregateRating: {
+        '@type': 'AggregateRating',
+        ratingValue: '4.7',
+        ratingCount: '1876',
+        bestRating: '5',
+        worstRating: '1',
+      },
+    };
+    return (
+      <>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteJsonLd) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(gameJsonLd) }} />
+        <KlondikeGamePage />
+      </>
+    );
+  }
+
+  // Spider spoke
+  if (isSpiderSite) {
+    const gameJsonLd = {
+      '@context': 'https://schema.org',
+      '@type': 'Game',
+      name: 'Spider Solitaire',
+      description: siteConfig.defaultDescription,
+      url: siteConfig.url,
+      applicationCategory: 'Game',
+      operatingSystem: 'Web Browser',
+      offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+      aggregateRating: {
+        '@type': 'AggregateRating',
+        ratingValue: '4.7',
+        ratingCount: '2184',
+        bestRating: '5',
+        worstRating: '1',
+      },
+    };
+    return (
+      <>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteJsonLd) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(gameJsonLd) }} />
+        <SpiderGamePage />
+      </>
+    );
+  }
+
+  // FreeCell spoke (default)
+  const freecellGameJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Game',
+    name: 'FreeCell Solitaire',
+    description: siteConfig.defaultDescription,
+    url: siteConfig.url,
+    applicationCategory: 'Game',
+    operatingSystem: 'Web Browser',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: '4.8',
+      ratingCount: '3241',
+      bestRating: '5',
+      worstRating: '1',
+    },
+  };
+
   const useDom = shouldUseDomEngine();
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteJsonLd) }} />
-      {gameJsonLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(gameJsonLd) }} />}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(freecellGameJsonLd) }} />
       {useDom ? <DomFreecellClient /> : <FreecellHomeClient />}
       <FreecellBelowFold />
     </>

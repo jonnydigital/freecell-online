@@ -1,4 +1,4 @@
-export type SiteKey = 'playfreecellonline' | 'solitairestack';
+export type SiteKey = 'playfreecellonline' | 'solitairestack' | 'playklondikeonline' | 'playspidersolitaireonline';
 
 export interface SiteConfig {
   key: SiteKey;
@@ -46,10 +46,42 @@ const SITE_CONFIGS: Record<SiteKey, SiteConfig> = {
     appleWebAppTitle: 'Solitaire',
     gaMeasurementId: 'G-988ZBJSKVJ',
   },
+  playklondikeonline: {
+    key: 'playklondikeonline',
+    domain: 'playklondikeonline.com',
+    url: 'https://playklondikeonline.com',
+    siteName: 'PlayKlondikeOnline.com',
+    brandName: 'Klondike Online',
+    footerWordmark: 'Klondike',
+    primaryGamePath: '/',
+    defaultTitle: 'Play Klondike Solitaire Online Free — Draw 1 & Draw 3',
+    defaultDescription:
+      'Play Klondike Solitaire online for free. The classic card game everyone calls Solitaire. Choose Draw 1 or Draw 3 mode. Undo, hints, statistics. No download required.',
+    privacyEmail: 'privacy@playklondikeonline.com',
+    appleWebAppTitle: 'Klondike',
+    gaMeasurementId: 'G-988ZBJSKVJ',
+  },
+  playspidersolitaireonline: {
+    key: 'playspidersolitaireonline',
+    domain: 'playspidersolitaireonline.com',
+    url: 'https://playspidersolitaireonline.com',
+    siteName: 'PlaySpiderSolitaireOnline.com',
+    brandName: 'Spider Solitaire Online',
+    footerWordmark: 'Spider',
+    primaryGamePath: '/',
+    defaultTitle: 'Play Spider Solitaire Online Free — 1, 2 & 4 Suit',
+    defaultDescription:
+      'Play Spider Solitaire online for free. Choose 1-suit, 2-suit, or 4-suit difficulty. The classic 2-deck card game with undo, hints, and statistics. No download required.',
+    privacyEmail: 'privacy@playspidersolitaireonline.com',
+    appleWebAppTitle: 'Spider',
+    gaMeasurementId: 'G-988ZBJSKVJ',
+  },
 };
 
 function resolveSiteKey(rawSiteKey: string | undefined): SiteKey {
   if (rawSiteKey === 'solitairestack') return 'solitairestack';
+  if (rawSiteKey === 'playklondikeonline') return 'playklondikeonline';
+  if (rawSiteKey === 'playspidersolitaireonline') return 'playspidersolitaireonline';
   return 'playfreecellonline';
 }
 
@@ -58,6 +90,8 @@ export const siteConfig = SITE_CONFIGS[
 ];
 
 export const isHubSite = siteConfig.key === 'solitairestack';
+export const isKlondikeSite = siteConfig.key === 'playklondikeonline';
+export const isSpiderSite = siteConfig.key === 'playspidersolitaireonline';
 
 export function absoluteUrl(path = '/'): string {
   return new URL(path, siteConfig.url).toString();

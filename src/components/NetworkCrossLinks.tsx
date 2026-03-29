@@ -1,19 +1,30 @@
-import { isHubSite } from '@/lib/siteConfig';
+import { isHubSite, isKlondikeSite, isSpiderSite, siteConfig } from '@/lib/siteConfig';
 
-const SPOKE_LINKS = [
-  { href: 'https://solitairestack.com', label: 'Solitaire Stack', desc: 'All solitaire games in one place' },
-  { href: 'https://solitairestack.com/spider', label: 'Spider Solitaire', desc: 'Play Spider on SolitaireStack' },
-  { href: 'https://solitairestack.com/klondike', label: 'Klondike', desc: 'Play Klondike on SolitaireStack' },
-];
+// All four network properties
+const ALL_SITES = {
+  freecell:  { href: 'https://playfreecellonline.com', label: 'FreeCell Online', desc: 'Daily challenges, streak mode & 32,000+ deals' },
+  klondike:  { href: 'https://playklondikeonline.com', label: 'Klondike Online', desc: 'Classic solitaire — Draw 1 & Draw 3' },
+  spider:    { href: 'https://playspidersolitaireonline.com', label: 'Spider Solitaire Online', desc: '1-suit, 2-suit & 4-suit difficulty' },
+  hub:       { href: 'https://solitairestack.com', label: 'Solitaire Stack', desc: 'All solitaire variants in one place' },
+};
 
-const HUB_LINKS = [
-  { href: 'https://playfreecellonline.com', label: 'PlayFreeCellOnline.com', desc: 'Dedicated FreeCell with daily challenges' },
-  { href: 'https://playfreecellonline.com/daily-freecell', label: 'Daily FreeCell', desc: 'A new puzzle every day' },
-  { href: 'https://playfreecellonline.com/streak', label: 'Streak Mode', desc: 'How long can you keep winning?' },
-];
+// Each site shows the three others; hub shows the three spokes
+function getLinks() {
+  if (isHubSite) {
+    return [ALL_SITES.freecell, ALL_SITES.klondike, ALL_SITES.spider];
+  }
+  if (isKlondikeSite) {
+    return [ALL_SITES.hub, ALL_SITES.freecell, ALL_SITES.spider];
+  }
+  if (isSpiderSite) {
+    return [ALL_SITES.hub, ALL_SITES.freecell, ALL_SITES.klondike];
+  }
+  // FreeCell spoke (default)
+  return [ALL_SITES.hub, ALL_SITES.klondike, ALL_SITES.spider];
+}
 
 export default function NetworkCrossLinks() {
-  const links = isHubSite ? HUB_LINKS : SPOKE_LINKS;
+  const links = getLinks();
   const heading = isHubSite ? 'From Our Network' : 'More Solitaire Games';
 
   return (

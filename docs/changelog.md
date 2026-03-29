@@ -1,5 +1,14 @@
 # FreeCell Online — Changelog
 
+## 2026-03-28 (Saturday Night Build #3)
+### Shipped
+- **📝 3 More Blog Posts** — Blog library now at 8 posts total:
+  - "How to Win at FreeCell (Almost) Every Time" (~1,000 words) — systematic 6-step winning method, supermove math, win rate progression. Targets "how to win freecell" keyword.
+  - "FreeCell vs Spider Solitaire: Which Is Harder?" (~900 words) — win rate comparison table, perfect vs hidden info, strategy depth comparison. Targets "freecell vs spider" keyword.
+  - "What Makes a FreeCell Game Impossible? The Science of Unsolvable Deals" (~1,200 words) — Deal #11982 analysis, three deadly patterns, stuck checklist, NP-completeness. Targets "unsolvable freecell" / "impossible freecell" keywords.
+- All posts: internal links to game pages, solver, tips, strategy, and content pages.
+- (60th consecutive night of shipping) 🔥
+
 ## 2026-03-28 (Saturday Night Build #2)
 ### Shipped
 - **📝 3 New Blog Posts** — Expanding blog content library to 5 posts total:

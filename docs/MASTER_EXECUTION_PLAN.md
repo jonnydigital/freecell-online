@@ -1,5 +1,5 @@
 # Master Execution Plan — Solitaire Network Domination
-**Created:** 2026-03-27 | **Last Updated:** 2026-03-28
+**Created:** 2026-03-27 | **Last Updated:** 2026-03-29
 **Sites:** playfreecellonline.com, solitairestack.com
 **Primary Competitor:** online-solitaire.com (Holger Sindbaek)
 
@@ -23,6 +23,7 @@ A brutally honest audit of every problem across the entire network, organized by
 
 | # | Issue | Where | Details | Est. Fix |
 |---|-------|-------|---------|----------|
+| B_NEW1 | **Settings panel hidden behind sidebar on desktop** | Both sites, desktop | Gear icon opens a right-side slide-in drawer that renders at the right edge of the game board (~x 780–1080). The right sidebar at x 1080–1512 completely hides the panel. Users cannot change themes, animation speed, or sound settings on desktop. Found in QA 2026-03-29. | M (2–3 hrs) — convert to centered modal like Stats panel, or offset drawer left of sidebar |
 | B1 | Game dropdown doesn't close on outside click | Both sites, game picker | Menu stays open overlapping game board. Can interact with cards behind menu. | FIXED (commit aa729b6) |
 | B2 | "ADVERTISEMENT / SPONSORED" label shows on empty slots | Both sites, sidebar | Shows a labeled empty box when ads don't fill. Looks broken and amateur. | FIXED (commit aa729b6) — SidebarAdSlot now hides label when unfilled |
 | B3 | Hint button gives no visible feedback | Both sites | Clicking hint icon does nothing visible — no toast, no highlight, no animation. Users don't know if it worked. | FIXED (commit f27c497) |
@@ -105,6 +106,8 @@ Every feature observed on online-solitaire.com mapped against our current state.
 | Cascade settling | Staggered 20ms with bounce | Simultaneous reposition | MEDIUM | Add stagger + micro-bounce |
 | Auto-complete speed | Rapid flourish ~25ms | Slower 50ms per card | LOW | Speed up to 25-30ms |
 | Turn 1 / Turn 3 toggle | Yes (for Klondike) | Not visible | MEDIUM | Add draw-mode toggle to Klondike |
+| New game difficulty modes | Easy/Medium/Hard shuffle in New Game menu (observed 2026-03-29) | No difficulty filter | LOW | Add Easy/Medium/Hard deal filter to New Deal flow |
+| Non-card puzzle games | 2048 in "Puzzle games" category (observed 2026-03-29) | No puzzle games | LOW | Out of scope — FreeCell depth is our moat, not breadth |
 | Card back designs | Multiple | 4-5 backs via themes | EVEN | Already decent, expand library |
 | Background themes | 9+ backgrounds | 5 themes | MEDIUM | Add 4-5 more themes |
 | Undo button | Prominent in toolbar | Yes, in bottom bar | EVEN | Good |

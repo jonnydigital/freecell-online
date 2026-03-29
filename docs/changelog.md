@@ -1,5 +1,14 @@
 # FreeCell Online — Changelog
 
+## 2026-03-29 (Sunday Overnight Build)
+### Shipped
+- **📝 3 More Blog Posts** — Blog library now at 14 posts total:
+  - "FreeCell for Beginners: Your Complete Getting Started Guide" (~1,200 words) — step-by-step first game walkthrough, 5 beginner mistakes, supermove intro. Targets "freecell for beginners" / "how to play freecell" keywords.
+  - "10 FreeCell Terms Every Player Should Know" (~1,100 words) — terminology guide with quick reference table. Links to glossary, strategy, deals. Targets "freecell terminology" / "freecell glossary" keywords.
+  - "Why FreeCell Beats Candy Crush (And Most Mobile Games)" (~1,000 words) — opinionated comparison piece: no ads, no lives, no pay-to-win, real brain training. Feature comparison table. Targets casual game searchers.
+- All posts: internal links to game pages, strategy guides, and content pages.
+- (61st consecutive night of shipping) 🔥
+
 ## 2026-03-28 (Saturday Night Build #3)
 ### Shipped
 - **📝 3 More Blog Posts** — Blog library now at 8 posts total:
@@ -21,9 +30,12 @@
 ## 2026-03-28 (Saturday Night Build)
 ### Shipped
 - **📝 Blog Infrastructure** (C1) — Full MDX-based blog system: `/blog` index page, `/blog/[slug]` dynamic routes with SSG, `gray-matter` + `next-mdx-remote` for markdown rendering, Article + BreadcrumbList JSON-LD on each post, 3 AdUnit placements per post, styled typography matching site design. Added blog to ContentHeader nav + SiteFooter. Auto-included in sitemap.
-- **📝 2 Initial Blog Posts:**
-  - "5 FreeCell Strategies That Actually Work" (~1,200 words, practical tips)
-  - "The History of FreeCell: From PLATO to Your Browser" (~1,500 words, engaging history)
+- **📝 5 Blog Posts Published:**
+  - "5 FreeCell Strategies That Actually Work" (~1,200 words)
+  - "The History of FreeCell: From PLATO to Your Browser" (~1,500 words)
+  - "Is Every FreeCell Game Winnable? The Math Behind Solvability" (~1,150 words)
+  - "FreeCell vs Spider Solitaire: Which Should You Play?" (~950 words)
+  - "Why FreeCell Is the Perfect Brain Training Game" (~1,100 words)
 ### Fixed
 - **🍪 Cookie Consent GDPR Fix** (D13) — Cookie consent banner was blocked by splash screen. Now shows after 1-second delay independent of splash state. Z-index bumped to `z-60` above splash (`z-50`).
 - (58th consecutive night of shipping) 🔥

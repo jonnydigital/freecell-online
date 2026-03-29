@@ -3,6 +3,8 @@ import FreecellHomeClient from '@/components/FreecellHomeClient';
 import DomFreecellClient from '@/components/DomFreecellClient';
 import SolitaireHubHome from '@/components/SolitaireHubHome';
 import FreecellBelowFold from '@/components/FreecellBelowFold';
+import KlondikeBelowFold from '@/components/KlondikeBelowFold';
+import SpiderBelowFold from '@/components/SpiderBelowFold';
 import KlondikeGamePage from './klondike/KlondikeGamePage';
 import SpiderGamePage from './spider/SpiderGamePage';
 import { absoluteUrl, isHubSite, isKlondikeSite, isSpiderSite, siteConfig } from '@/lib/siteConfig';
@@ -153,6 +155,7 @@ export default function Home() {
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteJsonLd) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(gameJsonLd) }} />
         <KlondikeGamePage />
+        <KlondikeBelowFold />
       </>
     );
   }
@@ -181,6 +184,7 @@ export default function Home() {
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteJsonLd) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(gameJsonLd) }} />
         <SpiderGamePage />
+        <SpiderBelowFold />
       </>
     );
   }

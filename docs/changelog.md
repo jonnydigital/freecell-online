@@ -1,5 +1,19 @@
 # FreeCell Online — Changelog
 
+## 2026-03-29 (Sunday Early Morning Build)
+### Shipped
+- **🗺️ Deal Sitemap Expansion (1,200+ → 1,394 game numbers)** — Massively expanded sitemap indexing for individual game deal pages. Previously ~100 game numbers were in the sitemap; now 1,394 unique deal URLs are indexed:
+  - Every number 1–100 (heavily searched: "freecell game 42", etc.)
+  - Every 10th from 100–1,000
+  - Every 50th from 1,000–10,000
+  - Every 100th from 10,000–50,000
+  - Every 250th from 50,000–100,000
+  - Every 1,000th from 100,000–500,000
+  - Plus all curated famous/beginner/expert deals
+- Improved game page meta descriptions with range-based variation (classic deals, puzzles, challenges)
+- Build compiles clean with 1,566 total static pages
+- (64th consecutive night of shipping) 🔥
+
 ## 2026-03-29 (Sunday Overnight Build #3)
 ### Shipped
 - **🏴 Bristol Solitaire — Playable Game Page** — The last missing playable variant! Bristol had a full engine (`BristolEngine.ts`), deal function, tips page, and how-to-play page, but no actual game page. Users clicking "Play Bristol Solitaire" from content pages hit a dead end. Now live with:

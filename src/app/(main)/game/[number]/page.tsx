@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { absoluteUrl, siteConfig } from '@/lib/siteConfig';
 import { shouldUseDomEngine } from '@/lib/useDomEngine';
-import { dealLookup, sitemapGameNumbers } from '@/lib/curatedDeals';
+import { dealLookup, sitemapGameNumbers, staticGameNumbers } from '@/lib/curatedDeals';
 import GamePage from './GamePage';
 import GameDealInfo from './GameDealInfo';
 import DomFreecellClient from '@/components/DomFreecellClient';
@@ -71,7 +71,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export function generateStaticParams() {
-  return sitemapGameNumbers.map((num) => ({
+  // Pre-render curated deals + deals 1–1,000 only.
+  // The remaining sitemapGameNumbers are server-rendered on demand and edge-cached.
+  // This keeps build output well within Vercel Hobby file limits.
+  return staticGameNumbers.map((num) => ({
     number: String(num),
   }));
 }

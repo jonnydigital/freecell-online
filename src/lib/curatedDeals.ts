@@ -92,7 +92,7 @@ function generateMilestones(): number[] {
 }
 
 /**
- * All game numbers that should appear in the sitemap and be pre-rendered.
+ * All game numbers that should appear in the sitemap.
  * 1–10,000: every deal; 10,000–50,000: every 10th; 50,000–500,000: sparser.
  * ~14,000+ URLs for long-tail "freecell game N" search coverage.
  */
@@ -100,6 +100,19 @@ export const sitemapGameNumbers: number[] = (() => {
   const nums = new Set<number>();
   for (const deal of allCuratedDeals) nums.add(deal.number);
   for (const n of generateMilestones()) nums.add(n);
+  return Array.from(nums).sort((a, b) => a - b);
+})();
+
+/**
+ * Game numbers to pre-render as static pages at build time.
+ * Subset of sitemapGameNumbers — curated deals + deals 1–1,000.
+ * The full sitemapGameNumbers list is still used in sitemap.xml for Google discovery;
+ * remaining pages are server-rendered on demand and cached at the edge.
+ */
+export const staticGameNumbers: number[] = (() => {
+  const nums = new Set<number>();
+  for (const deal of allCuratedDeals) nums.add(deal.number);
+  for (let n = 1; n <= 1000; n++) nums.add(n);
   return Array.from(nums).sort((a, b) => a - b);
 })();
 

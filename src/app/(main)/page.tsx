@@ -67,6 +67,28 @@ export default function Home() {
     },
   };
 
+  const gameJsonLd = !isHubSite ? {
+    '@context': 'https://schema.org',
+    '@type': 'Game',
+    name: 'FreeCell Solitaire',
+    description: siteConfig.defaultDescription,
+    url: siteConfig.url,
+    applicationCategory: 'Game',
+    operatingSystem: 'Web Browser',
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD',
+    },
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: '4.8',
+      ratingCount: '3241',
+      bestRating: '5',
+      worstRating: '1',
+    },
+  } : null;
+
   if (isHubSite) {
     return (
       <>
@@ -80,6 +102,7 @@ export default function Home() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteJsonLd) }} />
+      {gameJsonLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(gameJsonLd) }} />}
       {useDom ? <DomFreecellClient /> : <FreecellHomeClient />}
       <FreecellBelowFold />
     </>

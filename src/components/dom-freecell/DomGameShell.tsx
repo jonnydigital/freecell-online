@@ -52,6 +52,7 @@ const GAME_PICKER_SOLITAIRE = [
   { label: 'Klondike', href: '/klondike', icon: '♦' },
   { label: "Baker's Game", href: '/bakers-game', icon: '♥' },
   { label: 'Eight Off', href: '/eight-off', icon: '♠' },
+  { label: 'Bristol', href: '/bristol', icon: '♣' },
 ];
 const GAME_PICKER_VARIANTS = [
   { label: 'Easy FreeCell', href: '/easy-freecell', icon: '🟢' },
@@ -1567,22 +1568,29 @@ function SidebarAdSlot({ children, height, label, delayMs }: { children: React.R
 
   if (!visible || collapsed) return null;
 
+  // When the ad hasn't filled yet, keep the slot in the DOM (so AdSense can load)
+  // but hide it completely — no visible panel, no ghost bar.
+  if (!adFilled) {
+    return (
+      <div ref={slotRef} style={{ height: 0, overflow: 'hidden', visibility: 'hidden' }}>
+        {children}
+      </div>
+    );
+  }
+
   return (
     <section
       className="rounded-[26px] border border-white/10 bg-[linear-gradient(180deg,rgba(23,67,24,0.95),rgba(7,25,9,0.94))] p-4 shadow-[0_20px_40px_rgba(0,0,0,0.2)] backdrop-blur-sm"
       aria-label={label}
     >
-      {/* Only show Advertisement/Sponsored labels when an ad is actually filled */}
-      {adFilled && (
-        <div className="mb-3 flex items-center justify-between px-2">
-          <span className="text-xs font-bold uppercase tracking-[0.24em] text-white/[0.32]">{label}</span>
-          <span className="text-xs font-semibold uppercase tracking-[0.16em] text-[#d9c07a]/[0.72]">Sponsored</span>
-        </div>
-      )}
+      <div className="mb-3 flex items-center justify-between px-2">
+        <span className="text-xs font-bold uppercase tracking-[0.24em] text-white/[0.32]">{label}</span>
+        <span className="text-xs font-semibold uppercase tracking-[0.16em] text-[#d9c07a]/[0.72]">Sponsored</span>
+      </div>
       <div
         ref={slotRef}
         className="flex items-center justify-center overflow-hidden rounded-[20px] border border-[#d9c07a]/12 bg-[linear-gradient(180deg,rgba(244,239,226,0.08),rgba(22,35,15,0.45))]"
-        style={{ minHeight: adFilled ? `${height}px` : '0px', transition: 'min-height 0.3s ease' }}
+        style={{ minHeight: `${height}px` }}
       >
         {children}
       </div>

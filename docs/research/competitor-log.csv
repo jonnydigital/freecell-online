@@ -35,3 +35,8 @@ date,site,spark_found,description,priority,implemented
 2026-03-15,reddit/r/DailySolitaire,yes,Daily challenge result sharing community — Wordle-style share feature opportunity,medium,no
 2026-03-15,google.com/analytics,yes,GA4 recommending GSC link for playfreecellonline.com — first time this appeared,medium,no
 2026-03-15,google.com/search,no,SERP top 6 stable — positions 7-10 still churning. playfreecellonline.com not yet in top 100,info,no
+2026-03-29,online-solitaire.com,yes,Star ratings (5395 at 4.8 stars) + user testimonials on FreeCell page — strong social proof missing from our pages,high,no
+2026-03-29,online-solitaire.com,yes,Video thumbnail on FreeCell game page — embedded tutorial content improves dwell time and trust,medium,no
+2026-03-29,online-solitaire.com,no,Daily leaderboard dominated by 'ze21' bot — their leaderboard engagement appears low despite live data,info,no
+2026-03-29,online-solitaire.com,no,Ad network: privacy-mgmt.com consent layer loaded; Freestar not detected on this visit — may have switched networks,info,no
+2026-03-29,online-solitaire.com,yes,March Challenge calendar identical concept to ours — but competitor also shows milestone badge icons (bronze/silver/gold) inline in calendar UI,medium,no

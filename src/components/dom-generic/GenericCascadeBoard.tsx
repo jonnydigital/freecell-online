@@ -47,6 +47,17 @@ export default function GenericCascadeBoard({
   const wasteTopCard = waste && waste.length > 0 ? waste[waste.length - 1] : null;
   const reserveTopCard = reserve && reserve.length > 0 ? reserve[reserve.length - 1] : null;
 
+  // Override --card-width CSS variable for wide layouts (>8 cascades, e.g. Bristol's 11).
+  // The default formula in dom-card-styles.css is designed for 8 columns; with more columns
+  // we scale the divisor proportionally so all cards fit without overflow.
+  const cardWidthOverride = useMemo(() => {
+    if (cascades.length <= 8) return {};
+    const divisor = (cascades.length * 1.08).toFixed(1); // ~1.08× accounts for pile gaps
+    return {
+      '--card-width': `clamp(60px, calc((100vw - 288px) / ${divisor}), 100px)`,
+    } as React.CSSProperties;
+  }, [cascades.length]);
+
   return (
     <div
       className="dom-board-surface"
@@ -61,6 +72,7 @@ export default function GenericCascadeBoard({
         margin: '0 auto',
         position: 'relative',
         userSelect: 'none',
+        ...cardWidthOverride,
       }}
     >
       {/* Top row */}

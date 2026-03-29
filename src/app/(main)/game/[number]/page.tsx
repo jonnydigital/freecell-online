@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const deal = dealLookup.get(gameNum);
   const title = deal
-    ? `FreeCell Game #${gameNum} - ${deal.label} Deal`
+    ? `FreeCell Game #${gameNum} - ${deal.label}`
     : `FreeCell Game #${gameNum} - Play Deal ${gameNum.toLocaleString()} Online Free`;
 
   function variedDescription(num: number): string {

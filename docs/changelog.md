@@ -1,5 +1,16 @@
 # FreeCell Online — Changelog
 
+## 2026-03-30 (Monday Overnight Build #2)
+### Shipped
+- **📖 3 Strategy Pages — Yukon, Scorpion, Seahaven Towers** — Deep strategy content for 3 popular variants:
+  - **Yukon Strategy** (598 lines): Face-down card liberation, group-move calculus, King placement, column clearing, foundation timing, Yukon vs Klondike comparison
+  - **Scorpion Strategy** (606 lines): Suit sequence architecture, face-down excavation, King column strategy, reserve timing, empty column optimization, Scorpion vs Spider comparison
+  - **Seahaven Strategy** (657 lines): Tower management, move capacity calculation, same-suit building, Kings-only columns, opening strategy, Seahaven vs FreeCell comparison
+- Each page: Full SEO metadata (11 keywords), BreadcrumbList + Article + FAQPage JSON-LD, 6 strategy sections, 5 FAQs, 3 AdUnit placements
+- Sitemap updated with all 3 new paths
+- Build passed clean
+- (68th consecutive night of shipping) 🔥
+
 ## 2026-03-30 (Monday Midnight Build)
 ### Shipped
 - **📝 3 More Blog Posts — Klondike/Spider Keyword Targeting** — Blog library now at 20 posts:

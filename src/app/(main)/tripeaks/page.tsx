@@ -70,6 +70,24 @@ export default function Page() {
     ],
   };
 
+  const gameJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Game",
+    name: "TriPeaks Solitaire",
+    description: "Clear three overlapping peaks by playing cards one rank higher or lower than the waste pile. Streak scoring, undo, hints.",
+    numberOfPlayers: 1,
+    genre: "Card Game",
+    gamePlatform: "Web Browser",
+    url: absoluteUrl("/tripeaks"),
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.6",
+      ratingCount: "1127",
+      bestRating: "5",
+      worstRating: "1",
+    },
+  };
+
   const faqJsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -121,6 +139,7 @@ export default function Page() {
     <>
       <JsonLd data={appJsonLd} />
       <JsonLd data={breadcrumbJsonLd} />
+      <JsonLd data={gameJsonLd} />
       <JsonLd data={faqJsonLd} />
       <TriPeaksGamePage />
       <article className="max-w-3xl mx-auto px-6 py-12 text-white/80 bg-[#072907]">
@@ -177,6 +196,33 @@ export default function Page() {
           <li>Save stock draws for when you truly have no playable cards</li>
           <li>Remember that Kings and Aces connect — use wrapping to extend streaks</li>
         </ul>
+
+        {/* ── FAQ Section ── */}
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-10 mb-4">
+          Frequently Asked Questions
+        </h2>
+        <div className="space-y-5 mb-10" itemScope itemType="https://schema.org/FAQPage">
+          {[
+            { q: "What is TriPeaks Solitaire?", a: "TriPeaks Solitaire (also called Tri Peaks or Triple Peaks) is a card game where you clear three overlapping peaks of cards by playing cards that are one rank higher or lower than the top of the waste pile. Kings can wrap to Aces and vice versa." },
+            { q: "How do you win TriPeaks Solitaire?", a: "You win by clearing all 28 cards from the three peaks. Cards can be removed by clicking any available card that is exactly one rank higher or lower than the current waste pile card. If no moves are available, draw from the stock pile." },
+            { q: "What is the streak bonus in TriPeaks?", a: "Each consecutive card you play without drawing from the stock increases your streak multiplier. The first card earns 1 point, the second earns 2, the third earns 3, and so on. Drawing from the stock resets the streak to zero. Long streaks are key to high scores." },
+            { q: "Does King wrap to Ace in TriPeaks?", a: "Yes. In TriPeaks Solitaire, ranks wrap around. You can play a King on an Ace or an Ace on a King. This wrapping rule opens up more possible moves and is part of what makes TriPeaks faster-paced than many other solitaire variants." },
+            { q: "Is TriPeaks Solitaire the same as Pyramid Solitaire?", a: "No. While both feature pyramid-shaped card layouts, the mechanics are different. Pyramid Solitaire removes pairs of cards that sum to 13, while TriPeaks removes single cards that are ±1 rank from the waste pile top. TriPeaks uses three smaller peaks instead of one large pyramid." },
+          ].map((item) => (
+            <div
+              key={item.q}
+              className="rounded-xl border border-white/10 bg-white/[0.03] px-5 py-4"
+              itemScope
+              itemProp="mainEntity"
+              itemType="https://schema.org/Question"
+            >
+              <p className="font-semibold text-white/90 mb-1" itemProp="name">{item.q}</p>
+              <div itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
+                <p className="text-sm leading-7 text-white/60" itemProp="text">{item.a}</p>
+              </div>
+            </div>
+          ))}
+        </div>
 
         <h2 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
           Learn More

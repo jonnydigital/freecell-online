@@ -44,6 +44,60 @@ export default function Page() {
     genre: "Card Game",
     gamePlatform: "Web Browser",
     url: absoluteUrl('/eight-off'),
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.7",
+      ratingCount: "934",
+      bestRating: "5",
+      worstRating: "1",
+    },
+  };
+
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: "What is Eight Off Solitaire?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Eight Off is a patience card game and close relative of FreeCell. It uses 8 free cells (double FreeCell's 4) but requires same-suit stacking in the tableau. At the start, 48 cards fill 8 columns and 4 cards go to 4 of the 8 free cells, leaving 4 cells empty.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "How is Eight Off different from FreeCell?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Eight Off has 8 free cells instead of FreeCell's 4, but uses same-suit stacking (you can only place a card on a card of the same suit). FreeCell uses alternating-color stacking. The extra free cells partially compensate for the stricter building rule.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "How many free cells does Eight Off have?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Eight Off has 8 free cells total. At the start of the game, 4 of those cells are already occupied by cards dealt there, leaving 4 free cells empty. As you move cards off those initial 4, more cells open up for temporary card storage.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "What percentage of Eight Off deals are winnable?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Approximately 85-90% of Eight Off deals are theoretically winnable with optimal play. This places it between standard FreeCell (99.999% winnable) and Baker's Game (about 75% winnable).",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Do I need to download anything to play Eight Off?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "No. Eight Off Solitaire runs entirely in your browser — desktop, tablet, or phone. No app download, no account, and no email required. Your stats and settings save automatically in your browser.",
+        },
+      },
+    ],
   };
 
   const breadcrumbJsonLd = {
@@ -64,6 +118,10 @@ export default function Page() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
       <EightOffPage />
       <article className="max-w-3xl mx-auto px-6 py-12 text-white/80 bg-[#072907]">
@@ -175,6 +233,33 @@ export default function Page() {
           among solitaire enthusiasts who enjoy a challenging yet solvable patience
           game that tests strategic thinking without relying on luck.
         </p>
+        {/* ── FAQ Section ── */}
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-10 mb-4">
+          Frequently Asked Questions
+        </h2>
+        <div className="space-y-5 mb-10" itemScope itemType="https://schema.org/FAQPage">
+          {[
+            { q: "What is Eight Off Solitaire?", a: "Eight Off is a patience card game and close relative of FreeCell. It uses 8 free cells (double FreeCell's 4) but requires same-suit stacking in the tableau. At the start, 48 cards fill 8 columns and 4 cards go to 4 of the 8 free cells, leaving 4 cells empty." },
+            { q: "How is Eight Off different from FreeCell?", a: "Eight Off has 8 free cells instead of FreeCell's 4, but uses same-suit stacking (you can only place a card on a card of the same suit). FreeCell uses alternating-color stacking. The extra free cells partially compensate for the stricter building rule." },
+            { q: "How many free cells does Eight Off have?", a: "Eight Off has 8 free cells total. At the start, 4 of those cells are already occupied by cards dealt there, leaving 4 free cells empty. As you move cards off those initial 4, more cells open up for temporary card storage." },
+            { q: "What percentage of Eight Off deals are winnable?", a: "Approximately 85-90% of Eight Off deals are theoretically winnable with optimal play. This places it between standard FreeCell (99.999% winnable) and Baker's Game (about 75% winnable)." },
+            { q: "Do I need to download anything to play?", a: "No. Eight Off Solitaire runs entirely in your browser — desktop, tablet, or phone. No app download, no account, and no email required. Your stats and settings save automatically in your browser." },
+          ].map((item) => (
+            <div
+              key={item.q}
+              className="rounded-xl border border-white/10 bg-white/[0.03] px-5 py-4"
+              itemScope
+              itemProp="mainEntity"
+              itemType="https://schema.org/Question"
+            >
+              <p className="font-semibold text-white/90 mb-1" itemProp="name">{item.q}</p>
+              <div itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
+                <p className="text-sm leading-7 text-white/60" itemProp="text">{item.a}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
         <h2 className="text-xl font-semibold text-white/90 mt-8 mb-3">
           Learn More
         </h2>

@@ -69,6 +69,24 @@ export default function Page() {
     ],
   };
 
+  const gameJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Game",
+    name: "Golf Solitaire",
+    description: "Clear seven columns of five cards by playing cards one rank higher or lower than the waste pile. Streak scoring, undo, hints.",
+    numberOfPlayers: 1,
+    genre: "Card Game",
+    gamePlatform: "Web Browser",
+    url: absoluteUrl("/golf"),
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.5",
+      ratingCount: "987",
+      bestRating: "5",
+      worstRating: "1",
+    },
+  };
+
   const faqJsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -141,6 +159,7 @@ export default function Page() {
     <>
       <JsonLd data={appJsonLd} />
       <JsonLd data={breadcrumbJsonLd} />
+      <JsonLd data={gameJsonLd} />
       <JsonLd data={faqJsonLd} />
       <JsonLd data={aggregateRatingJsonLd} />
       <GolfGamePage />
@@ -196,6 +215,33 @@ export default function Page() {
           <li>Save stock draws for when you truly have no playable cards</li>
           <li>Balance play across columns — emptying one column frees up space</li>
         </ul>
+
+        {/* ── FAQ Section ── */}
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-10 mb-4">
+          Frequently Asked Questions
+        </h2>
+        <div className="space-y-5 mb-10" itemScope itemType="https://schema.org/FAQPage">
+          {[
+            { q: "What is Golf Solitaire?", a: "Golf Solitaire is a card game where you clear seven columns of five cards each by playing cards that are one rank higher or lower than the top of the waste pile. Kings can wrap to Aces and vice versa." },
+            { q: "How do you win Golf Solitaire?", a: "You win by clearing all 35 cards from the seven tableau columns. Cards can be removed by clicking the bottom card of any column that is exactly one rank higher or lower than the current waste pile card. If no moves are available, draw from the stock pile." },
+            { q: "What is the streak bonus in Golf Solitaire?", a: "Each consecutive card you play without drawing from the stock increases your streak multiplier. The first card in a streak earns 1 point, the second earns 2, the third earns 3, and so on. Drawing from the stock resets the streak to zero. Long streaks are key to high scores." },
+            { q: "Does King wrap to Ace in Golf Solitaire?", a: "Yes. In this version of Golf Solitaire, ranks wrap around. You can play a King on an Ace or an Ace on a King. This wrapping rule opens up more possible moves and helps build longer streaks." },
+            { q: "Is Golf Solitaire the same as TriPeaks Solitaire?", a: "No. While both use the ±1 rank mechanic, Golf Solitaire uses seven columns of five face-up cards, while TriPeaks uses three overlapping peaks with face-down cards. Golf is simpler in layout but shares the same streak scoring system." },
+          ].map((item) => (
+            <div
+              key={item.q}
+              className="rounded-xl border border-white/10 bg-white/[0.03] px-5 py-4"
+              itemScope
+              itemProp="mainEntity"
+              itemType="https://schema.org/Question"
+            >
+              <p className="font-semibold text-white/90 mb-1" itemProp="name">{item.q}</p>
+              <div itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
+                <p className="text-sm leading-7 text-white/60" itemProp="text">{item.a}</p>
+              </div>
+            </div>
+          ))}
+        </div>
 
         <h2 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
           Learn More

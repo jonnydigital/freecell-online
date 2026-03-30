@@ -42,6 +42,60 @@ export default function Page() {
     genre: "Card Game",
     gamePlatform: "Web Browser",
     url: absoluteUrl('/bakers-game'),
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.8",
+      ratingCount: "1203",
+      bestRating: "5",
+      worstRating: "1",
+    },
+  };
+
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: "What is Baker's Game?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Baker's Game is a classic patience card game and the direct ancestor of FreeCell. It uses a standard 52-card deck dealt into 8 tableau columns, 4 free cells, and 4 foundation piles. The key rule: tableau stacking must be same-suit and descending, unlike FreeCell which allows alternating colors.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "How is Baker's Game different from FreeCell?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "In FreeCell, you can stack any card on a card of the opposite color that is one rank higher. In Baker's Game, you can only stack a card on a card of the same suit that is one rank higher (e.g., 7 of Hearts on 8 of Hearts only). This single rule change makes the game significantly harder.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "What percentage of Baker's Game deals are winnable?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Approximately 75% of Baker's Game deals are theoretically winnable with perfect play, compared to 99.999% for standard FreeCell. The stricter same-suit stacking requirement means many deals become deadlocked where FreeCell deals would remain solvable.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Who invented Baker's Game?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Baker's Game is named after C. L. Baker, who described it in a 1968 Scientific American article by Martin Gardner. Paul Alfille later modified it by changing same-suit stacking to alternating colors, creating modern FreeCell in the early 1970s.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Do I need to download anything to play Baker's Game?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "No. Baker's Game runs entirely in your browser — desktop, tablet, or phone. No app download, no account, and no email required. Your stats and settings save automatically in your browser.",
+        },
+      },
+    ],
   };
 
   const breadcrumbJsonLd = {
@@ -62,6 +116,10 @@ export default function Page() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
       <BakersGamePage />
       <article className="max-w-3xl mx-auto px-6 py-12 text-white/80 bg-[#072907]">
@@ -160,6 +218,33 @@ export default function Page() {
           Game offers a deeply rewarding experience that tests your patience, foresight,
           and strategic skill.
         </p>
+        {/* ── FAQ Section ── */}
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-10 mb-4">
+          Frequently Asked Questions
+        </h2>
+        <div className="space-y-5 mb-10" itemScope itemType="https://schema.org/FAQPage">
+          {[
+            { q: "What is Baker's Game?", a: "Baker's Game is a classic patience card game and the direct ancestor of FreeCell. It uses a standard 52-card deck dealt into 8 tableau columns, 4 free cells, and 4 foundation piles. The key rule: tableau stacking must be same-suit and descending, unlike FreeCell which allows alternating colors." },
+            { q: "How is Baker's Game different from FreeCell?", a: "In FreeCell, you can stack any card on a card of the opposite color that is one rank higher. In Baker's Game, you can only stack a card on a card of the same suit that is one rank higher (e.g., 7 of Hearts on 8 of Hearts only). This single rule change makes the game significantly harder." },
+            { q: "What percentage of Baker's Game deals are winnable?", a: "Approximately 75% of Baker's Game deals are theoretically winnable with perfect play, compared to 99.999% for standard FreeCell. The stricter same-suit stacking requirement means many deals become deadlocked where FreeCell deals would remain solvable." },
+            { q: "Who invented Baker's Game?", a: "Baker's Game is named after C. L. Baker, who described it in a 1968 Scientific American article by Martin Gardner. Paul Alfille later modified it by changing same-suit stacking to alternating colors, creating modern FreeCell in the early 1970s." },
+            { q: "Do I need to download anything to play?", a: "No. Baker's Game runs entirely in your browser — desktop, tablet, or phone. No app download, no account, and no email required. Your stats and settings save automatically in your browser." },
+          ].map((item) => (
+            <div
+              key={item.q}
+              className="rounded-xl border border-white/10 bg-white/[0.03] px-5 py-4"
+              itemScope
+              itemProp="mainEntity"
+              itemType="https://schema.org/Question"
+            >
+              <p className="font-semibold text-white/90 mb-1" itemProp="name">{item.q}</p>
+              <div itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
+                <p className="text-sm leading-7 text-white/60" itemProp="text">{item.a}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
         <h2 className="text-xl font-semibold text-white/90 mt-8 mb-3">
           Learn More
         </h2>

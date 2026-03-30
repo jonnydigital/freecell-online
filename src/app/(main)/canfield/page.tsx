@@ -188,6 +188,33 @@ export default function Page() {
           <li>Use the unlimited redeal wisely — track which cards cycle through the waste</li>
         </ul>
 
+        {/* ── FAQ Section ── */}
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-10 mb-4">
+          Frequently Asked Questions
+        </h2>
+        <div className="space-y-5 mb-10" itemScope itemType="https://schema.org/FAQPage">
+          {[
+            { q: "What is Canfield Solitaire?", a: "Canfield Solitaire is a challenging card game where you build four foundation piles up in suit from a randomly determined base rank, with wrapping from King back to Ace. It features a 13-card reserve pile, four tableau columns, and a stock that deals three cards at a time." },
+            { q: "How do you play Canfield Solitaire?", a: "Deal 13 cards to the reserve (top card face-up), one card to start the first foundation (setting the base rank), one card to each of four tableau columns, and the rest to the stock. Build foundations up in suit with wrapping. Build tableau columns down in alternating colors with wrapping. Draw three cards at a time from the stock. Empty tableau columns auto-fill from the reserve." },
+            { q: "What is the base rank in Canfield Solitaire?", a: "The base rank is determined by the first card dealt to the foundation. All four foundations must be built starting from this rank, going up in suit and wrapping around (e.g., if the base is 7, you build 7-8-9-10-J-Q-K-A-2-3-4-5-6)." },
+            { q: "Is Canfield Solitaire the same as Demon Solitaire?", a: "Yes. Canfield Solitaire is known as 'Demon' or 'Demon Patience' in the UK. The rules are identical — both feature the 13-card reserve, random base rank foundations, and draw-three stock. The game was named after Richard A. Canfield, a 19th-century casino owner." },
+            { q: "What percentage of Canfield Solitaire games are winnable?", a: "Only about 30-35% of Canfield Solitaire deals are theoretically winnable with perfect play. In practice, win rates are typically 5-15% due to the hidden reserve cards and limited tableau space. This makes Canfield one of the more challenging solitaire variants." },
+          ].map((item) => (
+            <div
+              key={item.q}
+              className="rounded-xl border border-white/10 bg-white/[0.03] px-5 py-4"
+              itemScope
+              itemProp="mainEntity"
+              itemType="https://schema.org/Question"
+            >
+              <p className="font-semibold text-white/90 mb-1" itemProp="name">{item.q}</p>
+              <div itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
+                <p className="text-sm leading-7 text-white/60" itemProp="text">{item.a}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
         <h2 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
           Learn More
         </h2>

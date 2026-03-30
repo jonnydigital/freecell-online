@@ -1,5 +1,14 @@
 # FreeCell Online — Changelog
 
+## 2026-03-30 (Monday Midnight Build)
+### Shipped
+- **📝 3 More Blog Posts — Klondike/Spider Keyword Targeting** — Blog library now at 20 posts:
+  - "Klondike vs FreeCell: Which Solitaire Game Is Harder?" — win rates, luck vs skill, hidden vs open info comparison. Targets "klondike vs freecell" searches.
+  - "Spider Solitaire Tips for Beginners: 7 Mistakes to Avoid" — common beginner traps with actionable fixes. Targets "spider solitaire tips" + "spider solitaire beginners" keywords.
+  - "The History of Solitaire: From Napoleon to Windows to Your Browser" — 18th century origins through Windows era. Targets "solitaire history" + "windows solitaire history" keywords.
+- Strong internal linking to all three game verticals (FreeCell, Klondike, Spider).
+- (67th consecutive night of shipping) 🔥
+
 ## 2026-03-29 (Sunday Night Build #2)
 ### Shipped
 - **📄 Below-Fold SEO Content for Klondike & Spider Spoke Homepages** — Both spoke site homepages now have rich below-fold content matching FreeCell's pattern:

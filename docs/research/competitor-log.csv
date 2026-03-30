@@ -40,3 +40,15 @@ date,site,spark_found,description,priority,implemented
 2026-03-29,online-solitaire.com,no,Daily leaderboard dominated by 'ze21' bot — their leaderboard engagement appears low despite live data,info,no
 2026-03-29,online-solitaire.com,no,Ad network: privacy-mgmt.com consent layer loaded; Freestar not detected on this visit — may have switched networks,info,no
 2026-03-29,online-solitaire.com,yes,March Challenge calendar identical concept to ours — but competitor also shows milestone badge icons (bronze/silver/gold) inline in calendar UI,medium,no
+2026-03-30,online-solitaire.com,yes,FreeCell page: 5395 ratings at 4.8 — 10x more ratings than our 3241 implies much higher organic traffic / longer site history,high,no
+2026-03-30,online-solitaire.com,yes,Spider page: 3520 ratings at 4.8 stars — variant navigation (1-suit/2-suits/4-suits) embedded inline as tab UI above game,medium,no
+2026-03-30,online-solitaire.com,yes,320+ games listed in sidebar — categories include card games (Hearts/Spades/Euchre/Gin Rummy) and puzzle games (2048),medium,no
+2026-03-30,online-solitaire.com,yes,Multilingual support: EN/DE/ES/FR/IT/PT — flag switcher in footer — significant international SEO advantage,high,no
+2026-03-30,online-solitaire.com,yes,App downloads: Windows/Mac/Linux/Android/iOS/Kindle/Chrome extension — substantial trust signal and direct traffic channel,medium,no
+2026-03-30,online-solitaire.com,yes,Embed widget feature: generates iframe code for any website — viral distribution mechanism we lack entirely,medium,no
+2026-03-30,online-solitaire.com,no,Daily challenge leaderboard shows anonymous username data (bix/RETARD/Jenn etc.) — our named leaderboard (CardShark42/AcePlayer etc.) looks more polished,info,no
+2026-03-30,online-solitaire.com,yes,Easy/Medium/Hard shuffle options on all game pages — gives players more control and replay incentive,low,no
+2026-03-30,online-solitaire.com,yes,Homepage schema only WebApplication — no FAQPage JSON-LD despite visible FAQ section. Our FAQPage schema is an advantage,info,no
+2026-03-30,online-solitaire.com,yes,FreeCell page: 772 word count — our FreeCell page is significantly longer and more comprehensive,info,no
+2026-03-30,online-solitaire.com,yes,Spider page: 1080 word count — our Spider page comparable in depth. No AggregateRating schema on Spider page — we have an advantage here,info,no
+2026-03-30,online-solitaire.com,no,Both FreeCell and Spider pages use only WebApplication+BreadcrumbList schema — no Game type or FAQPage JSON-LD. Our schema coverage is more comprehensive,info,no

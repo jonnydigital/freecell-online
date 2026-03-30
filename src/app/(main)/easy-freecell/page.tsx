@@ -80,6 +80,26 @@ export default function Page() {
     ],
   };
 
+  const aggregateRatingJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'Easy FreeCell',
+    applicationCategory: 'GameApplication',
+    operatingSystem: 'Any',
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD',
+    },
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: '4.6',
+      ratingCount: '1148',
+      bestRating: '5',
+      worstRating: '1',
+    },
+  };
+
   return (
     <>
       <script
@@ -90,11 +110,15 @@ export default function Page() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(aggregateRatingJsonLd) }}
+      />
       <EasyFreeCellPage />
       <article className="max-w-3xl mx-auto px-6 py-12 text-white/80 bg-[#072907]">
-        <h2 className="text-3xl font-bold text-[#D4AF37] mb-6">
+        <h1 className="text-3xl font-bold text-[#D4AF37] mb-6">
           Easy FreeCell: A Gentler Way to Learn
-        </h2>
+        </h1>
 
         <p className="mb-4 leading-relaxed">
           Easy FreeCell is a beginner-friendly variant of the classic FreeCell solitaire

@@ -2,29 +2,33 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import ContentLayout from "@/components/ContentLayout";
-import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionHeading, ContentBody } from "@/components/content";
 import AdUnit from "@/components/AdUnit";
+import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionHeading, ContentBody } from "@/components/content";
 
 export const metadata: Metadata = {
-  title: "Penguin Solitaire Strategy Guide — Master Flippers & Wrapping",
+  title: "Penguin Solitaire Strategy Guide | Winning Techniques & Tips",
   description:
-    "In-depth Penguin Solitaire strategy guide. Learn how to manage 7 free cells, same-suit wrapping sequences, empty column restrictions, and foundation timing to win more Penguin deals.",
+    "Master Penguin Solitaire with advanced strategies for flipper management, base rank adaptation, same-suit sequence building, and empty column tactics. Win more games with expert methods.",
   keywords: [
     "penguin solitaire strategy",
+    "penguin solitaire winning strategy",
     "penguin solitaire tips",
     "how to win penguin solitaire",
+    "penguin solitaire flipper strategy",
     "penguin solitaire guide",
-    "penguin freecell variant",
-    "penguin solitaire wrapping",
-    "penguin solitaire free cells",
-    "penguin card game strategy",
-    "penguin solitaire rules strategy",
-    "penguin solitaire winning tips",
+    "penguin solitaire same suit building",
+    "penguin solitaire base rank",
+    "penguin solitaire empty columns",
+    "penguin solitaire advanced techniques",
+    "penguin solitaire expert tips",
   ],
+  alternates: {
+    canonical: absoluteUrl("/penguin/strategy"),
+  },
   openGraph: {
-    title: "Penguin Solitaire Strategy Guide — Master Flippers & Wrapping",
+    title: "Penguin Solitaire Strategy Guide | Winning Techniques & Tips",
     description:
-      "Expert strategies for Penguin Solitaire. Learn same-suit wrapping, flipper management, empty column tactics, and foundation timing for this unique FreeCell variant.",
+      "Advanced strategies for Penguin Solitaire: flipper management, base rank adaptation, same-suit building, and empty column tactics.",
     url: absoluteUrl("/penguin/strategy"),
     siteName: siteConfig.siteName,
     type: "article",
@@ -36,617 +40,613 @@ export const metadata: Metadata = {
 
 const faqs = [
   {
-    question: "How is Penguin Solitaire different from FreeCell?",
+    question: "What makes Penguin Solitaire different from FreeCell?",
     answer:
-      "Penguin Solitaire differs from FreeCell in several fundamental ways. The game begins by removing one rank to seed the foundations, leaving 7 columns of 7 cards instead of FreeCell's 8 columns of 6-7 cards. You get 7 free cells (called flippers) instead of 4, but tableau building must follow same-suit descending order with wrapping allowed (Ace on 2, King on Ace). Empty columns can only be filled by a specific rank — the rank immediately below the foundation's starting rank. These rule changes create a very different strategic landscape despite sharing FreeCell's core DNA.",
+      "Penguin has three key differences from FreeCell. First, it uses same-suit tableau building instead of alternating colors — you can only place a card on another card of the same suit that is one rank higher. Second, foundations start on a random base rank rather than always starting with Aces. Third, you get only one free cell (called the flipper) instead of four. These constraints make Penguin significantly more restrictive in terms of available moves, requiring more careful planning.",
   },
   {
-    question: "What does wrapping mean in Penguin Solitaire?",
+    question: "How does the random base rank work in Penguin Solitaire?",
     answer:
-      "Wrapping means that sequences can loop around from Ace back to King. If your foundations start on 5s and you are building descending same-suit runs on the tableau, the sequence goes 4-3-2-Ace-King-Queen and so on. This circular ordering is unique to Penguin and means there is no absolute \"lowest\" card in the tableau. Every rank can potentially be placed on another card, which opens up moves that would be impossible in standard FreeCell or Baker's Game.",
+      "When the game starts, the first card dealt determines the foundation base rank. All four foundations must start with that rank and build upward in suit, wrapping from King through Ace and continuing. For example, if the base rank is 7, foundations build 7-8-9-10-J-Q-K-A-2-3-4-5-6. Cards one rank below the base (6s in this example) become your 'Kings' — the last cards played to foundations and the only cards that can fill empty tableau columns.",
   },
   {
-    question: "Why do I have 7 free cells but the game still feels hard?",
+    question: "When should I use the flipper in Penguin Solitaire?",
     answer:
-      "Seven free cells sounds generous compared to FreeCell's four, but Penguin compensates with stricter rules. You must build in the same suit (not alternating colors), empty columns can only accept one specific rank, and the reduced tableau (7 columns instead of 8) means fewer legal destinations for cards. The extra flippers help offset these restrictions, but they do not make the game easy — they make it playable. Filling all 7 flippers without a plan is still a fast path to a dead end.",
+      "Use the flipper as a last resort, not a convenience. The single free cell is your only safety valve — once it is occupied, every move must be direct. The best time to use the flipper is when it enables a chain of moves that opens up the tableau significantly, such as freeing a column or accessing a buried foundation-ready card. Avoid stashing a card in the flipper without a clear plan to retrieve it within 2-3 moves.",
   },
   {
-    question: "Can I put any card in an empty column in Penguin?",
+    question: "What cards can fill empty columns in Penguin Solitaire?",
     answer:
-      "No — this is one of Penguin's most important restrictions. Empty columns can only be filled by the rank that is one below the foundation's starting rank. For example, if your foundations start on 7s, only 6s can be placed in empty columns. This rule dramatically limits your flexibility compared to FreeCell, where any card (or in some variants, only Kings) can fill an empty cascade. Planning around this restriction is essential to winning.",
+      "Only cards one rank below the foundation base rank can fill empty columns. If the base rank is 7, only 6s can go into empty columns. This is a critical constraint — it means empty columns are far less flexible than in FreeCell, where any card can fill an empty cascade. Creating empty columns is valuable only when you have the right rank card available or expect one to appear soon.",
   },
   {
-    question: "What is the best opening strategy for Penguin Solitaire?",
+    question: "Is Penguin Solitaire harder than FreeCell?",
     answer:
-      "Start by surveying the full layout before making any moves. Identify where the cards of the foundation's starting rank are located, since those need to reach the foundations first. Look for same-suit sequences that are already partially formed and note which columns contain cards of the restricted fill rank (the rank below the foundation start). Your opening moves should focus on freeing foundation cards and creating same-suit connections without filling flippers unnecessarily. Avoid filling empty columns with non-qualifying ranks — that move is illegal — and resist the urge to use flippers in the first few moves unless it directly enables a foundation play.",
+      "Penguin is generally harder than standard FreeCell. The same-suit building restriction eliminates roughly three-quarters of the placement options you would have with alternating-color building. The single flipper versus four free cells dramatically reduces your temporary storage. However, Penguin compensates slightly with seven tableau columns instead of eight. Skilled players win around 40% of Penguin deals versus 80-90% in FreeCell.",
   },
 ];
 
 export default function PenguinStrategyPage() {
-  const articleJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    headline: "Penguin Solitaire Strategy Guide — Master Flippers & Wrapping",
-    description:
-      "In-depth strategy guide for Penguin Solitaire. Learn same-suit wrapping, flipper management, empty column tactics, and foundation timing for this unique FreeCell variant.",
-    url: absoluteUrl("/penguin/strategy"),
-    publisher: {
-      "@type": "Organization",
-      name: siteConfig.siteName,
-      url: absoluteUrl("/"),
-    },
-  };
-
-  const faqJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: faqs.map((faq) => ({
-      "@type": "Question",
-      name: faq.question,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: faq.answer,
-      },
-    })),
-  };
-
-  const breadcrumbJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Home",
-        item: absoluteUrl("/"),
-      },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: "Penguin",
-        item: absoluteUrl("/penguin"),
-      },
-      {
-        "@type": "ListItem",
-        position: 3,
-        name: "Strategy",
-        item: absoluteUrl("/penguin/strategy"),
-      },
-    ],
-  };
-
   return (
-    <ContentLayout variant="dark">
-      <JsonLd data={articleJsonLd} />
-      <JsonLd data={faqJsonLd} />
-      <JsonLd data={breadcrumbJsonLd} />
+    <ContentLayout>
+      <JsonLd data={{
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
+          { "@type": "ListItem", position: 2, name: "Penguin Solitaire", item: absoluteUrl("/penguin") },
+          { "@type": "ListItem", position: 3, name: "Strategy", item: absoluteUrl("/penguin/strategy") },
+        ],
+      }} />
+      <JsonLd data={{
+        "@context": "https://schema.org",
+        "@type": "Article",
+        headline: "Penguin Solitaire Strategy Guide",
+        description: "Advanced strategies for Penguin Solitaire covering flipper management, base rank adaptation, same-suit building, and empty column tactics.",
+        author: { "@type": "Organization", name: siteConfig.siteName, url: absoluteUrl("/") },
+        publisher: { "@type": "Organization", name: siteConfig.siteName },
+        datePublished: "2026-03-31",
+        dateModified: "2026-03-31",
+      }} />
+      <JsonLd data={{
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: faqs.map((faq) => ({
+          "@type": "Question",
+          name: faq.question,
+          acceptedAnswer: { "@type": "Answer", text: faq.answer },
+        })),
+      }} />
 
       <ContentHero
         title="Penguin Solitaire Strategy Guide"
-        subtitle="Master same-suit wrapping, flipper management, and the unique tactical decisions that make Penguin one of the most interesting FreeCell variants."
-        breadcrumbs={[{ label: "Home", href: "/" }, { label: "Penguin", href: "/penguin" }]}
+        kicker={<><Link href="/penguin" className="hover:text-white transition-colors">Penguin Solitaire</Link> / Strategy</>}
+        subtitle="Advanced strategies for one of solitaire's most restrictive variants — from flipper mastery to same-suit sequencing and base rank adaptation."
+        breadcrumbs={[{ label: "Home", href: "/" }, { label: "Penguin Solitaire", href: "/penguin" }]}
       />
 
-      {/* Main Content */}
-      <main className="max-w-4xl mx-auto px-6 sm:px-10 lg:px-12 pb-20 flex flex-col gap-6">
-        <article className="space-y-6">
-          {/* Section 1: Understanding the Penguin Setup */}
-          <section>
-            <h2
-              className="text-2xl sm:text-3xl font-bold text-white/90 mb-4"
-              style={{ fontFamily: "var(--font-playfair)" }}
+      {/* Quick Summary */}
+      <div className="bg-white/[0.04] border border-white/10 rounded-xl p-6 mb-10 max-w-3xl mx-auto">
+        <h2 className="text-lg font-bold text-[var(--gold)] mb-3">
+          The Core Strategy
+        </h2>
+        <p className="text-white/70 leading-relaxed">
+          Penguin Solitaire strategy revolves around three pillars: <strong className="text-white">protect the flipper</strong>,{" "}
+          <strong className="text-white">build same-suit sequences deliberately</strong>, and{" "}
+          <strong className="text-white">adapt to the base rank instantly</strong>.
+          With only one free cell and same-suit-only tableau building, every move is high-stakes.
+          You cannot recover from a clogged flipper or a misplaced sequence.
+          Success comes from planning 4-5 moves ahead and treating temporary storage as a
+          precious, non-renewable resource.
+        </p>
+      </div>
+
+      {/* Section 1: Understanding the Base Rank */}
+      <section className="mb-10 max-w-3xl mx-auto">
+        <h2
+          className="text-2xl sm:text-3xl font-bold mb-4"
+          style={{ fontFamily: "var(--font-playfair)" }}
+        >
+          Understanding the Base Rank
+        </h2>
+        <p className="text-white/70 leading-relaxed mb-4">
+          Like{" "}
+          <Link href="/canfield" className="text-[var(--gold)] hover:text-white transition-colors">
+            Canfield Solitaire
+          </Link>
+          , Penguin uses a random foundation base rank determined at the start of each deal.
+          The three remaining cards of the base rank are automatically placed on foundations
+          during the deal. This means you start with three foundations already seeded — a
+          significant head start, but one that reshapes your entire strategic calculus.
+        </p>
+        <p className="text-white/70 leading-relaxed mb-4">
+          The base rank determines two critical things: which cards are immediately valuable
+          for foundations, and which card rank can fill empty columns. Cards one rank below the
+          base are your &ldquo;Kings&rdquo; — the anchors that sit at the bottom of sequences and
+          the only cards eligible to fill empty tableau columns.
+        </p>
+        <ul className="list-disc list-inside text-white/70 space-y-2 mb-4 ml-4">
+          <li>
+            <strong className="text-white/90">Base rank cards</strong> go to foundations immediately.
+            Three are pre-placed; find the fourth and get it to a foundation as your top priority.
+          </li>
+          <li>
+            <strong className="text-white/90">Base rank + 1 cards</strong> are your next foundation targets.
+            Keep them accessible and avoid burying them under long sequences.
+          </li>
+          <li>
+            <strong className="text-white/90">Base rank - 1 cards</strong> are your column fillers and
+            sequence anchors. These are the only cards that can occupy empty columns, making them
+            strategically crucial for tableau reorganization.
+          </li>
+          <li>
+            <strong className="text-white/90">Mental re-mapping</strong> is essential at game start.
+            Spend five seconds identifying the &ldquo;Ace equivalent,&rdquo; &ldquo;Two equivalent,&rdquo;
+            and &ldquo;King equivalent&rdquo; for this specific deal.
+          </li>
+        </ul>
+        <div className="bg-emerald-900/20 border border-emerald-500/20 rounded-lg p-4">
+          <p className="text-emerald-300/80 text-sm">
+            <strong>Key insight:</strong> Because three base rank cards are pre-placed, you
+            effectively start the game with three foundations already begun. This means cards of
+            base rank + 1 are immediately playable to foundations — prioritize uncovering and
+            playing them early to build momentum.
+          </p>
+        </div>
+      </section>
+
+      {/* Section 2: Flipper Management */}
+      <section className="mb-10 max-w-3xl mx-auto">
+        <h2
+          className="text-2xl sm:text-3xl font-bold mb-4"
+          style={{ fontFamily: "var(--font-playfair)" }}
+        >
+          Flipper Management: Your Only Safety Net
+        </h2>
+        <p className="text-white/70 leading-relaxed mb-4">
+          The flipper — Penguin&apos;s single free cell — is the most important resource in the game.
+          In{" "}
+          <Link href="/" className="text-[var(--gold)] hover:text-white transition-colors">
+            FreeCell
+          </Link>
+          , four free cells give you generous temporary storage. In Penguin, you get exactly one.
+          This means the flipper must be treated as an emergency resource, not a convenience.
+        </p>
+        <p className="text-white/70 leading-relaxed mb-4">
+          The cardinal rule: never place a card in the flipper without a concrete plan to remove it
+          within the next 2-3 moves. A flipper that stays occupied for multiple turns is a flipper
+          that cannot save you when you truly need it. The best Penguin players keep the flipper
+          empty 80% of the time.
+        </p>
+        <ul className="list-disc list-inside text-white/70 space-y-2 mb-4 ml-4">
+          <li>
+            <strong className="text-white/90">Use the flipper to enable chains, not single moves.</strong>{" "}
+            The best flipper plays involve temporarily storing one card to unlock a cascade of 3-4
+            subsequent moves that significantly improve the board state.
+          </li>
+          <li>
+            <strong className="text-white/90">Plan the exit before the entry.</strong> Before placing a
+            card in the flipper, identify exactly where it will go. If the destination requires moves
+            that depend on cards you cannot yet access, do not use the flipper.
+          </li>
+          <li>
+            <strong className="text-white/90">Foundation-bound cards are ideal flipper candidates.</strong>{" "}
+            If the card you are about to stash in the flipper can go directly to a foundation on
+            the next move, that is a safe use — the flipper will be cleared immediately.
+          </li>
+          <li>
+            <strong className="text-white/90">Avoid flipper use in the early game.</strong> In the first
+            10-15 moves, focus on creating space through direct plays. Save the flipper for mid-game
+            and late-game situations where the board is tighter.
+          </li>
+        </ul>
+        <div className="bg-red-900/20 border border-red-500/20 rounded-lg p-4">
+          <p className="text-red-300/80 text-sm">
+            <strong>Common mistake:</strong> Stashing a card in the flipper because it &ldquo;might
+            be useful later.&rdquo; This is almost always wrong. The card occupies your only safety
+            valve, and the speculative benefit rarely materializes. If you cannot articulate the
+            specific sequence of moves that will clear the flipper, do not use it.
+          </p>
+        </div>
+      </section>
+
+      <AdUnit format="horizontal" className="-my-1 max-w-3xl mx-auto" />
+
+      {/* Section 3: Same-Suit Sequence Building */}
+      <section className="mb-10 max-w-3xl mx-auto">
+        <h2
+          className="text-2xl sm:text-3xl font-bold mb-4"
+          style={{ fontFamily: "var(--font-playfair)" }}
+        >
+          Same-Suit Sequence Building
+        </h2>
+        <p className="text-white/70 leading-relaxed mb-4">
+          The same-suit building constraint is what makes Penguin fundamentally different from
+          most solitaire variants. In{" "}
+          <Link href="/klondike" className="text-[var(--gold)] hover:text-white transition-colors">
+            Klondike
+          </Link>{" "}
+          or FreeCell, alternating colors give you two possible placement targets for any card.
+          In Penguin, each card has exactly one valid column to join — the one with a same-suit
+          card of the next higher rank at the bottom of its accessible sequence.
+        </p>
+        <p className="text-white/70 leading-relaxed mb-4">
+          This restriction means you must think about suit distribution from the very first move.
+          Columns naturally want to become single-suit runs. When you mix suits within a column
+          (which is impossible by the rules), you — wait, you <em>cannot</em> mix suits. Every
+          sequence in every column is pure suit. This makes columns highly ordered but severely
+          limits where cards can go.
+        </p>
+        <ul className="list-disc list-inside text-white/70 space-y-2 mb-4 ml-4">
+          <li>
+            <strong className="text-white/90">Think in suit lanes.</strong> Mentally assign each
+            column to a suit based on the cards already there. With 7 columns and 4 suits, you
+            have flexibility to dedicate 1-2 columns per suit, with extras for overflow.
+          </li>
+          <li>
+            <strong className="text-white/90">Long sequences are powerful.</strong> A run of 5-6
+            cards in the same suit can be moved as a complete unit to another column, provided
+            there is space. This gives you column-clearing capability that isolated cards lack.
+          </li>
+          <li>
+            <strong className="text-white/90">Avoid splitting sequences unnecessarily.</strong> Once
+            you have built a clean same-suit run, breaking it apart costs moves to rebuild. Only
+            split a sequence when it directly enables a foundation play or frees a critical card.
+          </li>
+          <li>
+            <strong className="text-white/90">Watch for suit bottlenecks.</strong> If all accessible
+            cards of one suit are buried under cards of another suit, that suit is effectively
+            locked. Identify these bottlenecks early and plan around them.
+          </li>
+        </ul>
+        <div className="bg-amber-900/20 border border-amber-500/20 rounded-lg p-4">
+          <p className="text-amber-300/80 text-sm">
+            <strong>Mental shortcut:</strong> Count how many cards of each suit are currently
+            accessible (top of columns or in the flipper). If a suit has zero accessible cards,
+            it is completely blocked. You need to free at least one card of that suit before any
+            foundation progress is possible for it.
+          </p>
+        </div>
+      </section>
+
+      {/* Section 4: Empty Column Strategy */}
+      <section className="mb-10 max-w-3xl mx-auto">
+        <h2
+          className="text-2xl sm:text-3xl font-bold mb-4"
+          style={{ fontFamily: "var(--font-playfair)" }}
+        >
+          Empty Column Strategy
+        </h2>
+        <p className="text-white/70 leading-relaxed mb-4">
+          Empty columns in Penguin are both valuable and restricted. Unlike FreeCell where any card
+          can fill an empty cascade, Penguin allows only cards of the rank immediately below the
+          base rank to fill empty columns. If the base rank is 9, only 8s can go into empty columns.
+          This makes empty columns useful only in specific circumstances.
+        </p>
+        <p className="text-white/70 leading-relaxed mb-4">
+          Despite this restriction, clearing columns is still a powerful strategy. Each empty column
+          effectively extends your sequence-moving capacity. With 7 columns and only 4 suits, you
+          should aim to keep 1-2 columns empty whenever possible, giving you room to reorganize
+          sequences and access buried cards.
+        </p>
+        <ul className="list-disc list-inside text-white/70 space-y-2 mb-4 ml-4">
+          <li>
+            <strong className="text-white/90">Track your &ldquo;King equivalent&rdquo; cards.</strong>{" "}
+            Know where every card of the column-filling rank is located. Having one available when
+            a column clears is essential — an empty column you cannot fill is wasted opportunity.
+          </li>
+          <li>
+            <strong className="text-white/90">Clear columns by building onto other columns first.</strong>{" "}
+            Move same-suit sequences onto longer runs in other columns to empty a column. This
+            often requires the flipper as a temporary bridge.
+          </li>
+          <li>
+            <strong className="text-white/90">Empty columns amplify supermove capacity.</strong> Each
+            empty column multiplies the number of cards you can move as a unit between columns.
+            Two empty columns let you move sequences that would otherwise require multiple free cells.
+          </li>
+          <li>
+            <strong className="text-white/90">Do not fill empty columns reflexively.</strong> Sometimes
+            keeping a column empty for 2-3 turns enables a larger reorganization. Resist the urge
+            to fill it immediately just because you have a valid card.
+          </li>
+        </ul>
+
+        <div className="bg-white/[0.03] border border-white/10 rounded-xl overflow-hidden mb-4">
+          <div className="grid grid-cols-3 text-sm font-bold text-white/40 uppercase tracking-wider px-4 py-3 border-b border-white/5">
+            <span>Empty Columns</span>
+            <span>Max Sequence Move</span>
+            <span>Strategic Value</span>
+          </div>
+          {[
+            ["0 empty + flipper free", "2 cards", "Minimal — only short sequences movable"],
+            ["1 empty + flipper free", "4 cards", "Moderate — can reorganize medium runs"],
+            ["2 empty + flipper free", "6 cards", "Strong — significant reorganization power"],
+            ["3+ empty + flipper free", "8+ cards", "Dominant — move nearly any sequence"],
+          ].map(([cols, maxMove, value], i) => (
+            <div
+              key={i}
+              className={`grid grid-cols-3 px-4 py-3 text-sm text-white/60 ${i % 2 === 0 ? "bg-white/[0.02]" : ""}`}
             >
-              Understanding the Penguin Setup and Its Unique Rules
-            </h2>
-            <div className="space-y-4 text-white/60 leading-relaxed">
-              <p>
-                Penguin Solitaire starts differently from any other FreeCell variant. Before you
-                play a single card, one rank is selected and three of its four cards are pulled
-                from the deck to seed the foundations. The fourth card of that rank stays in the
-                tableau as part of the deal. This means your foundations already have a head start,
-                but it also means the tableau is built around a gap &mdash; 49 cards spread across
-                7 columns of 7 cards each.
-              </p>
-              <p>
-                The foundation&apos;s starting rank defines everything about the game. If the
-                foundations start on 7s, you build up from 7 through King, then wrap around through
-                Ace, 2, 3, 4, 5, and finally 6. The tableau builds in the opposite direction:
-                same-suit descending with wrapping. So in a game starting on 7s, a 6 goes on a 7
-                of the same suit, and after reaching Ace, you wrap to King, then Queen, and so on.
-              </p>
-              <p>
-                This wrapping mechanic is what gives Penguin its distinctive character. There is no
-                &quot;bottom&quot; of the sequence &mdash; every card can potentially be placed on
-                another card of the same suit. An Ace is not stuck at the end of the line; it
-                connects to a 2 above and wraps to a King below. This circular nature opens up
-                moves that would be impossible in standard FreeCell or Baker&apos;s Game, but it
-                also makes the game harder to visualize because you have to think in loops rather
-                than in linear descending order.
-              </p>
-
-              <div className="bg-white/[0.03] border border-white/10 rounded-lg p-5">
-                <h3 className="font-semibold text-[#D4AF37] mb-2">
-                  The Foundation Starting Rank Drives Everything
-                </h3>
-                <p className="text-sm">
-                  Before making any moves, identify the foundation starting rank and mentally map
-                  out the build order. If foundations start on Jacks, the foundation build order is
-                  J-Q-K-A-2-3-4-5-6-7-8-9-10, and the tableau descending order is
-                  10-9-8-7-6-5-4-3-2-A-K-Q (same suit). Write this sequence down if it helps.
-                  Getting confused about whether a 3 goes on a 4 or whether wrapping applies at a
-                  particular point will cost you games. The first few times you play, the wrapping
-                  will feel unnatural. After a dozen games it will become second nature.
-                </p>
-              </div>
-
-              <p>
-                The other critical rule to internalize is the empty column restriction. In standard
-                FreeCell, any card can fill an empty cascade. In Penguin, only one specific rank
-                can fill an empty column &mdash; the rank immediately below the foundation starting
-                rank (in the wrapping sense). If foundations start on 7s, only 6s can fill empty
-                columns. If foundations start on Aces, only Kings can fill empty columns. This
-                restriction dramatically limits your options and forces you to plan column usage
-                much more carefully than in FreeCell.
-              </p>
+              <span className="text-white/80 font-medium">{cols}</span>
+              <span>{maxMove}</span>
+              <span>{value}</span>
             </div>
-          </section>
+          ))}
+        </div>
 
-          <AdUnit format="horizontal" className="-my-1" />
+        <div className="bg-emerald-900/20 border border-emerald-500/20 rounded-lg p-4">
+          <p className="text-emerald-300/80 text-sm">
+            <strong>Pro tip:</strong> The supermove formula in Penguin is (1 + flipper) × 2^(empty columns).
+            With the flipper free and 2 empty columns, you can move 2 × 4 = 8 cards at once.
+            This is why maintaining empty columns is so powerful — each one doubles your
+            sequence-moving capacity.
+          </p>
+        </div>
+      </section>
 
-          {/* Section 2: Managing 7 Free Cells */}
-          <section>
-            <h2
-              className="text-2xl sm:text-3xl font-bold text-white/90 mb-4"
-              style={{ fontFamily: "var(--font-playfair)" }}
+      <AdUnit format="horizontal" className="-my-1 max-w-3xl mx-auto" />
+
+      {/* Section 5: Foundation Building Order */}
+      <section className="mb-10 max-w-3xl mx-auto">
+        <h2
+          className="text-2xl sm:text-3xl font-bold mb-4"
+          style={{ fontFamily: "var(--font-playfair)" }}
+        >
+          Foundation Building Order
+        </h2>
+        <p className="text-white/70 leading-relaxed mb-4">
+          With three foundations pre-seeded at the start of the game, you have a head start —
+          but you also face a coordination challenge. Building all four foundations at roughly the
+          same pace is important because running one foundation far ahead can bury cards needed by
+          the others.
+        </p>
+        <p className="text-white/70 leading-relaxed mb-4">
+          The wrapping mechanic (foundations build past King through Ace and continue) means that
+          every suit must eventually play all 13 ranks. Cards near the base rank should go to
+          foundations immediately. Cards far from the base rank in the building sequence are your
+          long-term tableau anchors — they will be the last to move up.
+        </p>
+        <ul className="list-disc list-inside text-white/70 space-y-2 mb-4 ml-4">
+          <li>
+            <strong className="text-white/90">Keep foundations within 2 ranks of each other.</strong>{" "}
+            If one suit is at base+5 and another is still at base+1, the advanced suit may have
+            stripped cards from the tableau that the lagging suit needs for building.
+          </li>
+          <li>
+            <strong className="text-white/90">Play foundation cards immediately when safe.</strong>{" "}
+            A card is &ldquo;safe&rdquo; to play to the foundation when no other card currently
+            on the tableau needs it as a building target. In same-suit building, this means
+            checking only the same suit — is a card of one rank lower still on the tableau
+            needing this card as a destination?
+          </li>
+          <li>
+            <strong className="text-white/90">Find the fourth base rank card fast.</strong>{" "}
+            Three foundations start pre-seeded; the fourth base rank card is somewhere in the
+            tableau. Locating and playing it to complete the foundation quartet should be a
+            top-three priority in every game.
+          </li>
+          <li>
+            <strong className="text-white/90">Do not hoard cards on the tableau.</strong> In
+            FreeCell, keeping cards on the tableau gives flexibility. In Penguin, the same-suit
+            constraint means tableau cards are less flexible — move them to foundations whenever
+            the opportunity arises.
+          </li>
+        </ul>
+        <div className="bg-amber-900/20 border border-amber-500/20 rounded-lg p-4">
+          <p className="text-amber-300/80 text-sm">
+            <strong>Watch out:</strong> Aggressive foundation building can backfire if you remove
+            a card that was serving as a building target for another card in the same suit. Before
+            playing to a foundation, check whether the card below it in the tableau sequence will
+            become stranded without a valid destination.
+          </p>
+        </div>
+      </section>
+
+      {/* Section 6: Opening Moves */}
+      <section className="mb-10 max-w-3xl mx-auto">
+        <h2
+          className="text-2xl sm:text-3xl font-bold mb-4"
+          style={{ fontFamily: "var(--font-playfair)" }}
+        >
+          Opening Moves: The First 10 Plays
+        </h2>
+        <p className="text-white/70 leading-relaxed mb-4">
+          The opening is where Penguin games are won or lost. With the initial deal visible and
+          three foundations pre-seeded, you have complete information. Use it. Before making your
+          first move, scan the entire board and develop a plan for the first 8-10 moves.
+        </p>
+        <p className="text-white/70 leading-relaxed mb-4">
+          Your opening priorities, in order: play any immediately foundation-ready cards (base+1
+          rank cards sitting on top of columns), then begin consolidating same-suit sequences to
+          free up columns, then identify which suit is most blocked and plan to address it.
+        </p>
+        <ul className="list-disc list-inside text-white/70 space-y-2 mb-4 ml-4">
+          <li>
+            <strong className="text-white/90">Play foundation cards first.</strong> Any card of
+            base+1 rank sitting on top of a column goes to its foundation immediately. This frees
+            the card below it and advances your position with zero cost.
+          </li>
+          <li>
+            <strong className="text-white/90">Consolidate short same-suit runs.</strong> If two
+            columns have cards of the same suit that can connect, merge them. This frees one column
+            and creates a longer, more powerful sequence.
+          </li>
+          <li>
+            <strong className="text-white/90">Do not use the flipper in the opening.</strong> The
+            first 5-8 moves should be direct plays — foundations and sequence merges. If you need
+            the flipper before move 8, re-evaluate your plan.
+          </li>
+          <li>
+            <strong className="text-white/90">Identify the problem suit.</strong> One suit will
+            inevitably be more tangled than the others. Identify it early and route your first
+            column-clearing efforts toward freeing its cards.
+          </li>
+        </ul>
+        <div className="bg-emerald-900/20 border border-emerald-500/20 rounded-lg p-4">
+          <p className="text-emerald-300/80 text-sm">
+            <strong>Key insight:</strong> Because the deal is fully visible (no hidden cards),
+            Penguin is a pure information game. Every losing game is theoretically detectable
+            from the initial position. Train yourself to scan the full board before moving —
+            this habit alone will improve your win rate significantly.
+          </p>
+        </div>
+      </section>
+
+      {/* Section 7: Penguin vs FreeCell vs Canfield */}
+      <section className="mb-10 max-w-3xl mx-auto">
+        <h2
+          className="text-2xl sm:text-3xl font-bold mb-4"
+          style={{ fontFamily: "var(--font-playfair)" }}
+        >
+          Penguin vs FreeCell vs Canfield
+        </h2>
+        <p className="text-white/70 leading-relaxed mb-4">
+          Penguin borrows mechanics from both{" "}
+          <Link href="/freecell/strategy" className="text-[var(--gold)] hover:text-white transition-colors">
+            FreeCell
+          </Link>{" "}
+          and{" "}
+          <Link href="/canfield/strategy" className="text-[var(--gold)] hover:text-white transition-colors">
+            Canfield
+          </Link>
+          , but the combination creates a uniquely constrained experience. Understanding how Penguin
+          differs from its relatives helps players avoid importing habits that do not work here.
+        </p>
+        <div className="bg-white/[0.03] border border-white/10 rounded-xl overflow-hidden mb-4">
+          <div className="grid grid-cols-4 text-sm font-bold text-white/40 uppercase tracking-wider px-4 py-3 border-b border-white/5">
+            <span>Feature</span>
+            <span>FreeCell</span>
+            <span>Canfield</span>
+            <span>Penguin</span>
+          </div>
+          {[
+            ["Tableau building", "Alternating color", "Alternating color", "Same suit only"],
+            ["Free cells", "4", "0", "1 (flipper)"],
+            ["Foundation start", "Always Aces", "Random base", "Random base (3 pre-placed)"],
+            ["Empty column fill", "Any card", "Auto from reserve", "Base rank - 1 only"],
+            ["Hidden cards", "None", "Reserve + stock", "None"],
+            ["Tableau columns", "8", "4", "7"],
+            ["Win rate (skilled)", "80-90%", "30-35%", "~40%"],
+          ].map(([feature, fc, canfield, penguin], i) => (
+            <div
+              key={i}
+              className={`grid grid-cols-4 px-4 py-3 text-sm text-white/60 ${i % 2 === 0 ? "bg-white/[0.02]" : ""}`}
             >
-              Managing 7 Free Cells vs. FreeCell&apos;s 4
-            </h2>
-            <div className="space-y-4 text-white/60 leading-relaxed">
-              <p>
-                Penguin gives you 7 free cells &mdash; called &quot;flippers&quot; &mdash; nearly
-                double what standard FreeCell provides. This sounds like an enormous advantage,
-                and it is, but not in the way most players expect. The extra flippers exist to
-                compensate for Penguin&apos;s stricter rules: same-suit building, wrapping
-                sequences, restricted empty columns, and only 7 tableau columns instead of 8.
-                Without those extra flippers, the game would be nearly impossible.
-              </p>
-
-              <div className="bg-white/[0.03] border border-white/10 rounded-lg p-5">
-                <h3 className="font-semibold text-[#D4AF37] mb-2">
-                  The Flipper Threshold Rule
-                </h3>
-                <p className="text-sm">
-                  As a general guideline, try to keep at least 3 flippers empty at all times. With
-                  7 flippers total, that means you should be uncomfortable once you have 5 occupied
-                  and alarmed once you reach 6. Filling all 7 flippers is almost always a losing
-                  position unless you are in the final stages of a solve. Each occupied flipper
-                  reduces your ability to execute multi-card moves, and in a same-suit game with
-                  restricted empty columns, those multi-card moves are your lifeline.
-                </p>
-              </div>
-
-              <h3 className="text-lg font-semibold text-[#D4AF37] mt-4">
-                Flippers Are Not a Dumping Ground
-              </h3>
-              <p>
-                The most common beginner mistake in Penguin is treating the 7 flippers like a
-                generous storage facility. &quot;I have 7 slots, I can afford to use a few
-                carelessly.&quot; This thinking leads to a gradual loss of flexibility. Each card
-                in a flipper is a card that needs a same-suit destination to leave. Unlike FreeCell
-                where alternating colors give you two potential targets per card, Penguin&apos;s
-                same-suit rule means each flipper card has exactly one possible tableau destination
-                (the next higher card of the same suit). If that destination is buried or occupied,
-                the flipper stays full.
-              </p>
-
-              <h3 className="text-lg font-semibold text-[#D4AF37] mt-4">
-                Plan the Exit Before the Entry
-              </h3>
-              <p>
-                Before placing a card in a flipper, identify exactly how and when it will leave.
-                Can it go to the foundations soon? Is there a same-suit card one rank higher that
-                is exposed or will be exposed in the next few moves? If you cannot answer either
-                question with confidence, reconsider the move. A flipper with no exit plan is dead
-                weight that will haunt you for the rest of the game.
-              </p>
-
-              <h3 className="text-lg font-semibold text-[#D4AF37] mt-4">
-                Using Flippers for Multi-Card Sequences
-              </h3>
-              <p>
-                The supermove formula applies to Penguin just as it does to FreeCell: the number
-                of cards you can move as a same-suit sequence equals (1 + number of empty
-                flippers) multiplied by 2 raised to the power of empty columns. With 4 empty
-                flippers and 1 empty column, you can move a 10-card same-suit sequence in one
-                logical operation. With only 1 empty flipper and no empty columns, you can move
-                just 2 cards. Since Penguin often requires relocating long wrapping sequences,
-                maintaining flipper availability directly determines which moves are possible.
-              </p>
+              <span className="text-white/80 font-medium">{feature}</span>
+              <span>{fc}</span>
+              <span>{canfield}</span>
+              <span>{penguin}</span>
             </div>
-          </section>
+          ))}
+        </div>
+        <p className="text-white/70 leading-relaxed">
+          The biggest habit to break when coming from FreeCell: you cannot use color mixing to
+          build interim sequences. Every card must match suit. This means positions that would
+          be trivially solvable in FreeCell can be impossible in Penguin. Respect the constraint
+          and plan accordingly.
+        </p>
+      </section>
 
-          {/* Section 3: Same-Suit Building and Wrapping */}
-          <section>
-            <h2
-              className="text-2xl sm:text-3xl font-bold text-white/90 mb-4"
-              style={{ fontFamily: "var(--font-playfair)" }}
+      <AdUnit format="horizontal" className="-my-1 max-w-3xl mx-auto" />
+
+      {/* Quick Reference Cheat Sheet */}
+      <section className="mb-10 max-w-3xl mx-auto">
+        <h2
+          className="text-2xl sm:text-3xl font-bold mb-4"
+          style={{ fontFamily: "var(--font-playfair)" }}
+        >
+          Quick Reference: Strategy Cheat Sheet
+        </h2>
+        <div className="bg-white/[0.04] border border-white/10 rounded-xl p-5">
+          <ol className="list-decimal list-inside text-white/80 space-y-3 ml-2">
+            <li>
+              <strong>Map the base rank immediately.</strong> Identify your &ldquo;Ace,&rdquo; &ldquo;Two,&rdquo;
+              and &ldquo;King&rdquo; equivalents before making any move.
+            </li>
+            <li>
+              <strong>Find the fourth base rank card.</strong> Three are pre-placed; locating and
+              playing the fourth completes your foundation quartet.
+            </li>
+            <li>
+              <strong>Keep the flipper empty.</strong> Use it only for planned chains with a clear
+              exit within 2-3 moves. Never speculatively stash.
+            </li>
+            <li>
+              <strong>Think in suit lanes.</strong> Dedicate columns to suits and build clean
+              same-suit sequences. Avoid fragmenting your suits across too many columns.
+            </li>
+            <li>
+              <strong>Create and maintain empty columns.</strong> Each empty column doubles your
+              supermove capacity. Keep 1-2 empty whenever possible.
+            </li>
+            <li>
+              <strong>Build foundations evenly.</strong> Keep all four within 2 ranks of each other
+              to avoid stranding cards.
+            </li>
+            <li>
+              <strong>Scan the full board before moving.</strong> Penguin is a perfect-information
+              game. Use that information — plan 5-8 moves ahead.
+            </li>
+            <li>
+              <strong>Recognize dead positions early.</strong> If a suit is completely blocked with
+              no path to free it, restart rather than grinding.
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      {/* Related Guides */}
+      <div className="max-w-3xl mx-auto">
+        <CardSection variant="dark">
+          <SectionHeading variant="dark" sub="Continue Learning">Related Guides</SectionHeading>
+          <ContentBody variant="dark" className="grid gap-4 md:grid-cols-3">
+            <ContentLinkCard href="/penguin/how-to-play" title="How to Play Penguin" description="Complete rules, setup, and dealing mechanics explained." />
+            <ContentLinkCard href="/penguin/tips" title="Penguin Tips & Tricks" description="Quick, practical tips for improving your Penguin game." />
+            <ContentLinkCard href="/freecell/strategy" title="FreeCell Strategy Guide" description="Strategy guide for the classic FreeCell game." />
+          </ContentBody>
+        </CardSection>
+      </div>
+
+      <div className="mb-10 max-w-3xl mx-auto">
+        <CtaSection
+          heading="Ready to Apply These Strategies?"
+          body="Put your Penguin knowledge to the test. Play free online Penguin Solitaire with unlimited undo, hints, and instant new deals."
+          primaryLabel="Play Penguin Solitaire"
+          primaryHref="/penguin"
+          secondaryLabel="Learn the Rules"
+          secondaryHref="/penguin/how-to-play"
+        />
+      </div>
+
+      <AdUnit format="horizontal" className="-my-1 max-w-3xl mx-auto" />
+
+      {/* FAQ Section */}
+      <section className="mb-10 max-w-3xl mx-auto">
+        <h2
+          className="text-2xl font-bold mb-4"
+          style={{ fontFamily: "var(--font-playfair)" }}
+        >
+          Frequently Asked Questions
+        </h2>
+        <div className="space-y-4">
+          {faqs.map((faq, i) => (
+            <details
+              key={i}
+              className="group bg-white/[0.03] border border-white/10 rounded-xl overflow-hidden"
+              {...(i === 0 ? { open: true } : {})}
             >
-              Same-Suit Building and Wrapping Strategy
-            </h2>
-            <div className="space-y-4 text-white/60 leading-relaxed">
-              <p>
-                Same-suit building is the rule that makes Penguin genuinely challenging. In
-                FreeCell, the 9 of Hearts can go on either the 10 of Spades or the 10 of Clubs.
-                In Penguin, the 9 of Hearts can only go on the 10 of Hearts. This restriction
-                means that at any given moment, each card has exactly one legal tableau destination
-                instead of two. The result is far fewer available moves and a much tighter
-                strategic space.
-              </p>
-
-              <div className="bg-white/[0.03] border border-white/10 rounded-lg p-5">
-                <h3 className="font-semibold text-[#D4AF37] mb-2">
-                  Wrapping Creates Hidden Connections
-                </h3>
-                <p className="text-sm">
-                  The wrapping rule means that the sequence does not end at Ace. In a game where
-                  foundations start on 5s, the tableau descending order is
-                  4-3-2-A-K-Q-J-10-9-8-7-6-5. Notice how King wraps below Ace and 5 is at the
-                  bottom (just above the foundation start). This creates connections that are easy
-                  to overlook. When you see a King of Hearts exposed and an Ace of Hearts one card
-                  deep, that is a connection &mdash; the King can go on the Ace. Players new to
-                  Penguin frequently miss these wrapping opportunities because their brain is trained
-                  to see King as the highest card that nothing can be placed on.
-                </p>
+              <summary className="px-5 py-4 cursor-pointer text-white/90 font-semibold hover:text-[var(--gold)] transition-colors list-none flex items-center justify-between">
+                {faq.question}
+                <span className="text-white/30 group-open:rotate-180 transition-transform ml-2">
+                  ▾
+                </span>
+              </summary>
+              <div className="px-5 pb-4 text-white/60 leading-relaxed">
+                {faq.answer}
               </div>
+            </details>
+          ))}
+        </div>
+      </section>
 
-              <h3 className="text-lg font-semibold text-[#D4AF37] mt-4">
-                Prioritize Long Same-Suit Runs
-              </h3>
-              <p>
-                Survey the tableau for suits where multiple adjacent-rank cards are already
-                exposed or near the surface. If the 8, 7, and 6 of Clubs are all accessible,
-                connecting them into a 3-card same-suit run should be a high priority. Long
-                same-suit runs are powerful because they can be moved as a unit (given enough
-                empty flippers and columns), they free up the columns they leave behind, and
-                each card in the run is one step closer to being sent to the foundations.
-              </p>
-
-              <h3 className="text-lg font-semibold text-[#D4AF37] mt-4">
-                Suit Concentration Strategy
-              </h3>
-              <p>
-                Rather than spreading your attention across all four suits, identify the one or
-                two suits where the initial deal is most favorable &mdash; cards already partially
-                ordered, key cards near the surface &mdash; and focus your early efforts there.
-                Building a long run in one suit creates cascading benefits: it frees up columns,
-                sends cards to foundations, and creates space that helps you work on the remaining
-                suits later. Trying to make equal progress across four suits simultaneously
-                usually means making meaningful progress in none of them.
-              </p>
-
-              <h3 className="text-lg font-semibold text-[#D4AF37] mt-4">
-                Watch for Wrapping Traps
-              </h3>
-              <p>
-                Wrapping is powerful but it can also create confusion. When you wrap a sequence
-                from Ace down to King and continue descending, it is easy to lose track of which
-                direction the sequence is heading and where it will ultimately connect to the
-                foundations. A useful mental trick: always think in terms of &quot;distance to
-                foundation.&quot; Count how many cards in the descending sequence need to be built
-                before a card reaches the foundation. This keeps you focused on progress rather
-                than getting lost in the circular ordering.
-              </p>
-            </div>
-          </section>
-
-          <AdUnit format="auto" className="-my-1" />
-
-          {/* Section 4: Empty Column Restrictions */}
-          <section>
-            <h2
-              className="text-2xl sm:text-3xl font-bold text-white/90 mb-4"
-              style={{ fontFamily: "var(--font-playfair)" }}
-            >
-              Empty Column Restrictions and Planning
-            </h2>
-            <div className="space-y-4 text-white/60 leading-relaxed">
-              <p>
-                In standard FreeCell, an empty cascade is a versatile tool &mdash; any card can go
-                there, and you can use it as temporary storage for any blocking card. Penguin
-                removes that flexibility entirely. Empty columns can only be filled by one specific
-                rank: the rank immediately below (in the wrapping order) the foundation starting
-                rank. This single restriction is responsible for more lost Penguin games than any
-                other rule.
-              </p>
-
-              <div className="bg-white/[0.03] border border-white/10 rounded-lg p-5">
-                <h3 className="font-semibold text-[#D4AF37] mb-2">
-                  Know Your Fill Rank
-                </h3>
-                <p className="text-sm">
-                  Before your first move, identify the fill rank &mdash; the only rank that can
-                  go into empty columns. If foundations start on Queens, the fill rank is Jack. If
-                  foundations start on 3s, the fill rank is 2. If foundations start on Aces, the
-                  fill rank is King (wrapping). Memorize this rank for the current game. Every
-                  decision about whether to empty a column or keep it occupied depends on whether
-                  you have a fill-rank card available to place there and whether doing so actually
-                  advances your position.
-                </p>
-              </div>
-
-              <h3 className="text-lg font-semibold text-[#D4AF37] mt-4">
-                Empty Columns Are Less Useful Than in FreeCell
-              </h3>
-              <p>
-                Because only one rank can fill empty columns, creating an empty column in Penguin
-                is not the universal tool it is in FreeCell. If you empty a column but have no
-                fill-rank card ready to place there, the column sits empty &mdash; useful only
-                as part of the supermove calculation. You cannot temporarily stash a random
-                blocking card there. This means the traditional FreeCell strategy of &quot;empty
-                a column as fast as possible&quot; does not always apply. Sometimes keeping a
-                column occupied with a well-ordered same-suit sequence is more valuable than
-                emptying it.
-              </p>
-
-              <h3 className="text-lg font-semibold text-[#D4AF37] mt-4">
-                Planning Around the Restriction
-              </h3>
-              <p>
-                When you notice a column that could potentially be emptied, immediately check
-                two things. First, do you have a fill-rank card that benefits from being placed
-                in the empty column? Ideally, it is a fill-rank card that can serve as the base
-                of a new same-suit descending sequence. Second, is the act of emptying the column
-                itself valuable enough even if you cannot fill it immediately? An empty column
-                still contributes to your supermove capacity, which matters when you need to
-                relocate a long sequence.
-              </p>
-
-              <div className="bg-white/[0.03] border border-white/10 rounded-lg p-5">
-                <h3 className="font-semibold text-[#D4AF37] mb-2">
-                  Strategic Use of Fill-Rank Cards
-                </h3>
-                <p className="text-sm">
-                  Fill-rank cards are special in Penguin because they are the only cards that can
-                  start new columns. Treat them as strategic assets. Do not bury a fill-rank card
-                  deep in a column if you can avoid it. Do not send one to a flipper unless you
-                  have a specific plan to retrieve it. And when you do place a fill-rank card in
-                  an empty column, think carefully about which same-suit sequence you want to build
-                  on top of it. The column you are creating will be one of your primary workspaces
-                  for the rest of the game.
-                </p>
-              </div>
-            </div>
-          </section>
-
-          {/* Section 5: Foundation Timing */}
-          <section>
-            <h2
-              className="text-2xl sm:text-3xl font-bold text-white/90 mb-4"
-              style={{ fontFamily: "var(--font-playfair)" }}
-            >
-              Foundation Timing &mdash; When to Build Up
-            </h2>
-            <div className="space-y-4 text-white/60 leading-relaxed">
-              <p>
-                Penguin&apos;s foundation mechanics add another layer of complexity. Because the
-                foundations start on a random rank and build up with wrapping, you need to send
-                cards in a specific circular order. The card of the starting rank goes first,
-                then the next rank up, continuing through King, wrapping to Ace, and eventually
-                reaching the rank just below where you started. Timing these foundation plays
-                correctly is critical.
-              </p>
-
-              <h3 className="text-lg font-semibold text-[#D4AF37] mt-4">
-                Don&apos;t Rush to the Foundations
-              </h3>
-              <p>
-                It is tempting to send every playable card to the foundations as soon as it
-                becomes available. Resist this urge. In Penguin, the same-suit building rule
-                means you often need intermediate cards in the tableau as landing spots for
-                other cards. Sending the 9 of Hearts to the foundation might feel like progress,
-                but if the 8 of Hearts is buried and needs the 9 as a temporary destination
-                before it can be routed to the foundation, you have created a problem. Always
-                check whether a card is still needed as a tableau stepping stone before promoting
-                it.
-              </p>
-
-              <div className="bg-white/[0.03] border border-white/10 rounded-lg p-5">
-                <h3 className="font-semibold text-[#D4AF37] mb-2">
-                  The Safety Threshold for Foundation Plays
-                </h3>
-                <p className="text-sm">
-                  A card is safe to send to the foundation when all cards that might need to land
-                  on it in the tableau have already been sent to the foundation themselves. In
-                  practice, this means the first 2-3 ranks above the foundation start can usually
-                  be promoted safely, because the cards that would land on them are the foundation
-                  starting rank (already on the foundation) and the rank just above (which you are
-                  about to promote). Beyond that, check carefully. The more ranks you have built
-                  on the foundations, the more likely it is that promoting the next card is safe
-                  &mdash; but it is never automatic.
-                </p>
-              </div>
-
-              <h3 className="text-lg font-semibold text-[#D4AF37] mt-4">
-                Keep Foundations Roughly Even
-              </h3>
-              <p>
-                Try to advance all four foundations at a similar pace. If one foundation is 5
-                cards ahead of the others, you have likely been too aggressive with that suit
-                and may have stranded cards from other suits that needed those promoted cards
-                as tableau landing spots. A good target is to keep all foundations within 2-3
-                ranks of each other. When one suit pulls ahead, pause and look for opportunities
-                to advance the lagging suits before continuing.
-              </p>
-
-              <h3 className="text-lg font-semibold text-[#D4AF37] mt-4">
-                The Endgame Acceleration
-              </h3>
-              <p>
-                Once you have cleared most of the tableau and have 3 or fewer cards per column
-                with plenty of empty flippers, the game shifts into an endgame mode where you
-                can typically send cards to foundations rapidly. At this point, the wrapping
-                order becomes your primary concern &mdash; make sure you are sending cards in
-                the correct sequence. A common late-game mistake is trying to send a card to
-                a foundation before its predecessor in the build order has been placed. Stay
-                disciplined about the circular ordering even when victory is in sight.
-              </p>
-            </div>
-          </section>
-
-          <AdUnit format="auto" className="-my-1" />
-
-          {/* Section 6: Common Mistakes */}
-          <section>
-            <h2
-              className="text-2xl sm:text-3xl font-bold text-white/90 mb-4"
-              style={{ fontFamily: "var(--font-playfair)" }}
-            >
-              Common Mistakes and How to Avoid Them
-            </h2>
-            <div className="space-y-4 text-white/60 leading-relaxed">
-              <p>
-                Penguin Solitaire punishes certain habits that players develop in FreeCell and
-                other solitaire variants. Understanding these common mistakes will save you
-                dozens of lost games.
-              </p>
-
-              <div className="space-y-4">
-                <div className="bg-white/[0.03] border border-red-500/10 rounded-lg p-5">
-                  <h3 className="font-semibold text-red-400 mb-2">
-                    Forgetting the Empty Column Restriction
-                  </h3>
-                  <p className="text-sm">
-                    The most frequent mistake new Penguin players make is planning a sequence of
-                    moves that requires placing a card in an empty column, only to discover that the
-                    card is not the correct fill rank. This wastes mental energy and often leaves you
-                    in a worse position because you have already committed flippers to the first
-                    steps of the plan. Before executing any multi-move sequence, verify that every
-                    card you plan to place in an empty column is the correct fill rank. Make this
-                    check automatic.
-                  </p>
-                </div>
-
-                <div className="bg-white/[0.03] border border-red-500/10 rounded-lg p-5">
-                  <h3 className="font-semibold text-red-400 mb-2">
-                    Treating Flippers Like FreeCell Free Cells
-                  </h3>
-                  <p className="text-sm">
-                    In FreeCell, using 2-3 free cells casually is normal because the alternating-color
-                    rule provides plenty of legal moves to clear them. In Penguin, same-suit building
-                    means each flipper card has only one possible tableau destination. Casually filling
-                    5-6 flippers because &quot;you have 7&quot; creates a logjam that is extremely
-                    difficult to resolve. The extra flippers are there to compensate for the game&apos;s
-                    stricter rules, not to encourage careless storage.
-                  </p>
-                </div>
-
-                <div className="bg-white/[0.03] border border-red-500/10 rounded-lg p-5">
-                  <h3 className="font-semibold text-red-400 mb-2">
-                    Ignoring Wrapping Opportunities
-                  </h3>
-                  <p className="text-sm">
-                    Players who are new to Penguin often miss wrapping moves entirely. They see an
-                    Ace at the bottom of a sequence and assume nothing can be placed on it, forgetting
-                    that a King of the same suit can wrap below it. Similarly, they overlook that a
-                    2 can accept an Ace of the same suit, which can then accept a King. These missed
-                    connections leave cards stranded that could have been part of a productive sequence.
-                    Train yourself to check for wrapping moves, especially around the Ace-King boundary.
-                  </p>
-                </div>
-
-                <div className="bg-white/[0.03] border border-red-500/10 rounded-lg p-5">
-                  <h3 className="font-semibold text-red-400 mb-2">
-                    Building Long Sequences You Cannot Move
-                  </h3>
-                  <p className="text-sm">
-                    Building a beautiful 8-card same-suit sequence feels productive, but if you do not
-                    have enough empty flippers and columns to actually move it where it needs to go,
-                    you have effectively locked those 8 cards in place. Before extending a sequence,
-                    check the supermove math. With 3 empty flippers and 0 empty columns, you can move
-                    4 cards. Building a 6-card sequence when you can only move 4 means the bottom 2
-                    cards are stuck until conditions improve. Sometimes building a shorter, movable
-                    sequence is more strategically sound than building a longer, immovable one.
-                  </p>
-                </div>
-
-                <div className="bg-white/[0.03] border border-red-500/10 rounded-lg p-5">
-                  <h3 className="font-semibold text-red-400 mb-2">
-                    Promoting Foundation Cards Too Aggressively
-                  </h3>
-                  <p className="text-sm">
-                    Because Penguin&apos;s foundations build with wrapping, the build order can feel
-                    unintuitive. Players sometimes rush to promote cards without checking whether
-                    those cards are still needed in the tableau as same-suit landing spots. A card
-                    on the foundation is gone forever &mdash; you cannot retrieve it. In the middle
-                    game, always ask: &quot;Is any card in the tableau currently counting on this card
-                    as a potential destination?&quot; If the answer might be yes, hold the promotion
-                    until you are certain the card is no longer needed below.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <AdUnit format="auto" className="-my-1" />
-
-          {/* FAQ Section */}
-          <section className="bg-white/[0.03] border border-white/10 rounded-xl p-6 sm:p-8">
-            <h2
-              className="text-2xl font-bold text-white/90 mb-6"
-              style={{ fontFamily: "var(--font-playfair)" }}
-            >
-              Frequently Asked Questions
-            </h2>
-            <div className="space-y-6">
-              {faqs.map((faq, i) => (
-                <div key={i}>
-                  <h3 className="font-medium text-white/80 text-lg mb-2">
-                    {faq.question}
-                  </h3>
-                  <p className="text-white/50 leading-relaxed">{faq.answer}</p>
-                  {i < faqs.length - 1 && (
-                    <div className="mt-6 border-b border-white/10" />
-                  )}
-                </div>
-              ))}
-            </div>
-          </section>
-
-          <AdUnit format="horizontal" className="-my-1" />
-
-          {/* ── Related Guides ── */}
-          <CardSection variant="dark">
-            <SectionHeading variant="dark" sub="Continue Learning">Related Guides</SectionHeading>
-            <ContentBody variant="dark" className="grid gap-4 md:grid-cols-3">
-              <ContentLinkCard href="/penguin" title="Play Penguin Solitaire" description="Play online for free, no download required." />
-              <ContentLinkCard href="/bakers-game/strategy" title="Baker's Game Strategy" description="Same-suit building without wrapping." />
-              <ContentLinkCard href="/strategy" title="FreeCell Strategy" description="Compare with alternating-color FreeCell tactics." />
-            </ContentBody>
-          </CardSection>
-
-          <CtaSection
-            heading="Ready to Play?"
-            body="Put these strategies into practice. Play Penguin Solitaire online for free — no download, no signup."
-            primaryLabel="Play Penguin Solitaire"
-            primaryHref="/penguin"
-          />
-
-          {/* Cross-links */}
-          <section className="bg-white/[0.03] border border-white/10 rounded-xl p-6 sm:p-8">
-            <h2 className="text-xl font-bold text-white/90 mb-4" style={{ fontFamily: "var(--font-playfair)" }}>
-              Related Pages
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <ContentLinkCard href="/penguin" title="Play Penguin Solitaire" description="Play online for free, no download" />
-              <ContentLinkCard href="/penguin/how-to-play" title="Penguin How to Play" description="Rules and setup for Penguin Solitaire" />
-              <ContentLinkCard href="/penguin/tips" title="Penguin Tips" description="Quick tips for winning more games" />
-              <ContentLinkCard href="/strategy" title="FreeCell Strategy" description="Strategy for the classic FreeCell game" />
-              <ContentLinkCard href="/solitaire-types" title="Types of Solitaire" description="20 solitaire variants compared" />
-              <ContentLinkCard href="/" title="Play FreeCell" description="The classic strategic solitaire" />
-            </div>
-          </section>
-        </article>
-      </main>
+      {/* More Resources */}
+      <section className="max-w-3xl mx-auto">
+        <h2
+          className="text-2xl font-bold mb-4"
+          style={{ fontFamily: "var(--font-playfair)" }}
+        >
+          More Penguin Solitaire Resources
+        </h2>
+        <div className="grid sm:grid-cols-2 gap-3">
+          <ContentLinkCard href="/penguin" title="Play Penguin Solitaire" description="Put these strategies into practice online for free" />
+          <ContentLinkCard href="/penguin/how-to-play" title="How to Play Penguin" description="Complete rules and dealing mechanics" />
+          <ContentLinkCard href="/penguin/tips" title="Penguin Tips & Tricks" description="Quick tips for all skill levels" />
+          <ContentLinkCard href="/freecell/strategy" title="FreeCell Strategy Guide" description="Strategy for the classic FreeCell game" />
+          <ContentLinkCard href="/canfield/strategy" title="Canfield Strategy Guide" description="Strategy for another base-rank variant" />
+          <ContentLinkCard href="/solitaire-types" title="All Solitaire Types" description="Explore 20+ solitaire variants and find your next game" />
+        </div>
+      </section>
     </ContentLayout>
   );
 }

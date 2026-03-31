@@ -129,6 +129,9 @@ const variantGuides = [
   { href: "/penguin", label: "Penguin Solitaire", desc: "Play Penguin Solitaire online" },
   { href: "/penguin/how-to-play", label: "Penguin Rules", desc: "How to play Penguin Solitaire" },
   { href: "/penguin/tips", label: "Penguin Tips", desc: "Penguin tips and tricks" },
+  { href: "/penguin/strategy", label: "Penguin Strategy", desc: "Penguin winning techniques" },
+  { href: "/flower-garden/strategy", label: "Flower Garden Strategy", desc: "Bouquet management strategy" },
+  { href: "/gaps/strategy", label: "Gaps Strategy", desc: "Gap positioning techniques" },
 ];
 
 const legalLinks = [

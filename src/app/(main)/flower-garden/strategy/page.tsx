@@ -2,29 +2,33 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import ContentLayout from "@/components/ContentLayout";
-import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionHeading, ContentBody } from "@/components/content";
 import AdUnit from "@/components/AdUnit";
+import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionHeading, ContentBody } from "@/components/content";
 
 export const metadata: Metadata = {
-  title: "Flower Garden Solitaire Strategy Guide — Master the Bouquet",
+  title: "Flower Garden Solitaire Strategy Guide | Expert Winning Tips",
   description:
-    "In-depth Flower Garden Solitaire strategy guide. Learn bouquet management, suit-free tableau building, empty column tactics, and multi-move planning to dramatically improve your win rate.",
+    "Master Flower Garden Solitaire with advanced strategies for bouquet management, King placement, empty column creation, foundation building order, and garden bed optimization. Win more games with proven techniques.",
   keywords: [
     "flower garden solitaire strategy",
+    "flower garden solitaire winning strategy",
     "flower garden solitaire tips",
     "how to win flower garden solitaire",
-    "flower garden card game strategy",
+    "flower garden bouquet strategy",
     "flower garden solitaire guide",
-    "bouquet solitaire strategy",
-    "flower garden solitaire tactics",
-    "flower garden advanced strategy",
-    "solitaire variant strategy",
-    "flower garden winning tips",
+    "flower garden solitaire garden beds",
+    "flower garden solitaire expert tips",
+    "flower garden solitaire empty columns",
+    "flower garden solitaire foundation order",
+    "flower garden solitaire advanced techniques",
   ],
+  alternates: {
+    canonical: absoluteUrl("/flower-garden/strategy"),
+  },
   openGraph: {
-    title: "Flower Garden Solitaire Strategy Guide — Master the Bouquet",
+    title: "Flower Garden Solitaire Strategy Guide | Expert Winning Tips",
     description:
-      "Expert strategies for Flower Garden Solitaire. Learn bouquet management, tableau building, and multi-move planning to beat more deals.",
+      "Advanced strategies for Flower Garden Solitaire: bouquet management, King placement, empty column creation, and foundation building optimization.",
     url: absoluteUrl("/flower-garden/strategy"),
     siteName: siteConfig.siteName,
     type: "article",
@@ -36,629 +40,606 @@ export const metadata: Metadata = {
 
 const faqs = [
   {
-    question: "What makes Flower Garden Solitaire different from other solitaire games?",
+    question: "What is the best strategy for Flower Garden Solitaire?",
     answer:
-      "Flower Garden Solitaire has two distinctive features. First, every card in the game is visible from the start — the 36 cards in the six flower bed columns and the 16 cards in the bouquet are all face-up. Second, tableau building ignores suit entirely — you can place any card on any card that is exactly one rank higher, regardless of color or suit. The combination of perfect information and suit-free building creates a unique strategic experience where planning and foresight matter more than luck.",
+      "The best strategy centers on bouquet management and empty column creation. The 16-card bouquet gives you enormous flexibility since every card in it is playable at any time — use this advantage to plan multi-move sequences. Focus on clearing at least one garden bed (column) early, which gives you space to reorganize. Build foundations evenly and be strategic about when you deploy bouquet cards versus when you hold them in reserve.",
   },
   {
-    question: "How do I use the bouquet effectively in Flower Garden Solitaire?",
+    question: "How should I use the bouquet in Flower Garden Solitaire?",
     answer:
-      "The bouquet is your most powerful resource. All 16 cards in the bouquet are available to play at any time, making it a flexible reserve that can fill gaps in your tableau sequences or feed your foundations. The key is to resist playing bouquet cards impulsively. Instead, treat each bouquet play as a strategic decision — consider whether playing that card now will open up more moves than saving it for later. Ideally, use bouquet cards to unblock critical sequences or to build on empty columns when you need a King.",
+      "Think of the bouquet as a 16-card reserve where every card is simultaneously available. Use bouquet cards to fill gaps in sequences, to place on foundations directly, or to enable moves that clear columns. The key discipline is not depleting the bouquet too quickly — each card you play from the bouquet is one fewer option for future moves. Play bouquet cards when they directly advance your position (foundation plays, completing sequences) rather than just because you can.",
   },
   {
-    question: "Why can only Kings fill empty columns in Flower Garden?",
+    question: "How do I handle Kings in Flower Garden Solitaire?",
     answer:
-      "The King-only restriction on empty columns is a balancing mechanic. Without it, the game would be too easy because you could use empty columns as temporary storage for any card. By requiring Kings, the game forces you to think carefully about when and whether to empty a column. Creating an empty column is only valuable if you have a King available to fill it (from the bouquet or as an exposed tableau card) and a plan for how the new King-headed column will help your overall game.",
+      "Kings are the biggest positional challenge because they block columns — nothing can be placed on top of a King in descending-rank building. When a King sits at the bottom of a garden bed, that column is effectively locked until the King goes to a foundation (which happens last). Prioritize moving Kings to empty columns where they serve as useful anchors for building long descending sequences, rather than leaving them blocking productive columns.",
   },
   {
-    question: "Is Flower Garden Solitaire easier or harder than FreeCell?",
+    question: "Should I focus on foundation building or tableau organization?",
     answer:
-      "Flower Garden is generally considered harder than standard FreeCell. While suit-free building gives you more legal moves on the tableau, the lack of free cells means you have no temporary storage. In FreeCell, you can park up to four cards in free cells while you rearrange. In Flower Garden, your only flexible resource is the bouquet, and it depletes as you use it — you cannot move cards back into it. The King-only empty column rule further limits your options. Winning percentages for Flower Garden are typically lower than FreeCell&apos;s near-perfect solvability rate.",
+      "Prioritize tableau organization in the early game and foundation building in the mid-to-late game. Early on, your goal is to create empty columns and long sequences — this gives you the reorganization power needed later. Once you have 1-2 empty columns and reasonable sequences, shift to aggressive foundation building. Playing cards to foundations that are 'safe' (no card on the tableau needs them as a building target) is always correct at any stage.",
   },
   {
-    question: "What is the best opening strategy for Flower Garden Solitaire?",
+    question: "What is the win rate for Flower Garden Solitaire?",
     answer:
-      "Start by surveying the entire layout — all 52 cards are visible, so take advantage of that. Identify where the Aces are (in the bouquet or buried in flower beds), look for Kings that could fill empty columns, and find long natural sequences that are already partially built. Your first moves should focus on freeing Aces and Twos for the foundations while preserving your bouquet cards for critical moments later. Avoid emptying columns early unless you have a King ready to fill the space immediately.",
+      "Skilled players can win roughly 60% of Flower Garden deals with optimal play. This is higher than many solitaire variants because the fully-visible bouquet provides exceptional flexibility. The any-suit building rule on the tableau also helps by maximizing your placement options. However, King placement problems and unfavorable card distributions can still create unwinnable deals. Recognizing these early saves time.",
   },
 ];
 
 export default function FlowerGardenStrategyPage() {
-  const articleJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    headline: "Flower Garden Solitaire Strategy Guide — Master the Bouquet",
-    description:
-      "In-depth strategy guide for Flower Garden Solitaire. Learn bouquet management, suit-free tableau building, and multi-move planning to win more deals.",
-    url: absoluteUrl("/flower-garden/strategy"),
-    publisher: {
-      "@type": "Organization",
-      name: siteConfig.siteName,
-      url: absoluteUrl("/"),
-    },
-  };
-
-  const faqJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: faqs.map((faq) => ({
-      "@type": "Question",
-      name: faq.question,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: faq.answer,
-      },
-    })),
-  };
-
-  const breadcrumbJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Home",
-        item: absoluteUrl("/"),
-      },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: "Flower Garden",
-        item: absoluteUrl("/flower-garden"),
-      },
-      {
-        "@type": "ListItem",
-        position: 3,
-        name: "Strategy",
-        item: absoluteUrl("/flower-garden/strategy"),
-      },
-    ],
-  };
-
   return (
-    <ContentLayout variant="dark">
-      <JsonLd data={articleJsonLd} />
-      <JsonLd data={faqJsonLd} />
-      <JsonLd data={breadcrumbJsonLd} />
+    <ContentLayout>
+      <JsonLd data={{
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
+          { "@type": "ListItem", position: 2, name: "Flower Garden Solitaire", item: absoluteUrl("/flower-garden") },
+          { "@type": "ListItem", position: 3, name: "Strategy", item: absoluteUrl("/flower-garden/strategy") },
+        ],
+      }} />
+      <JsonLd data={{
+        "@context": "https://schema.org",
+        "@type": "Article",
+        headline: "Flower Garden Solitaire Strategy Guide",
+        description: "Advanced strategies for Flower Garden Solitaire covering bouquet management, King placement, empty column creation, and foundation building order.",
+        author: { "@type": "Organization", name: siteConfig.siteName, url: absoluteUrl("/") },
+        publisher: { "@type": "Organization", name: siteConfig.siteName },
+        datePublished: "2026-03-31",
+        dateModified: "2026-03-31",
+      }} />
+      <JsonLd data={{
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: faqs.map((faq) => ({
+          "@type": "Question",
+          name: faq.question,
+          acceptedAnswer: { "@type": "Answer", text: faq.answer },
+        })),
+      }} />
 
       <ContentHero
         title="Flower Garden Solitaire Strategy Guide"
-        subtitle="Master bouquet management, suit-free tableau building, and the planning skills that separate consistent winners from casual players."
-        breadcrumbs={[{ label: "Home", href: "/" }, { label: "Flower Garden", href: "/flower-garden" }]}
+        kicker={<><Link href="/flower-garden" className="hover:text-white transition-colors">Flower Garden Solitaire</Link> / Strategy</>}
+        subtitle="Advanced strategies for mastering the bouquet — from garden bed optimization to King management and foundation building order."
+        breadcrumbs={[{ label: "Home", href: "/" }, { label: "Flower Garden Solitaire", href: "/flower-garden" }]}
       />
 
-      {/* Main Content */}
-      <main className="max-w-4xl mx-auto px-6 sm:px-10 lg:px-12 pb-20 flex flex-col gap-6">
-        <article className="space-y-6">
-          {/* Section 1: Understanding the Flower Garden Layout */}
-          <section>
-            <h2
-              className="text-2xl sm:text-3xl font-bold text-white/90 mb-4"
-              style={{ fontFamily: "var(--font-playfair)" }}
+      {/* Quick Summary */}
+      <div className="bg-white/[0.04] border border-white/10 rounded-xl p-6 mb-10 max-w-3xl mx-auto">
+        <h2 className="text-lg font-bold text-[var(--gold)] mb-3">
+          The Core Strategy
+        </h2>
+        <p className="text-white/70 leading-relaxed">
+          Flower Garden strategy centers on three pillars: <strong className="text-white">use the bouquet strategically, not impulsively</strong>,{" "}
+          <strong className="text-white">create empty columns early</strong>, and{" "}
+          <strong className="text-white">manage Kings as positional anchors, not obstacles</strong>.
+          The 16-card bouquet where every card is always available gives you more options than
+          almost any other solitaire variant. The challenge is converting that flexibility into
+          efficient foundation building without depleting your reserves prematurely.
+        </p>
+      </div>
+
+      {/* Section 1: Bouquet Management */}
+      <section className="mb-10 max-w-3xl mx-auto">
+        <h2
+          className="text-2xl sm:text-3xl font-bold mb-4"
+          style={{ fontFamily: "var(--font-playfair)" }}
+        >
+          Bouquet Management: Your 16-Card Advantage
+        </h2>
+        <p className="text-white/70 leading-relaxed mb-4">
+          The bouquet is what makes Flower Garden unique among solitaire games. Sixteen cards —
+          roughly a third of the deck — sit in a reserve where every single card is playable at
+          any time. No other solitaire variant gives you this level of immediate access. In{" "}
+          <Link href="/canfield" className="text-[var(--gold)] hover:text-white transition-colors">
+            Canfield
+          </Link>
+          , only the top reserve card is available. In{" "}
+          <Link href="/" className="text-[var(--gold)] hover:text-white transition-colors">
+            FreeCell
+          </Link>
+          , free cells hold at most 4 cards. Flower Garden&apos;s bouquet is a massive parallel
+          resource, and using it well is the core skill of the game.
+        </p>
+        <p className="text-white/70 leading-relaxed mb-4">
+          The fundamental tension: every bouquet card you play is one fewer option for future turns.
+          Early in the game, the bouquet provides a safety net — you can always find <em>something</em>{" "}
+          to play. But if you spend bouquet cards carelessly, the mid-game becomes much harder when
+          you need specific cards for foundation runs or sequence bridging.
+        </p>
+        <ul className="list-disc list-inside text-white/70 space-y-2 mb-4 ml-4">
+          <li>
+            <strong className="text-white/90">Foundation plays from bouquet are always good.</strong>{" "}
+            Playing a bouquet card directly to a foundation advances your position and reduces the
+            reserve at the same time. Never hesitate on these.
+          </li>
+          <li>
+            <strong className="text-white/90">Sequence-completing plays are high value.</strong> Using
+            a bouquet card to connect two partial sequences on the tableau is worthwhile because it
+            creates a longer, more powerful run that can clear a column.
+          </li>
+          <li>
+            <strong className="text-white/90">Avoid &ldquo;parking&rdquo; bouquet cards on the tableau.</strong>{" "}
+            Placing a bouquet card onto a column just because it fits is usually wasteful. The card
+            was more useful in the bouquet (accessible anytime) than buried in a column.
+          </li>
+          <li>
+            <strong className="text-white/90">Count your bouquet periodically.</strong> When the bouquet
+            drops below 8 cards, start being more conservative. Below 4 cards, every play must
+            directly advance a foundation or clear a column.
+          </li>
+        </ul>
+        <div className="bg-emerald-900/20 border border-emerald-500/20 rounded-lg p-4">
+          <p className="text-emerald-300/80 text-sm">
+            <strong>Key insight:</strong> The bouquet is not a &ldquo;hand of cards to play.&rdquo;
+            It is a strategic reserve. The best Flower Garden players end the game with the bouquet
+            nearly empty, but they deplete it gradually over the full game — not in a burst at
+            the start.
+          </p>
+        </div>
+      </section>
+
+      {/* Section 2: King Management */}
+      <section className="mb-10 max-w-3xl mx-auto">
+        <h2
+          className="text-2xl sm:text-3xl font-bold mb-4"
+          style={{ fontFamily: "var(--font-playfair)" }}
+        >
+          King Management: The Biggest Positional Challenge
+        </h2>
+        <p className="text-white/70 leading-relaxed mb-4">
+          Kings are the most problematic cards in Flower Garden because nothing can be placed on
+          top of a King in descending-rank building. A King at the bottom of a garden bed blocks
+          the entire column — you cannot extend the sequence downward. The column becomes a
+          one-way street: you can remove cards from the top, but you cannot add to it once you
+          reach the King.
+        </p>
+        <p className="text-white/70 leading-relaxed mb-4">
+          The strategic approach to Kings depends on their location. Kings in the bouquet are
+          actually useful — you can deploy them to empty columns where they anchor full
+          descending sequences (K-Q-J-10-...). Kings stuck at the bottom of occupied garden
+          beds are the real problem, and dealing with them requires column-clearing maneuvers.
+        </p>
+        <ul className="list-disc list-inside text-white/70 space-y-2 mb-4 ml-4">
+          <li>
+            <strong className="text-white/90">Kings in bouquet → save for empty columns.</strong>{" "}
+            A bouquet King placed in an empty column starts a fresh sequence that can hold up to 12
+            more cards (Q through A). This is one of the most powerful plays in the game.
+          </li>
+          <li>
+            <strong className="text-white/90">Kings at bottom of beds → work above them.</strong>{" "}
+            If a King is at the bottom of a garden bed, focus on clearing the cards above it.
+            Once all cards above the King are played to foundations or moved elsewhere, the King
+            is alone in the column — effectively an empty column with an anchor.
+          </li>
+          <li>
+            <strong className="text-white/90">Kings in the middle of beds → biggest problem.</strong>{" "}
+            A King sandwiched between cards you need requires moving everything above it first,
+            then dealing with the King. Sometimes using the bouquet to build a parallel sequence
+            is the only path.
+          </li>
+          <li>
+            <strong className="text-white/90">Count Kings early.</strong> At the start of each game,
+            locate all four Kings. Their positions largely determine the difficulty of the deal.
+            Three Kings in the bouquet? Easy game. Three Kings buried mid-column? Prepare for a fight.
+          </li>
+        </ul>
+        <div className="bg-amber-900/20 border border-amber-500/20 rounded-lg p-4">
+          <p className="text-amber-300/80 text-sm">
+            <strong>Warning:</strong> Do not move a King from the bouquet to the tableau just to
+            &ldquo;get it out.&rdquo; A King in the bouquet is not taking up useful space — bouquet
+            cards do not block each other. Only deploy a bouquet King when you have a specific plan
+            to build a productive sequence on top of it.
+          </p>
+        </div>
+      </section>
+
+      <AdUnit format="horizontal" className="-my-1 max-w-3xl mx-auto" />
+
+      {/* Section 3: Empty Column Creation */}
+      <section className="mb-10 max-w-3xl mx-auto">
+        <h2
+          className="text-2xl sm:text-3xl font-bold mb-4"
+          style={{ fontFamily: "var(--font-playfair)" }}
+        >
+          Empty Column Creation: Your Primary Early Goal
+        </h2>
+        <p className="text-white/70 leading-relaxed mb-4">
+          With only 6 garden beds holding 6 cards each, the tableau is relatively small. Creating
+          even one empty column gives you critical reorganization space. Each empty column acts
+          like a free cell that can hold an entire sequence — far more powerful than a single-card
+          cell.
+        </p>
+        <p className="text-white/70 leading-relaxed mb-4">
+          Your first empty column should be your top priority for the first 15-20 moves of the game.
+          Target the shortest column or the one with the most foundation-ready cards on top.
+          Use bouquet cards to supplement the tableau when they create direct foundation plays
+          that thin out a target column.
+        </p>
+        <ul className="list-disc list-inside text-white/70 space-y-2 mb-4 ml-4">
+          <li>
+            <strong className="text-white/90">Target the shortest column first.</strong> If one
+            garden bed has only 3-4 cards remaining after initial foundation plays, that is your
+            best candidate for clearing.
+          </li>
+          <li>
+            <strong className="text-white/90">Use any-suit building to your advantage.</strong>{" "}
+            Unlike{" "}
+            <Link href="/penguin" className="text-[var(--gold)] hover:text-white transition-colors">
+              Penguin
+            </Link>{" "}
+            (same-suit only), Flower Garden allows any-suit descending building. This means every
+            card has multiple possible destinations, making it much easier to move cards off a
+            target column.
+          </li>
+          <li>
+            <strong className="text-white/90">Fill empty columns with Kings.</strong> Once a column
+            is empty, the best card to place there is a King (from the bouquet or another column).
+            A King starts a fresh 13-card descending sequence and will not be moved until end-game
+            foundation building.
+          </li>
+          <li>
+            <strong className="text-white/90">Multiple empty columns are game-winning.</strong> One
+            empty column is useful. Two is powerful. Three means you have almost total control over
+            the board. Aim for two empty columns by the mid-game.
+          </li>
+        </ul>
+        <div className="bg-emerald-900/20 border border-emerald-500/20 rounded-lg p-4">
+          <p className="text-emerald-300/80 text-sm">
+            <strong>Pro tip:</strong> An empty column can hold an entire sequence, not just one card.
+            This means moving a 5-card sequence to an empty column is valid and frees the original
+            column completely. Use this to chain column-clearing moves — clear one column, use it
+            as staging, then clear another.
+          </p>
+        </div>
+      </section>
+
+      {/* Section 4: Foundation Building Order */}
+      <section className="mb-10 max-w-3xl mx-auto">
+        <h2
+          className="text-2xl sm:text-3xl font-bold mb-4"
+          style={{ fontFamily: "var(--font-playfair)" }}
+        >
+          Foundation Building Order
+        </h2>
+        <p className="text-white/70 leading-relaxed mb-4">
+          Flower Garden foundations build up from Ace to King in suit — the standard pattern.
+          The question is not <em>where</em> cards go but <em>when</em> to play them. Aggressive
+          foundation building depletes the tableau and makes reorganization easier, but playing
+          a card to the foundation when it is still needed as a tableau building target can
+          strand other cards.
+        </p>
+        <p className="text-white/70 leading-relaxed mb-4">
+          The &ldquo;safe play&rdquo; rule: a card is safe to play to the foundation when both
+          cards of the opposite color and one rank lower are already on their foundations. For
+          example, the 5 of Hearts is safe when both black 4s (4♠ and 4♣) are on foundations.
+          This ensures no card on the tableau could have used the 5♥ as a building target.
+        </p>
+        <ul className="list-disc list-inside text-white/70 space-y-2 mb-4 ml-4">
+          <li>
+            <strong className="text-white/90">Aces and 2s go immediately.</strong> These are always
+            safe — no card needs them as a tableau building target.
+          </li>
+          <li>
+            <strong className="text-white/90">Build foundations evenly.</strong> Keeping all four
+            foundations within 2-3 ranks of each other ensures the safe-play rule is satisfied
+            more often, enabling faster play.
+          </li>
+          <li>
+            <strong className="text-white/90">Check bouquet Aces first.</strong> Scan the bouquet for
+            Aces at the start of every game. They go to foundations immediately, thinning the bouquet
+            without losing options.
+          </li>
+          <li>
+            <strong className="text-white/90">Late-game: play aggressively.</strong> Once the bouquet
+            is mostly depleted and columns are thin, play to foundations at every opportunity. The
+            safe-play rule matters less when few cards remain on the tableau.
+          </li>
+        </ul>
+
+        <div className="bg-white/[0.03] border border-white/10 rounded-xl overflow-hidden mb-4">
+          <div className="grid grid-cols-3 text-sm font-bold text-white/40 uppercase tracking-wider px-4 py-3 border-b border-white/5">
+            <span>Foundation Rank</span>
+            <span>Safe Play Rule</span>
+            <span>Action</span>
+          </div>
+          {[
+            ["Aces", "Always safe", "Play immediately from any location"],
+            ["2s", "Always safe", "Play immediately — nothing builds on an Ace"],
+            ["3s-5s", "Check opposite-color cards 1 rank lower", "Play if safe; hold if needed as building target"],
+            ["6s-9s", "Check carefully — high impact if wrong", "Only play when safe rule is satisfied or you are certain"],
+            ["10s-Kings", "Usually safe by late game", "Play when foundations catch up; Kings always go last"],
+          ].map(([rank, rule, action], i) => (
+            <div
+              key={i}
+              className={`grid grid-cols-3 px-4 py-3 text-sm text-white/60 ${i % 2 === 0 ? "bg-white/[0.02]" : ""}`}
             >
-              Understanding the Flower Garden Layout
-            </h2>
-            <div className="space-y-4 text-white/60 leading-relaxed">
-              <p>
-                Flower Garden Solitaire begins with a layout unlike any other solitaire variant.
-                Thirty-six cards are dealt into six columns of six cards each &mdash; these are
-                called the &quot;flower beds.&quot; Every card in every flower bed is face-up and
-                visible from the start. The remaining sixteen cards form the &quot;bouquet,&quot;
-                a reserve row where every card is also face-up and immediately playable at any time.
-              </p>
-              <p>
-                This means you have perfect information from the very first moment. There are no
-                hidden cards, no stock pile to draw from, no surprises. Every decision you make
-                can be fully informed, and every mistake is entirely your own. This perfect
-                information is both the game&apos;s greatest gift and its greatest challenge &mdash;
-                you have no excuse for not planning ahead, and the game punishes shallow thinking
-                ruthlessly.
-              </p>
-              <p>
-                The four foundations sit above the flower beds, waiting for you to build them up
-                by suit from Ace to King. Your goal is to move all 52 cards to the foundations.
-                Unlike FreeCell, there are no free cells for temporary storage. Your only flexible
-                resource is the bouquet &mdash; and once you play a card from the bouquet, it is
-                gone. You cannot move cards back into the bouquet, so every bouquet play is a
-                one-way decision.
-              </p>
-
-              <div className="bg-white/[0.03] border border-white/10 rounded-lg p-5">
-                <h3 className="font-semibold text-[#D4AF37] mb-2">
-                  The Two Zones at a Glance
-                </h3>
-                <p className="text-sm">
-                  <strong className="text-white/70">Flower Beds (Tableau):</strong> 6 columns of 6
-                  face-up cards. Only the bottom card of each column is playable. You build down
-                  by rank regardless of suit &mdash; any card can go on any card that is exactly
-                  one rank higher. Only Kings may fill empty columns.
-                </p>
-                <p className="text-sm mt-2">
-                  <strong className="text-white/70">Bouquet (Reserve):</strong> 16 face-up cards,
-                  all playable at any time. Cards can move from the bouquet to the tableau or
-                  foundations, but never back. The bouquet shrinks as you use it and cannot be
-                  replenished.
-                </p>
-              </div>
-
-              <p>
-                Understanding this layout is crucial because it defines your strategic landscape.
-                With no free cells and no stock pile, your ability to rearrange the board is
-                limited to what the tableau columns and the shrinking bouquet allow. Every move
-                either opens a path forward or closes one off. The rest of this guide teaches you
-                how to tell the difference.
-              </p>
+              <span className="text-white/80 font-medium">{rank}</span>
+              <span>{rule}</span>
+              <span>{action}</span>
             </div>
-          </section>
+          ))}
+        </div>
+      </section>
 
-          <AdUnit format="horizontal" className="-my-1" />
+      {/* Section 5: Any-Suit Building */}
+      <section className="mb-10 max-w-3xl mx-auto">
+        <h2
+          className="text-2xl sm:text-3xl font-bold mb-4"
+          style={{ fontFamily: "var(--font-playfair)" }}
+        >
+          Exploiting Any-Suit Building
+        </h2>
+        <p className="text-white/70 leading-relaxed mb-4">
+          Flower Garden uses any-suit descending building on the tableau — a 9 of any suit can go
+          on a 10 of any suit. This is the most permissive building rule in solitaire, giving you
+          four possible destinations for every card (one per column with a matching rank+1 at its
+          top). This flexibility is your primary advantage and the reason Flower Garden has a
+          higher win rate than most variants.
+        </p>
+        <p className="text-white/70 leading-relaxed mb-4">
+          The tradeoff: any-suit building makes it easy to create &ldquo;messy&rdquo; sequences
+          where suits are interleaved. These sequences are easy to build but hard to dismantle
+          for foundation play, since foundations require in-suit ordering. The skill is using
+          any-suit flexibility for short-term organization while maintaining an eye toward
+          eventual foundation dismantling.
+        </p>
+        <ul className="list-disc list-inside text-white/70 space-y-2 mb-4 ml-4">
+          <li>
+            <strong className="text-white/90">Build in-suit when possible.</strong> Even though
+            any suit is allowed, choosing same-suit placements makes future foundation building
+            smoother. Treat any-suit as a fallback, not a default.
+          </li>
+          <li>
+            <strong className="text-white/90">Use any-suit to consolidate columns.</strong> The
+            main value of any-suit building is merging cards from different columns efficiently.
+            Use it to stack cards from a column you are trying to clear, even if the suits mix.
+          </li>
+          <li>
+            <strong className="text-white/90">Short mixed-suit sequences are fine.</strong> A
+            3-4 card mixed-suit sequence is easy to dismantle later. A 10-card mixed sequence
+            is a nightmare. Keep mixed sequences short.
+          </li>
+          <li>
+            <strong className="text-white/90">Sequences do not move as units.</strong> Unlike
+            some solitaire variants, Flower Garden only allows moving one card at a time. Long
+            sequences must be dismantled card-by-card, requiring empty columns or bouquet cards
+            as temporary storage.
+          </li>
+        </ul>
+        <div className="bg-red-900/20 border border-red-500/20 rounded-lg p-4">
+          <p className="text-red-300/80 text-sm">
+            <strong>Critical rule:</strong> Only single cards can be moved in Flower Garden — there
+            are no supermoves or group moves. A 6-card sequence requires 6 individual moves (with
+            5 temporary storage locations) to relocate. This makes empty columns and the bouquet
+            even more critical for reorganization.
+          </p>
+        </div>
+      </section>
 
-          {/* Section 2: Using the Bouquet Strategically */}
-          <section>
-            <h2
-              className="text-2xl sm:text-3xl font-bold text-white/90 mb-4"
-              style={{ fontFamily: "var(--font-playfair)" }}
+      <AdUnit format="horizontal" className="-my-1 max-w-3xl mx-auto" />
+
+      {/* Section 6: Reading the Deal */}
+      <section className="mb-10 max-w-3xl mx-auto">
+        <h2
+          className="text-2xl sm:text-3xl font-bold mb-4"
+          style={{ fontFamily: "var(--font-playfair)" }}
+        >
+          Reading the Deal: First-Move Analysis
+        </h2>
+        <p className="text-white/70 leading-relaxed mb-4">
+          Flower Garden is a perfect-information game — every card is visible from the start (36 in
+          the garden beds, 16 in the bouquet). This means you can and should analyze the full deal
+          before making your first move. Experienced players spend 30-60 seconds reading the deal
+          to identify opportunities and threats.
+        </p>
+        <p className="text-white/70 leading-relaxed mb-4">
+          Your initial scan should answer five questions: Where are the Aces? Where are the Kings?
+          Which column is shortest? Which suits have the best foundation-building chains? And
+          what is blocking the most progress?
+        </p>
+        <ul className="list-disc list-inside text-white/70 space-y-2 mb-4 ml-4">
+          <li>
+            <strong className="text-white/90">Locate all four Aces.</strong> Aces in the bouquet
+            go to foundations immediately. Aces buried at the bottom of garden beds need excavation
+            plans. Aces on top of beds — play them instantly.
+          </li>
+          <li>
+            <strong className="text-white/90">Assess King positions.</strong> Kings in the bouquet
+            are assets (future column anchors). Kings at the bottom of beds are neutral. Kings in
+            the middle of beds are liabilities requiring column-clearing work.
+          </li>
+          <li>
+            <strong className="text-white/90">Identify the clearing candidate.</strong> Which column
+            can be emptied with the fewest moves? Often it is the column with the most top-accessible
+            cards that can go directly to other columns or foundations.
+          </li>
+          <li>
+            <strong className="text-white/90">Trace foundation chains.</strong> For each suit, trace
+            the A-2-3-4... sequence and note where each card sits. If a suit has A-2-3-4 all
+            accessible, that is a fast foundation run waiting to happen.
+          </li>
+        </ul>
+        <div className="bg-emerald-900/20 border border-emerald-500/20 rounded-lg p-4">
+          <p className="text-emerald-300/80 text-sm">
+            <strong>Reading shortcut:</strong> Count how many Aces are in the bouquet (free),
+            how many Kings are in the bouquet (useful), and what is the shortest garden bed.
+            These three numbers give you a quick difficulty estimate: 3+ bouquet Aces with
+            2+ bouquet Kings and a 4-card shortest bed? That is a very winnable deal.
+          </p>
+        </div>
+      </section>
+
+      {/* Section 7: Flower Garden vs Canfield */}
+      <section className="mb-10 max-w-3xl mx-auto">
+        <h2
+          className="text-2xl sm:text-3xl font-bold mb-4"
+          style={{ fontFamily: "var(--font-playfair)" }}
+        >
+          Flower Garden vs Canfield: Strategic Comparison
+        </h2>
+        <p className="text-white/70 leading-relaxed mb-4">
+          Flower Garden and{" "}
+          <Link href="/canfield/strategy" className="text-[var(--gold)] hover:text-white transition-colors">
+            Canfield
+          </Link>{" "}
+          are both reserve-based solitaire games, but their reserves work completely differently,
+          which reshapes the entire strategy. Understanding the comparison helps players coming
+          from one game adapt to the other.
+        </p>
+        <div className="bg-white/[0.03] border border-white/10 rounded-xl overflow-hidden mb-4">
+          <div className="grid grid-cols-3 text-sm font-bold text-white/40 uppercase tracking-wider px-4 py-3 border-b border-white/5">
+            <span>Feature</span>
+            <span>Flower Garden</span>
+            <span>Canfield</span>
+          </div>
+          {[
+            ["Reserve size", "16 cards (bouquet)", "13 cards"],
+            ["Reserve access", "All cards available simultaneously", "Only top card visible/playable"],
+            ["Tableau building", "Any suit descending", "Alternating color descending"],
+            ["Foundation start", "Always Aces", "Random base rank"],
+            ["Tableau columns", "6 (garden beds)", "4"],
+            ["Cards per column", "6", "1 (+ auto-fill from reserve)"],
+            ["Stock/waste", "None", "Yes (deal 3)"],
+            ["Win rate (skilled)", "~60%", "30-35%"],
+            ["Key skill", "Bouquet conservation", "Reserve depletion"],
+          ].map(([feature, fg, canfield], i) => (
+            <div
+              key={i}
+              className={`grid grid-cols-3 px-4 py-3 text-sm text-white/60 ${i % 2 === 0 ? "bg-white/[0.02]" : ""}`}
             >
-              Using the Bouquet Strategically
-            </h2>
-            <div className="space-y-4 text-white/60 leading-relaxed">
-              <p>
-                The bouquet is the single most important resource in Flower Garden Solitaire. Those
-                sixteen freely-playable cards give you flexibility that the tableau alone cannot
-                provide. But the bouquet is a depletable resource &mdash; once a card leaves the
-                bouquet, it is gone forever. How you manage this resource often determines whether
-                you win or lose.
-              </p>
-
-              <div className="bg-white/[0.03] border border-white/10 rounded-lg p-5">
-                <h3 className="font-semibold text-[#D4AF37] mb-2">
-                  Play Bouquet Cards with Purpose
-                </h3>
-                <p className="text-sm">
-                  Every bouquet card you play should serve a clear strategic purpose. The best
-                  reasons to play a bouquet card are: (1) it is an Ace or the next card needed on
-                  a foundation, (2) it is a King that will fill an empty column you deliberately
-                  created, (3) it completes a critical tableau sequence that frees a buried card
-                  you need, or (4) it enables a multi-move combination that advances your position
-                  significantly. Playing a bouquet card just because it fits somewhere on the
-                  tableau is usually a waste of a valuable resource.
-                </p>
-              </div>
-
-              <h3 className="text-lg font-semibold text-[#D4AF37] mt-4">
-                The Bouquet as a Safety Net
-              </h3>
-              <p>
-                Think of the bouquet as serving the role that free cells play in FreeCell. In
-                FreeCell, you can temporarily park cards in free cells while you rearrange the
-                tableau. In Flower Garden, the bouquet serves a similar but different function
-                &mdash; it provides cards you can inject into the tableau to bridge gaps or
-                complete sequences. A large bouquet means more options and more flexibility. As
-                the bouquet shrinks, your game becomes increasingly rigid and dependent on the
-                tableau alone.
-              </p>
-
-              <h3 className="text-lg font-semibold text-[#D4AF37] mt-4">
-                Prioritize Foundation-Bound Bouquet Cards
-              </h3>
-              <p>
-                If your bouquet contains Aces, play them to foundations immediately &mdash; there
-                is never a reason to hold an Ace in the bouquet. Twos that match an Ace already
-                on a foundation should follow quickly. These plays reduce your bouquet size but
-                they also advance your foundations without costing you tableau flexibility. The
-                net effect is positive because foundation cards are permanently resolved.
-              </p>
-
-              <h3 className="text-lg font-semibold text-[#D4AF37] mt-4">
-                Avoid Premature Bouquet Depletion
-              </h3>
-              <p>
-                A common beginner mistake is playing bouquet cards aggressively in the opening,
-                burning through 8-10 bouquet cards in the first few moves. This feels productive
-                because the board looks different, but it leaves you with a tiny bouquet for the
-                midgame when you actually need the flexibility. As a general rule, try to preserve
-                at least 8-10 bouquet cards through the opening phase. Play bouquet cards to
-                foundations freely, but be conservative about playing them to the tableau unless
-                the move is clearly necessary.
-              </p>
-
-              <div className="bg-white/[0.03] border border-white/10 rounded-lg p-5">
-                <h3 className="font-semibold text-[#D4AF37] mb-2">
-                  Reading the Bouquet for Planning
-                </h3>
-                <p className="text-sm">
-                  Because the bouquet is fully visible, you should regularly scan it as part of
-                  your planning. Ask yourself: which bouquet cards will I definitely need later?
-                  Are there Kings in the bouquet that could fill empty columns? Are there cards
-                  that complete long sequences in the tableau? Knowing what your bouquet contains
-                  helps you plan moves that set up future bouquet plays rather than making them
-                  unnecessary.
-                </p>
-              </div>
+              <span className="text-white/80 font-medium">{feature}</span>
+              <span>{fg}</span>
+              <span>{canfield}</span>
             </div>
-          </section>
+          ))}
+        </div>
+        <p className="text-white/70 leading-relaxed">
+          The critical strategic inversion: in Canfield, you want to deplete the reserve as fast
+          as possible (it blocks access to hidden cards). In Flower Garden, you want to conserve
+          the bouquet as long as possible (every card is simultaneously useful). This is the single
+          biggest mindset shift between the two games.
+        </p>
+      </section>
 
-          {/* Section 3: Tableau Building Without Suit Restrictions */}
-          <section>
-            <h2
-              className="text-2xl sm:text-3xl font-bold text-white/90 mb-4"
-              style={{ fontFamily: "var(--font-playfair)" }}
+      {/* Quick Reference Cheat Sheet */}
+      <section className="mb-10 max-w-3xl mx-auto">
+        <h2
+          className="text-2xl sm:text-3xl font-bold mb-4"
+          style={{ fontFamily: "var(--font-playfair)" }}
+        >
+          Quick Reference: Strategy Cheat Sheet
+        </h2>
+        <div className="bg-white/[0.04] border border-white/10 rounded-xl p-5">
+          <ol className="list-decimal list-inside text-white/80 space-y-3 ml-2">
+            <li>
+              <strong>Read the full deal first.</strong> Locate Aces, Kings, and the shortest column
+              before making any move.
+            </li>
+            <li>
+              <strong>Play bouquet Aces and 2s immediately.</strong> These are always safe foundation
+              plays that thin the bouquet without losing options.
+            </li>
+            <li>
+              <strong>Clear a column within 15-20 moves.</strong> Your primary early goal is creating
+              empty space for reorganization.
+            </li>
+            <li>
+              <strong>Conserve the bouquet.</strong> Treat it as a strategic reserve, not a hand to
+              empty. Deploy cards for foundation plays and sequence completions, not parking.
+            </li>
+            <li>
+              <strong>Place Kings in empty columns.</strong> A King anchors a full 13-card sequence.
+              Save bouquet Kings for this purpose.
+            </li>
+            <li>
+              <strong>Build in-suit when possible.</strong> Any-suit is allowed, but same-suit
+              sequences dismantle more cleanly for foundation play.
+            </li>
+            <li>
+              <strong>Keep foundations within 2-3 ranks.</strong> Even building enables the safe-play
+              rule and prevents card stranding.
+            </li>
+            <li>
+              <strong>Remember: single card moves only.</strong> Plan reorganization with temporary
+              storage (empty columns + bouquet) since sequences cannot move as units.
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      {/* Related Guides */}
+      <div className="max-w-3xl mx-auto">
+        <CardSection variant="dark">
+          <SectionHeading variant="dark" sub="Continue Learning">Related Guides</SectionHeading>
+          <ContentBody variant="dark" className="grid gap-4 md:grid-cols-3">
+            <ContentLinkCard href="/flower-garden/how-to-play" title="How to Play Flower Garden" description="Complete rules, setup, and bouquet mechanics explained." />
+            <ContentLinkCard href="/flower-garden/tips" title="Flower Garden Tips" description="Quick, practical tips for improving your game." />
+            <ContentLinkCard href="/canfield/strategy" title="Canfield Strategy Guide" description="Strategy for another reserve-based solitaire." />
+          </ContentBody>
+        </CardSection>
+      </div>
+
+      <div className="mb-10 max-w-3xl mx-auto">
+        <CtaSection
+          heading="Ready to Apply These Strategies?"
+          body="Put your Flower Garden knowledge to the test. Play free online Flower Garden Solitaire with unlimited undo, hints, and the full 16-card bouquet."
+          primaryLabel="Play Flower Garden"
+          primaryHref="/flower-garden"
+          secondaryLabel="Learn the Rules"
+          secondaryHref="/flower-garden/how-to-play"
+        />
+      </div>
+
+      <AdUnit format="horizontal" className="-my-1 max-w-3xl mx-auto" />
+
+      {/* FAQ Section */}
+      <section className="mb-10 max-w-3xl mx-auto">
+        <h2
+          className="text-2xl font-bold mb-4"
+          style={{ fontFamily: "var(--font-playfair)" }}
+        >
+          Frequently Asked Questions
+        </h2>
+        <div className="space-y-4">
+          {faqs.map((faq, i) => (
+            <details
+              key={i}
+              className="group bg-white/[0.03] border border-white/10 rounded-xl overflow-hidden"
+              {...(i === 0 ? { open: true } : {})}
             >
-              Tableau Building Without Suit Restrictions
-            </h2>
-            <div className="space-y-4 text-white/60 leading-relaxed">
-              <p>
-                One of Flower Garden&apos;s most distinctive rules is that tableau building
-                ignores suit entirely. You can place any card on any card that is exactly one rank
-                higher &mdash; the 7 of Hearts can go on the 8 of Spades, the 8 of Diamonds, the
-                8 of Clubs, or the 8 of Hearts. This gives you four times as many legal tableau
-                placements as a same-suit game like Baker&apos;s Game, and twice as many as
-                FreeCell&apos;s alternating-color rule.
-              </p>
-
-              <h3 className="text-lg font-semibold text-[#D4AF37] mt-4">
-                More Options, but Only One Card Moves at a Time
-              </h3>
-              <p>
-                The flexibility of suit-free building comes with an important limitation: you can
-                only move one card at a time from the tableau. There are no supermoves in Flower
-                Garden. You cannot pick up a sequence of five cards and move them together, even
-                if they are perfectly ordered. Each card must be moved individually. This means
-                that long descending sequences in the tableau are not nearly as useful as they
-                are in FreeCell, because disassembling them requires one move per card and
-                somewhere to put each card temporarily.
-              </p>
-
-              <div className="bg-white/[0.03] border border-white/10 rounded-lg p-5">
-                <h3 className="font-semibold text-[#D4AF37] mb-2">
-                  Build Short, Purposeful Sequences
-                </h3>
-                <p className="text-sm">
-                  Because you can only move one card at a time, long tableau sequences are a trap.
-                  A 7-card descending run looks impressive but it means those 7 cards are locked
-                  in place unless you have 6 empty columns or bouquet slots to temporarily house
-                  them while you rearrange. Instead, build short sequences of 2-3 cards that serve
-                  a specific purpose &mdash; like uncovering a card you need or setting up a
-                  foundation play. Quality of moves matters far more than quantity.
-                </p>
+              <summary className="px-5 py-4 cursor-pointer text-white/90 font-semibold hover:text-[var(--gold)] transition-colors list-none flex items-center justify-between">
+                {faq.question}
+                <span className="text-white/30 group-open:rotate-180 transition-transform ml-2">
+                  ▾
+                </span>
+              </summary>
+              <div className="px-5 pb-4 text-white/60 leading-relaxed">
+                {faq.answer}
               </div>
+            </details>
+          ))}
+        </div>
+      </section>
 
-              <h3 className="text-lg font-semibold text-[#D4AF37] mt-4">
-                Use Suit-Free Building for Tactical Advantage
-              </h3>
-              <p>
-                The suit-free rule is your main tactical weapon. When you need to uncover a buried
-                card in a flower bed, you have four potential landing spots for the blocking card
-                (any card one rank higher in another column), compared to just one in Baker&apos;s
-                Game. This dramatically increases the chances that you can move a blocking card
-                without using the bouquet. Before playing a bouquet card, always check whether
-                the same result can be achieved through a tableau-to-tableau move. The suit-free
-                rule often makes this possible.
-              </p>
-
-              <h3 className="text-lg font-semibold text-[#D4AF37] mt-4">
-                Watch for Rank Congestion
-              </h3>
-              <p>
-                Even though suit does not matter for building, rank still does. If three columns
-                all have a 9 as their bottom card, only one card of each rank (any 8) can be
-                placed on them. When multiple columns share the same bottom rank, your effective
-                options narrow. Pay attention to the distribution of ranks at the bottom of your
-                columns. Ideally, you want a spread of different ranks so that you have landing
-                spots for cards of many different ranks.
-              </p>
-            </div>
-          </section>
-
-          <AdUnit format="auto" className="-my-1" />
-
-          {/* Section 4: Creating and Using Empty Columns */}
-          <section>
-            <h2
-              className="text-2xl sm:text-3xl font-bold text-white/90 mb-4"
-              style={{ fontFamily: "var(--font-playfair)" }}
-            >
-              Creating and Using Empty Columns
-            </h2>
-            <div className="space-y-4 text-white/60 leading-relaxed">
-              <p>
-                Empty columns in Flower Garden are both extremely valuable and extremely
-                restricted. Unlike FreeCell where any card can fill an empty cascade, Flower
-                Garden requires that only Kings may be placed in empty columns. This King-only
-                rule fundamentally changes how you think about emptying columns.
-              </p>
-
-              <div className="bg-white/[0.03] border border-white/10 rounded-lg p-5">
-                <h3 className="font-semibold text-[#D4AF37] mb-2">
-                  Only Empty a Column When You Have a King Ready
-                </h3>
-                <p className="text-sm">
-                  Creating an empty column without a King to fill it is almost always a mistake.
-                  The empty column sits there unusable while you have one fewer column to work
-                  with. Before investing moves to empty a column, confirm that you have a King
-                  available &mdash; either in the bouquet or as the exposed card at the bottom of
-                  another flower bed. The ideal scenario is emptying a column and immediately
-                  filling it with a King that has useful cards (Queens, Jacks) ready to stack
-                  beneath it.
-                </p>
-              </div>
-
-              <h3 className="text-lg font-semibold text-[#D4AF37] mt-4">
-                When Empty Columns Are Worth Creating
-              </h3>
-              <p>
-                Despite the King restriction, empty columns are worth creating when you have a
-                clear plan. The best scenarios are: (1) you have a King in the bouquet and several
-                descending cards that can immediately build on it, creating a long useful column;
-                (2) the column you are emptying contains cards that can all go directly to
-                foundations; or (3) emptying the column is the only way to access a critical
-                buried card in another column (by moving cards to the new King-headed column
-                one at a time).
-              </p>
-
-              <h3 className="text-lg font-semibold text-[#D4AF37] mt-4">
-                Kings Are Premium Cards
-              </h3>
-              <p>
-                In most solitaire variants, Kings are neutral or even slightly negative cards
-                because they cannot be placed on anything &mdash; they can only sit in empty
-                columns. In Flower Garden, this makes Kings <em>premium</em> cards because they
-                are the only cards that unlock the value of empty columns. A King in the bouquet
-                is especially powerful because it can fill an empty column at any time. A King
-                buried at the bottom of a long flower bed is much less useful because you would
-                need to disassemble the entire column above it just to access it.
-              </p>
-
-              <div className="bg-white/[0.03] border border-white/10 rounded-lg p-5">
-                <h3 className="font-semibold text-[#D4AF37] mb-2">
-                  The Empty Column Trap
-                </h3>
-                <p className="text-sm">
-                  Beginners sometimes empty a column only to immediately fill it with the first
-                  available King, without considering whether that King placement actually helps
-                  their game. Not every King placement is equal. A King with no Queens available
-                  to stack on it creates a dead-end column that wastes space. Before placing a
-                  King, check whether there are Queens (and ideally Jacks and 10s) that can build
-                  on it. A King that kicks off a long building sequence is far more valuable than
-                  a King that sits alone.
-                </p>
-              </div>
-
-              <h3 className="text-lg font-semibold text-[#D4AF37] mt-4">
-                Column Count Management
-              </h3>
-              <p>
-                With only six columns to work with (compared to eight in FreeCell), losing even
-                one column to a dead-end King or an unusable empty space has a bigger impact.
-                Think of your six columns as a portfolio &mdash; each one should be either
-                actively working toward your goals (building sequences, feeding foundations) or
-                being prepared for a strategic purpose. If two of your six columns are stuck
-                with deeply buried cards and no path forward, you are effectively playing with
-                four columns, and the game will likely become unwinnable.
-              </p>
-            </div>
-          </section>
-
-          {/* Section 5: Foundation Timing */}
-          <section>
-            <h2
-              className="text-2xl sm:text-3xl font-bold text-white/90 mb-4"
-              style={{ fontFamily: "var(--font-playfair)" }}
-            >
-              Foundation Timing: When to Build Up and When to Hold Back
-            </h2>
-            <div className="space-y-4 text-white/60 leading-relaxed">
-              <p>
-                In many solitaire games, sending cards to foundations as quickly as possible is
-                the right default strategy. Flower Garden is different. Because you can only
-                move one card at a time and there are no free cells, every card in the tableau
-                is a potential stepping stone for other cards. Sending a card to the foundation
-                permanently removes it from play, which can sometimes eliminate a critical
-                intermediate placement.
-              </p>
-
-              <h3 className="text-lg font-semibold text-[#D4AF37] mt-4">
-                Always Play Aces and Twos Immediately
-              </h3>
-              <p>
-                Aces and Twos should go to foundations without hesitation. No card ever needs to
-                be placed on an Ace or a Two in the tableau (since building goes downward), so
-                they serve no useful purpose in the flower beds. Playing them to foundations
-                immediately reduces clutter and begins building your foundation stacks. If an
-                Ace is in the bouquet, play it on your first move. If an Ace is exposed at the
-                bottom of a flower bed, prioritize it highly.
-              </p>
-
-              <h3 className="text-lg font-semibold text-[#D4AF37] mt-4">
-                Be Cautious with Middle-Rank Cards
-              </h3>
-              <p>
-                Cards in the 3-8 range require more thought before sending to foundations. A 5
-                sitting at the bottom of a flower bed column might seem like it should go to
-                the foundation immediately, but that 5 might be the only available card for a 4
-                that needs to move from another column. Before sending a middle-rank card to
-                the foundation, scan the board for cards one rank lower that might need to land
-                on it. If no such cards exist or they are all already in the bouquet or on
-                foundations, go ahead and play it up. Otherwise, consider waiting.
-              </p>
-
-              <div className="bg-white/[0.03] border border-white/10 rounded-lg p-5">
-                <h3 className="font-semibold text-[#D4AF37] mb-2">
-                  The Foundation Timing Rule of Thumb
-                </h3>
-                <p className="text-sm">
-                  Ask yourself: &quot;Is there any card currently in the flower beds that is one
-                  rank lower than this card and might need to be placed on it?&quot; If the
-                  answer is no, send the card to the foundation. If the answer is yes, wait
-                  until either that lower card has been dealt with or you are confident it has
-                  an alternative placement. This simple check prevents the most common foundation
-                  timing mistakes.
-                </p>
-              </div>
-
-              <h3 className="text-lg font-semibold text-[#D4AF37] mt-4">
-                Keep Foundations Roughly Even
-              </h3>
-              <p>
-                Try to build all four foundations at a similar pace rather than racing one suit
-                to the top while others stagnate. Uneven foundations create problems because
-                high-rank cards in the lagging suits have no place to go, clogging the tableau.
-                If your Hearts foundation is at 7 but your Spades foundation is still at 2,
-                every Spade from 3 through 7 is sitting in your tableau or bouquet taking up
-                space. Keeping foundations within 2-3 ranks of each other maintains a healthier
-                board state.
-              </p>
-            </div>
-          </section>
-
-          <AdUnit format="auto" className="-my-1" />
-
-          {/* Section 6: Reading the Board */}
-          <section>
-            <h2
-              className="text-2xl sm:text-3xl font-bold text-white/90 mb-4"
-              style={{ fontFamily: "var(--font-playfair)" }}
-            >
-              Reading the Board: Planning Multi-Move Sequences
-            </h2>
-            <div className="space-y-4 text-white/60 leading-relaxed">
-              <p>
-                Flower Garden&apos;s perfect information means that the best players do not
-                make moves one at a time. They read the board like a chess position, planning
-                sequences of 5, 10, or even 15 moves ahead. This skill &mdash; reading the
-                board &mdash; is the single biggest differentiator between beginners and
-                experienced Flower Garden players.
-              </p>
-
-              <h3 className="text-lg font-semibold text-[#D4AF37] mt-4">
-                Start from the Goal and Work Backward
-              </h3>
-              <p>
-                Instead of looking at what moves are available right now, start by identifying
-                what you want to achieve. Maybe you want to free the Ace of Diamonds buried
-                third from the top in column four. Work backward: what card is covering it?
-                Where can that card go? What needs to happen to create that landing spot? Often,
-                a 3-4 move sequence emerges that looks impossible when you scan the board
-                forward but becomes obvious when you trace it backward from the goal.
-              </p>
-
-              <div className="bg-white/[0.03] border border-white/10 rounded-lg p-5">
-                <h3 className="font-semibold text-[#D4AF37] mb-2">
-                  The Chain Reaction Technique
-                </h3>
-                <p className="text-sm">
-                  Look for chain reactions &mdash; sequences where one move enables the next,
-                  which enables the next, and so on. For example: move the 6 from column 1 to
-                  the 7 in column 3, which exposes a 4 in column 1, which goes to the foundation,
-                  which reveals a Queen in column 1, which moves to the King in column 5, which
-                  empties column 1, which you fill with a King from the bouquet. Each link in the
-                  chain sets up the next. The longest chain you can identify and execute is usually
-                  the best available play.
-                </p>
-              </div>
-
-              <h3 className="text-lg font-semibold text-[#D4AF37] mt-4">
-                Identify Bottleneck Cards
-              </h3>
-              <p>
-                A bottleneck card is one that multiple parts of your plan depend on. Maybe the 8
-                in column 2 is blocking two different cards you need &mdash; a 5 that should go
-                to foundations and a King that could fill an empty column. Resolving the
-                bottleneck card should be your top priority because it unlocks multiple lines of
-                play simultaneously. When you find yourself stuck, look for the single card
-                whose removal would open up the most possibilities.
-              </p>
-
-              <h3 className="text-lg font-semibold text-[#D4AF37] mt-4">
-                The 30-Second Survey
-              </h3>
-              <p>
-                Before making your first move on any new deal, spend 30 seconds surveying the
-                entire board. During this survey, identify: (1) where all four Aces are located,
-                (2) which Kings are accessible and which are buried, (3) whether any columns
-                have naturally ordered sequences that could be leveraged, (4) how many bouquet
-                cards can go directly to foundations, and (5) which columns look shortest and
-                might be candidates for emptying. This initial survey shapes your entire game
-                plan and prevents the aimless card-shuffling that characterizes losing play.
-              </p>
-
-              <div className="bg-white/[0.03] border border-white/10 rounded-lg p-5">
-                <h3 className="font-semibold text-[#D4AF37] mb-2">
-                  Recognizing Lost Positions
-                </h3>
-                <p className="text-sm">
-                  Not every Flower Garden deal is solvable. After 10-15 moves, if you find that
-                  your bouquet is nearly depleted, no columns can be emptied, and critical cards
-                  are deeply buried with no path to them, the deal may be unwinnable. Signs of a
-                  lost position include: all exposed column cards being high-rank with no Kings
-                  available for empty slots, all bouquet cards already played with foundations
-                  stuck at low ranks, and circular dependencies where card A blocks card B which
-                  blocks card A. Recognizing lost positions early saves time and frustration.
-                </p>
-              </div>
-            </div>
-          </section>
-
-          <AdUnit format="auto" className="-my-1" />
-
-          {/* FAQ Section */}
-          <section className="bg-white/[0.03] border border-white/10 rounded-xl p-6 sm:p-8">
-            <h2
-              className="text-2xl font-bold text-white/90 mb-6"
-              style={{ fontFamily: "var(--font-playfair)" }}
-            >
-              Frequently Asked Questions
-            </h2>
-            <div className="space-y-6">
-              {faqs.map((faq, i) => (
-                <div key={i}>
-                  <h3 className="font-medium text-white/80 text-lg mb-2">
-                    {faq.question}
-                  </h3>
-                  <p className="text-white/50 leading-relaxed">{faq.answer}</p>
-                  {i < faqs.length - 1 && (
-                    <div className="mt-6 border-b border-white/10" />
-                  )}
-                </div>
-              ))}
-            </div>
-          </section>
-
-          <AdUnit format="horizontal" className="-my-1" />
-
-          {/* ── Related Guides ── */}
-          <CardSection variant="dark">
-            <SectionHeading variant="dark" sub="Continue Learning">Related Guides</SectionHeading>
-            <ContentBody variant="dark" className="grid gap-4 md:grid-cols-3">
-              <ContentLinkCard href="/flower-garden" title="Play Flower Garden" description="Play online for free, no download required." />
-              <ContentLinkCard href="/flower-garden/tips" title="Flower Garden Tips" description="Quick tips for better Flower Garden play." />
-              <ContentLinkCard href="/strategy" title="FreeCell Strategy" description="Compare with FreeCell strategic principles." />
-            </ContentBody>
-          </CardSection>
-
-          <CtaSection
-            heading="Ready to Play?"
-            body="Put these strategies into practice. Play Flower Garden Solitaire online for free — no download, no signup."
-            primaryLabel="Play Flower Garden"
-            primaryHref="/flower-garden"
-          />
-
-          {/* Cross-links */}
-          <section className="bg-white/[0.03] border border-white/10 rounded-xl p-6 sm:p-8">
-            <h2 className="text-xl font-bold text-white/90 mb-4" style={{ fontFamily: "var(--font-playfair)" }}>
-              Related Pages
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <ContentLinkCard href="/flower-garden" title="Play Flower Garden" description="Play online for free, no download" />
-              <ContentLinkCard href="/flower-garden/how-to-play" title="How to Play" description="Rules and setup for Flower Garden" />
-              <ContentLinkCard href="/flower-garden/tips" title="Flower Garden Tips" description="Quick tips to improve your game" />
-              <ContentLinkCard href="/strategy" title="FreeCell Strategy" description="Strategy for the classic FreeCell variant" />
-              <ContentLinkCard href="/solitaire-types" title="Types of Solitaire" description="20 solitaire variants compared" />
-              <ContentLinkCard href="/" title="Play FreeCell" description="The classic strategic solitaire" />
-            </div>
-          </section>
-        </article>
-      </main>
+      {/* More Resources */}
+      <section className="max-w-3xl mx-auto">
+        <h2
+          className="text-2xl font-bold mb-4"
+          style={{ fontFamily: "var(--font-playfair)" }}
+        >
+          More Flower Garden Resources
+        </h2>
+        <div className="grid sm:grid-cols-2 gap-3">
+          <ContentLinkCard href="/flower-garden" title="Play Flower Garden" description="Put these strategies into practice online for free" />
+          <ContentLinkCard href="/flower-garden/how-to-play" title="How to Play Flower Garden" description="Complete rules and bouquet mechanics" />
+          <ContentLinkCard href="/flower-garden/tips" title="Flower Garden Tips" description="Quick tips for all skill levels" />
+          <ContentLinkCard href="/canfield/strategy" title="Canfield Strategy Guide" description="Strategy for another reserve-based solitaire" />
+          <ContentLinkCard href="/strategy" title="FreeCell Strategy" description="Strategy guide for the classic FreeCell game" />
+          <ContentLinkCard href="/solitaire-types" title="All Solitaire Types" description="Explore 20+ solitaire variants and find your next game" />
+        </div>
+      </section>
     </ContentLayout>
   );
 }

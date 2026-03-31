@@ -2,29 +2,33 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import ContentLayout from "@/components/ContentLayout";
-import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionHeading, ContentBody } from "@/components/content";
 import AdUnit from "@/components/AdUnit";
+import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionHeading, ContentBody } from "@/components/content";
 
 export const metadata: Metadata = {
-  title: "Gaps Solitaire Strategy Guide — Master Positional Card Sorting",
+  title: "Gaps Solitaire Strategy Guide | Winning Techniques & Expert Tips",
   description:
-    "In-depth Gaps Solitaire strategy guide. Learn gap management, dead gap avoidance, row completion tactics, reshuffle timing, and advanced multi-move planning for Montana Solitaire.",
+    "Master Gaps Solitaire with advanced strategies for gap positioning, 2-placement priority, King management, reshuffle timing, and left-to-right building. Win more games with expert methods.",
   keywords: [
     "gaps solitaire strategy",
+    "gaps solitaire winning strategy",
     "gaps solitaire tips",
     "how to win gaps solitaire",
+    "gaps solitaire guide",
+    "gaps solitaire reshuffle strategy",
+    "gaps solitaire gap positioning",
+    "gaps solitaire expert tips",
+    "gaps solitaire king management",
+    "gaps solitaire advanced techniques",
     "montana solitaire strategy",
-    "spaces solitaire guide",
-    "gaps solitaire tactics",
-    "gaps card game strategy",
-    "gaps solitaire reshuffle",
-    "positional solitaire strategy",
-    "gaps solitaire winning tips",
   ],
+  alternates: {
+    canonical: absoluteUrl("/gaps/strategy"),
+  },
   openGraph: {
-    title: "Gaps Solitaire Strategy Guide — Master Positional Card Sorting",
+    title: "Gaps Solitaire Strategy Guide | Winning Techniques & Expert Tips",
     description:
-      "Expert strategies for Gaps Solitaire. Learn gap management, row completion tactics, reshuffle timing, and advanced planning for this positional sorting game.",
+      "Advanced strategies for Gaps Solitaire: gap positioning, 2-placement priority, King dead-gap avoidance, reshuffle timing, and left-to-right building.",
     url: absoluteUrl("/gaps/strategy"),
     siteName: siteConfig.siteName,
     type: "article",
@@ -36,646 +40,598 @@ export const metadata: Metadata = {
 
 const faqs = [
   {
-    question: "What is the best opening move in Gaps Solitaire?",
+    question: "What is the best strategy for Gaps Solitaire?",
     answer:
-      "The best opening move is usually to fill a leftmost gap with a 2 that unlocks the most future moves. Look for a 2 that, once placed, creates a new gap next to a card whose same-suit successor is available to play. Ideally, you want your first move to trigger a chain of two or three follow-up placements. If multiple 2s are available, choose the one in the row where you already have the most cards of that suit in roughly the right order.",
+      "The best strategy revolves around two principles: fill leftmost gaps with 2s as early as possible, and avoid creating dead gaps next to Kings. Twos in the leftmost position start suit runs that lock cards in place permanently. Dead gaps (gaps to the right of a King) are completely unusable — nothing can fill them. Plan every gap-filling move to minimize dead gaps and maximize locked runs from the left side.",
   },
   {
-    question: "How many reshuffles do you get in Gaps Solitaire?",
+    question: "How do reshuffles work in Gaps Solitaire?",
     answer:
-      "Most versions of Gaps Solitaire allow 1 to 2 reshuffles per game. A reshuffle picks up all cards that are not yet in their final correct position (placed in proper suit-and-rank order starting from the left of a row), shuffles them, and redeals them into the remaining spaces. Reshuffles are a powerful reset tool, but they are limited, so you should exhaust all productive moves before using one. Using a reshuffle too early wastes it, while waiting until the board is completely locked may not leave enough flexibility for the reshuffle to help.",
+      "When you run out of moves (all gaps are dead — next to Kings or at the rightmost position with a King to the left), you can reshuffle. All cards that are NOT part of a completed left-to-right sequence starting with a 2 are picked up, shuffled randomly, and re-dealt into the remaining spaces. Cards locked in suit runs from the left edge are preserved. Most versions allow 1-2 reshuffles. Use them strategically — do not reshuffle when you still have productive moves available.",
   },
   {
-    question: "What makes a gap 'dead' in Gaps Solitaire?",
+    question: "Why are Kings so problematic in Gaps Solitaire?",
     answer:
-      "A gap is considered dead when it appears directly to the right of a King. Since Kings are the highest rank, no card can be one rank higher than a King in the same suit, so nothing can legally fill that space. Dead gaps reduce the number of usable gaps on the board, limiting your options. Managing dead gaps is one of the most important strategic considerations in the game — every dead gap means one fewer tool for rearranging cards.",
+      "Kings create dead gaps because there is no card that can be placed to the right of a King (Kings are the highest rank, and gap-filling requires a card one rank higher than the card to the left). Any gap that appears immediately after a King is permanently unusable for the rest of the deal or until a reshuffle. This effectively reduces your four gaps to fewer working gaps, severely limiting your moves. Managing King positions is the central strategic challenge.",
   },
   {
-    question: "Is Gaps Solitaire mostly luck or skill?",
+    question: "Should I focus on one row or work all four rows at once?",
     answer:
-      "Gaps Solitaire has a meaningful skill component, though the initial deal does affect your chances. Skilled players win significantly more often than beginners because the game rewards careful sequencing, forward planning, and smart reshuffle timing. Unlike many solitaire variants where you simply reveal and react, Gaps gives you full information from the start — all cards are face up — so the challenge is purely about making optimal decisions with the moves available to you.",
+      "Focus on one or two rows first, specifically whichever rows have 2s closest to the leftmost position. Locking a complete suit run (2 through King) in one row early removes 12 cards from the reshuffle pool, making subsequent reshuffles more favorable. Working all four rows equally tends to produce partial progress everywhere and locked runs nowhere.",
   },
   {
-    question: "How do I avoid getting stuck in Gaps Solitaire?",
+    question: "What is the win rate for Gaps Solitaire?",
     answer:
-      "The main causes of getting stuck are creating too many dead gaps (gaps next to Kings) and placing cards out of optimal order. To avoid this, always think two or three moves ahead before filling a gap. Prioritize moves that keep gaps away from Kings, and try to work on one row at a time rather than spreading your effort across all four rows. When you do get stuck, that is usually the right time to use a reshuffle — but only after confirming that no productive moves remain.",
+      "With optimal play and 2 reshuffles allowed, skilled players can win roughly 30-40% of Gaps deals. With only 1 reshuffle, the win rate drops to around 20-25%. Without reshuffles, very few deals are completable. The randomness of reshuffles means some luck is always involved, but strategic gap management and reshuffle timing significantly improve your odds.",
   },
 ];
 
 export default function GapsStrategyPage() {
-  const articleJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    headline: "Gaps Solitaire Strategy Guide — Master Positional Card Sorting",
-    description:
-      "In-depth strategy guide for Gaps Solitaire. Learn gap management, row completion tactics, reshuffle timing, and advanced multi-move planning.",
-    url: absoluteUrl("/gaps/strategy"),
-    publisher: {
-      "@type": "Organization",
-      name: siteConfig.siteName,
-      url: absoluteUrl("/"),
-    },
-  };
-
-  const faqJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: faqs.map((faq) => ({
-      "@type": "Question",
-      name: faq.question,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: faq.answer,
-      },
-    })),
-  };
-
-  const breadcrumbJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Home",
-        item: absoluteUrl("/"),
-      },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: "Gaps",
-        item: absoluteUrl("/gaps"),
-      },
-      {
-        "@type": "ListItem",
-        position: 3,
-        name: "Strategy",
-        item: absoluteUrl("/gaps/strategy"),
-      },
-    ],
-  };
-
   return (
-    <ContentLayout variant="dark">
-      <JsonLd data={articleJsonLd} />
-      <JsonLd data={faqJsonLd} />
-      <JsonLd data={breadcrumbJsonLd} />
+    <ContentLayout>
+      <JsonLd data={{
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
+          { "@type": "ListItem", position: 2, name: "Gaps Solitaire", item: absoluteUrl("/gaps") },
+          { "@type": "ListItem", position: 3, name: "Strategy", item: absoluteUrl("/gaps/strategy") },
+        ],
+      }} />
+      <JsonLd data={{
+        "@context": "https://schema.org",
+        "@type": "Article",
+        headline: "Gaps Solitaire Strategy Guide",
+        description: "Advanced strategies for Gaps Solitaire covering gap positioning, 2-placement priority, King management, reshuffle timing, and left-to-right building.",
+        author: { "@type": "Organization", name: siteConfig.siteName, url: absoluteUrl("/") },
+        publisher: { "@type": "Organization", name: siteConfig.siteName },
+        datePublished: "2026-03-31",
+        dateModified: "2026-03-31",
+      }} />
+      <JsonLd data={{
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: faqs.map((faq) => ({
+          "@type": "Question",
+          name: faq.question,
+          acceptedAnswer: { "@type": "Answer", text: faq.answer },
+        })),
+      }} />
 
       <ContentHero
         title="Gaps Solitaire Strategy Guide"
-        subtitle="Master gap management, row completion tactics, reshuffle timing, and the positional thinking that separates winning players from the rest."
-        breadcrumbs={[{ label: "Home", href: "/" }, { label: "Gaps", href: "/gaps" }]}
+        kicker={<><Link href="/gaps" className="hover:text-white transition-colors">Gaps Solitaire</Link> / Strategy</>}
+        subtitle="Advanced strategies for solitaire's most unique spatial puzzle — from gap positioning to King management and reshuffle optimization."
+        breadcrumbs={[{ label: "Home", href: "/" }, { label: "Gaps Solitaire", href: "/gaps" }]}
       />
 
-      {/* Main Content */}
-      <main className="max-w-4xl mx-auto px-6 sm:px-10 lg:px-12 pb-20 flex flex-col gap-6">
-        <article className="space-y-6">
-          {/* Section 1: Understanding Gaps and Movement Rules */}
-          <section>
-            <h2
-              className="text-2xl sm:text-3xl font-bold text-white/90 mb-4"
-              style={{ fontFamily: "var(--font-playfair)" }}
+      {/* Quick Summary */}
+      <div className="bg-white/[0.04] border border-white/10 rounded-xl p-6 mb-10 max-w-3xl mx-auto">
+        <h2 className="text-lg font-bold text-[var(--gold)] mb-3">
+          The Core Strategy
+        </h2>
+        <p className="text-white/70 leading-relaxed">
+          Gaps Solitaire strategy centers on three pillars: <strong className="text-white">get 2s to the leftmost positions fast</strong>,{" "}
+          <strong className="text-white">avoid creating dead gaps next to Kings</strong>, and{" "}
+          <strong className="text-white">time your reshuffles for maximum impact</strong>.
+          Unlike every other solitaire variant, there are no foundations — the goal is to arrange
+          four rows of 2 through King in suit. This spatial puzzle rewards left-to-right thinking
+          and King awareness above all else.
+        </p>
+      </div>
+
+      {/* Section 1: Understanding Gaps */}
+      <section className="mb-10 max-w-3xl mx-auto">
+        <h2
+          className="text-2xl sm:text-3xl font-bold mb-4"
+          style={{ fontFamily: "var(--font-playfair)" }}
+        >
+          Understanding How Gaps Work
+        </h2>
+        <p className="text-white/70 leading-relaxed mb-4">
+          Gaps Solitaire is fundamentally different from every other solitaire game. There are no
+          foundations, no stock, no waste pile. The entire game takes place on a 4×13 grid where
+          you shuffle cards into position by moving them into gaps. Understanding the gap-filling
+          rules is essential before any strategic discussion.
+        </p>
+        <p className="text-white/70 leading-relaxed mb-4">
+          When the game starts, all four Aces are removed, creating four gaps. A gap can be filled
+          by the card that is one rank higher than the card to its left <em>and the same suit</em>.
+          If the gap is in the leftmost position (no card to its left), only a 2 can fill it — any
+          suit&apos;s 2. If the card to the left of a gap is a King, the gap is &ldquo;dead&rdquo; —
+          nothing can fill it because there is no card ranked higher than King.
+        </p>
+        <ul className="list-disc list-inside text-white/70 space-y-2 mb-4 ml-4">
+          <li>
+            <strong className="text-white/90">Gap to the right of a 7♠</strong> → only the 8♠ can fill it.
+          </li>
+          <li>
+            <strong className="text-white/90">Gap in leftmost position</strong> → any 2 (2♠, 2♥, 2♦, 2♣) can fill it.
+          </li>
+          <li>
+            <strong className="text-white/90">Gap to the right of a King</strong> → dead gap, nothing can fill it.
+          </li>
+          <li>
+            <strong className="text-white/90">Gap to the right of another gap</strong> → can be filled by
+            any card that is one rank higher and same suit as the card two positions to the left
+            (once the first gap is filled, the rule cascades).
+          </li>
+        </ul>
+        <div className="bg-emerald-900/20 border border-emerald-500/20 rounded-lg p-4">
+          <p className="text-emerald-300/80 text-sm">
+            <strong>Key insight:</strong> Moving a card into a gap creates a new gap where that card
+            was. This means every move <em>relocates</em> a gap rather than eliminating it. The art
+            of Gaps is controlling <em>where</em> gaps end up after each move — ideally next to
+            cards that have useful same-suit followers available.
+          </p>
+        </div>
+      </section>
+
+      {/* Section 2: The 2-Priority Rule */}
+      <section className="mb-10 max-w-3xl mx-auto">
+        <h2
+          className="text-2xl sm:text-3xl font-bold mb-4"
+          style={{ fontFamily: "var(--font-playfair)" }}
+        >
+          The 2-Priority Rule: Left Edge Is Everything
+        </h2>
+        <p className="text-white/70 leading-relaxed mb-4">
+          Getting 2s into the leftmost column positions is the single most important strategic
+          objective. A 2 in the leftmost position starts a suit run that can extend rightward
+          (3, 4, 5, 6...) and, critically, cards locked into a completed leftward run are
+          preserved during reshuffles. Every card you lock in place is one fewer card to worry
+          about.
+        </p>
+        <p className="text-white/70 leading-relaxed mb-4">
+          When a gap appears in the leftmost position, you have a choice of four 2s. This choice
+          is one of the most impactful decisions in the game. Pick the 2 that enables the longest
+          immediate chain of same-suit fills — if the 2♥ is followed by an accessible 3♥ which
+          is followed by an accessible 4♥, that is a three-card chain that locks into place.
+        </p>
+        <ul className="list-disc list-inside text-white/70 space-y-2 mb-4 ml-4">
+          <li>
+            <strong className="text-white/90">Evaluate all four 2s before choosing.</strong> For each
+            2, trace how many consecutive same-suit cards can follow it into the row. Pick the one
+            with the longest chain.
+          </li>
+          <li>
+            <strong className="text-white/90">Consider where each 2 currently sits.</strong> Moving
+            a 2 creates a gap at its previous position. If that previous position is next to a King,
+            you have just created a dead gap. Factor this into your choice.
+          </li>
+          <li>
+            <strong className="text-white/90">Lock rows before reshuffling.</strong> A row with
+            2-3-4-5-6 locked preserves 5 cards through the reshuffle. This dramatically improves
+            your odds — fewer cards in the reshuffle pool means less randomness.
+          </li>
+          <li>
+            <strong className="text-white/90">Sometimes delay 2-placement.</strong> If placing a 2
+            now creates a dead gap and you have productive moves elsewhere, wait. The leftmost gap
+            will still be there next turn.
+          </li>
+        </ul>
+        <div className="bg-amber-900/20 border border-amber-500/20 rounded-lg p-4">
+          <p className="text-amber-300/80 text-sm">
+            <strong>Mental shortcut:</strong> When choosing a 2 for a leftmost gap, count the chain
+            length for each suit: &ldquo;Hearts can chain 3 deep, Spades 1, Diamonds 5, Clubs 2.&rdquo;
+            Pick Diamonds. This takes 10 seconds and is the highest-value thinking time in the game.
+          </p>
+        </div>
+      </section>
+
+      <AdUnit format="horizontal" className="-my-1 max-w-3xl mx-auto" />
+
+      {/* Section 3: King Management */}
+      <section className="mb-10 max-w-3xl mx-auto">
+        <h2
+          className="text-2xl sm:text-3xl font-bold mb-4"
+          style={{ fontFamily: "var(--font-playfair)" }}
+        >
+          King Management: Avoiding Dead Gaps
+        </h2>
+        <p className="text-white/70 leading-relaxed mb-4">
+          Kings are the most dangerous cards in Gaps because any gap that forms to the right of
+          a King is permanently dead. With four Kings in the deck and four gaps, the potential for
+          dead gaps is enormous. In the worst case, all four gaps end up next to Kings and the
+          game halts immediately, forcing a reshuffle.
+        </p>
+        <p className="text-white/70 leading-relaxed mb-4">
+          The ideal position for Kings is the rightmost column of each row (position 13). A
+          completed row reads 2-3-4-5-6-7-8-9-10-J-Q-K, with the King naturally at the end.
+          Until a row is complete, you want Kings as far right as possible and you want to avoid
+          moving cards away from positions that would create a gap next to a King.
+        </p>
+        <ul className="list-disc list-inside text-white/70 space-y-2 mb-4 ml-4">
+          <li>
+            <strong className="text-white/90">Before every move, check where the gap will land.</strong>{" "}
+            Moving a card into the current gap creates a new gap at the card&apos;s old position. If that
+            position is to the right of a King, you are creating a dead gap. Avoid this unless there
+            is no alternative.
+          </li>
+          <li>
+            <strong className="text-white/90">Kings in the rightmost column are safe.</strong> A gap
+            cannot form to the right of a rightmost-column King because there is no position to the right.
+            If a King is already in column 13, it is not a threat.
+          </li>
+          <li>
+            <strong className="text-white/90">Move Kings rightward when possible.</strong> If a gap
+            appears in the rightmost column and a King can fill it (because the card to its left
+            is a Queen of the same suit), take that move — it parks the King safely.
+          </li>
+          <li>
+            <strong className="text-white/90">Count dead gaps constantly.</strong> Track how many of
+            your four gaps are dead versus productive. When dead gaps exceed productive ones, consider
+            whether a reshuffle is warranted.
+          </li>
+        </ul>
+
+        <div className="bg-white/[0.03] border border-white/10 rounded-xl overflow-hidden mb-4">
+          <div className="grid grid-cols-3 text-sm font-bold text-white/40 uppercase tracking-wider px-4 py-3 border-b border-white/5">
+            <span>Dead Gaps</span>
+            <span>Productive Gaps</span>
+            <span>Assessment</span>
+          </div>
+          {[
+            ["0", "4", "Excellent — full flexibility, keep building"],
+            ["1", "3", "Good — manageable, avoid creating more"],
+            ["2", "2", "Concerning — play carefully, consider reshuffle timing"],
+            ["3", "1", "Critical — extract maximum value from last gap, then reshuffle"],
+            ["4", "0", "Stuck — reshuffle required immediately"],
+          ].map(([dead, productive, assessment], i) => (
+            <div
+              key={i}
+              className={`grid grid-cols-3 px-4 py-3 text-sm text-white/60 ${i % 2 === 0 ? "bg-white/[0.02]" : ""}`}
             >
-              Understanding How Gaps Work
-            </h2>
-            <div className="space-y-4 text-white/60 leading-relaxed">
-              <p>
-                Gaps Solitaire &mdash; also known as Montana or Spaces &mdash; is unlike most
-                solitaire games you have played. There is no stock, no waste pile, no foundation
-                area to build on. Instead, all 52 cards are dealt face-up into four rows of 13
-                cards. The four Aces are then removed, creating four gaps. Your job is to rearrange
-                all the cards so that each row contains a complete suit running from 2 through King,
-                left to right.
-              </p>
-              <p>
-                The movement rule is simple but restrictive: you can only place a card into a gap
-                if that card is the same suit and exactly one rank higher than the card immediately
-                to the left of the gap. If the gap is in the leftmost position of a row, only a 2
-                can fill it. If the gap is immediately to the right of a King, nothing can fill it
-                &mdash; that gap is dead.
-              </p>
-              <p>
-                This single rule creates a game that is entirely about sequencing and positional
-                thinking. Every move you make creates a new gap somewhere else, and the question is
-                always whether that new gap is more useful than the one you just filled. Unlike
-                FreeCell or Klondike, there is no hidden information &mdash; you can see every card
-                from the start. The challenge is purely strategic: given a fixed set of cards, find
-                the right order of moves to sort them all.
-              </p>
-
-              <div className="bg-white/[0.03] border border-white/10 rounded-lg p-5">
-                <h3 className="font-semibold text-[#D4AF37] mb-2">
-                  Key Movement Rules to Remember
-                </h3>
-                <ul className="list-disc pl-5 space-y-2 text-sm">
-                  <li>
-                    A card placed in a gap must be the same suit and one rank higher than the card
-                    to the left of the gap (e.g., 7 of Hearts can go to the right of 6 of Hearts)
-                  </li>
-                  <li>
-                    The leftmost position in any row can only be filled with a 2 &mdash; there is
-                    no card to the left, so only the lowest playable rank is allowed
-                  </li>
-                  <li>
-                    A gap to the right of a King is permanently dead &mdash; since no card is one
-                    rank higher than a King, nothing can ever fill that space
-                  </li>
-                  <li>
-                    Moving a card always creates a new gap where that card was &mdash; so every move
-                    shifts the gap, it never eliminates it
-                  </li>
-                </ul>
-              </div>
-
-              <p>
-                Understanding these rules deeply is the foundation of all strategy. The rest of this
-                guide builds on these mechanics to show you how to think multiple moves ahead and
-                avoid the traps that catch most beginners.
-              </p>
+              <span className="text-white/80 font-medium">{dead}</span>
+              <span>{productive}</span>
+              <span>{assessment}</span>
             </div>
-          </section>
+          ))}
+        </div>
 
-          <AdUnit format="horizontal" className="-my-1" />
+        <div className="bg-red-900/20 border border-red-500/20 rounded-lg p-4">
+          <p className="text-red-300/80 text-sm">
+            <strong>Critical warning:</strong> Creating a dead gap is often irreversible within
+            the current deal (before reshuffle). Think of each dead gap as permanently losing 25%
+            of your movement capacity. Two dead gaps means you are playing with half your moves.
+            Prevention is far more valuable than any single card placement.
+          </p>
+        </div>
+      </section>
 
-          {/* Section 2: Starting Strategy — Which Gaps to Fill First */}
-          <section>
-            <h2
-              className="text-2xl sm:text-3xl font-bold text-white/90 mb-4"
-              style={{ fontFamily: "var(--font-playfair)" }}
+      {/* Section 4: Reshuffle Strategy */}
+      <section className="mb-10 max-w-3xl mx-auto">
+        <h2
+          className="text-2xl sm:text-3xl font-bold mb-4"
+          style={{ fontFamily: "var(--font-playfair)" }}
+        >
+          Reshuffle Strategy: Timing Is Everything
+        </h2>
+        <p className="text-white/70 leading-relaxed mb-4">
+          Reshuffles are your lifeline when the board locks up. All cards that are not part of a
+          completed suit run from the left edge are gathered, shuffled, and re-dealt. The more
+          cards you have locked in place before reshuffling, the better — fewer cards in the
+          reshuffle pool means the random re-deal has a higher chance of producing favorable positions.
+        </p>
+        <p className="text-white/70 leading-relaxed mb-4">
+          The fundamental question is: should you reshuffle now or keep playing? The answer depends
+          on how many productive moves remain and how many cards you have locked.
+        </p>
+        <ul className="list-disc list-inside text-white/70 space-y-2 mb-4 ml-4">
+          <li>
+            <strong className="text-white/90">Maximize locked cards before reshuffling.</strong>{" "}
+            Every additional card you lock in a suit run from the left edge is one fewer random
+            variable in the reshuffle. Lock 8 cards → 44 reshuffled. Lock 20 cards → 32 reshuffled.
+            The difference in outcome quality is enormous.
+          </li>
+          <li>
+            <strong className="text-white/90">Do not reshuffle when productive moves exist.</strong>{" "}
+            If you still have gaps next to non-King cards, keep playing. Every move has a chance
+            of locking more cards before the inevitable reshuffle.
+          </li>
+          <li>
+            <strong className="text-white/90">Reshuffle immediately when all gaps are dead.</strong>{" "}
+            If all four gaps are next to Kings, there is nothing to think about — reshuffle.
+            Continuing to stare at the board will not help.
+          </li>
+          <li>
+            <strong className="text-white/90">Save reshuffles for when they matter.</strong> If you
+            have 2 reshuffles and only 3 cards locked, resist the urge to reshuffle immediately.
+            Play out the current deal as far as possible, lock what you can, then reshuffle.
+            Your second reshuffle will be much more effective with more cards locked.
+          </li>
+        </ul>
+        <div className="bg-emerald-900/20 border border-emerald-500/20 rounded-lg p-4">
+          <p className="text-emerald-300/80 text-sm">
+            <strong>Pro tip:</strong> Before reshuffling, count your locked cards. If you have
+            fewer than 8 locked, try harder to find moves — a reshuffle with 8 locked cards has
+            roughly twice the success rate of one with 4. Even locking one more card before
+            reshuffling is worth the effort.
+          </p>
+        </div>
+      </section>
+
+      <AdUnit format="horizontal" className="-my-1 max-w-3xl mx-auto" />
+
+      {/* Section 5: Left-to-Right Building */}
+      <section className="mb-10 max-w-3xl mx-auto">
+        <h2
+          className="text-2xl sm:text-3xl font-bold mb-4"
+          style={{ fontFamily: "var(--font-playfair)" }}
+        >
+          Left-to-Right Building: The Lock-In Pattern
+        </h2>
+        <p className="text-white/70 leading-relaxed mb-4">
+          The winning pattern in Gaps is building suit runs from left to right: 2-3-4-5-6-7-8-9-10-J-Q-K
+          across each row. Cards become &ldquo;locked&rdquo; when they form part of an unbroken
+          same-suit sequence starting from a 2 in the leftmost position. Once locked, these cards
+          cannot be moved and survive reshuffles.
+        </p>
+        <p className="text-white/70 leading-relaxed mb-4">
+          This lock-in mechanic creates a snowball effect. The more cards you lock early, the easier
+          the game becomes. Each locked card removes one variable from the puzzle and makes subsequent
+          moves more predictable. The strategic implication: invest your early moves in building the
+          longest possible locked runs, even if it means ignoring other opportunities.
+        </p>
+        <ul className="list-disc list-inside text-white/70 space-y-2 mb-4 ml-4">
+          <li>
+            <strong className="text-white/90">Prioritize extending existing runs.</strong> If row 1
+            has 2♥-3♥-4♥ locked and the 5♥ is accessible, moving it into position is almost always
+            the best move. Extending a run by one card is guaranteed progress.
+          </li>
+          <li>
+            <strong className="text-white/90">Chain moves when possible.</strong> The best sequences
+            involve filling a gap to lock a card, which creates a new gap next to another lockable
+            card, which creates another gap — a chain of 3-4 locks from a single starting move.
+          </li>
+          <li>
+            <strong className="text-white/90">Focus on one or two rows at a time.</strong> Completing
+            a full row (12 locked cards) is far more valuable than having 3 cards locked in each
+            of four rows. Concentration beats diversification in Gaps.
+          </li>
+          <li>
+            <strong className="text-white/90">Track which cards are available for your target row.</strong>{" "}
+            If you are building Hearts and the 6♥ is trapped in a position you cannot reach without
+            creating dead gaps, you may need to switch focus to a different suit temporarily.
+          </li>
+        </ul>
+        <div className="bg-amber-900/20 border border-amber-500/20 rounded-lg p-4">
+          <p className="text-amber-300/80 text-sm">
+            <strong>Strategic insight:</strong> A row does not need to be finished in order. You
+            might lock 2-3-4-5 in one sequence of moves, then switch to another row, then come back
+            to extend to 6-7-8 later (or after a reshuffle). The lock-in is persistent — you will
+            never lose progress on locked cards.
+          </p>
+        </div>
+      </section>
+
+      {/* Section 6: Gap Chain Planning */}
+      <section className="mb-10 max-w-3xl mx-auto">
+        <h2
+          className="text-2xl sm:text-3xl font-bold mb-4"
+          style={{ fontFamily: "var(--font-playfair)" }}
+        >
+          Gap Chain Planning: Thinking Ahead
+        </h2>
+        <p className="text-white/70 leading-relaxed mb-4">
+          Every move in Gaps relocates a gap. Advanced players think not just about the current
+          move but about where the gap will end up — and whether that new gap position enables
+          another useful move. The best players can trace chains of 4-6 moves from a single
+          starting gap position.
+        </p>
+        <p className="text-white/70 leading-relaxed mb-4">
+          Chain planning is the skill that separates casual players from consistent winners.
+          Before moving a card, ask: where does the new gap go? What card can fill that gap?
+          Where does <em>that</em> gap go? If the chain leads to a locked card or a dead gap
+          within 2 moves, the initial move may not be worthwhile. If the chain leads to 4-5
+          productive moves, take it immediately.
+        </p>
+        <ul className="list-disc list-inside text-white/70 space-y-2 mb-4 ml-4">
+          <li>
+            <strong className="text-white/90">Trace the chain mentally before moving.</strong> Visualize:
+            card A fills gap 1 → creates gap 2 at A&apos;s old position → card B fills gap 2 → creates
+            gap 3 → and so on. Stop when the chain reaches a dead end (dead gap or no useful fill).
+          </li>
+          <li>
+            <strong className="text-white/90">Choose the longest productive chain.</strong> When
+            multiple moves are available, trace each chain and pick the one that produces the most
+            locked cards or the fewest dead gaps.
+          </li>
+          <li>
+            <strong className="text-white/90">End chains in safe positions.</strong> The ideal
+            chain terminus is a gap in the leftmost column (opens a 2-placement) or next to a
+            low-rank card of a suit you are building. The worst terminus is next to a King.
+          </li>
+          <li>
+            <strong className="text-white/90">Sometimes a shorter chain is better.</strong> A 2-move
+            chain that locks 2 cards beats a 5-move chain that locks 0 and ends in a dead gap.
+            Quality of outcome matters more than chain length.
+          </li>
+        </ul>
+        <div className="bg-emerald-900/20 border border-emerald-500/20 rounded-lg p-4">
+          <p className="text-emerald-300/80 text-sm">
+            <strong>Practice technique:</strong> Before each move, force yourself to trace at least
+            3 steps ahead. Ask: &ldquo;If I move this card, where does the gap go? Can anything
+            fill that gap? Where does <em>that</em> gap go?&rdquo; This habit alone will improve
+            your win rate by 10-15%.
+          </p>
+        </div>
+      </section>
+
+      {/* Section 7: Gaps vs Other Solitaire Games */}
+      <section className="mb-10 max-w-3xl mx-auto">
+        <h2
+          className="text-2xl sm:text-3xl font-bold mb-4"
+          style={{ fontFamily: "var(--font-playfair)" }}
+        >
+          Gaps vs Other Solitaire: A Unique Puzzle
+        </h2>
+        <p className="text-white/70 leading-relaxed mb-4">
+          Gaps (also known as Montana or Spaces) stands apart from virtually every other solitaire
+          variant. There are no foundations, no stock, no building sequences on a tableau. Instead,
+          you are solving a spatial arrangement puzzle. Players coming from{" "}
+          <Link href="/" className="text-[var(--gold)] hover:text-white transition-colors">
+            FreeCell
+          </Link>{" "}
+          or{" "}
+          <Link href="/klondike" className="text-[var(--gold)] hover:text-white transition-colors">
+            Klondike
+          </Link>{" "}
+          need to adjust their thinking completely.
+        </p>
+        <div className="bg-white/[0.03] border border-white/10 rounded-xl overflow-hidden mb-4">
+          <div className="grid grid-cols-3 text-sm font-bold text-white/40 uppercase tracking-wider px-4 py-3 border-b border-white/5">
+            <span>Feature</span>
+            <span>Gaps</span>
+            <span>Traditional Solitaire</span>
+          </div>
+          {[
+            ["Goal", "Arrange rows 2-K in suit", "Build foundations A-K"],
+            ["Foundations", "None", "4 piles, build up in suit"],
+            ["Movement", "Fill gaps with specific cards", "Build sequences, move groups"],
+            ["Key mechanic", "Gap relocation", "Sequence building"],
+            ["Blocking threat", "Dead gaps (Kings)", "Buried cards / locked columns"],
+            ["Reset mechanic", "Reshuffle (limited)", "Undo / restock"],
+            ["Information", "Fully visible", "Varies (hidden cards in Klondike)"],
+            ["Core skill", "Spatial planning + chain tracing", "Sequence management + foundation timing"],
+          ].map(([feature, gaps, traditional], i) => (
+            <div
+              key={i}
+              className={`grid grid-cols-3 px-4 py-3 text-sm text-white/60 ${i % 2 === 0 ? "bg-white/[0.02]" : ""}`}
             >
-              Starting Strategy: Which Gaps to Fill First
-            </h2>
-            <div className="space-y-4 text-white/60 leading-relaxed">
-              <p>
-                When the Aces are removed and you see your four initial gaps, resist the urge to
-                start filling them immediately. Take a moment to survey the entire board. The
-                decisions you make in the first five to ten moves often determine whether the deal
-                is winnable, so a few seconds of planning pays enormous dividends.
-              </p>
-
-              <h3 className="text-lg font-semibold text-[#D4AF37] mt-4">
-                Prioritize Leftmost Gaps
-              </h3>
-              <p>
-                Gaps in the leftmost column are the most valuable because they accept 2s, which
-                are the starting cards for every completed row. If you have a gap in the leftmost
-                position, look for the 2 that gives you the best chain of follow-up moves. Placing
-                a 2 creates a new gap where the 2 was, and ideally that new gap is next to a card
-                whose same-suit successor is ready to play. A good opening can chain three, four,
-                or even five moves in sequence.
-              </p>
-
-              <h3 className="text-lg font-semibold text-[#D4AF37] mt-4">
-                Look for Natural Chains
-              </h3>
-              <p>
-                Before making your first move, trace the chain of consequences. If you fill a gap
-                with the 5 of Spades, a new gap opens where the 5 was. Can you fill that new gap
-                with another card? And the gap after that? The best opening moves create chains
-                of three or more placements. A single isolated move that does not lead anywhere
-                is rarely the right choice when a chain-starting alternative exists.
-              </p>
-
-              <div className="bg-white/[0.03] border border-white/10 rounded-lg p-5">
-                <h3 className="font-semibold text-[#D4AF37] mb-2">
-                  Opening Assessment Checklist
-                </h3>
-                <ul className="list-disc pl-5 space-y-2 text-sm">
-                  <li>
-                    Which rows have 2s closest to the left side? These rows are easiest to start
-                    building
-                  </li>
-                  <li>
-                    Where are the Kings? Any gap that ends up next to a King becomes dead &mdash;
-                    plan to avoid this
-                  </li>
-                  <li>
-                    Which suits have the most cards already in roughly the right order within the
-                    same row? These are your best candidates for early completion
-                  </li>
-                  <li>
-                    Are any 2s already in the leftmost position? If so, that row has a head start
-                    and may be worth prioritizing
-                  </li>
-                </ul>
-              </div>
-
-              <p>
-                A common beginner mistake is to fill every available gap as fast as possible without
-                considering the downstream effects. This scattershot approach almost always leads to
-                dead gaps forming within the first ten moves. Disciplined players fill gaps
-                selectively, always asking: &quot;Where will the new gap appear, and is that a
-                useful place for it?&quot;
-              </p>
+              <span className="text-white/80 font-medium">{feature}</span>
+              <span>{gaps}</span>
+              <span>{traditional}</span>
             </div>
-          </section>
+          ))}
+        </div>
+        <p className="text-white/70 leading-relaxed">
+          The mental model shift: in traditional solitaire, you think about which cards to move and
+          where. In Gaps, you think about which gaps to create and where they will end up. The gaps
+          are the active element — cards are just the things that fill them. Once you internalize
+          this inversion, the game becomes much more intuitive.
+        </p>
+      </section>
 
-          {/* Section 3: Managing Dead Gaps */}
-          <section>
-            <h2
-              className="text-2xl sm:text-3xl font-bold text-white/90 mb-4"
-              style={{ fontFamily: "var(--font-playfair)" }}
+      <AdUnit format="horizontal" className="-my-1 max-w-3xl mx-auto" />
+
+      {/* Quick Reference Cheat Sheet */}
+      <section className="mb-10 max-w-3xl mx-auto">
+        <h2
+          className="text-2xl sm:text-3xl font-bold mb-4"
+          style={{ fontFamily: "var(--font-playfair)" }}
+        >
+          Quick Reference: Strategy Cheat Sheet
+        </h2>
+        <div className="bg-white/[0.04] border border-white/10 rounded-xl p-5">
+          <ol className="list-decimal list-inside text-white/80 space-y-3 ml-2">
+            <li>
+              <strong>Get 2s to the left edge first.</strong> This is your highest-priority objective.
+              Choose the 2 with the longest available same-suit chain.
+            </li>
+            <li>
+              <strong>Never voluntarily create dead gaps.</strong> Before every move, check whether
+              the card&apos;s old position is next to a King. If so, find a different move.
+            </li>
+            <li>
+              <strong>Trace chains before moving.</strong> Think 3-5 moves ahead. Where does each
+              gap go? Does the chain end productively or at a dead gap?
+            </li>
+            <li>
+              <strong>Focus on one or two rows.</strong> Lock complete suit runs rather than spreading
+              progress across all four rows.
+            </li>
+            <li>
+              <strong>Extend existing runs whenever possible.</strong> Adding one card to a locked run
+              is almost always the best available move.
+            </li>
+            <li>
+              <strong>Maximize locked cards before reshuffling.</strong> Every locked card improves
+              reshuffle outcomes. Play out all productive moves first.
+            </li>
+            <li>
+              <strong>Save reshuffles for real emergencies.</strong> Do not reshuffle when productive
+              moves still exist. Exhaust your options first.
+            </li>
+            <li>
+              <strong>Think in gaps, not cards.</strong> You are managing gap positions. Cards fill gaps;
+              gaps are the active resource you control.
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      {/* Related Guides */}
+      <div className="max-w-3xl mx-auto">
+        <CardSection variant="dark">
+          <SectionHeading variant="dark" sub="Continue Learning">Related Guides</SectionHeading>
+          <ContentBody variant="dark" className="grid gap-4 md:grid-cols-3">
+            <ContentLinkCard href="/gaps/how-to-play" title="How to Play Gaps" description="Complete rules, gap-filling mechanics, and reshuffle rules." />
+            <ContentLinkCard href="/gaps/tips" title="Gaps Tips & Tricks" description="Quick, practical tips for improving your Gaps game." />
+            <ContentLinkCard href="/freecell/strategy" title="FreeCell Strategy Guide" description="Strategy for the classic free cell game." />
+          </ContentBody>
+        </CardSection>
+      </div>
+
+      <div className="mb-10 max-w-3xl mx-auto">
+        <CtaSection
+          heading="Ready to Apply These Strategies?"
+          body="Put your Gaps knowledge to the test. Play free online Gaps Solitaire with unlimited undo, hints, and reshuffle tracking."
+          primaryLabel="Play Gaps Solitaire"
+          primaryHref="/gaps"
+          secondaryLabel="Learn the Rules"
+          secondaryHref="/gaps/how-to-play"
+        />
+      </div>
+
+      <AdUnit format="horizontal" className="-my-1 max-w-3xl mx-auto" />
+
+      {/* FAQ Section */}
+      <section className="mb-10 max-w-3xl mx-auto">
+        <h2
+          className="text-2xl font-bold mb-4"
+          style={{ fontFamily: "var(--font-playfair)" }}
+        >
+          Frequently Asked Questions
+        </h2>
+        <div className="space-y-4">
+          {faqs.map((faq, i) => (
+            <details
+              key={i}
+              className="group bg-white/[0.03] border border-white/10 rounded-xl overflow-hidden"
+              {...(i === 0 ? { open: true } : {})}
             >
-              Managing Dead Gaps: The Kings Problem
-            </h2>
-            <div className="space-y-4 text-white/60 leading-relaxed">
-              <p>
-                Dead gaps &mdash; gaps that form to the right of a King &mdash; are the single
-                biggest obstacle in Gaps Solitaire. Since no card ranks higher than a King, a gap
-                in that position can never be filled. It is permanently wasted. And because you
-                start with only four gaps total, losing even one to a dead position cuts your
-                available moves by 25%.
-              </p>
-
-              <div className="bg-white/[0.03] border border-white/10 rounded-lg p-5">
-                <h3 className="font-semibold text-[#D4AF37] mb-2">
-                  Why Dead Gaps Are So Dangerous
-                </h3>
-                <p className="text-sm">
-                  Think of your four gaps as your four &quot;workers&quot; &mdash; each one allows
-                  you to make a move. When a gap dies next to a King, you lose a worker permanently
-                  (until a reshuffle). With three gaps, you have 75% of your original flexibility.
-                  With two, you have 50%. If two or more gaps die early in a game, you are almost
-                  certainly heading for a dead end unless you have a reshuffle available. This is
-                  why preventing dead gaps is often more important than making progress on row
-                  completion.
-                </p>
+              <summary className="px-5 py-4 cursor-pointer text-white/90 font-semibold hover:text-[var(--gold)] transition-colors list-none flex items-center justify-between">
+                {faq.question}
+                <span className="text-white/30 group-open:rotate-180 transition-transform ml-2">
+                  ▾
+                </span>
+              </summary>
+              <div className="px-5 pb-4 text-white/60 leading-relaxed">
+                {faq.answer}
               </div>
+            </details>
+          ))}
+        </div>
+      </section>
 
-              <h3 className="text-lg font-semibold text-[#D4AF37] mt-4">
-                How to Avoid Dead Gaps
-              </h3>
-              <p>
-                Before every move, look at where the new gap will appear. If the card to the left
-                of the new gap position is a King, that gap will be dead on arrival. This is the
-                most common way players accidentally kill gaps &mdash; they focus on where they are
-                placing a card and forget to check what is next to the space they are vacating.
-              </p>
-              <p>
-                Sometimes creating a dead gap is unavoidable. When it is, try to ensure that the
-                move you are making is extremely valuable &mdash; it should complete a significant
-                portion of a row or set up a long chain of future moves. Trading a gap for a single
-                low-value placement is almost never worth it.
-              </p>
-
-              <h3 className="text-lg font-semibold text-[#D4AF37] mt-4">
-                Kings in the Rightmost Column
-              </h3>
-              <p>
-                Kings belong in the rightmost (13th) position of their target row. A King that is
-                already in the rightmost column of any row is not immediately dangerous &mdash;
-                it is in a position where a gap to its right would be off the board anyway. The
-                dangerous Kings are the ones sitting in the middle of a row, because any gap that
-                drifts next to them becomes dead. When you see a King in columns 2 through 12,
-                be extra cautious about moving cards near it.
-              </p>
-
-              <div className="bg-white/[0.03] border border-white/10 rounded-lg p-5">
-                <h3 className="font-semibold text-[#D4AF37] mb-2">
-                  Tip: Track the Kings
-                </h3>
-                <p className="text-sm">
-                  At the start of every game, mentally note where all four Kings are. These are
-                  your danger zones. As you plan each move, always check: &quot;Will this move
-                  create a gap next to a King?&quot; Make this check a habit, and you will avoid
-                  the most common cause of lost games. Experienced Gaps players develop an almost
-                  automatic awareness of King positions, treating them like obstacles on a
-                  navigation map.
-                </p>
-              </div>
-            </div>
-          </section>
-
-          <AdUnit format="auto" className="-my-1" />
-
-          {/* Section 4: Row Completion Strategy */}
-          <section>
-            <h2
-              className="text-2xl sm:text-3xl font-bold text-white/90 mb-4"
-              style={{ fontFamily: "var(--font-playfair)" }}
-            >
-              Row Completion Strategy: Focus vs. Spread
-            </h2>
-            <div className="space-y-4 text-white/60 leading-relaxed">
-              <p>
-                One of the key strategic decisions in Gaps Solitaire is whether to focus on
-                completing one row at a time or to make incremental progress across multiple rows
-                simultaneously. Both approaches have trade-offs, and the right choice depends on
-                the specific deal you are playing.
-              </p>
-
-              <h3 className="text-lg font-semibold text-[#D4AF37] mt-4">
-                The Case for Focusing on One Row
-              </h3>
-              <p>
-                When you complete a section of a row &mdash; say, placing the 2 through 7 of
-                Hearts in order from the left &mdash; those cards are locked in permanently.
-                They will not be disturbed by future moves, and they will survive a reshuffle
-                intact. This means every card you lock in reduces the complexity of the remaining
-                puzzle. Focusing on one row at a time maximizes the number of locked-in cards
-                early, which simplifies everything that follows.
-              </p>
-              <p>
-                Focusing also reduces the number of things you need to track mentally. Instead of
-                juggling four partially complete rows, you concentrate on one row and can plan
-                moves more deeply for that single objective.
-              </p>
-
-              <h3 className="text-lg font-semibold text-[#D4AF37] mt-4">
-                The Case for Spreading Across Rows
-              </h3>
-              <p>
-                Sometimes the deal does not cooperate with a single-row strategy. If the cards
-                for your target suit are scattered across all four rows and buried behind other
-                cards, forcing a single-row focus may require too many intermediate moves. In
-                these situations, making opportunistic progress on whichever row currently offers
-                the easiest placements can be more efficient.
-              </p>
-              <p>
-                The spread approach also helps when you need to avoid dead gaps. If focusing on
-                one row would force you to create a dead gap, switching to a different row for a
-                few moves can keep all your gaps alive while still making progress.
-              </p>
-
-              <div className="bg-white/[0.03] border border-white/10 rounded-lg p-5">
-                <h3 className="font-semibold text-[#D4AF37] mb-2">
-                  The Hybrid Approach
-                </h3>
-                <p className="text-sm">
-                  Most successful Gaps players use a hybrid strategy: identify the row with the
-                  best starting position and make it your primary focus, but stay flexible enough
-                  to take easy placements on other rows when they are available at no cost. The key
-                  is to avoid &quot;drift&quot; &mdash; randomly making moves on different rows
-                  without a clear plan. Every move should either advance your primary row or set up
-                  a concrete future move on another row. If a move does neither, it is probably
-                  not worth making.
-                </p>
-              </div>
-
-              <h3 className="text-lg font-semibold text-[#D4AF37] mt-4">
-                Locking In Cards Before a Reshuffle
-              </h3>
-              <p>
-                If you know a reshuffle is coming, your priority shifts to locking in as many
-                cards as possible before triggering it. Remember that correctly placed cards
-                &mdash; those in proper suit-and-rank order starting from the leftmost position
-                &mdash; are preserved during a reshuffle. Every card you lock in before reshuffling
-                is one fewer card in the random redeal, which increases your chances of getting a
-                favorable post-reshuffle layout. This is where the focused single-row approach
-                really shines: a half-completed row preserves more cards than four rows that are
-                each 10% complete.
-              </p>
-            </div>
-          </section>
-
-          {/* Section 5: When to Use Your Reshuffles */}
-          <section>
-            <h2
-              className="text-2xl sm:text-3xl font-bold text-white/90 mb-4"
-              style={{ fontFamily: "var(--font-playfair)" }}
-            >
-              When to Use Your Reshuffles
-            </h2>
-            <div className="space-y-4 text-white/60 leading-relaxed">
-              <p>
-                Reshuffles are your lifeline in Gaps Solitaire. Most versions give you one or
-                two, and using them at the right moment can turn a losing game into a win. But
-                timing is everything &mdash; a poorly timed reshuffle wastes your most powerful
-                tool.
-              </p>
-
-              <div className="bg-white/[0.03] border border-white/10 rounded-lg p-5">
-                <h3 className="font-semibold text-[#D4AF37] mb-2">
-                  How Reshuffles Work
-                </h3>
-                <p className="text-sm">
-                  When you trigger a reshuffle, all cards that are not in their final correct
-                  position are picked up, shuffled randomly, and redealt into the remaining
-                  spaces. Cards that are correctly placed &mdash; in proper suit-and-rank order
-                  starting from the left of their row &mdash; stay put. The Aces are removed
-                  again, creating new gaps. Essentially, you get a fresh start on the unsolved
-                  portion of the board while keeping your progress.
-                </p>
-              </div>
-
-              <h3 className="text-lg font-semibold text-[#D4AF37] mt-4">
-                The Right Time to Reshuffle
-              </h3>
-              <p>
-                The right time to reshuffle is when you have exhausted all productive moves but
-                still have cards locked in. Specifically, you want to reshuffle when:
-              </p>
-              <ul className="list-disc pl-5 space-y-2">
-                <li>
-                  All remaining gaps are dead (next to Kings) and no further moves are possible
-                </li>
-                <li>
-                  You have locked in a meaningful number of cards, so the reshuffle will only
-                  affect a reduced set of cards
-                </li>
-                <li>
-                  You have checked multiple times that no productive move remains &mdash; sometimes
-                  a useful move is hiding in plain sight
-                </li>
-              </ul>
-
-              <h3 className="text-lg font-semibold text-[#D4AF37] mt-4">
-                Common Reshuffle Mistakes
-              </h3>
-              <p>
-                The most common mistake is reshuffling too early, before maximizing your locked-in
-                cards. If you reshuffle with only two or three cards locked in, you are essentially
-                just redealing the entire board with slightly fewer cards &mdash; the odds of
-                getting a better layout are not much better than starting a new game.
-              </p>
-              <p>
-                The second mistake is reshuffling too late &mdash; specifically, saving your
-                reshuffle for &quot;later&quot; when you are already in an unrecoverable position.
-                If you have been stuck for several moves and have been making sub-optimal plays
-                trying to force progress, those sub-optimal plays may have created a worse position
-                than if you had reshuffled earlier.
-              </p>
-
-              <div className="bg-white/[0.03] border border-white/10 rounded-lg p-5">
-                <h3 className="font-semibold text-[#D4AF37] mb-2">
-                  Reshuffle Timing Guideline
-                </h3>
-                <p className="text-sm">
-                  Aim to have at least one-quarter to one-third of your cards locked in before
-                  your first reshuffle. With 13 cards per row, that means 13 to 17 cards in their
-                  final positions. This gives the reshuffle enough room to work with while ensuring
-                  that a significant portion of the puzzle is already solved. If you have two
-                  reshuffles, you can use the first a bit earlier (around 10-12 locked cards)
-                  since you have a second chance if the first redeal is unfavorable.
-                </p>
-              </div>
-            </div>
-          </section>
-
-          <AdUnit format="auto" className="-my-1" />
-
-          {/* Section 6: Advanced Planning — Thinking Multiple Moves Ahead */}
-          <section>
-            <h2
-              className="text-2xl sm:text-3xl font-bold text-white/90 mb-4"
-              style={{ fontFamily: "var(--font-playfair)" }}
-            >
-              Advanced Planning: Thinking Multiple Moves Ahead
-            </h2>
-            <div className="space-y-4 text-white/60 leading-relaxed">
-              <p>
-                The difference between a casual Gaps player and an expert comes down to depth of
-                planning. Beginners look at the current gaps and find a legal move. Intermediate
-                players look one move ahead &mdash; they consider where the new gap will appear.
-                Expert players think three, four, or five moves ahead, tracing entire chains of
-                consequences before touching a single card.
-              </p>
-
-              <h3 className="text-lg font-semibold text-[#D4AF37] mt-4">
-                Tracing Move Chains
-              </h3>
-              <p>
-                Before making any move, mentally trace the chain. &quot;If I place the 6 of Clubs
-                here, the gap moves to column 9 of row 3. The card to the left of that new gap is
-                the 10 of Diamonds, so I can place the Jack of Diamonds there. That moves the gap
-                to column 4 of row 1, where the card to the left is the 3 of Hearts, so I can
-                place the 4 of Hearts...&quot; and so on. The longer the chain you can trace, the
-                better your move selection will be.
-              </p>
-
-              <h3 className="text-lg font-semibold text-[#D4AF37] mt-4">
-                Evaluating Chain Endpoints
-              </h3>
-              <p>
-                A chain eventually ends when the new gap lands in a dead position (next to a King)
-                or in a position where no legal card can fill it. When comparing two possible
-                opening moves, trace both chains to their endpoints and compare: which chain is
-                longer? Which chain locks in more cards? Which chain&apos;s endpoint leaves the
-                gap in a more useful position? The move that produces the best endpoint is usually
-                the right choice, even if it does not look as attractive on the first step.
-              </p>
-
-              <div className="bg-white/[0.03] border border-white/10 rounded-lg p-5">
-                <h3 className="font-semibold text-[#D4AF37] mb-2">
-                  The Gap Destination Principle
-                </h3>
-                <p className="text-sm">
-                  Every move in Gaps Solitaire is really two decisions: where to place a card, and
-                  where to send the gap. Beginners focus on the first decision and ignore the
-                  second. Experts give equal weight to both. A &quot;good&quot; move that sends the
-                  gap to a dead position is often worse than a &quot;mediocre&quot; move that keeps
-                  the gap alive and flexible. Always ask: &quot;Where will my gap end up, and what
-                  can I do with it when it gets there?&quot;
-                </p>
-              </div>
-
-              <h3 className="text-lg font-semibold text-[#D4AF37] mt-4">
-                Planning Around Suit Clusters
-              </h3>
-              <p>
-                When multiple cards of the same suit are clustered in the same row, that cluster
-                represents either an opportunity or an obstacle, depending on their order. If the
-                cards are in ascending order from left to right (e.g., 4-5-6 of Diamonds), they
-                may be close to their final positions and can potentially be locked in with
-                minimal effort. If they are out of order (e.g., 6-4-5 of Diamonds), untangling
-                them will require moving at least one card out and back in, which costs gap
-                moves.
-              </p>
-              <p>
-                Advanced players identify these clusters early and plan their gap routing to
-                address the out-of-order clusters before they become surrounded by locked-in
-                cards that make rearrangement impossible.
-              </p>
-
-              <h3 className="text-lg font-semibold text-[#D4AF37] mt-4">
-                Preserving Flexibility
-              </h3>
-              <p>
-                When two moves seem equally good in terms of immediate progress, choose the one
-                that preserves more future options. This usually means choosing the move that
-                keeps gaps away from Kings, keeps gaps in the middle of rows (where they have
-                more potential placements available), and avoids locking cards into positions
-                that might need to change later. Flexibility is a form of insurance &mdash; it
-                may not pay off on this specific move, but it keeps the door open for solutions
-                you have not yet seen.
-              </p>
-
-              <div className="bg-white/[0.03] border border-white/10 rounded-lg p-5">
-                <h3 className="font-semibold text-[#D4AF37] mb-2">
-                  Practice Exercise
-                </h3>
-                <p className="text-sm">
-                  To build your planning skills, try this exercise: before every move, force
-                  yourself to trace the full chain of consequences until the gap dies or reaches
-                  a dead end. Do this for every legal move available, then choose the best one.
-                  This will be slow at first &mdash; games that normally take five minutes might
-                  take twenty. But within a dozen games, you will start seeing chains automatically,
-                  and your win rate will improve dramatically.
-                </p>
-              </div>
-            </div>
-          </section>
-
-          <AdUnit format="auto" className="-my-1" />
-
-          {/* FAQ Section */}
-          <section className="bg-white/[0.03] border border-white/10 rounded-xl p-6 sm:p-8">
-            <h2
-              className="text-2xl font-bold text-white/90 mb-6"
-              style={{ fontFamily: "var(--font-playfair)" }}
-            >
-              Frequently Asked Questions
-            </h2>
-            <div className="space-y-6">
-              {faqs.map((faq, i) => (
-                <div key={i}>
-                  <h3 className="font-medium text-white/80 text-lg mb-2">
-                    {faq.question}
-                  </h3>
-                  <p className="text-white/50 leading-relaxed">{faq.answer}</p>
-                  {i < faqs.length - 1 && (
-                    <div className="mt-6 border-b border-white/10" />
-                  )}
-                </div>
-              ))}
-            </div>
-          </section>
-
-          <AdUnit format="horizontal" className="-my-1" />
-
-          {/* ── Related Guides ── */}
-          <CardSection variant="dark">
-            <SectionHeading variant="dark" sub="Continue Learning">Related Guides</SectionHeading>
-            <ContentBody variant="dark" className="grid gap-4 md:grid-cols-3">
-              <ContentLinkCard href="/gaps" title="Play Gaps Solitaire" description="Play online for free, no download required." />
-              <ContentLinkCard href="/gaps/how-to-play" title="How to Play Gaps" description="Complete rules and gameplay guide." />
-              <ContentLinkCard href="/strategy" title="FreeCell Strategy" description="Compare with classic FreeCell tactics." />
-            </ContentBody>
-          </CardSection>
-
-          <CtaSection
-            heading="Ready to Play?"
-            body="Put these strategies into practice. Play Gaps Solitaire online for free — no download, no signup."
-            primaryLabel="Play Gaps Solitaire"
-            primaryHref="/gaps"
-          />
-
-          {/* Cross-links */}
-          <section className="bg-white/[0.03] border border-white/10 rounded-xl p-6 sm:p-8">
-            <h2 className="text-xl font-bold text-white/90 mb-4" style={{ fontFamily: "var(--font-playfair)" }}>
-              Related Pages
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <ContentLinkCard href="/gaps" title="Play Gaps Solitaire" description="Play online for free, no download" />
-              <ContentLinkCard href="/gaps/how-to-play" title="How to Play Gaps" description="Complete rules and gameplay guide" />
-              <ContentLinkCard href="/gaps/tips" title="Gaps Tips" description="Quick tips for better play" />
-              <ContentLinkCard href="/strategy" title="FreeCell Strategy" description="Strategy for classic FreeCell" />
-              <ContentLinkCard href="/solitaire-types" title="Types of Solitaire" description="20 solitaire variants compared" />
-              <ContentLinkCard href="/" title="Play FreeCell" description="The classic strategic solitaire" />
-            </div>
-          </section>
-        </article>
-      </main>
+      {/* More Resources */}
+      <section className="max-w-3xl mx-auto">
+        <h2
+          className="text-2xl font-bold mb-4"
+          style={{ fontFamily: "var(--font-playfair)" }}
+        >
+          More Gaps Solitaire Resources
+        </h2>
+        <div className="grid sm:grid-cols-2 gap-3">
+          <ContentLinkCard href="/gaps" title="Play Gaps Solitaire" description="Put these strategies into practice online for free" />
+          <ContentLinkCard href="/gaps/how-to-play" title="How to Play Gaps" description="Complete rules and gap mechanics" />
+          <ContentLinkCard href="/gaps/tips" title="Gaps Tips & Tricks" description="Quick tips for all skill levels" />
+          <ContentLinkCard href="/freecell/strategy" title="FreeCell Strategy Guide" description="Strategy for the classic FreeCell game" />
+          <ContentLinkCard href="/klondike/strategy" title="Klondike Strategy Guide" description="Strategy for the world's most popular solitaire" />
+          <ContentLinkCard href="/solitaire-types" title="All Solitaire Types" description="Explore 20+ solitaire variants and find your next game" />
+        </div>
+      </section>
     </ContentLayout>
   );
 }

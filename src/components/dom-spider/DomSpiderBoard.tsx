@@ -121,9 +121,15 @@ export default function DomSpiderBoard() {
           })}
         </div>
 
-        {/* Stock pile */}
+        {/* Stock pile — stacked with slight offset so count is visible */}
         <div
-          style={{ display: 'flex', gap: '4px', cursor: stock.length > 0 ? 'pointer' : 'default' }}
+          style={{
+            position: 'relative',
+            width: 'var(--card-width)',
+            height: 'var(--card-height)',
+            cursor: stock.length > 0 ? 'pointer' : 'default',
+            flexShrink: 0,
+          }}
           onClick={stock.length > 0 ? dealFromStock : undefined}
         >
           {Array.from({ length: stockDeals }, (_, i) => (
@@ -131,10 +137,14 @@ export default function DomSpiderBoard() {
               key={`stock-${i}`}
               className="dom-card dom-card-back"
               style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
                 width: 'var(--card-width)',
                 height: 'var(--card-height)',
                 cursor: 'pointer',
                 opacity: 0.8 + (i * 0.04),
+                transform: `translate(${i * 2}px, ${i * 2}px)`,
               }}
             />
           ))}

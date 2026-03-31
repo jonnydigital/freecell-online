@@ -1061,9 +1061,8 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
         <div
           className="absolute inset-0 overflow-clip px-2 py-2 sm:px-4 sm:py-4 lg:px-5 lg:py-5"
           style={{
-            background:
-              'radial-gradient(circle at top center, rgba(132, 187, 112, 0.17) 0%, transparent 42%), linear-gradient(180deg, color-mix(in srgb, var(--theme-mid, #125a2a) 78%, #2d6c2c 22%) 0%, color-mix(in srgb, var(--theme-base, #0e4020) 88%, #173917 12%) 100%)',
-            boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04)',
+            background: 'var(--felt-color, #0a3d0a)',
+            boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.06), inset 0 0 60px rgba(0,0,0,0.15)',
           }}
         >
           <DomBoard hint={hint} />

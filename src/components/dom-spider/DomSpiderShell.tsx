@@ -170,7 +170,7 @@ export default function DomSpiderShell({ initialDifficulty = '1-suit' }: DomSpid
 
       {/* Main content */}
       <div style={{ display: 'flex', flex: 1 }}>
-        <div style={{ flex: 1, padding: '16px', overflow: 'auto' }}>
+        <div style={{ flex: 1, padding: '16px', overflow: 'hidden' }}>
           <DomSpiderBoard />
         </div>
 

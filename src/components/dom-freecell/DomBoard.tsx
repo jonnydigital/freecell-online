@@ -274,8 +274,6 @@ export default function DomBoard({ hint }: DomBoardProps) {
       ref={boardRef as React.RefObject<HTMLDivElement>}
       onClick={handleBoardClick}
       style={{
-        background: 'var(--felt-color, #0a3d0a)',
-        borderRadius: 12,
         boxSizing: 'border-box',
         padding: 'var(--board-padding-y) var(--board-padding-x)',
         maxWidth: 'var(--board-max-width)',
@@ -290,7 +288,7 @@ export default function DomBoard({ hint }: DomBoardProps) {
           display: 'flex',
           justifyContent: 'space-between',
           gap: 'var(--pile-gap)',
-          marginBottom: 'calc(var(--board-padding-y) + var(--pile-gap))',
+          marginBottom: 'calc(var(--board-padding-y) * 1.5 + var(--pile-gap))',
         }}
       >
         {/* 4 Free cells */}

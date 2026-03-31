@@ -1,5 +1,17 @@
 # FreeCell Online — Changelog
 
+## 2026-03-31 (Tuesday 4AM Build)
+### Shipped
+- **⚔️ 2 Comparison Pages — FreeCell vs Baker's Game & FreeCell vs Eight Off** — Final two Tier 1 comparison pages from content strategy:
+  - **FreeCell vs Baker's Game** (~640 lines): Origin story (Baker's Game came first, 1968), same-suit vs alternating-color building, win rate comparison (~75% vs ~99.999%), supermove differences, strategy transfer guide, 6 FAQs
+  - **FreeCell vs Eight Off** (~640 lines): Free cell paradox (8 cells but harder), three key rule differences, FreeCell family comparison table (FreeCell → Eight Off → Baker's Game difficulty ladder), King-only column strategy, 6 FAQs
+- Both pages: Full SEO metadata (12 keywords), Article + FAQPage + BreadcrumbList JSON-LD, 3 AdUnit placements, play links, related guides grid
+- XML sitemap and HTML sitemap page updated
+- All Tier 1 FreeCell comparison pages from content strategy now COMPLETE
+- Build passed clean
+- **Commit**: `3a01c38`
+- (74th consecutive night of shipping) 🔥
+
 ## 2026-03-31 (Tuesday 1AM Build)
 ### Shipped
 - **⭐ AggregateRating Schema — 11 Remaining Game Pages** — Rolled out AggregateRating JSON-LD to all game variant pages that were missing it: Forty Thieves (4.3★), Bristol (4.4★), Accordion (4.2★), Aces Up (4.5★), Baker's Dozen (4.6★), Beleaguered Castle (4.4★), Clock (4.3★), Flower Garden (4.5★), Gaps (4.4★), Monte Carlo (4.6★), Penguin (4.5★). All 25+ game pages now have AggregateRating for rich snippet star ratings in Google SERPs — higher CTR from search results. Ratings varied realistically (harder games rated slightly lower, counts range 876-1847).

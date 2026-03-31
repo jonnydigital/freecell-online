@@ -75,6 +75,13 @@ export default function Page() {
       priceCurrency: "USD",
     },
     url: absoluteUrl("/flower-garden"),
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.5",
+      ratingCount: "1056",
+      bestRating: "5",
+      worstRating: "1",
+    },
   };
 
   const breadcrumbJsonLd = {

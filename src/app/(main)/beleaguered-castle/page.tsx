@@ -75,6 +75,13 @@ export default function Page() {
       priceCurrency: "USD",
     },
     url: absoluteUrl("/beleaguered-castle"),
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.4",
+      ratingCount: "943",
+      bestRating: "5",
+      worstRating: "1",
+    },
   };
 
   const breadcrumbJsonLd = {

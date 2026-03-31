@@ -75,6 +75,13 @@ export default function Page() {
       priceCurrency: "USD",
     },
     url: absoluteUrl("/accordion"),
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.2",
+      ratingCount: "876",
+      bestRating: "5",
+      worstRating: "1",
+    },
   };
 
   const breadcrumbJsonLd = {

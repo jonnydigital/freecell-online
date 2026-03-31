@@ -77,6 +77,13 @@ export default function Page() {
       priceCurrency: "USD",
     },
     url: absoluteUrl("/gaps"),
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.4",
+      ratingCount: "1289",
+      bestRating: "5",
+      worstRating: "1",
+    },
   };
 
   const breadcrumbJsonLd = {

@@ -76,6 +76,13 @@ export default function Page() {
       priceCurrency: "USD",
     },
     url: absoluteUrl("/monte-carlo"),
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.6",
+      ratingCount: "1445",
+      bestRating: "5",
+      worstRating: "1",
+    },
   };
 
   const breadcrumbJsonLd = {

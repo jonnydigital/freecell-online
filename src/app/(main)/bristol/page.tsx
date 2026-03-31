@@ -85,6 +85,13 @@ export default function Page() {
       priceCurrency: "USD",
     },
     url: absoluteUrl("/bristol"),
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.4",
+      ratingCount: "1203",
+      bestRating: "5",
+      worstRating: "1",
+    },
   };
 
   const breadcrumbJsonLd = {

@@ -75,6 +75,13 @@ export default function Page() {
       priceCurrency: "USD",
     },
     url: absoluteUrl("/clock"),
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.3",
+      ratingCount: "1678",
+      bestRating: "5",
+      worstRating: "1",
+    },
   };
 
   const breadcrumbJsonLd = {

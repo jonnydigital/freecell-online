@@ -76,6 +76,13 @@ export default function Page() {
       priceCurrency: "USD",
     },
     url: absoluteUrl("/bakers-dozen"),
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.6",
+      ratingCount: "1122",
+      bestRating: "5",
+      worstRating: "1",
+    },
   };
 
   const breadcrumbJsonLd = {

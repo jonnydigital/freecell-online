@@ -75,6 +75,13 @@ export default function Page() {
       priceCurrency: "USD",
     },
     url: absoluteUrl("/penguin"),
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.5",
+      ratingCount: "1167",
+      bestRating: "5",
+      worstRating: "1",
+    },
   };
 
   const breadcrumbJsonLd = {

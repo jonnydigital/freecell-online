@@ -69,6 +69,7 @@ export default function DomSpiderBoard() {
   return (
     <div
       className="dom-board-surface"
+      data-game="spider"
       ref={boardRef}
       onClick={handleBoardClick}
       style={{

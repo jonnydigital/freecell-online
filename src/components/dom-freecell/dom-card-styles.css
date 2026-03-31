@@ -78,6 +78,38 @@
   }
 }
 
+/* ── Spider Solitaire overrides (10 columns instead of 8) ── */
+
+.dom-board-surface[data-game="spider"] {
+  /* Desktop with sidebar (240px at xl): 240 + padding 32 + board padding 32 ≈ 304px */
+  --card-width: clamp(70px, calc((100vw - 304px) / 10.9), 110px);
+}
+
+/* Spider: no sidebar below xl (1280px) */
+@media (max-width: 1279px) {
+  .dom-board-surface[data-game="spider"] {
+    /* No sidebar: outer padding (~32px) + board padding (~32px) + gaps (~54px) ≈ 118px */
+    --card-width: clamp(56px, calc((100vw - 118px) / 10.9), 100px);
+  }
+}
+
+/* Spider tablet: 768–1023px */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .dom-board-surface[data-game="spider"] {
+    --card-width: clamp(56px, calc((100vw - 100px) / 10.9), 90px);
+  }
+}
+
+/* Spider mobile: ≤767px */
+@media (max-width: 767px) {
+  .dom-board-surface[data-game="spider"] {
+    /* 10 cards + 9 gaps (~2px each = 18px) + board padding (~8px×2) + outer padding (16px×2) ≈ 66px */
+    --card-width: clamp(24px, calc((100vw - 66px) / 10), 44px);
+    --cascade-overlap: clamp(8px, calc(var(--card-width) * 0.3), 14px);
+    --pile-gap: clamp(1px, 0.5vw, 4px);
+  }
+}
+
 /* ---- Base card ---- */
 
 .dom-card {

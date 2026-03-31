@@ -766,7 +766,7 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
       className="w-full min-h-dvh"
       style={{
         background:
-          'radial-gradient(circle at top, color-mix(in srgb, var(--theme-mid, #1b5a24) 54%, #7aa25a 46%) 0%, color-mix(in srgb, var(--theme-base, #0d2e0d) 92%, black) 56%, #061406 100%)',
+          'radial-gradient(circle at top, color-mix(in srgb, var(--theme-mid, #125a2a) 54%, #7aa25a 46%) 0%, color-mix(in srgb, var(--theme-base, #0e4020) 92%, black) 56%, #061406 100%)',
       }}
     >
     <div className="mx-auto flex min-h-dvh w-full max-w-[1580px] flex-col lg:flex-row lg:items-start lg:gap-4 lg:px-4 xl:px-6">
@@ -781,7 +781,7 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
       className="flex h-full flex-col overflow-clip lg:rounded-[30px] lg:border lg:border-white/10"
       style={{
         background:
-          'linear-gradient(180deg, color-mix(in srgb, var(--theme-base, #0d2e0d) 86%, #214f1d 14%) 0%, color-mix(in srgb, var(--theme-base, #0d2e0d) 94%, black) 100%)',
+          'linear-gradient(180deg, color-mix(in srgb, var(--theme-base, #0e4020) 86%, #214f1d 14%) 0%, color-mix(in srgb, var(--theme-base, #0e4020) 94%, black) 100%)',
         boxShadow: '0 22px 54px rgba(0, 0, 0, 0.24)',
       }}
     >
@@ -791,7 +791,7 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
         className="hidden md:flex items-center justify-between z-20"
         style={{
           padding: '12px 24px',
-          background: 'linear-gradient(180deg, color-mix(in srgb, var(--theme-dark, #051e05) 74%, #1f4f1d 26%) 0%, color-mix(in srgb, var(--theme-base, #072907) 88%, #173e16 12%) 100%)',
+          background: 'linear-gradient(180deg, color-mix(in srgb, var(--theme-dark, #0a3310) 74%, #1f4f1d 26%) 0%, color-mix(in srgb, var(--theme-base, #0e4020) 88%, #173e16 12%) 100%)',
           borderBottom: '1px solid rgba(255,255,255,0.08)',
         }}
       >
@@ -1009,7 +1009,7 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
           className="flex md:hidden items-center justify-between z-20"
           style={{
             padding: '8px 16px',
-            background: 'linear-gradient(180deg, var(--theme-dark, #051e05) 0%, var(--theme-base, #072907) 100%)',
+            background: 'linear-gradient(180deg, var(--theme-dark, #0a3310) 0%, var(--theme-base, #0e4020) 100%)',
             borderBottom: '1px solid rgba(255,255,255,0.06)',
           }}
         >
@@ -1062,7 +1062,7 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
           className="absolute inset-0 overflow-clip px-2 py-2 sm:px-4 sm:py-4 lg:px-5 lg:py-5"
           style={{
             background:
-              'radial-gradient(circle at top center, rgba(132, 187, 112, 0.17) 0%, transparent 42%), linear-gradient(180deg, color-mix(in srgb, var(--theme-mid, #0d2e0d) 78%, #2d6c2c 22%) 0%, color-mix(in srgb, var(--theme-base, #0d2e0d) 88%, #173917 12%) 100%)',
+              'radial-gradient(circle at top center, rgba(132, 187, 112, 0.17) 0%, transparent 42%), linear-gradient(180deg, color-mix(in srgb, var(--theme-mid, #125a2a) 78%, #2d6c2c 22%) 0%, color-mix(in srgb, var(--theme-base, #0e4020) 88%, #173917 12%) 100%)',
             boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04)',
           }}
         >

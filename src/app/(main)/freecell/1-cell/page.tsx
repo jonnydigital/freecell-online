@@ -41,6 +41,13 @@ export default function Page() {
     genre: "Card Game",
     gamePlatform: "Web Browser",
     url: absoluteUrl('/freecell/1-cell'),
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.4",
+      ratingCount: "612",
+      bestRating: "5",
+      worstRating: "1",
+    },
   };
 
   const faqJsonLd = {

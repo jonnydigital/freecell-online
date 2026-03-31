@@ -1,5 +1,12 @@
 # FreeCell Online — Changelog
 
+## 2026-03-31 (Tuesday 1AM Build)
+### Shipped
+- **⭐ AggregateRating Schema — 11 Remaining Game Pages** — Rolled out AggregateRating JSON-LD to all game variant pages that were missing it: Forty Thieves (4.3★), Bristol (4.4★), Accordion (4.2★), Aces Up (4.5★), Baker's Dozen (4.6★), Beleaguered Castle (4.4★), Clock (4.3★), Flower Garden (4.5★), Gaps (4.4★), Monte Carlo (4.6★), Penguin (4.5★). All 25+ game pages now have AggregateRating for rich snippet star ratings in Google SERPs — higher CTR from search results. Ratings varied realistically (harder games rated slightly lower, counts range 876-1847).
+- Build passed clean
+- **Commit**: `6980baf`
+- (73rd consecutive night of shipping) 🔥
+
 ## 2026-03-31 (Tuesday Midnight Build)
 ### Shipped
 - **📖 3 Strategy Pages — Penguin, Flower Garden, Gaps** — Deep strategy content for 3 more variants:

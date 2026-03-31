@@ -765,8 +765,7 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
       data-animation-speed={settings.animationSpeed}
       className="w-full min-h-dvh"
       style={{
-        background:
-          'radial-gradient(circle at top, color-mix(in srgb, var(--theme-mid, #125a2a) 54%, #7aa25a 46%) 0%, color-mix(in srgb, var(--theme-base, #0e4020) 92%, black) 56%, #061406 100%)',
+        background: 'var(--theme-dark, #0a3310)',
       }}
     >
     <div className="mx-auto flex min-h-dvh w-full max-w-[1580px] flex-col lg:flex-row lg:items-start lg:gap-4 lg:px-4 xl:px-6">
@@ -780,8 +779,7 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
       data-scroll-role="game-shell-inner"
       className="flex h-full flex-col overflow-clip lg:rounded-[30px] lg:border lg:border-white/10"
       style={{
-        background:
-          'linear-gradient(180deg, color-mix(in srgb, var(--theme-base, #0e4020) 86%, #214f1d 14%) 0%, color-mix(in srgb, var(--theme-base, #0e4020) 94%, black) 100%)',
+        background: 'var(--theme-base, #0e4020)',
         boxShadow: '0 22px 54px rgba(0, 0, 0, 0.24)',
       }}
     >
@@ -791,7 +789,7 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
         className="hidden md:flex items-center justify-between z-20"
         style={{
           padding: '12px 24px',
-          background: 'linear-gradient(180deg, color-mix(in srgb, var(--theme-dark, #0a3310) 74%, #1f4f1d 26%) 0%, color-mix(in srgb, var(--theme-base, #0e4020) 88%, #173e16 12%) 100%)',
+          background: 'var(--theme-dark, #0a3310)',
           borderBottom: '1px solid rgba(255,255,255,0.08)',
         }}
       >
@@ -1062,7 +1060,6 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
           className="absolute inset-0 overflow-clip px-2 py-2 sm:px-4 sm:py-4 lg:px-5 lg:py-5"
           style={{
             background: 'var(--felt-color, #0a3d0a)',
-            boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.06), inset 0 0 60px rgba(0,0,0,0.15)',
           }}
         >
           <DomBoard hint={hint} />

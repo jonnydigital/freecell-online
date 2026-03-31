@@ -25,6 +25,8 @@ const contentPages = [
   { path: '/spider', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/freecell-vs-spider', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/freecell-vs-klondike', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/freecell-vs-bakers-game', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/freecell-vs-eight-off', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/statistics', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/deals', changeFrequency: 'weekly', priority: 0.7 },
   { path: '/solver', changeFrequency: 'monthly', priority: 0.8 },

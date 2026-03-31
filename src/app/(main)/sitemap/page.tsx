@@ -65,6 +65,8 @@ const exploreLinks = [
   { href: "/freecell-variants", label: "FreeCell Variants", desc: "All FreeCell variant modes" },
   { href: "/freecell-vs-klondike", label: "FreeCell vs Klondike", desc: "Head-to-head comparison" },
   { href: "/freecell-vs-spider", label: "FreeCell vs Spider", desc: "Two strategic favorites compared" },
+  { href: "/freecell-vs-bakers-game", label: "FreeCell vs Baker's Game", desc: "Same layout, same-suit building" },
+  { href: "/freecell-vs-eight-off", label: "FreeCell vs Eight Off", desc: "More free cells, tougher rules" },
   { href: "/is-every-freecell-game-winnable", label: "Is Every Game Winnable?", desc: "Solvability analysis" },
   { href: "/freecell-game-11982", label: "Deal #11982", desc: "The only proven unsolvable deal" },
   { href: "/hard-freecell-games", label: "Hard FreeCell Games", desc: "The toughest solvable deals" },

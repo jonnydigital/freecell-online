@@ -1,27 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <!-- Full green background for maskable -->
   <rect width="512" height="512" fill="#0a3d0a"/>
-  
-  <!-- Content in safe zone (center ~80% = 51.2 to 460.8) -->
-  <!-- Card 1: white card with red diamond -->
-  <g filter="url(#shadow)">
-    <rect x="100" y="95" width="145" height="200" rx="12" fill="white"/>
-  </g>
-  <polygon points="172,145 200,195 172,245 144,195" fill="#cc0000"/>
-  
-  <!-- Card 2: white card with black spade, offset -->
-  <g filter="url(#shadow)">
-    <rect x="267" y="165" width="145" height="200" rx="12" fill="white"/>
-  </g>
-  <!-- Spade symbol -->
-  <path d="M339,210 C339,210 305,250 305,275 C305,292 318,298 332,288 L332,310 L346,310 L346,288 C360,298 373,292 373,275 C373,250 339,210 339,210Z" fill="#1a1a1a"/>
-  
-  <!-- "FC" text -->
-  <text x="256" y="435" font-family="Arial,Helvetica,sans-serif" font-weight="bold" font-size="72" fill="#D4AF37" text-anchor="middle">FC</text>
-  
-  <defs>
-    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
-      <feDropShadow dx="3" dy="3" stdDeviation="4" flood-opacity="0.4"/>
-    </filter>
-  </defs>
+  <!-- Card shadow -->
+  <rect x="94" y="98" width="328" height="328" rx="32" fill="rgba(0,0,0,0.3)"/>
+  <!-- White card -->
+  <rect x="90" y="94" width="328" height="328" rx="32" fill="white"/>
+  <!-- Large heart -->
+  <path d="M254 374 C254 374 140 295 140 222 C140 186 164 162 194 162 C216 162 238 174 254 192 C270 174 292 162 314 162 C344 162 368 186 368 222 C368 295 254 374 254 374Z" fill="#cc0000"/>
 </svg>

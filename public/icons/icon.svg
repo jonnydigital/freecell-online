@@ -1,11 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
   <rect width="512" height="512" rx="64" fill="#0a3d0a"/>
-  <rect x="96" y="80" width="140" height="196" rx="12" fill="white"/>
-  <rect x="276" y="80" width="140" height="196" rx="12" fill="white"/>
-  <text x="166" y="200" font-family="serif" font-size="80" fill="#cc0000" text-anchor="middle">A</text>
-  <text x="166" y="248" font-family="serif" font-size="48" fill="#cc0000" text-anchor="middle">&hearts;</text>
-  <text x="346" y="200" font-family="serif" font-size="80" fill="#000" text-anchor="middle">K</text>
-  <text x="346" y="248" font-family="serif" font-size="48" fill="#000" text-anchor="middle">&spades;</text>
-  <rect x="96" y="316" width="140" height="120" rx="12" fill="#1a5c1a" stroke="#2a7c2a" stroke-width="3"/>
-  <rect x="276" y="316" width="140" height="120" rx="12" fill="#1a5c1a" stroke="#2a7c2a" stroke-width="3"/>
+  <rect x="1" y="1" width="510" height="510" rx="63" fill="none" stroke="#1a5c1a" stroke-width="4"/>
+  <!-- Card shadow -->
+  <rect x="74" y="78" width="368" height="368" rx="36" fill="rgba(0,0,0,0.35)"/>
+  <!-- White card face -->
+  <rect x="70" y="74" width="368" height="368" rx="36" fill="white"/>
+  <!-- Small rank indicators top-left and bottom-right -->
+  <text x="100" y="140" font-family="Georgia,serif" font-size="64" fill="#cc0000" font-weight="bold">A</text>
+  <text x="100" y="192" font-family="Georgia,serif" font-size="48" fill="#cc0000" text-anchor="middle">&#9829;</text>
+  <!-- Large heart center -->
+  <path d="M256 390 C256 390 130 300 130 210 C130 170 158 144 192 144 C216 144 240 158 256 178 C272 158 296 144 320 144 C354 144 382 170 382 210 C382 300 256 390 256 390Z" fill="#cc0000"/>
+  <!-- Small rank indicators bottom-right (rotated) -->
+  <text x="412" y="386" font-family="Georgia,serif" font-size="64" fill="#cc0000" font-weight="bold" text-anchor="middle" transform="rotate(180,412,373)">A</text>
 </svg>

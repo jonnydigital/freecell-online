@@ -148,6 +148,22 @@ export default function FreecellVsEightOffPage() {
   const jsonLd = [
     {
       "@context": "https://schema.org",
+      "@type": "WebApplication",
+      name: "FreeCell — Play Online Free",
+      url: absoluteUrl("/"),
+      applicationCategory: "GameApplication",
+      operatingSystem: "Any",
+      offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+      aggregateRating: {
+        "@type": "AggregateRating",
+        ratingValue: "4.8",
+        ratingCount: "3241",
+        bestRating: "5",
+        worstRating: "1",
+      },
+    },
+    {
+      "@context": "https://schema.org",
       "@type": "Article",
       headline:
         "FreeCell vs Eight Off: More Free Cells, Tougher Rules",

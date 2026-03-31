@@ -3,6 +3,7 @@ import Analytics from "@/components/Analytics";
 import CookieConsent from "@/components/CookieConsent";
 import ThemeInitializer from "@/components/ThemeInitializer";
 import AccessibilityInitializer from "@/components/AccessibilityInitializer";
+import FreecellNavigationReload from "@/components/FreecellNavigationReload";
 import SiteFooter from "@/components/SiteFooter";
 import ScrollDebugOverlay from "@/components/ScrollDebugOverlay";
 import { siteConfig } from "@/lib/siteConfig";
@@ -17,6 +18,7 @@ export default function MainLayout({
       <a href="#game-container" className="skip-to-game">
         Skip to game
       </a>
+      <FreecellNavigationReload />
       <ThemeInitializer />
       <AccessibilityInitializer />
       <Analytics />

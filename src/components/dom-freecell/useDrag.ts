@@ -114,6 +114,7 @@ export function useDrag({ cardIds, sourceLocation, boardRef }: UseDragOptions): 
         origPosition: string;
         origZIndex: string;
         origTransform: string;
+        origWillChange: string;
         origPointerEvents: string;
         origLeft: string;
         origTop: string;
@@ -131,6 +132,7 @@ export function useDrag({ cardIds, sourceLocation, boardRef }: UseDragOptions): 
           origPosition: el.style.position,
           origZIndex: el.style.zIndex,
           origTransform: el.style.transform,
+          origWillChange: el.style.willChange,
           origPointerEvents: el.style.pointerEvents,
           origLeft: el.style.left,
           origTop: el.style.top,
@@ -156,6 +158,7 @@ export function useDrag({ cardIds, sourceLocation, boardRef }: UseDragOptions): 
           snap.el.style.left = `${snap.startLeft}px`;
           snap.el.style.top = `${snap.startTop}px`;
           snap.el.style.width = `${firstRect.width}px`;
+          snap.el.style.willChange = 'left, top, transform';
           snap.el.style.transform = 'scale(1.06)';
           snap.el.style.pointerEvents = 'none';
           snap.el.style.transition = 'none';
@@ -194,6 +197,7 @@ export function useDrag({ cardIds, sourceLocation, boardRef }: UseDragOptions): 
           snap.el.style.position = snap.origPosition;
           snap.el.style.zIndex = snap.origZIndex;
           snap.el.style.transform = snap.origTransform;
+          snap.el.style.willChange = snap.origWillChange;
           snap.el.style.pointerEvents = snap.origPointerEvents;
           snap.el.style.left = snap.origLeft;
           snap.el.style.top = snap.origTop;

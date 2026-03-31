@@ -52,3 +52,7 @@ date,site,spark_found,description,priority,implemented
 2026-03-30,online-solitaire.com,yes,FreeCell page: 772 word count — our FreeCell page is significantly longer and more comprehensive,info,no
 2026-03-30,online-solitaire.com,yes,Spider page: 1080 word count — our Spider page comparable in depth. No AggregateRating schema on Spider page — we have an advantage here,info,no
 2026-03-30,online-solitaire.com,no,Both FreeCell and Spider pages use only WebApplication+BreadcrumbList schema — no Game type or FAQPage JSON-LD. Our schema coverage is more comprehensive,info,no
+2026-03-31,online-solitaire.com,no,"FreeCell page: zero application/ld+json schema blocks — no WebApplication, FAQPage, or AggregateRating structured data. All FAQs are plain HTML only.",info,no
+2026-03-31,online-solitaire.com,no,"Spider page: 1075 words, no JSON-LD schema. Our schema coverage (FAQPage + AggregateRating + Game + BreadcrumbList) is a clear structural SEO advantage.",info,no
+2026-03-31,online-solitaire.com,no,"Competitor nav shows 320+ games — a variety gap we cannot close quickly. Focus: depth and schema quality on games we do have.",info,no
+2026-03-31,online-solitaire.com,no,"Meta descriptions are generic and templated. Ours are more specific and keyword-rich — maintain this advantage.",info,no

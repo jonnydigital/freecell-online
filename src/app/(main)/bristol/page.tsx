@@ -133,12 +133,12 @@ export default function Page() {
       <JsonLd data={faqJsonLd} />
       <BristolGamePage />
       <article className="max-w-3xl mx-auto px-6 py-12 text-white/80 bg-[#072907]">
-        <h2
+        <h1
           className="text-3xl font-bold text-[#D4AF37] mb-6"
           style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
         >
           Bristol Solitaire
-        </h2>
+        </h1>
 
         <p className="mb-4 leading-relaxed">
           Bristol Solitaire is a distinctive patience card game featuring 8 short &ldquo;fans&rdquo;
@@ -191,6 +191,15 @@ export default function Page() {
               How to Play Bristol Solitaire
             </Link>{" "}
             — Complete rules and detailed guide
+          </li>
+          <li>
+            <Link
+              href="/bristol/strategy"
+              className="text-[#D4AF37] hover:underline"
+            >
+              Bristol Strategy Guide
+            </Link>{" "}
+            — Tips and winning tactics
           </li>
           <li>
             <Link

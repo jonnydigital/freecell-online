@@ -81,7 +81,7 @@ export default function Page() {
     aggregateRating: {
       "@type": "AggregateRating",
       ratingValue: "4.5",
-      ratingCount: "987",
+      ratingCount: "1312",
       bestRating: "5",
       worstRating: "1",
     },

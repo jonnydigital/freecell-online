@@ -139,12 +139,12 @@ export default function Page() {
       <JsonLd data={aggregateRatingJsonLd} />
       <CalculationGamePage />
       <article className="max-w-3xl mx-auto px-6 py-12 text-white/80 bg-[#072907]">
-        <h2
+        <h1
           className="text-3xl font-bold text-[#D4AF37] mb-6"
           style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
         >
           Calculation Solitaire
-        </h2>
+        </h1>
 
         <p className="mb-4 leading-relaxed">
           Calculation is a unique math-based solitaire where <strong>suit doesn&apos;t matter</strong> —
@@ -197,6 +197,15 @@ export default function Page() {
               How to Play Calculation
             </Link>{" "}
             — Complete rules and strategy guide
+          </li>
+          <li>
+            <Link
+              href="/calculation/strategy"
+              className="text-[#D4AF37] hover:underline"
+            >
+              Calculation Strategy Guide
+            </Link>{" "}
+            — Tips and winning tactics
           </li>
           <li>
             <Link

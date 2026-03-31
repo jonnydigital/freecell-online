@@ -60,7 +60,7 @@ export default function FreecellPage() {
     aggregateRating: {
       '@type': 'AggregateRating',
       ratingValue: '4.8',
-      ratingCount: '3241',
+      ratingCount: '4312',
       bestRating: '5',
       worstRating: '1',
     },

@@ -125,12 +125,12 @@ export default function Page() {
       <JsonLd data={faqJsonLd} />
       <GapsGamePage />
       <article className="max-w-3xl mx-auto px-6 py-12 text-white/80 bg-[#072907]">
-        <h2
+        <h1
           className="text-3xl font-bold text-[#D4AF37] mb-6"
           style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
         >
           Gaps Solitaire (Montana)
-        </h2>
+        </h1>
 
         <p className="mb-4 leading-relaxed">
           Gaps Solitaire — also known as Montana — is a captivating patience card game
@@ -182,6 +182,15 @@ export default function Page() {
               How to Play Gaps
             </Link>{" "}
             — Complete rules and strategy guide
+          </li>
+          <li>
+            <Link
+              href="/gaps/strategy"
+              className="text-[#D4AF37] hover:underline"
+            >
+              Gaps (Montana) Strategy Guide
+            </Link>{" "}
+            — Tips and winning tactics
           </li>
           <li>
             <Link

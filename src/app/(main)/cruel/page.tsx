@@ -138,12 +138,12 @@ export default function Page() {
       <JsonLd data={aggregateRatingJsonLd} />
       <CruelGamePage />
       <article className="max-w-3xl mx-auto px-6 py-12 text-white/80 bg-[#072907]">
-        <h2
+        <h1
           className="text-3xl font-bold text-[#D4AF37] mb-6"
           style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
         >
           Cruel Solitaire
-        </h2>
+        </h1>
 
         <p className="mb-4 leading-relaxed">
           Cruel Solitaire is a classic patience card game that combines strategic
@@ -192,6 +192,15 @@ export default function Page() {
               How to Play Cruel Solitaire
             </Link>{" "}
             — Complete rules and strategy guide
+          </li>
+          <li>
+            <Link
+              href="/cruel/strategy"
+              className="text-[#D4AF37] hover:underline"
+            >
+              Cruel Solitaire Strategy Guide
+            </Link>{" "}
+            — Tips and winning tactics
           </li>
           <li>
             <Link

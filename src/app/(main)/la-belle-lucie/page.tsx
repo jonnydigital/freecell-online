@@ -138,12 +138,12 @@ export default function Page() {
       <JsonLd data={aggregateRatingJsonLd} />
       <LaBelleLucieGamePage />
       <article className="max-w-3xl mx-auto px-6 py-12 text-white/80 bg-[#072907]">
-        <h2
+        <h1
           className="text-3xl font-bold text-[#D4AF37] mb-6"
           style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
         >
           La Belle Lucie Solitaire
-        </h2>
+        </h1>
 
         <p className="mb-4 leading-relaxed">
           La Belle Lucie (also known as <strong>The Fan</strong>) is one of the
@@ -192,6 +192,15 @@ export default function Page() {
               How to Play La Belle Lucie
             </Link>{" "}
             — Complete rules and strategy guide
+          </li>
+          <li>
+            <Link
+              href="/la-belle-lucie/strategy"
+              className="text-[#D4AF37] hover:underline"
+            >
+              La Belle Lucie Strategy Guide
+            </Link>{" "}
+            — Tips and winning tactics
           </li>
           <li>
             <Link

@@ -137,12 +137,12 @@ export default function Page() {
       <JsonLd data={aggregateRatingJsonLd} />
       <ScorpionGamePage />
       <article className="max-w-3xl mx-auto px-6 py-12 text-white/80 bg-[#072907]">
-        <h2
+        <h1
           className="text-3xl font-bold text-[#D4AF37] mb-6"
           style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
         >
           Scorpion Solitaire
-        </h2>
+        </h1>
 
         <p className="mb-4 leading-relaxed">
           Scorpion Solitaire is a strategic single-deck card game that combines the
@@ -198,6 +198,15 @@ export default function Page() {
               How to Play Scorpion Solitaire
             </Link>{" "}
             — Complete rules and strategy guide
+          </li>
+          <li>
+            <Link
+              href="/scorpion/strategy"
+              className="text-[#D4AF37] hover:underline"
+            >
+              Scorpion Strategy Guide
+            </Link>{" "}
+            — Tips and winning tactics
           </li>
           <li>
             <Link

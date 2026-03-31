@@ -124,12 +124,12 @@ export default function Page() {
       <JsonLd data={faqJsonLd} />
       <MonteCarloGamePage />
       <article className="max-w-3xl mx-auto px-6 py-12 text-white/80 bg-[#072907]">
-        <h2
+        <h1
           className="text-3xl font-bold text-[#D4AF37] mb-6"
           style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
         >
           Monte Carlo Solitaire
-        </h2>
+        </h1>
 
         <p className="mb-4 leading-relaxed">
           Monte Carlo (also known as Weddings or Double and Quits) is a classic pair-matching
@@ -173,6 +173,15 @@ export default function Page() {
               How to Play Monte Carlo
             </Link>{" "}
             — Complete rules and strategy guide
+          </li>
+          <li>
+            <Link
+              href="/monte-carlo/strategy"
+              className="text-[#D4AF37] hover:underline"
+            >
+              Monte Carlo Strategy Guide
+            </Link>{" "}
+            — Tips and winning tactics
           </li>
           <li>
             <Link

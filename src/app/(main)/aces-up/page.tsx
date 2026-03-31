@@ -123,12 +123,12 @@ export default function Page() {
       <JsonLd data={faqJsonLd} />
       <AcesUpGamePage />
       <article className="max-w-3xl mx-auto px-6 py-12 text-white/80 bg-[#072907]">
-        <h2
+        <h1
           className="text-3xl font-bold text-[#D4AF37] mb-6"
           style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
         >
           Aces Up Solitaire
-        </h2>
+        </h1>
 
         <p className="mb-4 leading-relaxed">
           Aces Up (also known as <strong>Idiot&apos;s Delight</strong> or <strong>Firing Squad</strong>)
@@ -177,6 +177,15 @@ export default function Page() {
               How to Play Aces Up Solitaire
             </Link>{" "}
             — Complete rules, strategy tips, and history
+          </li>
+          <li>
+            <Link
+              href="/aces-up/strategy"
+              className="text-[#D4AF37] hover:underline"
+            >
+              Aces Up Strategy Guide
+            </Link>{" "}
+            — Tips and winning tactics
           </li>
           <li>
             <Link

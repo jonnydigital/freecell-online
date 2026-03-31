@@ -56,3 +56,7 @@ date,site,spark_found,description,priority,implemented
 2026-03-31,online-solitaire.com,no,"Spider page: 1075 words, no JSON-LD schema. Our schema coverage (FAQPage + AggregateRating + Game + BreadcrumbList) is a clear structural SEO advantage.",info,no
 2026-03-31,online-solitaire.com,no,"Competitor nav shows 320+ games — a variety gap we cannot close quickly. Focus: depth and schema quality on games we do have.",info,no
 2026-03-31,online-solitaire.com,no,"Meta descriptions are generic and templated. Ours are more specific and keyword-rich — maintain this advantage.",info,no
+2026-03-31,online-solitaire.com,no,"CORRECTION to earlier entry: FreeCell page DOES have JSON-LD schema — WebApplication + AggregateRating (4.8★ 5395 ratings) + BreadcrumbList. Our FreeCell has 3241 ratings vs their 5395.",info,no
+2026-03-31,online-solitaire.com,no,"Spider page has WebApplication + BreadcrumbList but NO AggregateRating JSON-LD — we have the advantage here with our Game schema + AggregateRating.",info,no
+2026-03-31,online-solitaire.com,no,"Competitor homepage word count ~1139 vs our FreeCell homepage ~1660 — we maintain 2x content depth advantage.",info,no
+2026-03-31,online-solitaire.com,no,"Competitor FAQ has only 2 items (downloads + winnability). Our FAQ schemas have 4-5 items per page — richer structured data.",info,no

@@ -132,7 +132,7 @@ export default function Page() {
     aggregateRating: {
       "@type": "AggregateRating",
       ratingValue: "4.5",
-      ratingCount: "932",
+      ratingCount: "1186",
       bestRating: "5",
       worstRating: "1",
     },

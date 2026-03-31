@@ -123,12 +123,12 @@ export default function Page() {
       <JsonLd data={faqJsonLd} />
       <FlowerGardenGamePage />
       <article className="max-w-3xl mx-auto px-6 py-12 text-white/80 bg-[#072907]">
-        <h2
+        <h1
           className="text-3xl font-bold text-[#D4AF37] mb-6"
           style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
         >
           Flower Garden Solitaire
-        </h2>
+        </h1>
 
         <p className="mb-4 leading-relaxed">
           Flower Garden Solitaire is a classic patience card game featuring a unique{" "}
@@ -176,6 +176,15 @@ export default function Page() {
               How to Play Flower Garden Solitaire
             </Link>{" "}
             — Complete rules and strategy guide
+          </li>
+          <li>
+            <Link
+              href="/flower-garden/strategy"
+              className="text-[#D4AF37] hover:underline"
+            >
+              Flower Garden Strategy Guide
+            </Link>{" "}
+            — Tips and winning tactics
           </li>
           <li>
             <Link

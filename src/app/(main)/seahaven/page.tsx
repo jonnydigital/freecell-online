@@ -137,12 +137,12 @@ export default function Page() {
       <JsonLd data={aggregateRatingJsonLd} />
       <SeahavenGamePage />
       <article className="max-w-3xl mx-auto px-6 py-12 text-white/80 bg-[#072907]">
-        <h2
+        <h1
           className="text-3xl font-bold text-[#D4AF37] mb-6"
           style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
         >
           Seahaven Towers Solitaire
-        </h2>
+        </h1>
 
         <p className="mb-4 leading-relaxed">
           Seahaven Towers is a strategic single-deck solitaire game that blends the
@@ -195,6 +195,15 @@ export default function Page() {
               How to Play Seahaven Towers
             </Link>{" "}
             — Complete rules and strategy guide
+          </li>
+          <li>
+            <Link
+              href="/seahaven/strategy"
+              className="text-[#D4AF37] hover:underline"
+            >
+              Seahaven Towers Strategy Guide
+            </Link>{" "}
+            — Tips and winning tactics
           </li>
           <li>
             <Link

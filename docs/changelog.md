@@ -1,5 +1,17 @@
 # FreeCell Online — Changelog
 
+## 2026-03-31 (Tuesday Midnight Build)
+### Shipped
+- **📖 3 Strategy Pages — Penguin, Flower Garden, Gaps** — Deep strategy content for 3 more variants:
+  - **Penguin Strategy** (~680 lines): Flipper management, base rank adaptation, same-suit sequence building, empty column strategy (base-1 only), foundation building order, opening moves, comparison table vs FreeCell vs Canfield
+  - **Flower Garden Strategy** (~690 lines): Bouquet management (16-card fully-visible reserve), King management as positional anchors, empty column creation, foundation safe-play rules, any-suit building exploitation, deal reading analysis, comparison vs Canfield
+  - **Gaps Strategy** (~660 lines): Gap mechanics explanation, 2-priority rule for left edge, King dead-gap avoidance, reshuffle timing strategy, left-to-right lock-in pattern, gap chain planning, comparison vs traditional solitaire
+- Each page: Full SEO metadata (11 keywords), BreadcrumbList + Article + FAQPage JSON-LD, 6-7 strategy sections, 5 FAQs, 3 AdUnit placements, cheat sheet, comparison tables
+- Sitemap page updated with all 3 new strategy links
+- Build passed clean
+- **Commit**: `6777b29`
+- (71st consecutive night of shipping) 🔥
+
 ## 2026-03-30 (Monday Overnight Build #2)
 ### Shipped
 - **📖 3 Strategy Pages — Yukon, Scorpion, Seahaven Towers** — Deep strategy content for 3 popular variants:

@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { isHubSite } from '@/lib/siteConfig';
+import GameSwitcher from '../GameSwitcher';
 import AdUnit from '../AdUnit';
 
 function formatTime(seconds: number): string {
@@ -69,10 +70,7 @@ export default function GenericSolitaireShell({
       {/* Toolbar */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 16px', background: 'rgba(0,0,0,0.3)', borderBottom: '1px solid rgba(255,255,255,0.06)', flexWrap: 'wrap', gap: '8px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <Link href={isHubSite ? '/' : gameHref} style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none', padding: '6px 14px', borderRadius: '10px', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)' }}>
-            <span style={{ fontSize: '15px' }}>{gameIcon}</span>
-            <span style={{ fontSize: '13px', fontWeight: 700, color: 'rgba(255,255,255,0.7)', letterSpacing: '0.02em' }}>{gameName}</span>
-          </Link>
+          <GameSwitcher currentGame={gameName} currentIcon={gameIcon} />
           {extraToolbar}
         </div>
 

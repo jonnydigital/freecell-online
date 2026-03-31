@@ -9,7 +9,7 @@ import { getTodaysSeed, getTodayStr, isTodayCompleted, getCurrentStreak, recordD
 import { soundManager } from '@/lib/sounds';
 import { useSolver } from '@/hooks/useSolver';
 import { describeSolution } from '@/solver/FreeCellSolver';
-import { RotateCcw, RotateCw, Lightbulb, Settings, AlertTriangle, ChevronLeft, ChevronRight, ChevronDown, Volume2, VolumeX, X, Share2, Home, Shuffle, HelpCircle, Swords, Trophy, Play, Pause, Ghost, Layers, Bookmark } from 'lucide-react';
+import { RotateCcw, RotateCw, Lightbulb, Settings, AlertTriangle, ChevronLeft, ChevronRight, Volume2, VolumeX, X, Share2, Home, Shuffle, HelpCircle, Swords, Trophy, Play, Pause, Ghost, Layers, Bookmark } from 'lucide-react';
 import { cardBackDesigns, getSelectedCardBack, setSelectedCardBack, type CardBackDesign } from '@/game/CardBacks';
 import { checkWinAchievements, recordModePlayed, recordUniqueGame } from '@/lib/achievementTracker';
 import type { Achievement } from '@/lib/achievements';
@@ -33,6 +33,7 @@ import SidebarLeaderboard from '../sidebar/SidebarLeaderboard';
 import SidebarAchievements from '../sidebar/SidebarAchievements';
 import SidebarStats from '../sidebar/SidebarStats';
 import Leaderboard from '../Leaderboard';
+import GameSwitcher from '../GameSwitcher';
 
 // Variant display names
 const VARIANT_NAMES: Record<string, string> = {
@@ -44,23 +45,6 @@ const VARIANT_NAMES: Record<string, string> = {
   'freecell-2cell': '2-Cell FreeCell',
   'freecell-3cell': '3-Cell FreeCell',
 };
-
-// Game picker dropdown data
-const GAME_PICKER_SOLITAIRE = [
-  { label: 'FreeCell', href: isHubSite ? '/freecell' : '/', icon: '♠' },
-  { label: 'Spider Solitaire', href: '/spider', icon: '♣' },
-  { label: 'Klondike', href: '/klondike', icon: '♦' },
-  { label: "Baker's Game", href: '/bakers-game', icon: '♥' },
-  { label: 'Eight Off', href: '/eight-off', icon: '♠' },
-  { label: 'Bristol', href: '/bristol', icon: '♣' },
-];
-const GAME_PICKER_VARIANTS = [
-  { label: 'Easy FreeCell', href: '/easy-freecell', icon: '🟢' },
-  { label: '1-Cell FreeCell', href: '/freecell/1-cell', icon: '1' },
-  { label: '2-Cell FreeCell', href: '/freecell/2-cell', icon: '2' },
-  { label: '3-Cell FreeCell', href: '/freecell/3-cell', icon: '3' },
-  { label: 'Storm Mode', href: '/storm', icon: '⚡' },
-];
 
 // ---------------------------------------------------------------------------
 // Props
@@ -151,21 +135,7 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
   const [newAchievements, setNewAchievements] = useState<Achievement[]>([]);
   const [streakMilestone, setStreakMilestone] = useState<number | null>(null);
   const [showReplay, setShowReplay] = useState(false);
-  const [showGamePicker, setShowGamePicker] = useState(false);
   const [showLeaderboard, setShowLeaderboard] = useState(false);
-  const gamePickerRef = useRef<HTMLDivElement>(null);
-
-  // Close game picker on outside click — use capture phase so card drag stopPropagation doesn't block it
-  useEffect(() => {
-    if (!showGamePicker) return;
-    const handler = (e: Event) => {
-      if (gamePickerRef.current && !gamePickerRef.current.contains(e.target as Node)) {
-        setShowGamePicker(false);
-      }
-    };
-    document.addEventListener('pointerdown', handler, true);
-    return () => document.removeEventListener('pointerdown', handler, true);
-  }, [showGamePicker]);
 
   // Game number input state
   const [gameInputValue, setGameInputValue] = useState('');
@@ -794,60 +764,8 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
         }}
       >
         {/* Left: Game picker dropdown */}
-        <div style={{ flex: '0 0 200px' }} ref={gamePickerRef} className="relative">
-          <button
-            onClick={() => setShowGamePicker((p) => !p)}
-            className="group transition-all active:scale-95"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '10px',
-              padding: '8px 16px',
-              borderRadius: '10px',
-              background: 'rgba(255,255,255,0.04)',
-              border: '1px solid rgba(255,255,255,0.06)',
-            }}
-          >
-            <span style={{ fontSize: '15px' }}>♠</span>
-            <span style={{
-              fontSize: '13px',
-              fontWeight: 700,
-              color: 'rgba(255,255,255,0.7)',
-              letterSpacing: '0.02em',
-            }}>{VARIANT_NAMES[variant || 'freecell'] || 'FreeCell'}</span>
-            <ChevronDown size={14} style={{ color: 'rgba(255,255,255,0.4)' }} className={`transition-transform ${showGamePicker ? 'rotate-180' : ''}`} />
-          </button>
-          {showGamePicker && (
-            <div
-              className="absolute top-full left-0 mt-2 z-[80] rounded-xl shadow-2xl border border-white/10 py-2 min-w-[220px]"
-              style={{ background: 'linear-gradient(180deg, #0f3a0f 0%, #0a2d0a 100%)' }}
-            >
-              <div className="px-3 pt-1 pb-1.5">
-                <span className="text-[10px] font-bold uppercase tracking-widest text-white/30">Solitaire Games</span>
-              </div>
-              {GAME_PICKER_SOLITAIRE.map((g) => {
-                const isCurrent = g.label === (VARIANT_NAMES[variant || 'freecell'] || 'FreeCell');
-                return (
-                  <Link key={g.label} href={g.href} onClick={() => setShowGamePicker(false)} className={`flex items-center gap-3 px-4 py-2 text-sm transition-colors ${isCurrent ? 'text-[#D4AF37] font-semibold hover:bg-white/5' : 'text-white/70 hover:bg-white/5 hover:text-white'}`}>
-                    <span className="w-4 text-center">{g.icon}</span> {g.label}
-                  </Link>
-                );
-              })}
-              <div className="my-1 mx-3 border-t border-white/[0.08]" />
-              <div className="px-3 pt-1 pb-1.5">
-                <span className="text-[10px] font-bold uppercase tracking-widest text-white/30">FreeCell Variants</span>
-              </div>
-              {GAME_PICKER_VARIANTS.map((g) => (
-                <Link key={g.label} href={g.href} onClick={() => setShowGamePicker(false)} className="flex items-center gap-3 px-4 py-2 text-sm text-white/70 hover:bg-white/5 hover:text-white transition-colors">
-                  <span className="w-4 text-center text-xs">{g.icon}</span> {g.label}
-                </Link>
-              ))}
-              <div className="my-1 mx-3 border-t border-white/[0.08]" />
-              <button onClick={() => { setShowGamePicker(false); setShowHome(true); }} className="flex items-center gap-3 px-4 py-2 text-sm text-white/50 hover:bg-white/5 hover:text-white transition-colors w-full text-left">
-                <Home size={14} /> Menu & Settings
-              </button>
-            </div>
-          )}
+        <div style={{ flex: '0 0 200px' }}>
+          <GameSwitcher currentGame={VARIANT_NAMES[variant || 'freecell'] || 'FreeCell'} currentIcon="♠" />
         </div>
 
         {/* Center: Stats pill */}

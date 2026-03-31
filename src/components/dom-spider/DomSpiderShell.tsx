@@ -5,8 +5,8 @@ import { useDomSpiderStore, domSpiderStore } from '@/lib/dom-spider/useDomSpider
 import DomSpiderBoard from './DomSpiderBoard';
 import { SpiderDifficulty } from '@/engine/SpiderEngine';
 import Link from 'next/link';
-import { isHubSite } from '@/lib/siteConfig';
 import { Undo2, Lightbulb } from 'lucide-react';
+import GameSwitcher from '../GameSwitcher';
 import AdUnit from '../AdUnit';
 
 function formatTime(seconds: number): string {
@@ -89,27 +89,7 @@ export default function DomSpiderShell({ initialDifficulty = '1-suit' }: DomSpid
       >
         {/* Left: Game name + difficulty */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <Link
-            href={isHubSite ? '/' : '/spider'}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              textDecoration: 'none',
-              padding: '6px 14px',
-              borderRadius: '10px',
-              background: 'rgba(255,255,255,0.04)',
-              border: '1px solid rgba(255,255,255,0.06)',
-            }}
-          >
-            <span style={{ fontSize: '15px' }}>♣</span>
-            <span style={{
-              fontSize: '13px',
-              fontWeight: 700,
-              color: 'rgba(255,255,255,0.7)',
-              letterSpacing: '0.02em',
-            }}>Spider</span>
-          </Link>
+          <GameSwitcher currentGame="Spider Solitaire" currentIcon="♣" />
 
           {/* Difficulty toggle */}
           <div style={{ display: 'flex', gap: '4px' }}>

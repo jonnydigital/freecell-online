@@ -7,6 +7,7 @@ import { KlondikeDrawMode } from '@/engine/KlondikeEngine';
 import Link from 'next/link';
 import { isHubSite } from '@/lib/siteConfig';
 import { Undo2, RotateCcw, Lightbulb, Home } from 'lucide-react';
+import GameSwitcher from '../GameSwitcher';
 import AdUnit from '../AdUnit';
 
 // ---------------------------------------------------------------------------
@@ -105,27 +106,7 @@ export default function DomKlondikeShell({ initialDrawMode = 1 }: DomKlondikeShe
       >
         {/* Left: Game name + draw mode */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <Link
-            href={isHubSite ? '/' : '/klondike'}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              textDecoration: 'none',
-              padding: '6px 14px',
-              borderRadius: '10px',
-              background: 'rgba(255,255,255,0.04)',
-              border: '1px solid rgba(255,255,255,0.06)',
-            }}
-          >
-            <span style={{ fontSize: '15px' }}>♦</span>
-            <span style={{
-              fontSize: '13px',
-              fontWeight: 700,
-              color: 'rgba(255,255,255,0.7)',
-              letterSpacing: '0.02em',
-            }}>Klondike</span>
-          </Link>
+          <GameSwitcher currentGame="Klondike" currentIcon="♦" />
 
           {/* Draw mode toggle */}
           <div style={{ display: 'flex', gap: '4px' }}>

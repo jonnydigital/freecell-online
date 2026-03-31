@@ -32,7 +32,8 @@
 }
 
 .dom-board-surface {
-  --card-width: clamp(96px, calc((100vw - 380px) / 8.6), 125px);
+  /* 460px = sidebar 380 + layout gap 16 + container padding 32 + board padding buffer 32 */
+  --card-width: clamp(86px, calc((100vw - 460px) / 8.6), 125px);
   --card-height: calc(var(--card-width) * 1.4);
   --card-border-radius: clamp(8px, calc(var(--card-width) * 0.085), 10px);
   --cascade-overlap: clamp(24px, calc(var(--card-width) * 0.3), 36px);
@@ -48,22 +49,32 @@
   --slot-label-size: clamp(22px, calc(var(--card-width) * 0.24), 28px);
 }
 
+/* Tablet: no sidebar, game takes full width — 768–1023px */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .dom-board-surface {
+    /* No sidebar: just outer padding (~40px) + board padding (~32px) + gaps (~56px) ≈ 128px */
+    --card-width: clamp(66px, calc((100vw - 128px) / 8.6), 105px);
+  }
+}
+
+/* Mobile: ≤767px */
 @media (max-width: 767px) {
   .dom-board-surface {
-    --card-width: clamp(34px, calc((100vw - 44px) / 8), 54px);
+    /* 8 cards + 7 gaps (~3px each ≈ 21px) + board padding (~12px×2) + outer padding (8px×2) ≈ 61px */
+    --card-width: clamp(30px, calc((100vw - 61px) / 8), 54px);
     --card-height: calc(var(--card-width) * 1.4);
     --card-border-radius: clamp(4px, calc(var(--card-width) * 0.09), 9px);
     --cascade-overlap: clamp(10px, calc(var(--card-width) * 0.32), 18px);
-    --pile-gap: clamp(3px, 1vw, 5px);
-    --board-padding-x: clamp(6px, 2vw, 10px);
-    --board-padding-y: clamp(8px, 2.5vw, 12px);
+    --pile-gap: clamp(2px, 0.8vw, 5px);
+    --board-padding-x: clamp(4px, 1.5vw, 10px);
+    --board-padding-y: clamp(6px, 2vw, 12px);
     --board-max-width: 100%;
-    --card-corner-offset-y: clamp(3px, calc(var(--card-width) * 0.06), 5px);
-    --card-corner-offset-x: clamp(3px, calc(var(--card-width) * 0.07), 6px);
-    --card-rank-size: clamp(9px, calc(var(--card-width) * 0.18), 14px);
-    --card-suit-small-size: clamp(8px, calc(var(--card-width) * 0.16), 12px);
-    --card-center-suit-size: clamp(15px, calc(var(--card-width) * 0.36), 24px);
-    --slot-label-size: clamp(10px, calc(var(--card-width) * 0.24), 18px);
+    --card-corner-offset-y: clamp(2px, calc(var(--card-width) * 0.06), 5px);
+    --card-corner-offset-x: clamp(2px, calc(var(--card-width) * 0.07), 6px);
+    --card-rank-size: clamp(8px, calc(var(--card-width) * 0.18), 14px);
+    --card-suit-small-size: clamp(7px, calc(var(--card-width) * 0.16), 12px);
+    --card-center-suit-size: clamp(14px, calc(var(--card-width) * 0.36), 24px);
+    --slot-label-size: clamp(9px, calc(var(--card-width) * 0.24), 18px);
   }
 }
 
@@ -83,6 +94,15 @@
   cursor: grab;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
     Arial, sans-serif;
+}
+
+/* Ensure cards are never stuck invisible — safety net for reduced-motion
+   and browsers where the deal animation doesn't fire properly. */
+@media (prefers-reduced-motion: reduce) {
+  .dom-card-dealing {
+    opacity: 1 !important;
+    animation: none !important;
+  }
 }
 
 /* Animation speed multipliers — set via data-animation-speed on game container */

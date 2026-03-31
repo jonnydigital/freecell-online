@@ -379,7 +379,7 @@ export default function DomBoard({ hint }: DomBoardProps) {
           justifyContent: 'center',
           gap: 'var(--pile-gap)',
           flexWrap: 'nowrap',
-          overflow: 'hidden',
+          overflow: 'visible',
         }}
       >
         {cascades.map((cascade, colIdx) => {

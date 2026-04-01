@@ -1,5 +1,15 @@
 # FreeCell Online — Changelog
 
+## 2026-04-01 (Wednesday Midnight Build)
+### Shipped
+- **📐 How Solitaire Rules Change Across Variants** — Educational deep dive into the 6 core rule dimensions that define every solitaire variant: information visibility (open/closed), building rules (color/suit), temporary storage (free cells/stock/reserves), empty column rules, winning conditions, and movement restrictions. Comparison tables, variant recommendations by preference. Internal links to 15+ game and strategy pages.
+- **💼 How People Actually Play Solitaire at Work** — Workplace solitaire history (Windows 3.0→browser era→mobile), player archetypes (micro-break, lunch-break, wind-down, thinking-break), cognitive science backing (Attention Restoration Theory, ultradian rhythms, incubation effects), break game tier list, productivity tips.
+- Blog library now at **35 posts** 📚
+- Completes all blog posts from CONTENT_STRATEGY.md Tier 2-3 lists
+- Build passed clean
+- **Commit**: `8aa9982`
+- (83rd consecutive night of shipping) 🔥
+
 ## 2026-03-31 (Tuesday 10:48 PM Build)
 ### Shipped
 - **💀 The Most Impossible FreeCell Deals Explained** — Deep dive into the 9 proven unsolvable deals: Deal #11982 history, million-deal search results table, 4 structural reasons deals become impossible (circular dependencies, buried keys, suit entanglement, insufficient slack), warning signs, solvability comparison across 7 games, psychology of "impossible" vs "I can't solve this"

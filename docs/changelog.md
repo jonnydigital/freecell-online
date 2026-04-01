@@ -1,5 +1,18 @@
 # FreeCell Online — Changelog
 
+## 2026-04-01 (Wednesday Evening Build)
+### Shipped
+- **⚡ Animation Timing Overhaul** — Tightened all card movement animations to competitor-range speed:
+  - `getMoveDuration()`: 180–400ms → 80–200ms (distance factor 0.4 → 0.25)
+  - Cascade reposition: min 250→120ms, max 600→300ms
+  - Free cell reposition: min 250→120ms, max 600→300ms
+  - Foundation reposition: min 250→120ms, max 600→300ms
+  - Cascade settling stagger: 20ms → 12ms per row
+  - Cards now move at 80–200ms (competitors: 80–120ms) — was the #1 remaining fluidity gap
+- Build passed clean
+- **Commit**: `836a691`
+- (84th consecutive night of shipping) 🔥
+
 ## 2026-04-01 (Wednesday Midnight Build)
 ### Shipped
 - **📐 How Solitaire Rules Change Across Variants** — Educational deep dive into the 6 core rule dimensions that define every solitaire variant: information visibility (open/closed), building rules (color/suit), temporary storage (free cells/stock/reserves), empty column rules, winning conditions, and movement restrictions. Comparison tables, variant recommendations by preference. Internal links to 15+ game and strategy pages.

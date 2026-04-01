@@ -1,5 +1,16 @@
 # FreeCell Online — Changelog
 
+## 2026-03-31 (Tuesday 9:36 PM Build)
+### Shipped
+- **🧮 How FreeCell Supermoves Work** (~600 lines) — Complete guide to supermove mechanics: the formula ((1 + free cells) × 2^empty columns), 14-row capacity reference table, why empty columns are exponentially more valuable than free cells, practical strategy tips, common mistakes, cheat sheet, 6 FAQs
+- **🏁 FreeCell Endgame Strategy** (~550 lines) — How to close out winnable deals: endgame definition, foundation sequencing with safe-play rule, deadlock prevention (keep foundations within 2 ranks), late-game free cell management, auto-complete trigger mechanics, 7-point endgame checklist, 6 FAQs
+- Both pages: 12 SEO keywords, Article + FAQPage + BreadcrumbList JSON-LD, 3 AdUnit placements
+- XML sitemap and HTML sitemap page updated
+- 4 of 5 Tier 2 FreeCell depth pages now COMPLETE (remaining: famous-freecell-game-numbers)
+- Build passed clean
+- **Commit**: `8a74dc9`
+- (78th consecutive night of shipping) 🔥
+
 ## 2026-03-31 (Tuesday 9:30PM Build)
 ### Shipped
 - **📝 3 Tier 2 Blog Posts + Patience Solitaire Content Page** — Blog library now at 25 posts:

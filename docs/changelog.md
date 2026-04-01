@@ -1,5 +1,15 @@
 # FreeCell Online — Changelog
 
+## 2026-03-31 (Tuesday 9PM Build)
+### Shipped
+- **⚔️ Klondike vs Spider Solitaire Comparison** (~600 lines): 12-row comparison table, difficulty spectrum (1/2/4-suit adjustable), strategy differences (Klondike: reveal hidden cards, Spider: empty columns are king), who-should-play guide, 6 FAQs, Article + FAQPage + BreadcrumbList JSON-LD, 3 AdUnit placements
+- **🧠 FreeCell Opening Strategy Guide** (~580 lines): 4-step opening framework (scan board → plan ace liberation → protect free cells → create empty columns), 4 opening patterns (Free Ace, Short Column Clear, Buried King, Natural Run), 7-point cheat sheet, 6 FAQs, full JSON-LD
+- **📝 2 Blog Posts**: "Best Solitaire Games for Seniors" + "Best Card Games to Play Alone" — targeting long-tail keywords for older demographics
+- SiteFooter updated with new page links, XML + HTML sitemaps updated
+- Build passed clean
+- **Commit**: `d42da26`
+- (76th consecutive night of shipping) 🔥
+
 ## 2026-03-31 (Tuesday 8:30PM Build)
 ### Shipped
 - **🕷️ Spider: How to Empty a Column** (~580 lines) — The #1 winning move in Spider Solitaire. Step-by-step column-clearing strategy, difficulty-specific advice (1-suit/2-suit/4-suit), 5 common mistakes that cost games, quick reference cheat sheet, 6 FAQs. Article + FAQPage + BreadcrumbList JSON-LD, 3 AdUnit placements. Targets "spider solitaire empty column" keyword cluster.

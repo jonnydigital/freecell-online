@@ -1,5 +1,16 @@
 # FreeCell Online — Changelog
 
+## 2026-03-31 (Tuesday 10:43 PM Build)
+### Shipped
+- **🎯 3 Tier 3 Linkbait Blog Posts** — First batch of shareable/link-worthy content:
+  - **What Your Favorite Solitaire Game Says About You** — personality-style breakdown for 8 solitaire games (FreeCell = Strategic Planner, Spider = Ambitious Perfectionist, etc.). Fun, shareable, designed for social traffic.
+  - **Which Solitaire Games Are Most Skill-Based?** — Data-driven ranking of 14 games with skill factor percentages, 4-tier system (Pure Strategy → Mostly Luck), comparison table. Targets "skill vs luck solitaire" searches.
+  - **How Many Solitaire Variants Actually Exist?** — Surprisingly deep dive into the 500+ documented variants. Covers 9 game families, history of invention, most obscure games, software collections. Targets "how many solitaire games" searches.
+- Blog library now at **31 posts** 📚
+- Build passed clean
+- **Commit**: `86fc1fb`
+- (81st consecutive night of shipping) 🔥
+
 ## 2026-03-31 (Tuesday 10:12 PM Build)
 ### Shipped
 - **📝 3 Tier 2 Blog Posts — Easiest/Hardest Ranked + Short Breaks** — Blog library now at 28 posts:

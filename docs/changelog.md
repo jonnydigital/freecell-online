@@ -1,5 +1,14 @@
 # FreeCell Online — Changelog
 
+## 2026-03-31 (Tuesday 8:30PM Build)
+### Shipped
+- **🕷️ Spider: How to Empty a Column** (~580 lines) — The #1 winning move in Spider Solitaire. Step-by-step column-clearing strategy, difficulty-specific advice (1-suit/2-suit/4-suit), 5 common mistakes that cost games, quick reference cheat sheet, 6 FAQs. Article + FAQPage + BreadcrumbList JSON-LD, 3 AdUnit placements. Targets "spider solitaire empty column" keyword cluster.
+- **💰 Klondike: Vegas Scoring Explained** (~540 lines) — Complete guide to casino solitaire scoring. $52 buy-in mechanics, break-even math table (11 cards = break-even), Vegas vs Standard scoring comparison, cumulative scoring, casino history, 5 profit-maximizing strategies, 6 FAQs. Article + FAQPage + BreadcrumbList JSON-LD, 3 AdUnit placements. Targets "vegas solitaire scoring" keyword cluster.
+- XML sitemap and HTML sitemap page updated
+- Build passed clean
+- **Commit**: `25ae330`
+- (75th consecutive night of shipping) 🔥
+
 ## 2026-03-31 (Tuesday 4AM Build)
 ### Shipped
 - **⚔️ 2 Comparison Pages — FreeCell vs Baker's Game & FreeCell vs Eight Off** — Final two Tier 1 comparison pages from content strategy:

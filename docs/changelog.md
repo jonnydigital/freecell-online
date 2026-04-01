@@ -1,5 +1,14 @@
 # FreeCell Online — Changelog
 
+## 2026-03-31 (Tuesday 10:48 PM Build)
+### Shipped
+- **💀 The Most Impossible FreeCell Deals Explained** — Deep dive into the 9 proven unsolvable deals: Deal #11982 history, million-deal search results table, 4 structural reasons deals become impossible (circular dependencies, buried keys, suit entanglement, insufficient slack), warning signs, solvability comparison across 7 games, psychology of "impossible" vs "I can't solve this"
+- **📊 Every Solitaire Variation Ranked by Difficulty** — Comprehensive ranking of 20 games across 5 difficulty tiers: Beginner (FreeCell 99.999%), Intermediate (Klondike ~80%), Challenging (Baker's Game ~75%), Expert (Spider 4-Suit ~33%), Brutal (Accordion ~5-10%). Full ranking table with win rates and skill factors. Internal links to all game and strategy pages.
+- Blog library now at **33 posts** 📚
+- Build passed clean
+- **Commit**: `64d7828`
+- (82nd consecutive night of shipping) 🔥
+
 ## 2026-03-31 (Tuesday 10:43 PM Build)
 ### Shipped
 - **🎯 3 Tier 3 Linkbait Blog Posts** — First batch of shareable/link-worthy content:

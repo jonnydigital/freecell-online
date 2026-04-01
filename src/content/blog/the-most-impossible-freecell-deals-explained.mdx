@@ -1,0 +1,109 @@
+---
+title: "The Most Impossible FreeCell Deals Explained"
+slug: "the-most-impossible-freecell-deals-explained"
+date: "2026-03-31"
+description: "Why some FreeCell deals are truly impossible to win — the famous #11982, the eight other unsolvable deals in a million, and the math behind what makes a deal unwinnable."
+author: "PlayFreeCellOnline.com"
+tags: ["freecell", "advanced", "mathematics"]
+---
+
+FreeCell is famous for being almost always winnable. Skilled players routinely achieve win rates above 95%, and computer solvers have proven that 99.999% of all random deals are solvable with perfect play. But that fraction of a percent that *isn't* solvable? Those deals are fascinating — and understanding why they're impossible teaches you more about FreeCell strategy than winning a hundred easy games.
+
+## The Legend of Deal #11982
+
+Every FreeCell player eventually hears about deal #11982. It's the most famous unsolvable deal in solitaire history, and for good reason: it was the **only** proven unsolvable deal among the original 32,000 games shipped with Microsoft Windows FreeCell.
+
+When Microsoft included FreeCell in Windows 3.1 in 1991, they programmed a pseudo-random number generator (PRNG) that could produce 32,000 distinct deals, numbered 1 through 32,000. Over the following years, dedicated players and early internet communities began systematically solving every single deal.
+
+By the late 1990s, all 32,000 deals had been attempted by humans and computers alike. Deal #11982 was the last holdout. No one could solve it. Computer solvers confirmed: it is mathematically impossible. No sequence of legal moves can clear all 52 cards to the foundations.
+
+**What makes #11982 impossible?** The deal creates an interlocking deadlock where the cards needed to make progress are buried beneath each other in a way that no combination of free cells and empty columns can untangle. It's not that the deal is *hard* — it's that no solution exists, period.
+
+[Play Deal #11982](/game/11982) | [FreeCell Solver](/solver)
+
+## Beyond 32,000: The Million-Deal Search
+
+After #11982 was identified, researchers expanded the search. What happens when you test not 32,000 deals but a **million**?
+
+Using the same Microsoft PRNG extended to deal numbers 1 through 1,000,000, exhaustive computer analysis found exactly **eight additional unsolvable deals**:
+
+| Deal Number | Status |
+|-------------|--------|
+| #11982 | Proven unsolvable (original 32K) |
+| #146692 | Proven unsolvable |
+| #186216 | Proven unsolvable |
+| #455889 | Proven unsolvable |
+| #495505 | Proven unsolvable |
+| #512118 | Proven unsolvable |
+| #517776 | Proven unsolvable |
+| #781948 | Proven unsolvable |
+| #820589 | Proven unsolvable |
+
+That's 9 unsolvable deals out of 1,000,000 — a solvability rate of **99.9991%**. To put that in perspective, if you played one random FreeCell deal every day, you would statistically encounter an unsolvable deal once every **300 years**.
+
+## Why Are These Deals Impossible?
+
+Unsolvable FreeCell deals share common structural problems. Understanding these patterns helps you recognize when a deal is heading toward an unwinnable state — even in solvable games.
+
+### 1. Circular Dependencies
+
+The most common cause of impossibility is circular dependency: Card A is blocking Card B, which is blocking Card C, which is blocking Card A. No matter which card you try to move first, you need one of the others to already be moved.
+
+In solvable deals, free cells and empty columns provide enough "slack" to break these cycles temporarily. In unsolvable deals, the cycles are too deep and too numerous for four free cells and eight columns to untangle.
+
+### 2. Key Cards Buried Too Deep
+
+When aces and twos are buried at the bottom of columns beneath cards that themselves need those aces and twos to be freed, the deal may be impossible. FreeCell's strength is that you can *see* this problem from the start — the challenge is whether the available moves can excavate those key cards.
+
+### 3. Suit Entanglement
+
+When cards of the same suit are interleaved across multiple columns in a way that requires more temporary storage than four free cells can provide, the deal locks up. This is why [supermoves](/how-freecell-supermoves-work) are so important — they let you move sequences using empty columns as extended storage.
+
+### 4. Insufficient Slack
+
+Every FreeCell deal has a finite amount of "maneuvering room" determined by how many free cells are empty and how many columns can be cleared. Unsolvable deals are those where the minimum slack required to untangle the cards exceeds what the board can ever provide. It's a mathematical constraint, not a strategy failure.
+
+## Can You Tell If a Deal Is Impossible?
+
+**Not easily.** Determining whether a specific FreeCell deal is solvable is computationally expensive — it's believed to be an NP-hard problem. There's no simple formula that looks at a deal and says "this one is impossible."
+
+That said, experienced players develop intuitions. Warning signs include:
+
+- **All four aces buried in the bottom third of columns** — especially if the cards above them are high-rank cards of the same suits
+- **Multiple columns with deeply buried low cards** — when 2s, 3s, and 4s are trapped under Kings and Queens
+- **Heavy suit concentration** — when most cards of one suit end up in the same 2-3 columns, creating severe entanglement
+- **Early free cell exhaustion** — if you fill all four free cells within the first few moves and still can't make foundation progress
+
+But these are heuristics, not guarantees. Many deals that *look* impossible are actually solvable with creative play. The difference between a truly impossible deal and a merely difficult one often comes down to a single card placement deep in the game tree.
+
+## The Psychology of "Impossible" Deals
+
+Here's the dirty secret of FreeCell: most deals that players *think* are impossible are actually solvable. Studies of online FreeCell play show that average players win about 40-60% of their games, meaning they fail on 40-60% of deals — yet only 0.001% of deals are actually unsolvable.
+
+The gap between "I can't solve this" and "this can't be solved" is enormous. Almost every time you lose at FreeCell, there was a winning path you didn't find. This is what makes FreeCell such a compelling puzzle: the fault almost always lies with the player, not the cards.
+
+This is also why [our solver](/solver) is such a valuable learning tool. When you get stuck, run the solver. If it finds a solution, study where your strategy diverged from the winning path. Over time, you'll develop the pattern recognition to solve deals that once seemed impossible.
+
+## How Other Solitaire Games Compare
+
+FreeCell's solvability rate is remarkably high compared to other solitaire games:
+
+| Game | Solvability Rate | Notes |
+|------|-----------------|-------|
+| [FreeCell](/strategy) | ~99.999% | Nearly every deal is solvable |
+| [Baker's Game](/bakers-game) | ~75% | Same layout, same-suit building |
+| [Eight Off](/eight-off) | ~85-90% | 8 free cells, same-suit building |
+| [Klondike](/klondike) (Draw 1) | ~79-82% | Hidden cards add luck |
+| [Spider](/spider) (1 suit) | ~99% | Single suit simplifies greatly |
+| [Spider](/spider) (4 suits) | ~33% | Multiple suits complicate |
+| [Scorpion](/scorpion) | ~10-15% | No stock pile, no mercy |
+
+FreeCell's near-perfect solvability is a direct result of its design: all cards visible, four free cells for temporary storage, and alternating-color building that maximizes move flexibility. Paul Alfille's 1978 modification of [Baker's Game](/freecell-vs-bakers-game) — changing same-suit to alternating-color building — transformed a 75%-solvable game into a 99.999%-solvable one. That single rule change is one of the greatest game design decisions in card game history.
+
+## Try the Impossible Deals Yourself
+
+Want to experience impossibility firsthand? Try [Deal #11982](/game/11982) and see how far you can get before the deadlock traps you. Then try the [solver](/solver) on it and watch even the computer give up.
+
+Or better yet — play a random deal and appreciate that you're holding a puzzle that almost certainly has a solution, if you're skilled enough to find it. That's the beauty of FreeCell: the answer is always there. You just have to see it.
+
+[Play FreeCell](/game) | [Famous Game Numbers](/famous-freecell-game-numbers) | [FreeCell Strategy Guide](/strategy)

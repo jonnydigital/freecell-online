@@ -1,5 +1,16 @@
 # FreeCell Online — Changelog
 
+## 2026-03-31 (Tuesday 9:42 PM Build)
+### Shipped
+- **🧠 Why FreeCell Is Almost Always Solvable** (~600 lines) — Deep mathematical exploration of FreeCell's 99.999% solvability: solvability spectrum comparison table (5 games), 3 design principles (perfect information, free cells as deadlock prevention, alternating-color building), state space analysis, research history (32K→1M→billions of deals), game design lessons, 6 FAQs
+- **🏆 Famous FreeCell Game Numbers** (~550 lines) — Hall of Fame showcasing 6 legendary deals (#11982, #617, #1, #169, #146692, #32000) with styled cards, full #11982 impossibility story, Microsoft PRNG numbering explanation, extended million-deal unsolvable table (9 deals), playable deal links, 6 FAQs
+- Both pages: 12 SEO keywords, Article + FAQPage + BreadcrumbList JSON-LD, 3+ AdUnit placements, NetworkCrossLinks
+- XML sitemap and HTML sitemap page updated
+- **ALL Tier 2 content from CONTENT_STRATEGY.md now COMPLETE** 🎉
+- Build passed clean
+- **Commit**: `2b2bc63`
+- (79th consecutive night of shipping) 🔥
+
 ## 2026-03-31 (Tuesday 9:36 PM Build)
 ### Shipped
 - **🧮 How FreeCell Supermoves Work** (~600 lines) — Complete guide to supermove mechanics: the formula ((1 + free cells) × 2^empty columns), 14-row capacity reference table, why empty columns are exponentially more valuable than free cells, practical strategy tips, common mistakes, cheat sheet, 6 FAQs

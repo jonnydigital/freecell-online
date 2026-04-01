@@ -3562,8 +3562,8 @@ export class FreeCellScene extends Phaser.Scene {
     const dx = targetX - sprite.x;
     const dy = targetY - sprite.y;
     const distance = Math.sqrt(dx * dx + dy * dy);
-    // Snappy speed: 180ms min, 400ms max. Fast but trackable.
-    return Math.min(400, Math.max(180, distance * 0.4)) * this.getSpeedMultiplier();
+    // Snappy speed: 80ms min, 200ms max. Competitor-range timing.
+    return Math.min(200, Math.max(80, distance * 0.25)) * this.getSpeedMultiplier();
   }
 
   /**
@@ -3611,9 +3611,9 @@ export class FreeCellScene extends Phaser.Scene {
               x: pos.x,
               y: pos.y,
               duration: isMoving
-                ? Math.min(600, Math.max(250, this.getMoveDuration(sprite, pos.x, pos.y)))
+                ? Math.min(300, Math.max(120, this.getMoveDuration(sprite, pos.x, pos.y)))
                 : this.getMoveDuration(sprite, pos.x, pos.y),
-              delay: row * 20 * this.getSpeedMultiplier(),  // slightly longer per-card stagger for physical settling feel
+              delay: row * 12 * this.getSpeedMultiplier(),  // tight per-card stagger for snappy settling feel
               ease: 'Cubic.easeOut',
             });
           } else {
@@ -3646,7 +3646,7 @@ export class FreeCellScene extends Phaser.Scene {
               x: pos.x,
               y: pos.y,
               duration: isMoving
-                ? Math.min(600, Math.max(250, this.getMoveDuration(sprite, pos.x, pos.y)))
+                ? Math.min(300, Math.max(120, this.getMoveDuration(sprite, pos.x, pos.y)))
                 : this.getMoveDuration(sprite, pos.x, pos.y),
               ease: 'Cubic.easeOut',
             });
@@ -3681,7 +3681,7 @@ export class FreeCellScene extends Phaser.Scene {
             const autoStagger = 40 * this.getSpeedMultiplier();
             const duration = autoMove
               ? 80 * this.getSpeedMultiplier()
-              : Math.min(600, Math.max(250, this.getMoveDuration(sprite, pos.x, pos.y)));
+              : Math.min(300, Math.max(120, this.getMoveDuration(sprite, pos.x, pos.y)));
             const delay = autoMove ? autoMove.index * autoStagger : 0;
             this.tweens.add({
               targets: sprite,

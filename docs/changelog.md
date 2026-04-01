@@ -1,5 +1,17 @@
 # FreeCell Online — Changelog
 
+## 2026-03-31 (Tuesday 9:30PM Build)
+### Shipped
+- **📝 3 Tier 2 Blog Posts + Patience Solitaire Content Page** — Blog library now at 25 posts:
+  - "Best Solitaire Games for Beginners" — 5 ranked games (Klondike, FreeCell, Pyramid, TriPeaks, Easy FreeCell), comparison table, progression path
+  - "Solitaire vs Patience: What Is the Difference?" — etymology, regional usage table, Microsoft's influence on terminology
+  - "Best Solitaire Games to Play at Work" — ranked for office breaks, science of game breaks, "one game per break" rule
+  - **Patience Solitaire** content page (~1100 lines): complete guide targeting "patience solitaire" keyword cluster, full JSON-LD
+- Sitemap updates included
+- Build passed clean
+- **Commit**: `d3d8784`
+- (77th consecutive night of shipping) 🔥
+
 ## 2026-03-31 (Tuesday 9PM Build)
 ### Shipped
 - **⚔️ Klondike vs Spider Solitaire Comparison** (~600 lines): 12-row comparison table, difficulty spectrum (1/2/4-suit adjustable), strategy differences (Klondike: reveal hidden cards, Spider: empty columns are king), who-should-play guide, 6 FAQs, Article + FAQPage + BreadcrumbList JSON-LD, 3 AdUnit placements

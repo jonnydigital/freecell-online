@@ -31,6 +31,8 @@ const contentPages = [
   { path: '/freecell-opening-strategy', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/how-freecell-supermoves-work', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/freecell-endgame-strategy', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/why-freecell-is-almost-always-solvable', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/famous-freecell-game-numbers', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/statistics', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/deals', changeFrequency: 'weekly', priority: 0.7 },
   { path: '/solver', changeFrequency: 'monthly', priority: 0.8 },

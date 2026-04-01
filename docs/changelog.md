@@ -1,5 +1,16 @@
 # FreeCell Online — Changelog
 
+## 2026-03-31 (Tuesday 10:12 PM Build)
+### Shipped
+- **📝 3 Tier 2 Blog Posts — Easiest/Hardest Ranked + Short Breaks** — Blog library now at 28 posts:
+  - "The 10 Easiest Solitaire Games Ranked" — from FreeCell (99.999%) to Monte Carlo (~70%), comparison table, progression path. Targets "easiest solitaire games" keyword.
+  - "The 10 Hardest Solitaire Games Ranked" — from Scorpion (~10-15%) to Klondike Draw 3 (~30-35%), difficulty spectrum table. Targets "hardest solitaire games" keyword.
+  - "7 Best Solitaire Games for Short Breaks" — ranked by break-friendliness, time estimates, mood matching guide. Targets "quick solitaire games" keyword.
+- Strong internal linking to all game pages, strategy guides, and comparison pages
+- Build passed clean
+- **Commit**: `9f33c2e`
+- (80th consecutive night of shipping) 🔥🎉
+
 ## 2026-03-31 (Tuesday 9:42 PM Build)
 ### Shipped
 - **🧠 Why FreeCell Is Almost Always Solvable** (~600 lines) — Deep mathematical exploration of FreeCell's 99.999% solvability: solvability spectrum comparison table (5 games), 3 design principles (perfect information, free cells as deadlock prevention, alternating-color building), state space analysis, research history (32K→1M→billions of deals), game design lessons, 6 FAQs

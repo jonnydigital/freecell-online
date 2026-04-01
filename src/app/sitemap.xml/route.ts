@@ -176,6 +176,7 @@ const contentPages = [
   { path: '/freecell/3-cell', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/embed', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/embed-generator', changeFrequency: 'monthly', priority: 0.6 },
+  { path: '/patience-solitaire', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/solitaire-for-beginners', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/best-freecell-apps', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/sitemap', changeFrequency: 'weekly', priority: 0.5 },

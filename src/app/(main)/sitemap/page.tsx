@@ -61,6 +61,7 @@ const learnLinks = [
 const exploreLinks = [
   { href: "/history", label: "FreeCell History", desc: "From 1978 PLATO to Windows" },
   { href: "/microsoft-freecell", label: "Microsoft FreeCell", desc: "The iconic Windows game" },
+  { href: "/patience-solitaire", label: "Patience Solitaire", desc: "Complete guide to patience card games" },
   { href: "/solitaire-types", label: "Solitaire Types", desc: "20+ solitaire variants compared" },
   { href: "/freecell-variants", label: "FreeCell Variants", desc: "All FreeCell variant modes" },
   { href: "/freecell-vs-klondike", label: "FreeCell vs Klondike", desc: "Head-to-head comparison" },

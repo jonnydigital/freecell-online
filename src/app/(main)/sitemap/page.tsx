@@ -70,6 +70,8 @@ const exploreLinks = [
   { href: "/freecell-vs-eight-off", label: "FreeCell vs Eight Off", desc: "More free cells, tougher rules" },
   { href: "/spider/klondike-vs-spider", label: "Klondike vs Spider Solitaire", desc: "Two most popular solitaire games compared" },
   { href: "/freecell-opening-strategy", label: "FreeCell Opening Strategy", desc: "How to start every game strong" },
+  { href: "/how-freecell-supermoves-work", label: "How Supermoves Work", desc: "The math behind multi-card moves" },
+  { href: "/freecell-endgame-strategy", label: "FreeCell Endgame Strategy", desc: "Close out every winnable deal" },
   { href: "/is-every-freecell-game-winnable", label: "Is Every Game Winnable?", desc: "Solvability analysis" },
   { href: "/freecell-game-11982", label: "Deal #11982", desc: "The only proven unsolvable deal" },
   { href: "/hard-freecell-games", label: "Hard FreeCell Games", desc: "The toughest solvable deals" },

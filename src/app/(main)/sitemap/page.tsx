@@ -69,6 +69,8 @@ const exploreLinks = [
   { href: "/freecell-vs-bakers-game", label: "FreeCell vs Baker's Game", desc: "Same layout, same-suit building" },
   { href: "/freecell-vs-eight-off", label: "FreeCell vs Eight Off", desc: "More free cells, tougher rules" },
   { href: "/spider/klondike-vs-spider", label: "Klondike vs Spider Solitaire", desc: "Two most popular solitaire games compared" },
+  { href: "/spider-vs-scorpion", label: "Spider vs Scorpion", desc: "Two tough tableau games compared" },
+  { href: "/klondike-vs-pyramid", label: "Klondike vs Pyramid", desc: "Building vs pairing solitaire compared" },
   { href: "/freecell-opening-strategy", label: "FreeCell Opening Strategy", desc: "How to start every game strong" },
   { href: "/how-freecell-supermoves-work", label: "How Supermoves Work", desc: "The math behind multi-card moves" },
   { href: "/freecell-endgame-strategy", label: "FreeCell Endgame Strategy", desc: "Close out every winnable deal" },

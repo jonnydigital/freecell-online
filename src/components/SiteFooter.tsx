@@ -238,6 +238,8 @@ export default function SiteFooter() {
           { href: '/solver', label: 'Solver' },
           { href: '/patience-solitaire', label: 'Patience Solitaire' },
           { href: '/solitaire-difficulty-ranking', label: 'Difficulty Ranking' },
+          { href: '/spider-vs-scorpion', label: 'Spider vs Scorpion' },
+          { href: '/klondike-vs-pyramid', label: 'Klondike vs Pyramid' },
         ]
       : [
           { href: '/history', label: 'FreeCell History' },
@@ -245,6 +247,8 @@ export default function SiteFooter() {
           { href: '/freecell-vs-spider', label: 'FreeCell vs Spider' },
           { href: '/freecell-vs-klondike', label: 'FreeCell vs Klondike' },
           { href: '/spider/klondike-vs-spider', label: 'Klondike vs Spider' },
+          { href: '/spider-vs-scorpion', label: 'Spider vs Scorpion' },
+          { href: '/klondike-vs-pyramid', label: 'Klondike vs Pyramid' },
           { href: '/microsoft-freecell', label: 'Microsoft FreeCell' },
           { href: '/download', label: 'Download FreeCell' },
           { href: '/embed', label: 'Embed FreeCell' },

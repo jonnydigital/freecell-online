@@ -1,6 +1,6 @@
 import { absoluteUrl, isHubSite } from '@/lib/siteConfig';
 import { sitemapGameNumbers, isHighPriorityDeal } from '@/lib/curatedDeals';
-import { getAllPosts } from '@/lib/blog';
+import { getAllPosts, getAllTags } from '@/lib/blog';
 
 /**
  * Dynamic XML sitemap served at /sitemap.xml via route handler.
@@ -28,6 +28,8 @@ const contentPages = [
   { path: '/freecell-vs-bakers-game', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/freecell-vs-eight-off', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/spider/klondike-vs-spider', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/spider-vs-scorpion', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/klondike-vs-pyramid', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/freecell-opening-strategy', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/how-freecell-supermoves-work', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/freecell-endgame-strategy', changeFrequency: 'monthly', priority: 0.7 },
@@ -208,9 +210,18 @@ function buildXml(): string {
     ),
   ];
 
+  const blogTags = getAllTags();
+  const tagEntries = [
+    `  <url>\n    <loc>${absoluteUrl('/blog/tags')}</loc>\n    <lastmod>${now}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>0.5</priority>\n  </url>`,
+    ...blogTags.map(
+      ({ tag }) =>
+        `  <url>\n    <loc>${absoluteUrl(`/blog/tag/${tag}`)}</loc>\n    <lastmod>${now}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>0.5</priority>\n  </url>`
+    ),
+  ];
+
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${[...staticEntries, ...blogEntries, ...gameEntries].join('\n')}
+${[...staticEntries, ...blogEntries, ...tagEntries, ...gameEntries].join('\n')}
 </urlset>`;
 }
 

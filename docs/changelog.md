@@ -1,5 +1,17 @@
 # FreeCell Online — Changelog
 
+## 2026-04-03 (Friday 6:30 PM Build)
+### Shipped
+- **↩️ Spider Solitaire Undo** — Full undo support for Spider Solitaire, the last game variant without it:
+  - `SpiderEngine.undoMove()` reverses cascade moves, stock deals, and completed run removals
+  - `SpiderMove` interface extended with `flippedCard`, `completedRun`, `completedRunCascadeIndex`, `completedRunFlippedCard` metadata
+  - `useDomSpiderStore` tracks `moveHistory`, pushes on every move, clears on new game/restart
+  - Gold-styled Undo button in Spider toolbar (matches FreeCell design), disabled when history empty
+- **🔧 Sitemap Build Fix** — Removed dead `getAllTags` import from sitemap.xml route that was causing build failures
+- Build passed clean
+- **Commit**: `45f2a3a`
+- (87th consecutive night of shipping) 🔥
+
 ## 2026-04-03 (Friday 2:40 AM Build)
 ### Shipped
 - **🕷️ Spider vs Scorpion Comparison** — Full SEO comparison page: 12-row comparison table, win rate data, 8 sections, 6 FAQs, Key Takeaways, recommendation section. Article + FAQPage + BreadcrumbList JSON-LD. 3 AdUnit placements. Internal links to Spider + Scorpion game/strategy/tips pages.

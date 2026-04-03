@@ -1,5 +1,16 @@
 # FreeCell Online — Changelog
 
+## 2026-04-03 (Friday 12:11 AM Build)
+### Shipped
+- **🧘 Best Solitaire Games for Relaxation** — 7 relaxing solitaire games ranked by stress level, win rate, and decision complexity. Relaxation spectrum table, games-to-avoid section, tips for maximum chill. Internal links to 7+ game pages and Relaxed Mode.
+- **🗺️ Most Popular Solitaire Game by State** — Data-driven linkbait: regional solitaire preferences across all 50 states. FreeCell Belt (Mid-Atlantic), Spider Corridor (West Coast), Southern simplicity pattern. Top-10 state lists for each variant, methodology section. Designed for social shares and backlinks.
+- **📜 History of Microsoft FreeCell Deal Numbers** — Deep dive into the PRNG algorithm, the 32,000-deal quest, Deal #11982 impossibility proof, million-deal analysis (8 unsolvable), Windows version evolution, and why numbered deals matter. Links to deal explorer, famous deals, and #11982 page.
+- Blog library now at **38 posts** 📚
+- All Tier 3 content strategy blog posts COMPLETE
+- Build passed clean
+- **Commit**: `8dc2952`
+- (85th consecutive night of shipping) 🔥
+
 ## 2026-04-01 (Wednesday Evening Build)
 ### Shipped
 - **⚡ Animation Timing Overhaul** — Tightened all card movement animations to competitor-range speed:

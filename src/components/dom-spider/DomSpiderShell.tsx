@@ -30,6 +30,8 @@ export default function DomSpiderShell({ initialDifficulty = '1-suit' }: DomSpid
   const difficulty = useDomSpiderStore((s) => s.difficulty);
   const setDifficulty = useDomSpiderStore((s) => s.setDifficulty);
   const foundations = useDomSpiderStore((s) => s.foundations);
+  const undo = useDomSpiderStore((s) => s.undo);
+  const moveHistory = useDomSpiderStore((s) => s.moveHistory);
 
   const [showWinModal, setShowWinModal] = useState(false);
 
@@ -142,6 +144,27 @@ export default function DomSpiderShell({ initialDifficulty = '1-suit' }: DomSpid
 
         {/* Right: Action buttons */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+          <button
+            onClick={undo}
+            disabled={moveHistory.length === 0}
+            title="Undo (Ctrl+Z)"
+            style={{
+              padding: '6px 14px',
+              borderRadius: '8px',
+              background: moveHistory.length === 0 ? 'rgba(255,255,255,0.03)' : 'rgba(212,175,55,0.15)',
+              border: `1px solid ${moveHistory.length === 0 ? 'rgba(255,255,255,0.06)' : 'rgba(212,175,55,0.3)'}`,
+              color: moveHistory.length === 0 ? 'rgba(255,255,255,0.2)' : '#D4AF37',
+              fontSize: '12px',
+              fontWeight: 600,
+              cursor: moveHistory.length === 0 ? 'default' : 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '4px',
+            }}
+          >
+            <Undo2 size={14} />
+            Undo
+          </button>
           <button onClick={() => newGame()} title="New Game" style={{ padding: '6px 14px', borderRadius: '8px', background: 'rgba(212,175,55,0.15)', border: '1px solid rgba(212,175,55,0.3)', color: '#D4AF37', fontSize: '12px', fontWeight: 600, cursor: 'pointer' }}>
             New Deal
           </button>

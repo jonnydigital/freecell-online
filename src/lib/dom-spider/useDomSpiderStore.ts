@@ -37,6 +37,7 @@ export interface DomSpiderState {
 
   timerStarted: boolean;
   timerSeconds: number;
+  moveHistory: SpiderMove[];
 
   dragState: DragState | null;
   selection: { cardIds: string[]; sourceLocation: SpiderLocation } | null;
@@ -89,6 +90,7 @@ export const domSpiderStore = create<DomSpiderState>()((set, get) => ({
 
   timerStarted: false,
   timerSeconds: 0,
+  moveHistory: [],
   dragState: null,
   selection: null,
 
@@ -97,6 +99,7 @@ export const domSpiderStore = create<DomSpiderState>()((set, get) => ({
     _engine = new SpiderEngine(num, _difficulty);
     set({
       ...snapshotEngine(_engine),
+      moveHistory: [],
       dragState: null,
       selection: null,
       timerStarted: false,
@@ -109,6 +112,7 @@ export const domSpiderStore = create<DomSpiderState>()((set, get) => ({
     _engine = new SpiderEngine(num, _difficulty);
     set({
       ...snapshotEngine(_engine),
+      moveHistory: [],
       dragState: null,
       selection: null,
       timerStarted: false,
@@ -122,6 +126,7 @@ export const domSpiderStore = create<DomSpiderState>()((set, get) => ({
     _engine = new SpiderEngine(num, _difficulty);
     set({
       ...snapshotEngine(_engine),
+      moveHistory: [],
       dragState: null,
       selection: null,
       timerStarted: false,
@@ -136,8 +141,8 @@ export const domSpiderStore = create<DomSpiderState>()((set, get) => ({
     const hasEmpty = state.cascades.some(c => c.length === 0);
     if (hasEmpty) return; // Can't deal with empty columns
     try {
-      _engine.executeMove({ type: 'stock' }, { type: 'cascade', index: 0 });
-      set({ ...snapshotEngine(_engine), timerStarted: true });
+      const move = _engine.executeMove({ type: 'stock' }, { type: 'cascade', index: 0 });
+      set({ ...snapshotEngine(_engine), moveHistory: [...get().moveHistory, move], timerStarted: true });
     } catch {
       // Can't deal
     }
@@ -145,14 +150,18 @@ export const domSpiderStore = create<DomSpiderState>()((set, get) => ({
 
   tryMove: (from: SpiderLocation, to: SpiderLocation) => {
     if (!_engine.isLegalMove(from, to)) return false;
-    _engine.executeMove(from, to);
-    set({ ...snapshotEngine(_engine), timerStarted: true });
+    const move = _engine.executeMove(from, to);
+    set({ ...snapshotEngine(_engine), moveHistory: [...get().moveHistory, move], timerStarted: true });
     return true;
   },
 
   undo: () => {
-    // Spider engine doesn't have undo yet - just snapshot
-    // TODO: Add undo support
+    const history = get().moveHistory;
+    if (history.length === 0) return;
+    const newHistory = [...history];
+    const move = newHistory.pop()!;
+    _engine.undoMove(move);
+    set({ ...snapshotEngine(_engine), moveHistory: newHistory });
   },
 
   tickTimer: () => {

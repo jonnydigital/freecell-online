@@ -20,6 +20,10 @@ export interface SpiderMove {
     to: SpiderLocation;
     cards: Card[];
     isDeal?: boolean; // True if this move represents dealing from stock
+    flippedCard?: boolean; // Whether source top card was flipped face-up after the move
+    completedRun?: Card[]; // If a K→A run was removed during this move
+    completedRunCascadeIndex?: number; // Which cascade the run was removed from
+    completedRunFlippedCard?: boolean; // Whether removing the run flipped a card
 }
 
 export type SpiderDifficulty = '1-suit' | '2-suit' | '4-suit';
@@ -144,24 +148,78 @@ export class SpiderEngine {
             target.push(...cards);
 
             // Flip top card of source if face down
+            let flippedCard = false;
             if (source.length > 0 && !source[source.length - 1].isFaceUp) {
                 source[source.length - 1].isFaceUp = true;
+                flippedCard = true;
             }
 
             // Check for completed runs (K down to A of same suit)
-            this.checkAndRemoveCompletedRuns(to.index);
+            const runResult = this.checkAndRemoveCompletedRuns(to.index);
 
             this.state.moveCount++;
             this.checkWinCondition();
-            return { from, to, cards };
+            return {
+                from, to, cards, flippedCard,
+                ...(runResult ? {
+                    completedRun: runResult.cards,
+                    completedRunCascadeIndex: runResult.cascadeIndex,
+                    completedRunFlippedCard: runResult.flippedCard,
+                } : {}),
+            };
         }
 
         throw new Error('Unsupported move');
     }
 
-    private checkAndRemoveCompletedRuns(cascadeIndex: number) {
+    public undoMove(move: SpiderMove): void {
+        if (move.isDeal) {
+            // Reverse a stock deal: remove last card from each cascade, push back to stock
+            const dealCount = move.cards.length;
+            for (let i = dealCount - 1; i >= 0; i--) {
+                const cascade = this.state.cascades[i];
+                const card = cascade.pop()!;
+                card.isFaceUp = false;
+                this.state.stock.push(card);
+            }
+            this.state.moveCount--;
+            return;
+        }
+
+        if (move.from.type === 'cascade' && move.to.type === 'cascade') {
+            const source = this.state.cascades[move.from.index];
+            const target = this.state.cascades[move.to.index];
+
+            // First, reverse any completed run removal
+            if (move.completedRun && move.completedRunCascadeIndex !== undefined) {
+                const runCascade = this.state.cascades[move.completedRunCascadeIndex];
+                // Un-flip the card that was flipped when the run was removed
+                if (move.completedRunFlippedCard && runCascade.length > 0) {
+                    runCascade[runCascade.length - 1].isFaceUp = false;
+                }
+                // Put the completed run back
+                runCascade.push(...move.completedRun);
+                // Remove from foundations
+                this.state.foundations.pop();
+            }
+
+            // Un-flip the source card that was flipped after the original move
+            if (move.flippedCard && source.length > 0) {
+                source[source.length - 1].isFaceUp = false;
+            }
+
+            // Move cards back from target to source
+            const cardsToReturn = target.splice(target.length - move.cards.length);
+            source.push(...cardsToReturn);
+
+            this.state.moveCount--;
+            this.state.isWon = false;
+        }
+    }
+
+    private checkAndRemoveCompletedRuns(cascadeIndex: number): { cards: Card[]; cascadeIndex: number; flippedCard: boolean } | null {
         const cascade = this.state.cascades[cascadeIndex];
-        if (cascade.length < 13) return;
+        if (cascade.length < 13) return null;
 
         // Look for A, 2, 3... K of same suit from bottom up
         let runCompleted = true;
@@ -180,10 +238,14 @@ export class SpiderEngine {
             this.state.foundations.push(completedCards);
 
             // Flip new top card
+            let flippedCard = false;
             if (cascade.length > 0 && !cascade[cascade.length - 1].isFaceUp) {
                 cascade[cascade.length - 1].isFaceUp = true;
+                flippedCard = true;
             }
+            return { cards: completedCards, cascadeIndex, flippedCard };
         }
+        return null;
     }
 
     private checkWinCondition() {

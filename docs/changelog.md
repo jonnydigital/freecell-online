@@ -1,5 +1,14 @@
 # FreeCell Online — Changelog
 
+## 2026-04-03 (Friday 2:40 AM Build)
+### Shipped
+- **🕷️ Spider vs Scorpion Comparison** — Full SEO comparison page: 12-row comparison table, win rate data, 8 sections, 6 FAQs, Key Takeaways, recommendation section. Article + FAQPage + BreadcrumbList JSON-LD. 3 AdUnit placements. Internal links to Spider + Scorpion game/strategy/tips pages.
+- **♦️ Klondike vs Pyramid Comparison** — Full SEO comparison page: 12-row comparison table, win rate data, 9 sections, 6 FAQs, Key Takeaways, recommendation section. Article + FAQPage + BreadcrumbList JSON-LD. 3 AdUnit placements. Internal links to Klondike + Pyramid game/strategy/tips pages.
+- Both added to XML sitemap, HTML sitemap, and SiteFooter
+- Build passed clean
+- **Commit**: `3384553`
+- (86th consecutive night of shipping) 🔥
+
 ## 2026-04-03 (Friday 12:11 AM Build)
 ### Shipped
 - **🧘 Best Solitaire Games for Relaxation** — 7 relaxing solitaire games ranked by stress level, win rate, and decision complexity. Relaxation spectrum table, games-to-avoid section, tips for maximum chill. Internal links to 7+ game pages and Relaxed Mode.

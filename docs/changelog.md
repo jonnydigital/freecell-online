@@ -1,5 +1,19 @@
 # FreeCell Online — Changelog
 
+## 2026-04-03 (Friday 10:30 PM Build)
+### Shipped
+- **🌍 Solitaire Rules by Country** — New 1121-line international SEO content page at `/solitaire-rules-by-country`:
+  - Covers 10 countries/regions: France, UK, USA, Germany, Russia, Scandinavia, Spain/Latin America, Japan, Australia/NZ, Italy
+  - Cross-country comparison table (7 aspects across 5 countries)
+  - Digital era section: how Windows/apps unified and fragmented rules globally
+  - 6 FAQs, Key Takeaways, Related Pages grid, CTA
+  - Article + FAQPage + BreadcrumbList JSON-LD, 3 AdUnit placements
+  - Added to sitemap and SiteFooter (both domains)
+  - Targets international keyword cluster: "solitaire rules by country", "patience card game history", "solitaire around the world"
+- Build passed clean
+- **Commit**: `50d5120`
+- (88th consecutive night of shipping) 🔥
+
 ## 2026-04-03 (Friday 6:30 PM Build)
 ### Shipped
 - **↩️ Spider Solitaire Undo** — Full undo support for Spider Solitaire, the last game variant without it:

@@ -30,6 +30,7 @@ const contentPages = [
   { path: '/spider/klondike-vs-spider', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/spider-vs-scorpion', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/klondike-vs-pyramid', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/solitaire-rules-by-country', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/freecell-opening-strategy', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/how-freecell-supermoves-work', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/freecell-endgame-strategy', changeFrequency: 'monthly', priority: 0.7 },

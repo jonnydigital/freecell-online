@@ -240,6 +240,7 @@ export default function SiteFooter() {
           { href: '/solitaire-difficulty-ranking', label: 'Difficulty Ranking' },
           { href: '/spider-vs-scorpion', label: 'Spider vs Scorpion' },
           { href: '/klondike-vs-pyramid', label: 'Klondike vs Pyramid' },
+          { href: '/solitaire-rules-by-country', label: 'Rules by Country' },
         ]
       : [
           { href: '/history', label: 'FreeCell History' },
@@ -270,6 +271,7 @@ export default function SiteFooter() {
           { href: '/freecell-variants', label: 'All Variants' },
           { href: '/patience-solitaire', label: 'Patience Solitaire' },
           { href: '/solitaire-difficulty-ranking', label: 'Difficulty Ranking' },
+          { href: '/solitaire-rules-by-country', label: 'Rules by Country' },
         ];
 
   return (

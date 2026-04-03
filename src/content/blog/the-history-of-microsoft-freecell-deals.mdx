@@ -1,0 +1,121 @@
+---
+title: "The History of Microsoft FreeCell Deal Numbers (From Windows 95 to Today)"
+slug: "the-history-of-microsoft-freecell-deals"
+date: "2026-04-03"
+description: "How Microsoft's FreeCell deal numbering system worked, why Deal #11982 became famous, and the community effort to solve all 32,000 original deals."
+author: "PlayFreeCellOnline.com"
+tags: ["history", "microsoft", "deals", "deep-dive"]
+---
+
+Every game of FreeCell starts with a number. In Microsoft's original version, you could enter any number from 1 to 32,000 and get the same card layout every time. That simple feature created one of the most obsessive community challenges in gaming history.
+
+## The PRNG That Started It All
+
+Microsoft's FreeCell used a pseudorandom number generator (PRNG) to convert a deal number into a specific card arrangement. The algorithm was a simple linear congruential generator:
+
+```
+state = seed
+For each card position:
+  state = (state * 214013 + 2531011) % 2^31
+  card = (state >> 16) % remaining_cards
+```
+
+The seed was the deal number. Same seed, same shuffle, every time. This meant Deal #1 on your computer produced the exact same layout as Deal #1 on every other Windows computer in the world.
+
+That reproducibility turned FreeCell from a casual card game into a shared puzzle. You could tell someone "try Deal #617" and know they would face exactly the same challenge you did.
+
+## 32,000 Deals and the Quest to Solve Them All
+
+The original Windows 95 FreeCell offered 32,000 deals. In 1994, a group of players organized by Dave Ring began a systematic effort to solve every single one.
+
+The project, called the "FreeCell Pro Internet Contest," divided the 32,000 deals among volunteers. Each person would attempt their assigned deals and report back on solvability.
+
+By 1995, they had attempted all 32,000 and found that exactly **one deal could not be solved: Deal #11982**.
+
+But "could not be solved" is different from "cannot be solved." The human players acknowledged they might have missed a solution. It took years of computer analysis to confirm that #11982 is genuinely, mathematically impossible.
+
+## Deal #11982: The Impossible Game
+
+[Deal #11982](/freecell-game-11982) is not just hard. It is provably unsolvable. No sequence of legal moves from the starting position can result in all cards reaching the foundations.
+
+What makes it impossible is a specific combination of card positions that creates circular dependencies. The cards you need to move are blocked by other cards that can only move after the first cards are moved. The free cells cannot break the deadlock because the blockage is too deep.
+
+The proof came from exhaustive computer search. Every possible sequence of moves was tried. None led to a win. The deal is not merely difficult; it is a mathematical impossibility.
+
+This made #11982 famous. It was the one blemish on FreeCell's near-perfect solvability record, and it gave the game a piece of lore that players still reference thirty years later.
+
+## The Extended Search: 1 Million Deals
+
+After conquering the original 32,000, the community expanded the search. The same PRNG algorithm could generate deals beyond 32,000 simply by using larger seed numbers.
+
+By 2000, players and researchers had analyzed the first 1,000,000 deals. Out of a million, exactly **eight deals were found to be unsolvable**:
+
+| Deal Number | Confirmed Unsolvable |
+|-------------|---------------------|
+| #11982 | Yes (the original) |
+| #146692 | Yes |
+| #186216 | Yes |
+| #455889 | Yes |
+| #495340 | Yes |
+| #512118 | Yes |
+| #517776 | Yes |
+| #781948 | Yes |
+
+Eight out of a million. That is a 99.9992% solvability rate. FreeCell is not "almost always" solvable. It is solvable to a degree that borders on mathematical certainty.
+
+## The Billion-Deal Frontier
+
+Research continued. By the 2010s, analysis had been pushed to billions of deals. The 99.999%+ solvability rate held steady. New unsolvable deals were found, but they remained extraordinarily rare.
+
+The exact solvability rate depends on the specific PRNG used and the definition of a "deal," but all serious analyses converge on the same conclusion: virtually every random FreeCell deal has at least one solution.
+
+This is not true of most solitaire games. [Klondike](/klondike) is winnable roughly 80% of the time with perfect play. [Spider (4-suit)](/spider) sits around 35%. FreeCell is in a different category entirely.
+
+## Why the Numbering System Mattered
+
+Microsoft's deal numbering system did something no other casual game had done: it turned a solo card game into a shared experience.
+
+**Competitive benchmarking.** If you solved Deal #7890 in 47 moves and your friend needed 62, you had bragging rights based on the same starting position.
+
+**Difficulty rating.** Players could identify and share particularly easy or hard deals. [Deal #617](/game/617) became known as the "always winnable" warmup. Others became notorious for their difficulty.
+
+**Community building.** The Internet FreeCell Project brought strangers together around a common mission. Before Reddit, before Discord, a card game created a volunteer research community.
+
+**Replay value.** With 32,000 distinct puzzles, FreeCell offered more variety than most games of its era. And because each deal was reproducible, you could return to one you lost and try again.
+
+## Microsoft's Evolution
+
+The numbering system survived through several Windows versions:
+
+- **Windows 95 (1995):** 32,000 deals. The original.
+- **Windows XP (2001):** Same 32,000 deals, updated graphics.
+- **Windows Vista (2007):** 1,000,000 deals available.
+- **Windows 7 (2009):** Same million-deal range.
+- **Windows 8/10 Microsoft Solitaire Collection (2012+):** Random deals by default. Numbered deals still available but less prominent.
+
+The shift in Windows 8 was significant. Microsoft moved FreeCell into the Solitaire Collection alongside Klondike, Spider, TriPeaks, and Pyramid. The focus shifted from numbered puzzles to daily challenges and progression systems. Ads were added. The pure, numbered-deal experience was de-emphasized.
+
+Many longtime players considered this a regression. The numbered deals were what made FreeCell special. Without them front and center, FreeCell became just another card game in a bundle.
+
+## The Legacy
+
+Microsoft's FreeCell deal system proved several things:
+
+1. **Reproducible randomness is powerful.** The ability to share a specific starting position turned solitaire into a social game decades before "daily challenges" became a game design trend.
+
+2. **Near-perfect solvability is a feature.** FreeCell's 99.999% win rate (with optimal play) means losing is almost always the player's fault, not bad luck. That transforms the emotional experience of the game.
+
+3. **Simple systems create deep communities.** A PRNG with 32,000 seeds spawned a volunteer research effort, competitive communities, and thirty years of analysis.
+
+4. **Game #11982 proved that "almost always" is more interesting than "always."** The one impossible deal gave FreeCell its most memorable story. Perfect solvability would have been less interesting.
+
+## Playing Numbered Deals Today
+
+You can still play any numbered FreeCell deal on our site. Enter a number from 1 to 1,000,000+ and get a deterministic layout using a compatible PRNG algorithm.
+
+- [Play a specific deal number →](/deals)
+- [Browse famous deals →](/famous-freecell-game-numbers)
+- [The legendary impossible Deal #11982 →](/freecell-game-11982)
+- [Why FreeCell is almost always solvable →](/is-every-freecell-game-winnable)
+
+The deal number system is one of the things that makes FreeCell fundamentally different from other solitaire games. Every game is a puzzle with a known identity. Every win is proof you solved that specific puzzle. And every loss is an invitation to try again, because the cards will be exactly where you left them.

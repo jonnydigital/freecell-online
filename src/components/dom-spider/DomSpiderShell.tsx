@@ -61,6 +61,25 @@ export default function DomSpiderShell({ initialDifficulty = '1-suit' }: DomSpid
     }
   }, [isWon, gameNumber]);
 
+  // Keyboard shortcuts
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      const tag = (e.target as HTMLElement)?.tagName;
+      if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+
+      if (e.ctrlKey || e.metaKey) {
+        if (e.key === 'z') { e.preventDefault(); undo(); return; }
+        return;
+      }
+
+      const key = e.key.toLowerCase();
+      if (key === 'z') { e.preventDefault(); undo(); return; }
+      if (key === 'n') { e.preventDefault(); newGame(); return; }
+    };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, [undo, newGame]);
+
   const suitLabels: Record<SpiderDifficulty, string> = {
     '1-suit': '1 Suit',
     '2-suit': '2 Suits',

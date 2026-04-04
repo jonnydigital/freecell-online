@@ -49,6 +49,26 @@ export default function GenericSolitaireShell({
 }: GenericSolitaireShellProps) {
   const [showWinModal, setShowWinModal] = useState(false);
 
+  // Keyboard shortcuts: Z/Ctrl+Z = Undo, N = New Game, H = Hint
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      const tag = (e.target as HTMLElement)?.tagName;
+      if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+
+      if (e.ctrlKey || e.metaKey) {
+        if (e.key === 'z' && onUndo) { e.preventDefault(); onUndo(); return; }
+        return;
+      }
+
+      const key = e.key.toLowerCase();
+      if (key === 'z' && onUndo) { e.preventDefault(); onUndo(); return; }
+      if (key === 'n') { e.preventDefault(); onNewGame(); return; }
+      if (key === 'h' && onHint) { e.preventDefault(); onHint(); return; }
+    };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, [onUndo, onNewGame, onHint]);
+
   // Timer
   useEffect(() => {
     if (!timerStarted || isWon) return;

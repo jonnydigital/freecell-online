@@ -1,5 +1,18 @@
 # FreeCell Online — Changelog
 
+## 2026-04-04 (Saturday 12:15 AM Build)
+### Shipped
+- **⌨️ Keyboard Shortcuts for ALL 22 DOM Solitaire Variants** — Added keyboard support to GenericSolitaireShell, instantly giving 22 game variants keyboard controls:
+  - `Z` or `Ctrl+Z` / `⌘+Z` — Undo (when undo is available)
+  - `N` — New Game
+  - `H` — Hint (when hints are available)
+  - Input fields excluded from shortcut capture
+  - Covers: Pyramid, Golf, Yukon, Canfield, Forty Thieves, TriPeaks, Scorpion, Seahaven, Beleaguered Castle, Penguin, Clock, Cruel, Accordion, La Belle Lucie, Flower Garden, Calculation, Monte Carlo, Bristol, Bisley, Aces Up, Baker's Dozen, Gaps
+  - Now ALL game variants site-wide have consistent keyboard support
+- Build passed clean
+- **Commit**: `dcdf69b`
+- (91st consecutive night of shipping) 🔥
+
 ## 2026-04-04 (Saturday 12:09 AM Build)
 ### Shipped
 - **⌨️ Keyboard Shortcuts for Spider & Klondike** — Both game variants now support keyboard controls matching FreeCell:

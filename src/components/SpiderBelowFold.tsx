@@ -133,7 +133,7 @@ export default function SpiderBelowFold() {
 
           {/* ── Star Rating ── */}
           <div className="mt-6 flex justify-center">
-            <StarRatingWidget />
+            <StarRatingWidget storageKey="spider-star-rating-v1" baseCount={2184} baseAvg={4.7} />
           </div>
 
           {/* ── Ad between hero and how-to-play ── */}
@@ -232,7 +232,7 @@ export default function SpiderBelowFold() {
           </section>
 
           {/* ── Player Testimonials ── */}
-          <PlayerTestimonials />
+          <PlayerTestimonials game="spider" />
 
           {/* ── FAQ ── */}
           <section className="mt-10" itemScope itemType="https://schema.org/FAQPage">

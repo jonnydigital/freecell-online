@@ -2,43 +2,50 @@
 
 import { useState, useEffect } from 'react';
 
-const RATING_KEY = 'site-star-rating-v1';
-// Seeded base — represents aggregate from early users before interactive ratings
-const BASE_COUNT = 3241;
-const BASE_SUM = 3241 * 4.8; // avg 4.8
+interface StarRatingWidgetProps {
+  storageKey?: string;
+  baseCount?: number;
+  baseAvg?: number;
+}
 
-export default function StarRatingWidget() {
+export default function StarRatingWidget({
+  storageKey = 'site-star-rating-v1',
+  baseCount = 3241,
+  baseAvg = 4.8,
+}: StarRatingWidgetProps) {
+  const baseSum = baseCount * baseAvg;
+
   const [userRating, setUserRating] = useState<number | null>(null);
   const [hovered, setHovered] = useState<number | null>(null);
-  const [count, setCount] = useState(BASE_COUNT);
-  const [sum, setSum] = useState(BASE_SUM);
+  const [count, setCount] = useState(baseCount);
+  const [sum, setSum] = useState(baseSum);
 
   useEffect(() => {
     try {
-      const stored = localStorage.getItem(RATING_KEY);
+      const stored = localStorage.getItem(storageKey);
       if (stored) {
         const parsed = JSON.parse(stored);
         if (parsed?.rating) {
           setUserRating(parsed.rating);
-          setCount(BASE_COUNT + 1);
-          setSum(BASE_SUM + parsed.rating);
+          setCount(baseCount + 1);
+          setSum(baseSum + parsed.rating);
         }
       }
     } catch {
       // localStorage unavailable — use seeded defaults
     }
-  }, []);
+  }, [storageKey, baseCount, baseSum]);
 
   const handleRate = (stars: number) => {
     if (userRating !== null) return;
     try {
-      localStorage.setItem(RATING_KEY, JSON.stringify({ rating: stars, ratedAt: Date.now() }));
+      localStorage.setItem(storageKey, JSON.stringify({ rating: stars, ratedAt: Date.now() }));
     } catch {
       // ignore storage errors
     }
     setUserRating(stars);
-    setCount(BASE_COUNT + 1);
-    setSum(BASE_SUM + stars);
+    setCount(baseCount + 1);
+    setSum(baseSum + stars);
   };
 
   const avgRating = sum / count;

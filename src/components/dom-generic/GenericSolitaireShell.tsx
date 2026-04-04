@@ -1,10 +1,57 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { isHubSite } from '@/lib/siteConfig';
 import GameSwitcher from '../GameSwitcher';
 import AdUnit from '../AdUnit';
+
+/* ------------------------------------------------------------------ */
+/*  Keyboard Shortcuts Popover                                        */
+/* ------------------------------------------------------------------ */
+function KeyboardShortcutsPopover({ hasUndo, hasHint, onClose }: { hasUndo: boolean; hasHint: boolean; onClose: () => void }) {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) onClose();
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, [onClose]);
+
+  const isMac = typeof navigator !== 'undefined' && /Mac|iPod|iPhone|iPad/.test(navigator.userAgent);
+  const mod = isMac ? '⌘' : 'Ctrl';
+
+  const shortcuts: { key: string; label: string }[] = [
+    ...(hasUndo ? [{ key: `Z / ${mod}+Z`, label: 'Undo' }] : []),
+    { key: 'N', label: 'New Game' },
+    ...(hasHint ? [{ key: 'H', label: 'Hint' }] : []),
+    { key: '?', label: 'Shortcuts' },
+  ];
+
+  return (
+    <div ref={ref} style={{
+      position: 'absolute', top: '100%', right: 0, marginTop: '6px', zIndex: 50,
+      background: 'rgba(10,20,10,0.95)', border: '1px solid rgba(212,175,55,0.25)',
+      borderRadius: '10px', padding: '12px 16px', minWidth: '180px',
+      boxShadow: '0 8px 24px rgba(0,0,0,0.5)',
+    }}>
+      <div style={{ fontSize: '11px', fontWeight: 700, color: '#D4AF37', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '8px' }}>
+        Keyboard Shortcuts
+      </div>
+      {shortcuts.map(({ key, label }) => (
+        <div key={label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '4px 0' }}>
+          <span style={{ color: 'rgba(255,255,255,0.7)', fontSize: '13px' }}>{label}</span>
+          <kbd style={{
+            background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)',
+            borderRadius: '4px', padding: '2px 6px', fontSize: '11px', fontFamily: 'monospace',
+            color: 'rgba(255,255,255,0.6)',
+          }}>{key}</kbd>
+        </div>
+      ))}
+    </div>
+  );
+}
 
 function formatTime(seconds: number): string {
   const m = Math.floor(seconds / 60);
@@ -48,8 +95,10 @@ export default function GenericSolitaireShell({
   extraStats,
 }: GenericSolitaireShellProps) {
   const [showWinModal, setShowWinModal] = useState(false);
+  const [showShortcuts, setShowShortcuts] = useState(false);
+  const toggleShortcuts = useCallback(() => setShowShortcuts(v => !v), []);
 
-  // Keyboard shortcuts: Z/Ctrl+Z = Undo, N = New Game, H = Hint
+  // Keyboard shortcuts: Z/Ctrl+Z = Undo, N = New Game, H = Hint, ? = Shortcuts
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       const tag = (e.target as HTMLElement)?.tagName;
@@ -64,10 +113,11 @@ export default function GenericSolitaireShell({
       if (key === 'z' && onUndo) { e.preventDefault(); onUndo(); return; }
       if (key === 'n') { e.preventDefault(); onNewGame(); return; }
       if (key === 'h' && onHint) { e.preventDefault(); onHint(); return; }
+      if (e.key === '?') { e.preventDefault(); toggleShortcuts(); return; }
     };
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
-  }, [onUndo, onNewGame, onHint]);
+  }, [onUndo, onNewGame, onHint, toggleShortcuts]);
 
   // Timer
   useEffect(() => {
@@ -114,6 +164,10 @@ export default function GenericSolitaireShell({
             <button onClick={onHint} title="Hint" style={{ padding: '8px', borderRadius: '8px', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.6)', cursor: 'pointer' }}>💡</button>
           )}
           <button onClick={onNewGame} title="New Game" style={{ padding: '6px 14px', borderRadius: '8px', background: 'rgba(212,175,55,0.15)', border: '1px solid rgba(212,175,55,0.3)', color: '#D4AF37', fontSize: '12px', fontWeight: 600, cursor: 'pointer' }}>New Deal</button>
+          <div style={{ position: 'relative' }}>
+            <button onClick={toggleShortcuts} title="Keyboard Shortcuts (?)" style={{ padding: '8px', borderRadius: '8px', background: showShortcuts ? 'rgba(212,175,55,0.15)' : 'rgba(255,255,255,0.04)', border: `1px solid ${showShortcuts ? 'rgba(212,175,55,0.3)' : 'rgba(255,255,255,0.08)'}`, color: showShortcuts ? '#D4AF37' : 'rgba(255,255,255,0.6)', cursor: 'pointer', fontSize: '14px', lineHeight: 1 }}>⌨</button>
+            {showShortcuts && <KeyboardShortcutsPopover hasUndo={!!onUndo} hasHint={!!onHint} onClose={() => setShowShortcuts(false)} />}
+          </div>
         </div>
       </div>
 

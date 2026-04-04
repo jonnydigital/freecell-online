@@ -1,5 +1,18 @@
 # FreeCell Online — Changelog
 
+## 2026-04-04 (Saturday 2:30 AM Build)
+### Shipped
+- **⌨️ Keyboard Shortcuts Help Popover** — Discoverable keyboard shortcut guide for all 22 DOM solitaire variants:
+  - ⌨ button added to toolbar, shows popover with available shortcuts
+  - Press `?` to toggle from keyboard
+  - Platform-aware: shows ⌘+Z on Mac, Ctrl+Z on Windows/Linux
+  - Adapts to game capabilities (hides Undo/Hint if not available)
+  - Auto-closes on outside click
+  - Makes Night 90-91's keyboard work discoverable to users
+- Build passed clean
+- **Commit**: `d406553`
+- (92nd consecutive night of shipping) 🔥
+
 ## 2026-04-04 (Saturday 12:15 AM Build)
 ### Shipped
 - **⌨️ Keyboard Shortcuts for ALL 22 DOM Solitaire Variants** — Added keyboard support to GenericSolitaireShell, instantly giving 22 game variants keyboard controls:

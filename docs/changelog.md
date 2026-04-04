@@ -1,5 +1,18 @@
 # FreeCell Online — Changelog
 
+## 2026-04-04 (Saturday 12:20 AM Build)
+### Shipped
+- **⭐ Spider & Klondike Testimonials** — Added game-specific testimonials and star rating widgets to Spider and Klondike hub pages:
+  - Spider: 7 reviews from diverse personas (strategy enthusiasts, mobile commuters, seniors, couples, casual gamers)
+  - Klondike: 8 reviews (Windows nostalgia players, draw-1/draw-3 fans, retirees, tablet users, strategy thinkers)
+  - `PlayerTestimonials` refactored with `game` prop for variant-specific content
+  - `StarRatingWidget` now supports per-game `storageKey`, `baseCount`, and `baseAvg` (no cross-game contamination)
+  - Spider: 2,184 base ratings, 4.7 avg | Klondike: 1,876 base ratings, 4.7 avg
+  - Both pages already had AggregateRating in JSON-LD — now visually matched with testimonial sections
+- Build passed clean
+- **Commit**: `e496c1c`
+- (89th consecutive night of shipping) 🔥
+
 ## 2026-04-03 (Friday 10:30 PM Build)
 ### Shipped
 - **🌍 Solitaire Rules by Country** — New 1121-line international SEO content page at `/solitaire-rules-by-country`:

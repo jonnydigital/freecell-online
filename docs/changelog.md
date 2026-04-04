@@ -1,5 +1,17 @@
 # FreeCell Online — Changelog
 
+## 2026-04-04 (Saturday 12:09 AM Build)
+### Shipped
+- **⌨️ Keyboard Shortcuts for Spider & Klondike** — Both game variants now support keyboard controls matching FreeCell:
+  - `Z` or `Ctrl+Z` / `⌘+Z` — Undo last move
+  - `N` — New game
+  - Input fields excluded from shortcut capture
+  - Spider: tooltip already said "Ctrl+Z" but had no listener — now it works
+  - Klondike: first-ever keyboard support
+- Build passed clean
+- **Commit**: `2786dc7`
+- (90th consecutive night of shipping) 🔥🎯
+
 ## 2026-04-04 (Saturday 12:20 AM Build)
 ### Shipped
 - **⭐ Spider & Klondike Testimonials** — Added game-specific testimonials and star rating widgets to Spider and Klondike hub pages:

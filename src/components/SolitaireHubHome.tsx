@@ -4,7 +4,10 @@ import { useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { absoluteUrl, siteConfig } from '@/lib/siteConfig';
+import { WIN_RATES } from '@/lib/winRateData';
 import GameErrorBoundary from './GameErrorBoundary';
+import AuthorByline from './content/AuthorByline';
+import AuthorBio from './content/AuthorBio';
 
 const DomGameShell = dynamic(() => import('./dom-freecell/DomGameShell'), {
   ssr: false,
@@ -48,36 +51,36 @@ const featuredGames = [
 
 const faqItems = [
   {
-    q: 'Is Solitaire Stack really free?',
-    a: 'Yes. Every game on Solitaire Stack is free to play in your browser with no download, no signup, and no paywall. We keep the lights on with non-intrusive ads that never appear during active gameplay.',
+    q: `What’s the difference between ${siteConfig.brandName} and a single-game solitaire site?`,
+    a: `Most solitaire sites pick one game — usually Klondike or FreeCell — and wrap it in a wall of ads. We take a wider view. ${siteConfig.brandName} treats solitaire as a family of related puzzles, and we cover 26 variants with the same editorial depth: canonical rules, researched win rates, strategy guides written by players who actually solve the games, and honest difficulty ratings. If you only ever want to play Klondike, a single-game site is fine. If you want to understand the whole tradition, compare variants, or explore beyond the two or three games Windows shipped with, this is where we live.`,
   },
   {
-    q: 'What is the difference between FreeCell and regular Solitaire?',
-    a: 'Classic Solitaire (Klondike) deals cards face-down, so luck plays a big role. FreeCell deals all 52 cards face-up, which means every game is a pure logic puzzle. About 99.999% of FreeCell deals are solvable with the right strategy.',
+    q: 'How do you pick which solitaire games to include?',
+    a: `We start with every variant that appears in Parlett’s Oxford History of Card Games, Morehead and Mott-Smith’s Complete Book of Solitaire, and the Microsoft Solitaire Collection. From that long list we keep the games that still have players in 2026 — measured by search volume, community activity, and whether the rules produce interesting decisions. A game has to teach a skill that another game in the catalog does not already teach. That filter removed about a dozen near-duplicates and left us with the 26 distinct variants on the site.`,
   },
   {
-    q: 'How many FreeCell deals are there?',
-    a: 'The standard Microsoft numbering system covers deals 1 through 1,000,000. Of those, only one deal — #11982 — has been proven unsolvable. Every other numbered deal can be won with perfect play.',
+    q: 'Do your win rates come from real data?',
+    a: `Where rigorous data exists — FreeCell, Klondike, a few others — we cite the primary source and reproduce the number with our own simulations. Where rigorous data does not exist, we label the figure as an estimate and show the range. Our Research Desk publishes methodology notes on every number, and we correct in public when we are wrong. We would rather publish an honest estimate with bounds than a confident-sounding number we cannot defend.`,
   },
   {
-    q: 'What is Spider Solitaire?',
-    a: 'Spider Solitaire uses two decks (104 cards) dealt across ten tableau columns. The goal is to build complete runs of 13 cards in the same suit from King down to Ace. It comes in three difficulty levels: 1-suit (beginner), 2-suit (intermediate), and 4-suit (expert).',
+    q: `I’m brand new to solitaire — where should I start?`,
+    a: `Start with Klondike Draw 1. It is the game most people mean when they say "Solitaire," the rules are the most widely known, and the tutorial materials are the deepest on the open web. Once you win a few deals, try FreeCell — all cards are visible, so you can see why your plan worked or failed. Skip 4-suit Spider and Forty Thieves until you have 50 games under your belt. We keep a full skill ladder on this page.`,
   },
   {
-    q: 'Do you save my progress?',
-    a: 'Yes. Your game statistics, win streaks, achievements, and settings are saved in your browser automatically. No account needed. Your data stays on your device and is never sent to a server.',
+    q: 'Are these the same games I played on Windows?',
+    a: `For FreeCell, Spider, and Klondike: yes. We use the Microsoft deal numbering so deal #1 here is deal #1 in the 1995 Windows FreeCell client, and we match the Microsoft rule decisions (unlimited undo, auto-move to foundations, Draw 1 and Draw 3 variants). For games Windows never shipped — Yukon, Canfield, Forty Thieves, La Belle Lucie — we follow the canonical rules documented in Parlett and Morehead, with our Rules Desk flagging any place where implementations differ in the wild.`,
   },
   {
-    q: 'Can I play on my phone?',
-    a: 'Yes. All games on Solitaire Stack are fully responsive and work on phones and tablets. The interface adapts to touch input with tap-to-move and drag-and-drop support.',
+    q: `Why do you publish strategy content — doesn’t that spoil the game?`,
+    a: `We think the opposite. Solitaire is more interesting when you know what you are doing. A player who understands column management in FreeCell or stock cycling in Klondike gets to make real decisions; a player without those concepts is guessing. Our strategy content is optional and sits on separate pages, so you can ignore it entirely. But if you want to move from a 30-percent win rate to 80, we would rather teach you than watch you grind.`,
   },
   {
-    q: "What is Baker's Game?",
-    a: "Baker's Game is the historical ancestor of FreeCell. The rules are nearly identical, with one key difference: tableau columns must be built by suit (spades on spades) instead of alternating colors. This single change makes the game significantly harder.",
+    q: 'Can I trust your rules? Different sites have different rules.',
+    a: `Our Rules Desk documents the canonical rule set for every variant and notes where implementations disagree. When the historical sources conflict — and they often do for older games like Canfield or Baker’s Dozen — we pick the most commonly used modern ruleset, explain why, and list the alternatives. Every rules page on the site is checked against the game that actually runs in the browser, so what you read matches what you play.`,
   },
   {
-    q: 'How do hints work?',
-    a: 'Press H or tap the lightbulb icon during any game to get a move suggestion. The hint system analyzes the current board state and highlights the best available move. You can use hints as many times as you want — they are free and unlimited.',
+    q: 'What is the point of playing so many variants?',
+    a: `Each variant tests a different cognitive skill. FreeCell is about full-information sequencing. Spider is about suit management across a crowded board. Pyramid is about pattern recognition under time-like pressure. Forty Thieves is about patience and risk assessment. Playing variety keeps you sharper than grinding one game forever, and it gives you a deeper appreciation for how solitaire designers have kept 52 cards interesting for 250 years.`,
   },
 ];
 
@@ -163,6 +166,13 @@ export default function SolitaireHubHome() {
           >
             Play Solitaire Online for Free
           </h1>
+          <div className="mx-auto mt-6 flex max-w-3xl justify-center">
+            <AuthorByline
+              authorSlug="editorial-team"
+              publishedDate="2026-04-05"
+              updatedDate="2026-04-05"
+            />
+          </div>
           <div className="mx-auto mt-8 max-w-3xl space-y-4 text-base leading-7 text-white/70">
             <p>
               Solitaire Stack is a growing collection of free solitaire card games you can play
@@ -189,6 +199,383 @@ export default function SolitaireHubHome() {
               shipping regularly.
             </p>
           </div>
+
+          {/* ── Section 1: What Solitaire Stack Is ── */}
+          <section className="mt-16">
+            <h2
+              className="text-2xl font-bold text-white sm:text-3xl"
+              style={{ fontFamily: 'var(--font-playfair), Georgia, serif' }}
+            >
+              What {siteConfig.brandName} Is
+            </h2>
+            <div className="mt-6 space-y-4 text-base leading-7 text-white/70">
+              <p>
+                {siteConfig.brandName} is not a FreeCell clone and it is not another
+                Klondike-focused site with a reskinned engine. It is the place where the
+                solitaire tradition actually lives under one roof. We publish 26 distinct
+                variants — cascade games, discard games, patience games, two-deck
+                games, and the oddball specialists — and we give each one the same
+                editorial depth: researched win rates, canonical rules, honest difficulty
+                ratings, and strategy that has been tested at the table. You can think of
+                the site as a reference library that happens to be playable.
+              </p>
+              <p>
+                What we do differently comes down to four decisions. First, we publish
+                deeper supporting content per game than anyone else on the open web
+                — how-to pages with illustrated boards, strategy guides with
+                worked examples, and history pieces sourced from Parlett and the old
+                Hoyles. Second, we put researched win rates next to every variant, show
+                the methodology, and mark estimates as estimates. Third, every article
+                carries an editorial byline from one of our five desks (Strategy,
+                History, Rules, Research, or the Editorial Team) so you know who wrote
+                it and what they are accountable for. Fourth, we do not run ads during
+                gameplay. Ads go below the fold, outside the play surface, and never
+                interrupt a deal in progress.
+              </p>
+              <p>
+                Who is this for? Players who want variety beyond the three games
+                Microsoft shipped. Players deciding which variant fits their mood
+                tonight. Writers, researchers, and classroom teachers who need reliable
+                rules and statistics. Families who want something safe, fast, and ad-lite
+                to hand to a grandparent or a kid. If any of that sounds like you, our{' '}
+                <Link href="/about" className="text-[#d4af37] hover:text-[#f5df97]">
+                  about page
+                </Link>{' '}
+                explains the broader project, and the{' '}
+                <Link href="/authors" className="text-[#d4af37] hover:text-[#f5df97]">
+                  authors page
+                </Link>{' '}
+                introduces the desks that actually write the content you read here.
+              </p>
+            </div>
+          </section>
+
+          {/* ── Section 2: 26 Games Under One Roof ── */}
+          <section className="mt-16">
+            <h2
+              className="text-2xl font-bold text-white sm:text-3xl"
+              style={{ fontFamily: 'var(--font-playfair), Georgia, serif' }}
+            >
+              26 Solitaire Games Under One Roof
+            </h2>
+            <div className="mt-6 space-y-4 text-base leading-7 text-white/70">
+              <p>
+                Solitaire is not a single game. It is a family with at least four distinct
+                branches: the cascade tradition (FreeCell, Klondike, Yukon), the packer
+                tradition (Spider, Scorpion), the discard tradition (Pyramid, TriPeaks,
+                Golf), and the patience tradition of matching and pairing (Gaps, Accordion,
+                Clock). Below is a curated taxonomy of the variants we cover most deeply,
+                with researched win rates drawn from our Research Desk and published
+                sources.
+              </p>
+            </div>
+            <div className="mt-6 overflow-x-auto rounded-xl border border-white/10 bg-white/[0.03]">
+              <table className="w-full min-w-[640px] text-left text-sm text-white/75">
+                <thead className="border-b border-white/10 text-xs uppercase tracking-wider text-[#d4af37]/80">
+                  <tr>
+                    <th className="px-4 py-3 font-semibold">Game</th>
+                    <th className="px-4 py-3 font-semibold">Family</th>
+                    <th className="px-4 py-3 font-semibold">Difficulty</th>
+                    <th className="px-4 py-3 font-semibold">Win Rate</th>
+                    <th className="px-4 py-3 font-semibold">Skill / Luck</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-white/5">
+                  {[
+                    { href: '/freecell', name: 'FreeCell', family: 'Cascade', diff: 'Moderate', rateKey: 'freecell', lean: 'Pure skill' },
+                    { href: '/klondike', name: 'Klondike (Draw 1)', family: 'Cascade', diff: 'Moderate', rateKey: 'klondike-draw-1', lean: 'Skill + luck' },
+                    { href: '/klondike', name: 'Klondike (Draw 3)', family: 'Cascade', diff: 'Hard', rateKey: 'klondike-draw-3', lean: 'Skill + luck' },
+                    { href: '/spider', name: 'Spider (1 suit)', family: 'Packer', diff: 'Easy', rateKey: 'spider-1-suit', lean: 'Mostly skill' },
+                    { href: '/spider', name: 'Spider (2 suit)', family: 'Packer', diff: 'Moderate', rateKey: 'spider-2-suit', lean: 'Skill lean' },
+                    { href: '/spider', name: 'Spider (4 suit)', family: 'Packer', diff: 'Very hard', rateKey: 'spider-4-suit', lean: 'Skill + luck' },
+                    { href: '/yukon', name: 'Yukon', family: 'Cascade', diff: 'Moderate', rateKey: 'yukon', lean: 'Pure skill' },
+                    { href: '/pyramid', name: 'Pyramid', family: 'Discard', diff: 'Very hard', rateKey: 'pyramid', lean: 'Luck heavy' },
+                    { href: '/tripeaks', name: 'TriPeaks', family: 'Discard', diff: 'Moderate', rateKey: 'tripeaks', lean: 'Pattern recognition' },
+                    { href: '/golf', name: 'Golf', family: 'Discard', diff: 'Hard', rateKey: 'golf', lean: 'Luck heavy' },
+                    { href: '/forty-thieves', name: 'Forty Thieves', family: 'Two-deck', diff: 'Very hard', rateKey: 'forty-thieves', lean: 'Skill + luck' },
+                    { href: '/canfield', name: 'Canfield', family: 'Cascade', diff: 'Moderate', rateKey: 'canfield', lean: 'Luck lean' },
+                    { href: '/bakers-game', name: "Baker's Game", family: 'Cascade', diff: 'Hard', rateKey: 'bakers-game', lean: 'Pure skill' },
+                    { href: '/eight-off', name: 'Eight Off', family: 'Cascade', diff: 'Easy', rateKey: 'eight-off', lean: 'Pure skill' },
+                    { href: '/seahaven', name: 'Seahaven Towers', family: 'Cascade', diff: 'Moderate', rateKey: 'seahaven', lean: 'Pure skill' },
+                  ].map((row) => {
+                    const entry = WIN_RATES[row.rateKey];
+                    const rate = entry ? `${entry.winRatePercent}%` : '—';
+                    return (
+                      <tr key={row.name} className="hover:bg-white/[0.04]">
+                        <td className="px-4 py-3 font-medium">
+                          <Link href={row.href} className="text-[#d4af37] hover:text-[#f5df97]">
+                            {row.name}
+                          </Link>
+                        </td>
+                        <td className="px-4 py-3 text-white/60">{row.family}</td>
+                        <td className="px-4 py-3 text-white/60">{row.diff}</td>
+                        <td className="px-4 py-3 tabular-nums text-white/75">{rate}</td>
+                        <td className="px-4 py-3 text-white/60">{row.lean}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+            <p className="mt-4 text-sm text-white/55">
+              The full directory of all 26 games lives on our{' '}
+              <Link href="/games" className="text-[#d4af37] hover:text-[#f5df97]">
+                games index
+              </Link>
+              . Win rates reflect optimal play with unlimited undo where applicable;
+              human win rates sit well below the theoretical ceiling for all but the
+              easiest variants.
+            </p>
+          </section>
+
+          {/* ── Section 3: How to Choose Your Solitaire Game ── */}
+          <section className="mt-16">
+            <h2
+              className="text-2xl font-bold text-white sm:text-3xl"
+              style={{ fontFamily: 'var(--font-playfair), Georgia, serif' }}
+            >
+              How to Choose Your Solitaire Game
+            </h2>
+            <div className="mt-6 space-y-4 text-base leading-7 text-white/70">
+              <p>
+                The most common message we get is some variation of: &quot;I don&apos;t
+                know which one to play.&quot; Twenty-six variants is a lot, and the
+                standard answer — &quot;just try a few&quot; — is
+                unsatisfying if you have twenty minutes and want to spend them playing,
+                not browsing. So here is a decision guide organized around what you
+                actually want out of the next hour.
+              </p>
+            </div>
+            <div className="mt-6 space-y-4">
+              {[
+                {
+                  label: 'I want a pure logic puzzle',
+                  pick: 'FreeCell',
+                  href: '/freecell',
+                  why: `All 52 cards are visible from the opening deal, so there is no hidden information and no luck in the outcome. Around 99.9987% of random deals are solvable with optimal play, which means if you lose, you lost the puzzle, not the deal. FreeCell is the closest solitaire gets to chess: every move is a decision you own.`,
+                },
+                {
+                  label: 'I want the classic',
+                  pick: 'Klondike (Draw 1)',
+                  href: '/klondike',
+                  why: `This is the game most English speakers actually mean when they say &quot;Solitaire.&quot; Seven columns, three face-down rows, a stock you flip one card at a time. It shipped with Windows 3.0 in 1990, which is the single largest reason billions of people recognize a tableau on sight. Start here if you want the canonical experience.`,
+                },
+                {
+                  label: 'I want something relaxing for a short break',
+                  pick: 'TriPeaks or Golf',
+                  href: '/tripeaks',
+                  why: `Discard-family games play fast — typically five to ten minutes per deal — and the decision load is low. You clear cards one at a time from a layout by matching values one above or below the waste card. TriPeaks is the friendlier of the two; Golf is stricter. Either works as a meditative palette cleanser between harder games.`,
+                },
+                {
+                  label: 'I want a real challenge',
+                  pick: '4-suit Spider or Forty Thieves',
+                  href: '/spider',
+                  why: `Both games punish impatience. Spider 4-suit asks you to build complete 13-card runs in matching suits across ten crowded columns; Forty Thieves deals two decks into a strict same-suit tableau and gives you almost no slack. Expected human win rates sit in the 10-25% band even for strong players. Bring coffee.`,
+                },
+                {
+                  label: 'I want to finish quickly but feel skilled',
+                  pick: 'Yukon or Canfield',
+                  href: '/yukon',
+                  why: `Yukon deals all cards face-up like FreeCell but without free cells, which forces you to think in terms of long movable groups rather than individual cards. Canfield is faster — a 13-card reserve, a tight tableau, and constant stock cycling. Both reward decisive play, and both fit comfortably into a fifteen-minute window.`,
+                },
+                {
+                  label: 'I want something exotic and brain-stretching',
+                  pick: 'La Belle Lucie or Pyramid',
+                  href: '/la-belle-lucie',
+                  why: `La Belle Lucie spreads the deck into eighteen three-card fans and asks you to build foundations from the scraps. Pyramid is a matching puzzle where every King is free but everything else is a careful extraction problem. Neither game resembles the Microsoft canon; both reward players who enjoy lateral thinking more than raw sequencing.`,
+                },
+              ].map((archetype) => (
+                <div
+                  key={archetype.label}
+                  className="rounded-xl border border-white/10 bg-white/[0.03] p-5"
+                >
+                  <div className="text-xs font-semibold uppercase tracking-wider text-[#d4af37]/80">
+                    {archetype.label}
+                  </div>
+                  <div className="mt-1 text-lg font-semibold text-white">
+                    Play{' '}
+                    <Link href={archetype.href} className="text-[#d4af37] hover:text-[#f5df97]">
+                      {archetype.pick}
+                    </Link>
+                  </div>
+                  <p
+                    className="mt-2 text-sm leading-6 text-white/65"
+                    dangerouslySetInnerHTML={{ __html: archetype.why }}
+                  />
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* ── Section 4: The Solitaire Family Tree ── */}
+          <section className="mt-16">
+            <h2
+              className="text-2xl font-bold text-white sm:text-3xl"
+              style={{ fontFamily: 'var(--font-playfair), Georgia, serif' }}
+            >
+              The Solitaire Family Tree
+            </h2>
+            <div className="mt-6 space-y-4 text-base leading-7 text-white/70">
+              <p>
+                Solitaire is roughly 250 years old, give or take a decade. The earliest
+                documented patience games appeared in late-eighteenth-century northern
+                Europe, most likely in Germany or Scandinavia, where they circulated in
+                hand-copied rulebooks before the first printed collections arrived. The
+                German term &quot;Patience-Spiele&quot; — patience games
+                — is the oldest label we have, and the tradition traveled from
+                there into France, England, and Russia during the early nineteenth
+                century. By the time Lady Adelaide Cadogan published her Illustrated
+                Games of Patience in the 1870s, dozens of variants already had settled
+                names and stable rules.
+              </p>
+              <p>
+                One persistent story deserves careful handling: the claim that Napoleon
+                invented or popularized patience while exiled on St. Helena. David
+                Parlett, whose Oxford Guide to Card Games remains the most careful
+                secondary source in English, treats this as legend. There is no
+                contemporary evidence Napoleon designed a game, and the variants
+                sometimes attributed to him (Napoleon at St. Helena, St. Helena, and
+                others) are almost certainly nineteenth-century inventions named for
+                his memory rather than his hand. Some patience games do have French
+                names and likely French origins, but Bonaparte himself is a marketing
+                embellishment.
+              </p>
+              <p>
+                The real fork in the family tree came with Klondike, which took its
+                name from the Yukon gold rush of the 1890s. The game existed before the
+                rush under other names, but the new label stuck, traveled back to the
+                eastern United States, and — crucially — became the
+                default version of solitaire people taught their children. By the
+                mid-twentieth century, &quot;Solitaire&quot; meant Klondike in most
+                English-speaking homes.
+              </p>
+              <p>
+                FreeCell belongs to a different lineage. The game traces back to Paul
+                Alfille, who implemented it on the PLATO computing system at the
+                University of Illinois around 1978. Alfille was building on older
+                patience variants (most notably Eight Off and Baker&apos;s Game), but
+                his decision to expose all 52 cards and allow four free cells created a
+                new kind of puzzle. The Microsoft Entertainment Pack shipped a FreeCell
+                client in 1991, and Windows 95 bundled it. That single distribution
+                decision pushed FreeCell from a university curiosity to a
+                hundred-million-player game inside a decade.
+              </p>
+              <p>
+                Spider is older than FreeCell and more argued over. Parlett flags
+                multiple competing origin stories, none conclusive, and the game
+                existed in print collections by the mid-twentieth century. Windows ME
+                shipped Microsoft Spider in 2000, which did for Spider what the
+                Entertainment Pack did for FreeCell. Spider has since branched into
+                Scorpion (looser movement rules) and Wasp (shorter deal), and the
+                three-suit-count variants (1, 2, 4) are a Microsoft-era innovation that
+                became canonical.
+              </p>
+              <p>
+                The discard family — Pyramid, TriPeaks, Golf — sits
+                on a different branch entirely. These games do not build sequences;
+                they extract cards from a fixed layout by matching values. They play
+                faster, reward pattern recognition over planning, and have their own
+                regional traditions (Pyramid in Europe, TriPeaks and Golf in the
+                twentieth-century American tradition).
+              </p>
+              <p>
+                Why does variety matter? Because each branch tests a different skill.
+                Cascade games train sequencing and long-horizon planning. Packer games
+                train suit management under pressure. Discard games train pattern
+                recognition and probabilistic thinking. Patience games train memory
+                and risk assessment. A player who only knows Klondike has touched one
+                branch of a much larger tree — and the other branches are
+                where the interesting puzzles live.
+              </p>
+            </div>
+          </section>
+
+          {/* ── Section 5: The Solitaire Skill Ladder ── */}
+          <section className="mt-16">
+            <h2
+              className="text-2xl font-bold text-white sm:text-3xl"
+              style={{ fontFamily: 'var(--font-playfair), Georgia, serif' }}
+            >
+              The Solitaire Skill Ladder
+            </h2>
+            <div className="mt-6 space-y-4 text-base leading-7 text-white/70">
+              <p>
+                Most people learn solitaire the way they learned to swim: dropped into
+                Klondike Draw 1 and told to figure it out. That works, eventually, but
+                there is a better path. The ladder below moves from gentlest to
+                hardest, and each rung teaches a concept the next rung builds on. You
+                do not have to climb it in order, but if you want to get genuinely good
+                at solitaire, this is the path we would recommend.
+              </p>
+            </div>
+            <ol className="mt-6 space-y-4">
+              {[
+                {
+                  n: 'Rung 1',
+                  title: 'Easy cascade games',
+                  games: 'Klondike 1-suit, Spider 1-suit, Eight Off (1-cell FreeCell style)',
+                  desc: 'Learn the cascade concept — descending alternating-color stacks — and get comfortable with the idea that the top card is the only one you can move. You are building hand-eye fluency here, not strategy.',
+                  ready: `You are ready to climb when you finish a deal without using a hint and you stop confusing foundation piles with tableau columns.`,
+                },
+                {
+                  n: 'Rung 2',
+                  title: 'Classic Klondike Draw 3',
+                  games: 'Klondike Draw 3 (the hard Windows default)',
+                  desc: 'Learn waste management: how to cycle the stock, when to commit a card from the waste pile, how to plan around cards you cannot reach this pass. Draw 3 is a different game than Draw 1, and most players never realize it.',
+                  ready: `You are ready to climb when you can win Klondike Draw 1 consistently and you can name the three cards currently buried in the waste pile without looking.`,
+                },
+                {
+                  n: 'Rung 3',
+                  title: 'Standard FreeCell',
+                  games: 'FreeCell (four free cells, alternating-color tableau)',
+                  desc: 'Learn supermoves — the math of moving multi-card groups through free cells and empty columns — and full-information strategy. FreeCell is where you start actually planning, because you can see everything from move one.',
+                  ready: `You are ready to climb when you win 80% of random FreeCell deals and you can explain why empty columns are worth more than free cells.`,
+                },
+                {
+                  n: 'Rung 4',
+                  title: '2-suit Spider',
+                  games: 'Spider Solitaire (2-suit mode)',
+                  desc: 'Learn suit matching and group movement across ten columns. 2-suit Spider is the sweet spot most experienced Spider players settle into — tight enough to punish sloppy play, loose enough to reward strategy. The skill: knowing when to stop building and when to deal from stock.',
+                  ready: `You are ready to climb when you win 2-suit Spider more than you lose and you can feel which columns are &quot;safe&quot; without counting.`,
+                },
+                {
+                  n: 'Rung 5',
+                  title: 'Forty Thieves and 4-suit Spider',
+                  games: 'Forty Thieves, Spider 4-suit',
+                  desc: 'Learn advanced patience and high frustration tolerance. These games demand perfect move selection and still lose frequently because the deal determines outcomes in ways cascade games do not. You are learning when to concede a deal and when to push.',
+                  ready: `You are ready to climb when you can tell within the first ten moves whether a Forty Thieves deal is winnable.`,
+                },
+                {
+                  n: 'Rung 6',
+                  title: 'Obscure variants',
+                  games: "La Belle Lucie, Cruel, Flower Garden, Baker's Dozen",
+                  desc: 'Learn the specialist games. These variants have non-standard structures, unusual movement rules, and their own micro-strategies. Few players beyond the patience community ever touch them, which is exactly why they stay interesting.',
+                  ready: `You have reached the top of the ladder. Start comparing your win rates against our Research Desk figures and reach out if you disagree.`,
+                },
+              ].map((rung) => (
+                <li
+                  key={rung.n}
+                  className="rounded-xl border border-white/10 bg-white/[0.03] p-5"
+                >
+                  <div className="flex items-baseline gap-3">
+                    <span className="text-xs font-semibold uppercase tracking-wider text-[#d4af37]/80">
+                      {rung.n}
+                    </span>
+                    <h3 className="text-lg font-semibold text-white">{rung.title}</h3>
+                  </div>
+                  <p className="mt-1 text-xs italic text-white/55">{rung.games}</p>
+                  <p
+                    className="mt-3 text-sm leading-6 text-white/70"
+                    dangerouslySetInnerHTML={{ __html: rung.desc }}
+                  />
+                  <p className="mt-3 text-sm leading-6 text-[#d4af37]/80">
+                    <strong className="font-semibold">Ready to climb when:</strong>{' '}
+                    <span className="text-white/70">{rung.ready}</span>
+                  </p>
+                </li>
+              ))}
+            </ol>
+          </section>
 
           {/* ── Featured games ── */}
           <section className="mt-16">
@@ -284,14 +671,19 @@ export default function SolitaireHubHome() {
             </div>
           </section>
 
-          {/* ── FAQ ── */}
+          {/* ── FAQ (hub-specific) ── */}
           <section className="mt-16">
             <h2
               className="text-2xl font-bold text-white sm:text-3xl"
               style={{ fontFamily: 'var(--font-playfair), Georgia, serif' }}
             >
-              Frequently Asked Questions
+              Questions About {siteConfig.brandName}
             </h2>
+            <p className="mt-3 text-sm text-white/55">
+              Questions that come up specifically because we cover a network of
+              solitaire games rather than a single title. For rules and strategy on
+              any individual game, see that game&apos;s dedicated page.
+            </p>
             <div className="mt-6 space-y-4">
               {faqItems.map((item) => (
                 <details
@@ -382,12 +774,18 @@ export default function SolitaireHubHome() {
                 there&apos;s content here for every skill level.
               </p>
               <p>
-                Solitaire Stack is part of a network that includes{' '}
+                {siteConfig.brandName} is part of a network that includes{' '}
                 <strong className="text-white/80">playfreecellonline.com</strong> for dedicated
                 FreeCell players, with more specialist domains launching as the game catalog grows.
                 Learn more on our{' '}
-                <Link href="/about" className="text-[#d4af37] hover:text-[#f5df97]">about page</Link>.
+                <Link href="/about" className="text-[#d4af37] hover:text-[#f5df97]">about page</Link>,
+                or read our{' '}
+                <Link href="/editorial-standards" className="text-[#d4af37] hover:text-[#f5df97]">editorial standards</Link>{' '}
+                to see how articles move from research to publication.
               </p>
+            </div>
+            <div className="mt-8">
+              <AuthorBio authorSlug="editorial-team" />
             </div>
           </section>
         </div>

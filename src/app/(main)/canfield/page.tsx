@@ -2,6 +2,8 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import { JsonLd } from "@/components/content";
+import AuthorByline from "@/components/content/AuthorByline";
+import AuthorBio from "@/components/content/AuthorBio";
 import CanfieldGamePage from "./CanfieldGamePage";
 import MoreGames from '@/components/MoreGames';
 
@@ -138,6 +140,14 @@ export default function Page() {
           Canfield Solitaire
         </h1>
 
+        <div className="mb-6">
+          <AuthorByline
+            authorSlug="the-strategy-desk"
+            publishedDate="2026-03-27"
+            updatedDate="2026-03-27"
+          />
+        </div>
+
         <p className="mb-4 leading-relaxed">
           Canfield Solitaire (also called Demon Patience in the UK) is one of the most
           challenging and storied solitaire card games. Originally played in the casinos of
@@ -201,6 +211,172 @@ export default function Page() {
         </div>
 
         <h2 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
+          History &amp; Origins
+        </h2>
+        <p className="mb-4 leading-relaxed">
+          Canfield takes its name from <strong>Richard A. Canfield</strong>,
+          a notorious gambling impresario who ran the Canfield Casino in
+          Saratoga Springs, New York in the late 1800s. According to the
+          enduring story, Canfield sold players a full $52 deck for fifty-two
+          dollars and then paid them five dollars for every card they
+          managed to move to the foundations — a game so punishingly hard
+          that the house pocketed the difference on nearly every hand. The
+          mathematics of the deal mean the average player loses around
+          twenty-five to thirty dollars per session, which is why Canfield
+          the man became wealthy and Canfield the game became famous. In
+          the United Kingdom the same rules circulated under the name
+          <strong> Demon</strong> or <strong>Demon Patience</strong>, and
+          those names survive in British patience manuals today. The game
+          stuck around because the rules are simple, the decisions are
+          genuinely interesting, and the casino pedigree gives every deal
+          a faint whiff of danger.
+        </p>
+
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
+          Strategic Principles
+        </h2>
+        <p className="mb-4 leading-relaxed">
+          The first strategic idea in Canfield is that the
+          <strong> reserve pile of 13 cards</strong> is the entire game. We
+          cannot win a Canfield deal without clearing most of that reserve,
+          and since only the top card is face-up at any moment, every
+          reserve move is a small act of discovery. Plan to play the
+          reserve down systematically — every time a tableau column empties,
+          it auto-fills from the top of the reserve, so we should engineer
+          tableau clears precisely to keep the reserve moving.
+        </p>
+        <p className="mb-4 leading-relaxed">
+          The second strategic idea is that the
+          <strong> foundation base rank is variable</strong>. In Canfield,
+          the fourteenth card we see (the first foundation card dealt)
+          sets the base for all four foundations. If that card is a seven,
+          all four foundations climb 7-8-9-10-J-Q-K-A-2-3-4-5-6 with
+          wraparound. This matters because it changes which cards are
+          &ldquo;low&rdquo; and which are &ldquo;high&rdquo; for the
+          duration of the deal. A two is usually a friendly foundation
+          climber; in a base-seven game, it is one of the last cards we
+          can play up. Track the base rank and plan foundation moves
+          around it, not around the natural ace-through-king habit.
+        </p>
+        <p className="mb-4 leading-relaxed">
+          The third idea is <strong>stock cycling discipline</strong>.
+          Canfield deals three cards at a time from the stock to the
+          waste pile, with unlimited redeals, but the cycle is not free
+          — each pass shows us the same subset of cards in the same
+          order, and we only have access to the top of each triplet.
+          Track which cards you have seen, and commit to playing them
+          when the tableau supports it. If a card cycles through three
+          times without a home, it is a signal that we need to change
+          the tableau structure, not keep waiting. Finally, build
+          tableau columns down in alternating colors with wrapping,
+          but do not over-invest in long tableau runs — reserve clearing
+          is almost always more valuable than tableau building.
+        </p>
+
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
+          Difficulty &amp; Win Rate
+        </h2>
+        <p className="mb-4 leading-relaxed">
+          Canfield is middle-of-the-pack in difficulty. The commonly cited
+          number is that roughly <strong>35%</strong> of Canfield deals
+          are winnable with careful play — a figure that places it above
+          <Link href="/forty-thieves" className="text-[#D4AF37] hover:underline"> Forty Thieves</Link> (around
+          10&ndash;20%) and below
+          <Link href="/klondike" className="text-[#D4AF37] hover:underline"> Klondike</Link> (roughly 80% solvable).
+          Casual player win rates typically sit in the 5&ndash;15% band,
+          mostly because the hidden reserve pile punishes players who
+          fail to track what has been revealed. The unlimited stock
+          redeals give us more chances to recover than Forty Thieves
+          offers, but the variable base rank and the 13-card reserve
+          create genuine strategic tension that Klondike lacks. Players
+          who enjoy Canfield usually describe it as a game of
+          <em> information management</em>: win rates climb noticeably
+          once we internalize the stock cycle and reserve tracking.
+        </p>
+
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
+          Common Mistakes
+        </h2>
+        <ul className="list-disc list-inside space-y-2 mb-4 text-white/70">
+          <li>
+            <strong className="text-white/90">Neglecting the reserve.</strong>
+            The reserve pile is the game. Players who treat it as a side
+            stack and focus on tableau and stock will lose most deals.
+          </li>
+          <li>
+            <strong className="text-white/90">Blocking foundations.</strong>
+            Because foundations wrap from the base rank, it is easy to
+            lock a card under a useless build. Always check foundation
+            availability before committing a tableau sequence.
+          </li>
+          <li>
+            <strong className="text-white/90">Miscounting stock cycles.</strong>
+            We see the same cards in the same order every pass, minus
+            the ones we played. Losing track of that cycle turns the
+            stock into noise instead of information.
+          </li>
+          <li>
+            <strong className="text-white/90">Over-building the tableau.</strong>
+            A long tableau run looks productive but does not clear the
+            reserve. When in doubt, do the reserve move first.
+          </li>
+        </ul>
+
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
+          How This Game Compares
+        </h2>
+        <p className="mb-4 leading-relaxed">
+          <strong>Canfield vs. Klondike.</strong> On paper the games look
+          similar — both feature a stock, a waste, tableau columns built
+          down in alternating colors, and foundations that climb by suit.
+          The differences are decisive.
+          <Link href="/klondike" className="text-[#D4AF37] hover:underline"> Klondike</Link> fixes the
+          foundation base at ace and has no reserve pile, which makes it
+          a cleaner cascading game. Canfield&rsquo;s 13-card reserve plus
+          variable base rank create a very different puzzle: we are not
+          just sequencing cards, we are managing a hidden information
+          pile while navigating foundations that do not start at ace.
+          Klondike is the better introduction; Canfield is the better
+          long-term practice.
+        </p>
+        <p className="mb-4 leading-relaxed">
+          <strong>Canfield vs. <Link href="/freecell" className="text-[#D4AF37] hover:underline">FreeCell</Link>.</strong>
+          FreeCell is an open-information game with near-perfect
+          solvability. Canfield is the opposite — hidden reserve cards,
+          cycled stock triplets, and variable base ranks create
+          information asymmetry that FreeCell players find genuinely
+          foreign. Neither is harder than the other in a pure solver
+          sense; they are hard in different ways.
+        </p>
+        <p className="mb-4 leading-relaxed">
+          <strong>Canfield vs. <Link href="/yukon" className="text-[#D4AF37] hover:underline">Yukon</Link>.</strong>
+          Both offer richer tableau mechanics than Klondike, but they
+          diverge sharply. Yukon has no stock or reserve at all; Canfield
+          leans on both. Yukon rewards aggressive digging; Canfield
+          rewards patience and information tracking.
+        </p>
+
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
+          Variant Notes
+        </h2>
+        <p className="mb-4 leading-relaxed">
+          The Canfield family includes several named variants worth
+          knowing. <strong>Rainbow Canfield</strong> loosens the
+          alternating-color rule and lets us build tableau columns in
+          any color sequence, which noticeably raises the win rate and
+          is a common easy-mode entry point. <strong>Storehouse
+          Canfield</strong> (sometimes called Thirteen Up or Provisions)
+          fixes all four foundations to start at ace, which removes the
+          variable base rank and turns the game into a more conventional
+          ace-to-king climb. <strong>Demon</strong> is simply the British
+          name for standard Canfield and plays identically. Some digital
+          collections include a <strong>Double Canfield</strong>
+          two-deck version for longer sessions. Each variant keeps the
+          13-card reserve as its strategic anchor; only the surrounding
+          rules change.
+        </p>
+
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
           Learn More
         </h2>
         <ul className="space-y-2 text-white/70">
@@ -242,6 +418,10 @@ export default function Page() {
           </li>
         </ul>
         <MoreGames currentSlug="canfield" />
+
+        <div className="mt-10">
+          <AuthorBio authorSlug="the-strategy-desk" />
+        </div>
       </article>
     </>
   );

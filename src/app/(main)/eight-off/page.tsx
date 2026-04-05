@@ -3,6 +3,8 @@ import type { Metadata } from 'next';
 import { absoluteUrl, siteConfig } from '@/lib/siteConfig';
 import EightOffPage from './EightOffPage';
 import MoreGames from '@/components/MoreGames';
+import AuthorByline from '@/components/content/AuthorByline';
+import AuthorBio from '@/components/content/AuthorBio';
 
 export const metadata: Metadata = {
   title: 'Eight Off Solitaire — Play the Classic 8 Free Cell Card Game Online Free',
@@ -128,6 +130,14 @@ export default function Page() {
         <h1 className="text-3xl font-bold text-[#D4AF37] mb-6">
           Eight Off Solitaire: The 8 Free Cell Challenge
         </h1>
+
+        <div className="mb-6">
+          <AuthorByline
+            authorSlug="the-strategy-desk"
+            publishedDate="2026-04-05"
+            updatedDate="2026-04-05"
+          />
+        </div>
 
         <p className="mb-4 leading-relaxed">
           Eight Off is a classic patience card game and a close relative of FreeCell.
@@ -260,6 +270,176 @@ export default function Page() {
           ))}
         </div>
 
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-10 mb-3">
+          History &amp; Origins
+        </h2>
+        <p className="mb-4 leading-relaxed">
+          Eight Off belongs to the mid-20th-century family of reserve-cell
+          patience games that bloomed in European card-game compendiums
+          before computers made solitaire a household pastime. The game is
+          essentially a cousin to{" "}
+          <Link
+            href="/bakers-game"
+            className="text-[#D4AF37] hover:underline"
+          >
+            Baker&apos;s Game
+          </Link>
+          , sharing the strict same-suit stacking rule that distinguishes
+          both from modern FreeCell. Where Baker&apos;s Game hands you four
+          cells, Eight Off doubles that to eight — four already holding
+          cards at deal time, four starting empty. The extra cell budget
+          lifts the solve rate to roughly 99%, making Eight Off the gentlest
+          entry point into the same-suit branch of the FreeCell family. We
+          think of it as the training wheels cousin: it teaches you to plan
+          by suit without punishing you for every inefficient move.
+        </p>
+
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-10 mb-3">
+          Strategic Principles
+        </h2>
+        <p className="mb-4 leading-relaxed">
+          The eight cells are a trap if you do not treat them as scarce.
+          Because Eight Off is nearly always winnable, players learn to spray
+          cards into cells reflexively — one here, one there — confident that
+          the surplus capacity will bail them out. It often does. But the
+          habit fails the moment you transition back to{" "}
+          <Link href="/freecell" className="text-[#D4AF37] hover:underline">
+            standard FreeCell
+          </Link>{" "}
+          or Baker&apos;s Game. We discipline ourselves to ask &ldquo;does
+          this cell move reopen a tableau option?&rdquo; before every park.
+          If the answer is no, the card stays in the column.
+        </p>
+        <p className="mb-4 leading-relaxed">
+          Same-suit tableau building makes sequence construction slower than
+          FreeCell. A red 9 cannot sit on a black 10; it needs its own suit
+          mate. That means we actively plan <strong>where each suit will be
+          assembled</strong> — usually the column holding that suit&apos;s
+          King, or an empty column we have claimed. We then funnel 2 through
+          Queen into that column in descending order, one at a time, using
+          cells as temporary stepping stones. A well-played Eight Off looks
+          like four parallel assembly lines, one per suit.
+        </p>
+        <p className="mb-4 leading-relaxed">
+          The four pre-dealt cell cards deserve a first-move audit. Two of
+          them are often playable immediately — either to foundations (if
+          one is an Ace) or to a tableau column that has the matching suit
+          on top. Clearing those two opens real working cells. Empty columns
+          remain the highest-leverage resource; we clear the shortest column
+          first, then protect the empty slot aggressively. For the full
+          comparison against FreeCell, see our{" "}
+          <Link
+            href="/freecell-vs-eight-off"
+            className="text-[#D4AF37] hover:underline"
+          >
+            FreeCell vs Eight Off
+          </Link>{" "}
+          guide.
+        </p>
+
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-10 mb-3">
+          Difficulty &amp; Win Rate
+        </h2>
+        <p className="mb-4 leading-relaxed">
+          Eight Off lands at roughly <strong>99% solvable</strong> with good
+          play — nearly a guaranteed win if you avoid obvious blunders. That
+          is why we treat it as the perfect on-ramp to cell-based patience
+          games. It sits between standard FreeCell (99.999%) and Baker&apos;s
+          Game (~75%), and in practical terms it is a more forgiving sibling
+          of both. The high solvability is structural: with up to eight cells
+          available and 48 cards dealt across eight columns of six, the
+          board almost always has a safety valve.
+        </p>
+        <p className="mb-4 leading-relaxed">
+          The gap between theoretical winability and actual performance is
+          the real story. Beginners land around 60% because they burn cells
+          early and cannot rebuild suit sequences afterward. Disciplined
+          players crest 95% by treating the cell budget as if it were four
+          rather than eight. The deals that do lose typically share a
+          pattern: a low card of one suit buried under a King-stack of
+          another, with no path to surface it before cells fill.
+        </p>
+
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-10 mb-3">
+          Common Mistakes
+        </h2>
+        <ul className="mb-4 leading-relaxed list-disc list-inside space-y-2">
+          <li>
+            <strong>Overusing cells because they are there.</strong> Eight
+            open cells feel infinite. They are not. Every card you park is a
+            card you eventually have to place, and tableau building is
+            same-suit, so landing spots are narrower than your instinct says.
+          </li>
+          <li>
+            <strong>Ignoring the four pre-dealt cell cards.</strong> Players
+            often leave them untouched for ten or fifteen moves. The correct
+            habit is to audit them in the first two moves and play whichever
+            are immediately legal.
+          </li>
+          <li>
+            <strong>Building without a suit plan.</strong> If you cannot name
+            which suit will finish first, you are playing reactively. Pick a
+            target suit within the first five moves.
+          </li>
+          <li>
+            <strong>Spending empty columns on mid-rank cards.</strong> An
+            empty column holding a 7 is almost wasted. Empty columns earn
+            their keep with Kings or as swap stations for suit blocks.
+          </li>
+          <li>
+            <strong>Treating the last five cards as automatic.</strong>{" "}
+            Endgames in Eight Off can still lose if a low card is buried.
+            Verify the final descent path before committing the penultimate
+            foundation play.
+          </li>
+        </ul>
+
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-10 mb-3">
+          How This Game Compares
+        </h2>
+        <p className="mb-4 leading-relaxed">
+          The one-rule change against{" "}
+          <Link href="/freecell" className="text-[#D4AF37] hover:underline">
+            standard FreeCell
+          </Link>
+          {" "}is cell count — eight rather than four — and the reciprocal
+          constraint is same-suit tableau building instead of alternating
+          colour. That swap moves us from 99.999% solvability down to about
+          99%, but it flips the texture of play entirely. FreeCell feels
+          like solving a logic puzzle; Eight Off feels like running a
+          four-lane assembly. Against Baker&apos;s Game, Eight Off keeps the
+          same-suit rule but quadruples the working space (four extra cells,
+          since Baker&apos;s Game starts with all cells empty but only
+          provides four). Among{" "}
+          <Link
+            href="/freecell-variants"
+            className="text-[#D4AF37] hover:underline"
+          >
+            FreeCell variants
+          </Link>
+          , Eight Off is the most forgiving entry point. Seahaven Towers is
+          the strictest sibling, layering a Kings-only empty-column rule
+          onto the same-suit foundation.
+        </p>
+
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-10 mb-3">
+          Variant Notes
+        </h2>
+        <p className="mb-4 leading-relaxed">
+          The classical description gives Eight Off exactly eight cells with
+          four cards pre-dealt into them, and no redeal. Some implementations
+          allow any card into an empty column; stricter variants (often
+          grouped with Seahaven-style rules) restrict empty columns to
+          Kings, which pushes the solve rate down into the low 90s. A
+          &ldquo;tight&rdquo; variant that deals one card to every cell at
+          start (eight pre-dealt cards, zero empty cells) appears in some
+          older compendiums and rarely clears 80%. Supermove shortcuts —
+          moving a pre-built same-suit run as a group when enough cells and
+          columns are free — are standard in modern implementations
+          including ours. Eight Off never offers a redeal; the deal you get
+          is the deal you solve.
+        </p>
+
         <h2 className="text-xl font-semibold text-white/90 mt-8 mb-3">
           Learn More
         </h2>
@@ -278,6 +458,10 @@ export default function Page() {
           , which uses the same same-suit stacking rule but with only 4 free cells
           for an even tougher challenge.
         </p>
+
+        <div className="mt-10 mb-8">
+          <AuthorBio authorSlug="the-strategy-desk" />
+        </div>
 
         <MoreGames currentSlug="eight-off" />
       </article>

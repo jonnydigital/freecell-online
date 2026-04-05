@@ -4,6 +4,8 @@ import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import { JsonLd } from "@/components/content";
 import GolfGamePage from "./GolfGamePage";
 import MoreGames from '@/components/MoreGames';
+import AuthorByline from "@/components/content/AuthorByline";
+import AuthorBio from "@/components/content/AuthorBio";
 
 export const metadata: Metadata = {
   title: "Golf Solitaire | Play Online Free — No Download",
@@ -149,6 +151,14 @@ export default function Page() {
           Golf Solitaire
         </h1>
 
+        <div className="mb-6">
+          <AuthorByline
+            authorSlug="the-strategy-desk"
+            publishedDate="2026-03-27"
+            updatedDate="2026-03-27"
+          />
+        </div>
+
         <p className="mb-4 leading-relaxed">
           Golf Solitaire is a fast-paced solitaire card game where the goal is to clear
           seven columns of five cards each. Like TriPeaks, you remove cards by playing
@@ -173,7 +183,7 @@ export default function Page() {
         </p>
 
         <h2 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
-          Scoring & Streaks
+          Scoring &amp; Streaks
         </h2>
         <p className="mb-4 leading-relaxed">
           Golf Solitaire features a streak-based scoring system. Each consecutive card
@@ -192,6 +202,218 @@ export default function Page() {
           <li>Use King↔Ace wrapping to &ldquo;turn the corner&rdquo; on long runs</li>
           <li>Save stock draws for when you truly have no playable cards</li>
           <li>Balance play across columns — emptying one column frees up space</li>
+        </ul>
+
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
+          History &amp; Origins
+        </h2>
+        <p className="mb-4 leading-relaxed">
+          Golf Solitaire emerged in nineteenth-century patience literature, likely of
+          British origin, and took its name from the scoring objective: finish with
+          as few cards left &ldquo;on the course&rdquo; (in the tableau) as possible.
+          Early printed rule sets — including references in Lady Adelaide Cadogan&apos;s
+          1870 patience compilations and later handbooks like Morehead &amp; Mott-Smith&apos;s
+          Complete Book of Solitaire — present Golf as a short pick-up game, counting
+          the final stock as the golfer&apos;s score. Some historical texts call a
+          particular eight-column variant &ldquo;Forty Thieves Golf,&rdquo; but that
+          name is unrelated to the classic Forty Thieves patience and refers instead
+          to the 40-card layout used in that variant. The game crossed into digital
+          form in the 1980s and 1990s through shareware card packs and eventually
+          reached Microsoft&apos;s Entertainment Pack line alongside TriPeaks, which
+          is when the wrap-around rule became standard and the streak-scoring model
+          was layered on top of the original low-score objective.
+        </p>
+
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
+          Strategic Principles
+        </h2>
+        <p className="mb-4 leading-relaxed">
+          Golf Solitaire rewards patient, multi-move planning far more than its
+          fast-click appearance suggests. Because every card is face-up, we can plan
+          the entire game on turn one if we are willing to look. The principles we
+          rely on:
+        </p>
+        <ul className="list-disc list-inside space-y-2 mb-4 text-white/70">
+          <li>
+            <strong className="text-white/90">Plan three to four moves
+            ahead.</strong> With all 35 tableau cards visible, partial clears can
+            be mapped in advance. We pick move A because it enables move B, which
+            enables move C — not because it is the highest card showing.
+          </li>
+          <li>
+            <strong className="text-white/90">Prioritize cards with more
+            neighbours.</strong> A 7 sitting below a 6 and an 8 on adjacent
+            columns has two immediate follow-ups. A K sitting next to two 4s has
+            none. When choosing between equally playable cards, pick the one
+            that preserves optionality.
+          </li>
+          <li>
+            <strong className="text-white/90">Never draw stock for a short
+            chain.</strong> If we are about to draw stock in the middle of a
+            two-card streak, we almost always lose value. Finish the chain or
+            abandon it, then draw deliberately.
+          </li>
+          <li>
+            <strong className="text-white/90">Respect the wrap-around variable.</strong>{" "}
+            When wrap-around is on, A↔K is a genuine connection. It lets us
+            pivot around the deck boundary and rescue chains that would otherwise
+            die at King or Ace.
+          </li>
+          <li>
+            <strong className="text-white/90">Clear the longest column
+            first.</strong> Emptying a column removes five cards from the board
+            in a short burst and often opens multiple ±1 transitions elsewhere.
+            Because stock is finite (17 cards), column-emptying is our best
+            leverage.
+          </li>
+          <li>
+            <strong className="text-white/90">Watch the stock count.</strong>{" "}
+            Knowing how many draws remain is half of the game. When the stock is
+            near-empty we must commit to chains; when it is full we can afford
+            to wait for a better sequence.
+          </li>
+          <li>
+            <strong className="text-white/90">Balance column depths.</strong>{" "}
+            Letting two columns drain to one card each while three remain at
+            four-plus cards creates dead ends. We try to work across the
+            tableau, not down a single column.
+          </li>
+        </ul>
+
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
+          Difficulty &amp; Win Rate
+        </h2>
+        <p className="mb-4 leading-relaxed">
+          Golf Solitaire is one of the more stock-luck-dependent patience games.
+          Published win-rate estimates vary from roughly 5% up to about 12% for
+          standard rules with skillful play, and the range itself is largely
+          explained by whether wrap-around is enabled. Solitairelaboratory.com and
+          several academic card-game surveys report the low end (around 2–4%)
+          when wrap-around is disabled and the draw is single-pass, and the high
+          end (around 10–12%) once wrap-around and occasional redeals are added.
+          The game&apos;s win rate is constrained by a structural fact: we only
+          get 17 stock cards to bridge gaps, and the tableau has no storage
+          mechanism — we cannot stash a card for later. If the deal scatters high
+          and low ranks badly across the columns, no amount of planning can
+          reconnect them. That said, within any given deal the gap between
+          careful play and careless play is enormous. A thoughtful player often
+          clears 25+ of 35 tableau cards even on an unwinnable deal; a careless
+          player may stall at 10.
+        </p>
+
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
+          Common Mistakes
+        </h2>
+        <ul className="list-disc list-inside space-y-2 mb-4 text-white/70">
+          <li>
+            <strong className="text-white/90">Drawing stock too early.</strong>{" "}
+            Every stock draw throws away a potential bridge card. New players
+            draw whenever they pause to think; experienced players draw only
+            when the current chain is truly dead.
+          </li>
+          <li>
+            <strong className="text-white/90">Playing high-neighbour cards
+            last.</strong> Saving the 7 that sits between a 6 and an 8 for later
+            is a mistake — it is the exact card that should anchor early chains
+            because it has the most exits.
+          </li>
+          <li>
+            <strong className="text-white/90">Ignoring wrap-around when
+            enabled.</strong> Some players mentally model Golf as ±1 only, which
+            costs them A↔K transitions on every long chain. Check the variant
+            rules before you start.
+          </li>
+          <li>
+            <strong className="text-white/90">Column tunnel vision.</strong>{" "}
+            Focusing on clearing one column at the expense of cross-column
+            chains wastes the game&apos;s biggest strategic lever.
+          </li>
+          <li>
+            <strong className="text-white/90">Not tracking the stock.</strong>{" "}
+            With only 17 stock cards, knowing whether four or twelve remain is
+            critical. Forgetting the count leads to stranded tableau cards.
+          </li>
+          <li>
+            <strong className="text-white/90">Reflex plays on the first
+            available card.</strong> Picking the left-most ±1 match without
+            scanning the other columns is the single fastest way to waste
+            chains.
+          </li>
+          <li>
+            <strong className="text-white/90">Underusing long ladders.</strong>{" "}
+            A six-card ladder (e.g., 4-5-6-7-8-9) is worth 21 points under
+            standard streak scoring; the same cards played across three broken
+            chains are worth much less.
+          </li>
+        </ul>
+
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
+          How This Game Compares
+        </h2>
+        <p className="mb-4 leading-relaxed">
+          Golf and{" "}
+          <Link href="/tripeaks" className="text-[#D4AF37] hover:underline">
+            TriPeaks
+          </Link>{" "}
+          share the ±1 sequencing rule and the streak-scoring model, which makes
+          them close cousins. The layout is what separates them: TriPeaks
+          scatters 28 cards across three peaks and hides 18 of them under
+          overlapping tiers, while Golf spreads 35 cards face-up across a 7×5
+          rectangle. TriPeaks has more positional blocking and reveal drama;
+          Golf has more open-board planning. Compared to{" "}
+          <Link href="/pyramid" className="text-[#D4AF37] hover:underline">
+            Pyramid
+          </Link>
+          , Golf belongs to the same &ldquo;discard&rdquo; family but uses
+          sequencing rather than pair-to-13 addition, which fundamentally
+          changes how we evaluate cards: in Pyramid we count partners, in Golf
+          we count neighbours. Versus cascade games like Klondike, Spider, and
+          FreeCell, Golf is structurally simpler — no foundations, no tableau
+          stacking, no alternating colours — and leans more on front-loaded
+          planning than on dynamic decision trees. Players who enjoy the
+          clean geometry of Golf often enjoy{" "}
+          <Link href="/accordion" className="text-[#D4AF37] hover:underline">
+            Accordion
+          </Link>
+          , TriPeaks, and the minimalist patience game Clock for similar
+          reasons: tight rule sets, short sessions, and visible state.
+        </p>
+
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
+          Variant Notes
+        </h2>
+        <p className="mb-4 leading-relaxed">
+          Golf Solitaire has accumulated a handful of stable variants over the
+          years:
+        </p>
+        <ul className="list-disc list-inside space-y-2 mb-4 text-white/70">
+          <li>
+            <strong className="text-white/90">Standard 7-column Golf.</strong>{" "}
+            35 tableau cards, 17-card stock, single pass, wrap-around on. The
+            modern default online.
+          </li>
+          <li>
+            <strong className="text-white/90">8-column Golf.</strong>{" "}
+            40 tableau cards, leaving 12 stock cards. Much harder because the
+            stock-to-tableau ratio shrinks and we have fewer bridge draws.
+          </li>
+          <li>
+            <strong className="text-white/90">No-wrap Golf.</strong>{" "}
+            Removes the A↔K bridge. Chains cannot pass through the boundary.
+            Drops win rate by roughly half.
+          </li>
+          <li>
+            <strong className="text-white/90">Single vs unlimited
+            redeals.</strong> Classic Golf is single-pass; some modern versions
+            allow one or two stock reshuffles, raising win rate toward the
+            15–20% range.
+          </li>
+          <li>
+            <strong className="text-white/90">Relaxed Golf / undo-enabled
+            variants.</strong> With unlimited undo, Golf shifts toward a
+            puzzle-solving game. Useful for practice but changes the character
+            of play.
+          </li>
         </ul>
 
         {/* ── FAQ Section ── */}
@@ -219,6 +441,10 @@ export default function Page() {
               </div>
             </div>
           ))}
+        </div>
+
+        <div className="mb-8">
+          <AuthorBio authorSlug="the-strategy-desk" />
         </div>
 
         <h2 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">

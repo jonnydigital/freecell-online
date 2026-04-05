@@ -4,6 +4,8 @@ import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import { JsonLd } from "@/components/content";
 import BisleyGamePage from "./BisleyGamePage";
 import MoreGames from '@/components/MoreGames';
+import AuthorByline from "@/components/content/AuthorByline";
+import AuthorBio from "@/components/content/AuthorBio";
 
 export const metadata: Metadata = {
   title: "Bisley Solitaire | Play Online Free — Dual-Direction Foundation Card Game",
@@ -130,6 +132,14 @@ export default function Page() {
           Bisley Solitaire
         </h1>
 
+        <div className="mb-6">
+          <AuthorByline
+            authorSlug="the-strategy-desk"
+            publishedDate="2026-04-05"
+            updatedDate="2026-04-05"
+          />
+        </div>
+
         <p className="mb-4 leading-relaxed">
           Bisley Solitaire is a classic patience card game featuring a unique{" "}
           <strong>dual-direction foundation</strong> system. Four aces start on{" "}
@@ -163,6 +173,146 @@ export default function Page() {
           suit have consecutive top cards, the suit is automatically complete. This gives
           you two paths to clear each suit, making the game more accessible than many
           patience variants.
+        </p>
+
+        <h3 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
+          History &amp; Origins
+        </h3>
+        <p className="mb-4 leading-relaxed">
+          Bisley traces back to nineteenth-century English patience compendiums, where
+          it appeared alongside better-known names such as Klondike and Canfield. We
+          find the earliest printed descriptions in Victorian parlor-game books that
+          collected one-player card pastimes for rainy afternoons at the country house.
+          The game takes its name from the Surrey village of Bisley, long associated
+          with the National Rifle Association&apos;s shooting meetings — a small clue
+          that this was a pastime of British sporting culture rather than a Continental
+          import. What set Bisley apart from its contemporaries was the dual-foundation
+          architecture: aces climbing upward toward king and kings descending toward
+          ace, with the two halves of each suit scheduled to meet somewhere in the
+          middle. Thirteen columns arranged around the foundation row produced a
+          distinctive diamond-shaped layout that remains unusual among patience games
+          even today. Over the decades, compilers preserved Bisley largely intact,
+          and we still play essentially the same version our great-grandparents did.
+        </p>
+
+        <h3 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
+          Strategic Principles
+        </h3>
+        <p className="mb-4 leading-relaxed">
+          The central tension in Bisley is that every card in a suit belongs to exactly
+          one foundation pile — but we choose which one. When we slide the 7&hearts;
+          somewhere, we are implicitly committing it either to the ascending half (as
+          the top of the A→7 stack) or to the descending half (as the bottom of the
+          K→7 stack). Because the two halves must eventually meet, misjudging the
+          split can strand cards on the wrong side and freeze the suit.
+        </p>
+        <p className="mb-4 leading-relaxed">
+          We work outward from the kings. As soon as a king emerges, we promote it
+          to a descending foundation and start counting how many ranks it controls
+          — three or four cards already in open positions is ideal. Then we count
+          how many ranks remain buried, because those buried ranks will ultimately
+          have to climb out through the ascending foundation instead. This running
+          ledger keeps the meeting point honest: roughly half the suit comes from
+          below, half from above, and the join happens where our buried-vs-exposed
+          distribution dictates.
+        </p>
+        <p className="mb-4 leading-relaxed">
+          Tableau flexibility is our second lever. Because we can build a column
+          either upward or downward in the same suit, one column can temporarily
+          host both a rising sequence and a falling one, as long as we keep the top
+          card legal. We treat these columns as holding zones — stashing a stubborn
+          9&clubs; under a 10&clubs; while we clear the cards beneath the 8&clubs;,
+          then reversing direction once the road opens. This reversibility is what
+          lifts Bisley&apos;s win rate above many thirteen-column patiences.
+        </p>
+        <p className="mb-4 leading-relaxed">
+          The final principle is empty-column discipline. Emptying a column is
+          permanent — no fresh card can refill it — so every vacated slot is a
+          one-time resource we have consumed. We tolerate an empty column only when
+          clearing it unlocks a buried ace, an early king, or an otherwise impossible
+          merge in a slow suit. Clearing columns for convenience early in the game
+          is the quickest path to a deadlocked endgame.
+        </p>
+
+        <h3 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
+          Difficulty &amp; Win Rate
+        </h3>
+        <p className="mb-4 leading-relaxed">
+          Bisley sits near the top of the patience solvability curve. Published
+          solver analyses place the theoretical win rate somewhere in the{" "}
+          <strong>seventy percent</strong> neighborhood under optimal play, and
+          casual-yet-careful players commonly post win rates in the fifty-to-sixty
+          percent range once they grasp the dual-foundation rhythm. That places
+          Bisley well above Baker&apos;s Dozen, Canfield, and Forty Thieves, but
+          below FreeCell&apos;s near-guaranteed solvability. The generous building
+          rules — same-suit up OR down — explain the high ceiling: almost any card
+          can eventually find a home if we route it patiently. The frictions that
+          keep the rate under one hundred percent are the inability to fill empty
+          columns and the requirement that the two foundation halves of each suit
+          connect at a legitimate rank. We estimate roughly one in four deals is
+          effectively unwinnable from the start because of adversarial burial of
+          mid-rank cards.
+        </p>
+
+        <h3 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
+          Common Mistakes
+        </h3>
+        <p className="mb-4 leading-relaxed">
+          The mistake we see most often is premature column emptying. New players
+          chase the satisfaction of clearing a column, forgetting that the slot is
+          gone forever. A second mistake is over-committing to the ascending side:
+          because aces start the game on foundations, there&apos;s a natural bias
+          toward feeding them first, which leaves the kings under-supplied and the
+          suits lopsided. A third error is stacking tableau sequences without
+          thinking about reversals — building a long descending same-suit run is
+          beautiful but useless if the bottom card can never move. We also see
+          players unload mid-rank cards (sevens, eights) onto foundations too
+          early, before they know whether those ranks needed to climb from the ace
+          side or descend from the king side. Finally, fatigue mistakes dominate
+          the endgame: after fifteen minutes of routing, it is easy to miss that
+          the 6&clubs; and 7&clubs; now sit on opposite foundations and the suit
+          has quietly deadlocked.
+        </p>
+
+        <h3 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
+          How This Game Compares
+        </h3>
+        <p className="mb-4 leading-relaxed">
+          Compared to FreeCell, Bisley is freer on tableau moves but stingier on
+          storage — there are no reserve cells, so we route cards through each
+          other rather than parking them. Compared to Klondike, Bisley shows all
+          fifty-two cards face-up from the start, replacing the stock-and-waste
+          guessing game with pure planning. Against Forty Thieves, another
+          thirteen-column patience, Bisley wins on flexibility: Forty Thieves
+          builds strictly downward, while Bisley&apos;s up-or-down tableau rule
+          creates escape routes Forty Thieves lacks. Cruel and La Belle Lucie
+          share Bisley&apos;s same-suit building but rely on redeals to recover
+          from dead positions; Bisley refuses redeals, which makes every move
+          load-bearing. If we were ranking these games by cerebral load per
+          minute, Bisley sits just under Forty Thieves and just over Klondike — a
+          middleweight patience that rewards foresight but forgives the occasional
+          slip.
+        </p>
+
+        <h3 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
+          Variant Notes
+        </h3>
+        <p className="mb-4 leading-relaxed">
+          A handful of Victorian-era variants circulated alongside canonical Bisley.
+          Some compilers allowed a single end-of-game redeal if no legal moves
+          remained, inflating win rates into the mid-eighties. Others permitted
+          only ascending tableau building, producing a dramatically harder game
+          closer in feel to Forty Thieves. Twentieth-century software editions
+          sometimes skipped the dual-foundation setup entirely and treated the
+          king row as automatic, which eliminated Bisley&apos;s most interesting
+          decision. Our implementation preserves the traditional ruleset: aces
+          pre-placed, kings promoted on first availability, same-suit up-or-down
+          on the tableau, no redeals, no empty-column refills. Players who want
+          a closely related experience with harsher terms can try{" "}
+          <Link href="/la-belle-lucie" className="text-[#D4AF37] hover:underline">
+            La Belle Lucie
+          </Link>
+          .
         </p>
 
         <h3 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
@@ -224,6 +374,11 @@ export default function Page() {
             — Explore 20+ solitaire variants
           </li>
         </ul>
+
+        <div className="mt-10">
+          <AuthorBio authorSlug="the-strategy-desk" />
+        </div>
+
         <MoreGames currentSlug="bisley" />
       </article>
     </>

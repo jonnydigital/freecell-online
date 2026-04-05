@@ -4,6 +4,8 @@ import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import { JsonLd } from "@/components/content";
 import FlowerGardenGamePage from "./FlowerGardenGamePage";
 import MoreGames from '@/components/MoreGames';
+import AuthorByline from "@/components/content/AuthorByline";
+import AuthorBio from "@/components/content/AuthorBio";
 
 export const metadata: Metadata = {
   title: "Flower Garden Solitaire | Play Online Free — Bouquet Reserve Card Game",
@@ -130,6 +132,14 @@ export default function Page() {
           Flower Garden Solitaire
         </h1>
 
+        <div className="mb-6">
+          <AuthorByline
+            authorSlug="the-strategy-desk"
+            publishedDate="2026-04-05"
+            updatedDate="2026-04-05"
+          />
+        </div>
+
         <p className="mb-4 leading-relaxed">
           Flower Garden Solitaire is a classic patience card game featuring a unique{" "}
           <strong>bouquet reserve</strong> of 16 cards — all available to play at any time.
@@ -162,6 +172,172 @@ export default function Page() {
           you can play any bouquet card at any time, giving you tremendous flexibility
           to unblock tableau columns and build foundations. Managing the bouquet
           wisely is the key to winning.
+        </p>
+
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-10 mb-3">
+          History &amp; Origins
+        </h2>
+        <p className="mb-4 leading-relaxed">
+          Flower Garden — sometimes titled <em>The Bouquet</em> or <em>The
+          Parterre</em> in older French and English manuals — descends from the
+          ornamental garden-themed patiences that circulated in Europe from the
+          sixteenth through the eighteenth centuries. The parterre layout mirrors a
+          formal French garden: six tidy &ldquo;beds&rdquo; of six cards each,
+          surrounded by a loose &ldquo;garden&rdquo; reserve of sixteen blooms scattered
+          above. The vocabulary is deliberate. Nineteenth-century patience writers used
+          the names <em>bouquet</em> and <em>garden</em> for the reserve and beds
+          respectively, and those terms survive in modern digital rulebooks. Flower
+          Garden represents one of the earliest written examples of a pre-dealt
+          always-available reserve, predating FreeCell&apos;s free-cells concept by
+          roughly a century and setting the template for the open-reserve family of
+          patience games we still play today.
+        </p>
+
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-10 mb-3">
+          Strategic Principles
+        </h2>
+        <p className="mb-4 leading-relaxed">
+          The sixteen-card garden reserve is our entire toolkit, so we treat it as
+          precious storage rather than a dumping ground. Every bouquet card already
+          faces up means every bouquet card is a knowable, plannable resource — we
+          inventory it before we touch a bed. When a bouquet card cannot go to a
+          foundation immediately, we ask whether placing it on a bed column will unlock
+          two or three subsequent plays; if it will not, we leave it in the reserve
+          where it remains visible and routable.
+        </p>
+        <p className="mb-4 leading-relaxed">
+          Bed columns unblock from the bottom up, and because building is down
+          regardless of suit, the tableau is more flexible than it first appears. We
+          use the bouquet to peel cards off a bed&apos;s tail, not to pile fresh
+          obstacles on top. When two beds hold near-identical descending runs, we merge
+          them early to open an empty column — empty columns in Flower Garden are
+          solid gold because <em>any</em> card can fill them.
+        </p>
+        <p className="mb-4 leading-relaxed">
+          Kings are structural dead-ends in Flower Garden unless their foundation is
+          already within reach. A King buried under five bed cards cannot move anywhere
+          on the tableau (nothing stacks on it there, since we build down), and it
+          cannot reach the foundation until its suit reaches twelve previous cards. We
+          identify the location of every King on the opening deal and route the
+          bouquet around them. If a King sits in the bouquet itself, we leave it alone
+          until its suit&apos;s Jack is foundationed — dumping a King onto an empty
+          column early removes a priceless wild slot and rarely pays back the cost.
+          Compared to{" "}
+          <Link href="/freecell" className="text-[#D4AF37] hover:underline">
+            FreeCell
+          </Link>
+          , where Kings are fine anchors, Flower Garden punishes King mismanagement
+          severely.
+        </p>
+        <p className="mb-4 leading-relaxed">
+          Sequencing low ranks is the other half of our strategy. Aces must reach
+          foundations before their suit can progress, so we trace every Ace&apos;s
+          route before committing to bed moves. A bouquet Ace is a gift — we play it
+          at the first opportunity. A bed-bottom Ace demands patient excavation using
+          the bouquet and empty columns together. Twos and Threes behave similarly
+          but with less urgency. When two Aces are accessible and only one can be
+          foundationed this turn (say, because a foundation row is already occupied
+          by the Ace-2-3 chain of a rival suit), we foundation the Ace whose suit
+          has the largest number of trapped low cards in the beds — that is the suit
+          we need to unblock first.
+        </p>
+
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-10 mb-3">
+          Difficulty &amp; Win Rate
+        </h2>
+        <p className="mb-4 leading-relaxed">
+          Flower Garden has a reputation for being friendlier than it is. With only
+          single-card moves, no redeal, and six short bed columns, the game is tighter
+          than the sixteen-card reserve suggests. Skilled play yields roughly 10-15%
+          wins across a large sample of random deals. Published estimates range widely
+          because older rulebooks bundle in variants with larger reserves or relaxed
+          movement rules; we quote the strict classical ruleset here.
+        </p>
+        <p className="mb-4 leading-relaxed">
+          The low win rate is structural. With just 36 cards in beds and 16 in the
+          bouquet, any poor King distribution — say, two Kings buried at the bottom of
+          two adjacent columns — can make a deal unwinnable before the first move.
+          Players who come to Flower Garden expecting FreeCell-level forgiveness are
+          often startled; it is strategically closer to{" "}
+          <Link href="/canfield" className="text-[#D4AF37] hover:underline">
+            Canfield
+          </Link>{" "}
+          than to FreeCell in terms of how many deals refuse to yield regardless of
+          skill.
+        </p>
+
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-10 mb-3">
+          Common Mistakes
+        </h2>
+        <p className="mb-4 leading-relaxed">
+          The classic error is using the bouquet as a trash bin — shoveling
+          inconvenient cards into it without a plan for how they leave. Because the
+          reserve is always visible, we should always know exactly which path each
+          bouquet card will take to its foundation. If we cannot name the sequence, we
+          have not thought the move through. A second mistake is refusing to merge
+          beds: players cling to original column identity instead of consolidating
+          them, and the chance to open an empty column slips by.
+        </p>
+        <p className="mb-4 leading-relaxed">
+          Another frequent blunder is dropping a high card into an empty column &quot;to
+          get it out of the way.&quot; That empty column was a wildcard worth holding;
+          a King placed there locks it forever in Flower Garden, whereas a more modest
+          card can be peeled off later if needed. Finally, players routinely move a
+          low card to the foundation reflexively without checking whether it is needed
+          as a tableau bridge first — sending the 3 of hearts to the foundation feels
+          productive, but it is a catastrophe if we needed that 3 to land the 2 of
+          hearts from a locked bed column.
+        </p>
+
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-10 mb-3">
+          How This Game Compares
+        </h2>
+        <p className="mb-4 leading-relaxed">
+          Flower Garden sits between the open-reserve games and the cascade patiences.
+          Compared to{" "}
+          <Link href="/freecell" className="text-[#D4AF37] hover:underline">
+            FreeCell
+          </Link>
+          , it offers a much larger reserve but trades away alternating-colour
+          stacking and multi-card moves — we build down regardless of suit, but we can
+          only ever move one card at a time. Compared to{" "}
+          <Link href="/bisley" className="text-[#D4AF37] hover:underline">
+            Bisley
+          </Link>
+          , Flower Garden is less austere (no dual-direction foundations) but harder
+          to win because the beds bury Kings more ruthlessly.
+        </p>
+        <p className="mb-4 leading-relaxed">
+          Players who like Flower Garden often enjoy{" "}
+          <Link href="/la-belle-lucie" className="text-[#D4AF37] hover:underline">
+            La Belle Lucie
+          </Link>{" "}
+          for its similar French garden vocabulary, or{" "}
+          <Link href="/seahaven" className="text-[#D4AF37] hover:underline">
+            Seahaven Towers
+          </Link>{" "}
+          for a tighter, more FreeCell-like reserve experience. Gamers who want
+          a looser reserve game with redeals usually drift toward{" "}
+          <Link href="/canfield" className="text-[#D4AF37] hover:underline">
+            Canfield
+          </Link>
+          .
+        </p>
+
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-10 mb-3">
+          Variant Notes
+        </h2>
+        <p className="mb-4 leading-relaxed">
+          Published Flower Garden variants differ chiefly in the bouquet size and in
+          how sequenced moves are handled. <em>Parterre</em> — the older French name —
+          is essentially identical to Flower Garden but sometimes presented with seven
+          beds of five cards and a seventeen-card bouquet. Some Victorian manuals
+          allow multi-card ordered moves if a legal run already exists on the bed,
+          which substantially raises the win rate. Modern digital versions, including
+          ours, stay with the strict single-card rule for classical fidelity. A
+          short-form variant titled simply <em>The Bouquet</em> restricts the reserve
+          to twelve cards, which pushes the difficulty closer to 5-8% wins and is best
+          reserved for players who have solved the classical form many times.
         </p>
 
         <h3 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
@@ -224,6 +400,10 @@ export default function Page() {
           </li>
         </ul>
         <MoreGames currentSlug="flower-garden" />
+
+        <div className="mt-10">
+          <AuthorBio authorSlug="the-strategy-desk" />
+        </div>
       </article>
     </>
   );

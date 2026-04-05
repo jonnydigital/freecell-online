@@ -4,6 +4,8 @@ import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import { JsonLd } from "@/components/content";
 import MonteCarloGamePage from "./MonteCarloGamePage";
 import MoreGames from '@/components/MoreGames';
+import AuthorByline from "@/components/content/AuthorByline";
+import AuthorBio from "@/components/content/AuthorBio";
 
 export const metadata: Metadata = {
   title: "Monte Carlo Solitaire | Play Online Free — 5x5 Grid Pair-Matching Game",
@@ -131,6 +133,14 @@ export default function Page() {
           Monte Carlo Solitaire
         </h1>
 
+        <div className="mb-6">
+          <AuthorByline
+            authorSlug="the-strategy-desk"
+            publishedDate="2026-04-05"
+            updatedDate="2026-04-05"
+          />
+        </div>
+
         <p className="mb-4 leading-relaxed">
           Monte Carlo (also known as Weddings or Double and Quits) is a classic pair-matching
           solitaire played on a <strong>5&times;5 grid</strong>. Deal 25 cards face-up, then
@@ -160,6 +170,168 @@ export default function Page() {
           <li>Track which ranks still have un-removed cards to avoid dead ends.</li>
           <li>Remove pairs that free up the most space for new stock cards.</li>
         </ul>
+
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-10 mb-3">
+          History &amp; Origins
+        </h2>
+        <p className="mb-4 leading-relaxed">
+          Monte Carlo is a late-nineteenth-century American pairing patience whose name
+          pays tribute to the famous Mediterranean casino — a flourish typical of the
+          Gilded Age parlour-game scene, when exotic place-names lent glamour to
+          household diversions. Under its alternate titles <em>Weddings</em> and
+          <em> Double and Quits</em>, the game appeared in American patience compilations
+          in the 1890s and spread quickly because its rules could be summarised in a
+          single sentence: remove pairs of equal rank that are adjacent in the grid,
+          then consolidate. Monte Carlo&apos;s simplicity is its greatest virtue and
+          its most famous trap. Players who learn the rules in ten seconds routinely
+          lose dozens of deals before discovering how quickly a 5&times;5 grid turns
+          into a dead end. The game remains a fixture of modern solitaire apps because
+          its blend of approachable rules and deceptive depth has never been bettered
+          by imitators.
+        </p>
+
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-10 mb-3">
+          Strategic Principles
+        </h2>
+        <p className="mb-4 leading-relaxed">
+          Monte Carlo rewards players who look for multiple pairs at once. When two or
+          three legal pair removals exist on the board, the order we execute them in
+          shapes the next consolidation. We trace adjacencies forward: if we pull the
+          top-left pair first, the cards that shift in will touch a very different set
+          of neighbours than if we had pulled the bottom-right pair first. Elite play
+          is essentially one-move-ahead simulation of every candidate pair.
+        </p>
+        <p className="mb-4 leading-relaxed">
+          Compressing the grid between moves is the central tactic. Because
+          consolidation shifts cards left and up to fill empty squares, any pair we
+          remove from the bottom-right corner has a large, rippling effect — the
+          entire board re-flows. Pairs removed from the top-left corner barely move
+          anything. Depending on what we want to achieve, this is either a tool for
+          mixing or a way to preserve a delicate adjacency. When we already see a
+          second pair locked in, we remove from the top-left to preserve it. When we
+          need to churn the board, we remove from the bottom-right.
+        </p>
+        <p className="mb-4 leading-relaxed">
+          We also watch the stock count constantly. Twenty-seven cards sit in stock
+          after the opening deal, arriving in predictable positions after each
+          consolidation. Before committing to a removal, we ask whether the
+          consolidation will produce empty cells that the stock will fill with
+          duplicates of cards already on the board — those incoming duplicates create
+          new pairs for free. A removal that turns the grid into a trap for incoming
+          cards is worth several obvious pair pickups.
+        </p>
+
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-10 mb-3">
+          Difficulty &amp; Win Rate
+        </h2>
+        <p className="mb-4 leading-relaxed">
+          Monte Carlo has a famously volatile win rate. Because adjacency is so
+          restrictive, some opening deals are essentially unwinnable — no amount of
+          skill can produce a solution when the ranks cluster poorly. Across a large
+          sample, win rates run from 10% to 20% depending on the deal. Skilled players
+          drift toward the upper end of that range; casual players frequently sit near
+          5%.
+        </p>
+        <p className="mb-4 leading-relaxed">
+          The volatility is baked into the game&apos;s short grid. With only 25
+          visible cards at a time and eight possible adjacencies per card, we are
+          always one bad consolidation from stalling out. That fragility is why Monte
+          Carlo feels so different from{" "}
+          <Link href="/pyramid" className="text-[#D4AF37] hover:underline">
+            Pyramid
+          </Link>
+          , another pairing game: Pyramid is about vertical access, while Monte Carlo
+          is about the 2D topology of neighbours.
+        </p>
+
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-10 mb-3">
+          Common Mistakes
+        </h2>
+        <p className="mb-4 leading-relaxed">
+          Players new to Monte Carlo grab the first pair they see, which is almost
+          always wrong when multiple pairs exist. The game&apos;s depth is in pair
+          order, not pair availability. A second frequent mistake is consolidating
+          early — clicking the consolidate button as soon as one obvious pair
+          disappears, rather than scanning the board exhaustively. Many legal pairs
+          hide along the diagonals, and players who only scan horizontally and
+          vertically routinely miss them.
+        </p>
+        <p className="mb-4 leading-relaxed">
+          Another recurring blunder is ignoring rank counts. Four of each rank exist
+          in the deck, and each rank must leave in two pairs. If we remove a pair of
+          Kings early and both remaining Kings end up in widely separated positions
+          after several consolidations, we have built a deadlock. Players who track
+          rank distribution across the board and stock play far better — we mentally
+          partition the deck into &ldquo;still out there&rdquo; and &ldquo;already
+          paired&rdquo; to avoid isolation traps.
+        </p>
+        <p className="mb-4 leading-relaxed">
+          A subtler mistake is failing to read the consolidation shape before
+          committing. Because cards shift left and up, removing a pair near the right
+          edge produces a long row-wise slide, while removing a pair on the left
+          produces a short vertical lift. Experienced players visualise the exact
+          grid that will appear after consolidation before choosing which pair to
+          remove. Players who skip that visualisation step frequently create
+          adjacencies they did not intend, and break adjacencies they needed.
+        </p>
+
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-10 mb-3">
+          How This Game Compares
+        </h2>
+        <p className="mb-4 leading-relaxed">
+          Monte Carlo is the grid-based cousin of{" "}
+          <Link href="/pyramid" className="text-[#D4AF37] hover:underline">
+            Pyramid
+          </Link>{" "}
+          and{" "}
+          <Link href="/tripeaks" className="text-[#D4AF37] hover:underline">
+            TriPeaks
+          </Link>
+          . Pyramid pairs cards to thirteen in a triangular stack; TriPeaks threads a
+          waste pile through a three-peak layout; Monte Carlo pairs cards of equal
+          rank across a two-dimensional grid. All three reward pattern recognition,
+          but Monte Carlo is the only one where spatial adjacency is the puzzle.
+          Compared to{" "}
+          <Link href="/gaps" className="text-[#D4AF37] hover:underline">
+            Gaps
+          </Link>
+          , Monte Carlo is less structured and more chaotic — Gaps fixes the layout
+          and lets us slot cards deliberately, while Monte Carlo reshuffles the board
+          after every sweep.
+        </p>
+        <p className="mb-4 leading-relaxed">
+          Players who enjoy Monte Carlo often try{" "}
+          <Link href="/accordion" className="text-[#D4AF37] hover:underline">
+            Accordion
+          </Link>{" "}
+          for a similarly compressive puzzle, or{" "}
+          <Link href="/clock" className="text-[#D4AF37] hover:underline">
+            Clock
+          </Link>{" "}
+          when they want a quick, light pattern game between harder deals.
+        </p>
+
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-10 mb-3">
+          Variant Notes
+        </h2>
+        <p className="mb-4 leading-relaxed">
+          The most famous Monte Carlo variant is <em>Weddings</em>, which is sometimes
+          played with a 4&times;4 grid of sixteen cards — a harder, tighter puzzle
+          that wins roughly 5% of the time. Some Victorian-era rulebooks permit
+          removing pairs that sum to 13 instead of pairs of equal rank, producing a
+          hybrid with Pyramid logic called <em>Monte Carlo Thirteens</em>. Modern
+          digital versions occasionally allow diagonal-only adjacency or
+          orthogonal-only adjacency as difficulty toggles; the classical rules, which
+          we follow, permit both and therefore produce the most forgiving (though
+          still challenging) game. A competitive two-player version called
+          <em> Double and Quits</em> pits two players against identical deals and
+          awards points for pairs removed before a deadlock, turning Monte Carlo from
+          a solitaire into a head-to-head speed puzzle. The shared rules across all
+          these variants are consolidation, adjacency-based removal, and
+          rank-matching — with those three mechanics in place, Monte Carlo&apos;s
+          character remains recognisable even as grid size and adjacency rules
+          flex around it.
+        </p>
 
         <h3 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
           Learn More
@@ -212,6 +384,10 @@ export default function Page() {
           </li>
         </ul>
         <MoreGames currentSlug="monte-carlo" />
+
+        <div className="mt-10">
+          <AuthorBio authorSlug="the-strategy-desk" />
+        </div>
       </article>
     </>
   );

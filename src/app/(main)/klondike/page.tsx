@@ -4,6 +4,8 @@ import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import { JsonLd } from "@/components/content";
 import KlondikeGamePage from "./KlondikeGamePage";
 import MoreGames from '@/components/MoreGames';
+import AuthorByline from "@/components/content/AuthorByline";
+import AuthorBio from "@/components/content/AuthorBio";
 
 export const metadata: Metadata = {
   title: "Klondike Solitaire | Play Online Free — Draw 1 & Draw 3",
@@ -143,6 +145,14 @@ export default function Page() {
           Play Klondike Solitaire Online — Free, Draw 1 &amp; Draw 3
         </h1>
 
+        <div className="mb-6">
+          <AuthorByline
+            authorSlug="the-strategy-desk"
+            publishedDate="2026-04-05"
+            updatedDate="2026-04-05"
+          />
+        </div>
+
         <p className="mb-4 leading-relaxed">
           Klondike is the card game most people simply call &quot;Solitaire.&quot;
           Originally popularized during the Klondike Gold Rush and later made
@@ -178,6 +188,227 @@ export default function Page() {
           the traditional competitive variant. Use the toggle above the game
           to switch between modes.
         </p>
+
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
+          History &amp; Origins
+        </h2>
+        <p className="mb-4 leading-relaxed">
+          Klondike takes its name from the Yukon region of northwest Canada,
+          where the Klondike Gold Rush of 1896–99 drew roughly 100,000
+          prospectors north along the Chilkoot and White Pass trails. Patience
+          historians — including David Parlett in The Penguin Book of Card
+          Games — document the game travelling alongside miners through those
+          camps, which likely gave it its regional name. Before Microsoft,
+          Klondike lived in parlour books under several aliases (Canfield in
+          some American sources, though strictly a different game, and
+          &quot;Fascination&quot; in 19th-century English compilations).
+          Its modern dominance dates to 1990, when Wes Cherry coded Windows
+          Solitaire as an intern at Microsoft and Susan Kare designed the card
+          faces. Shipped with Windows 3.0, Solitaire onboarded a generation to
+          the mouse. It has since shipped on more installed computers than any
+          other game in history, which makes Klondike — plausibly — the
+          most-played card game ever.
+        </p>
+
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
+          Strategic Principles
+        </h2>
+        <p className="mb-4 leading-relaxed">
+          Klondike rewards a set of concrete habits more than it rewards raw
+          calculation. We teach the following rules of thumb:
+        </p>
+        <ul className="list-disc list-inside space-y-2 mb-4 text-white/70">
+          <li>
+            <strong className="text-white/90">Reveal face-down cards as
+            early as possible.</strong> Every hidden card is a missing piece
+            of the puzzle. A move that uncovers a face-down tableau card is
+            almost always better than a move that does not, even when both are
+            otherwise equal.
+          </li>
+          <li>
+            <strong className="text-white/90">Play from the longest stack
+            first.</strong> Column 7 starts with 6 hidden cards, column 6 with
+            5, and so on. Uncovering early reveals in columns 6 and 7 gives
+            you the most downstream information.
+          </li>
+          <li>
+            <strong className="text-white/90">Do not promote low cards to the
+            foundation too fast.</strong> A 2 or 3 on the foundation cannot
+            come back to the tableau. If that 2 could still host a red Ace
+            later, leaving it in the tableau keeps options alive.
+          </li>
+          <li>
+            <strong className="text-white/90">Cycle the waste pile
+            deliberately in Draw 3.</strong> Every three-card advance changes
+            which card sits on top. Walk through the entire stock at least
+            once before committing to a tableau plan — you need to know what
+            is coming.
+          </li>
+          <li>
+            <strong className="text-white/90">When both Kings are available,
+            keep the one that leads a usable sequence.</strong> Dumping the
+            first King into an empty column is the single most common losing
+            move in Klondike. Wait for a King whose same-suit Queen is already
+            accessible.
+          </li>
+          <li>
+            <strong className="text-white/90">Track colour parity on the
+            foundation.</strong> Klondike needs alternating-colour tableau
+            builds, so if you send a red 5 to the foundation you need a black
+            4 somewhere to continue descending — check before the foundation
+            move.
+          </li>
+        </ul>
+        <p className="mb-4 leading-relaxed">
+          A left-to-right play order is a reasonable default for uncovering
+          early, but it is not a rule — follow the information, not the layout.
+        </p>
+
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
+          Difficulty &amp; Win Rate
+        </h2>
+        <p className="mb-4 leading-relaxed">
+          Klondike sits in an unusual spot in the solitaire family: its
+          solvability ceiling is high, but the hidden-card constraint crushes
+          human win rates. The best academic estimate comes from Bjarnason,
+          Fern &amp; Tadepalli&apos;s 2007 paper &quot;Lower Bounding Klondike
+          Solitaire with Monte-Carlo Planning,&quot; which establishes an
+          upper bound of roughly 82% solvability for Draw 1 under thoughtful
+          play (i.e. with full information). Blake &amp; Gent&apos;s 2013
+          work pushed similar solvability bounds for Draw 3 in the 78–82%
+          range with unlimited redeals.
+        </p>
+        <p className="mb-4 leading-relaxed">
+          Those are ceilings. Real human play — where you cannot see the
+          face-down cards when choosing a move — produces much lower
+          numbers. Typical human win rates cluster at 30–40% in Draw 1 and
+          15–20% in Draw 3. Our own data reflects that spread. See our{" "}
+          <Link href="/klondike/strategy" className="text-[#D4AF37] hover:underline">
+            Klondike Strategy guide
+          </Link>{" "}
+          for the full methodology notes.
+        </p>
+
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
+          Common Mistakes
+        </h2>
+        <p className="mb-4 leading-relaxed">
+          The most frequent losing moves we see in Klondike:
+        </p>
+        <ul className="list-disc list-inside space-y-2 mb-4 text-white/70">
+          <li>
+            <strong className="text-white/90">Placing Kings into empty
+            columns prematurely.</strong> A King with no matching Queen nearby
+            freezes the column and wastes the most valuable structural slot
+            in the game.
+          </li>
+          <li>
+            <strong className="text-white/90">Sending 2s and 3s to the
+            foundation immediately.</strong> Those low cards often have
+            tableau jobs to do. Once they land on the foundation they cannot
+            come back.
+          </li>
+          <li>
+            <strong className="text-white/90">Forgetting to cycle the
+            waste.</strong> Players often exhaust tableau options and then
+            restart without having flipped through the full stock. In Draw 3,
+            you may need two or three full cycles to see a specific card.
+          </li>
+          <li>
+            <strong className="text-white/90">Ignoring what hides beneath
+            a playable card.</strong> Before moving a tableau stack, count the
+            face-down cards you will expose. A move that uncovers more
+            information is almost always the better move.
+          </li>
+          <li>
+            <strong className="text-white/90">Committing to a colour
+            sequence without checking the other colour.</strong> Klondike
+            alternates red and black. Sending one colour to the foundation
+            can orphan descending sequences in the opposite colour.
+          </li>
+          <li>
+            <strong className="text-white/90">Redeal fatigue.</strong> Draw 3
+            with unlimited redeals tempts endless cycling. If two full passes
+            produce no new tableau moves, the deal is likely dead.
+          </li>
+          <li>
+            <strong className="text-white/90">Not using undo as a research
+            tool.</strong> Our undo is unlimited — explore a line, then back
+            out if it closes down. That is not cheating; it is how modern
+            players study positions.
+          </li>
+        </ul>
+
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
+          How This Game Compares
+        </h2>
+        <p className="mb-4 leading-relaxed">
+          Klondike is the reference point for the whole solitaire family, so
+          most comparisons run through it:
+        </p>
+        <ul className="list-disc list-inside space-y-2 mb-4 text-white/70">
+          <li>
+            <strong className="text-white/90">Klondike vs{" "}
+            <Link href="/freecell-vs-klondike" className="text-[#D4AF37] hover:underline">
+              FreeCell
+            </Link>
+            :</strong> FreeCell is deterministic — all cards face-up, no
+            stock, ~99.9987% solvable. Klondike hides 21 cards and relies on a
+            stock pile, which injects genuine randomness. FreeCell rewards
+            perfect planning; Klondike rewards good decisions under
+            uncertainty.
+          </li>
+          <li>
+            <strong className="text-white/90">Klondike vs{" "}
+            <Link href="/canfield" className="text-[#D4AF37] hover:underline">
+              Canfield
+            </Link>
+            :</strong> Canfield (historically called Demon) shares the
+            reserve-and-foundation structure but adds a 13-card reserve pile
+            and draws three cards from the stock with only one redeal. It is
+            markedly harder — solver analyses place win rates around 35%.
+          </li>
+          <li>
+            <strong className="text-white/90">Klondike vs Yukon:</strong>{" "}
+            Yukon is essentially Klondike with every card face-up and no stock
+            pile — you see the entire tableau from turn one. It is a purer
+            information game with ~85% solvability but no randomness.
+          </li>
+        </ul>
+
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
+          Variant Notes
+        </h2>
+        <p className="mb-4 leading-relaxed">
+          Klondike has several widely played variants:
+        </p>
+        <ul className="list-disc list-inside space-y-2 mb-4 text-white/70">
+          <li>
+            <strong className="text-white/90">Draw 1 vs Draw 3:</strong> Draw
+            1 flips one card at a time and produces higher win rates. Draw 3
+            flips three at a time but only the top card is immediately
+            playable — traditional competitive play.
+          </li>
+          <li>
+            <strong className="text-white/90">Vegas scoring:</strong> You
+            &quot;buy&quot; the deck for $52 and earn $5 per card sent to the
+            foundation. Break-even requires 11 foundation cards. Vegas
+            typically restricts redeals (one pass in Draw 3, three passes in
+            Draw 1) and treats each deal as a standalone wager.
+          </li>
+          <li>
+            <strong className="text-white/90">Thoughtful Solitaire:</strong>{" "}
+            Academic research variant where all face-down cards are revealed
+            from the start. This is the configuration solvers like Bjarnason
+            et al. actually analysed — it is how the ~82% solvability figure
+            was established.
+          </li>
+          <li>
+            <strong className="text-white/90">Limited redeals:</strong> Many
+            classic clients cap redeals at 1–3 passes, which significantly
+            lowers win rates versus unlimited cycling.
+          </li>
+        </ul>
 
         <h2 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
           Klondike vs FreeCell
@@ -224,6 +455,10 @@ export default function Page() {
               </div>
             </div>
           ))}
+        </div>
+
+        <div className="mt-10">
+          <AuthorBio authorSlug="the-strategy-desk" />
         </div>
 
         <h2 className="text-xl font-semibold text-[#D4AF37] mt-10 mb-3">

@@ -2,6 +2,8 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import { JsonLd } from "@/components/content";
+import AuthorByline from "@/components/content/AuthorByline";
+import AuthorBio from "@/components/content/AuthorBio";
 import FortyThievesGamePage from "./FortyThievesGamePage";
 import MoreGames from '@/components/MoreGames';
 
@@ -129,6 +131,14 @@ export default function Page() {
           Forty Thieves Solitaire
         </h1>
 
+        <div className="mb-6">
+          <AuthorByline
+            authorSlug="the-strategy-desk"
+            publishedDate="2026-03-27"
+            updatedDate="2026-03-27"
+          />
+        </div>
+
         <p className="mb-4 leading-relaxed">
           Forty Thieves is one of the most challenging solitaire card games ever
           devised. Played with two full decks (104 cards), it features 10
@@ -171,6 +181,167 @@ export default function Page() {
           stock offers <strong>no second chances</strong> — once you draw through
           all 64 cards, you&apos;re done. Win rates hover around 5-10% even for
           experienced players.
+        </p>
+
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
+          History &amp; Origins
+        </h2>
+        <p className="mb-4 leading-relaxed">
+          Forty Thieves carries one of the richer origin stories in patience.
+          It appears in nineteenth-century European collections and is
+          reputedly a favorite of Napoleon during his exile on Saint Helena —
+          a romantic attribution that historians treat with a healthy dose
+          of skepticism. Whether or not the emperor actually shuffled two
+          decks on that volcanic rock, the nickname <strong>Napoleon at
+          St. Helena</strong> has followed the game ever since, alongside
+          <strong> Big Forty</strong> and <strong>Roosevelt at San Juan</strong>.
+          The &ldquo;forty&rdquo; in the name refers to the forty cards
+          laid out in the initial tableau — four cards across ten columns —
+          and the &ldquo;thieves&rdquo; flavor fits a game that punishes
+          greed at every turn. By the late 1800s the rules appear in
+          standard English patience manuals, and the same-suit building
+          constraint that defines the game today was already locked in.
+        </p>
+
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
+          Strategic Principles
+        </h2>
+        <p className="mb-4 leading-relaxed">
+          Forty Thieves rewards foresight and punishes speed. The first
+          strategic truth is that <strong>foundations must match suit
+          exactly</strong> — ace through king, spades on spades, hearts on
+          hearts. Because the game uses two decks, we are building eight
+          foundations, not four, and every suit needs two complete climbs.
+          That means we should always ask which ace we are moving up: is
+          it the first copy (we still need the second later) or the second
+          copy (we can commit more freely)? Losing track of which deck a
+          foundation card came from is the hallmark of a lost game.
+        </p>
+        <p className="mb-4 leading-relaxed">
+          The second truth is that the <strong>stock is a one-way trip</strong>.
+          We draw one card at a time to the waste pile, and there is no
+          redeal in the standard rules — once we turn the last stock card,
+          what remains in the waste is what we have to work with. Every
+          stock flip matters, which makes it tempting to rush through the
+          deck hunting for a single useful card. Resist. Before each draw,
+          scan the tableau for moves we already have. A card we skipped
+          in the waste two turns ago is still useful, while a card we
+          burn past now is gone forever.
+        </p>
+        <p className="mb-4 leading-relaxed">
+          The third truth is that <strong>long tableau runs win games</strong>.
+          Because we can only move one card at a time (no group moves),
+          building a tidy same-suit run on a tableau column is like paying
+          rent in small installments — it takes forever to assemble but
+          pays out all at once when we finally dump the run to foundation.
+          Plan column builds deliberately: a 10-through-ace run on the
+          same suit is worth more than three fragmented piles. Finally,
+          avoid <strong>blocking your own foundations</strong> by playing
+          aces and twos too early. An ace on the foundation is inert; an
+          ace in a tableau column can anchor a useful run or absorb a
+          stray two before we need to commit it.
+        </p>
+
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
+          Difficulty &amp; Win Rate
+        </h2>
+        <p className="mb-4 leading-relaxed">
+          Forty Thieves is one of the hardest mainstream solitaire games,
+          and the numbers back it up. Published solver studies place the
+          human win rate somewhere between <strong>10% and 20%</strong>,
+          with most casual players landing at the lower end. Strong players
+          with disciplined stock management can push toward 20&ndash;25%,
+          but breaking 30% over a large sample is unusual. The combination
+          of strict same-suit foundations, single-card tableau moves, and a
+          non-recycling stock means that a single misplayed draw can lock
+          a deal beyond recovery — and unlike
+          <Link href="/freecell" className="text-[#D4AF37] hover:underline"> FreeCell</Link>,
+          real luck is a significant factor. Some deals are mathematically
+          unwinnable no matter how carefully we play. Treat Forty Thieves
+          as a long-game ritual: a losing streak is normal, and a win
+          should feel earned.
+        </p>
+
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
+          Common Mistakes
+        </h2>
+        <ul className="list-disc list-inside space-y-2 mb-4 text-white/70">
+          <li>
+            <strong className="text-white/90">Rushing aces up.</strong>
+            Aces look useful on foundations, but moving them too early
+            strips the tableau of anchor cards we need for building runs.
+          </li>
+          <li>
+            <strong className="text-white/90">Ignoring suit-matching needs.</strong>
+            With two decks and eight foundations, we need both copies of
+            every card. Moving a heart five without tracking where the
+            second heart five sits is a silent killer.
+          </li>
+          <li>
+            <strong className="text-white/90">Burning through stock too fast.</strong>
+            The waste pile is one-way. Every draw should follow a careful
+            scan of existing moves; never flip a card just to see what
+            comes next.
+          </li>
+          <li>
+            <strong className="text-white/90">Building short tableau runs.</strong>
+            Because group moves are forbidden, a 9-8-7 run on column three
+            only pays out when we can dump the whole thing to foundation.
+            Short, fragmented runs eat moves and rarely cash out.
+          </li>
+        </ul>
+
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
+          How This Game Compares
+        </h2>
+        <p className="mb-4 leading-relaxed">
+          <strong>Forty Thieves vs. FreeCell.</strong> Both games have a
+          reputation for difficulty, but the difficulty comes from
+          different places.
+          <Link href="/freecell" className="text-[#D4AF37] hover:underline"> FreeCell</Link> is
+          famously solvable (about 99.999% of deals have a solution),
+          which means a loss there is almost always a strategic failure
+          — the line existed, we just missed it. Forty Thieves has real
+          luck baked in: the same-suit foundation rule, the no-redeal
+          stock, and the 104-card draw stream make some deals
+          mathematically impossible. FreeCell tests deduction; Forty
+          Thieves tests patience and risk management.
+        </p>
+        <p className="mb-4 leading-relaxed">
+          <strong>Forty Thieves vs. <Link href="/klondike" className="text-[#D4AF37] hover:underline">Klondike</Link>.</strong>
+          Klondike allows alternating-color tableau builds and recycles
+          the stock indefinitely in most variants, which gives players
+          many more chances to recover from a bad draw. Forty Thieves
+          refuses both of those safety nets. Players stepping up from
+          Klondike should expect a long adjustment period and a much
+          lower win rate.
+        </p>
+        <p className="mb-4 leading-relaxed">
+          <strong>Forty Thieves vs. <Link href="/spider" className="text-[#D4AF37] hover:underline">Spider</Link>.</strong>
+          Both are two-deck games, but Spider&rsquo;s tableau-wide
+          dealing from stock and group-move mechanics create a
+          completely different strategic puzzle. Forty Thieves is the
+          stricter, slower, more deliberate of the two.
+        </p>
+
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
+          Variant Notes
+        </h2>
+        <p className="mb-4 leading-relaxed">
+          Forty Thieves has produced an unusually large family of
+          variants, most of which soften the base rules in some way.
+          <strong> Josephine</strong> (also called Maria Luisa) grants
+          one redeal of the stock, dramatically improving win rates
+          without changing anything else. <strong>Streets</strong> uses
+          75 cards (three suits from each deck) and adjusts the column
+          count, turning Forty Thieves into a shorter session game.
+          <strong> Number Ten</strong> deals ten columns with alternating
+          face-up and face-down cards, adding a discovery element that
+          standard Forty Thieves lacks. Other well-known variants include
+          <strong> Emperor</strong>, <strong>Lucas</strong>, and
+          <strong> Deauville</strong>, each of which tweaks foundation
+          rules, stock handling, or initial tableau depth. Learning the
+          base game first makes every variant easier to pick up.
         </p>
 
         <h3 className="text-xl font-semibold text-[#D4AF37] mt-8 mb-3">
@@ -233,6 +404,10 @@ export default function Page() {
           </li>
         </ul>
         <MoreGames currentSlug="forty-thieves" />
+
+        <div className="mt-10">
+          <AuthorBio authorSlug="the-strategy-desk" />
+        </div>
       </article>
     </>
   );

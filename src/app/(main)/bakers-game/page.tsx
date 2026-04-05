@@ -3,6 +3,8 @@ import type { Metadata } from 'next';
 import { absoluteUrl, siteConfig } from '@/lib/siteConfig';
 import BakersGamePage from './BakersGamePage';
 import MoreGames from '@/components/MoreGames';
+import AuthorByline from '@/components/content/AuthorByline';
+import AuthorBio from '@/components/content/AuthorBio';
 
 export const metadata: Metadata = {
   title: "Baker's Game — Play the Original FreeCell Ancestor Online Free",
@@ -127,6 +129,14 @@ export default function Page() {
           Baker&apos;s Game: The Original FreeCell
         </h1>
 
+        <div className="mb-6">
+          <AuthorByline
+            authorSlug="the-strategy-desk"
+            publishedDate="2026-04-05"
+            updatedDate="2026-04-05"
+          />
+        </div>
+
         <p className="mb-4 leading-relaxed">
           Baker&apos;s Game is a classic patience card game and the direct ancestor of
           FreeCell, one of the most popular solitaire variants ever created. While
@@ -245,6 +255,175 @@ export default function Page() {
           ))}
         </div>
 
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-10 mb-3">
+          History &amp; Origins
+        </h2>
+        <p className="mb-4 leading-relaxed">
+          We think of Baker&apos;s Game as the missing link in patience card
+          history — the direct ancestor that Paul Alfille tweaked on a PLATO
+          terminal to create the FreeCell millions know from Microsoft Windows.
+          The name itself honours the baker who taught it to C. L. Baker, whose
+          description Martin Gardner preserved in a 1968{" "}
+          <em>Scientific American</em> column. The layout is a dead ringer for
+          FreeCell: eight cascades, four cells, four foundations. The rule
+          change that matters is foundation construction. Here we stack the
+          foundations by <strong>suit</strong> instead of alternating color.
+          That single swap sounds cosmetic, but it ripples through every
+          decision — we can no longer park an off-colour card on a foundation
+          for temporary safekeeping, and sequencing inside each suit becomes a
+          commitment rather than a convenience. It is also why many historians
+          call Baker&apos;s Game the purest branch of the free-cell family tree.
+        </p>
+
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-10 mb-3">
+          Strategic Principles
+        </h2>
+        <p className="mb-4 leading-relaxed">
+          The same-suit foundation rule changes our decision tree from the very
+          first move. In standard{" "}
+          <Link href="/freecell" className="text-[#D4AF37] hover:underline">
+            FreeCell
+          </Link>
+          , we can push a red 4 onto a black-led foundation to buy tempo. In
+          Baker&apos;s Game, a 4 of Hearts can only settle on the 3 of Hearts
+          foundation pile — nowhere else. That forces us to plan{" "}
+          <strong>suit blocks</strong> early: we identify which suit will run
+          first (usually the one whose 2 sits closest to the column surface)
+          and clear a path from 3 through 10 without burying the intermediate
+          cards. A 6 of Clubs buried under a pile of diamonds is a nightmare
+          because we cannot substitute a 6 of Spades on the foundation later.
+        </p>
+        <p className="mb-4 leading-relaxed">
+          Empty cells are scarcer than they feel. Because tableau movement is
+          also same-suit (rank −1, matching suit), we burn through cells
+          simply shuffling cards into position. We keep a hard rule: at least
+          one cell open at all times before committing to a speculative play.
+          Whenever we break that rule, we pay for it within four or five
+          moves.
+        </p>
+        <p className="mb-4 leading-relaxed">
+          Empty cascades are gold. An empty column in Baker&apos;s Game lets us
+          temporarily park any card — including a King — while we rearrange
+          suit blocks. We work aggressively to clear the shortest column
+          first, usually by emptying it into free cells and one adjacent
+          same-suit home, then guard that empty slot like a treasure. For a
+          side-by-side breakdown of these differences, see our{" "}
+          <Link
+            href="/freecell-vs-bakers-game"
+            className="text-[#D4AF37] hover:underline"
+          >
+            FreeCell vs Baker&apos;s Game
+          </Link>{" "}
+          comparison.
+        </p>
+
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-10 mb-3">
+          Difficulty &amp; Win Rate
+        </h2>
+        <p className="mb-4 leading-relaxed">
+          Baker&apos;s Game sits roughly at a <strong>75% solve rate</strong>
+          {" "}with strong play — far below FreeCell&apos;s 99.999% but well
+          above two-deck variants like Forty Thieves. The gap comes from two
+          structural constraints. First, the same-suit foundation rule
+          eliminates the &ldquo;park it on the other colour&rdquo; escape
+          hatch that saves countless FreeCell positions. Second, without
+          automatic King auto-moves or forgiving tableau stacking, a single
+          buried low card (3, 4, 5) in a long suit block can lock the deal.
+        </p>
+        <p className="mb-4 leading-relaxed">
+          We treat the 75% figure as a performance ceiling rather than a
+          guarantee. On our own play logs we hover in the low 60s until we
+          internalise suit-block planning, and most players we coach climb
+          from the mid-50s into the 70s over a few dozen deals. If you are
+          coming from FreeCell, expect a sobering first week: the board
+          <em>looks</em> identical but punishes habits that standard FreeCell
+          rewards.
+        </p>
+
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-10 mb-3">
+          Common Mistakes
+        </h2>
+        <ul className="mb-4 leading-relaxed list-disc list-inside space-y-2">
+          <li>
+            <strong>Treating cells like FreeCell cells.</strong> Parking four
+            cards &ldquo;for later&rdquo; works in FreeCell because the
+            alternating-colour tableau absorbs them again. In Baker&apos;s
+            Game, same-suit requirements mean those cells often lock up.
+          </li>
+          <li>
+            <strong>Chasing the wrong first suit.</strong> Players grab the
+            first Ace they see and push hard on that foundation. We instead
+            scan for the suit whose 2 through 6 are closest to the column
+            surface — that is the suit with the shortest path to a full run.
+          </li>
+          <li>
+            <strong>Building cross-suit tableau runs.</strong> Muscle memory
+            from FreeCell tempts us to drop a 7 on an 8 of any matching
+            colour. In Baker&apos;s Game, that move is illegal — and visually
+            similar enough that players misclick constantly in their first
+            sessions.
+          </li>
+          <li>
+            <strong>Ignoring the empty-column rule.</strong> Kings do not
+            auto-fill empty cascades. We choose which King claims an empty
+            column deliberately, because the &ldquo;wrong&rdquo; King can
+            bury three cards we actually needed to surface.
+          </li>
+          <li>
+            <strong>Delaying the second suit block.</strong> After finishing
+            one suit, players often coast. The optimal play is to immediately
+            identify the next suit block and pre-position its low cards while
+            cells are still open.
+          </li>
+        </ul>
+
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-10 mb-3">
+          How This Game Compares
+        </h2>
+        <p className="mb-4 leading-relaxed">
+          Compared to its descendant{" "}
+          <Link href="/freecell" className="text-[#D4AF37] hover:underline">
+            FreeCell
+          </Link>
+          , Baker&apos;s Game changes a single load-bearing rule: foundation
+          and tableau building snap to suit instead of colour. That one rule
+          shifts the solvability curve from 99.999% down to about 75%, because
+          colour-based stacking effectively doubles the number of landing
+          spots for every card. Compared to{" "}
+          <Link href="/eight-off" className="text-[#D4AF37] hover:underline">
+            Eight Off
+          </Link>
+          , which shares the same same-suit rule, Baker&apos;s Game is harder
+          because Eight Off hands us eight cells instead of four. Seahaven
+          Towers layers on a third constraint — only Kings fill empty columns
+          — making it the strictest cousin of all. Among{" "}
+          <Link
+            href="/freecell-variants"
+            className="text-[#D4AF37] hover:underline"
+          >
+            FreeCell variants
+          </Link>
+          , Baker&apos;s Game is the purest historical test.
+        </p>
+
+        <h2 className="text-xl font-semibold text-[#D4AF37] mt-10 mb-3">
+          Variant Notes
+        </h2>
+        <p className="mb-4 leading-relaxed">
+          A handful of Baker&apos;s Game variants float around the hobby. The
+          classic 1968 description allows only single-card tableau moves;
+          most modern implementations (including ours) apply the standard
+          supermove shortcut that counts free cells and empty cascades to
+          determine the maximum legal group. Some rulebooks permit
+          alternating-colour tableau building while keeping same-suit
+          foundations — a middle ground sometimes called
+          &ldquo;Baker&apos;s FreeCell&rdquo; or Eight Off-style play. Empty
+          columns accept any card in our default ruleset; strict variants
+          restrict empty columns to Kings, which pushes the solve rate down
+          toward 65%. We do not offer a redeal — Baker&apos;s Game is a
+          one-shot puzzle, like FreeCell itself.
+        </p>
+
         <h2 className="text-xl font-semibold text-white/90 mt-8 mb-3">
           Learn More
         </h2>
@@ -263,6 +442,10 @@ export default function Page() {
           , a related variant that uses 8 reserve cells with the same same-suit
           stacking rule.
         </p>
+
+        <div className="mt-10 mb-8">
+          <AuthorBio authorSlug="the-strategy-desk" />
+        </div>
 
         <MoreGames currentSlug="bakers-game" />
       </article>

@@ -24,7 +24,7 @@ export type RouteOwnership = {
   primaryOwner: SiteKey;
 };
 
-const SITE_DOMAINS: Record<SiteKey, string> = {
+export const SITE_DOMAINS: Record<SiteKey, string> = {
   solitairestack: 'https://solitairestack.com',
   playfreecellonline: 'https://playfreecellonline.com',
   playklondikeonline: 'https://playklondikeonline.com',
@@ -75,6 +75,15 @@ export const ROUTE_OWNERSHIP: Record<string, RouteOwnership> = {
   '/solitaire-rules-by-country': HUB_ONLY,
   '/patience-solitaire': HUB_ONLY,
 
+  // Hub pillar pages (Wave 8-HUB)
+  '/solitaire-games-guide': HUB_ONLY,
+  '/solitaire-strategy': HUB_ONLY,
+  '/solitaire-history': HUB_ONLY,
+  '/solitaire-for-every-mood': HUB_ONLY,
+
+  // Hub long-form research (Wave 10-F)
+  '/how-solitaire-changed-windows': HUB_ONLY,
+
   // Hub editorial / reference
   '/history': HUB_ONLY,
   '/glossary': HUB_ONLY,
@@ -91,6 +100,11 @@ export const ROUTE_OWNERSHIP: Record<string, RouteOwnership> = {
   '/how-we-test-solitaire-games': HUB_ONLY,
   '/our-solitaire-methodology': HUB_ONLY,
   '/editorial-standards': HUB_ONLY,
+  '/solitaire-win-rates': HUB_ONLY,
+
+  // Hub linkbait / interactive tools
+  '/popular-solitaire-by-state': HUB_ONLY,
+  '/solitaire-game-finder': HUB_ONLY,
 
   // Corporate / legal pages (all hub-owned)
   '/about': HUB_ONLY,
@@ -204,7 +218,9 @@ export const ROUTE_OWNERSHIP: Record<string, RouteOwnership> = {
   '/famous-freecell-deals': FREECELL_ONLY,
   '/famous-freecell-game-numbers': FREECELL_ONLY,
   '/freecell-endgame-strategy': FREECELL_ONLY,
+  '/freecell-mastery': FREECELL_ONLY,
   '/freecell-opening-strategy': FREECELL_ONLY,
+  '/freecell-solvability': FREECELL_ONLY,
   '/freecell-hints-explained': FREECELL_ONLY,
   '/freecell-world-records': FREECELL_ONLY,
   '/freecell-variants': FREECELL_ONLY,
@@ -222,6 +238,7 @@ export const ROUTE_OWNERSHIP: Record<string, RouteOwnership> = {
   '/how-freecell-supermoves-work': FREECELL_ONLY,
   '/why-freecell-is-almost-always-solvable': FREECELL_ONLY,
   '/is-every-freecell-game-winnable': FREECELL_ONLY,
+  '/unsolvable-freecell-deals': FREECELL_ONLY,
 
   // FreeCell gameplay sub-pages (hub owns /freecell itself but spoke owns the sub-content)
   '/freecell/1-cell': FREECELL_ONLY,
@@ -267,6 +284,12 @@ export const ROUTE_OWNERSHIP: Record<string, RouteOwnership> = {
   '/klondike/draw-1-vs-draw-3': KLONDIKE_ONLY,
   '/klondike/vegas-scoring': KLONDIKE_ONLY,
 
+  // Klondike spoke pillar pages (Wave 8-KL)
+  '/klondike-mastery': KLONDIKE_ONLY,
+  '/klondike-vegas-scoring': KLONDIKE_ONLY,
+  '/klondike-probability': KLONDIKE_ONLY,
+  '/klondike-variants': KLONDIKE_ONLY,
+
   // Klondike-family variants
   '/canfield': KLONDIKE_ONLY,
   '/canfield/how-to-play': KLONDIKE_ONLY,
@@ -288,6 +311,13 @@ export const ROUTE_OWNERSHIP: Record<string, RouteOwnership> = {
   '/spider/1-suit-vs-2-suit-vs-4-suit': SPIDER_ONLY,
   '/spider/is-spider-solitaire-winnable': SPIDER_ONLY,
   '/spider/how-to-empty-a-column': SPIDER_ONLY,
+
+  // Spider spoke pillar pages (Wave 8-SP)
+  '/spider-mastery': SPIDER_ONLY,
+  '/spider-suit-strategy': SPIDER_ONLY,
+  '/spider-column-tactics': SPIDER_ONLY,
+  '/spider-winnability': SPIDER_ONLY,
+  '/spider-variants': SPIDER_ONLY,
 
   // Spider-family variants
   '/scorpion': SPIDER_ONLY,

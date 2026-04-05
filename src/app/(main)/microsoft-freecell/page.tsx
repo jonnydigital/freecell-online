@@ -1,6 +1,8 @@
+import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
+import { canonicalUrlFor, isOwnedBy } from "@/lib/routeOwnership";
 import AdUnit from "@/components/AdUnit";
 import ContentLayout from "@/components/ContentLayout";
 import NetworkCrossLinks from "@/components/NetworkCrossLinks";
@@ -13,6 +15,11 @@ import {
   ContentLinkCard,
   JsonLd,
 } from "@/components/content";
+import AuthorByline from "@/components/content/AuthorByline";
+
+const PUBLISHED_DATE = "2026-04-05";
+const UPDATED_DATE = "2026-04-05";
+const ROUTE = "/microsoft-freecell";
 
 export const metadata: Metadata = {
   title:
@@ -49,7 +56,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
   },
   alternates: {
-    canonical: absoluteUrl("/microsoft-freecell"),
+    canonical: canonicalUrlFor(ROUTE),
   },
 };
 
@@ -86,6 +93,8 @@ const faqItems = [
 ];
 
 export default function MicrosoftFreecellPage() {
+  if (!isOwnedBy(ROUTE, siteConfig.key)) notFound();
+
   const jsonLd = [
     {
       "@context": "https://schema.org",
@@ -96,17 +105,18 @@ export default function MicrosoftFreecellPage() {
         "Play Microsoft FreeCell online with the same deal numbers as Windows FreeCell. Free, no download, with modern features like undo, hints, and statistics.",
       author: {
         "@type": "Organization",
-        name: siteConfig.siteName,
+        name: "The History Desk",
+        url: absoluteUrl("/authors/the-history-desk"),
       },
       publisher: {
         "@type": "Organization",
         name: siteConfig.siteName,
       },
-      datePublished: "2026-03-16",
-      dateModified: "2026-03-16",
+      datePublished: PUBLISHED_DATE,
+      dateModified: UPDATED_DATE,
       mainEntityOfPage: {
         "@type": "WebPage",
-        "@id": absoluteUrl("/microsoft-freecell"),
+        "@id": absoluteUrl(ROUTE),
       },
     },
     {
@@ -148,10 +158,18 @@ export default function MicrosoftFreecellPage() {
       <main className="max-w-5xl mx-auto px-4 sm:px-6 pt-6 pb-20 space-y-6">
         {/* Hero */}
         <ContentHero
-          kicker="Classic Windows Game"
+          kicker="History Desk"
           title="Play Microsoft FreeCell Online for Free"
           subtitle="The card game that shipped with every copy of Windows — now in your browser. Same deal numbers, same strategic depth, no download required. Pick up right where you left off in 1998."
         />
+
+        <div className="-mt-2 mb-2 flex justify-center">
+          <AuthorByline
+            authorSlug="the-history-desk"
+            publishedDate={PUBLISHED_DATE}
+            updatedDate={UPDATED_DATE}
+          />
+        </div>
 
         {/* The Windows FreeCell Story */}
         <CardSection id="history" variant="dark">
@@ -563,6 +581,524 @@ export default function MicrosoftFreecellPage() {
         </CardSection>
 
         <AdUnit className="-my-1" />
+
+        {/* The 32,000 Deal Numbering System */}
+        <CardSection id="deal-numbering-system" variant="dark">
+          <SectionHeading
+            variant="dark"
+            sub="How Jim Horne Built The Set"
+            id="deal-numbering-heading"
+          >
+            The 32,000 deal numbering system
+          </SectionHeading>
+          <ContentBody variant="dark" className="space-y-4">
+            <p>
+              The thirty-two thousand numbered deals that defined
+              Microsoft FreeCell are not arbitrary. They are the
+              output of a specific algorithm: a seeded
+              linear-congruential pseudorandom number generator,
+              an integer modulus of 2^31 − 1, and a specific
+              deal-out procedure that walks the shuffled deck
+              across the eight tableau columns one card at a
+              time. Feed the algorithm a seed — any integer from
+              one to 32,000 — and you get a deterministic,
+              reproducible layout. Deal #1 is always the same
+              board. Deal #617 is always the same board. The set
+              is frozen by the algorithm, not by a stored
+              database.
+            </p>
+            <p>
+              Why cap the set at 32,000? The original Windows
+              FreeCell game dialog only accepted values up to
+              32,000 because 2^15 − 1 (which equals 32,767) is
+              the maximum positive value of a signed 16-bit
+              integer, and the rounded-down thirty-two-thousand
+              ceiling fit neatly inside that range. That is the
+              entire explanation. There is nothing mathematically
+              special about 32,000. It was a pragmatic bound
+              that matched the data type the dialog box used.
+            </p>
+            <p>
+              The PRNG itself was the classic Microsoft
+              C-runtime generator: seed × 214013 + 2531011, then
+              shift right by sixteen bits and mask with 0x7FFF.
+              Horne used that generator to produce a sequence of
+              pseudorandom indices into the remaining deck, and
+              the sequence was used to deal cards one at a time
+              across the eight columns. Because the generator
+              is deterministic and widely documented, modern
+              implementations (including this one) can reproduce
+              the original Microsoft deals exactly. That is why
+              deal numbers from Windows FreeCell still work here
+              — we run the same arithmetic.
+            </p>
+            <p>
+              The deterministic property of the set created
+              something Horne did not foresee: a shared cultural
+              vocabulary. When two FreeCell players from
+              different continents both said &ldquo;I could not
+              beat #617,&rdquo; they were talking about the
+              same board. The deal number became the stable
+              identifier for a puzzle, the way chess positions
+              have FEN strings or crosswords have puzzle
+              numbers. Almost no other solitaire game of the era
+              had that property, and it is the single most
+              important reason FreeCell developed the collective
+              lore it did.
+            </p>
+            <p>
+              One useful consequence of the shared numbering
+              system: it means a beginner and a tournament
+              player can literally play the same board. Chess
+              has that property — a grandmaster and a novice
+              can both study the same position — and so do
+              crosswords, but very few casual card games do.
+              FreeCell&apos;s numbered deal set turned every
+              deal into a potential teaching example, a
+              potential tournament position, and a potential
+              community anecdote. That is why deal numbers
+              survive as cultural currency more than three
+              decades after the original ship date.
+            </p>
+            <p>
+              The extension beyond 32,000 came later. When
+              modern implementations (including ours) wanted
+              to go past Horne&apos;s original ceiling, the
+              natural choice was to keep the same PRNG and
+              dealing algorithm but extend the seed range up
+              to 2^31 − 1, which gives more than two billion
+              distinct deals. The Microsoft 32,000 remains
+              the canonical set — it is the range with
+              shared history — but anyone looking for fresh
+              puzzles can draw from the much larger extended
+              range without leaving the Horne-era algorithm
+              behind.
+            </p>
+          </ContentBody>
+        </CardSection>
+
+        <AdUnit className="-my-1" />
+
+        {/* Famous Deals by Number */}
+        <CardSection id="famous-deals" variant="dark">
+          <SectionHeading
+            variant="dark"
+            sub="The Deals That Built The Legend"
+            id="famous-deals-heading"
+          >
+            Famous deals by number
+          </SectionHeading>
+          <ContentBody variant="dark" className="space-y-4">
+            <p>
+              Once the deal-number system existed, specific
+              deals became famous. Some earned reputations for
+              difficulty, some for elegance, some for being
+              beginner traps or welcome gifts. Here are the
+              deal numbers that FreeCell players mention most
+              often, with brief notes on why each one matters
+              and how to think about it.
+            </p>
+
+            <h3 className="text-lg font-semibold text-white">
+              Deal #11982 — the unsolvable one
+            </h3>
+            <p>
+              The most famous individual deal in FreeCell
+              history. It is the only deal in the original
+              Microsoft 32,000 that has been proven genuinely
+              unwinnable. Every legal sequence of moves leads
+              to a dead-end position, and no amount of
+              creative play can salvage it. Read the full
+              walkthrough on our{" "}
+              <Link
+                href="/freecell-game-11982"
+                className="text-[#D4AF37] hover:underline"
+              >
+                deal #11982
+              </Link>{" "}
+              page, or try to bang your head against it at{" "}
+              <Link
+                href="/game/11982"
+                className="text-[#D4AF37] hover:underline"
+              >
+                /game/11982
+              </Link>
+              .
+            </p>
+
+            <h3 className="text-lg font-semibold text-white">
+              Deal #617 — the folklore nemesis
+            </h3>
+            <p>
+              A deal with a long reputation as a difficult but
+              solvable puzzle. Community archives from the
+              1990s are full of posts about #617, because it
+              sits at the boundary where human search begins
+              to struggle but the solution is still within
+              reach. Players who beat #617 remembered it. The
+              deal is technically solvable and the solution
+              was verified decades ago, but finding the line
+              without solver help is a genuine test.
+            </p>
+
+            <h3 className="text-lg font-semibold text-white">
+              Deals #1 through #3 — the welcome mat
+            </h3>
+            <p>
+              The first three deals in the set are
+              unusually gentle, which is not accidental: Horne
+              chose the seed scheme so that low-numbered deals
+              tend to be forgiving. Deal #1 is a nearly-trivial
+              board that most players finish in under two
+              minutes. Deals #2 and #3 are slightly harder
+              but still within reach of a first-time player.
+              The welcome-mat effect was deliberate: the first
+              deals you ever saw were designed to let you win
+              and come back.
+            </p>
+
+            <h3 className="text-lg font-semibold text-white">
+              Deal #6974 — a tournament favourite
+            </h3>
+            <p>
+              A deal often chosen for speedrun and tournament
+              events because it is challenging without being
+              brutal. The opening is interesting, the midgame
+              has multiple viable lines, and the endgame
+              rewards counting. Tournament organisers like
+              deals like #6974 because they produce meaningful
+              differentiation between strong and average
+              players without the random-feeling difficulty
+              of the genuinely hard deals.
+            </p>
+
+            <h3 className="text-lg font-semibold text-white">
+              Deals #146, #1941, #6182, #8591 — the reclassified
+            </h3>
+            <p>
+              These deals were long considered impossible by
+              the Internet FreeCell Project before modern
+              solvers eventually proved them solvable. Their
+              winning lines are counterintuitive — sacrificial
+              cell usage that human players reject on sight.
+              Studying their solutions is a lesson in how
+              often intuition about solvability is wrong.
+            </p>
+            <p>
+              For a longer list of notable deals, visit our{" "}
+              <Link
+                href="/famous-freecell-game-numbers"
+                className="text-[#D4AF37] hover:underline"
+              >
+                famous FreeCell game numbers
+              </Link>{" "}
+              page.
+            </p>
+            <p>
+              Studying named deals is one of the most
+              efficient ways to improve. A player who works
+              through the standard list of famous deals will
+              encounter almost every opening pattern, every
+              mid-game cell trap, and every endgame ordering
+              puzzle that FreeCell can produce. Good players
+              often keep a list of deals they have beaten,
+              deals they have lost, and deals they intend to
+              revisit, and they use that list the way chess
+              students use their own game notebooks.
+            </p>
+          </ContentBody>
+        </CardSection>
+
+        <AdUnit className="-my-1" />
+
+        {/* The Microsoft Era */}
+        <CardSection id="microsoft-era" variant="dark">
+          <SectionHeading
+            variant="dark"
+            sub="1991 to 2012"
+            id="microsoft-era-heading"
+          >
+            The Microsoft era
+          </SectionHeading>
+          <ContentBody variant="dark" className="space-y-4">
+            <p>
+              Jim Horne&apos;s port of FreeCell arrived in 1991
+              bundled with the Windows Entertainment Pack
+              Volume 2 — an optional add-on for Windows 3.x —
+              and it stayed roughly unchanged for more than
+              two decades. The port took Paul Alfille&apos;s
+              PLATO-era design, added the 32,000 numbered deal
+              system, and put it in front of an audience
+              measured in hundreds of millions. By Windows 95,
+              FreeCell was a standard install: if you had a
+              Windows PC, you had FreeCell, whether you wanted
+              it or not.
+            </p>
+            <p>
+              Workplace productivity research from the 1990s
+              and early 2000s repeatedly listed FreeCell and
+              Minesweeper as the most-played computer games in
+              the world by raw play count, not because anyone
+              had branded them that way but because they were
+              on every desk. A generation of office workers
+              learned FreeCell on their lunch breaks. A
+              generation of students learned it in computer
+              labs. Cultural footprint at that scale is rare
+              for a deterministic card puzzle.
+            </p>
+            <p>
+              Microsoft kept FreeCell in Windows 98, ME,
+              2000, XP, Vista, and 7, all with substantially
+              the same implementation. The only material
+              updates across that twenty-year run were
+              cosmetic — slightly redrawn card backs, a
+              clearer dialog, sharper fonts. The gameplay was
+              stable enough that players who took a decade off
+              could come back and find their favourite deals
+              exactly as they had left them.
+            </p>
+            <p>
+              Windows 8 (2012) ended the classic run.
+              Microsoft replaced the standalone game with the
+              Microsoft Solitaire Collection, which bundled
+              FreeCell alongside Klondike, Spider, Pyramid,
+              and TriPeaks, and which introduced advertising
+              into a previously ad-free experience. The
+              Solitaire Collection still supports the original
+              32,000 deals, but the experience around them
+              changed materially: video ads between games,
+              banner ads during play, and a subscription
+              model to remove both. For many longtime
+              players, the Windows 7 era is the endpoint of
+              &ldquo;classic&rdquo; Microsoft FreeCell.
+            </p>
+            <p>
+              The shift was controversial at the time and
+              remains a touchstone in community discussions.
+              Players who had grown up with the clean,
+              ad-free version described the change as the end
+              of a small but real part of the Windows
+              identity. Microsoft had good reasons — bundling
+              games together reduced maintenance burden, and
+              the free-to-play model funded ongoing updates —
+              but the shift illustrated how quickly a default
+              install becomes infrastructure. FreeCell had
+              been part of the Windows PC the way the taskbar
+              was, and making it feel commercial altered the
+              texture of the whole operating system for some
+              long-time users.
+            </p>
+          </ContentBody>
+        </CardSection>
+
+        {/* Why FreeCell Survived */}
+        <CardSection id="why-survived" variant="dark">
+          <SectionHeading
+            variant="dark"
+            sub="Design Longevity"
+            id="why-survived-heading"
+          >
+            Why FreeCell survived
+          </SectionHeading>
+          <ContentBody variant="dark" className="space-y-4">
+            <p>
+              Most games in the original Windows Entertainment
+              Pack are gone. Minesweeper lives on in corners
+              of the web and in reissues, but Taipei,
+              JezzBall, Rodent&apos;s Revenge, Tetris for
+              Windows, SkiFree, and a dozen others are
+              effectively dead. FreeCell is the rare survivor.
+              Why?
+            </p>
+            <p>
+              Three design strengths explain it. First, full
+              visibility: FreeCell is a puzzle, not a gamble,
+              and that means every game rewards thought in a
+              way that players come back to. Solitaire games
+              with hidden information feel random when they
+              go badly; FreeCell never does. Second, the
+              numbered deal set: shared identifiers create
+              shared stories, and shared stories create
+              community. Third, the near-perfect solvability
+              rate: FreeCell is one of the few card games
+              where you can reasonably expect to win ninety
+              percent of games if you play carefully, which
+              keeps the satisfaction feedback loop tight.
+            </p>
+            <p>
+              Those three design strengths were not
+              accidental. Paul Alfille explicitly set out to
+              design a solitaire variant that rewarded
+              planning over luck, and Jim Horne preserved
+              that design intent while adding the deal-number
+              infrastructure that let players share their
+              experience. Good design ages well, and
+              FreeCell is the clearest case we know of a card
+              game whose design intent still drives its
+              popularity thirty-plus years later.
+            </p>
+            <p>
+              There is a fourth reason worth naming: FreeCell
+              scales beautifully. New players finish the
+              early deals and feel competent. Intermediate
+              players get stuck on specific deals and have
+              something concrete to return to. Strong players
+              chase the solver ceiling and track their own
+              win rates. Tournament players compete on
+              hardest-deal sets. Every skill level has a
+              natural next challenge built into the same
+              game, and the numbered deal set makes those
+              challenges legible. That is a kind of design
+              longevity that most puzzle games never achieve.
+            </p>
+            <p>
+              The Entertainment Pack games that disappeared
+              tended to lack at least one of those features.
+              Minesweeper had a similar skill ceiling but no
+              shared identifiers, so community collapsed when
+              the game moved off the default install.
+              JezzBall had no long-form depth. Taipei had no
+              numbered boards. FreeCell had all four: design
+              intent that rewarded skill, numbered deals,
+              near-perfect solvability, and a difficulty
+              curve that scales with the player. That
+              combination is why it survived.
+            </p>
+          </ContentBody>
+        </CardSection>
+
+        <AdUnit className="-my-1" />
+
+        {/* Variants and Descendants */}
+        <CardSection id="variants" variant="dark">
+          <SectionHeading
+            variant="dark"
+            sub="The Family Tree"
+            id="variants-heading"
+          >
+            Variants and descendants
+          </SectionHeading>
+          <ContentBody variant="dark" className="space-y-4">
+            <p>
+              FreeCell is the centre of a small family of
+              closely related games. Each variant changes one
+              rule and produces a noticeably different
+              experience. Understanding the family is part of
+              understanding FreeCell itself, because the
+              tradeoffs Alfille made are clearer when you see
+              what happens when you undo them.
+            </p>
+
+            <h3 className="text-lg font-semibold text-white">
+              Baker&apos;s Game — the ancestor
+            </h3>
+            <p>
+              Before FreeCell, there was Baker&apos;s Game:
+              the same eight-column layout, the same four
+              cells, but with same-suit tableau stacking
+              instead of alternating-colour. Baker&apos;s
+              Game is significantly harder because same-suit
+              stacking removes half of your legal receiving
+              cards. Solvability drops from 99.99 percent to
+              around seventy-five percent. Alfille&apos;s
+              single change — to alternating-colour stacking
+              — is what turned a niche hard puzzle into a
+              mass-audience game. See the full{" "}
+              <Link
+                href="/bakers-game"
+                className="text-[#D4AF37] hover:underline"
+              >
+                Baker&apos;s Game
+              </Link>{" "}
+              rules for the details.
+            </p>
+
+            <h3 className="text-lg font-semibold text-white">
+              Eight Off — extra cells, stricter stacking
+            </h3>
+            <p>
+              Eight Off doubles the number of cells to eight
+              and uses same-suit stacking. The extra cells
+              more than compensate for the stricter stacking,
+              producing a solvability rate around
+              eighty-nine percent. It is a slower, more
+              methodical game than FreeCell, because eight
+              cells makes aggressive planning almost
+              unnecessary. Read more on our{" "}
+              <Link
+                href="/eight-off"
+                className="text-[#D4AF37] hover:underline"
+              >
+                Eight Off
+              </Link>{" "}
+              page.
+            </p>
+
+            <h3 className="text-lg font-semibold text-white">
+              Seahaven Towers — ten columns, four cells
+            </h3>
+            <p>
+              Seahaven uses ten columns of five cards each,
+              four cells, and same-suit stacking. The
+              narrower columns and same-suit rule make it
+              harder than standard FreeCell, but the extra
+              columns provide compensating structure. See our{" "}
+              <Link
+                href="/seahaven"
+                className="text-[#D4AF37] hover:underline"
+              >
+                Seahaven
+              </Link>{" "}
+              page for the full rules.
+            </p>
+
+            <h3 className="text-lg font-semibold text-white">
+              Penguin — different tableau, same cells
+            </h3>
+            <p>
+              Penguin is a FreeCell relative that keeps the
+              four-cell structure but starts with a tableau of
+              seven columns of seven cards plus a distinctive
+              &ldquo;flipper&rdquo; row. The Aces begin on
+              foundations, which changes early strategy
+              substantially: you are not hunting for Aces,
+              you are building tableau sequences that
+              eventually feed the already-started foundations.
+              Penguin is moderately harder than FreeCell and
+              has a loyal niche following.
+            </p>
+
+            <h3 className="text-lg font-semibold text-white">
+              Cell-variant FreeCell
+            </h3>
+            <p>
+              Shrinking the cells from four to three, two, or
+              one produces a family of difficulty variants.
+              Three-cell is marginally harder. Two-cell is
+              noticeably harder, with solvability around
+              eighty-five percent. One-cell is brutal, with
+              solvability around ten percent. These variants
+              are covered in detail on the{" "}
+              <Link
+                href="/freecell-variants"
+                className="text-[#D4AF37] hover:underline"
+              >
+                FreeCell variants
+              </Link>{" "}
+              page, which also discusses Penguin, a tableau
+              variant with a different starting configuration.
+              If you want to chase speed and streak records
+              across any of these, see our{" "}
+              <Link
+                href="/freecell-world-records"
+                className="text-[#D4AF37] hover:underline"
+              >
+                FreeCell world records
+              </Link>{" "}
+              page.
+            </p>
+          </ContentBody>
+        </CardSection>
 
         {/* Getting Started */}
         <CardSection id="getting-started" variant="dark">

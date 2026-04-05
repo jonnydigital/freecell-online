@@ -601,6 +601,194 @@ export default function Draw1VsDraw3Page() {
             </div>
           </section>
 
+          {/* Mathematical Deep Dive */}
+          <section>
+            <h2
+              className="text-2xl sm:text-3xl font-bold text-white/90 mb-4"
+              style={{ fontFamily: "var(--font-playfair)" }}
+            >
+              The Mathematical Difference
+            </h2>
+            <div className="space-y-4 text-white/60 leading-relaxed">
+              <p>
+                The mathematical gap between Draw 1 and Draw 3 is smaller
+                than most players imagine at the solver ceiling and much
+                larger than most players imagine at the human ceiling.
+                Under full-information simulation, Draw 1 Klondike is
+                solvable in roughly 82 percent of deals, while Draw 3
+                Klondike is solvable in roughly 78&ndash;82 percent
+                depending on redeal rules. That is a narrow gap. A
+                perfect player would win almost the same fraction of
+                deals in either mode.
+              </p>
+              <p>
+                The gap widens dramatically for human play. Strong human
+                Draw 1 players reach 60&ndash;70 percent win rates, and
+                experts push into the high seventies. Strong human Draw 3
+                players land at 15&ndash;20 percent, and experts reach
+                25&ndash;33 percent. The solvability ceiling is similar;
+                the attainable human ceiling is not. That happens
+                because Draw 3 requires memory-heavy cycle tracking that
+                humans do not deliver reliably under real-time play.
+                Every missed cycle opportunity costs a possible win.
+              </p>
+              <p>
+                The practical math on stock access is clean. In Draw 1,
+                all 24 stock cards are reachable on every pass, so the
+                effective stock size is 24. In Draw 3 with unlimited
+                redeals, only 8 cards are reachable per pass on average,
+                and the other 16 are reachable only after shifting the
+                cycle through plays. A player who never plays a stock
+                card sees exactly the same 8 cards forever. A player who
+                plays stock cards reshuffles the cycle and can eventually
+                reach every card, but doing so takes more passes than
+                Draw 1 requires.
+              </p>
+            </div>
+          </section>
+
+          <AdUnit format="auto" className="-my-1" />
+
+          {/* Tempo and Psychology */}
+          <section>
+            <h2
+              className="text-2xl sm:text-3xl font-bold text-white/90 mb-4"
+              style={{ fontFamily: "var(--font-playfair)" }}
+            >
+              Tempo and Psychology
+            </h2>
+            <div className="space-y-4 text-white/60 leading-relaxed">
+              <p>
+                The psychology of the two modes pulls in opposite
+                directions. Draw 1 feels fair: every card is reachable,
+                every loss feels like the player&apos;s mistake. Draw 3
+                feels contested: the cycle hides cards the player needs,
+                and losses can feel unfair even when they are not. That
+                asymmetry shapes how players develop in each mode. Draw
+                1 players tend to study their losses more carefully,
+                because they know the cards were available; Draw 3
+                players sometimes blame the cycle and skip the post-loss
+                review.
+              </p>
+              <p>
+                Tempo follows psychology. Draw 1 invites methodical,
+                patient play. The player has all the information
+                eventually, so there is no rush. Draw 3 invites alert,
+                adaptive play. The cycle changes every move, and
+                opportunities appear and disappear quickly. Players who
+                carry Draw 1 tempo into Draw 3 often miss cycle
+                opportunities because they are still deliberating when
+                the cycle shifts past the card they wanted. Players who
+                carry Draw 3 tempo into Draw 1 often move too fast and
+                leave winnable deals on the table.
+              </p>
+              <p>
+                The right mindset for each mode is different. Draw 1
+                rewards the player who thinks like a puzzle solver.
+                Draw 3 rewards the player who thinks like a memory
+                athlete. Both skills are learnable; neither is automatic
+                from general Klondike experience. Players who want to
+                be strong in both modes should practice them as
+                separate games, not as the same game with different
+                settings.
+              </p>
+            </div>
+          </section>
+
+          {/* When Each Mode Makes Sense */}
+          <section>
+            <h2
+              className="text-2xl sm:text-3xl font-bold text-white/90 mb-4"
+              style={{ fontFamily: "var(--font-playfair)" }}
+            >
+              When Each Mode Makes Sense
+            </h2>
+            <div className="space-y-4 text-white/60 leading-relaxed">
+              <p>
+                Beyond personal preference, certain contexts favor one
+                mode over the other. For learning Klondike,
+                Draw 1 is the clear choice. It lets new players
+                experience the full game loop without the restricted
+                stock blocking access to cards they need. A beginner
+                who wins half their Draw 1 games develops a working
+                model of the game&apos;s structure; a beginner who
+                wins five percent of their Draw 3 games never develops
+                that model because too many deals end in positions the
+                beginner cannot diagnose.
+              </p>
+              <p>
+                For tournament play, Draw 3 is traditional. The lower
+                win rate compresses the skill distribution, and
+                tournaments reward the skill that compresses deals
+                around a ranking. A Draw 1 tournament tends to reward
+                whoever draws the easiest deal; a Draw 3 tournament
+                rewards the player who navigates the cycle best. That
+                is why serious Klondike competitions usually specify
+                Draw 3 with restricted redeals.
+              </p>
+              <p>
+                For Vegas scoring, Draw 3 is the casino standard and
+                the digital default. The EV math pushes casinos toward
+                Draw 3 because it lowers expected payouts enough to
+                support a house edge under traditional rules. Players
+                who want the authentic Vegas experience should play
+                Draw 3 with honest redeal limits; players who want to
+                maximize expected earnings with Vegas scoring should
+                play Draw 1 instead, where the higher win rate
+                translates into larger average per-deal profit.
+              </p>
+            </div>
+          </section>
+
+          <AdUnit format="auto" className="-my-1" />
+
+          {/* Tactical Framework */}
+          <section>
+            <h2
+              className="text-2xl sm:text-3xl font-bold text-white/90 mb-4"
+              style={{ fontFamily: "var(--font-playfair)" }}
+            >
+              Tactical Framework Differences
+            </h2>
+            <div className="space-y-4 text-white/60 leading-relaxed">
+              <p>
+                The tactical framework in Draw 1 is built around
+                optimization. The player can see every card in the
+                stock across the first pass, and from that point
+                forward the game is a scheduling problem: in what
+                order should the available cards go down onto the
+                tableau and up to the foundations to maximize the
+                chance of clearing. Draw 1 play is about ordering.
+              </p>
+              <p>
+                The tactical framework in Draw 3 is built around
+                retrieval. The player can see only a fraction of the
+                stock on any given pass, so the question is which
+                cycle shifts will bring the needed cards to the
+                accessible position. Draw 3 play is about scheduling
+                cycle shifts: plays that do double duty, placing a
+                card on the tableau while advancing the cycle toward
+                a useful window.
+              </p>
+              <p>
+                The micro-decisions that differ between modes are
+                numerous. Should we send a two to the foundation? In
+                Draw 1, usually yes; a replacement from the stock is
+                reachable. In Draw 3, often no; the replacement may
+                be trapped for multiple passes. Should we fill an
+                empty column immediately? In Draw 1, usually yes;
+                empty columns are workspace. In Draw 3, often no;
+                the workspace is more valuable than a reflexive
+                King placement. Should we cycle the stock more than
+                three times? In Draw 1, yes, every pass shows the
+                same cards and lets us pick a new order. In Draw 3,
+                diminishing returns set in quickly and cycling more
+                than four or five times usually indicates a locked
+                deal.
+              </p>
+            </div>
+          </section>
+
           {/* History / Origin */}
           <section>
             <h2

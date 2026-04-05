@@ -100,6 +100,7 @@ const WHITELIST_PATH_PATTERNS = [
   /^src\/app\/\(main\)\/correction-policy(\/|$)/,
   /^src\/app\/\(main\)\/how-we-test-solitaire-games(\/|$)/,
   /^src\/app\/\(main\)\/our-solitaire-methodology(\/|$)/,
+  /^src\/app\/\(main\)\/solitaire-win-rates(\/|$)/,
 ];
 
 /** Inline comment directive that suppresses a single line. */

@@ -740,6 +740,289 @@ export default function SolitaireDifficultyRankingPage() {
           </ContentBody>
         </CardSection>
 
+        {/* Methodology */}
+        <CardSection id="methodology" variant="dark">
+          <SectionHeading variant="dark" sub="How we ranked" id="methodology-heading">
+            Our Methodology
+          </SectionHeading>
+          <ContentBody variant="dark" className="space-y-5">
+            <p>
+              The ranking above is not a single-number score. We blend
+              four separate inputs to produce a difficulty tier for each
+              game: win rate at best play, skill contribution, luck
+              factor, and rule complexity. Understanding how each
+              contributes helps readers decide whether our ranking
+              matches the kind of difficulty they care about.
+            </p>
+            <p>
+              <strong className="text-white">Win rate at best play.</strong>{" "}
+              We start with the win rate a strong human player (or a
+              solver) achieves on random deals of the game. This is the
+              number most players notice first. But win rate alone is
+              misleading: a game with a ninety-percent win rate that
+              requires perfect play is not easy, and a game with a
+              thirty-percent win rate that requires no decisions is
+              not hard. Win rate is a component, not a verdict.
+            </p>
+            <p>
+              <strong className="text-white">Skill contribution.</strong>{" "}
+              Skill contribution measures how much better a strong
+              player is than a random-move baseline. In FreeCell a
+              strong player is dramatically better (the gap between
+              random and skilled play is enormous). In Clock Solitaire
+              the gap is zero because the game makes no decisions. A
+              high skill-contribution number means effort is rewarded;
+              a low number means the deal decides the outcome.
+            </p>
+            <p>
+              <strong className="text-white">Luck factor.</strong>{" "}
+              Luck is the mirror of skill contribution: how much of
+              the outcome is fixed by the deal before the player
+              touches a card. Games with high luck factors feel
+              capricious even when you play well; games with low luck
+              factors feel earned, win or lose. FreeCell has very low
+              luck because almost every deal is winnable. Klondike has
+              high luck because the hidden cards decide many deals
+              before the player has any input.
+            </p>
+            <p>
+              <strong className="text-white">Rule complexity.</strong>{" "}
+              Some games are simple to learn and hard to play (FreeCell,
+              Spider 4-suit). Others are hard to learn and simple to
+              play once learned (Calculation, Canfield). Rule complexity
+              affects how accessible a game is, even if it does not
+              directly affect win rate. We track it separately because
+              new players care about it and experienced players often
+              forget that it matters.
+            </p>
+            <p>
+              The tier assignment blends all four inputs using an
+              editorial judgment call, not a formula. We intentionally
+              do not publish a numerical score because the weights
+              depend on what the reader cares about. A player who
+              wants to feel good picks by win rate; a player who
+              wants a challenge picks by skill contribution; a new
+              player picks by rule complexity. Our tiers try to
+              reflect a reasonable overall balance.
+            </p>
+          </ContentBody>
+        </CardSection>
+
+        <AdUnit className="-my-1" />
+
+        {/* The Tiered Ranking */}
+        <CardSection id="tiered-ranking" variant="dark">
+          <SectionHeading variant="dark" sub="Five tiers" id="tiered-ranking-heading">
+            The Tiered Ranking Explained
+          </SectionHeading>
+          <ContentBody variant="dark" className="space-y-6">
+            <p>
+              Here is what each tier actually represents, beyond the
+              short one-line description in the sections above.
+            </p>
+
+            <div>
+              <h3 className="text-lg font-semibold text-emerald-400 mb-2">
+                Tier 1 &mdash; Easy (Beginner tier)
+              </h3>
+              <p className="leading-relaxed text-sm">
+                Clock, TriPeaks, Aces Up, Golf, Monte Carlo. These
+                games have few or no meaningful decisions and either
+                a very high win rate or a very low one. Players pick
+                them for relaxation or for quick sessions, not for
+                strategic challenge. The only reason to spend
+                sustained time at this tier is enjoyment; the skill
+                ceiling is low.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-lg font-semibold text-green-400 mb-2">
+                Tier 2 &mdash; Moderate (Easy tier)
+              </h3>
+              <p className="leading-relaxed text-sm">
+                Accordion, Pyramid, Easy FreeCell, Klondike, Gaps.
+                Real decisions appear, but luck still dominates the
+                outcome distribution. Players at this tier can see
+                their skill matter, but they also experience deals
+                that are simply unwinnable. Klondike is the emblematic
+                Tier 2 game: its win rate caps around thirty percent
+                even with perfect play, because the hidden cards
+                often decide the deal.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-lg font-semibold text-amber-400 mb-2">
+                Tier 3 &mdash; Hard (Intermediate tier)
+              </h3>
+              <p className="leading-relaxed text-sm">
+                Canfield, Calculation, Baker&rsquo;s Dozen, FreeCell.
+                Skill clearly dominates luck at this tier. A skilled
+                player has a sharply higher win rate than a novice.
+                FreeCell is the prime example: the game is solvable
+                almost every time, but solving it requires planning,
+                counting, and discipline. Tier 3 games reward study.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-lg font-semibold text-orange-400 mb-2">
+                Tier 4 &mdash; Very Hard (Advanced tier)
+              </h3>
+              <p className="leading-relaxed text-sm">
+                La Belle Lucie, Bisley, Bristol, Yukon, Baker&rsquo;s
+                Game, Eight Off, Seahaven Towers, Penguin. Multiple
+                constraints, tight margins, and long planning
+                horizons. Tier 4 games punish sloppy moves. The
+                skilled player&rsquo;s advantage over the novice is
+                enormous here: twenty to forty percentage points of
+                win rate on many games. These are the games that
+                reward serious study.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-lg font-semibold text-red-400 mb-2">
+                Tier 5 &mdash; Brutal (Expert tier)
+              </h3>
+              <p className="leading-relaxed text-sm">
+                Cruel, Flower Garden, Beleaguered Castle, Spider,
+                Scorpion, Forty Thieves. Punishing win rates, complex
+                mechanics, or both. Tier 5 games demand patience and
+                acceptance that many deals will not yield. Forty
+                Thieves with its single-card moves and two-deck
+                layout is the archetype; Spider at four suits sits
+                here because even with perfect play the win rate
+                tops out in the thirty-to-forty-percent range. Enjoy
+                these games for the satisfaction of winning hard
+                deals; do not judge your play by win rate alone.
+              </p>
+            </div>
+
+            <p className="pt-4 border-t border-white/[0.08]">
+              The tier boundaries are judgment calls. A few games
+              could plausibly move one tier in either direction.
+              Calculation could sit in Tier 4; Yukon could sit in
+              Tier 3. We try to be internally consistent and to
+              explain the reasoning for the borderline cases.
+            </p>
+          </ContentBody>
+        </CardSection>
+
+        {/* Why Win Rates Mislead */}
+        <CardSection id="win-rate-myths" variant="dark">
+          <SectionHeading variant="dark" sub="Don't trust the percentage" id="win-rate-myths-heading">
+            Why Win Rates Mislead
+          </SectionHeading>
+          <ContentBody variant="dark" className="space-y-5">
+            <p>
+              Win rate is the first number every player looks at. It
+              is also one of the most misleading numbers in solitaire
+              analysis. Four separate ways win rates mislead are
+              worth naming.
+            </p>
+            <p>
+              <strong className="text-white">A high win rate does not
+              mean easy.</strong>{" "}
+              Eight Off has a ninety-percent win rate with skilled
+              play, and Penguin is close behind. Both games require
+              careful planning, disciplined cell management, and an
+              understanding of when to commit Kings. Neither game is
+              easy in the sense that novices can expect to win. The
+              high win rate reflects the fact that the deals are
+              almost always winnable, not that the path to the win
+              is obvious. A beginner tackling Eight Off will likely
+              lose most of their early hands despite the ceiling
+              being ninety percent.
+            </p>
+            <p>
+              <strong className="text-white">A low win rate does not
+              mean unfair.</strong>{" "}
+              Scorpion has a five-percent win rate. Flower Garden
+              has a five-percent win rate. Forty Thieves has a
+              roughly ten-percent win rate. These games are not
+              broken; they are designed to reward patience, careful
+              planning, and the acceptance that many deals will
+              simply not yield. Low win rates in this part of the
+              canon are a feature, not a bug. Players who love these
+              games love them precisely because winning is rare.
+            </p>
+            <p>
+              <strong className="text-white">Reported win rates
+              depend on methodology.</strong>{" "}
+              A FreeCell win rate of ninety-nine percent typically
+              measures "solver can find a win," which is a different
+              question from "human player will find a win." Klondike
+              win rates depend on whether the game uses draw-1 or
+              draw-3, whether redeals are allowed, and whether the
+              solver looks ahead or plays greedily. We try to be
+              explicit about the methodology behind every number we
+              publish, but comparing win rates across sources
+              requires care.
+            </p>
+            <p>
+              <strong className="text-white">Win rates hide the
+              distribution.</strong>{" "}
+              A thirty-percent win rate can mean "thirty percent of
+              deals are easy wins and seventy percent are impossible"
+              or "every deal is a coin flip." These are very different
+              experiences. Klondike has the second pattern; many
+              low-win-rate games in the Tier 5 group have something
+              closer to the first. The distribution of difficulty
+              across deals matters as much as the average.
+            </p>
+          </ContentBody>
+        </CardSection>
+
+        <AdUnit className="-my-1" />
+
+        {/* Skill vs Luck Decomposition */}
+        <CardSection id="skill-vs-luck" variant="dark">
+          <SectionHeading variant="dark" sub="Decomposing difficulty" id="skill-vs-luck-heading">
+            Skill vs Luck Decomposition
+          </SectionHeading>
+          <ContentBody variant="dark" className="space-y-5">
+            <p>
+              A cleaner way to think about difficulty is to decompose
+              the outcome into the part driven by the deal (luck) and
+              the part driven by the player (skill). For each game
+              we estimate these two values separately.
+            </p>
+            <p>
+              <strong className="text-white">Luck component</strong>{" "}
+              is the variance in outcomes when a strong player plays
+              many random deals. High variance means the deal is
+              driving outcomes; low variance means the player is.
+              Clock Solitaire has maximum luck and zero skill
+              (outcomes are fully determined by the deal, and the
+              player does not get to choose). FreeCell has very low
+              luck and very high skill (outcomes depend almost
+              entirely on the player&rsquo;s choices).
+            </p>
+            <p>
+              <strong className="text-white">Skill component</strong>{" "}
+              is the gap between random-move baseline and best play.
+              In FreeCell that gap is enormous. In Spider 4-suit the
+              gap is large but not as large, because the hidden cards
+              limit how much the player can do. In Klondike the gap
+              is modest because the hidden cards and the stock
+              dictate much of the outcome regardless of skill.
+            </p>
+            <p>
+              The practical use of this decomposition: pick games
+              whose skill component matches what you want from a
+              session. If you want the game to feel fair, pick
+              high-skill games. If you want variety and surprise,
+              pick high-luck games. If you want to improve as a
+              player, spend your practice time on high-skill games
+              exclusively; high-luck games reward experience, but
+              they do not reward deliberate practice in the same
+              way.
+            </p>
+          </ContentBody>
+        </CardSection>
+
         {/* Related links */}
         <CardSection variant="dark">
           <SectionHeading variant="dark" sub="Keep Exploring">Related Guides</SectionHeading>
@@ -747,6 +1030,9 @@ export default function SolitaireDifficultyRankingPage() {
             <ContentLinkCard href="/solitaire-types" title="Solitaire Types" description="Explore 20 solitaire variants organized by category with full rules and strategy notes." />
             <ContentLinkCard href="/games" title="All Games" description="Browse the full collection and start playing any solitaire game instantly." />
             <ContentLinkCard href="/solitaire-for-beginners" title="Solitaire for Beginners" description="New to solitaire? Start here for a guided introduction to the basics." />
+            <ContentLinkCard href="/solitaire-games-guide" title="Complete Solitaire Guide" description="The master pillar guide to solitaire families, rule variants, and player progression." />
+            <ContentLinkCard href="/solitaire-strategy" title="Solitaire Strategy" description="Cross-game strategic principles that apply to every solitaire variant you will ever play." />
+            <ContentLinkCard href="/solitaire-history" title="Solitaire History" description="A documented timeline of solitaire from European parlors to the modern browser." />
           </ContentBody>
         </CardSection>
 

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
+import { canonicalUrlFor } from "@/lib/routeOwnership";
 import { getAllPosts } from "@/lib/blog";
 import ContentLayout from "@/components/ContentLayout";
 import AdUnit from "@/components/AdUnit";
@@ -9,7 +10,9 @@ import { ContentHero, CardSection, ContentBody, CtaSection, JsonLd } from "@/com
 export const metadata: Metadata = {
   title: "FreeCell Blog | Strategy Tips, History & News",
   description: `Expert FreeCell strategy articles, game history, tips, and news. Improve your win rate with in-depth guides from the ${siteConfig.siteName} team.`,
-  alternates: { canonical: absoluteUrl("/blog") },
+  // Blog index is hub-owned — canonical points at solitairestack.com/blog
+  // regardless of which spoke renders the page.
+  alternates: { canonical: canonicalUrlFor("/blog") },
 };
 
 export default function BlogIndexPage() {

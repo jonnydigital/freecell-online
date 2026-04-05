@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
-import { getAllSlugs, getPostBySlug } from "@/lib/blog";
+import { getAllSlugs, getCanonicalSiteForPost, getPostBySlug } from "@/lib/blog";
+import { SITE_DOMAINS } from "@/lib/routeOwnership";
 import AdUnit from "@/components/AdUnit";
 import ContentLayout from "@/components/ContentLayout";
 import { ContentHero, CardSection, ContentBody, CtaSection, JsonLd } from "@/components/content";
@@ -21,10 +22,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const post = getPostBySlug(slug);
   if (!post) return {};
 
+  // Canonical resolution: point rel=canonical at the post's primary owner
+  // (first entry in its `sites` frontmatter array, default hub). This signals
+  // ownership to Google across the 4-domain network BEFORE we flip the
+  // site filter and actually stop serving the post on non-owner domains.
+  const canonicalSite = getCanonicalSiteForPost(post);
+  const canonicalUrl = `${SITE_DOMAINS[canonicalSite]}/blog/${post.slug}`;
+
   return {
     title: `${post.title} | FreeCell Blog`,
     description: post.description,
-    alternates: { canonical: absoluteUrl(`/blog/${post.slug}`) },
+    alternates: { canonical: canonicalUrl },
     openGraph: {
       title: post.title,
       description: post.description,

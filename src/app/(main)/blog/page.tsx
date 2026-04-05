@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { absoluteUrl } from "@/lib/siteConfig";
+import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import { getAllPosts } from "@/lib/blog";
 import ContentLayout from "@/components/ContentLayout";
 import AdUnit from "@/components/AdUnit";
@@ -8,8 +8,7 @@ import { ContentHero, CardSection, ContentBody, CtaSection, JsonLd } from "@/com
 
 export const metadata: Metadata = {
   title: "FreeCell Blog | Strategy Tips, History & News",
-  description:
-    "Expert FreeCell strategy articles, game history, tips, and news. Improve your win rate with in-depth guides from the PlayFreeCellOnline.com team.",
+  description: `Expert FreeCell strategy articles, game history, tips, and news. Improve your win rate with in-depth guides from the ${siteConfig.siteName} team.`,
   alternates: { canonical: absoluteUrl("/blog") },
 };
 
@@ -31,7 +30,7 @@ export default function BlogIndexPage() {
     name: "FreeCell Blog",
     description: "Expert FreeCell strategy articles, game history, tips, and news.",
     url: absoluteUrl("/blog"),
-    publisher: { "@type": "Organization", name: "PlayFreeCellOnline.com" },
+    publisher: { "@type": "Organization", name: siteConfig.siteName },
   };
 
   return (

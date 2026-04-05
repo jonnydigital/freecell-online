@@ -1,6 +1,8 @@
+import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { absoluteUrl, siteConfig } from '@/lib/siteConfig';
+import { canonicalUrlFor, isOwnedBy } from '@/lib/routeOwnership';
 import AdUnit from '@/components/AdUnit';
 import ContentLayout from '@/components/ContentLayout';
 import { ContentHero, SectionHeading, CardSection, ContentBody, CtaSection, ContentLinkCard, JsonLd } from '@/components/content';
@@ -32,7 +34,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
   },
   alternates: {
-    canonical: absoluteUrl('/solitaire-difficulty-ranking'),
+    canonical: canonicalUrlFor('/solitaire-difficulty-ranking'),
   },
 };
 
@@ -480,6 +482,10 @@ const faqs = [
 /* -- Page -- */
 
 export default function SolitaireDifficultyRankingPage() {
+  if (!isOwnedBy('/solitaire-difficulty-ranking', siteConfig.key)) {
+    notFound();
+  }
+
   const jsonLd = [
     {
       '@context': 'https://schema.org',

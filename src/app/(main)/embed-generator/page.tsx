@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
-import { absoluteUrl } from '@/lib/siteConfig';
+import { notFound } from 'next/navigation';
+import { absoluteUrl, siteConfig } from '@/lib/siteConfig';
+import { isOwnedBy } from '@/lib/routeOwnership';
 import ContentLayout from '@/components/ContentLayout';
 import { JsonLd, ContentLinkCard } from '@/components/content';
 import EmbedGeneratorClient from '@/components/embed/EmbedGeneratorClient';
@@ -18,6 +20,9 @@ export const metadata: Metadata = {
 };
 
 export default function EmbedGeneratorPage() {
+  if (!isOwnedBy('/embed-generator', siteConfig.key)) {
+    notFound();
+  }
   const breadcrumbJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',

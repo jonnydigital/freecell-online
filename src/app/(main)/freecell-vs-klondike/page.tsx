@@ -1,6 +1,9 @@
+import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
+import { siteCopy } from "@/lib/siteCopy";
+import { canonicalUrlFor, isOwnedBy } from "@/lib/routeOwnership";
 import AdUnit from "@/components/AdUnit";
 import ContentLayout from "@/components/ContentLayout";
 import NetworkCrossLinks from "@/components/NetworkCrossLinks";
@@ -35,6 +38,9 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
   },
+  alternates: {
+    canonical: canonicalUrlFor("/freecell-vs-klondike"),
+  },
 };
 
 /* ── FAQ data ── */
@@ -67,8 +73,7 @@ const faqs = [
   },
   {
     question: "Can I play both FreeCell and Klondike on this site?",
-    answer:
-      "Yes. PlayFreeCellOnline.com offers FreeCell as the main game on the homepage, completely free with no download required. The site includes features like undo, auto-complete, statistics tracking, and numbered deals. While Klondike is not currently available on this site, FreeCell offers a deeper strategic experience that many Klondike players find they prefer once they try it.",
+    answer: `${siteCopy.crossGameAvailability} The site includes features like undo, auto-complete, statistics tracking, and numbered deals.`,
   },
   {
     question: "Why do so many people know Klondike but not FreeCell?",
@@ -143,6 +148,10 @@ const comparisonRows = [
    ══════════════════════════════════════════════════════════════ */
 
 export default function FreecellVsKlondikePage() {
+  if (!isOwnedBy("/freecell-vs-klondike", siteConfig.key)) {
+    notFound();
+  }
+
   const jsonLd = [
     {
       "@context": "https://schema.org",

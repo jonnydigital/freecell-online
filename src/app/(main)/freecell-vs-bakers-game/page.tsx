@@ -1,6 +1,8 @@
+import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
+import { canonicalUrlFor, isOwnedBy } from "@/lib/routeOwnership";
 import AdUnit from "@/components/AdUnit";
 import ContentLayout from "@/components/ContentLayout";
 import NetworkCrossLinks from "@/components/NetworkCrossLinks";
@@ -36,6 +38,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
+  },
+  alternates: {
+    canonical: canonicalUrlFor("/freecell-vs-bakers-game"),
   },
 };
 
@@ -145,6 +150,10 @@ const comparisonRows = [
    ══════════════════════════════════════════════════════════════ */
 
 export default function FreecellVsBakersGamePage() {
+  if (!isOwnedBy("/freecell-vs-bakers-game", siteConfig.key)) {
+    notFound();
+  }
+
   const jsonLd = [
     {
       "@context": "https://schema.org",
@@ -583,7 +592,7 @@ export default function FreecellVsBakersGamePage() {
           <ContentBody className="space-y-4">
             <p>
               Ready to test your skills? Play both games right here on
-              PlayFreeCellOnline.com &mdash; completely free, no download
+              {" "}{siteConfig.siteName} &mdash; completely free, no download
               required.
             </p>
             <div className="flex flex-wrap gap-4">

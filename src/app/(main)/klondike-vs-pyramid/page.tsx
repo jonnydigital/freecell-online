@@ -1,6 +1,9 @@
+import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
+import { siteCopy } from "@/lib/siteCopy";
+import { canonicalUrlFor, isOwnedBy } from "@/lib/routeOwnership";
 import AdUnit from "@/components/AdUnit";
 import ContentLayout from "@/components/ContentLayout";
 import NetworkCrossLinks from "@/components/NetworkCrossLinks";
@@ -37,6 +40,9 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
   },
+  alternates: {
+    canonical: canonicalUrlFor("/klondike-vs-pyramid"),
+  },
 };
 
 /* ── FAQ data ── */
@@ -64,8 +70,7 @@ const faqs = [
   },
   {
     question: "Can I play both Klondike and Pyramid on this site?",
-    answer:
-      "PlayFreeCellOnline.com offers Klondike and Pyramid Solitaire along with FreeCell and other solitaire variants, all free with no download required. The site includes features like undo, statistics tracking, and numbered deals. You can switch between games any time to experience both building and pairing styles of solitaire.",
+    answer: `${siteCopy.crossGameAvailability} The site includes features like undo, statistics tracking, and numbered deals. You can switch between games any time to experience both building and pairing styles of solitaire.`,
   },
   {
     question: "Which solitaire game is better for beginners?",
@@ -140,6 +145,10 @@ const comparisonRows = [
    ══════════════════════════════════════════════════════════════ */
 
 export default function KlondikeVsPyramidPage() {
+  if (!isOwnedBy("/klondike-vs-pyramid", siteConfig.key)) {
+    notFound();
+  }
+
   const jsonLd = [
     {
       "@context": "https://schema.org",
@@ -859,7 +868,7 @@ export default function KlondikeVsPyramidPage() {
         {/* ── CTA ── */}
         <CtaSection
           heading="Play Both Games Free"
-          body="No downloads, no sign-ups. Klondike and Pyramid Solitaire are both available on PlayFreeCellOnline.com with full features."
+          body={`No downloads, no sign-ups. Klondike and Pyramid Solitaire are both available on ${siteConfig.siteName} with full features.`}
           primaryLabel="Play Klondike Solitaire"
           primaryHref="/klondike"
           secondaryLabel="Play Pyramid Solitaire"

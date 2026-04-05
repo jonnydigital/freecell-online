@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 import { absoluteUrl, siteConfig } from '@/lib/siteConfig';
+import { isOwnedBy } from '@/lib/routeOwnership';
 import StreakPage from './StreakPage';
 
 export const metadata: Metadata = {
@@ -29,6 +31,9 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
+  if (!isOwnedBy('/streak', siteConfig.key)) {
+    notFound();
+  }
   return (
     <>
       <script

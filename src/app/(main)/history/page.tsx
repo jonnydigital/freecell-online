@@ -80,8 +80,7 @@ const historyFaqs = [
   },
   {
     question: "Is FreeCell still available on Windows?",
-    answer:
-      "The classic standalone FreeCell was removed starting with Windows 8 in 2012. Microsoft replaced it with the Microsoft Solitaire Collection app, which bundles FreeCell along with Klondike, Spider, Pyramid, and TriPeaks. The app is free but includes advertisements and video ads between games unless you subscribe to a premium plan. Many players prefer web-based versions like PlayFreeCellOnline.com for an ad-free experience that preserves the clean, distraction-free gameplay of the original.",
+    answer: `The classic standalone FreeCell was removed starting with Windows 8 in 2012. Microsoft replaced it with the Microsoft Solitaire Collection app, which bundles FreeCell along with Klondike, Spider, Pyramid, and TriPeaks. The app is free but includes advertisements and video ads between games unless you subscribe to a premium plan. Many players prefer web-based versions like ${siteConfig.siteName} for an ad-free experience that preserves the clean, distraction-free gameplay of the original.`,
   },
 ];
 
@@ -157,8 +156,7 @@ const timeline = [
   {
     year: "2015–Present",
     title: "Browser-Based FreeCell and the Modern Era",
-    description:
-      "Web technologies like HTML5 and JavaScript enable feature-rich FreeCell implementations that run directly in the browser with no download required. Sites like PlayFreeCellOnline.com offer the classic experience with modern features: undo, auto-complete, statistics tracking, themed tables, and numbered deals. The core game remains unchanged from Alfille's 1978 original — a testament to the elegance of its design.",
+    description: `Web technologies like HTML5 and JavaScript enable feature-rich FreeCell implementations that run directly in the browser with no download required. Sites like ${siteConfig.siteName} offer the classic experience with modern features: undo, auto-complete, statistics tracking, themed tables, and numbered deals. The core game remains unchanged from Alfille's 1978 original — a testament to the elegance of its design.`,
   },
 ];
 
@@ -1330,7 +1328,7 @@ export default function HistoryPage() {
                 The rise of modern web technologies — HTML5, CSS3, and
                 JavaScript frameworks — enabled another shift: browser-based
                 FreeCell that requires no download at all. Sites like
-                PlayFreeCellOnline.com offer the full FreeCell experience
+                {" "}{siteConfig.siteName} offer the full FreeCell experience
                 directly in a web browser, complete with features like
                 unlimited undo, auto-complete for solved positions,
                 statistics tracking, and{" "}

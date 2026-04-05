@@ -1,8 +1,23 @@
 import Link from 'next/link';
 import { siteConfig } from '@/lib/siteConfig';
+import { isOwnedBy } from '@/lib/routeOwnership';
+
+type FooterLink = { href: string; label: string };
+
+/**
+ * Hides any link whose route is not owned by the current site. External links
+ * (http/https, mailto, etc.) are always kept — those are cross-network links
+ * handled by NetworkCrossLinks and similar components.
+ */
+function visibleLinks(links: FooterLink[]): FooterLink[] {
+  return links.filter((link) => {
+    if (!link.href.startsWith('/')) return true;
+    return isOwnedBy(link.href, siteConfig.key);
+  });
+}
 
 export default function SiteFooter() {
-  const playLinks =
+  const playLinks = visibleLinks(
     siteConfig.key === 'solitairestack'
       ? [
           { href: siteConfig.primaryGamePath, label: 'FreeCell' },
@@ -73,9 +88,10 @@ export default function SiteFooter() {
           { href: '/monte-carlo', label: 'Monte Carlo' },
           { href: '/bristol', label: 'Bristol Solitaire' },
           { href: '/games', label: 'All Games' },
-        ];
+        ]
+  );
 
-  const learnLinks =
+  const learnLinks = visibleLinks(
     siteConfig.key === 'solitairestack'
       ? [
           { href: '/freecell-for-beginners', label: 'FreeCell for Beginners' },
@@ -224,9 +240,10 @@ export default function SiteFooter() {
           { href: '/freecell/tips', label: 'FreeCell Tips' },
           { href: '/solitaire-for-beginners', label: 'Solitaire for Beginners' },
           { href: '/blog', label: 'Blog' },
-        ];
+        ]
+  );
 
-  const exploreLinks =
+  const exploreLinks = visibleLinks(
     siteConfig.key === 'solitairestack'
       ? [
           { href: '/about', label: 'About the Network' },
@@ -272,7 +289,8 @@ export default function SiteFooter() {
           { href: '/patience-solitaire', label: 'Patience Solitaire' },
           { href: '/solitaire-difficulty-ranking', label: 'Difficulty Ranking' },
           { href: '/solitaire-rules-by-country', label: 'Rules by Country' },
-        ];
+        ]
+  );
 
   return (
     <footer className="bg-[#041f04] border-t border-white/5 py-12 px-6">

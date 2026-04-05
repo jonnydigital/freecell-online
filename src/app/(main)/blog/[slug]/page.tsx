@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { absoluteUrl } from "@/lib/siteConfig";
+import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import { getAllSlugs, getPostBySlug } from "@/lib/blog";
 import AdUnit from "@/components/AdUnit";
 import ContentLayout from "@/components/ContentLayout";
@@ -48,7 +48,7 @@ export default async function BlogPostPage({ params }: Props) {
     headline: post.title,
     description: post.description,
     author: { "@type": "Organization", name: post.author },
-    publisher: { "@type": "Organization", name: "PlayFreeCellOnline.com" },
+    publisher: { "@type": "Organization", name: siteConfig.siteName },
     datePublished: post.date,
     dateModified: post.date,
     mainEntityOfPage: absoluteUrl(`/blog/${post.slug}`),

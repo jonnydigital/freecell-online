@@ -1,10 +1,14 @@
-import { absoluteUrl, isHubSite } from '@/lib/siteConfig';
+import { absoluteUrl, isHubSite, siteConfig } from '@/lib/siteConfig';
 import { sitemapGameNumbers, isHighPriorityDeal } from '@/lib/curatedDeals';
 import { getAllPosts } from '@/lib/blog';
+import { ownerOf } from '@/lib/routeOwnership';
 
 /**
  * Dynamic XML sitemap served at /sitemap.xml via route handler.
  * Moved from convention-based sitemap.ts to free up /sitemap for the HTML sitemap page.
+ *
+ * Each site's sitemap only lists routes it is the PRIMARY owner of, so Google
+ * sees one canonical URL per piece of content across the 4-domain network.
  */
 
 const contentPages = [
@@ -189,27 +193,46 @@ const contentPages = [
   { path: '/terms', changeFrequency: 'yearly', priority: 0.2 },
 ];
 
+/**
+ * Returns true when the given path is owned (primary) by the current site.
+ * Non-primary owners still serve the page (200 OK), but only the primary
+ * owner's sitemap lists it to avoid duplicate canonical signals to Google.
+ */
+function isPrimaryOwnerOfPath(path: string): boolean {
+  return ownerOf(path).primaryOwner === siteConfig.key;
+}
+
 function buildXml(): string {
   const now = new Date().toISOString();
 
-  const staticEntries = contentPages.map(
-    (p) =>
-      `  <url>\n    <loc>${absoluteUrl(p.path)}</loc>\n    <lastmod>${now}</lastmod>\n    <changefreq>${p.changeFrequency}</changefreq>\n    <priority>${p.priority}</priority>\n  </url>`
-  );
+  const staticEntries = contentPages
+    .filter((p) => isPrimaryOwnerOfPath(p.path))
+    .map(
+      (p) =>
+        `  <url>\n    <loc>${absoluteUrl(p.path)}</loc>\n    <lastmod>${now}</lastmod>\n    <changefreq>${p.changeFrequency}</changefreq>\n    <priority>${p.priority}</priority>\n  </url>`
+    );
 
-  const gameEntries = sitemapGameNumbers.map(
-    (num) =>
-      `  <url>\n    <loc>${absoluteUrl(`/game/${num}`)}</loc>\n    <lastmod>${now}</lastmod>\n    <changefreq>yearly</changefreq>\n    <priority>${isHighPriorityDeal(num) ? 0.6 : 0.4}</priority>\n  </url>`
-  );
+  const gameEntries = isPrimaryOwnerOfPath('/game/[number]')
+    ? sitemapGameNumbers.map(
+        (num) =>
+          `  <url>\n    <loc>${absoluteUrl(`/game/${num}`)}</loc>\n    <lastmod>${now}</lastmod>\n    <changefreq>yearly</changefreq>\n    <priority>${isHighPriorityDeal(num) ? 0.6 : 0.4}</priority>\n  </url>`
+      )
+    : [];
 
-  const blogPosts = getAllPosts();
-  const blogEntries = [
-    `  <url>\n    <loc>${absoluteUrl('/blog')}</loc>\n    <lastmod>${now}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>0.7</priority>\n  </url>`,
-    ...blogPosts.map(
-      (post) =>
+  const blogEntries: string[] = [];
+  if (isPrimaryOwnerOfPath('/blog')) {
+    blogEntries.push(
+      `  <url>\n    <loc>${absoluteUrl('/blog')}</loc>\n    <lastmod>${now}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>0.7</priority>\n  </url>`
+    );
+  }
+  if (isPrimaryOwnerOfPath('/blog/[slug]')) {
+    const blogPosts = getAllPosts();
+    for (const post of blogPosts) {
+      blogEntries.push(
         `  <url>\n    <loc>${absoluteUrl(`/blog/${post.slug}`)}</loc>\n    <lastmod>${now}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.6</priority>\n  </url>`
-    ),
-  ];
+      );
+    }
+  }
 
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

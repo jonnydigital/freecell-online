@@ -13,7 +13,7 @@ import { shouldUseDomEngine } from '@/lib/useDomEngine';
 function buildMetadata(): Metadata {
   if (isHubSite) {
     return {
-      title: 'Solitaire Stack | Play FreeCell, Spider Solitaire, and More',
+      title: `${siteConfig.brandName} | Play FreeCell, Spider Solitaire, and More`,
       description:
         'A growing solitaire hub with live FreeCell, Spider Solitaire, open-information variants, and strategy content built to support the portfolio.',
       keywords: [
@@ -25,7 +25,7 @@ function buildMetadata(): Metadata {
         'solitaire strategy',
       ],
       openGraph: {
-        title: 'Solitaire Stack | Play FreeCell, Spider Solitaire, and More',
+        title: `${siteConfig.brandName} | Play FreeCell, Spider Solitaire, and More`,
         description:
           "Play FreeCell, Spider Solitaire, Baker's Game, and more from one growing solitaire hub.",
         url: absoluteUrl('/'),

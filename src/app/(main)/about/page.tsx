@@ -1,83 +1,79 @@
+import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
+import { canonicalUrlFor, isOwnedBy } from "@/lib/routeOwnership";
 import AdUnit from "@/components/AdUnit";
 import ContentLayout from "@/components/ContentLayout";
-import { ContentHero, SectionHeading, CardSection, ContentBody, CtaSection, JsonLd, ContentLinkCard } from "@/components/content";
+import {
+  ContentHero,
+  SectionHeading,
+  CardSection,
+  ContentBody,
+  CtaSection,
+  JsonLd,
+  ContentLinkCard,
+} from "@/components/content";
+import AuthorByline from "@/components/content/AuthorByline";
 
 export const metadata: Metadata = {
-  title: "About PlayFreeCellOnline.com | Free Online Card Games",
-  description:
-    "Learn about PlayFreeCellOnline.com — a free, modern FreeCell Solitaire experience with faithful Microsoft deal numbering, multiple game modes, and no downloads required.",
+  title: `About ${siteConfig.siteName} | Our Mission, Editorial Model & Research Process`,
+  description: `${siteConfig.siteName} is a branded solitaire content network with five editorial desks. Learn our mission, founding story, research process, and editorial standards.`,
   keywords: [
-    "about playfreecellonline",
-    "free freecell online",
-    "freecell solitaire website",
-    "online card games",
-    "freecell no download",
-    "microsoft freecell online",
-    "freecell game modes",
-    "play freecell free",
+    "about solitaire stack",
+    "solitaire editorial team",
+    "solitaire research",
+    "solitaire network",
+    "solitaire fact checking",
+    "solitaire standards",
+    "who runs solitaire stack",
   ],
   openGraph: {
-    title: "About PlayFreeCellOnline.com | Free Online Card Games",
-    description:
-      "The story behind PlayFreeCellOnline.com — a clean, modern FreeCell experience with faithful Microsoft deal numbering and multiple game modes.",
+    title: `About ${siteConfig.siteName} | Mission, Team & Research Process`,
+    description: `How ${siteConfig.siteName} is researched, written, edited, and updated — by five specialty desks staffed to build the clearest solitaire reference on the open web.`,
     url: absoluteUrl("/about"),
     siteName: siteConfig.siteName,
-    type: "website",
+    type: "article",
   },
   twitter: {
     card: "summary_large_image",
   },
+  alternates: {
+    canonical: canonicalUrlFor("/about"),
+  },
 };
 
-/* ── Game data ── */
-
-const games = [
-  {
-    name: "FreeCell",
-    href: "/",
-    description:
-      "The classic game that started it all. All 52 cards dealt face-up, four free cells for temporary storage, and nearly every deal is solvable. Pure strategy with zero luck.",
-  },
-  {
-    name: "Spider Solitaire",
-    href: "/spider",
-    description:
-      "Two decks, ten columns, and the challenge of building complete same-suit runs from King to Ace. Available in one-suit, two-suit, and four-suit difficulty levels.",
-  },
-  {
-    name: "Baker's Game",
-    href: "/bakers-game",
-    description:
-      "FreeCell's stricter cousin. Same layout and free cells, but you must build by suit instead of alternating color. Significantly harder, with a win rate around 75%.",
-  },
-  {
-    name: "Eight Off",
-    href: "/eight-off",
-    description:
-      "Eight free cells instead of four, but building is by suit only. A fascinating middle ground between FreeCell and Baker's Game that rewards patient planning.",
-  },
-];
-
-/* ══════════════════════════════════════════════════════════════
-   Main Page
-   ══════════════════════════════════════════════════════════════ */
+const PUBLISHED_DATE = "2026-04-05";
+const UPDATED_DATE = "2026-04-05";
 
 export default function AboutPage() {
+  if (!isOwnedBy("/about", siteConfig.key)) notFound();
+
   const jsonLd = [
     {
       "@context": "https://schema.org",
-      "@type": "Organization",
-      name: siteConfig.siteName,
-      url: siteConfig.url,
-      description:
-        "Play FreeCell Solitaire online for free. No download, no signup. Classic Microsoft FreeCell deals, multiple game modes, and a clean modern experience.",
-      contactPoint: {
-        "@type": "ContactPoint",
-        email: siteConfig.privacyEmail,
-        contactType: "customer support",
+      "@type": "AboutPage",
+      name: `About ${siteConfig.siteName}`,
+      url: absoluteUrl("/about"),
+      datePublished: PUBLISHED_DATE,
+      dateModified: UPDATED_DATE,
+      publisher: {
+        "@type": "Organization",
+        name: siteConfig.siteName,
+        url: siteConfig.url,
+      },
+      mainEntity: {
+        "@type": "Organization",
+        name: siteConfig.siteName,
+        url: siteConfig.url,
+        description:
+          "A branded solitaire content network organized around five specialty editorial desks covering strategy, history, rules, research, and editorial oversight.",
+        department: [
+          { "@type": "Organization", name: "The Strategy Desk" },
+          { "@type": "Organization", name: "The History Desk" },
+          { "@type": "Organization", name: "The Rules Desk" },
+          { "@type": "Organization", name: "The Research Desk" },
+        ],
       },
     },
     {
@@ -104,460 +100,369 @@ export default function AboutPage() {
     <ContentLayout variant="dark">
       <JsonLd data={jsonLd} />
 
-      {/* ── Hero ── */}
       <ContentHero
-        title="About This Site"
-        subtitle="A passion project built for FreeCell lovers who want a clean, modern experience without the clutter."
+        title={`About ${siteConfig.siteName}`}
+        subtitle="A branded editorial network covering solitaire with five specialty desks, a documented research process, and published correction policy."
+        kicker="Our Mission & Team"
       />
 
-      {/* ── Content ── */}
       <main className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-10 pb-20 flex flex-col gap-6">
-        {/* The Story */}
-        <CardSection>
-          <SectionHeading sub="Our Origin" id="story" icon={"\u2665"}>
-            The Story Behind {siteConfig.siteName}
-          </SectionHeading>
+        <div className="-mt-4 mb-2 flex justify-center">
+          <AuthorByline
+            authorSlug="editorial-team"
+            publishedDate={PUBLISHED_DATE}
+            updatedDate={UPDATED_DATE}
+          />
+        </div>
 
-          <ContentBody className="space-y-5">
+        {/* Our Mission */}
+        <CardSection variant="dark">
+          <SectionHeading variant="dark" sub="Our Mission" id="mission" icon={"\u2660"}>
+            Why {siteConfig.siteName} exists
+          </SectionHeading>
+          <ContentBody variant="dark" className="space-y-5">
             <p>
-              If you grew up with a Windows PC in the 1990s or 2000s, chances
-              are you spent countless hours playing Microsoft FreeCell. It was
-              the perfect coffee-break game &mdash; a quick mental challenge
-              that rewarded careful thinking over blind luck. Every card was
-              visible from the start, and nearly every deal was solvable. All
-              you needed was patience and a plan.
+              {siteConfig.siteName} exists to be the clearest, most trustworthy
+              solitaire reference on the open web. Roughly one hundred million
+              people sit down to a solitaire game every month, and most of the
+              writing they find about those games is thin: scraped rules,
+              copy-paste histories, strategy advice written by people who have
+              not tested it at the table. We think solitaire players deserve
+              better than that, and the bar we hold ourselves to is simple — be
+              the best solitaire content network on the web, full stop.
             </p>
             <p>
-              When we went looking for that same experience online, we were
-              disappointed. Most FreeCell sites were bloated with intrusive
-              ads, slow to load, and riddled with pop-ups. Many used Flash
-              (now extinct) or required downloads. The ones that did work on
-              modern browsers felt like an afterthought &mdash; tiny game
-              boards, clunky controls, and no mobile support. The charm of the
-              original was lost.
+              Concretely, that means covering every serious variant with
+              canonical rules we have actually implemented, strategy grounded
+              in simulation and real play, history traced to primary sources
+              where they exist, and numbers we have run ourselves. When we
+              cannot verify a claim, we say so. When we are wrong, we correct
+              the record in public. Our job is to save a curious player from
+              reading ten surface-level pages to learn what one careful page
+              should have told them.
             </p>
             <p>
-              So we built {siteConfig.siteName}. The goal was simple: recreate
-              the experience of classic Microsoft FreeCell in a modern web
-              browser, with smooth animations, responsive design that works on
-              any screen size, and a clean interface that lets you focus on the
-              game. No downloads, no sign-ups, no bloated ad walls. Just
-              FreeCell, the way it should be.
+              The network is organized as a hub at {siteConfig.siteName} plus
+              a set of spoke domains that cover individual games in depth:
+              FreeCell, Klondike, and Spider each have their own home. The
+              hub handles cross-game reference material &mdash; comparison
+              pages, history, taxonomy, rules glossary, and the editorial
+              infrastructure you are reading right now. The spokes handle
+              the everyday tools players need: deal numbers, solvers, daily
+              challenges, statistics. Wherever you land, the editorial
+              standards are the same.
+            </p>
+          </ContentBody>
+        </CardSection>
+
+        {/* Founding Story */}
+        <CardSection variant="dark">
+          <SectionHeading variant="dark" sub="Founding Story" id="founding" icon={"\u2665"}>
+            How the network started
+          </SectionHeading>
+          <ContentBody variant="dark" className="space-y-5">
+            <p>
+              We started {siteConfig.siteName} because the open web was full of
+              solitaire content that did not respect the reader. Rule pages
+              copied verbatim from Wikipedia. Strategy articles that said
+              nothing more useful than &ldquo;plan ahead.&rdquo; History pieces
+              that repeated the Napoleon-on-St-Helena legend as fact without
+              ever naming a source. Thousands of near-identical &ldquo;how to
+              play solitaire&rdquo; pages, each one stuffed with ads and each
+              one telling a beginner roughly the same four paragraphs.
             </p>
             <p>
-              We kept the original Microsoft deal numbering system &mdash;
-              deals 1 through 32,000 &mdash; so veterans can revisit their
-              favorite (or most hated) deals. If you remember struggling with
-              deal #11982 back in the day, you can struggle with it here too.
-              It&apos;s the same algorithm, the same cards, the same challenge.
-              Some things are worth preserving exactly as they were.
+              The founding idea was to build a branded editorial operation
+              around solitaire the way a good trade publication is built
+              around any other specialty. That meant naming specialty desks,
+              writing a house style guide, documenting our research and
+              correction processes, and publishing a masthead so readers knew
+              who was behind each page. It also meant being selective: we
+              publish fewer pages than an SEO farm, and we update them on a
+              rolling schedule so they stay accurate as games, rules, and
+              player understanding evolve.
             </p>
             <p>
-              What started as a FreeCell project grew into something broader.
-              We added{" "}
-              <Link href="/spider" className="text-[#8B6914] hover:underline">
-                Spider Solitaire
-              </Link>
-              ,{" "}
-              <Link
-                href="/bakers-game"
-                className="text-[#8B6914] hover:underline"
-              >
-                Baker&apos;s Game
-              </Link>
-              , and{" "}
-              <Link
-                href="/eight-off"
-                className="text-[#8B6914] hover:underline"
-              >
-                Eight Off
-              </Link>{" "}
-              &mdash; all built with the same attention to quality. We
-              introduced a{" "}
-              <Link href="/streak" className="text-[#8B6914] hover:underline">
-                Daily Challenge with streaks
-              </Link>
-              , a timed{" "}
-              <Link href="/storm" className="text-[#8B6914] hover:underline">
-                Storm mode
-              </Link>
-              , and a{" "}
-              <Link href="/solver" className="text-[#8B6914] hover:underline">
-                FreeCell solver
-              </Link>{" "}
-              for those impossible deals. Every feature was added because we
-              wanted it ourselves.
+              The network launched as a small collection of FreeCell pages and
+              has grown into a hub at {siteConfig.siteName} plus a family of
+              spoke domains covering FreeCell, Klondike, and Spider. The
+              editorial model, however, has stayed the same from day one.
             </p>
           </ContentBody>
         </CardSection>
 
         <AdUnit />
 
-        {/* What Makes Us Different */}
-        <CardSection>
-          <SectionHeading
-            sub="Why Choose Us"
-            id="different"
-            icon={"\u2660"}
-          >
-            What Makes Us Different
+        {/* Editorial Model */}
+        <CardSection variant="dark">
+          <SectionHeading variant="dark" sub="Editorial Model" id="desks" icon={"\u2666"}>
+            Five desks, one editorial standard
           </SectionHeading>
-
-          <ContentBody>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="card-inset rounded-lg p-5">
-                <h3
-                  className="font-medium text-[#2a2522] mb-3"
-                  style={{
-                    fontFamily: "var(--font-playfair), Georgia, serif",
-                  }}
-                >
-                  No Download Required
-                </h3>
-                <p className="text-[#444444] text-sm leading-relaxed">
-                  Play instantly in any modern browser &mdash; Chrome, Safari,
-                  Firefox, Edge. No app to install, no Flash plugin, no Java
-                  applet. Just open the page and start playing. Works on
-                  desktop, tablet, and phone.
-                </p>
-              </div>
-
-              <div className="card-inset rounded-lg p-5">
-                <h3
-                  className="font-medium text-[#2a2522] mb-3"
-                  style={{
-                    fontFamily: "var(--font-playfair), Georgia, serif",
-                  }}
-                >
-                  Faithful Deal Numbering
-                </h3>
-                <p className="text-[#444444] text-sm leading-relaxed">
-                  We use the original Microsoft FreeCell deal-generation
-                  algorithm. Deals 1&ndash;32,000 produce exactly the same
-                  card layouts as the classic Windows game. Compare your
-                  solutions with decades of community knowledge.
-                </p>
-              </div>
-
-              <div className="card-inset rounded-lg p-5">
-                <h3
-                  className="font-medium text-[#2a2522] mb-3"
-                  style={{
-                    fontFamily: "var(--font-playfair), Georgia, serif",
-                  }}
-                >
-                  Multiple Game Modes
-                </h3>
-                <p className="text-[#444444] text-sm leading-relaxed">
-                  Beyond classic FreeCell, we offer a{" "}
-                  <Link
-                    href="/streak"
-                    className="text-[#8B6914] hover:underline"
-                  >
-                    Daily Challenge
-                  </Link>{" "}
-                  with streak tracking, a fast-paced{" "}
-                  <Link
-                    href="/storm"
-                    className="text-[#8B6914] hover:underline"
-                  >
-                    Storm mode
-                  </Link>{" "}
-                  with five timed games, and a{" "}
-                  <Link
-                    href="/solver"
-                    className="text-[#8B6914] hover:underline"
-                  >
-                    solver
-                  </Link>{" "}
-                  to check any deal&apos;s solution.
-                </p>
-              </div>
-
-              <div className="card-inset rounded-lg p-5">
-                <h3
-                  className="font-medium text-[#2a2522] mb-3"
-                  style={{
-                    fontFamily: "var(--font-playfair), Georgia, serif",
-                  }}
-                >
-                  Multiple Solitaire Variants
-                </h3>
-                <p className="text-[#444444] text-sm leading-relaxed">
-                  Love solitaire card games? We offer{" "}
-                  <Link
-                    href="/spider"
-                    className="text-[#8B6914] hover:underline"
-                  >
-                    Spider Solitaire
-                  </Link>
-                  ,{" "}
-                  <Link
-                    href="/bakers-game"
-                    className="text-[#8B6914] hover:underline"
-                  >
-                    Baker&apos;s Game
-                  </Link>
-                  , and{" "}
-                  <Link
-                    href="/eight-off"
-                    className="text-[#8B6914] hover:underline"
-                  >
-                    Eight Off
-                  </Link>{" "}
-                  &mdash; each with unique rules and their own strategic depth.
-                </p>
-              </div>
-
-              <div className="card-inset rounded-lg p-5">
-                <h3
-                  className="font-medium text-[#2a2522] mb-3"
-                  style={{
-                    fontFamily: "var(--font-playfair), Georgia, serif",
-                  }}
-                >
-                  Works on Any Device
-                </h3>
-                <p className="text-[#444444] text-sm leading-relaxed">
-                  Responsive design adapts to any screen size &mdash; from
-                  large desktop monitors to small phone screens. Touch controls
-                  feel natural on mobile, and keyboard shortcuts are available
-                  on desktop. Play wherever you are.
-                </p>
-              </div>
-
-              <div className="card-inset rounded-lg p-5">
-                <h3
-                  className="font-medium text-[#2a2522] mb-3"
-                  style={{
-                    fontFamily: "var(--font-playfair), Georgia, serif",
-                  }}
-                >
-                  Clean, Modern Experience
-                </h3>
-                <p className="text-[#444444] text-sm leading-relaxed">
-                  No pop-ups, no mandatory sign-ups, no dark patterns. The
-                  interface is designed to stay out of your way so you can
-                  focus on what matters &mdash; the cards. Smooth animations
-                  and thoughtful design throughout.
-                </p>
-              </div>
-            </div>
+          <ContentBody variant="dark" className="space-y-5">
+            <p>
+              We organize our writing around five desks, each with its own
+              beat, its own voice, and its own contact address. Every article
+              on the network is published under one of these desks, and every
+              article goes through our shared editorial standards before it
+              reaches a reader.
+            </p>
+            <ul className="space-y-4 list-none pl-0">
+              <li>
+                <strong className="text-white">The Editorial Team</strong> is
+                the masthead. We set the house style, commission pieces,
+                coordinate between desks, fact-check, and run the rolling
+                update schedule. See our{" "}
+                <Link href="/authors/editorial-team" className="text-[#D4AF37] hover:underline">
+                  Editorial Team profile
+                </Link>
+                .
+              </li>
+              <li>
+                <strong className="text-white">The Strategy Desk</strong>{" "}
+                covers tactics, decision-making, and probability: opening
+                theory, move-ordering, supermove math, endgame technique. See{" "}
+                <Link href="/authors/the-strategy-desk" className="text-[#D4AF37] hover:underline">
+                  the Strategy Desk profile
+                </Link>
+                .
+              </li>
+              <li>
+                <strong className="text-white">The History Desk</strong>{" "}
+                covers origins, variants, the patience tradition, and the
+                Microsoft era. We cite primary sources where available and
+                flag disputed claims. See{" "}
+                <Link href="/authors/the-history-desk" className="text-[#D4AF37] hover:underline">
+                  the History Desk profile
+                </Link>
+                .
+              </li>
+              <li>
+                <strong className="text-white">The Rules Desk</strong> owns
+                canonical rules for every variant we cover, writes the how-to
+                pages, and tests teaching materials on real beginners. See{" "}
+                <Link href="/authors/the-rules-desk" className="text-[#D4AF37] hover:underline">
+                  the Rules Desk profile
+                </Link>
+                .
+              </li>
+              <li>
+                <strong className="text-white">The Research Desk</strong> runs
+                simulations, builds solvers, and publishes win-rate and
+                solvability numbers with methodology disclosed. See{" "}
+                <Link href="/authors/the-research-desk" className="text-[#D4AF37] hover:underline">
+                  the Research Desk profile
+                </Link>
+                .
+              </li>
+            </ul>
+            <p>
+              Every page on the network carries a byline identifying which
+              desk wrote it, the publication date, and the most recent update
+              date. You can browse every desk profile on our{" "}
+              <Link href="/authors" className="text-[#D4AF37] hover:underline">
+                authors directory
+              </Link>
+              .
+            </p>
           </ContentBody>
         </CardSection>
 
-        {/* Our Games */}
-        <CardSection>
-          <SectionHeading sub="What We Offer" id="games" icon={"\u2666"}>
-            Our Games
+        {/* Research Process */}
+        <CardSection variant="dark">
+          <SectionHeading variant="dark" sub="Research Process" id="process" icon={"\u2663"}>
+            How a page is made
           </SectionHeading>
-
-          <ContentBody className="space-y-6">
-            {games.map((game) => (
-              <div key={game.name}>
-                <h3 className="font-medium text-[#2a2522] text-lg mb-2">
-                  <Link
-                    href={game.href}
-                    className="text-[#8B6914] hover:underline"
-                  >
-                    {game.name}
-                  </Link>
-                </h3>
-                <p className="text-[#444444] leading-relaxed">
-                  {game.description}
-                </p>
-              </div>
-            ))}
-
-            <div className="card-inset rounded-lg p-5 mt-4">
-              <h3
-                className="font-medium text-[#2a2522] mb-3"
-                style={{
-                  fontFamily: "var(--font-playfair), Georgia, serif",
-                }}
-              >
-                Special Game Modes
-              </h3>
-              <ul className="space-y-2 text-[#444444] text-sm leading-relaxed">
-                <li>
-                  <strong>
-                    <Link
-                      href="/streak"
-                      className="text-[#8B6914] hover:underline"
-                    >
-                      Daily Challenge &amp; Streak
-                    </Link>
-                  </strong>{" "}
-                  &mdash; A new deal every day, the same for all players
-                  worldwide. Build consecutive winning streaks and compete on
-                  time and moves.
-                </li>
-                <li>
-                  <strong>
-                    <Link
-                      href="/storm"
-                      className="text-[#8B6914] hover:underline"
-                    >
-                      Storm Mode
-                    </Link>
-                  </strong>{" "}
-                  &mdash; Five games, timed. How many can you win before the
-                  clock runs out? A fast-paced test of speed and accuracy.
-                </li>
-                <li>
-                  <strong>
-                    <Link
-                      href="/solver"
-                      className="text-[#8B6914] hover:underline"
-                    >
-                      FreeCell Solver
-                    </Link>
-                  </strong>{" "}
-                  &mdash; Enter any deal number and get a step-by-step
-                  solution. Perfect for learning strategy or checking whether a
-                  deal is solvable.
-                </li>
-              </ul>
-            </div>
+          <ContentBody variant="dark" className="space-y-5">
+            <p>
+              Every article on the network moves through a six-stage pipeline
+              before it is published, and it re-enters that pipeline whenever
+              something changes in the game, the research, or the rules.
+            </p>
+            <ol className="space-y-3 list-decimal pl-6">
+              <li>
+                <strong className="text-white">Research.</strong> The
+                assigning desk gathers primary and secondary sources: rulebooks,
+                historical archives, simulation data, academic papers,
+                reference implementations. We keep a source list per article.
+              </li>
+              <li>
+                <strong className="text-white">Draft.</strong> The desk writer
+                produces a first draft. Claims are cited inline. Uncertainty
+                is explicit. If we do not know, we say we do not know.
+              </li>
+              <li>
+                <strong className="text-white">Fact-check.</strong> A different
+                pair of eyes verifies every factual claim against its source.
+                Numbers are re-derived. Rule claims are tested against the
+                game engine. History claims are traced to their citation.
+              </li>
+              <li>
+                <strong className="text-white">Desk review.</strong> A senior
+                editor on the owning desk signs off on accuracy, coverage, and
+                tone. Strategy pieces get a second strategy review. Rules
+                pieces get tested on a new player.
+              </li>
+              <li>
+                <strong className="text-white">Publish.</strong> The article
+                goes live with author byline, publication date, and canonical
+                URL. The page enters our rolling update calendar.
+              </li>
+              <li>
+                <strong className="text-white">Update.</strong> We revisit
+                articles on a scheduled cadence and whenever something
+                material changes. Updates are marked with a visible updated
+                date.
+              </li>
+            </ol>
+            <p>
+              For the full process, including how we handle AI tooling and
+              sourcing disputes, see our{" "}
+              <Link href="/editorial-standards" className="text-[#D4AF37] hover:underline">
+                editorial standards
+              </Link>{" "}
+              and our{" "}
+              <Link href="/fact-checking-policy" className="text-[#D4AF37] hover:underline">
+                fact-checking policy
+              </Link>
+              .
+            </p>
           </ContentBody>
         </CardSection>
 
         <AdUnit />
 
-        {/* Technical Details */}
-        <CardSection>
-          <SectionHeading
-            sub="Under the Hood"
-            id="technical"
-            icon={"\u2663"}
-          >
-            Technical Details
+        {/* Our Standards */}
+        <CardSection variant="dark">
+          <SectionHeading variant="dark" sub="Our Standards" id="standards" icon={"\u2660"}>
+            Editorial standards
           </SectionHeading>
-
-          <ContentBody className="space-y-5">
+          <ContentBody variant="dark" className="space-y-5">
             <p>
-              {siteConfig.siteName} is built as a modern progressive web
-              application using Next.js and React. The game engine runs
-              entirely in your browser &mdash; no server round-trips for
-              gameplay, which means fast, responsive interaction even on
-              slower connections.
+              Our editorial standards cover independence, sourcing, evidence,
+              AI usage, updates, disclosure, and voice. They are written down
+              and public. If you ever want to know whether a page on the
+              network should have been written the way it was, the standards
+              page is where to check.
             </p>
             <p>
-              The site works offline once loaded. You can add it to your home
-              screen on mobile devices and play it like a native app. Game
-              state and statistics are saved locally in your browser, so your
-              progress persists between sessions without needing an account.
-            </p>
-            <p>
-              We take privacy seriously. We don&apos;t require registration,
-              we don&apos;t collect personal information, and we don&apos;t
-              sell data to third parties. Your game statistics stay on your
-              device. You can read our full{" "}
-              <Link
-                href="/privacy"
-                className="text-[#8B6914] hover:underline"
-              >
-                privacy policy
+              The short version: we write what we believe is best for players
+              (not for advertisers), we cite sources, we back numerical claims
+              with simulation, we use AI tools to accelerate research but
+              never to publish unreviewed, and we correct errors in public. See
+              the full{" "}
+              <Link href="/editorial-standards" className="text-[#D4AF37] hover:underline">
+                editorial standards policy
               </Link>{" "}
-              for complete details.
+              for the complete text.
             </p>
+          </ContentBody>
+        </CardSection>
+
+        {/* What We Don't Do */}
+        <CardSection variant="dark">
+          <SectionHeading variant="dark" sub="What We Avoid" id="avoid" icon={"\u2665"}>
+            What we don&rsquo;t do
+          </SectionHeading>
+          <ContentBody variant="dark" className="space-y-5">
             <p>
-              The deal-generation algorithm faithfully reproduces
-              Microsoft&apos;s original linear congruential generator, so
-              deals 1&ndash;32,000 match the classic Windows FreeCell exactly.
-              We also support extended deals beyond 32,000 using the same
-              mathematical approach, giving you millions of unique puzzles to
-              solve.
+              Part of building a trustworthy reference is being explicit about
+              what we will not publish.
             </p>
+            <ul className="space-y-3 list-disc pl-6">
+              <li>
+                <strong className="text-white">No AI-generated, unedited content.</strong>{" "}
+                We use AI tools to speed up research and drafting, but every
+                article is reviewed, rewritten, and signed off by a human
+                editor on the assigning desk. AI does not publish here.
+              </li>
+              <li>
+                <strong className="text-white">No sponsored &ldquo;content.&rdquo;</strong>{" "}
+                We do not accept paid placements disguised as editorial. If
+                we ever run a sponsored unit, it will be labelled plainly and
+                kept separate from the editorial flow.
+              </li>
+              <li>
+                <strong className="text-white">No regurgitated Wikipedia copy.</strong>{" "}
+                Wikipedia is a starting point, not a source. Every history or
+                rules claim is traced to a primary source or flagged as
+                disputed.
+              </li>
+              <li>
+                <strong className="text-white">No thin SEO farm pages.</strong>{" "}
+                We do not publish near-identical pages to chase long-tail
+                keywords. If two topics belong in one page, they live in one
+                page.
+              </li>
+            </ul>
           </ContentBody>
         </CardSection>
 
         {/* Contact */}
-        <CardSection>
-          <SectionHeading sub="Get in Touch" id="contact" icon={"\u2665"}>
-            Contact Us
+        <CardSection variant="dark">
+          <SectionHeading variant="dark" sub="Get in Touch" id="contact" icon={"\u2666"}>
+            Contact the team
           </SectionHeading>
-
-          <ContentBody className="space-y-5">
+          <ContentBody variant="dark" className="space-y-5">
             <p>
-              Have a question, found a bug, or just want to share your best
-              win streak? We&apos;d love to hear from you. Reach us at{" "}
-              <a
-                href={`mailto:${siteConfig.privacyEmail}`}
-                className="text-[#8B6914] hover:underline"
-              >
-                {siteConfig.privacyEmail}
-              </a>
-              .
-            </p>
-            <p>
-              We read every email and do our best to respond promptly. Whether
-              it&apos;s a feature request, accessibility concern, or just a
-              note saying you enjoy the site &mdash; it all helps us make the
-              experience better for everyone.
+              Each desk keeps its own inbox. Strategy questions go to the
+              Strategy Desk, rule disputes go to the Rules Desk, historical
+              citations go to the History Desk, and numerical or methodology
+              questions go to the Research Desk. For everything else, write
+              to the Editorial Team. See the{" "}
+              <Link href="/contact" className="text-[#D4AF37] hover:underline">
+                full contact directory
+              </Link>{" "}
+              for desk-by-desk email addresses and response-time expectations.
             </p>
           </ContentBody>
         </CardSection>
 
-        {/* Related Content */}
-        <CardSection>
-          <SectionHeading sub="Read Next" id="related" icon="♦">
-            Related Guides
+        {/* Related */}
+        <CardSection variant="dark">
+          <SectionHeading variant="dark" sub="Read Next" id="related" icon={"\u2663"}>
+            Related editorial pages
           </SectionHeading>
-          <ContentBody className="grid gap-4 md:grid-cols-3">
-            <ContentLinkCard variant="felt" href="/how-to-play" title="How to Play FreeCell" description="Learn the rules from scratch with our complete beginner-friendly tutorial." />
-            <ContentLinkCard variant="felt" href="/history" title="FreeCell History" description="From a 1978 university mainframe to every Windows PC — the full story." />
-            <ContentLinkCard variant="felt" href="/solitaire-types" title="Solitaire Types" description="Explore 20+ solitaire variants and find your next favorite card game." />
-            <ContentLinkCard variant="felt" href="/freecell-variants" title="FreeCell Variants" description="Baker's Game, Eight Off, and other ways to play FreeCell." />
-            <ContentLinkCard variant="felt" href="/microsoft-freecell" title="Microsoft FreeCell" description="The iconic Windows game that introduced millions to FreeCell." />
-            <ContentLinkCard variant="felt" href="/faq" title="FAQ" description="Quick answers to the most common FreeCell questions." />
+          <ContentBody variant="dark" className="grid gap-4 md:grid-cols-2">
+            <ContentLinkCard
+              variant="dark"
+              href="/editorial-standards"
+              title="Editorial Standards"
+              description="Independence, sourcing, evidence standards, AI usage, disclosure, and voice — the full editorial policy."
+            />
+            <ContentLinkCard
+              variant="dark"
+              href="/fact-checking-policy"
+              title="Fact-Checking Policy"
+              description="How we verify rule, history, probability, and strategy claims, and what happens when a source disagrees."
+            />
+            <ContentLinkCard
+              variant="dark"
+              href="/correction-policy"
+              title="Correction Policy"
+              description="When, how, and where we correct errors in published articles, including retractions."
+            />
+            <ContentLinkCard
+              variant="dark"
+              href="/contact"
+              title="Contact the Team"
+              description="Desk-by-desk contact addresses and the general contact form."
+            />
           </ContentBody>
         </CardSection>
 
-        {/* CTA */}
         <CtaSection
+          heading="Browse the network"
           body={
             <>
-              Jump into a game of FreeCell right now. No sign-up, no
-              download &mdash; just pure card game strategy.
+              Start with our rules and strategy library, or browse the full
+              directory of solitaire variants we cover.
             </>
           }
-          secondaryLabel="How to Play"
-          secondaryHref="/how-to-play"
-        >
-          <div className="mt-6 flex flex-wrap justify-center gap-4 text-sm text-[#6B7280]">
-            <Link
-              href="/strategy"
-              className="text-[#D4AF37]/70 hover:text-[#D4AF37] hover:underline"
-            >
-              Strategy Guide
-            </Link>
-            <Link
-              href="/spider"
-              className="text-[#D4AF37]/70 hover:text-[#D4AF37] hover:underline"
-            >
-              Spider Solitaire
-            </Link>
-            <Link
-              href="/solver"
-              className="text-[#D4AF37]/70 hover:text-[#D4AF37] hover:underline"
-            >
-              FreeCell Solver
-            </Link>
-            <Link
-              href="/streak"
-              className="text-[#D4AF37]/70 hover:text-[#D4AF37] hover:underline"
-            >
-              Daily Streak
-            </Link>
-            <Link
-              href="/storm"
-              className="text-[#D4AF37]/70 hover:text-[#D4AF37] hover:underline"
-            >
-              Storm Mode
-            </Link>
-          </div>
-        </CtaSection>
+          primaryLabel="See all games"
+          primaryHref="/games"
+          secondaryLabel="Meet the team"
+          secondaryHref="/authors"
+        />
       </main>
     </ContentLayout>
   );

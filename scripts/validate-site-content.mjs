@@ -81,6 +81,8 @@ const WHITELIST_PATHS = [
   'src/lib/siteCopy.ts',
   'src/components/NetworkCrossLinks.tsx',
   'src/components/Analytics.tsx',
+  'src/components/SolitaireHubHome.tsx', // hub-only component (renders iff isHubSite)
+  'src/components/MoreGames.tsx', // cross-domain promotion (marked allow-foreign-brand inline)
   'src/app/(main)/daily-freecell/share/[date]/opengraph-image.tsx',
 ];
 
@@ -88,6 +90,16 @@ const WHITELIST_PATHS = [
 const WHITELIST_PATH_PATTERNS = [
   /^src\/content\/blog\//,
   /^src\/content\/authors\//,
+  // Hub-only routes — all are runtime-gated via isOwnedBy(path, siteConfig.key)
+  // or isHubSite and will notFound() on any spoke domain. Brand references
+  // inside them cannot leak at render time.
+  /^src\/app\/\(main\)\/authors(\/|$)/,
+  /^src\/app\/\(main\)\/contact(\/|$)/,
+  /^src\/app\/\(main\)\/editorial-standards(\/|$)/,
+  /^src\/app\/\(main\)\/fact-checking-policy(\/|$)/,
+  /^src\/app\/\(main\)\/correction-policy(\/|$)/,
+  /^src\/app\/\(main\)\/how-we-test-solitaire-games(\/|$)/,
+  /^src\/app\/\(main\)\/our-solitaire-methodology(\/|$)/,
 ];
 
 /** Inline comment directive that suppresses a single line. */

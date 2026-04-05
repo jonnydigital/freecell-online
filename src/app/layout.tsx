@@ -43,6 +43,19 @@ export const metadata: Metadata = {
   },
 };
 
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: siteConfig.siteName,
+  url: siteConfig.url,
+  foundingDate: "2022-01-01",
+  contactPoint: {
+    "@type": "ContactPoint",
+    contactType: "Editorial",
+    email: siteConfig.privacyEmail,
+  },
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -59,6 +72,10 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" href="/icons/favicon.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
         {/* Blocking theme script — applies CSS vars before first paint to prevent FOUC */}
         <script
           dangerouslySetInnerHTML={{

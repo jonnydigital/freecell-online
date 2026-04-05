@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 import { absoluteUrl, siteConfig } from '@/lib/siteConfig';
+import { isOwnedBy } from '@/lib/routeOwnership';
 import StormPage from './StormPage';
 
 export const metadata: Metadata = {
@@ -29,6 +31,9 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
+  if (!isOwnedBy('/storm', siteConfig.key)) {
+    notFound();
+  }
   const gameJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { absoluteUrl } from "@/lib/siteConfig";
+import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import AdUnit from "@/components/AdUnit";
 import InContentAd from "@/components/InContentAd";
 import ContentLayout from "@/components/ContentLayout";
@@ -31,8 +31,8 @@ const jsonLd = {
   headline: "FreeCell Strategy Guide — Beginner to Expert",
   description:
     "A comprehensive guide to winning FreeCell solitaire, covering beginner fundamentals through advanced endgame techniques.",
-  author: { "@type": "Organization", name: "PlayFreeCellOnline.com" },
-  publisher: { "@type": "Organization", name: "PlayFreeCellOnline.com" },
+  author: { "@type": "Organization", name: siteConfig.siteName },
+  publisher: { "@type": "Organization", name: siteConfig.siteName },
   datePublished: "2026-02-15",
   dateModified: "2026-03-01",
 };

@@ -58,8 +58,7 @@ export const metadata: Metadata = {
 const faqItems = [
   {
     question: "Do I need to download anything to play FreeCell?",
-    answer:
-      "No. You can play FreeCell instantly in your browser at PlayFreeCellOnline.com with no download required. However, if you want an app-like experience with offline play and a home screen icon, you can install our free web app in about 10 seconds using your browser's install feature. It works on Chrome, Safari, Edge, and Firefox across all platforms.",
+    answer: `No. You can play FreeCell instantly in your browser at ${siteConfig.siteName} with no download required. However, if you want an app-like experience with offline play and a home screen icon, you can install our free web app in about 10 seconds using your browser's install feature. It works on Chrome, Safari, Edge, and Firefox across all platforms.`,
   },
   {
     question: "Is this FreeCell app really free?",
@@ -237,7 +236,7 @@ export default function DownloadFreecellPage() {
                 <li>
                   Open{" "}
                   <Link href="/" className="text-[#D4AF37] hover:underline">
-                    PlayFreeCellOnline.com
+                    {siteConfig.siteName}
                   </Link>{" "}
                   in Chrome or Microsoft Edge.
                 </li>
@@ -266,7 +265,7 @@ export default function DownloadFreecellPage() {
                 <li>
                   Open{" "}
                   <Link href="/" className="text-[#D4AF37] hover:underline">
-                    PlayFreeCellOnline.com
+                    {siteConfig.siteName}
                   </Link>{" "}
                   in Safari (this only works in Safari on iOS).
                 </li>
@@ -298,7 +297,7 @@ export default function DownloadFreecellPage() {
                 <li>
                   Open{" "}
                   <Link href="/" className="text-[#D4AF37] hover:underline">
-                    PlayFreeCellOnline.com
+                    {siteConfig.siteName}
                   </Link>{" "}
                   in Chrome on your Android device.
                 </li>

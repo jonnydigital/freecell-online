@@ -70,7 +70,7 @@ export default function MoreGames({ currentSlug, maxGames = 5 }: MoreGamesProps)
       ) : (
         <p className="mt-6 text-sm text-white/40 text-center">
           Visit our dedicated FreeCell site at{' '}
-          <a href="https://playfreecellonline.com" className="text-[#D4AF37]/70 hover:text-[#D4AF37] hover:underline transition-colors">
+          <a href="https://playfreecellonline.com" className="text-[#D4AF37]/70 hover:text-[#D4AF37] hover:underline transition-colors">{/* allow-foreign-brand:cross-site-promotion */}
             PlayFreeCellOnline.com
           </a>
         </p>

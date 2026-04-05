@@ -59,8 +59,7 @@ const faqs = [
   },
   {
     question: "Can I play specific FreeCell deal numbers on this site?",
-    answer:
-      "Yes. PlayFreeCellOnline.com supports numbered deals \u2014 you can enter any game number to play that specific deal. Use the deal explorer to browse notable deals, or enter a number directly to challenge a specific arrangement. Every numbered deal generates the same card layout every time, so you can retry, compare strategies, or compete with friends on the same deal.",
+    answer: `Yes. ${siteConfig.siteName} supports numbered deals \u2014 you can enter any game number to play that specific deal. Use the deal explorer to browse notable deals, or enter a number directly to challenge a specific arrangement. Every numbered deal generates the same card layout every time, so you can retry, compare strategies, or compete with friends on the same deal.`,
   },
   {
     question: "Are FreeCell deal numbers the same across different versions?",
@@ -388,7 +387,7 @@ export default function FamousFreecellGameNumbersPage() {
 
           <ContentBody className="space-y-4">
             <p>
-              You can play any numbered deal on PlayFreeCellOnline.com. Here
+              You can play any numbered deal on {siteConfig.siteName}. Here
               are some to start with:
             </p>
             <div className="grid sm:grid-cols-2 gap-3">

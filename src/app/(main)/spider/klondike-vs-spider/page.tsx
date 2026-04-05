@@ -1,6 +1,9 @@
+import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
+import { siteCopy } from "@/lib/siteCopy";
+import { canonicalUrlFor, isOwnedBy } from "@/lib/routeOwnership";
 import AdUnit from "@/components/AdUnit";
 import ContentLayout from "@/components/ContentLayout";
 import NetworkCrossLinks from "@/components/NetworkCrossLinks";
@@ -37,6 +40,9 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
   },
+  alternates: {
+    canonical: canonicalUrlFor("/spider/klondike-vs-spider"),
+  },
 };
 
 /* ── FAQ data ── */
@@ -64,8 +70,7 @@ const faqs = [
   },
   {
     question: "Can I play both Klondike and Spider on this site?",
-    answer:
-      "Yes! PlayFreeCellOnline.com offers both Klondike and Spider Solitaire alongside FreeCell and many other variants. All games are free to play in your browser with no download required. Each game includes features like undo, auto-complete, statistics tracking, and daily challenges.",
+    answer: `${siteCopy.crossGameAvailability} All games are free to play in your browser with no download required. Each game includes features like undo, auto-complete, statistics tracking, and daily challenges.`,
   },
   {
     question: "Which solitaire game has more luck \u2014 Klondike or Spider?",
@@ -140,6 +145,10 @@ const comparisonRows = [
    ══════════════════════════════════════════════════════════════ */
 
 export default function KlondikeVsSpiderPage() {
+  if (!isOwnedBy("/spider/klondike-vs-spider", siteConfig.key)) {
+    notFound();
+  }
+
   const jsonLd = [
     {
       "@context": "https://schema.org",

@@ -1,6 +1,8 @@
+import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
+import { canonicalUrlFor, isOwnedBy } from "@/lib/routeOwnership";
 import AdUnit from "@/components/AdUnit";
 import ContentLayout from "@/components/ContentLayout";
 import NetworkCrossLinks from "@/components/NetworkCrossLinks";
@@ -36,6 +38,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
+  },
+  alternates: {
+    canonical: canonicalUrlFor("/freecell-vs-eight-off"),
   },
 };
 
@@ -145,6 +150,10 @@ const comparisonRows = [
    ══════════════════════════════════════════════════════════════ */
 
 export default function FreecellVsEightOffPage() {
+  if (!isOwnedBy("/freecell-vs-eight-off", siteConfig.key)) {
+    notFound();
+  }
+
   const jsonLd = [
     {
       "@context": "https://schema.org",
@@ -554,7 +563,7 @@ export default function FreecellVsEightOffPage() {
 
           <ContentBody className="space-y-4">
             <p>
-              Play both games right here on PlayFreeCellOnline.com &mdash;
+              Play both games right here on {siteConfig.siteName} &mdash;
               completely free, no download required.
             </p>
             <div className="flex flex-wrap gap-4">

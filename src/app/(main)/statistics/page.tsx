@@ -87,8 +87,8 @@ const articleJsonLd = {
   headline: "FreeCell Statistics & Win Rates",
   description:
     "Comprehensive statistics on FreeCell solvability, win rates, difficulty tiers, and mathematical analysis of the game.",
-  author: { "@type": "Organization", name: "PlayFreeCellOnline.com" },
-  publisher: { "@type": "Organization", name: "PlayFreeCellOnline.com" },
+  author: { "@type": "Organization", name: siteConfig.siteName },
+  publisher: { "@type": "Organization", name: siteConfig.siteName },
   datePublished: "2026-03-06",
   dateModified: "2026-03-06",
 };

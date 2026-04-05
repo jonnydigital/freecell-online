@@ -83,6 +83,15 @@ export const ROUTE_OWNERSHIP: Record<string, RouteOwnership> = {
   '/tips': HUB_ONLY,
   '/faq': HUB_ONLY,
 
+  // Editorial masthead / author profile pages (hub-only)
+  '/authors': HUB_ONLY,
+  '/authors/[slug]': HUB_ONLY,
+
+  // Methodology and testing pages (hub-only, E-E-A-T signals)
+  '/how-we-test-solitaire-games': HUB_ONLY,
+  '/our-solitaire-methodology': HUB_ONLY,
+  '/editorial-standards': HUB_ONLY,
+
   // Corporate / legal pages (all hub-owned)
   '/about': HUB_ONLY,
   '/privacy': HUB_ONLY,

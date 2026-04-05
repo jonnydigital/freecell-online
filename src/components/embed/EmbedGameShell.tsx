@@ -214,12 +214,7 @@ export default function EmbedGameShell() {
       {/* ── Attribution bar ── */}
       <div className="flex items-center justify-center px-3 py-1 bg-black/30 text-xs text-white/50 shrink-0">
         Powered by{' '}
-        <a
-          href="https://playfreecellonline.com?utm_source=embed&utm_medium=widget"
-          target="_blank"
-          rel="noopener"
-          className="text-[#D4AF37]/70 hover:text-[#D4AF37] ml-1 transition-colors"
-        >
+        <a href="https://playfreecellonline.com?utm_source=embed&utm_medium=widget" target="_blank" rel="noopener" className="text-[#D4AF37]/70 hover:text-[#D4AF37] ml-1 transition-colors">{/* allow-foreign-brand:embed-canonical-owner */}
           PlayFreeCellOnline.com
         </a>
       </div>

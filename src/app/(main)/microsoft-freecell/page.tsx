@@ -58,8 +58,7 @@ export const metadata: Metadata = {
 const faqItems = [
   {
     question: "Where can I play Microsoft FreeCell online?",
-    answer:
-      "You can play Microsoft FreeCell online right here at PlayFreeCellOnline.com — completely free, no download or account required. Our version uses the same deal numbering algorithm as the original Windows FreeCell, so games #1 through #32,000 are identical to the classic version. You get all the nostalgic gameplay plus modern features like unlimited undo, hints, statistics tracking, and mobile support.",
+    answer: `You can play Microsoft FreeCell online right here at ${siteConfig.siteName} — completely free, no download or account required. Our version uses the same deal numbering algorithm as the original Windows FreeCell, so games #1 through #32,000 are identical to the classic version. You get all the nostalgic gameplay plus modern features like unlimited undo, hints, statistics tracking, and mobile support.`,
   },
   {
     question: "Are the deal numbers the same as Windows FreeCell?",
@@ -78,13 +77,11 @@ const faqItems = [
   },
   {
     question: "Can I play Microsoft FreeCell on my phone?",
-    answer:
-      "Yes. PlayFreeCellOnline.com is fully responsive and works on iPhones, Android phones, and tablets. The layout automatically adjusts to your screen size, and touch controls are optimized for mobile play. You get the same experience — including deal number selection, undo, hints, and statistics — on any device with a web browser. No app download needed.",
+    answer: `Yes. ${siteConfig.siteName} is fully responsive and works on iPhones, Android phones, and tablets. The layout automatically adjusts to your screen size, and touch controls are optimized for mobile play. You get the same experience — including deal number selection, undo, hints, and statistics — on any device with a web browser. No app download needed.`,
   },
   {
     question: "Is this the official Microsoft FreeCell?",
-    answer:
-      "No, this is not an official Microsoft product. PlayFreeCellOnline.com is an independent, fan-built recreation of the classic FreeCell experience. However, we use the same deal numbering algorithm, so the 32,000 original deals are identical to Windows FreeCell. We also add features the original never had — unlimited undo, a hint system, statistics tracking, daily challenges, achievements, and theme customization — while keeping the core gameplay faithful to the version millions grew up playing.",
+    answer: `No, this is not an official Microsoft product. ${siteConfig.siteName} is an independent, fan-built recreation of the classic FreeCell experience. However, we use the same deal numbering algorithm, so the 32,000 original deals are identical to Windows FreeCell. We also add features the original never had — unlimited undo, a hint system, statistics tracking, daily challenges, achievements, and theme customization — while keeping the core gameplay faithful to the version millions grew up playing.`,
   },
 ];
 

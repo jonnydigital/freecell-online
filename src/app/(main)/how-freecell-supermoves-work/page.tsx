@@ -65,7 +65,7 @@ const faqs = [
   {
     question: "Do all FreeCell games support supermoves?",
     answer:
-      "Most digital FreeCell implementations support supermoves as a convenience feature \u2014 including PlayFreeCellOnline.com. Some older or purist versions require you to manually move cards one at a time. Either way, the result is identical; supermoves just save you the tedium of clicking through each individual card move. A few implementations also show the individual moves being animated in sequence.",
+      `Most digital FreeCell implementations support supermoves as a convenience feature \u2014 including ${siteConfig.siteName}. Some older or purist versions require you to manually move cards one at a time. Either way, the result is identical; supermoves just save you the tedium of clicking through each individual card move. A few implementations also show the individual moves being animated in sequence.`,
   },
   {
     question: "What happens if I don\u2019t have enough capacity for a supermove?",

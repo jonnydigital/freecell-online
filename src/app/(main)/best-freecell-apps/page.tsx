@@ -52,18 +52,15 @@ export const metadata: Metadata = {
 const faqItems = [
   {
     question: "What is the best free FreeCell app in 2026?",
-    answer:
-      "For most players, a browser-based option like PlayFreeCellOnline.com is the best choice. It works on any device without downloading anything, offers multiple game variants, dark theme, unlimited undo, hints, and statistics tracking — all completely free with no account required. If you prefer a native app, the Microsoft Solitaire Collection is a solid option on Windows, though it includes ads unless you pay for Premium.",
+    answer: `For most players, a browser-based option like ${siteConfig.siteName} is the best choice. It works on any device without downloading anything, offers multiple game variants, dark theme, unlimited undo, hints, and statistics tracking — all completely free with no account required. If you prefer a native app, the Microsoft Solitaire Collection is a solid option on Windows, though it includes ads unless you pay for Premium.`,
   },
   {
     question: "Is there a FreeCell app with no ads?",
-    answer:
-      "Yes. PlayFreeCellOnline.com offers a clean FreeCell experience without video ads interrupting your gameplay. Some mobile apps on the App Store and Google Play also offer ad-free experiences, but most require a one-time purchase or subscription. The Microsoft Solitaire Collection shows ads between games and during gameplay unless you subscribe to Premium for $1.99 per month.",
+    answer: `Yes. ${siteConfig.siteName} offers a clean FreeCell experience without video ads interrupting your gameplay. Some mobile apps on the App Store and Google Play also offer ad-free experiences, but most require a one-time purchase or subscription. The Microsoft Solitaire Collection shows ads between games and during gameplay unless you subscribe to Premium for $1.99 per month.`,
   },
   {
     question: "Can I play FreeCell online without downloading anything?",
-    answer:
-      "Absolutely. Browser-based FreeCell sites like PlayFreeCellOnline.com run entirely in your web browser. There is nothing to download, install, or update. Just open the website and start playing. Your game progress and statistics are saved automatically in your browser. This works on desktops, laptops, tablets, and phones.",
+    answer: `Absolutely. Browser-based FreeCell sites like ${siteConfig.siteName} run entirely in your web browser. There is nothing to download, install, or update. Just open the website and start playing. Your game progress and statistics are saved automatically in your browser. This works on desktops, laptops, tablets, and phones.`,
   },
   {
     question: "What should I look for in a FreeCell app?",

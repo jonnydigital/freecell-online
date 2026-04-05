@@ -1,6 +1,8 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
+import { isOwnedBy } from "@/lib/routeOwnership";
 import ContentLayout from "@/components/ContentLayout";
 import AdUnit from "@/components/AdUnit";
 import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionHeading, ContentBody } from "@/components/content";
@@ -46,7 +48,7 @@ const faqs = [
   {
     question: "Is the FreeCell embed really free?",
     answer:
-      "Yes — completely free for personal and commercial use. No API keys, no registration, no hidden fees. We only ask that you keep the small attribution link at the bottom of the game, which links back to playfreecellonline.com. The attribution helps us continue offering the embed for free.",
+      "Yes — completely free for personal and commercial use. No API keys, no registration, no hidden fees. We only ask that you keep the small attribution link at the bottom of the game, which links back to the embed host. The attribution helps us continue offering the embed for free.", // allow-foreign-brand:canonical embed attribution
   },
   {
     question: "Does the embedded game show ads?",
@@ -86,6 +88,9 @@ const faqs = [
 ];
 
 export default function EmbedPage() {
+  if (!isOwnedBy('/embed', siteConfig.key)) {
+    notFound();
+  }
   return (
     <ContentLayout>
       <JsonLd data={{
@@ -151,7 +156,7 @@ export default function EmbedPage() {
         </p>
         <div className="bg-black/40 border border-white/10 rounded-xl p-4 mb-4 overflow-x-auto">
           <code className="text-emerald-400 text-sm whitespace-pre">
-            {`<iframe src="https://playfreecellonline.com/embed/freecell" width="100%" height="600" frameborder="0" loading="lazy" allow="fullscreen"></iframe>`}
+            {/* allow-foreign-brand:canonical-embed-url */}{`<iframe src="https://playfreecellonline.com/embed/freecell" width="100%" height="600" frameborder="0" loading="lazy" allow="fullscreen"></iframe>`}
           </code>
         </div>
         <p className="text-white/70 leading-relaxed mb-4">

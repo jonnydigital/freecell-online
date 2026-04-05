@@ -1,6 +1,8 @@
+import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
+import { canonicalUrlFor, isOwnedBy } from "@/lib/routeOwnership";
 import ContentLayout from "@/components/ContentLayout";
 import AdUnit from "@/components/AdUnit";
 import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionHeading, ContentBody } from "@/components/content";
@@ -35,7 +37,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
   },
   alternates: {
-    canonical: absoluteUrl("/solitaire-for-beginners"),
+    canonical: canonicalUrlFor("/solitaire-for-beginners"),
   },
 };
 
@@ -71,6 +73,10 @@ const faqs = [
    ================================================================ */
 
 export default function SolitaireForBeginnersPage() {
+  if (!isOwnedBy("/solitaire-for-beginners", siteConfig.key)) {
+    notFound();
+  }
+
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",

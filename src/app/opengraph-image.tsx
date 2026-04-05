@@ -9,7 +9,7 @@ const subtitleText = isHubImage
   : 'PLAY FREE • NO DOWNLOAD • NO SIGNUP';
 
 export const alt = isHubImage
-  ? 'Solitaire Stack - Play Solitaire Games Online'
+  ? `${siteConfig.brandName} - Play Solitaire Games Online`
   : 'FreeCell Online - Play Free, No Download, No Signup';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';

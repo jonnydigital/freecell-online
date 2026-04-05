@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { absoluteUrl } from "@/lib/siteConfig";
+import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import ContentLayout from "@/components/ContentLayout";
 import { ContentHero, SectionHeading, CardSection, ContentBody, CtaSection, JsonLd, ContentLinkCard } from "@/components/content";
 
 export const metadata: Metadata = {
-  title: "Terms of Service | PlayFreeCellOnline.com",
-  description: "Terms of Service for PlayFreeCellOnline.com",
+  title: `Terms of Service | ${siteConfig.siteName}`,
+  description: `Terms of Service for ${siteConfig.siteName}`,
 };
 
 export default function TermsPage() {
@@ -88,7 +88,7 @@ export default function TermsPage() {
                 01. Acceptance
               </h3>
               <p className="text-[#444444] leading-relaxed">
-                By accessing PlayFreeCellOnline.com, you agree to these
+                By accessing {siteConfig.siteName}, you agree to these
                 terms. If you do not agree, please stop using the service
                 immediately.
               </p>
@@ -122,7 +122,7 @@ export default function TermsPage() {
               <p className="text-[#444444] leading-relaxed">
                 The game mechanics of FreeCell are public domain. However,
                 our specific design, code, and professional assets are owned
-                by PlayFreeCellOnline.com.
+                by {siteConfig.siteName}.
               </p>
             </div>
 
@@ -146,10 +146,10 @@ export default function TermsPage() {
         {/* Related Content */}
         <CardSection>
           <SectionHeading sub="Explore" id="related" icon="♠">
-            More from PlayFreeCellOnline.com
+            More from {siteConfig.siteName}
           </SectionHeading>
           <ContentBody className="grid gap-4 md:grid-cols-3">
-            <ContentLinkCard variant="felt" href="/about" title="About Us" description="The story behind PlayFreeCellOnline.com and our mission." />
+            <ContentLinkCard variant="felt" href="/about" title="About Us" description={`The story behind ${siteConfig.siteName} and our mission.`} />
             <ContentLinkCard variant="felt" href="/privacy" title="Privacy Policy" description="How we handle data and protect your privacy." />
             <ContentLinkCard variant="felt" href="/how-to-play" title="How to Play" description="Learn FreeCell rules and start playing right away." />
           </ContentBody>

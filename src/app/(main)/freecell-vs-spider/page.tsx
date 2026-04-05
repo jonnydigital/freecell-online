@@ -1,6 +1,9 @@
+import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
+import { siteCopy } from "@/lib/siteCopy";
+import { canonicalUrlFor, isOwnedBy } from "@/lib/routeOwnership";
 import AdUnit from "@/components/AdUnit";
 import ContentLayout from "@/components/ContentLayout";
 import NetworkCrossLinks from "@/components/NetworkCrossLinks";
@@ -35,6 +38,9 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
   },
+  alternates: {
+    canonical: canonicalUrlFor("/freecell-vs-spider"),
+  },
 };
 
 /* ── FAQ data ── */
@@ -53,8 +59,7 @@ const faqs = [
   {
     question:
       "Can you play both FreeCell and Spider Solitaire on this site?",
-    answer:
-      "Yes. PlayFreeCellOnline.com offers both FreeCell and Spider Solitaire, completely free with no download required. FreeCell is the main game on the homepage, and Spider Solitaire is available at the /spider page. Both games include features like undo, auto-complete, statistics tracking, and numbered deals.",
+    answer: `${siteCopy.crossGameAvailability} Both games include features like undo, auto-complete, statistics tracking, and numbered deals.`,
   },
   {
     question:
@@ -131,6 +136,10 @@ const comparisonRows = [
    ══════════════════════════════════════════════════════════════ */
 
 export default function FreecellVsSpiderPage() {
+  if (!isOwnedBy("/freecell-vs-spider", siteConfig.key)) {
+    notFound();
+  }
+
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -784,7 +793,7 @@ export default function FreecellVsSpiderPage() {
           body={
             <>
               No downloads, no sign-ups. FreeCell and Spider Solitaire
-              are both available on PlayFreeCellOnline.com with full
+              are both available on {siteConfig.siteName} with full
               features — undo, statistics, numbered deals, and more.
             </>
           }

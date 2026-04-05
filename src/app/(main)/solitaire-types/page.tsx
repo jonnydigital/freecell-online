@@ -1,6 +1,8 @@
+import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
+import { canonicalUrlFor, isOwnedBy } from "@/lib/routeOwnership";
 import ContentLayout from "@/components/ContentLayout";
 import NetworkCrossLinks from "@/components/NetworkCrossLinks";
 import { ContentHero, SectionHeading, CardSection, ContentBody, TocPills, CtaSection, ContentLinkCard, JsonLd } from "@/components/content";
@@ -28,6 +30,9 @@ export const metadata: Metadata = {
     url: absoluteUrl('/solitaire-types'),
     siteName: siteConfig.siteName,
     type: "article",
+  },
+  alternates: {
+    canonical: canonicalUrlFor("/solitaire-types"),
   },
 };
 
@@ -423,6 +428,10 @@ function VariantCard({ variant }: { variant: SolitaireVariant }) {
    ══════════════════════════════════════════════════════════════ */
 
 export default function SolitaireTypesPage() {
+  if (!isOwnedBy("/solitaire-types", siteConfig.key)) {
+    notFound();
+  }
+
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",

@@ -8,3 +8,6 @@ export { default as ContentButton } from './ContentButton';
 export { default as ContentPill } from './ContentPill';
 export { default as ContentLinkCard } from './ContentLinkCard';
 export { default as JsonLd } from './JsonLd';
+export { default as AuthorByline } from './AuthorByline';
+export { default as AuthorBio } from './AuthorBio';
+export { default as PageMetaStamp } from './PageMetaStamp';

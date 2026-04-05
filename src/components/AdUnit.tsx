@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { isHubSite } from '@/lib/siteConfig';
 
 interface AdUnitProps {
   slot?: string;
@@ -15,7 +16,17 @@ interface AdUnitProps {
  * Google AdSense ad unit. Renders a responsive ad if AdSense script is loaded
  * (loaded via CookieConsent after user accepts). Falls back to nothing if blocked.
  * Collapses gracefully when no ad fills the slot.
+ *
+ * NOTE: on the hub site (solitairestack.com) ads are suppressed until AdSense
+ * approval completes. Set NEXT_PUBLIC_ADSENSE_APPROVED=true once approval is
+ * granted to re-enable hub ads. This prevents serving ads on an unreviewed
+ * site, which AdSense reviewers flag negatively.
  */
+// Suppress ads on hub until AdSense approves the site. Stable at build time
+// so checking once outside the component is safe and avoids a conditional hook.
+const HUB_ADS_SUPPRESSED =
+  isHubSite && process.env.NEXT_PUBLIC_ADSENSE_APPROVED !== 'true';
+
 export default function AdUnit({ slot, format = 'auto', layout, className = '', width, height }: AdUnitProps) {
   const adRef = useRef<HTMLModElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -79,7 +90,7 @@ export default function AdUnit({ slot, format = 'auto', layout, className = '', 
     };
   }, []);
 
-  if (collapsed) return null;
+  if (collapsed || HUB_ADS_SUPPRESSED) return null;
 
   const isFixedSize = width && height;
   const isFluid = format === 'fluid';

@@ -5,13 +5,11 @@ import ContentLayout from "@/components/ContentLayout";
 import { ContentHero, CardSection, JsonLd } from "@/components/content";
 
 export const metadata: Metadata = {
-  title: "Sitemap | PlayFreeCellOnline.com — All Pages",
-  description:
-    "Browse every page on PlayFreeCellOnline.com. Find FreeCell guides, strategy tips, game variants, comparisons, and more — all in one place.",
+  title: `Sitemap | ${siteConfig.siteName} — All Pages`,
+  description: `Browse every page on ${siteConfig.siteName}. Find FreeCell guides, strategy tips, game variants, comparisons, and more — all in one place.`,
   openGraph: {
-    title: "Sitemap | PlayFreeCellOnline.com",
-    description:
-      "Complete directory of every page on PlayFreeCellOnline.com.",
+    title: `Sitemap | ${siteConfig.siteName}`,
+    description: `Complete directory of every page on ${siteConfig.siteName}.`,
     url: absoluteUrl("/sitemap"),
     siteName: siteConfig.siteName,
     type: "website",
@@ -216,7 +214,7 @@ export default function SitemapPage() {
 
       <ContentHero
         title="Sitemap"
-        subtitle="Every page on PlayFreeCellOnline.com in one place. Find guides, strategies, games, and more."
+        subtitle={`Every page on ${siteConfig.siteName} in one place. Find guides, strategies, games, and more.`}
       />
 
       <main className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-10 pb-20 flex flex-col gap-6">

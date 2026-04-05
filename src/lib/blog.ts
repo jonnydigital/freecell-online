@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
+import { siteConfig } from './siteConfig';
 
 const BLOG_DIR = path.join(process.cwd(), 'src/content/blog');
 
@@ -29,7 +30,7 @@ export function getAllPosts(): BlogPost[] {
       title: data.title || '',
       date: data.date || '',
       description: data.description || '',
-      author: data.author || 'PlayFreeCellOnline.com',
+      author: data.author || siteConfig.siteName,
       tags: data.tags || [],
       content,
     };

@@ -354,7 +354,7 @@ export default function FreecellEndgameStrategyPage() {
               foundations in the correct order.
             </p>
             <p>
-              On PlayFreeCellOnline.com, auto-complete triggers when:
+              On {siteConfig.siteName}, auto-complete triggers when:
             </p>
             <ul className="list-disc pl-6 space-y-2">
               <li>All remaining tableau cards are in ascending order within their columns</li>

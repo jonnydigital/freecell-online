@@ -47,8 +47,7 @@ const faqs = [
   },
   {
     question: "Does King wrap to Ace in Golf Solitaire?",
-    answer:
-      "In the standard version of Golf Solitaire, wrapping is optional — some versions allow King-to-Ace wrapping while others treat Kings as dead ends. On playfreecellonline.com, wrapping IS enabled, meaning you can play a King on an Ace and an Ace on a King, giving you more strategic options.",
+    answer: `In the standard version of Golf Solitaire, wrapping is optional — some versions allow King-to-Ace wrapping while others treat Kings as dead ends. On ${siteConfig.siteName}, wrapping IS enabled, meaning you can play a King on an Ace and an Ace on a King, giving you more strategic options.`,
   },
   {
     question: "What happens when you can't make a move?",

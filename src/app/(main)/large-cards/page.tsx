@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 import { absoluteUrl, siteConfig } from '@/lib/siteConfig';
+import { isOwnedBy } from '@/lib/routeOwnership';
 import AdUnit from '@/components/AdUnit';
 import ContentLayout from '@/components/ContentLayout';
 import { SectionHeading, CardSection, ContentBody, CtaSection, ContentLinkCard, JsonLd } from '@/components/content';
@@ -37,6 +39,9 @@ export const metadata: Metadata = {
 
 
 export default function LargeCardsPage() {
+  if (!isOwnedBy('/large-cards', siteConfig.key)) {
+    notFound();
+  }
   const jsonLd = [
     {
       '@context': 'https://schema.org',

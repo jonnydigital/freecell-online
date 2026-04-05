@@ -1,6 +1,8 @@
+import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
+import { canonicalUrlFor, isOwnedBy } from "@/lib/routeOwnership";
 import AdUnit from "@/components/AdUnit";
 import ContentLayout from "@/components/ContentLayout";
 import NetworkCrossLinks from "@/components/NetworkCrossLinks";
@@ -36,6 +38,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
+  },
+  alternates: {
+    canonical: canonicalUrlFor("/spider-vs-scorpion"),
   },
 };
 
@@ -140,6 +145,10 @@ const comparisonRows = [
    ══════════════════════════════════════════════════════════════ */
 
 export default function SpiderVsScorpionPage() {
+  if (!isOwnedBy("/spider-vs-scorpion", siteConfig.key)) {
+    notFound();
+  }
+
   const jsonLd = [
     {
       "@context": "https://schema.org",
@@ -865,7 +874,7 @@ export default function SpiderVsScorpionPage() {
         {/* ── CTA ── */}
         <CtaSection
           heading="Play Both Games Free"
-          body="No downloads, no sign-ups. Spider and Scorpion Solitaire are both available on PlayFreeCellOnline.com with full features."
+          body={`No downloads, no sign-ups. Spider and Scorpion Solitaire are both available on ${siteConfig.siteName} with full features.`}
           primaryLabel="Play Spider Solitaire"
           primaryHref="/spider"
           secondaryLabel="Play Scorpion Solitaire"

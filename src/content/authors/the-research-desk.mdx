@@ -1,0 +1,47 @@
+---
+slug: the-research-desk
+name: "The Research Desk"
+role: "Data & Research Editor"
+expertise: ["simulation", "statistics", "win-rate analysis", "solvability", "data visualization"]
+joinedDate: "2026-01-15"
+updatedDate: "2026-04-05"
+---
+
+The Research Desk is the data team of the Solitaire Stack network. When a page on the site cites a win rate, a solvability figure, or a simulation result, this desk is the one that produced it. Our mandate is simple: when we put a number in front of a reader, we should be able to show how we got it.
+
+### Why we exist
+
+Most of the solitaire statistics that circulate on the open web trace back to one of a handful of figures quoted thirty years ago and then copy-pasted ever since. "FreeCell is solvable 99.999 percent of the time" is probably true, but the reader who encounters it deserves to know which solver was used, which deal pool was tested, and what counts as unsolvable. "Klondike has a 79 percent win rate" is a reasonable figure under certain assumptions, but other reasonable assumptions give 43 percent. The Research Desk exists to replace asserted numbers with numbers we have computed, and to show our work.
+
+### What we do
+
+We run simulations. We build solvers. We produce confidence intervals, not point estimates. We care about methodology because in solitaire the gap between a 78 percent win rate and an 82 percent win rate often comes down to three things: how the simulation models a human player, whether auto-moves are enabled, and how look-ahead is treated. Small modeling choices have large consequences, and we try to say which choices we made.
+
+Our usual output:
+
+- **Solvability analyses.** For a given variant, what fraction of deals are winnable under optimal play? Which deals are not? Why?
+- **Skill-model win rates.** Optimal play, good-human play, average-human play. Same deal pool, different decision rules.
+- **Player-behavior studies.** How long does an average game take? Where do players quit? What share of hands are abandoned versus played to completion?
+- **Methodology notes.** Published alongside every figure, explaining what we ran and how.
+
+### Method
+
+We do not claim more than the simulation supports. When a solver cannot finish a deal within a fixed computation budget, we call the deal "unresolved," not "unwinnable." When we report a win rate, we report the sample size and the confidence interval. When we disagree with a number from another source, we do not just say we disagree - we replicate their method and show where the difference comes from. When we are wrong, we publish the correction.
+
+We also partner closely with the Strategy Desk. They bring the tactical questions ("Does freeing the Ace of Spades first actually help?") and we bring the numbers that answer them. It is the most useful working relationship on the network.
+
+### Signature pieces
+
+- **The 8 Unsolvable FreeCell Deals.** The classic deals in the Microsoft 32,000 set that cannot be won, with the reasoning behind each one.
+- **Klondike Win Rates Under Different Play Strategies.** The same deal pool, four different decision rules, four different win rates.
+- **Spider Solvability: 1-Suit, 2-Suit, 4-Suit.** The numbers, the methodology, the caveats.
+- **Monte Carlo Simulations for Solitaire: A Methodology Primer.** How we run what we run, written for a reader who wants to replicate it.
+- **Where Players Quit.** Behavior research drawn from our own anonymized gameplay data.
+
+### What we will not do
+
+We will not publish a number without a methodology. We will not quote another site\'s figure without checking it. We will not pretend a simulation answered a question it did not answer.
+
+### Reach out
+
+If you see a figure on the site that looks wrong, we want to know. Email research@solitairestack.com with the page and the number and we will re-run it.

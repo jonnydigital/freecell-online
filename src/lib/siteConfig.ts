@@ -29,7 +29,7 @@ const SITE_CONFIGS: Record<SiteKey, SiteConfig> = {
       'Play FreeCell Solitaire online for free. No download, no signup. Classic Microsoft FreeCell deals, hints, undo, and more. Works on desktop and mobile.',
     privacyEmail: 'privacy@playfreecellonline.com',
     appleWebAppTitle: 'FreeCell',
-    gaMeasurementId: 'G-988ZBJSKVJ',
+    gaMeasurementId: 'G-8N85JJPLED',
   },
   solitairestack: {
     key: 'solitairestack',
@@ -59,7 +59,7 @@ const SITE_CONFIGS: Record<SiteKey, SiteConfig> = {
       'Play Klondike Solitaire online for free. The classic card game everyone calls Solitaire. Choose Draw 1 or Draw 3 mode. Undo, hints, statistics. No download required.',
     privacyEmail: 'privacy@playklondikeonline.com',
     appleWebAppTitle: 'Klondike',
-    gaMeasurementId: 'G-988ZBJSKVJ',
+    gaMeasurementId: 'G-9MJ1PYWNRR',
   },
   playspidersolitaireonline: {
     key: 'playspidersolitaireonline',

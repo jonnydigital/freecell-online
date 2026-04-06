@@ -74,7 +74,7 @@ const SITE_CONFIGS: Record<SiteKey, SiteConfig> = {
       'Play Spider Solitaire online for free. Choose 1-suit, 2-suit, or 4-suit difficulty. The classic 2-deck card game with undo, hints, and statistics. No download required.',
     privacyEmail: 'privacy@playspidersolitaireonline.com',
     appleWebAppTitle: 'Spider',
-    gaMeasurementId: 'G-988ZBJSKVJ',
+    gaMeasurementId: 'G-WZX8LMFDP8',
   },
 };
 

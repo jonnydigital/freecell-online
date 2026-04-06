@@ -1,3 +1,5 @@
+'use client';
+
 /**
  * AuthorByline — small inline attribution rendered at the top of articles.
  *

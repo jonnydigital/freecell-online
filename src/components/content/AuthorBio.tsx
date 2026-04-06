@@ -1,3 +1,5 @@
+'use client';
+
 /**
  * AuthorBio — larger end-of-article card with the author's short bio.
  *

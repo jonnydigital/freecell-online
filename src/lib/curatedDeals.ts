@@ -77,37 +77,30 @@ export const dealLookup: Map<number, DealInfo> = new Map(
   allCuratedDeals.map((d) => [d.number, d]),
 );
 
-/* ── Milestone numbers for sitemap/static params ── */
-function generateMilestones(): number[] {
-  const milestones = new Set<number>();
-  // Every single deal 1–10,000 (most-searched range: 'freecell game 42', 'freecell deal 5000', etc.)
-  for (let n = 1; n <= 10000; n++) milestones.add(n);
-  // Every 10th from 10,000–50,000
-  for (let n = 10010; n <= 50000; n += 10) milestones.add(n);
-  // Every 50th from 50,000–100,000
-  for (let n = 50050; n <= 100000; n += 50) milestones.add(n);
-  // Every 250th from 100,000–500,000
-  for (let n = 100250; n <= 500000; n += 250) milestones.add(n);
-  return Array.from(milestones).sort((a, b) => a - b);
-}
-
 /**
- * All game numbers that should appear in the sitemap.
- * 1–10,000: every deal; 10,000–50,000: every 10th; 50,000–500,000: sparser.
- * ~14,000+ URLs for long-tail "freecell game N" search coverage.
+ * Game numbers that appear in the sitemap.
+ * Curated deals only — famous (11982, 617), beginner-friendly, expert challenges,
+ * and community favorites. ~34 URLs total.
+ *
+ * History: previously included ~14,000 /game/N URLs targeting "long-tail 'freecell
+ * game N' search coverage". That backfired on a new domain — mass thin pages
+ * diluted crawl budget, triggering low-quality signals, and 154 pages got stuck
+ * in "Discovered - currently not indexed" in Google Search Console. Those
+ * programmatic deal numbers have effectively zero search volume anyway.
+ * The /game/[number] pages still work for direct navigation and sharing; they're
+ * just not advertised to Google via the sitemap.
  */
 export const sitemapGameNumbers: number[] = (() => {
   const nums = new Set<number>();
   for (const deal of allCuratedDeals) nums.add(deal.number);
-  for (const n of generateMilestones()) nums.add(n);
   return Array.from(nums).sort((a, b) => a - b);
 })();
 
 /**
  * Game numbers to pre-render as static pages at build time.
- * Subset of sitemapGameNumbers — curated deals + deals 1–1,000.
- * The full sitemapGameNumbers list is still used in sitemap.xml for Google discovery;
- * remaining pages are server-rendered on demand and cached at the edge.
+ * Curated deals + deals 1–1,000. Higher-numbered /game/N URLs (up to MAX_GAME_NUMBER)
+ * are still valid routes — they're server-rendered on demand and cached at the edge —
+ * but they're intentionally not listed in the sitemap (see sitemapGameNumbers above).
  */
 export const staticGameNumbers: number[] = (() => {
   const nums = new Set<number>();

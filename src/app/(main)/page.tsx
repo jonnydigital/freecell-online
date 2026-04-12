@@ -121,14 +121,9 @@ export default function Home() {
     },
   };
 
-  // Hub
+  // Hub — SolitaireHubHome already emits its own WebSite + ItemList + FAQPage schemas
   if (isHubSite) {
-    return (
-      <>
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteJsonLd) }} />
-        <SolitaireHubHome />
-      </>
-    );
+    return <SolitaireHubHome />;
   }
 
   // Klondike spoke

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import FreecellHomeClient from '@/components/FreecellHomeClient';
 import DomFreecellClient from '@/components/DomFreecellClient';
-import SolitaireHubHome from '@/components/SolitaireHubHome';
+import SolitaireHubHome, { featuredGames, faqItems } from '@/components/SolitaireHubHome';
 import FreecellBelowFold from '@/components/FreecellBelowFold';
 import KlondikeBelowFold from '@/components/KlondikeBelowFold';
 import SpiderBelowFold from '@/components/SpiderBelowFold';
@@ -15,7 +15,7 @@ function buildMetadata(): Metadata {
     return {
       title: `${siteConfig.brandName} | Play FreeCell, Spider Solitaire, and More`,
       description:
-        'A growing solitaire hub with live FreeCell, Spider Solitaire, open-information variants, and strategy content built to support the portfolio.',
+        'Play FreeCell, Spider Solitaire, Klondike, and 25+ solitaire card games online for free. No download, no signup — just classic card games with strategy guides, daily challenges, and leaderboards.',
       keywords: [
         'solitaire games online',
         'play solitaire online',
@@ -121,9 +121,43 @@ export default function Home() {
     },
   };
 
-  // Hub — SolitaireHubHome already emits its own WebSite + ItemList + FAQPage schemas
+  // Hub — JSON-LD emitted here (server component) to avoid client hydration duplication
   if (isHubSite) {
-    return <SolitaireHubHome />;
+    const hubWebSiteJsonLd = {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: siteConfig.brandName,
+      url: absoluteUrl('/'),
+      description: siteConfig.defaultDescription,
+    };
+    const hubCollectionJsonLd = {
+      '@context': 'https://schema.org',
+      '@type': 'ItemList',
+      name: 'Featured solitaire games',
+      itemListElement: featuredGames.map((game, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        name: game.label,
+        url: absoluteUrl(game.href),
+      })),
+    };
+    const hubFaqJsonLd = {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: faqItems.map((item) => ({
+        '@type': 'Question',
+        name: item.q,
+        acceptedAnswer: { '@type': 'Answer', text: item.a },
+      })),
+    };
+    return (
+      <>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(hubWebSiteJsonLd) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(hubCollectionJsonLd) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(hubFaqJsonLd) }} />
+        <SolitaireHubHome />
+      </>
+    );
   }
 
   // Klondike spoke

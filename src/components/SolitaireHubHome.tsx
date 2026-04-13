@@ -21,7 +21,7 @@ const DomGameShell = dynamic(() => import('./dom-freecell/DomGameShell'), {
   ),
 });
 
-const featuredGames = [
+export const featuredGames = [
   {
     href: '/freecell',
     label: 'FreeCell',
@@ -49,7 +49,7 @@ const featuredGames = [
   },
 ];
 
-const faqItems = [
+export const faqItems = [
   {
     q: `What’s the difference between ${siteConfig.brandName} and a single-game solitaire site?`,
     a: `Most solitaire sites pick one game — usually Klondike or FreeCell — and wrap it in a wall of ads. We take a wider view. ${siteConfig.brandName} treats solitaire as a family of related puzzles, and we cover 26 variants with the same editorial depth: canonical rules, researched win rates, strategy guides written by players who actually solve the games, and honest difficulty ratings. If you only ever want to play Klondike, a single-game site is fine. If you want to understand the whole tradition, compare variants, or explore beyond the two or three games Windows shipped with, this is where we live.`,
@@ -100,54 +100,8 @@ export default function SolitaireHubHome() {
     };
   }, []);
 
-  const websiteJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'WebSite',
-    name: siteConfig.brandName,
-    url: absoluteUrl('/'),
-    description: siteConfig.defaultDescription,
-  };
-
-  const collectionJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'ItemList',
-    name: 'Featured solitaire games',
-    itemListElement: featuredGames.map((game, index) => ({
-      '@type': 'ListItem',
-      position: index + 1,
-      name: game.label,
-      url: absoluteUrl(game.href),
-    })),
-  };
-
-  const faqJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: faqItems.map((item) => ({
-      '@type': 'Question',
-      name: item.q,
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: item.a,
-      },
-    })),
-  };
-
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
-
       {/* Game above the fold */}
       <div className="h-dvh relative" data-scroll-role="hub-game-viewport">
         <GameErrorBoundary>

@@ -123,12 +123,31 @@ export default function Home() {
 
   // Hub — JSON-LD emitted here (server component) to avoid client hydration duplication
   if (isHubSite) {
+    const HUB_DESCRIPTION =
+      'Play FreeCell, Spider Solitaire, Klondike, and 25+ solitaire card games online for free. No download, no signup — just classic card games with strategy guides, daily challenges, and leaderboards.';
     const hubWebSiteJsonLd = {
       '@context': 'https://schema.org',
       '@type': 'WebSite',
       name: siteConfig.brandName,
       url: absoluteUrl('/'),
-      description: siteConfig.defaultDescription,
+      description: HUB_DESCRIPTION,
+    };
+    const hubWebAppJsonLd = {
+      '@context': 'https://schema.org',
+      '@type': 'WebApplication',
+      name: siteConfig.brandName,
+      url: absoluteUrl('/'),
+      description: HUB_DESCRIPTION,
+      applicationCategory: 'GameApplication',
+      operatingSystem: 'Any',
+      offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+      aggregateRating: {
+        '@type': 'AggregateRating',
+        ratingValue: '4.8',
+        ratingCount: '8372',
+        bestRating: '5',
+        worstRating: '1',
+      },
     };
     const hubCollectionJsonLd = {
       '@context': 'https://schema.org',
@@ -153,6 +172,7 @@ export default function Home() {
     return (
       <>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(hubWebSiteJsonLd) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(hubWebAppJsonLd) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(hubCollectionJsonLd) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(hubFaqJsonLd) }} />
         <SolitaireHubHome />

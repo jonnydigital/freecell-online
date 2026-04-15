@@ -102,6 +102,7 @@ export default function KlondikeBelowFold() {
     <>
       <ScrollUnlock />
       <script
+        id="ld-faqpage"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />

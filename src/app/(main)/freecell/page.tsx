@@ -109,14 +109,17 @@ export default function FreecellPage() {
   return (
     <>
       <script
+        id="ld-breadcrumblist"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
       <script
+        id="ld-webapplication-freecell"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(appJsonLd) }}
       />
       <script
+        id="ld-faqpage"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />

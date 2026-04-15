@@ -106,14 +106,17 @@ export default function Page() {
   return (
     <>
       <script
+        id="ld-breadcrumblist-home"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
       <script
+        id="ld-faqpage-what-is-easy-freecell"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
       <script
+        id="ld-softwareapplication-easy-freecell"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(aggregateRatingJsonLd) }}
       />

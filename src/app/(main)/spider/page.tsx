@@ -131,18 +131,22 @@ export default function Page() {
   return (
     <>
       <script
+        id="ld-game-spider-solitaire"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(gameJsonLd) }}
       />
       <script
+        id="ld-webapplication-spider-solitaire"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(appJsonLd) }}
       />
       <script
+        id="ld-breadcrumblist-home"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
       <script
+        id="ld-faqpage"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />

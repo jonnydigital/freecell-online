@@ -102,14 +102,17 @@ export default function Page() {
   return (
     <>
       <script
+        id="ld-game-2-cell-freecell"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(gameJsonLd) }}
       />
       <script
+        id="ld-faqpage-what-is-2-cell-freecell"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
       <script
+        id="ld-breadcrumblist-home"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />

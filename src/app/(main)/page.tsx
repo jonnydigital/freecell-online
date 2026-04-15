@@ -171,10 +171,10 @@ export default function Home() {
     };
     return (
       <>
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(hubWebSiteJsonLd) }} />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(hubWebAppJsonLd) }} />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(hubCollectionJsonLd) }} />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(hubFaqJsonLd) }} />
+        <script id="ld-website-hub" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(hubWebSiteJsonLd) }} />
+        <script id="ld-webapplication-hub" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(hubWebAppJsonLd) }} />
+        <script id="ld-itemlist-hub" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(hubCollectionJsonLd) }} />
+        <script id="ld-faqpage-hub" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(hubFaqJsonLd) }} />
         <SolitaireHubHome />
       </>
     );
@@ -201,8 +201,8 @@ export default function Home() {
     };
     return (
       <>
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteJsonLd) }} />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(gameJsonLd) }} />
+        <script id="ld-website" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteJsonLd) }} />
+        <script id="ld-game-klondike-solitaire" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(gameJsonLd) }} />
         <KlondikeGamePage />
         <KlondikeBelowFold />
       </>
@@ -230,8 +230,8 @@ export default function Home() {
     };
     return (
       <>
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteJsonLd) }} />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(gameJsonLd) }} />
+        <script id="ld-website" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteJsonLd) }} />
+        <script id="ld-game-spider-solitaire" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(gameJsonLd) }} />
         <SpiderGamePage />
         <SpiderBelowFold />
       </>
@@ -260,8 +260,8 @@ export default function Home() {
   const useDom = shouldUseDomEngine();
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteJsonLd) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(freecellGameJsonLd) }} />
+      <script id="ld-website" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteJsonLd) }} />
+      <script id="ld-game-freecell-solitaire" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(freecellGameJsonLd) }} />
       {useDom ? <DomFreecellClient /> : <FreecellHomeClient />}
       <FreecellBelowFold />
     </>

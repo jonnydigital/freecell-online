@@ -56,6 +56,7 @@ export default function DailyCalendarPage() {
   return (
     <ContentLayout variant="dark">
       <script
+        id="ld-breadcrumblist-home"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />

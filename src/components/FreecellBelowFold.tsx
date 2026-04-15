@@ -107,6 +107,7 @@ export default function FreecellBelowFold() {
     <>
       <ScrollUnlock />
       <script
+        id="ld-faqpage"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />

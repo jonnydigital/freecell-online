@@ -24,6 +24,7 @@ export default function AchievementsPage() {
       style={{ backgroundColor: 'var(--felt-color, #0a3d0a)' }}
     >
       <script
+        id="ld-breadcrumblist"
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({

@@ -29,6 +29,7 @@ export default function MainLayout({
         crossOrigin="anonymous"
       />
       <script
+        id="ld-webapplication-site"
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({

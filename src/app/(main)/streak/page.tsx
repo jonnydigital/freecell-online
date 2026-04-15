@@ -37,6 +37,7 @@ export default function Page() {
   return (
     <>
       <script
+        id="ld-breadcrumblist"
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({

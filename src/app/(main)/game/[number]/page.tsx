@@ -118,7 +118,7 @@ export default async function Page({ params }: Props) {
   const useDom = shouldUseDomEngine();
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script id="ld-schema" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       {useDom ? <DomFreecellClient initialGameNumber={gameNum} /> : <GamePage gameNumber={gameNum} />}
       <ScrollUnlock />
       <GameDealInfo gameNum={gameNum} deal={deal} />

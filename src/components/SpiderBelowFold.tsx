@@ -101,6 +101,7 @@ export default function SpiderBelowFold() {
     <>
       <ScrollUnlock />
       <script
+        id="ld-faqpage"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />

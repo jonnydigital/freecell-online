@@ -108,14 +108,17 @@ export default function Page() {
   return (
     <>
       <script
+        id="ld-webapplication-puzzle-storm-freecell"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(gameJsonLd) }}
       />
       <script
+        id="ld-faqpage-what-is-puzzle-storm-in-freecell"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
       <script
+        id="ld-breadcrumblist-home"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />

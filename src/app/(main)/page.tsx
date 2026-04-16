@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 import FreecellHomeClient from '@/components/FreecellHomeClient';
 import DomFreecellClient from '@/components/DomFreecellClient';
-import SolitaireHubHome, { featuredGames, faqItems } from '@/components/SolitaireHubHome';
+import SolitaireHubHome from '@/components/SolitaireHubHome';
+import { featuredGames, faqItems } from '@/lib/hubContent';
 import FreecellBelowFold from '@/components/FreecellBelowFold';
 import KlondikeBelowFold from '@/components/KlondikeBelowFold';
 import SpiderBelowFold from '@/components/SpiderBelowFold';

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 import FreecellHomeClient from '@/components/FreecellHomeClient';
 import DomFreecellClient from '@/components/DomFreecellClient';
+import FreecellBelowFold from '@/components/FreecellBelowFold';
 import { absoluteUrl, isHubSite, siteConfig } from '@/lib/siteConfig';
 import { shouldUseDomEngine } from '@/lib/useDomEngine';
 
@@ -67,45 +68,6 @@ export default function FreecellPage() {
     url: absoluteUrl('/freecell'),
   };
 
-  const faqJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: [
-      {
-        '@type': 'Question',
-        name: 'What is FreeCell Solitaire?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'FreeCell is a solitaire card game where all 52 cards are dealt face-up into eight tableau columns at the start. You also have four free cells (temporary storage spaces) and four foundation piles. The goal is to build the four foundations up by suit from Ace to King. Because all cards are visible, nearly every deal (99.999%) is solvable with the right strategy.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'How do the free cells work in FreeCell?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Free cells are four temporary storage spaces in the top-left corner of the board. You can move any single card from the tableau to an empty free cell. Cards in free cells can be moved back to the tableau or directly to the foundations. You can only place one card per free cell at a time.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'Is every FreeCell deal winnable?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Almost. Of the 8 trillion+ possible FreeCell deals, the vast majority are winnable. In the classic Microsoft numbered deals (1–32000), only deal #11982 has been proven unsolvable. In practice, 99.999% of deals can be won with correct play.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'How many cards can I move at once in FreeCell?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'You can only move one card at a time in strict FreeCell rules. However, the game allows "supermoves" — moving a sequence of cards as a group — as a shortcut, as long as you have enough empty free cells and empty columns to physically move them one at a time. The formula is: (empty free cells + 1) × 2^(empty columns).',
-        },
-      },
-    ],
-  };
-
   return (
     <>
       <script
@@ -118,12 +80,8 @@ export default function FreecellPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(appJsonLd) }}
       />
-      <script
-        id="ld-faqpage"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
       {useDom ? <DomFreecellClient /> : <FreecellHomeClient />}
+      <FreecellBelowFold />
     </>
   );
 }

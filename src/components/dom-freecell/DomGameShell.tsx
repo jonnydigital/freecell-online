@@ -484,9 +484,12 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
   }, [gameNumber]);
 
   // ── URL history update on new game ──
-  // Only update URL on production routes, not /lab/*
+  // Only update URL on production routes, not /lab/*.
+  // On the hub (solitairestack.com), DomGameShell is embedded on the
+  // root page and we must NOT rewrite '/' to '/game/{n}' — that breaks
+  // canonical URLs, share links, and analytics for the hub homepage.
   useEffect(() => {
-    if (typeof window !== 'undefined' && gameNumber && !replayMode) {
+    if (typeof window !== 'undefined' && gameNumber && !replayMode && !isHubSite) {
       const isLabRoute = window.location.pathname.startsWith('/lab/');
       if (!isLabRoute) {
         window.history.replaceState({}, '', '/game/' + gameNumber);

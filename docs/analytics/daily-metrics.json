@@ -161,9 +161,117 @@
     }
   },
 
+  "ga4_live": {
+    "pulled_at": "2026-04-17 via Chrome MCP (analytics.google.com)",
+    "window": "Apr 11-17 2026 (last 7 days) + Mar 21-Apr 17 2026 (last 28 days where available)",
+    "network_total_7d": {
+      "active_users": 141,
+      "sessions": 177,
+      "pageviews": 295,
+      "note": "7x the 2026-03-26 snapshot (20 users/7d) — sandbox is lifting across the network"
+    },
+    "hub_solitairestack": {
+      "property_id": "525799022",
+      "property_name": "FreeCell Online (legacy name, now serves solitairestack.com content)",
+      "measurement_id": "G-988ZBJSKVJ",
+      "active_users_7d": 107,
+      "active_users_28d": 295,
+      "active_users_28d_growth_pct": 29400,
+      "event_count_28d": 1900,
+      "pageviews_7d": 201,
+      "sessions_7d": 134,
+      "sessions_by_channel_7d": {"organic": 89, "direct": 28, "unassigned": 16, "referral": 1},
+      "top_pages_7d": [
+        {"page": "FreeCell Solver", "views": 52},
+        {"page": "Solitaire Stack (home)", "views": 40},
+        {"page": "Types of Solitaire 20 Variants", "views": 8},
+        {"page": "Play FreeCell Online", "views": 7},
+        {"page": "FreeCell Rules", "views": 5},
+        {"page": "FreeCell Statistics & Win Rates", "views": 4},
+        {"page": "La Belle Lucie Solitaire", "views": 3}
+      ],
+      "top_countries_7d": [
+        {"country": "United States", "users": 58},
+        {"country": "Canada", "users": 11},
+        {"country": "Singapore", "users": 11},
+        {"country": "United Kingdom", "users": 8},
+        {"country": "Brazil", "users": 3},
+        {"country": "France", "users": 3},
+        {"country": "Australia", "users": 2}
+      ]
+    },
+    "playfreecellonline": {
+      "property_id": "531359003",
+      "measurement_id": "G-8N85JJPLED",
+      "active_users_7d": 22,
+      "active_users_7d_growth_pct": 450,
+      "event_count_7d": 177,
+      "pageviews_7d": 82,
+      "sessions_7d": 31,
+      "sessions_by_channel_7d": {"direct": 21, "organic": 5, "unassigned": 4, "referral": 1},
+      "top_pages_7d": [
+        {"page": "Play FreeCell Online (home)", "views": 51},
+        {"page": "FreeCell Game #1 - First MS deal", "views": 7},
+        {"page": "FreeCell Solver", "views": 6},
+        {"page": "About PlayFreeCellOnline.com", "views": 3},
+        {"page": "25 FreeCell Tips & Tricks", "views": 2},
+        {"page": "Baker's Game", "views": 2},
+        {"page": "Easy FreeCell", "views": 2}
+      ],
+      "top_countries_7d": [
+        {"country": "United States", "users": 9},
+        {"country": "India", "users": 5},
+        {"country": "Germany", "users": 4},
+        {"country": "Singapore", "users": 2}
+      ]
+    },
+    "playklondikeonline": {
+      "property_id": "531330279",
+      "measurement_id": "G-9MJ1PYWNRR",
+      "active_users_7d": 5,
+      "active_users_28d": 11,
+      "pageviews_7d": 5,
+      "sessions_7d": 5,
+      "sessions_by_channel_7d": {"direct": 5},
+      "top_pages_7d": [
+        {"page": "Play Klondike Solitaire (home)", "views": 4},
+        {"page": "Klondike Tips & Tricks", "views": 1}
+      ],
+      "top_countries_7d": [
+        {"country": "United States", "users": 4},
+        {"country": "China", "users": 1}
+      ],
+      "note": "Smallest spoke. Only direct traffic — organic hasn't caught it yet. Expect lift after today's sitemap resubmit + IndexNow."
+    },
+    "playspidersolitaireonline": {
+      "property_id": "531391445",
+      "measurement_id": "G-WZX8LMFDP8",
+      "active_users_7d": 7,
+      "active_users_7d_growth_pct": 75,
+      "active_users_28d": 11,
+      "active_users_28d_growth_pct": 175,
+      "pageviews_7d": 7,
+      "sessions_7d": 7,
+      "sessions_by_channel_7d": {"direct": 7},
+      "top_pages_7d": [
+        {"page": "Play Spider Solitaire (home)", "views": 7}
+      ],
+      "top_countries_7d": [
+        {"country": "United States", "users": 6},
+        {"country": "Italy", "users": 1}
+      ],
+      "note": "Only homepage has engagement. The 4 new pillar pages shipped today (9781b70) + IndexNow ping should broaden engagement surface."
+    },
+    "recommendations_from_ga4": [
+      "Link GSC to each GA4 property (1-min setup per) so landing-page queries flow into GA4 reports. GA4 itself surfaced this recommendation.",
+      "Hub (solitairestack) is the growth engine: 89 of 134 weekly sessions are organic. That's the domain with 3 months of age; spokes are still new.",
+      "Freecell spoke is 68% direct traffic — likely people typing the URL or returning. Good brand stickiness but organic trailing."
+    ]
+  },
+
   "ga4_last_known": {
     "as_of": "2026-03-26",
-    "source": "previous daily-metrics.json snapshot — NOT refreshed today, needs manual pull",
+    "source": "stale — see ga4_live block above for 2026-04-17 Chrome MCP pull",
     "activeUsers_7d": 20,
     "sessions_7d": 34,
     "pageViews_7d": 83

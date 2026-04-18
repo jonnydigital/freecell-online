@@ -2,6 +2,14 @@ import { absoluteUrl, isHubSite, siteConfig } from '@/lib/siteConfig';
 import { sitemapGameNumbers, isHighPriorityDeal } from '@/lib/curatedDeals';
 import { getAllPosts } from '@/lib/blog';
 import { ownerOf } from '@/lib/routeOwnership';
+import { AUTHORS, type AuthorSlug } from '@/lib/authors';
+
+/**
+ * Stable lastmod timestamp — evaluated once at module load (i.e. per deploy /
+ * cold start) rather than on every crawl. Google's anti-spam heuristics flag
+ * static content whose lastmod updates on every request.
+ */
+const LASTMOD = new Date().toISOString();
 
 /**
  * Dynamic XML sitemap served at /sitemap.xml via route handler.
@@ -22,6 +30,23 @@ const contentPages = [
   { path: '/faq', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/solitaire-types', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/solitaire-difficulty-ranking', changeFrequency: 'monthly', priority: 0.7 },
+  // Hub pillar pages (Wave 8-HUB)
+  { path: '/solitaire-games-guide', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/solitaire-strategy', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/solitaire-history', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/solitaire-for-every-mood', changeFrequency: 'monthly', priority: 0.7 },
+  // Hub long-form research (Wave 10-F)
+  { path: '/how-solitaire-changed-windows', changeFrequency: 'yearly', priority: 0.7 },
+  // Hub E-E-A-T methodology pages
+  { path: '/how-we-test-solitaire-games', changeFrequency: 'yearly', priority: 0.6 },
+  { path: '/our-solitaire-methodology', changeFrequency: 'yearly', priority: 0.6 },
+  { path: '/editorial-standards', changeFrequency: 'yearly', priority: 0.6 },
+  // Hub research / linkbait
+  { path: '/solitaire-win-rates', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/popular-solitaire-by-state', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/solitaire-game-finder', changeFrequency: 'monthly', priority: 0.7 },
+  // Author masthead (E-E-A-T)
+  { path: '/authors', changeFrequency: 'monthly', priority: 0.5 },
   { path: '/winning-deals', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/bakers-game', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/eight-off', changeFrequency: 'monthly', priority: 0.8 },
@@ -58,12 +83,22 @@ const contentPages = [
   { path: '/freecell-mistakes-to-avoid', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/famous-freecell-deals', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/freecell-game-11982', changeFrequency: 'yearly', priority: 0.7 },
+  // FreeCell spoke pillar + research pages
+  { path: '/freecell-mastery', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/freecell-solvability', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/unsolvable-freecell-deals', changeFrequency: 'yearly', priority: 0.7 },
   { path: '/spider/how-to-play', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/spider/strategy', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/spider/tips', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/spider/1-suit-vs-2-suit-vs-4-suit', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/spider/is-spider-solitaire-winnable', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/spider/how-to-empty-a-column', changeFrequency: 'monthly', priority: 0.7 },
+  // Spider spoke pillar pages (Wave 8-SP)
+  { path: '/spider-mastery', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/spider-suit-strategy', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/spider-column-tactics', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/spider-winnability', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/spider-variants', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/freecell-hints-explained', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/freecell-world-records', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/klondike', changeFrequency: 'monthly', priority: 0.8 },
@@ -74,6 +109,11 @@ const contentPages = [
   { path: '/klondike/winning-strategies', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/klondike/draw-1-vs-draw-3', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/klondike/vegas-scoring', changeFrequency: 'monthly', priority: 0.7 },
+  // Klondike spoke pillar pages (Wave 8-KL)
+  { path: '/klondike-mastery', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/klondike-vegas-scoring', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/klondike-probability', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/klondike-variants', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/pyramid', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/pyramid/how-to-play', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/pyramid/strategy', changeFrequency: 'monthly', priority: 0.7 },
@@ -203,40 +243,46 @@ function isPrimaryOwnerOfPath(path: string): boolean {
 }
 
 function buildXml(): string {
-  const now = new Date().toISOString();
-
   const staticEntries = contentPages
     .filter((p) => isPrimaryOwnerOfPath(p.path))
     .map(
       (p) =>
-        `  <url>\n    <loc>${absoluteUrl(p.path)}</loc>\n    <lastmod>${now}</lastmod>\n    <changefreq>${p.changeFrequency}</changefreq>\n    <priority>${p.priority}</priority>\n  </url>`
+        `  <url>\n    <loc>${absoluteUrl(p.path)}</loc>\n    <lastmod>${LASTMOD}</lastmod>\n    <changefreq>${p.changeFrequency}</changefreq>\n    <priority>${p.priority}</priority>\n  </url>`
     );
+
+  // Author profile pages (E-E-A-T signals, masthead)
+  const authorEntries = isPrimaryOwnerOfPath('/authors/[slug]')
+    ? (Object.keys(AUTHORS) as AuthorSlug[]).map(
+        (slug) =>
+          `  <url>\n    <loc>${absoluteUrl(`/authors/${slug}`)}</loc>\n    <lastmod>${LASTMOD}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.5</priority>\n  </url>`
+      )
+    : [];
 
   const gameEntries = isPrimaryOwnerOfPath('/game/[number]')
     ? sitemapGameNumbers.map(
         (num) =>
-          `  <url>\n    <loc>${absoluteUrl(`/game/${num}`)}</loc>\n    <lastmod>${now}</lastmod>\n    <changefreq>yearly</changefreq>\n    <priority>${isHighPriorityDeal(num) ? 0.6 : 0.4}</priority>\n  </url>`
+          `  <url>\n    <loc>${absoluteUrl(`/game/${num}`)}</loc>\n    <lastmod>${LASTMOD}</lastmod>\n    <changefreq>yearly</changefreq>\n    <priority>${isHighPriorityDeal(num) ? 0.6 : 0.4}</priority>\n  </url>`
       )
     : [];
 
   const blogEntries: string[] = [];
   if (isPrimaryOwnerOfPath('/blog')) {
     blogEntries.push(
-      `  <url>\n    <loc>${absoluteUrl('/blog')}</loc>\n    <lastmod>${now}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>0.7</priority>\n  </url>`
+      `  <url>\n    <loc>${absoluteUrl('/blog')}</loc>\n    <lastmod>${LASTMOD}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>0.7</priority>\n  </url>`
     );
   }
   if (isPrimaryOwnerOfPath('/blog/[slug]')) {
     const blogPosts = getAllPosts();
     for (const post of blogPosts) {
       blogEntries.push(
-        `  <url>\n    <loc>${absoluteUrl(`/blog/${post.slug}`)}</loc>\n    <lastmod>${now}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.6</priority>\n  </url>`
+        `  <url>\n    <loc>${absoluteUrl(`/blog/${post.slug}`)}</loc>\n    <lastmod>${LASTMOD}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.6</priority>\n  </url>`
       );
     }
   }
 
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${[...staticEntries, ...blogEntries, ...gameEntries].join('\n')}
+${[...staticEntries, ...authorEntries, ...blogEntries, ...gameEntries].join('\n')}
 </urlset>`;
 }
 

@@ -28,7 +28,7 @@ function shouldSkipOwnershipCheck(pathname: string): boolean {
   );
 }
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const host = request.headers.get('host') || '';
 
   // www → non-www redirect (production only)

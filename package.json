@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "metrics:pull": "node scripts/pull-public-metrics.mjs",
+    "indexnow:submit": "node scripts/indexnow-submit-sitemap.mjs"
   },
   "dependencies": {
     "@letele/playing-cards": "^0.1.0",

@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import { canonicalUrlFor, isOwnedBy } from "@/lib/routeOwnership";
 import ContentLayout from "@/components/ContentLayout";
+import AdUnit from "@/components/AdUnit";
 import {
   ContentHero,
   SectionHeading,
@@ -18,6 +19,39 @@ import {
 const PAGE_PATH = "/spider-suit-strategy";
 const PUBLISHED_DATE = "2026-04-05";
 const UPDATED_DATE = "2026-04-05";
+
+const FAQS = [
+  {
+    question: "Which Spider Solitaire mode should I learn first?",
+    answer:
+      "Start at 1-suit. Every card is the same suit, so any descending run is automatically a legal group, and you can focus entirely on column management and stock timing without suit constraints. Once you are winning above 90% of 1-suit games, move to 2-suit. Only move to 4-suit when you are consistently clearing 2-suit at 50% or better.",
+  },
+  {
+    question: "How much harder is 4-suit Spider than 2-suit?",
+    answer:
+      "Expert human win rates drop from roughly 55-65% in 2-suit to roughly 30-40% in 4-suit. The collapse happens because the group movement rule is suit-locked: with four suits present, the probability of two adjacent ranks also sharing a suit is much lower, so most sequences you build will be off-suit and non-portable.",
+  },
+  {
+    question: "What is the group movement rule?",
+    answer:
+      "Spider lets you move a stack of cards together only if they form a descending same-suit sequence. A 9-8-7 of spades moves as one unit; a 9-of-spades, 8-of-hearts, 7-of-spades sequence can only be disassembled card by card. The group movement rule is the single constraint that makes 4-suit harder than 2-suit and 2-suit harder than 1-suit.",
+  },
+  {
+    question: "Should I ever build off-suit in 4-suit Spider?",
+    answer:
+      "Yes, but only deliberately. Off-suit stacking is required in 4-suit to expose face-down cards and reach empty columns. The discipline is to keep off-suit stacks shallow (one or two cards deep) and to plan the untangling moves before committing. Every off-suit stack you build is a future demand on an empty column.",
+  },
+  {
+    question: "When should I step down in difficulty?",
+    answer:
+      "If your 4-suit win rate sits below 15% after fifty hands, you are not learning from those games — the board is too complex to extract clear feedback. Step down to 2-suit until suit discipline feels automatic, then move back up. A consistent 25%+ at 4-suit is the point at which each loss is informative rather than noise.",
+  },
+  {
+    question: "Do 1-suit habits transfer to 4-suit?",
+    answer:
+      "Partially. Column management, stock timing, and the priority of face-down exposure transfer directly. Suit discipline does not, because it does not exist in 1-suit. Players who master 1-suit then jump straight to 4-suit often lose for months because they never built the reflex of checking suit before committing to a compound move.",
+  },
+];
 
 export const metadata: Metadata = {
   title: `1-Suit vs 2-Suit vs 4-Suit Spider: Strategic Transitions | ${siteConfig.siteName}`,
@@ -81,6 +115,15 @@ export default function SpiderSuitStrategyPage() {
         { "@type": "ListItem", position: 2, name: "Spider Solitaire", item: absoluteUrl("/spider") },
         { "@type": "ListItem", position: 3, name: "Suit Strategy", item: absoluteUrl(PAGE_PATH) },
       ],
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: FAQS.map((faq) => ({
+        "@type": "Question",
+        name: faq.question,
+        acceptedAnswer: { "@type": "Answer", text: faq.answer },
+      })),
     },
   ];
 
@@ -260,6 +303,8 @@ export default function SpiderSuitStrategyPage() {
             </p>
           </ContentBody>
         </CardSection>
+
+        <AdUnit format="horizontal" className="-my-1" />
 
         {/* 4-Suit Challenges */}
         <CardSection variant="dark">
@@ -593,6 +638,25 @@ export default function SpiderSuitStrategyPage() {
             </p>
           </ContentBody>
         </CardSection>
+
+        {/* FAQ */}
+        <CardSection variant="dark">
+          <SectionHeading variant="dark" sub="Common Questions" id="faq" icon={"\u2666"}>
+            Frequently asked questions
+          </SectionHeading>
+          <ContentBody variant="dark" className="space-y-5">
+            {FAQS.map((faq, i) => (
+              <div key={i}>
+                <h3 className="text-lg font-semibold text-white mb-2">
+                  {faq.question}
+                </h3>
+                <p className="text-white/70">{faq.answer}</p>
+              </div>
+            ))}
+          </ContentBody>
+        </CardSection>
+
+        <AdUnit format="auto" className="-my-1" />
 
         {/* Related */}
         <CardSection variant="dark">

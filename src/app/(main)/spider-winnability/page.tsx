@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import { canonicalUrlFor, isOwnedBy } from "@/lib/routeOwnership";
 import ContentLayout from "@/components/ContentLayout";
+import AdUnit from "@/components/AdUnit";
 import {
   ContentHero,
   SectionHeading,
@@ -18,6 +19,39 @@ import {
 const PAGE_PATH = "/spider-winnability";
 const PUBLISHED_DATE = "2026-04-05";
 const UPDATED_DATE = "2026-04-05";
+
+const FAQS = [
+  {
+    question: "What percentage of Spider Solitaire deals are winnable?",
+    answer:
+      "Solvability varies sharply by mode. 1-suit Spider is winnable on essentially every deal — solver estimates sit above 99%. 2-suit Spider is estimated at roughly 95% winnable under optimal play. 4-suit Spider is the uncertain one: serious solver work puts the winnable ceiling in the 50-80% range depending on methodology and redeal rules. The headline number for 4-suit is closer to a solver lower bound than a proven ceiling.",
+  },
+  {
+    question: "What is a good human win rate in 4-suit Spider?",
+    answer:
+      "Casual players win 1-5% of 4-suit games. Intermediate players with basic strategy win 8-15%. Experienced players with consistent suit discipline win 18-30%. Expert players with long practice reach 30-40%. The gap between the expert human ceiling and the solver ceiling is the largest of any mode, which tells us 4-suit has more learnable skill than its reputation suggests.",
+  },
+  {
+    question: "Why is 4-suit Spider so much harder than 2-suit?",
+    answer:
+      "The group movement rule requires same-suit runs to move together. In 2-suit, the probability that two adjacent ranks share a suit is around 25% per placement; in 4-suit it drops to roughly 12.5%. That single probability change cascades through every compound move the player tries to make, so the board becomes harder to reorganize and empty columns become scarcer.",
+  },
+  {
+    question: "Is Spider more luck-based than FreeCell?",
+    answer:
+      "Yes, structurally. FreeCell exposes every card at the start and has no stock, so approximately 99.999% of deals are solvable. Spider deals only 10 cards face-up and forces a sealed five-deal stock; both factors inject randomness that skill cannot recover from on the worst deals. FreeCell is closer to chess (nearly every position is drawable), Spider is closer to bridge (some hands are losing hands).",
+  },
+  {
+    question: "Do the Microsoft deal numbers match the academic research?",
+    answer:
+      "Not directly. Academic solver studies typically sample uniformly at random from all 104-card permutations. Microsoft-numbered deals are a specific enumerated subset with their own statistical properties. Claims about Microsoft deal solvability therefore require their own samples. In practice the rate is similar to uniform-random, but anyone citing Microsoft figures should note the caveat.",
+  },
+  {
+    question: "How were the win-rate figures on this page estimated?",
+    answer:
+      "Numbers come from a combination of published solver bounds (where they exist), aggregated reports from public Spider implementations, and player-telemetry patterns consistent across multiple platforms. 4-suit solver bounds in particular are a range rather than a single point because different solvers report different figures depending on search depth and unsolved-deal treatment. We prefer conservative central estimates with explicit ranges.",
+  },
+];
 
 export const metadata: Metadata = {
   title: `Spider Winnability: What the Numbers Say | ${siteConfig.siteName}`,
@@ -81,6 +115,15 @@ export default function SpiderWinnabilityPage() {
         { "@type": "ListItem", position: 2, name: "Spider Solitaire", item: absoluteUrl("/spider") },
         { "@type": "ListItem", position: 3, name: "Winnability", item: absoluteUrl(PAGE_PATH) },
       ],
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: FAQS.map((faq) => ({
+        "@type": "Question",
+        name: faq.question,
+        acceptedAnswer: { "@type": "Answer", text: faq.answer },
+      })),
     },
   ];
 
@@ -324,6 +367,8 @@ export default function SpiderWinnabilityPage() {
             </p>
           </ContentBody>
         </CardSection>
+
+        <AdUnit format="horizontal" className="-my-1" />
 
         {/* Solver Analysis */}
         <CardSection variant="dark">
@@ -636,6 +681,25 @@ export default function SpiderWinnabilityPage() {
             </p>
           </ContentBody>
         </CardSection>
+
+        {/* FAQ */}
+        <CardSection variant="dark">
+          <SectionHeading variant="dark" sub="Common Questions" id="faq" icon={"\u2666"}>
+            Frequently asked questions
+          </SectionHeading>
+          <ContentBody variant="dark" className="space-y-5">
+            {FAQS.map((faq, i) => (
+              <div key={i}>
+                <h3 className="text-lg font-semibold text-white mb-2">
+                  {faq.question}
+                </h3>
+                <p className="text-white/70">{faq.answer}</p>
+              </div>
+            ))}
+          </ContentBody>
+        </CardSection>
+
+        <AdUnit format="auto" className="-my-1" />
 
         {/* Related */}
         <CardSection variant="dark">

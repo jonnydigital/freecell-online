@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import { canonicalUrlFor, isOwnedBy } from "@/lib/routeOwnership";
 import ContentLayout from "@/components/ContentLayout";
+import AdUnit from "@/components/AdUnit";
 import {
   ContentHero,
   SectionHeading,
@@ -18,6 +19,34 @@ import {
 const PAGE_PATH = "/spider-column-tactics";
 const PUBLISHED_DATE = "2026-04-05";
 const UPDATED_DATE = "2026-04-05";
+
+const FAQS = [
+  {
+    question: "Why are empty columns so valuable in Spider Solitaire?",
+    answer:
+      "An empty column in Spider can temporarily hold any single card or any same-suit run, which lets you disassemble buried sequences you could not otherwise move. The group movement rule locks most multi-card moves unless the cards share a suit; empty columns are the workaround. Each empty roughly doubles the set of legal reorganizations available to you.",
+  },
+  {
+    question: "How do I create an empty column early in a Spider game?",
+    answer:
+      "Target the shortest column or the column whose top card can be moved cleanly onto another column. Prioritize face-down exposure as you clear. Avoid feeding new cards into a column you are trying to empty — every card added to a target column costs you at least one move to remove. Good players can usually produce their first empty column before the second stock deal.",
+  },
+  {
+    question: "Should I fill an empty column with a King?",
+    answer:
+      "Only if the King drags a productive same-suit chain with it, or if leaving the column empty will force a stock deal you are not ready for. A King committed to an empty column locks that column for the rest of the game. Wait for the right King — usually one with a Queen of the same suit already accessible.",
+  },
+  {
+    question: "How many empty columns do I need to reliably untangle a mixed stack?",
+    answer:
+      "One empty is enough to peel a single off-suit card. Two empties let you split a deeper mixed stack by staging one run while you move the other. Three empties give you compound flexibility — you can rebuild entire columns in the correct suit order. At four or more empties, most 2-suit positions are effectively solved.",
+  },
+  {
+    question: "Is it ever wrong to create an empty column?",
+    answer:
+      "Yes. If creating an empty requires burying a critical face-down card or committing a King that belongs elsewhere, the cost can exceed the benefit. Empties are valuable because they are optional; an empty you cannot defend for even one move is just a forced deal trigger. Create empties you can hold for at least three moves.",
+  },
+];
 
 export const metadata: Metadata = {
   title: `Emptying Columns: Advanced Spider Tactics | ${siteConfig.siteName}`,
@@ -79,6 +108,15 @@ export default function SpiderColumnTacticsPage() {
         { "@type": "ListItem", position: 2, name: "Spider Solitaire", item: absoluteUrl("/spider") },
         { "@type": "ListItem", position: 3, name: "Column Tactics", item: absoluteUrl(PAGE_PATH) },
       ],
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: FAQS.map((faq) => ({
+        "@type": "Question",
+        name: faq.question,
+        acceptedAnswer: { "@type": "Answer", text: faq.answer },
+      })),
     },
   ];
 
@@ -354,6 +392,8 @@ export default function SpiderColumnTacticsPage() {
           </ContentBody>
         </CardSection>
 
+        <AdUnit format="horizontal" className="-my-1" />
+
         {/* The Two-Empty-Column State */}
         <CardSection variant="dark">
           <SectionHeading variant="dark" sub="Compound Flexibility" id="two-empties" icon={"\u2660"}>
@@ -580,6 +620,25 @@ export default function SpiderColumnTacticsPage() {
             </p>
           </ContentBody>
         </CardSection>
+
+        {/* FAQ */}
+        <CardSection variant="dark">
+          <SectionHeading variant="dark" sub="Common Questions" id="faq" icon={"\u2666"}>
+            Frequently asked questions
+          </SectionHeading>
+          <ContentBody variant="dark" className="space-y-5">
+            {FAQS.map((faq, i) => (
+              <div key={i}>
+                <h3 className="text-lg font-semibold text-white mb-2">
+                  {faq.question}
+                </h3>
+                <p className="text-white/70">{faq.answer}</p>
+              </div>
+            ))}
+          </ContentBody>
+        </CardSection>
+
+        <AdUnit format="auto" className="-my-1" />
 
         {/* Related */}
         <CardSection variant="dark">

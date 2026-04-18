@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import { canonicalUrlFor, isOwnedBy } from "@/lib/routeOwnership";
 import ContentLayout from "@/components/ContentLayout";
+import AdUnit from "@/components/AdUnit";
 import {
   ContentHero,
   SectionHeading,
@@ -16,6 +17,39 @@ import {
 } from "@/components/content";
 
 const PAGE_PATH = "/spider-mastery";
+
+const FAQS = [
+  {
+    question: "What is the single biggest skill in Spider Solitaire?",
+    answer:
+      "Empty-column discipline. Empty columns in Spider function like free cells in FreeCell, except they can hold entire same-suit runs rather than single cards. Players who learn to create, defend, and deploy empty columns add more to their win rate than any other habit.",
+  },
+  {
+    question: "How many cards and decks are used in Spider Solitaire?",
+    answer:
+      "Spider uses two standard 52-card decks shuffled together for a total of 104 cards. 54 cards are dealt into 10 tableau columns (the first four columns get 6 cards each, the remaining six get 5 each). The remaining 50 cards form the stock, which deals out in five rounds of 10 cards each.",
+  },
+  {
+    question: "Why is Spider harder than Klondike if you can see more cards?",
+    answer:
+      "Spider exposes only 10 cards face-up at the start (one per column) and buries 44 more face-down in the tableau, with another 50 in the stock. The compression of two decks into a fixed five-deal stock means luck has a higher weight than in Klondike's recyclable 24-card stock. 4-suit Spider's winnable ceiling sits in the 30-40% range even under optimal play.",
+  },
+  {
+    question: "When should I deal from the stock in Spider?",
+    answer:
+      "Deal when the tableau is genuinely stuck, all productive face-down reveals are exhausted, and your existing same-suit runs are stable enough to survive ten new top cards. Never deal while you still have empty columns you want to preserve, and never deal when you are one or two moves away from opening a column.",
+  },
+  {
+    question: "Should I always build same-suit in Spider Solitaire?",
+    answer:
+      "Same-suit is the goal because only same-suit runs can be moved as groups and only same-suit King-to-Ace sequences remove to the foundations. Off-suit stacks are sometimes necessary to expose face-down cards or create empty columns, but every off-suit move creates a knot you will later need empty columns to untangle.",
+  },
+  {
+    question: "Does Microsoft's version of Spider count as the canonical rules?",
+    answer:
+      "Microsoft bundled Spider with Windows ME in 2000 and Windows XP in 2001, popularizing the 1-suit and 2-suit variants which did not exist in the pre-digital tradition. The 4-suit rules are the historical ones dating to Games of Patience (1949). The 1-suit and 2-suit modes are Microsoft innovations that have since become standard across digital implementations.",
+  },
+];
 const PUBLISHED_DATE = "2026-04-05";
 const UPDATED_DATE = "2026-04-05";
 
@@ -82,6 +116,15 @@ export default function SpiderMasteryPage() {
         { "@type": "ListItem", position: 2, name: "Spider Solitaire", item: absoluteUrl("/spider") },
         { "@type": "ListItem", position: 3, name: "Spider Mastery", item: absoluteUrl(PAGE_PATH) },
       ],
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: FAQS.map((faq) => ({
+        "@type": "Question",
+        name: faq.question,
+        acceptedAnswer: { "@type": "Answer", text: faq.answer },
+      })),
     },
   ];
 
@@ -492,6 +535,8 @@ export default function SpiderMasteryPage() {
           </ContentBody>
         </CardSection>
 
+        <AdUnit format="horizontal" className="-my-1" />
+
         {/* Reading the Tableau */}
         <CardSection variant="dark">
           <SectionHeading variant="dark" sub="Board Awareness" id="reading-tableau" icon={"\u2666"}>
@@ -702,6 +747,25 @@ export default function SpiderMasteryPage() {
             </p>
           </ContentBody>
         </CardSection>
+
+        {/* FAQ */}
+        <CardSection variant="dark">
+          <SectionHeading variant="dark" sub="Common Questions" id="faq" icon={"\u2666"}>
+            Frequently asked questions
+          </SectionHeading>
+          <ContentBody variant="dark" className="space-y-5">
+            {FAQS.map((faq, i) => (
+              <div key={i}>
+                <h3 className="text-lg font-semibold text-white mb-2">
+                  {faq.question}
+                </h3>
+                <p className="text-white/70">{faq.answer}</p>
+              </div>
+            ))}
+          </ContentBody>
+        </CardSection>
+
+        <AdUnit format="auto" className="-my-1" />
 
         {/* Related */}
         <CardSection variant="dark">

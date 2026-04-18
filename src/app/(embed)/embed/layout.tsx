@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import EmbedAnalytics from "@/components/EmbedAnalytics";
 
 export const metadata: Metadata = {
   robots: { index: false, follow: false },
@@ -23,6 +24,7 @@ export default function EmbedLayout({
           `,
         }}
       />
+      <EmbedAnalytics />
       <div style={{ overflow: "hidden", height: "100vh" }}>
         {children}
       </div>

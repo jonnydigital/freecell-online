@@ -6,9 +6,9 @@ import ContentLayout from '@/components/ContentLayout';
 import { SectionHeading, CardSection, ContentBody, CtaSection, ContentLinkCard, JsonLd } from '@/components/content';
 
 export const metadata: Metadata = {
-  title: 'FreeCell Game #11982 — The Only Proven Unsolvable Deal',
+  title: 'FreeCell #11982: The Unsolvable & Impossible Deal',
   description:
-    'Deal #11982 is the most famous unsolvable FreeCell game in history. Learn why it cannot be won, how it was discovered, and why thousands of players still try it anyway.',
+    'FreeCell 11982 is the only proven unsolvable, impossible deal — the one FreeCell game no human or computer has ever won. Why it cannot be solved, how it was found, and why players still try.',
   keywords: [
     'freecell 11982',
     'freecell game 11982',
@@ -20,9 +20,9 @@ export const metadata: Metadata = {
     'hardest freecell game',
   ],
   openGraph: {
-    title: 'FreeCell Game #11982 — The Only Proven Unsolvable Deal',
+    title: 'FreeCell #11982: The Unsolvable & Impossible Deal',
     description:
-      'The definitive guide to FreeCell deal #11982: the one game out of 32,000 that no human or computer has ever solved. Its history, its proof, and why players keep trying.',
+      'The definitive guide to FreeCell deal #11982 — the only proven unsolvable, impossible FreeCell game out of 32,000. Its history, its proof, and why players keep trying.',
     url: absoluteUrl('/freecell-game-11982'),
     siteName: siteConfig.siteName,
     type: 'article',

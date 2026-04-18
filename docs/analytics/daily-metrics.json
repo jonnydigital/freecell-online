@@ -35,7 +35,90 @@
     "playklondikeonline": 1,
     "playspidersolitaireonline": 0,
     "network_total_indexed": 6,
-    "indexation_rate": "2.4% (6/252)"
+    "indexation_rate": "2.4% (6/252)",
+    "caveat": "Google `site:` is an underestimate vs GSC Coverage truth. See gsc_performance_live below for real numbers."
+  },
+
+  "gsc_performance_live": {
+    "pulled_at": "2026-04-17 via Chrome MCP (search.google.com/search-console)",
+    "window": "last 3 months where available; newer domains show shorter window",
+    "playfreecellonline": {
+      "clicks": 2,
+      "impressions": 516,
+      "ctr_pct": 0.4,
+      "avg_position": 62.7,
+      "total_queries_tracked": 109,
+      "top_queries_by_impressions": [
+        {"q": "freecell online", "imp": 90, "pos": 73.9},
+        {"q": "freecell free online", "imp": 53, "pos": 69.6},
+        {"q": "free cell online", "imp": 29, "pos": 76.9},
+        {"q": "play freecell", "imp": 22, "pos": 59.0},
+        {"q": "free cell", "imp": 19, "pos": 71.6},
+        {"q": "freecell play online", "imp": 17, "pos": 69.5}
+      ],
+      "best_ranking_queries": [
+        {"q": "freecell unsolvable", "imp": 2, "pos": 24.5, "note": "Our best striking-distance opportunity"},
+        {"q": "unsolvable freecell", "imp": 1, "pos": 34.0},
+        {"q": "free cells online", "imp": 1, "pos": 36.0},
+        {"q": "freecell unsolvable games", "imp": 1, "pos": 37.0},
+        {"q": "freecell 11982", "imp": 1, "pos": 41.0},
+        {"q": "freecell impossible games", "imp": 1, "pos": 43.0}
+      ],
+      "sitemap_last_submitted": "2026-04-18",
+      "sitemap_discovered_pages": 16669,
+      "sitemap_note": "Stale 16,669 from pre-trim sitemap. Resubmitted 2026-04-18 with clean 96 URLs; Google will re-read."
+    },
+    "solitairestack": {
+      "clicks": 2,
+      "impressions": 210,
+      "ctr_pct": 1,
+      "avg_position": 25.5,
+      "total_queries_tracked": 38,
+      "best_ranking_queries": [
+        {"q": "solitaire stack", "imp": 2, "pos": 2.5, "note": "BRAND query ranks page 1 — working as designed"},
+        {"q": "stack em up solitaire", "imp": 1, "pos": 29.0},
+        {"q": "freecell download no ads", "imp": 1, "pos": 35.0},
+        {"q": "original freecell game free download no ads", "imp": 3, "pos": 41.0}
+      ],
+      "sitemap_last_submitted": "2026-04-18",
+      "sitemap_discovered_pages": 132,
+      "sitemap_note": "Resubmitted 2026-04-18; expect re-read to find the new 149 URLs including pillar/authors pages."
+    },
+    "playklondikeonline": {
+      "clicks": 0,
+      "impressions": 24,
+      "ctr_pct": 0,
+      "avg_position": 21.8,
+      "total_queries_tracked": 5,
+      "window_days": 10,
+      "best_ranking_queries": [
+        {"q": "least moves to win solitaire", "imp": 1, "pos": 43.0},
+        {"q": "quickest game of solitaire", "imp": 1, "pos": 54.0}
+      ],
+      "sitemap_last_submitted": "2026-04-18",
+      "sitemap_discovered_pages": 16
+    },
+    "playspidersolitaireonline": {
+      "clicks": 0,
+      "impressions": 95,
+      "ctr_pct": 0,
+      "avg_position": 68,
+      "total_queries_tracked": 44,
+      "window_days": 10,
+      "top_queries_by_impressions": [
+        {"q": "easy freecell", "imp": 3, "pos": 43.7},
+        {"q": "how do you play freecell", "imp": 3, "pos": 56.3},
+        {"q": "freecell how to play", "imp": 3, "pos": 70.0}
+      ],
+      "anomaly": "All 44 Spider-domain queries are FreeCell-related. Google indexed the Spider domain showing FreeCell pages before route-ownership canonicalization. Resubmitted sitemap (now clean 16 Spider-only URLs) and IndexNow should accelerate re-crawl.",
+      "sitemap_last_submitted": "2026-04-18",
+      "sitemap_discovered_pages": 16
+    },
+    "network_totals": {
+      "clicks_3mo": 4,
+      "impressions_3mo": 845,
+      "striking_distance_queries": "0 at positions 5-20 yet. Best is 'solitaire stack' at 2.5 (brand). Next tier is 'freecell unsolvable' cluster at 24-43 — primary optimization target for 2026-04-17 ship."
+    }
   },
 
   "health_checks": {
@@ -57,12 +140,15 @@
     },
     "gsc_verified": {
       "playfreecellonline": true,
-      "solitairestack": false,
-      "playklondikeonline": "file_in_repo_verification_pending",
-      "playspidersolitaireonline": false
+      "solitairestack": true,
+      "playklondikeonline": true,
+      "playspidersolitaireonline": true,
+      "note": "All 4 confirmed verified via Chrome MCP 2026-04-17. Earlier 'pending' state was a stale assumption."
     },
     "bing_webmaster_verified": false,
-    "indexnow_key_deployed": false
+    "indexnow_key_deployed": true,
+    "indexnow_key": "75622f7c3eade87b0d7df27ff6087255",
+    "indexnow_last_submit": "2026-04-17 — all 281 network URLs pinged, all HTTP 202"
   },
 
   "competitor_reference": {

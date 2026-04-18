@@ -1,14 +1,30 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { getDailySeed } from '@/lib/dailyChallenge';
-import { siteConfig } from '@/lib/siteConfig';
+import { getDailySeed, formatTime } from '@/lib/dailyChallenge';
+import { absoluteUrl, siteConfig } from '@/lib/siteConfig';
 
 interface Props {
   params: Promise<{ date: string }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+function firstStr(v: string | string[] | undefined): string | undefined {
+  return Array.isArray(v) ? v[0] : v;
+}
+
+function parseStats(sp: Record<string, string | string[] | undefined>) {
+  const time = Number(firstStr(sp.t) ?? NaN);
+  const moves = Number(firstStr(sp.m) ?? NaN);
+  const hints = Number(firstStr(sp.h) ?? 0);
+  const streak = Number(firstStr(sp.s) ?? 0);
+  const hasStats = Number.isFinite(time) && Number.isFinite(moves);
+  return { hasStats, time, moves, hints, streak };
+}
+
+export async function generateMetadata({ params, searchParams }: Props): Promise<Metadata> {
   const { date } = await params;
+  const sp = await searchParams;
+  const { hasStats, time, moves, hints, streak } = parseStats(sp);
   const seed = getDailySeed(date);
 
   let displayDate = date;
@@ -24,26 +40,52 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     // Use raw date as fallback
   }
 
+  // Build dynamic OG image URL that bakes in the player's stats so every
+  // Wordle-style paste to Slack/iMessage/Twitter renders a rich card.
+  const ogParams = new URLSearchParams({ date });
+  if (hasStats) {
+    ogParams.set('t', String(time));
+    ogParams.set('m', String(moves));
+    if (hints) ogParams.set('h', String(hints));
+    if (streak) ogParams.set('s', String(streak));
+  }
+  const ogImageUrl = absoluteUrl(`/api/og/daily-result?${ogParams.toString()}`);
+
+  const title = hasStats
+    ? `I solved FreeCell Daily #${seed} in ${formatTime(time)}, ${moves} moves`
+    : `FreeCell Daily #${seed} — ${displayDate}`;
+  const description = hasStats
+    ? `Solved in ${formatTime(time)} with ${moves} moves. Can you beat it? Play the daily FreeCell challenge.`
+    : `Can you beat FreeCell Daily Challenge #${seed} for ${displayDate}? Play the daily FreeCell challenge and compare your results!`;
+
+  const shareUrl = `${siteConfig.url}/daily-freecell/share/${date}${
+    hasStats ? `?${ogParams.toString().replace(/date=[^&]+&?/, '')}` : ''
+  }`;
+
   return {
-    title: `FreeCell Daily #${seed} — ${displayDate} | ${siteConfig.siteName}`,
-    description: `Can you beat FreeCell Daily Challenge #${seed} for ${displayDate}? Play the daily FreeCell challenge and compare your results!`,
+    title: `${title} | ${siteConfig.siteName}`,
+    description,
     openGraph: {
-      title: `FreeCell Daily #${seed} — ${displayDate}`,
-      description: `Can you beat FreeCell Daily Challenge #${seed}? Play the daily FreeCell challenge and compare your results!`,
-      url: `${siteConfig.url}/daily-freecell/share/${date}`,
+      title,
+      description,
+      url: shareUrl,
       siteName: siteConfig.siteName,
       type: 'website',
+      images: [{ url: ogImageUrl, width: 1200, height: 630, alt: title }],
     },
     twitter: {
       card: 'summary_large_image',
-      title: `FreeCell Daily #${seed} — ${displayDate}`,
-      description: `Can you beat FreeCell Daily Challenge #${seed}?`,
+      title,
+      description,
+      images: [ogImageUrl],
     },
   };
 }
 
-export default async function DailySharePage({ params }: Props) {
+export default async function DailySharePage({ params, searchParams }: Props) {
   const { date } = await params;
+  const sp = await searchParams;
+  const { hasStats, time, moves, hints, streak } = parseStats(sp);
   const seed = getDailySeed(date);
 
   let displayDate = date;
@@ -78,24 +120,54 @@ export default async function DailySharePage({ params }: Props) {
 
           <p className="text-white/50 text-sm mb-6">{displayDate}</p>
 
-          {/* Suit indicators */}
-          <div className="flex justify-center gap-3 mb-6">
-            {['♠', '♥', '♦', '♣'].map((suit, i) => (
-              <div
-                key={suit}
-                className="w-12 h-14 rounded-lg flex items-center justify-center text-2xl font-bold"
-                style={{
-                  background: '#1a5c1a',
-                  color: i === 1 || i === 2 ? '#c83232' : '#e0e0e0',
-                }}
-              >
-                {suit}
+          {hasStats ? (
+            <div className="mb-6">
+              <div className="flex justify-center gap-6 mb-4">
+                <div>
+                  <div className="text-3xl font-bold text-white">{formatTime(time)}</div>
+                  <div className="text-xs text-[#D4AF37] tracking-wider">TIME</div>
+                </div>
+                <div>
+                  <div className="text-3xl font-bold text-white">{moves}</div>
+                  <div className="text-xs text-[#D4AF37] tracking-wider">MOVES</div>
+                </div>
+                <div>
+                  <div className="text-3xl font-bold text-[#D4AF37]">
+                    {moves <= 60 ? '★★★' : moves <= 90 ? '★★' : '★'}
+                  </div>
+                  <div className="text-xs text-[#D4AF37] tracking-wider">STARS</div>
+                </div>
               </div>
-            ))}
-          </div>
+              {streak >= 2 && (
+                <p className="text-sm text-[#D4AF37]">🔥 {streak}-day streak</p>
+              )}
+              {hints > 0 && (
+                <p className="text-xs text-white/40 mt-1">{hints} hint{hints === 1 ? '' : 's'} used</p>
+              )}
+            </div>
+          ) : (
+            <>
+              <div className="flex justify-center gap-3 mb-6">
+                {['♠', '♥', '♦', '♣'].map((suit, i) => (
+                  <div
+                    key={suit}
+                    className="w-12 h-14 rounded-lg flex items-center justify-center text-2xl font-bold"
+                    style={{
+                      background: '#1a5c1a',
+                      color: i === 1 || i === 2 ? '#c83232' : '#e0e0e0',
+                    }}
+                  >
+                    {suit}
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
 
           <p className="text-white/60 text-sm mb-8">
-            Think you can beat this daily challenge? Play it now and see how you stack up!
+            {hasStats
+              ? 'Think you can beat this? Play the same daily challenge now!'
+              : 'Think you can beat this daily challenge? Play it now and see how you stack up!'}
           </p>
 
           {/* CTA */}

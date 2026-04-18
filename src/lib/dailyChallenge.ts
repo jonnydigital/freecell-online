@@ -128,7 +128,7 @@ export function getCurrentStreak(): number {
 }
 
 /** Format time as m:ss */
-function formatTime(seconds: number): string {
+export function formatTime(seconds: number): string {
   const m = Math.floor(seconds / 60);
   const s = seconds % 60;
   return `${m}:${String(s).padStart(2, '0')}`;
@@ -182,7 +182,15 @@ export function getShareText(
     lines.push(`\u{1F525} ${streak}-day streak`);
   }
   lines.push('');
-  lines.push('Play at playfreecellonline.com/daily-freecell');
+  // Link directly to the rich-card share page with stats baked in so every
+  // paste into Slack/iMessage/Twitter renders a dynamic OG card showing the
+  // player's actual run (see src/app/api/og/daily-result/route.tsx).
+  const params = new URLSearchParams({ t: String(time), m: String(moves) });
+  if (hintsUsed) params.set('h', String(hintsUsed));
+  if (streak && streak >= 2) params.set('s', String(streak));
+  lines.push(
+    `https://playfreecellonline.com/daily-freecell/share/${dateStr}?${params.toString()}`,
+  );
   return lines.join('\n');
 }
 

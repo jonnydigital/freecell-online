@@ -84,6 +84,10 @@ export const ROUTE_OWNERSHIP: Record<string, RouteOwnership> = {
   // Hub long-form research (Wave 10-F)
   '/how-solitaire-changed-windows': HUB_ONLY,
 
+  // Hub striking-distance target (Wave 8-STR) — GSC shows hub surfacing at pos 35-41
+  // for "freecell download no ads" / "original freecell game free download no ads".
+  '/freecell-no-ads': HUB_ONLY,
+
   // Hub editorial / reference
   '/history': HUB_ONLY,
   '/glossary': HUB_ONLY,
@@ -289,6 +293,10 @@ export const ROUTE_OWNERSHIP: Record<string, RouteOwnership> = {
   '/klondike-vegas-scoring': KLONDIKE_ONLY,
   '/klondike-probability': KLONDIKE_ONLY,
   '/klondike-variants': KLONDIKE_ONLY,
+
+  // Klondike striking-distance target (Wave 8-STR) — GSC shows spoke surfacing at
+  // pos 43-54 for "least moves to win solitaire" / "quickest game of solitaire".
+  '/klondike-fewest-moves': KLONDIKE_ONLY,
 
   // Klondike-family variants
   '/canfield': KLONDIKE_ONLY,

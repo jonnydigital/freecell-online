@@ -279,8 +279,10 @@
 
   "blockers_and_actions": {
     "needs_user_action": [
-      "GSC: verify solitairestack.com + playspidersolitaireonline.com, submit all 4 sitemaps",
       "GA4/AdSense: pull 7d numbers and overwrite ga4_last_known block"
+    ],
+    "completed_2026_04_20": [
+      "GA4 <-> GSC linking for all 4 properties (resolved property/stream ambiguity via gtag cross-reference on live sites). Final mapping: 525799022/G-988ZBJSKVJ->solitairestack.com, 531359003/G-8N85JJPLED->playfreecellonline.com, 531330279/G-9MJ1PYWNRR->playklondikeonline.com, 531391445/G-WZX8LMFDP8->playspidersolitaireonline.com. 525799022 is confirmed as the repurposed solitairestack tracker (its GA4 name + stream URL are stale from its FreeCell origin, but the live gtag install on solitairestack.com uses G-988ZBJSKVJ)."
     ],
     "explicitly_deferred_by_user_2026_04_17": [
       "Bing Webmaster Tools (working around via IndexNow instead)",

@@ -7,19 +7,13 @@ import { absoluteUrl, siteConfig } from '@/lib/siteConfig';
 import { WIN_RATES } from '@/lib/winRateData';
 import { featuredGames, faqItems } from '@/lib/hubContent';
 import GameErrorBoundary from './GameErrorBoundary';
+import StaticBoardPlaceholder from './StaticBoardPlaceholder';
 import AuthorByline from './content/AuthorByline';
 import AuthorBio from './content/AuthorBio';
 
 const DomGameShell = dynamic(() => import('./dom-freecell/DomGameShell'), {
   ssr: false,
-  loading: () => (
-    <div className="flex items-center justify-center h-screen bg-[#0a3d0a]">
-      <div className="text-center">
-        <div className="text-4xl mb-4">&#127183;</div>
-        <p className="text-white/60 text-lg">Loading FreeCell...</p>
-      </div>
-    </div>
-  ),
+  loading: () => <StaticBoardPlaceholder />,
 });
 
 export default function SolitaireHubHome() {

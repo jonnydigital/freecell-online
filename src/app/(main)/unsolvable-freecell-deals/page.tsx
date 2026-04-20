@@ -16,23 +16,23 @@ import {
 import AuthorByline from "@/components/content/AuthorByline";
 
 export const metadata: Metadata = {
-  title: `The Unsolvable FreeCell Deals: A Complete Study | ${siteConfig.siteName}`,
+  title: `Unsolvable FreeCell: All 8 Impossible Games Proven So Far`,
   description:
-    "A definitive study of the FreeCell deals that genuinely cannot be solved. We walk through deal #11982, the 99.9987% figure behind Microsoft's 32,000 deals, structural patterns that produce dead layouts, and the solver work that proved it.",
+    "All 8 unsolvable FreeCell deals — proven impossible by exhaustive computer search. Deal #11982 and the 7 others discovered in the million-deal extended set, with the math behind why they cannot be won.",
   keywords: [
+    "unsolvable freecell",
+    "freecell unsolvable games",
+    "freecell impossible games",
     "unsolvable freecell deals",
     "freecell deal 11982",
     "freecell unwinnable games",
     "microsoft freecell 32000 deals",
-    "freecell solvability study",
     "freecell solver proof",
-    "keller freecell project",
-    "freecell pro community",
   ],
   openGraph: {
-    title: "The Unsolvable FreeCell Deals: A Complete Study",
+    title: "Unsolvable FreeCell: All 8 Impossible Games Proven So Far",
     description:
-      "Which Microsoft FreeCell deals cannot be solved, why, and how solvers proved it. A research piece on the structural patterns behind unwinnable positions.",
+      "The complete list of unsolvable FreeCell games — deal #11982 plus 7 others, all verified impossible by exhaustive solver search.",
     url: absoluteUrl("/unsolvable-freecell-deals"),
     siteName: siteConfig.siteName,
     type: "article",

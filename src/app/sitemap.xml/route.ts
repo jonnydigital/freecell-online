@@ -83,6 +83,8 @@ const contentPages = [
   { path: '/freecell-mistakes-to-avoid', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/famous-freecell-deals', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/freecell-game-11982', changeFrequency: 'yearly', priority: 0.7 },
+  // Hub striking-distance target (Wave 8-STR)
+  { path: '/freecell-no-ads', changeFrequency: 'monthly', priority: 0.7 },
   // FreeCell spoke pillar + research pages
   { path: '/freecell-mastery', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/freecell-solvability', changeFrequency: 'monthly', priority: 0.7 },
@@ -114,6 +116,8 @@ const contentPages = [
   { path: '/klondike-vegas-scoring', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/klondike-probability', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/klondike-variants', changeFrequency: 'monthly', priority: 0.7 },
+  // Klondike striking-distance target (Wave 8-STR)
+  { path: '/klondike-fewest-moves', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/pyramid', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/pyramid/how-to-play', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/pyramid/strategy', changeFrequency: 'monthly', priority: 0.7 },

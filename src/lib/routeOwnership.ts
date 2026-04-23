@@ -293,6 +293,7 @@ export const ROUTE_OWNERSHIP: Record<string, RouteOwnership> = {
   '/klondike-vegas-scoring': KLONDIKE_ONLY,
   '/klondike-probability': KLONDIKE_ONLY,
   '/klondike-variants': KLONDIKE_ONLY,
+  '/klondike-cheat-sheet': KLONDIKE_ONLY,
 
   // Klondike striking-distance target (Wave 8-STR) — GSC shows spoke surfacing at
   // pos 43-54 for "least moves to win solitaire" / "quickest game of solitaire".
@@ -316,6 +317,7 @@ export const ROUTE_OWNERSHIP: Record<string, RouteOwnership> = {
   '/spider/how-to-play': SPIDER_ONLY,
   '/spider/tips': SPIDER_ONLY,
   '/spider/strategy': SPIDER_ONLY,
+  '/spider/faq': SPIDER_ONLY,
   '/spider/1-suit-vs-2-suit-vs-4-suit': SPIDER_ONLY,
   '/spider/is-spider-solitaire-winnable': SPIDER_ONLY,
   '/spider/how-to-empty-a-column': SPIDER_ONLY,

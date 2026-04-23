@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import ContentLayout from "@/components/ContentLayout";
 import AdUnit from "@/components/AdUnit";
-import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionHeading, ContentBody } from "@/components/content";
+import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionHeading, ContentBody, RelatedArticles } from "@/components/content";
 
 export const metadata: Metadata = {
   title: "How to Play FreeCell Solitaire | Complete Rules & Strategy Guide",
@@ -528,6 +528,10 @@ export default function FreecellHowToPlayPage() {
           secondaryLabel="Advanced Strategy"
           secondaryHref="/strategy"
         />
+      </div>
+
+      <div className="max-w-4xl mx-auto px-6">
+        <RelatedArticles cluster="freecell" heading="Go Deeper on FreeCell" />
       </div>
 
       {/* FAQ */}

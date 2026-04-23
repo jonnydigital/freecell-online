@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import ContentLayout from "@/components/ContentLayout";
 import AdUnit from "@/components/AdUnit";
-import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionHeading, ContentBody } from "@/components/content";
+import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionHeading, ContentBody, RelatedArticles } from "@/components/content";
 
 export const metadata: Metadata = {
   title: "FreeCell Tips & Tricks | Expert Strategy for Higher Win Rates",
@@ -612,6 +612,10 @@ export default function FreecellTipsPage() {
           secondaryLabel="Read the Strategy Guide"
           secondaryHref="/strategy"
         />
+      </div>
+
+      <div className="max-w-4xl mx-auto px-6">
+        <RelatedArticles cluster="freecell-deals" heading="Practice On Real Deals" />
       </div>
 
       <AdUnit format="horizontal" className="-my-1 max-w-3xl mx-auto" />

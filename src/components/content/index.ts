@@ -11,3 +11,4 @@ export { default as JsonLd } from './JsonLd';
 export { default as AuthorByline } from './AuthorByline';
 export { default as AuthorBio } from './AuthorBio';
 export { default as PageMetaStamp } from './PageMetaStamp';
+export { default as RelatedArticles } from './RelatedArticles';

@@ -26,28 +26,49 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!gameNum) return {};
 
   const deal = dealLookup.get(gameNum);
-  const title = deal
-    ? `FreeCell Game #${gameNum} - ${deal.label}`
-    : `FreeCell Game #${gameNum} - Play Deal ${gameNum.toLocaleString()} Online Free`;
+
+  function variedTitle(num: number, d: typeof deal): string {
+    if (d?.difficulty === 'Impossible') {
+      return `FreeCell Game #${num} — Proven Unsolvable Deal | Play Online`;
+    }
+    if (d?.difficulty === 'Hard') {
+      return `FreeCell Game #${num} — ${d.label} (Hard) | Play Free Online`;
+    }
+    if (d?.difficulty === 'Easy') {
+      return `FreeCell Game #${num} — ${d.label} (Easy Deal) | Play Free`;
+    }
+    if (d) {
+      return `FreeCell Game #${num} — ${d.label} | Play Free Online`;
+    }
+    if (num <= 1000) {
+      return `FreeCell Game #${num} — Classic Microsoft Deal | Play Free Online`;
+    }
+    if (num <= 32000) {
+      return `FreeCell Game #${num.toLocaleString()} — Microsoft Deal | Play Free Online`;
+    }
+    return `FreeCell Game #${num.toLocaleString()} — Play This Deal Free Online`;
+  }
+
+  const title = variedTitle(gameNum, deal);
 
   function variedDescription(num: number): string {
     if (num <= 100) {
-      return `Play classic FreeCell Game #${num} online for free. One of the original 100 deals — a favorite among FreeCell enthusiasts. Same layout every time, no download required.`;
+      return `Play classic FreeCell Game #${num} online free. One of the original 100 Microsoft deals — a favorite among FreeCell enthusiasts. Same layout every time, no download, no signup.`;
     } else if (num <= 1000) {
-      return `Play FreeCell puzzle #${num} online for free. This specific card layout is the same every time — challenge yourself or share with friends. No download needed.`;
+      return `Play FreeCell puzzle #${num} online free. This specific card layout is identical every time — challenge yourself, share with friends, or retry until you master it.`;
     } else if (num <= 10000) {
-      return `Try FreeCell deal #${num.toLocaleString()} — a unique card layout you can replay anytime. Compare your strategy with other players. Free online, no download required.`;
-    } else if (num <= 50000) {
-      return `FreeCell Game #${num.toLocaleString()} — play this specific deal online for free. Every deal has a fixed layout, so you can retry and perfect your strategy.`;
+      return `Play FreeCell deal #${num.toLocaleString()} free — a unique, replayable card layout. Compare your strategy with other players. Free online FreeCell, no download required.`;
+    } else if (num <= 32000) {
+      return `FreeCell Game #${num.toLocaleString()} — one of the 32,000 original Microsoft deals. Play this specific layout online free. Every deal is fixed, so you can retry and perfect your strategy.`;
     } else if (num <= 100000) {
-      return `Play FreeCell deal #${num.toLocaleString()} online. This high-numbered deal offers a unique challenge — 99.999% of FreeCell deals are solvable. Can you beat this one?`;
+      return `Play FreeCell deal #${num.toLocaleString()} online free. This extended-range deal offers a fresh challenge — 99.999% of FreeCell deals are solvable. Can you beat this one?`;
     } else {
-      return `FreeCell deal #${num.toLocaleString()} — a unique FreeCell puzzle to play online for free. Test your skills on this specific card layout. Same deal every time, no download required.`;
+      return `FreeCell deal #${num.toLocaleString()} — a unique FreeCell puzzle to play online free. Test your skills on this specific card layout. Same deal every time, no download required.`;
     }
   }
 
   const description = deal
-    ? `Play FreeCell Game #${gameNum} online for free — ${deal.label.toLowerCase()}${deal.difficulty ? ` (${deal.difficulty})` : ''}. Share this specific deal with friends. No download required.`
+    ? `Play FreeCell Game #${gameNum} online free — ${deal.label.toLowerCase()}${deal.difficulty ? `, rated ${deal.difficulty.toLowerCase()}` : ''}. Share this exact Microsoft FreeCell deal with friends. No download, no signup.`
     : variedDescription(gameNum);
 
   return {

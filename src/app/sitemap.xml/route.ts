@@ -95,6 +95,7 @@ const contentPages = [
   { path: '/spider/1-suit-vs-2-suit-vs-4-suit', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/spider/is-spider-solitaire-winnable', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/spider/how-to-empty-a-column', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/spider/faq', changeFrequency: 'monthly', priority: 0.7 },
   // Spider spoke pillar pages (Wave 8-SP)
   { path: '/spider-mastery', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/spider-suit-strategy', changeFrequency: 'monthly', priority: 0.7 },
@@ -116,6 +117,7 @@ const contentPages = [
   { path: '/klondike-vegas-scoring', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/klondike-probability', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/klondike-variants', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/klondike-cheat-sheet', changeFrequency: 'monthly', priority: 0.8 },
   // Klondike striking-distance target (Wave 8-STR)
   { path: '/klondike-fewest-moves', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/pyramid', changeFrequency: 'monthly', priority: 0.8 },

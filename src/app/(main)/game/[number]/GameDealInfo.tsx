@@ -28,27 +28,119 @@ export default function GameDealInfo({ gameNum, deal }: GameDealInfoProps) {
 
       {/* Related links — always shown */}
       <div className="mt-8 pt-6 border-t border-white/[0.07]">
-        <h3 className="text-lg font-semibold text-white mb-3">Related</h3>
+        <h3 className="text-lg font-semibold text-white mb-3">Explore More FreeCell</h3>
         <div className="grid gap-3 sm:grid-cols-2">
           <Link href="/famous-freecell-deals" className="rounded-lg border border-white/[0.07] p-4 hover:border-[#D4AF37]/40 transition-colors">
             <span className="font-medium text-white text-sm">Famous FreeCell Deals</span>
             <p className="text-xs text-white/50 mt-1">The iconic game numbers every FreeCell player should know.</p>
           </Link>
-          <Link href="/deals" className="rounded-lg border border-white/[0.07] p-4 hover:border-[#D4AF37]/40 transition-colors">
-            <span className="font-medium text-white text-sm">Browse All Deals</span>
-            <p className="text-xs text-white/50 mt-1">Search curated collections or jump to any game number.</p>
+          <Link href="/freecell-solvability" className="rounded-lg border border-white/[0.07] p-4 hover:border-[#D4AF37]/40 transition-colors">
+            <span className="font-medium text-white text-sm">Which Deals Are Solvable?</span>
+            <p className="text-xs text-white/50 mt-1">The 8 known unsolvable deals and why every other deal can be won.</p>
+          </Link>
+          <Link href="/freecell-mastery" className="rounded-lg border border-white/[0.07] p-4 hover:border-[#D4AF37]/40 transition-colors">
+            <span className="font-medium text-white text-sm">Master FreeCell</span>
+            <p className="text-xs text-white/50 mt-1">The complete roadmap from first deal to expert-level play.</p>
+          </Link>
+          <Link href="/freecell-probability" className="rounded-lg border border-white/[0.07] p-4 hover:border-[#D4AF37]/40 transition-colors">
+            <span className="font-medium text-white text-sm">FreeCell Probability</span>
+            <p className="text-xs text-white/50 mt-1">Win rates, solvability math, and why FreeCell is 99.999% winnable.</p>
+          </Link>
+          <Link href="/solver" className="rounded-lg border border-white/[0.07] p-4 hover:border-[#D4AF37]/40 transition-colors">
+            <span className="font-medium text-white text-sm">FreeCell Solver</span>
+            <p className="text-xs text-white/50 mt-1">Paste a board — see the winning line if one exists.</p>
           </Link>
           <Link href="/strategy" className="rounded-lg border border-white/[0.07] p-4 hover:border-[#D4AF37]/40 transition-colors">
             <span className="font-medium text-white text-sm">Strategy Guide</span>
-            <p className="text-xs text-white/50 mt-1">Master free-cell management, supermoves, and board reading.</p>
-          </Link>
-          <Link href="/tips" className="rounded-lg border border-white/[0.07] p-4 hover:border-[#D4AF37]/40 transition-colors">
-            <span className="font-medium text-white text-sm">Tips and Tricks</span>
-            <p className="text-xs text-white/50 mt-1">Quick tactical advice you can apply mid-game.</p>
+            <p className="text-xs text-white/50 mt-1">Free-cell management, supermoves, and board reading.</p>
           </Link>
         </div>
       </div>
     </article>
+  );
+}
+
+function tierNarrative(num: number): { heading: string; paragraphs: string[] } {
+  if (num <= 100) {
+    return {
+      heading: `One of the original 100 FreeCell deals`,
+      paragraphs: [
+        `Deal #${num} sits in the first 100 game numbers of the classic Microsoft dealing algorithm — the range most long-time FreeCell players know by heart. Deals in this band tend to have recognizable openings because millions of players have encountered them since the 1990s.`,
+        `If you want to see how your solve time compares to other players, keep an eye on the daily leaderboard after completing this deal. Most deals in the 1–100 range are rated Easy or Medium, so this is a good number to chase personal bests on.`,
+      ],
+    };
+  }
+  if (num <= 1000) {
+    return {
+      heading: `A classic Microsoft FreeCell layout`,
+      paragraphs: [
+        `Deal #${num} is one of the early Microsoft FreeCell deals that originally shipped with Windows. The dealing algorithm is deterministic, so deal #${num} produces identical tableau placements for every player in every version of the game — which is why you can share the number and replay it years later.`,
+        `Deals in the 101–1,000 range make excellent practice targets. They are well-documented in the community, and if you get stuck you can check the solver for the shortest winning line or compare approaches in our strategy guide.`,
+      ],
+    };
+  }
+  if (num <= 10000) {
+    return {
+      heading: `A mid-range Microsoft FreeCell deal`,
+      paragraphs: [
+        `Deal #${num.toLocaleString()} belongs to the 1,001–10,000 range of Microsoft FreeCell numbering. These deals are part of the 32,000 deal set that shipped with Windows 98 and XP — they are the deals competitive FreeCell players reference when discussing difficulty and technique.`,
+        `If this deal feels tough, remember that 99.999% of all FreeCell deals are solvable with perfect play. The key moves in any FreeCell deal are usually: free an Ace early, hold at least two free cells in reserve, and avoid filling a column with a descending single-suit run until you have somewhere to move it.`,
+      ],
+    };
+  }
+  if (num <= 32000) {
+    return {
+      heading: `One of the 32,000 original Microsoft deals`,
+      paragraphs: [
+        `Deal #${num.toLocaleString()} is one of the 32,000 numbered deals included in the original Windows FreeCell release. Deals in this range are the historical canon of the game — every major solvability study (from Don Woods to modern automated solvers) has analyzed deals drawn from this set.`,
+        `Only one of these 32,000 deals — game #11982 — is proven unsolvable. Every other deal in this range, including #${num.toLocaleString()}, has a valid winning sequence. If you get stuck, the issue is almost always move order: try the solver, then replay to internalize the line.`,
+      ],
+    };
+  }
+  if (num <= 100000) {
+    return {
+      heading: `An extended-range FreeCell deal`,
+      paragraphs: [
+        `Deal #${num.toLocaleString()} lies in the extended range (32,001–100,000) — deals generated by the same Microsoft algorithm but outside the original Windows set. They produce fully legitimate FreeCell boards and are useful if you want a deal that you probably have not seen before.`,
+        `Seven of the eight known unsolvable FreeCell deals live in this wider range (#146692, #186216, #455889, #495505, #512118, #517776, #781948 are all outside the original 32,000). If this deal feels impossible, check our list of known unsolvable deals — otherwise it is winnable and the solver can prove it.`,
+      ],
+    };
+  }
+  return {
+    heading: `A high-range FreeCell deal`,
+    paragraphs: [
+      `Deal #${num.toLocaleString()} is a high-number Microsoft-algorithm deal. The algorithm is deterministic, so this deal produces a fixed, reproducible tableau that you can share with friends using the URL above.`,
+      `Deals this far into the numbering space are rarely discussed in published solvability studies, but they behave the same way mathematically — the vast majority are solvable, and the same FreeCell fundamentals apply: free Aces and Twos first, protect your free cells, and build empty columns before you commit to long sequences.`,
+    ],
+  };
+}
+
+function GenericDealContent({ gameNum }: { gameNum: number }) {
+  const { heading, paragraphs } = tierNarrative(gameNum);
+  return (
+    <div className="mb-4">
+      <p className="text-sm uppercase tracking-wide text-[#D4AF37]/80 mb-3">{heading}</p>
+      {paragraphs.map((text, i) => (
+        <p key={i} className={i === 0 ? 'leading-relaxed' : 'mt-3 leading-relaxed'}>
+          {text}
+        </p>
+      ))}
+      <p className="mt-3 leading-relaxed">
+        New to FreeCell? Start with our{' '}
+        <Link href="/how-to-play" className="text-[#D4AF37] hover:underline">
+          how to play guide
+        </Link>
+        , then read the{' '}
+        <Link href="/strategy" className="text-[#D4AF37] hover:underline">
+          strategy guide
+        </Link>{' '}
+        to learn the patterns that separate casual play from expert-level wins. Stuck on a specific deal? The{' '}
+        <Link href="/solver" className="text-[#D4AF37] hover:underline">
+          FreeCell solver
+        </Link>{' '}
+        will find a winning line if one exists.
+      </p>
+    </div>
   );
 }
 
@@ -155,32 +247,3 @@ function CuratedDealContent({ gameNum, deal }: { gameNum: number; deal: DealInfo
   );
 }
 
-function GenericDealContent({ gameNum }: { gameNum: number }) {
-  return (
-    <div className="mb-4">
-      <p className="leading-relaxed">
-        Every FreeCell game number corresponds to a unique card layout generated by
-        the original Microsoft dealing algorithm. Deal #{gameNum} produces the same
-        board every time, which means you can share this exact game with friends,
-        retry it after a loss, or compare your approach to other players.
-      </p>
-      <p className="mt-3 leading-relaxed">
-        Approximately 99.999% of all FreeCell deals are solvable with perfect play.
-        If this deal feels stuck, try clearing an empty column first, preserving
-        your free cells for critical extractions, and working to expose buried aces
-        and twos before building long tableau sequences.
-      </p>
-      <p className="mt-3 leading-relaxed">
-        New to FreeCell? Start with our{' '}
-        <Link href="/how-to-play" className="text-[#D4AF37] hover:underline">
-          how to play guide
-        </Link>{' '}
-        or read the{' '}
-        <Link href="/strategy" className="text-[#D4AF37] hover:underline">
-          strategy guide
-        </Link>{' '}
-        to learn the patterns that separate casual play from expert-level wins.
-      </p>
-    </div>
-  );
-}

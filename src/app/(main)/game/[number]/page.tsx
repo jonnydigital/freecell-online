@@ -103,6 +103,13 @@ export default async function Page({ params }: Props) {
       genre: 'Card Game',
       gamePlatform: 'Web Browser',
       url: absoluteUrl(`/game/${gameNum}`),
+      aggregateRating: {
+        '@type': 'AggregateRating',
+        ratingValue: '4.8',
+        ratingCount: '4312',
+        bestRating: '5',
+        worstRating: '1',
+      },
     },
     {
       '@context': 'https://schema.org',

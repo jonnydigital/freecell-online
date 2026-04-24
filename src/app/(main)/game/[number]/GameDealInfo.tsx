@@ -16,9 +16,10 @@ const difficultyColors: Record<string, string> = {
 export default function GameDealInfo({ gameNum, deal }: GameDealInfoProps) {
   return (
     <article className="max-w-3xl mx-auto px-6 py-12 text-white/80 bg-[#072907]">
-      <h2 className="text-2xl font-bold text-[#D4AF37] mb-4">
-        FreeCell Game #{gameNum}
-      </h2>
+      <h1 className="text-2xl font-bold text-[#D4AF37] mb-4 sm:text-3xl">
+        FreeCell Game #{gameNum.toLocaleString()}
+        {deal?.label ? ` — ${deal.label}` : ''}
+      </h1>
 
       {deal ? (
         <CuratedDealContent gameNum={gameNum} deal={deal} />

@@ -98,7 +98,7 @@ export default function SolitaireHubHome() {
               <p>
                 {siteConfig.brandName} is not a FreeCell clone and it is not another
                 Klondike-focused site with a reskinned engine. It is the place where the
-                solitaire tradition actually lives under one roof. We publish 26 distinct
+                solitaire tradition actually lives under one roof. We publish 28 distinct
                 variants — cascade games, discard games, patience games, two-deck
                 games, and the oddball specialists — and we give each one the same
                 editorial depth: researched win rates, canonical rules, honest difficulty
@@ -136,13 +136,13 @@ export default function SolitaireHubHome() {
             </div>
           </section>
 
-          {/* ── Section 2: 26 Games Under One Roof ── */}
+          {/* ── Section 2: 28 Games Under One Roof ── */}
           <section className="mt-16">
             <h2
               className="text-2xl font-bold text-white sm:text-3xl"
               style={{ fontFamily: 'var(--font-playfair), Georgia, serif' }}
             >
-              26 Solitaire Games Under One Roof
+              28 Solitaire Games Under One Roof
             </h2>
             <div className="mt-6 space-y-4 text-base leading-7 text-white/70">
               <p>
@@ -204,7 +204,7 @@ export default function SolitaireHubHome() {
               </table>
             </div>
             <p className="mt-4 text-sm text-white/55">
-              The full directory of all 26 games lives on our{' '}
+              The full directory of all 28 games lives on our{' '}
               <Link href="/games" className="text-[#d4af37] hover:text-[#f5df97]">
                 games index
               </Link>
@@ -225,7 +225,7 @@ export default function SolitaireHubHome() {
             <div className="mt-6 space-y-4 text-base leading-7 text-white/70">
               <p>
                 The most common message we get is some variation of: &quot;I don&apos;t
-                know which one to play.&quot; Twenty-six variants is a lot, and the
+                know which one to play.&quot; Twenty-eight variants is a lot, and the
                 standard answer — &quot;just try a few&quot; — is
                 unsatisfying if you have twenty minutes and want to spend them playing,
                 not browsing. So here is a decision guide organized around what you

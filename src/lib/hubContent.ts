@@ -52,11 +52,11 @@ export const featuredGames: FeaturedGame[] = [
 export const faqItems: FaqItem[] = [
   {
     q: `What’s the difference between ${siteConfig.brandName} and a single-game solitaire site?`,
-    a: `Most solitaire sites pick one game — usually Klondike or FreeCell — and wrap it in a wall of ads. We take a wider view. ${siteConfig.brandName} treats solitaire as a family of related puzzles, and we cover 26 variants with the same editorial depth: canonical rules, researched win rates, strategy guides written by players who actually solve the games, and honest difficulty ratings. If you only ever want to play Klondike, a single-game site is fine. If you want to understand the whole tradition, compare variants, or explore beyond the two or three games Windows shipped with, this is where we live.`,
+    a: `Most solitaire sites pick one game — usually Klondike or FreeCell — and wrap it in a wall of ads. We take a wider view. ${siteConfig.brandName} treats solitaire as a family of related puzzles, and we cover 28 variants with the same editorial depth: canonical rules, researched win rates, strategy guides written by players who actually solve the games, and honest difficulty ratings. If you only ever want to play Klondike, a single-game site is fine. If you want to understand the whole tradition, compare variants, or explore beyond the two or three games Windows shipped with, this is where we live.`,
   },
   {
     q: 'How do you pick which solitaire games to include?',
-    a: `We start with every variant that appears in Parlett’s Oxford History of Card Games, Morehead and Mott-Smith’s Complete Book of Solitaire, and the Microsoft Solitaire Collection. From that long list we keep the games that still have players in 2026 — measured by search volume, community activity, and whether the rules produce interesting decisions. A game has to teach a skill that another game in the catalog does not already teach. That filter removed about a dozen near-duplicates and left us with the 26 distinct variants on the site.`,
+    a: `We start with every variant that appears in Parlett’s Oxford History of Card Games, Morehead and Mott-Smith’s Complete Book of Solitaire, and the Microsoft Solitaire Collection. From that long list we keep the games that still have players in 2026 — measured by search volume, community activity, and whether the rules produce interesting decisions. A game has to teach a skill that another game in the catalog does not already teach. That filter removed about a dozen near-duplicates and left us with the 28 distinct variants on the site.`,
   },
   {
     q: 'Do your win rates come from real data?',

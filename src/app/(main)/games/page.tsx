@@ -8,7 +8,7 @@ import AdUnit from "@/components/AdUnit";
 import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionHeading, ContentBody } from "@/components/content";
 
 export const metadata: Metadata = {
-  title: "Free Solitaire Games Online | Play 26+ Card Games for Free",
+  title: "Free Solitaire Games Online | Play 28+ Card Games for Free",
   description:
     "Play the best free solitaire games online — FreeCell, Spider Solitaire, Klondike, Pyramid, Baker's Game, Eight Off, and more. No download, no sign-up. Choose your game and start playing instantly.",
   keywords: [
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     "best solitaire games",
   ],
   openGraph: {
-    title: "Free Solitaire Games Online | 26+ Card Games to Play Now",
+    title: "Free Solitaire Games Online | 28+ Card Games to Play Now",
     description:
       "FreeCell, Spider, Klondike, Pyramid, and more — all free, no download required. Pick a game and start playing.",
     url: absoluteUrl("/games"),
@@ -377,6 +377,62 @@ const games = [
     columns: 8,
     freeCells: 4,
     stackingRule: "Alternating color",
+  },
+  {
+    name: "Monte Carlo",
+    href: "/monte-carlo",
+    emoji: "🎲",
+    difficulty: "Easy",
+    difficultyColor: "text-emerald-400",
+    description:
+      "A pair-matching patience game on a 5×5 grid. Remove pairs of equal-rank cards that touch horizontally, vertically, or diagonally. When you stall, consolidate the layout and deal fresh cards. Clear all 52 to win.",
+    stats: "Win rate: ~50% · 1 deck · 5×5 grid · Pair to same rank",
+    winRate: "~50%",
+    columns: 5,
+    freeCells: 0,
+    stackingRule: "Match same rank",
+  },
+  {
+    name: "Aces Up",
+    href: "/aces-up",
+    emoji: "🅰️",
+    difficulty: "Hard",
+    difficultyColor: "text-red-400",
+    description:
+      "Also known as Idiot's Delight. Deal four cards at a time onto four piles and remove the lower-ranked card whenever two same-suit cards share the top. Win by reducing the deck to just four Aces. Pure tactical discarding — no foundations, no stacking.",
+    stats: "Win rate: ~10% · 1 deck · 4 piles · Discard same-suit lows",
+    winRate: "~10%",
+    columns: 4,
+    freeCells: 0,
+    stackingRule: "Discard lower same-suit",
+  },
+  {
+    name: "Bristol",
+    href: "/bristol",
+    emoji: "🌉",
+    difficulty: "Medium",
+    difficultyColor: "text-amber-400",
+    description:
+      "Eight fans of three cards plus three reserve piles. Build foundations Ace through King by suit, with tableau building down by any suit. Kings can never move from the tableau to another column. A flexible single-deck patience that rewards careful sequencing.",
+    stats: "Win rate: ~25–35% · 1 deck · 8 fans + 3 reserves · Down, any suit",
+    winRate: "~25–35%",
+    columns: 8,
+    freeCells: 3,
+    stackingRule: "Down, any suit",
+  },
+  {
+    name: "Flower Garden",
+    href: "/flower-garden",
+    emoji: "🌷",
+    difficulty: "Medium",
+    difficultyColor: "text-amber-400",
+    description:
+      "A 16-card open reserve called the bouquet — every reserve card is playable any time — paired with six tableau columns. Build foundations up by suit and tableau down regardless of suit. Empty columns can be filled with any card. Strategic and forgiving.",
+    stats: "Win rate: ~70–80% · 1 deck · 6 columns · 16-card reserve",
+    winRate: "~70–80%",
+    columns: 6,
+    freeCells: 16,
+    stackingRule: "Down, any suit",
   },
 ];
 

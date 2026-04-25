@@ -51,16 +51,16 @@ export const SITE_COPY: Record<SiteKey, SiteCopy> = {
     primaryGameArticle: 'the',
     brandPossessive: "SolitaireStack.com's",
     hubPositioning:
-      'The hub where 26 solitaire variants live under one roof — clean rules, no downloads, no interruptions.',
+      'The hub where 28 solitaire variants live under one roof — clean rules, no downloads, no interruptions.',
     sitePositioning:
       "Solitaire Stack is the hub of our solitaire network. Whether you want the focused tactics of FreeCell or the lighter luck of Spider, you'll find them here with clean rules, no downloads, and no interruptions.",
     otherGamesSentence:
-      'Solitaire Stack offers FreeCell, Spider, Klondike, and 23 more solitaire variants — all free, all in your browser, no downloads.',
+      'Solitaire Stack offers FreeCell, Spider, Klondike, and 25 more solitaire variants — all free, all in your browser, no downloads.',
     networkDescription: 'home of the Solitaire Stack network',
     recommendedSisterSiteLabel: 'Play FreeCell on the dedicated spoke at PlayFreeCellOnline.com',
     recommendedSisterSiteUrl: 'https://playfreecellonline.com',
     crossGameAvailability:
-      'Yes. Solitaire Stack is a multi-game hub with 26 solitaire variants available, including FreeCell, Spider, Klondike, Pyramid, TriPeaks, and more — all free and playable in your browser.',
+      'Yes. Solitaire Stack is a multi-game hub with 28 solitaire variants available, including FreeCell, Spider, Klondike, Pyramid, TriPeaks, and more — all free and playable in your browser.',
     publisherName: 'SolitaireStack.com',
   },
   playfreecellonline: {
@@ -77,7 +77,7 @@ export const SITE_COPY: Record<SiteKey, SiteCopy> = {
     recommendedSisterSiteLabel: 'Play Klondike Solitaire at PlayKlondikeOnline.com',
     recommendedSisterSiteUrl: 'https://playklondikeonline.com',
     crossGameAvailability:
-      'PlayFreeCellOnline.com focuses on FreeCell, with Spider Solitaire available as a secondary game. For Klondike, visit PlayKlondikeOnline.com; for the full 26-game catalogue, visit SolitaireStack.com.',
+      'PlayFreeCellOnline.com focuses on FreeCell, with Spider Solitaire available as a secondary game. For Klondike, visit PlayKlondikeOnline.com; for the full 28-game catalogue, visit SolitaireStack.com.',
     publisherName: 'PlayFreeCellOnline.com',
   },
   playklondikeonline: {
@@ -94,7 +94,7 @@ export const SITE_COPY: Record<SiteKey, SiteCopy> = {
     recommendedSisterSiteLabel: 'Play FreeCell at PlayFreeCellOnline.com',
     recommendedSisterSiteUrl: 'https://playfreecellonline.com',
     crossGameAvailability:
-      'PlayKlondikeOnline.com is dedicated to Klondike Solitaire (Draw 1, Draw 3, Vegas scoring). For FreeCell visit PlayFreeCellOnline.com, for Spider visit PlaySpiderSolitaireOnline.com, or browse all 26 variants on SolitaireStack.com.',
+      'PlayKlondikeOnline.com is dedicated to Klondike Solitaire (Draw 1, Draw 3, Vegas scoring). For FreeCell visit PlayFreeCellOnline.com, for Spider visit PlaySpiderSolitaireOnline.com, or browse all 28 variants on SolitaireStack.com.',
     publisherName: 'PlayKlondikeOnline.com',
   },
   playspidersolitaireonline: {
@@ -111,7 +111,7 @@ export const SITE_COPY: Record<SiteKey, SiteCopy> = {
     recommendedSisterSiteLabel: 'Play FreeCell at PlayFreeCellOnline.com',
     recommendedSisterSiteUrl: 'https://playfreecellonline.com',
     crossGameAvailability:
-      'PlaySpiderSolitaireOnline.com is dedicated to Spider Solitaire (1-suit, 2-suit, and 4-suit). For FreeCell visit PlayFreeCellOnline.com, for Klondike visit PlayKlondikeOnline.com, or browse all 26 variants on SolitaireStack.com.',
+      'PlaySpiderSolitaireOnline.com is dedicated to Spider Solitaire (1-suit, 2-suit, and 4-suit). For FreeCell visit PlayFreeCellOnline.com, for Klondike visit PlayKlondikeOnline.com, or browse all 28 variants on SolitaireStack.com.',
     publisherName: 'PlaySpiderSolitaireOnline.com',
   },
 };

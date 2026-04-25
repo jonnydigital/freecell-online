@@ -888,11 +888,11 @@ export default function FAQPage() {
             </SectionHeading>
             <ContentBody className="grid gap-4 md:grid-cols-3">
               <ContentLinkCard variant="felt" href="/solitaire-games-guide" title="All Solitaire Games" description="Complete guide to every major variant in the family." />
-              <ContentLinkCard variant="felt" href="/solitaire-types" title="Variants Directory" description="Browse all 26 variants we cover, organized by family." />
+              <ContentLinkCard variant="felt" href="/solitaire-types" title="Variants Directory" description="Browse all 28 variants we cover, organized by family." />
               <ContentLinkCard variant="felt" href="/solitaire-strategy" title="Cross-Variant Strategy" description="Principles that apply across Klondike, FreeCell, Spider, and more." />
               <ContentLinkCard variant="felt" href="/solitaire-difficulty-ranking" title="Difficulty Ranking" description="Every variant ranked easiest to hardest with win rates." />
               <ContentLinkCard variant="felt" href="/solitaire-history" title="Solitaire History" description="From Napoleon to Windows — how solitaire became ubiquitous." />
-              <ContentLinkCard variant="felt" href="/games" title="Play Any Game" description="Launch any of the 26 variants directly in your browser." />
+              <ContentLinkCard variant="felt" href="/games" title="Play Any Game" description="Launch any of the 28 variants directly in your browser." />
             </ContentBody>
           </CardSection>
         )}

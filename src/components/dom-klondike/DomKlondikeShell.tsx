@@ -14,6 +14,8 @@ import AdUnit from '../AdUnit';
 // Helpers
 // ---------------------------------------------------------------------------
 
+const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
+
 function formatTime(seconds: number): string {
   const m = Math.floor(seconds / 60);
   const s = seconds % 60;
@@ -121,6 +123,8 @@ export default function DomKlondikeShell({ initialDrawMode = 1 }: DomKlondikeShe
           borderBottom: '1px solid rgba(255,255,255,0.06)',
           flexWrap: 'wrap',
           gap: '8px',
+          position: 'relative',
+          zIndex: 50,
         }}
       >
         {/* Left: Game name + draw mode */}
@@ -144,7 +148,7 @@ export default function DomKlondikeShell({ initialDrawMode = 1 }: DomKlondikeShe
                   cursor: 'pointer',
                 }}
               >
-                Draw {mode}
+                {isMobile ? `D${mode}` : `Draw ${mode}`}
               </button>
             ))}
           </div>
@@ -155,8 +159,8 @@ export default function DomKlondikeShell({ initialDrawMode = 1 }: DomKlondikeShe
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '24px',
-            padding: '8px 24px',
+            gap: isMobile ? '12px' : '24px',
+            padding: isMobile ? '6px 12px' : '8px 24px',
             background: 'rgba(0,0,0,0.25)',
             border: '1px solid rgba(255,255,255,0.05)',
             borderRadius: '9999px',

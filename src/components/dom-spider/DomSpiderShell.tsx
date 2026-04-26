@@ -105,6 +105,8 @@ export default function DomSpiderShell({ initialDifficulty = '1-suit' }: DomSpid
           borderBottom: '1px solid rgba(255,255,255,0.06)',
           flexWrap: 'wrap',
           gap: '8px',
+          position: 'relative',
+          zIndex: 50,
         }}
       >
         {/* Left: Game name + difficulty */}

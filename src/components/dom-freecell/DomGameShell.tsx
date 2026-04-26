@@ -759,7 +759,7 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
 
       {/* ── Desktop Top Bar ── */}
       <div
-        className="hidden md:flex items-center justify-between z-20"
+        className="hidden md:flex items-center justify-between z-50"
         style={{
           padding: '12px 24px',
           background: 'var(--theme-dark, #0a3310)',
@@ -925,7 +925,7 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
       {/* ── Mobile Top Bar ── */}
       {!isLandscapeMobile && (
         <div
-          className="flex md:hidden items-center justify-between z-20"
+          className="flex md:hidden items-center justify-between z-50"
           style={{
             padding: '8px 16px',
             background: 'linear-gradient(180deg, var(--theme-dark, #0a3310) 0%, var(--theme-base, #0e4020) 100%)',

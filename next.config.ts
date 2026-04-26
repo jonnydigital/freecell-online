@@ -13,6 +13,17 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  async rewrites() {
+    return [
+      {
+        // Serve ads.txt from the API route — the App Router route at
+        // /ads.txt gets intercepted by Vercel's CDN redirect on spoke
+        // domains, but /api/ads-txt works. This rewrite bridges the gap.
+        source: '/ads.txt',
+        destination: '/api/ads-txt',
+      },
+    ];
+  },
   async headers() {
     return [
       {

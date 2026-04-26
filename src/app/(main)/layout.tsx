@@ -22,12 +22,6 @@ export default function MainLayout({
       <ThemeInitializer />
       <AccessibilityInitializer />
       <Analytics />
-      {/* AdSense — use plain script to avoid Next.js data-nscript attribute warning */}
-      <script
-        async
-        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3083538874906149"
-        crossOrigin="anonymous"
-      />
       <script
         id="ld-webapplication-site"
         type="application/ld+json"

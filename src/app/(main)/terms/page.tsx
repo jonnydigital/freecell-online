@@ -1,11 +1,15 @@
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
+import { canonicalUrlFor } from "@/lib/routeOwnership";
 import ContentLayout from "@/components/ContentLayout";
 import { ContentHero, SectionHeading, CardSection, ContentBody, CtaSection, JsonLd, ContentLinkCard } from "@/components/content";
 
 export const metadata: Metadata = {
   title: `Terms of Service | ${siteConfig.siteName}`,
   description: `Terms of Service for ${siteConfig.siteName}`,
+  alternates: {
+    canonical: canonicalUrlFor("/terms"),
+  },
 };
 
 export default function TermsPage() {

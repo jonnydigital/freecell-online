@@ -4,6 +4,7 @@ import FreecellHomeClient from '@/components/FreecellHomeClient';
 import DomFreecellClient from '@/components/DomFreecellClient';
 import FreecellBelowFold from '@/components/FreecellBelowFold';
 import { absoluteUrl, isHubSite, siteConfig } from '@/lib/siteConfig';
+import { canonicalUrlFor } from '@/lib/routeOwnership';
 import { shouldUseDomEngine } from '@/lib/useDomEngine';
 
 export const metadata: Metadata = {
@@ -24,6 +25,9 @@ export const metadata: Metadata = {
     url: absoluteUrl('/freecell'),
     siteName: siteConfig.siteName,
     type: 'website',
+  },
+  alternates: {
+    canonical: canonicalUrlFor('/freecell'),
   },
   twitter: {
     card: 'summary_large_image',
@@ -57,13 +61,6 @@ export default function FreecellPage() {
       '@type': 'Offer',
       price: '0',
       priceCurrency: 'USD',
-    },
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: '4.8',
-      ratingCount: '4312',
-      bestRating: '5',
-      worstRating: '1',
     },
     url: absoluteUrl('/freecell'),
   };

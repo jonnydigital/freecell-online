@@ -235,6 +235,7 @@ const contentPages = [
   { path: '/solitaire-for-beginners', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/best-freecell-apps', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/sitemap', changeFrequency: 'weekly', priority: 0.5 },
+  { path: '/contact', changeFrequency: 'yearly', priority: 0.5 },
   { path: '/privacy', changeFrequency: 'yearly', priority: 0.2 },
   { path: '/terms', changeFrequency: 'yearly', priority: 0.2 },
 ];

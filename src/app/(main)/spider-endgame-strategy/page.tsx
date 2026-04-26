@@ -416,8 +416,8 @@ export default function SpiderEndgameStrategyPage() {
               looks closest at a glance.
             </p>
             <p>
-              When two suits are independent -- neither blocks the other
-              -- complete the one that frees the most columns. If
+              When two suits are independent &mdash; neither blocks the other
+              &mdash; complete the one that frees the most columns. If
               completing Hearts opens two columns and completing Diamonds
               opens one, finish Hearts first. The extra column makes the
               Diamonds completion easier. When both suits free the same

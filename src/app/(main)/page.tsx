@@ -9,6 +9,7 @@ import SpiderBelowFold from '@/components/SpiderBelowFold';
 import KlondikeGamePage from './klondike/KlondikeGamePage';
 import SpiderGamePage from './spider/SpiderGamePage';
 import { absoluteUrl, isHubSite, isKlondikeSite, isSpiderSite, siteConfig } from '@/lib/siteConfig';
+import { canonicalUrlFor } from '@/lib/routeOwnership';
 import { shouldUseDomEngine } from '@/lib/useDomEngine';
 
 function buildMetadata(): Metadata {
@@ -32,6 +33,9 @@ function buildMetadata(): Metadata {
         url: absoluteUrl('/'),
         siteName: siteConfig.siteName,
         type: 'website',
+      },
+      alternates: {
+        canonical: canonicalUrlFor('/'),
       },
       twitter: { card: 'summary_large_image' },
     };
@@ -57,6 +61,9 @@ function buildMetadata(): Metadata {
         siteName: siteConfig.siteName,
         type: 'website',
       },
+      alternates: {
+        canonical: canonicalUrlFor('/'),
+      },
       twitter: { card: 'summary_large_image' },
     };
   }
@@ -80,6 +87,9 @@ function buildMetadata(): Metadata {
         siteName: siteConfig.siteName,
         type: 'website',
       },
+      alternates: {
+        canonical: canonicalUrlFor('/'),
+      },
       twitter: { card: 'summary_large_image' },
     };
   }
@@ -101,6 +111,9 @@ function buildMetadata(): Metadata {
       url: absoluteUrl('/'),
       siteName: siteConfig.siteName,
       type: 'website',
+    },
+    alternates: {
+      canonical: canonicalUrlFor('/'),
     },
     twitter: { card: 'summary_large_image' },
   };
@@ -142,13 +155,6 @@ export default function Home() {
       applicationCategory: 'GameApplication',
       operatingSystem: 'Any',
       offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
-      aggregateRating: {
-        '@type': 'AggregateRating',
-        ratingValue: '4.8',
-        ratingCount: '8372',
-        bestRating: '5',
-        worstRating: '1',
-      },
     };
     const hubCollectionJsonLd = {
       '@context': 'https://schema.org',
@@ -192,13 +198,6 @@ export default function Home() {
       applicationCategory: 'Game',
       operatingSystem: 'Web Browser',
       offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
-      aggregateRating: {
-        '@type': 'AggregateRating',
-        ratingValue: '4.7',
-        ratingCount: '1876',
-        bestRating: '5',
-        worstRating: '1',
-      },
     };
     return (
       <>
@@ -221,13 +220,6 @@ export default function Home() {
       applicationCategory: 'Game',
       operatingSystem: 'Web Browser',
       offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
-      aggregateRating: {
-        '@type': 'AggregateRating',
-        ratingValue: '4.7',
-        ratingCount: '2184',
-        bestRating: '5',
-        worstRating: '1',
-      },
     };
     return (
       <>
@@ -249,13 +241,6 @@ export default function Home() {
     applicationCategory: 'Game',
     operatingSystem: 'Web Browser',
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: '4.8',
-      ratingCount: '3241',
-      bestRating: '5',
-      worstRating: '1',
-    },
   };
 
   const useDom = shouldUseDomEngine();

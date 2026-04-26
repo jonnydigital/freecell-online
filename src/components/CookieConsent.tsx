@@ -15,7 +15,7 @@ export default function CookieConsent() {
         // Must appear promptly regardless of splash screen state.
         setTimeout(() => setVisible(true), 1000);
       }
-      // Note: AdSense is now loaded unconditionally via layout.tsx script tag.
+      // Note: AdSense is loaded unconditionally via the root layout script tag.
       // Cookie consent controls personalization, not script loading.
     } catch {
       // localStorage blocked

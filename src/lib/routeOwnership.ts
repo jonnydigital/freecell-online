@@ -112,6 +112,7 @@ export const ROUTE_OWNERSHIP: Record<string, RouteOwnership> = {
 
   // Corporate / legal pages (all hub-owned)
   '/about': HUB_ONLY,
+  '/contact': HUB_ONLY,
   '/privacy': HUB_ONLY,
   '/terms': HUB_ONLY,
   '/sitemap': HUB_ONLY,
@@ -294,6 +295,9 @@ export const ROUTE_OWNERSHIP: Record<string, RouteOwnership> = {
   '/klondike-probability': KLONDIKE_ONLY,
   '/klondike-variants': KLONDIKE_ONLY,
   '/klondike-cheat-sheet': KLONDIKE_ONLY,
+  '/klondike-for-beginners': KLONDIKE_ONLY,
+  '/klondike-for-seniors': KLONDIKE_ONLY,
+  '/klondike-mistakes-to-avoid': KLONDIKE_ONLY,
 
   // Klondike striking-distance target (Wave 8-STR) — GSC shows spoke surfacing at
   // pos 43-54 for "least moves to win solitaire" / "quickest game of solitaire".
@@ -328,6 +332,10 @@ export const ROUTE_OWNERSHIP: Record<string, RouteOwnership> = {
   '/spider-column-tactics': SPIDER_ONLY,
   '/spider-winnability': SPIDER_ONLY,
   '/spider-variants': SPIDER_ONLY,
+  '/spider-for-beginners': SPIDER_ONLY,
+  '/spider-for-seniors': SPIDER_ONLY,
+  '/spider-mistakes-to-avoid': SPIDER_ONLY,
+  '/spider-cheat-sheet': SPIDER_ONLY,
 
   // Spider-family variants
   '/scorpion': SPIDER_ONLY,

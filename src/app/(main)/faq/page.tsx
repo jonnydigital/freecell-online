@@ -280,7 +280,7 @@ const HUB_FAQ: FaqVariant = {
           answer: (
             <>
               Hundreds have been documented, but only about 30 are widely played.
-              We host 26 browser-playable variants across the network and maintain
+              We host 28 browser-playable variants across the network and maintain
               in-depth rules, strategy, and tips for each. See our full{" "}
               <Link
                 href="/solitaire-types"

@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import AdUnit from '@/components/AdUnit';
 import ScrollUnlock from '@/components/ScrollUnlock';
-import { absoluteUrl } from '@/lib/siteConfig';
+import { absoluteUrl, gameUrl } from '@/lib/siteConfig';
 import StarRatingWidget from '@/components/StarRatingWidget';
 import PlayerTestimonials from '@/components/PlayerTestimonials';
 
@@ -81,7 +81,7 @@ const variantGames = [
   { href: '/bakers-game', title: "Baker's Game", desc: 'Build by suit instead of alternating colors.' },
   { href: '/eight-off', title: 'Eight Off', desc: 'Eight reserve cells for a different tactical feel.' },
   { href: '/easy-freecell', title: 'Easy FreeCell', desc: 'Aces start on foundations for a gentler game.' },
-  { href: '/spider', title: 'Spider Solitaire', desc: 'Two decks, ten columns, three difficulty levels.' },
+  { href: gameUrl('/spider'), title: 'Spider Solitaire', desc: 'Two decks, ten columns, three difficulty levels.' },
   { href: '/freecell/1-cell', title: '1-Cell FreeCell', desc: 'Only one free cell — an extreme challenge.' },
   { href: '/freecell/2-cell', title: '2-Cell FreeCell', desc: 'Two free cells for a harder variation.' },
   { href: '/freecell/3-cell', title: '3-Cell FreeCell', desc: 'Three free cells — tighter than standard.' },

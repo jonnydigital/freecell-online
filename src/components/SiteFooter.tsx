@@ -239,6 +239,21 @@ export default function SiteFooter() {
           { href: '/freecell/how-to-play', label: 'FreeCell How to Play' },
           { href: '/freecell/tips', label: 'FreeCell Tips' },
           { href: '/solitaire-for-beginners', label: 'Solitaire for Beginners' },
+          { href: '/spider-for-beginners', label: 'Spider for Beginners' },
+          { href: '/spider-for-seniors', label: 'Spider for Seniors' },
+          { href: '/spider-mistakes-to-avoid', label: 'Spider Mistakes to Avoid' },
+          { href: '/spider-cheat-sheet', label: 'Spider Cheat Sheet' },
+          { href: '/spider-opening-strategy', label: 'Spider Opening Strategy' },
+          { href: '/spider-endgame-strategy', label: 'Spider Endgame Strategy' },
+          { href: '/spider-world-records', label: 'Spider World Records' },
+          { href: '/best-spider-solitaire-apps', label: 'Best Spider Apps' },
+          { href: '/klondike-for-beginners', label: 'Klondike for Beginners' },
+          { href: '/klondike-for-seniors', label: 'Klondike for Seniors' },
+          { href: '/klondike-mistakes-to-avoid', label: 'Klondike Mistakes to Avoid' },
+          { href: '/klondike-opening-strategy', label: 'Klondike Opening Strategy' },
+          { href: '/klondike-endgame-strategy', label: 'Klondike Endgame Strategy' },
+          { href: '/klondike-world-records', label: 'Klondike World Records' },
+          { href: '/best-klondike-apps', label: 'Best Klondike Apps' },
           { href: '/blog', label: 'Blog' },
         ]
   );
@@ -291,6 +306,16 @@ export default function SiteFooter() {
           { href: '/solitaire-rules-by-country', label: 'Rules by Country' },
         ]
   );
+
+  const moreLinks = visibleLinks([
+    { href: '/stats', label: 'Your Stats' },
+    { href: '/about', label: 'About' },
+    { href: '/contact', label: 'Contact' },
+    { href: '/editorial-standards', label: 'Editorial Standards' },
+    { href: '/privacy', label: 'Privacy Policy' },
+    { href: '/terms', label: 'Terms of Use' },
+    { href: '/sitemap', label: 'Sitemap' },
+  ]);
 
   return (
     <footer className="bg-[#041f04] border-t border-white/5 py-12 px-6">
@@ -350,31 +375,13 @@ export default function SiteFooter() {
               More
             </h3>
             <ul className="space-y-2.5">
-              <li>
-                <Link href="/stats" className="text-sm text-white/60 hover:text-white transition-colors">
-                  Your Stats
-                </Link>
-              </li>
-              <li>
-                <Link href="/about" className="text-sm text-white/60 hover:text-white transition-colors">
-                  About
-                </Link>
-              </li>
-              <li>
-                <Link href="/privacy" className="text-sm text-white/60 hover:text-white transition-colors">
-                  Privacy Policy
-                </Link>
-              </li>
-              <li>
-                <Link href="/terms" className="text-sm text-white/60 hover:text-white transition-colors">
-                  Terms of Use
-                </Link>
-              </li>
-              <li>
-                <Link href="/sitemap" className="text-sm text-white/60 hover:text-white transition-colors">
-                  Sitemap
-                </Link>
-              </li>
+              {moreLinks.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className="text-sm text-white/60 hover:text-white transition-colors">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
         </div>

@@ -3,27 +3,27 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { ChevronDown } from 'lucide-react';
-import { isHubSite } from '@/lib/siteConfig';
+import { isHubSite, gameUrl } from '@/lib/siteConfig';
 
 // ---------------------------------------------------------------------------
 // Game catalog — shared across all shells
 // ---------------------------------------------------------------------------
 
 const GAME_PICKER_SOLITAIRE = [
-  { label: 'FreeCell', href: isHubSite ? '/freecell' : '/', icon: '\u2660' },
-  { label: 'Spider Solitaire', href: '/spider', icon: '\u2663' },
-  { label: 'Klondike', href: '/klondike', icon: '\u2666' },
-  { label: "Baker's Game", href: '/bakers-game', icon: '\u2665' },
-  { label: 'Eight Off', href: '/eight-off', icon: '\u2660' },
+  { label: 'FreeCell', href: gameUrl('/freecell'), icon: '\u2660' },
+  { label: 'Spider Solitaire', href: gameUrl('/spider'), icon: '\u2663' },
+  { label: 'Klondike', href: gameUrl('/klondike'), icon: '\u2666' },
+  { label: "Baker's Game", href: gameUrl('/bakers-game'), icon: '\u2665' },
+  { label: 'Eight Off', href: gameUrl('/eight-off'), icon: '\u2660' },
   { label: 'Bristol', href: '/bristol', icon: '\u2663' },
 ];
 
 const GAME_PICKER_VARIANTS = [
-  { label: 'Easy FreeCell', href: '/easy-freecell', icon: '\uD83D\uDFE2' },
-  { label: '1-Cell FreeCell', href: '/freecell/1-cell', icon: '1' },
-  { label: '2-Cell FreeCell', href: '/freecell/2-cell', icon: '2' },
-  { label: '3-Cell FreeCell', href: '/freecell/3-cell', icon: '3' },
-  { label: 'Storm Mode', href: '/storm', icon: '\u26A1' },
+  { label: 'Easy FreeCell', href: gameUrl('/easy-freecell'), icon: '\uD83D\uDFE2' },
+  { label: '1-Cell FreeCell', href: gameUrl('/freecell/1-cell'), icon: '1' },
+  { label: '2-Cell FreeCell', href: gameUrl('/freecell/2-cell'), icon: '2' },
+  { label: '3-Cell FreeCell', href: gameUrl('/freecell/3-cell'), icon: '3' },
+  { label: 'Storm Mode', href: gameUrl('/storm'), icon: '\u26A1' },
 ];
 
 // ---------------------------------------------------------------------------

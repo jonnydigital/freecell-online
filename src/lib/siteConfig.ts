@@ -96,3 +96,67 @@ export const isSpiderSite = siteConfig.key === 'playspidersolitaireonline';
 export function absoluteUrl(path = '/'): string {
   return new URL(path, siteConfig.url).toString();
 }
+
+/**
+ * Maps a game path to the correct spoke domain URL for cross-site navigation.
+ * On the hub, returns relative paths (hub owns all game routes).
+ * On spoke sites, returns absolute URLs to the correct spoke domain.
+ *
+ * Examples:
+ *   gameUrl('/spider')   → 'https://playspidersolitaireonline.com/'
+ *   gameUrl('/freecell')  → 'https://playfreecellonline.com/'
+ *   gameUrl('/klondike')  → 'https://playklondikeonline.com/'
+ *   gameUrl('/bakers-game') → 'https://playfreecellonline.com/bakers-game'
+ */
+const GAME_DOMAIN_MAP: Record<string, SiteKey> = {
+  '/freecell': 'playfreecellonline',
+  '/bakers-game': 'playfreecellonline',
+  '/eight-off': 'playfreecellonline',
+  '/easy-freecell': 'playfreecellonline',
+  '/freecell/1-cell': 'playfreecellonline',
+  '/freecell/2-cell': 'playfreecellonline',
+  '/freecell/3-cell': 'playfreecellonline',
+  '/storm': 'playfreecellonline',
+  '/spider': 'playspidersolitaireonline',
+  '/scorpion': 'playspidersolitaireonline',
+  '/klondike': 'playklondikeonline',
+  '/yukon': 'playklondikeonline',
+  '/canfield': 'playklondikeonline',
+};
+
+export function gameUrl(path: string): string {
+  // Hub owns all routes — use relative paths
+  if (isHubSite) return path;
+
+  const ownerKey = GAME_DOMAIN_MAP[path];
+  if (!ownerKey) {
+    // Unknown game path — fall back to hub
+    return `${SITE_CONFIGS.solitairestack.url}${path}`;
+  }
+
+  const ownerConfig = SITE_CONFIGS[ownerKey];
+  // If we're already on the owning domain, use the spoke's primaryGamePath or relative path
+  if (ownerKey === siteConfig.key) {
+    return ownerConfig.primaryGamePath === '/' && path === `/${ownerConfig.footerWordmark.toLowerCase()}`
+      ? '/'
+      : path;
+  }
+
+  // Cross-site: use absolute URL to the correct spoke domain's homepage
+  // Spoke games live at / (primaryGamePath), not /freecell or /spider
+  if (ownerConfig.primaryGamePath === '/') {
+    // The game IS the homepage on that spoke
+    const gameName = path.split('/')[1]; // e.g., 'spider' from '/spider'
+    const spokeGameNames = Object.entries(GAME_DOMAIN_MAP)
+      .filter(([, key]) => key === ownerKey)
+      .map(([p]) => p);
+    // If this is the primary game for that spoke, link to their homepage
+    if (spokeGameNames[0] === path) {
+      return ownerConfig.url;
+    }
+    // Otherwise link to the subpath on that domain
+    return `${ownerConfig.url}${path}`;
+  }
+
+  return `${ownerConfig.url}${path}`;
+}

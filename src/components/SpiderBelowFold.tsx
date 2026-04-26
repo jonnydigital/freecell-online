@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import AdUnit from '@/components/AdUnit';
 import ScrollUnlock from '@/components/ScrollUnlock';
-import { absoluteUrl } from '@/lib/siteConfig';
+import { absoluteUrl, gameUrl } from '@/lib/siteConfig';
 import StarRatingWidget from '@/components/StarRatingWidget';
 import PlayerTestimonials from '@/components/PlayerTestimonials';
 
@@ -73,11 +73,11 @@ const popularPages = [
 ];
 
 const relatedGames = [
-  { href: '/freecell', title: 'FreeCell', desc: 'All cards face-up — pure strategy, every deal solvable.' },
-  { href: '/klondike', title: 'Klondike Solitaire', desc: 'The classic solitaire game with Draw 1 and Draw 3 modes.' },
-  { href: '/bakers-game', title: "Baker's Game", desc: 'Build by suit in this FreeCell relative.' },
-  { href: '/eight-off', title: 'Eight Off', desc: 'Eight reserve cells for a tactical open-information game.' },
-  { href: '/easy-freecell', title: 'Easy FreeCell', desc: 'A gentler FreeCell variant with Aces pre-placed.' },
+  { href: gameUrl('/freecell'), title: 'FreeCell', desc: 'All cards face-up — pure strategy, every deal solvable.' },
+  { href: gameUrl('/klondike'), title: 'Klondike Solitaire', desc: 'The classic solitaire game with Draw 1 and Draw 3 modes.' },
+  { href: gameUrl('/bakers-game'), title: "Baker's Game", desc: 'Build by suit in this FreeCell relative.' },
+  { href: gameUrl('/eight-off'), title: 'Eight Off', desc: 'Eight reserve cells for a tactical open-information game.' },
+  { href: gameUrl('/easy-freecell'), title: 'Easy FreeCell', desc: 'A gentler FreeCell variant with Aces pre-placed.' },
   { href: '/games', title: 'All Solitaire Games', desc: 'Browse 25+ solitaire variants in one place.' },
 ];
 

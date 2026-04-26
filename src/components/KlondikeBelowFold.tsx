@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import AdUnit from '@/components/AdUnit';
 import ScrollUnlock from '@/components/ScrollUnlock';
-import { absoluteUrl } from '@/lib/siteConfig';
+import { absoluteUrl, gameUrl } from '@/lib/siteConfig';
 import StarRatingWidget from '@/components/StarRatingWidget';
 import PlayerTestimonials from '@/components/PlayerTestimonials';
 
@@ -74,9 +74,9 @@ const popularPages = [
 ];
 
 const relatedGames = [
-  { href: '/freecell', title: 'FreeCell', desc: 'All cards face-up — pure skill, no luck involved.' },
-  { href: '/spider', title: 'Spider Solitaire', desc: 'Two decks, ten columns, three difficulty levels.' },
-  { href: '/bakers-game', title: "Baker's Game", desc: 'Build by suit in this FreeCell cousin.' },
+  { href: gameUrl('/freecell'), title: 'FreeCell', desc: 'All cards face-up — pure skill, no luck involved.' },
+  { href: gameUrl('/spider'), title: 'Spider Solitaire', desc: 'Two decks, ten columns, three difficulty levels.' },
+  { href: gameUrl('/bakers-game'), title: "Baker's Game", desc: 'Build by suit in this FreeCell cousin.' },
   { href: '/pyramid', title: 'Pyramid Solitaire', desc: 'Pair cards that add up to 13 to clear the pyramid.' },
   { href: '/tripeaks', title: 'TriPeaks', desc: 'Clear three peaks by building up or down from the waste.' },
   { href: '/games', title: 'All Solitaire Games', desc: 'Browse 25+ solitaire variants in one place.' },

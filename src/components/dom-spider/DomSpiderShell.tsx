@@ -80,11 +80,10 @@ export default function DomSpiderShell({ initialDifficulty = '1-suit' }: DomSpid
     return () => window.removeEventListener('keydown', handler);
   }, [undo, newGame]);
 
-  const suitLabels: Record<SpiderDifficulty, string> = {
-    '1-suit': '1 Suit',
-    '2-suit': '2 Suits',
-    '4-suit': '4 Suits',
-  };
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
+  const suitLabels: Record<SpiderDifficulty, string> = isMobile
+    ? { '1-suit': '1', '2-suit': '2', '4-suit': '4' }
+    : { '1-suit': '1 Suit', '2-suit': '2 Suits', '4-suit': '4 Suits' };
 
   return (
     <div
@@ -140,8 +139,8 @@ export default function DomSpiderShell({ initialDifficulty = '1-suit' }: DomSpid
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '24px',
-            padding: '8px 24px',
+            gap: isMobile ? '12px' : '24px',
+            padding: isMobile ? '6px 12px' : '8px 24px',
             background: 'rgba(0,0,0,0.25)',
             border: '1px solid rgba(255,255,255,0.05)',
             borderRadius: '9999px',
@@ -182,7 +181,7 @@ export default function DomSpiderShell({ initialDifficulty = '1-suit' }: DomSpid
             }}
           >
             <Undo2 size={14} />
-            Undo
+            {!isMobile && 'Undo'}
           </button>
           <button onClick={() => newGame()} title="New Game" style={{ padding: '6px 14px', borderRadius: '8px', background: 'rgba(212,175,55,0.15)', border: '1px solid rgba(212,175,55,0.3)', color: '#D4AF37', fontSize: '12px', fontWeight: 600, cursor: 'pointer' }}>
             New Deal

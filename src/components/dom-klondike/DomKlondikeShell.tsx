@@ -249,7 +249,31 @@ export default function DomKlondikeShell({ initialDrawMode = 1 }: DomKlondikeShe
             <p style={{ color: 'rgba(255,255,255,0.5)', marginBottom: '24px' }}>
               Time: {formatTime(timerSeconds)}
             </p>
-            <div style={{ display: 'flex', gap: '12px', justifyContent: 'center' }}>
+            <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
+              <button
+                onClick={async () => {
+                  const shareText = `🃏 Klondike Solitaire #${gameNumber} — Solved!\n⏱️ ${formatTime(timerSeconds)} | 🔄 ${moveCount} moves\n\n${window.location.origin}`;
+                  if (navigator.share) {
+                    try { await navigator.share({ title: 'Klondike Solitaire', text: shareText }); } catch {}
+                  } else {
+                    await navigator.clipboard.writeText(shareText);
+                  }
+                }}
+                style={{
+                  padding: '10px 24px',
+                  borderRadius: '10px',
+                  background: 'rgba(212,175,55,0.2)',
+                  border: '1px solid rgba(212,175,55,0.4)',
+                  color: '#D4AF37',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                }}
+              >
+                Share Result
+              </button>
               <button
                 onClick={() => { setShowWinModal(false); newGame(); }}
                 style={{

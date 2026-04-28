@@ -245,7 +245,29 @@ export default function DomSpiderShell({ initialDifficulty = '1-suit' }: DomSpid
             <p style={{ color: 'rgba(255,255,255,0.5)', marginBottom: '24px' }}>
               Time: {formatTime(timerSeconds)} • Difficulty: {suitLabels[difficulty]}
             </p>
-            <div style={{ display: 'flex', gap: '12px', justifyContent: 'center' }}>
+            <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
+              <button
+                onClick={async () => {
+                  const diffLabel = difficulty === '1-suit' ? '1-Suit' : difficulty === '2-suit' ? '2-Suit' : '4-Suit';
+                  const shareText = `🕷️ Spider Solitaire (${diffLabel}) — Solved!\n⏱️ ${formatTime(timerSeconds)} | 🔄 ${moveCount} moves\n\n${window.location.origin}`;
+                  if (navigator.share) {
+                    try { await navigator.share({ title: 'Spider Solitaire', text: shareText }); } catch {}
+                  } else {
+                    await navigator.clipboard.writeText(shareText);
+                  }
+                }}
+                style={{
+                  padding: '10px 24px',
+                  borderRadius: '10px',
+                  background: 'rgba(212,175,55,0.2)',
+                  border: '1px solid rgba(212,175,55,0.4)',
+                  color: '#D4AF37',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                }}
+              >
+                Share Result
+              </button>
               <button
                 onClick={() => { setShowWinModal(false); newGame(); }}
                 style={{

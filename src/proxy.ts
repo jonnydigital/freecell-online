@@ -20,6 +20,10 @@ const HOST_TO_SITEKEY: Record<string, SiteKey> = {
 function shouldSkipOwnershipCheck(pathname: string): boolean {
   return (
     pathname === '/' ||
+    pathname === '/ads.txt' ||
+    pathname === '/robots.txt' ||
+    pathname === '/sitemap.xml' ||
+    pathname === '/favicon.ico' ||
     pathname.startsWith('/game/') ||
     pathname.startsWith('/api/') ||
     pathname.startsWith('/embed') ||

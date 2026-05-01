@@ -78,8 +78,8 @@ export default function SolitaireHubHome() {
             </p>
             <p>
               Whether you&apos;re killing five minutes or chasing a personal best, there&apos;s
-              something here for you. More than{' '}
-              <Link href="/solitaire-types" className="text-[#d4af37] hover:text-[#f5df97]">20 solitaire variants</Link>{' '}
+              something here for you. All{' '}
+              <Link href="/solitaire-types" className="text-[#d4af37] hover:text-[#f5df97]">28 solitaire variants</Link>{' '}
               are documented in our catalog, with new playable games and{' '}
               <Link href="/strategy" className="text-[#d4af37] hover:text-[#f5df97]">strategy guides</Link>{' '}
               shipping regularly.

@@ -66,6 +66,7 @@ describe('catalog truthiness audit', () => {
       ['src/components/SolitaireHubHome.tsx', /We publish (\d+)\s+distinct/, 'hub home — intro'],
       ['src/components/SolitaireHubHome.tsx', /(\d+)\s+Solitaire Games Under One Roof/, 'hub home — section heading'],
       ['src/components/SolitaireHubHome.tsx', /The full directory of all (\d+) games/, 'hub home — directory link'],
+      ['src/components/SolitaireHubHome.tsx', /All\{' '\}\s*<Link[^>]*>(\d+) solitaire variants<\/Link>\{' '\}\s*are documented/, 'hub home — catalog documented link'],
       ['src/app/(main)/games/page.tsx', /Play (\d+)\+ Card Games/, 'games metadata title'],
       ['src/app/(main)/games/page.tsx', /(\d+)\+ Card Games to Play Now/, 'games OG title'],
       ['src/app/(main)/faq/page.tsx', /We host (\d+) browser-playable variants/, 'faq — host count'],

@@ -17,7 +17,7 @@ function buildMetadata(): Metadata {
     return {
       title: `${siteConfig.brandName} | Play FreeCell, Spider Solitaire, and More`,
       description:
-        'Play FreeCell, Spider Solitaire, Klondike, and 25+ solitaire card games online for free. No download, no signup — just classic card games with strategy guides, daily challenges, and leaderboards.',
+        'Play FreeCell, Spider Solitaire, Klondike, and 25 more solitaire variants — free, no signup. Strategy guides, daily challenges, leaderboards.',
       keywords: [
         'solitaire games online',
         'play solitaire online',
@@ -138,7 +138,7 @@ export default function Home() {
   // Hub — JSON-LD emitted here (server component) to avoid client hydration duplication
   if (isHubSite) {
     const HUB_DESCRIPTION =
-      'Play FreeCell, Spider Solitaire, Klondike, and 25+ solitaire card games online for free. No download, no signup — just classic card games with strategy guides, daily challenges, and leaderboards.';
+      'Play FreeCell, Spider Solitaire, Klondike, and 25 more solitaire variants — free, no signup. Strategy guides, daily challenges, leaderboards.';
     const hubWebSiteJsonLd = {
       '@context': 'https://schema.org',
       '@type': 'WebSite',

@@ -9,7 +9,7 @@ import AuthorBio from '@/components/content/AuthorBio';
 export const metadata: Metadata = {
   title: "Baker's Game — Play the Original FreeCell Ancestor Online Free",
   description:
-    "Play Baker's Game online for free. The same-suit predecessor of FreeCell with stricter stacking rules. Build foundations by suit, move sequences of same-suit cards. No download required.",
+    "Play Baker's Game online — free, no signup. The same-suit ancestor of FreeCell with stricter stacking. Build foundations by suit; move same-suit runs.",
   keywords: [
     "baker's game",
     "bakers game online",

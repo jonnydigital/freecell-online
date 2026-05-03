@@ -10,7 +10,7 @@ import AuthorBio from "@/components/content/AuthorBio";
 export const metadata: Metadata = {
   title: "Klondike Solitaire | Play Online Free — Draw 1 & Draw 3",
   description:
-    "Play Klondike Solitaire online for free. The classic card game everyone calls Solitaire. Choose Draw 1 or Draw 3 mode. Undo, hints, and statistics. No download required.",
+    "Play Klondike Solitaire online — free, no signup. The classic card game most people call Solitaire. Draw 1 or Draw 3, undo, hints, and stats.",
   keywords: [
     "klondike solitaire",
     "klondike solitaire online",

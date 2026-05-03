@@ -10,7 +10,7 @@ import MoreGames from '@/components/MoreGames';
 export const metadata: Metadata = {
   title: "Yukon Solitaire | Play Online Free — No Download",
   description:
-    "Play Yukon Solitaire online for free. Move any face-up card regardless of sequence in this challenging Klondike variant. Seven tableau columns, no stock pile. Undo, hints, mobile-friendly.",
+    "Play Yukon Solitaire online — free, no signup. Move any face-up card in this challenging Klondike variant. Seven tableau columns, no stock pile.",
   keywords: [
     "yukon solitaire",
     "yukon solitaire online",

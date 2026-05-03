@@ -9,7 +9,7 @@ import AuthorBio from '@/components/content/AuthorBio';
 export const metadata: Metadata = {
   title: 'Eight Off Solitaire — Play the Classic 8 Free Cell Card Game Online Free',
   description:
-    'Play Eight Off solitaire online for free. A challenging FreeCell variant with 8 free cells and same-suit stacking. Build foundations by suit from Ace to King. No download required.',
+    'Play Eight Off solitaire online — free, no signup. A FreeCell variant with 8 free cells and same-suit stacking. Build foundations Ace to King.',
   keywords: [
     'eight off solitaire',
     'eight off card game',

@@ -8,7 +8,7 @@ import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionH
 export const metadata: Metadata = {
   title: "Seahaven Towers Strategy Guide | Advanced Winning Techniques",
   description:
-    "Master Seahaven Towers with advanced strategies for free cell management, same-suit sequence building, Kings-only empty column optimization, supermove calculation, and tower rotation techniques. Win more games with proven methods.",
+    "Master Seahaven Towers: free cell management, same-suit building, Kings-only columns, and supermove calculation. Advanced strategy for this variant.",
   keywords: [
     "seahaven towers strategy",
     "seahaven towers winning strategy",

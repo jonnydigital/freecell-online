@@ -8,7 +8,7 @@ import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionH
 export const metadata: Metadata = {
   title: "Forty Thieves Strategy Guide | Master the Double-Deck Challenge",
   description:
-    "Master Forty Thieves Solitaire with our comprehensive strategy guide. Learn same-suit building discipline, empty column creation, stock pile management, and card counting techniques to beat this notoriously difficult double-deck game.",
+    "Master Forty Thieves Solitaire — same-suit building, empty column tactics, stock management, and card counting for this difficult double-deck game.",
   keywords: [
     "forty thieves solitaire strategy",
     "forty thieves strategy guide",

@@ -8,7 +8,7 @@ import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionH
 export const metadata: Metadata = {
   title: "Beleaguered Castle Strategy Guide | Expert Winning Techniques",
   description:
-    "Master Beleaguered Castle Solitaire with advanced strategies for open-information planning, foundation sequencing, tableau column management, and Ace liberation. Win more games with expert techniques for this challenging no-free-cell variant.",
+    "Master Beleaguered Castle Solitaire: open-information planning, foundation sequencing, and Ace liberation strategy for this no-free-cell variant.",
   keywords: [
     "beleaguered castle strategy",
     "beleaguered castle solitaire strategy",

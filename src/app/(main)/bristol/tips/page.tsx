@@ -8,7 +8,7 @@ import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionH
 export const metadata: Metadata = {
   title: "Bristol Solitaire Tips & Tricks | Master the Fan Layout",
   description:
-    "Master Bristol Solitaire with practical tips on managing fans, reserves, and stock deals. Learn how to avoid the kings restriction, build regardless of suit, plan your 3-card stock deals, and clear all 52 cards to the foundations.",
+    "Master Bristol Solitaire — manage fans and reserves, work around the kings restriction, plan 3-card stock deals, and clear all 52 cards.",
   keywords: [
     "bristol solitaire tips",
     "bristol solitaire strategy",

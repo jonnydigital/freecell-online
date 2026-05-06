@@ -57,7 +57,7 @@ const UPDATED_DATE = "2026-04-12";
 export const metadata: Metadata = {
   title: `Spider Solitaire for Seniors — Easy-to-Follow Guide | ${siteConfig.siteName}`,
   description:
-    "A warm, patient guide to playing Spider Solitaire online. Large cards, touch-friendly controls, no timer, and step-by-step instructions designed for older adults who want to enjoy card games on a computer or tablet.",
+    "A patient Spider Solitaire guide for older adults — large cards, touch-friendly controls, no timer, and step-by-step instructions for desktop and tablet.",
   keywords: [
     "spider solitaire for seniors",
     "spider solitaire for older adults",

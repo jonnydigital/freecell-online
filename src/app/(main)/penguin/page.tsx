@@ -10,7 +10,7 @@ import MoreGames from '@/components/MoreGames';
 export const metadata: Metadata = {
   title: "Penguin Solitaire | Play Online Free — Dynamic Foundation Base",
   description:
-    "Play Penguin Solitaire online for free. A unique FreeCell variant with a random beak card that sets the foundation base rank. Build up by suit with wrapping, same-suit tableau stacking, and a single flipper cell. No download required.",
+    "Play Penguin Solitaire online free — FreeCell variant with a beak card setting the foundation base rank, same-suit stacks, and one flipper cell.",
   keywords: [
     "penguin solitaire",
     "penguin solitaire online",

@@ -8,7 +8,7 @@ import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionH
 export const metadata: Metadata = {
   title: "Bristol Solitaire Strategy Guide | Winning Techniques & Expert Tips",
   description:
-    "Master Bristol Solitaire with advanced strategies for stock pile management, tableau column optimization, King placement, reserve fan sequencing, and foundation building order. Improve your win rate with proven methods.",
+    "Master Bristol Solitaire — stock pile management, tableau optimization, King placement, reserve fan sequencing, and foundation building order.",
   keywords: [
     "bristol solitaire strategy",
     "bristol solitaire winning strategy",

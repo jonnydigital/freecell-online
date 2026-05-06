@@ -23,7 +23,7 @@ const PAGE_PATH = "/how-we-test-solitaire-games";
 export const metadata: Metadata = {
   title: "How We Test Solitaire Games | SolitaireStack Methodology",
   description:
-    "Inside our three-pillar testing framework: rules verification against Hoyle's and Pagat, engine cross-checks, Monte Carlo win-rate simulations with 95% confidence intervals, editorial playtesting, and device and accessibility testing.",
+    "Our three-pillar testing framework: rules verification against Hoyle's & Pagat, engine cross-checks, Monte Carlo simulation, and editorial playtesting.",
   keywords: [
     "how we test solitaire",
     "solitaire testing methodology",

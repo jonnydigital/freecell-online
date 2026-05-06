@@ -23,7 +23,7 @@ const PAGE_PATH = "/our-solitaire-methodology";
 export const metadata: Metadata = {
   title: "Our Solitaire Research Methodology | SolitaireStack",
   description:
-    "How the Research Desk produces original solitaire analysis: primary sources (Hoyle's, Cadogan, Parlett, Pagat), Monte Carlo simulation framework, confidence intervals, strategy analysis, and transparent citation standards.",
+    "How the Research Desk produces solitaire analysis: Hoyle's / Cadogan / Parlett / Pagat sources, Monte Carlo framework, and transparent citation standards.",
   keywords: [
     "solitaire research methodology",
     "solitaire simulation methodology",

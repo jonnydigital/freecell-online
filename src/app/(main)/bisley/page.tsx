@@ -10,7 +10,7 @@ import AuthorBio from "@/components/content/AuthorBio";
 export const metadata: Metadata = {
   title: "Bisley Solitaire | Play Online Free — Dual-Direction Foundation Card Game",
   description:
-    "Play Bisley Solitaire online for free. A unique patience card game with dual-direction foundations — aces build up while kings build down, meeting in the middle. 13 columns, same-suit building. No download required.",
+    "Play Bisley Solitaire online free — a unique patience game with dual-direction foundations: aces build up, kings build down, meeting in the middle.",
   keywords: [
     "bisley solitaire",
     "bisley solitaire online",

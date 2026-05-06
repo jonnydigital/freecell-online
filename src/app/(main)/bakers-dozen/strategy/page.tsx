@@ -8,7 +8,7 @@ import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionH
 export const metadata: Metadata = {
   title: "Baker's Dozen Strategy Guide | Winning Techniques & Expert Tips",
   description:
-    "Master Baker's Dozen Solitaire with advanced strategies for foundation building order, tableau column management, King-on-bottom mechanics, and card access optimization. Achieve higher win rates with proven expert methods.",
+    "Master Baker's Dozen Solitaire: foundation order, tableau management, King-on-bottom mechanics, and card access optimization for higher win rates.",
   keywords: [
     "bakers dozen strategy",
     "bakers dozen solitaire strategy",

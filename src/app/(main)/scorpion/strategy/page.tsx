@@ -8,7 +8,7 @@ import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionH
 export const metadata: Metadata = {
   title: "Scorpion Solitaire Strategy Guide | Advanced Winning Techniques",
   description:
-    "Master Scorpion Solitaire with advanced strategies for suit sequence building, face-down card uncovering, King column management, stock pile timing, and empty column optimization. Win more games with proven methods.",
+    "Master Scorpion Solitaire — suit sequence building, face-down card uncovering, King column management, stock timing, and empty column optimization.",
   keywords: [
     "scorpion solitaire strategy",
     "scorpion solitaire winning strategy",

@@ -29,7 +29,7 @@ const PAGE_PATH = "/solitaire-win-rates";
 export const metadata: Metadata = {
   title: "Solitaire Win Rates: A Researched Database | SolitaireStack",
   description:
-    "Cited win rates for FreeCell, Klondike, Spider, and twelve other solitaire variants. Exhaustive solver analysis, Monte Carlo research, sample sizes, and confidence intervals for every number — audit the sources yourself.",
+    "Cited win rates for FreeCell, Klondike, Spider, and 12 other solitaire variants. Solver analysis, Monte Carlo research, and confidence intervals.",
   keywords: [
     "solitaire win rates",
     "freecell win rate",

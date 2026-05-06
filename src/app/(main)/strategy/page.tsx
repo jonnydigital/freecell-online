@@ -10,7 +10,7 @@ import { ContentHero, SectionHeading, CardSection, ContentBody, TocPills, CtaSec
 export const metadata: Metadata = {
   title: "FreeCell Strategy Guide | How to Win FreeCell — Beginner to Expert Tips",
   description:
-    "Master FreeCell with this in-depth strategy guide. Learn beginner fundamentals, intermediate supermove tactics, advanced endgame techniques, and common mistakes that cost you games. 2500+ words of expert FreeCell strategy.",
+    "Master FreeCell with our 2,500-word strategy guide: beginner fundamentals, supermove tactics, advanced endgame techniques, and the mistakes that cost wins.",
   keywords: [
     "freecell strategy",
     "how to win freecell",

@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   title:
     "Microsoft FreeCell Online — Play the Classic Windows Card Game Free",
   description:
-    "Play Microsoft FreeCell online for free — same deal numbers as Windows FreeCell, no download required. Features unlimited undo, hints, statistics, achievements, and mobile support. The classic card game you remember, modernized.",
+    "Play Microsoft FreeCell online free — the original Windows deal numbers, no download. Unlimited undo, hints, stats, achievements, mobile-friendly.",
   keywords: [
     "microsoft freecell",
     "microsoft freecell online",

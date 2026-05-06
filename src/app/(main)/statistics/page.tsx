@@ -8,7 +8,7 @@ import { ContentHero, SectionHeading, CardSection, ContentBody, TocPills, CtaSec
 export const metadata: Metadata = {
   title: "FreeCell Statistics & Win Rates | Solvability, Difficulty & Math",
   description:
-    "Comprehensive FreeCell statistics: 99.999% solvability rate, average win rates, difficulty tiers, famous game numbers, and mathematical analysis. Compare FreeCell win rates with Klondike, Spider, and other solitaire games.",
+    "FreeCell statistics: 99.999% solvability rate, win rates by skill, difficulty tiers, famous deal numbers, and how FreeCell compares to Klondike and Spider.",
   keywords: [
     "freecell statistics",
     "freecell win rate",

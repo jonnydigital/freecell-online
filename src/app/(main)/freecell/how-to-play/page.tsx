@@ -8,7 +8,7 @@ import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionH
 export const metadata: Metadata = {
   title: "How to Play FreeCell Solitaire | Complete Rules & Strategy Guide",
   description:
-    "Learn how to play FreeCell Solitaire with complete rules, setup, supermove formula, step-by-step strategy, and expert tips. The definitive guide to the world's most popular perfect-information card game.",
+    "Learn how to play FreeCell Solitaire — complete rules, setup, the supermove formula, step-by-step strategy, and expert tips. The definitive FreeCell guide.",
   keywords: [
     "how to play freecell",
     "freecell rules",

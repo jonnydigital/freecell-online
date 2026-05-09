@@ -10,7 +10,7 @@ import MoreGames from '@/components/MoreGames';
 export const metadata: Metadata = {
   title: "Beleaguered Castle Solitaire | Play Online Free — Zero Free Cells",
   description:
-    "Play Beleaguered Castle solitaire online for free. A challenging FreeCell variant with zero free cells — aces start on foundations, 48 cards in 8 cascades. Build up by suit from Ace to King. No download required.",
+    "Play Beleaguered Castle solitaire online free. Zero free cells, aces start on foundations, 48 cards across 8 cascades. Build up by suit, no download required.",
   keywords: [
     "beleaguered castle",
     "beleaguered castle solitaire",

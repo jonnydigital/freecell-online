@@ -8,7 +8,7 @@ import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionH
 export const metadata: Metadata = {
   title: "Flower Garden Solitaire Strategy Guide | Expert Winning Tips",
   description:
-    "Master Flower Garden Solitaire with advanced strategies for bouquet management, King placement, empty column creation, foundation building order, and garden bed optimization. Win more games with proven techniques.",
+    "Master Flower Garden Solitaire: bouquet management, King placement, empty-column creation, foundation order, and garden-bed optimization for higher win rates.",
   keywords: [
     "flower garden solitaire strategy",
     "flower garden solitaire winning strategy",

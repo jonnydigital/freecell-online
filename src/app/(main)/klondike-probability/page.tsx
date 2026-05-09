@@ -22,7 +22,7 @@ const UPDATED_DATE = "2026-04-05";
 export const metadata: Metadata = {
   title: `Klondike Probability: What the Math Says | ${siteConfig.siteName}`,
   description:
-    "Klondike Solitaire probability explained: solvability bounds from Bjarnason et al., human win rates by skill tier, stock-cycling EV, starting-position analysis, confidence intervals, and simulation methodology.",
+    "Klondike Solitaire probability: solvability bounds from Bjarnason et al., human win rates by skill, stock-cycling EV, and simulation methodology.",
   keywords: [
     "klondike probability",
     "klondike solvability",

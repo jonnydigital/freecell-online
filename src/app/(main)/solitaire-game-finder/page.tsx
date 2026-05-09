@@ -22,7 +22,7 @@ const PAGE_PATH = "/solitaire-game-finder";
 export const metadata: Metadata = {
   title: "Solitaire Game Finder: Which Solitaire Should You Play?",
   description:
-    "Answer five quick questions about game length, thinking effort, winning expectations, visibility, and experience — and our editors will recommend the three solitaire variants most likely to fit your next session.",
+    "Answer five quick questions and our editors recommend the three solitaire variants most likely to fit your next session.",
   keywords: [
     "solitaire game finder",
     "which solitaire should i play",

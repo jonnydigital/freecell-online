@@ -8,7 +8,7 @@ import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionH
 export const metadata: Metadata = {
   title: "TriPeaks Solitaire Strategy Guide | Clear All Three Peaks",
   description:
-    "Master TriPeaks Solitaire with advanced strategies for peak selection, chain building, stock pile management, and scoring optimization. Learn the techniques that separate casual players from consistent winners.",
+    "Master TriPeaks Solitaire: peak selection, chain building, stock-pile management, and scoring optimization — the techniques that separate casual play from consistent wins.",
   keywords: [
     "tripeaks solitaire strategy",
     "tripeaks strategy guide",

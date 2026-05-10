@@ -12,7 +12,7 @@ const PUBLISHED_DATE = "2026-04-12";
 export const metadata: Metadata = {
   title: "Klondike Solitaire Endgame -- Finishing Strong",
   description:
-    "Master the Klondike Solitaire endgame: learn when to autopilot, how to manage final stock passes in Draw 3, why foundation order matters, and how to recognize unwinnable positions before they waste your time.",
+    "Master the Klondike endgame: when to autopilot, managing final Draw 3 stock passes, foundation order, and recognizing unwinnable positions early.",
   keywords: [
     "klondike endgame strategy",
     "klondike solitaire endgame",

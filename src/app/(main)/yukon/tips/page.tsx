@@ -8,7 +8,7 @@ import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionH
 export const metadata: Metadata = {
   title: "Yukon Solitaire Tips & Tricks | Master the No-Stock Challenge",
   description:
-    "Essential Yukon Solitaire tips to boost your win rate. Learn to move face-up groups aggressively, uncover hidden cards, manage empty columns, and plan multiple moves ahead in this challenging no-stock variant.",
+    "Yukon Solitaire tips: move face-up groups aggressively, uncover hidden cards, manage empty columns, and plan ahead in this no-stock variant.",
   keywords: [
     "yukon solitaire tips",
     "yukon solitaire strategy",

@@ -8,7 +8,7 @@ import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionH
 export const metadata: Metadata = {
   title: "Canfield Solitaire Strategy Guide | Advanced Winning Techniques",
   description:
-    "Master Canfield Solitaire with advanced strategies for reserve pile management, foundation base rank adaptation, stock cycling optimization, and tableau wrapping techniques. Win more games with proven methods.",
+    "Master Canfield Solitaire: reserve pile management, foundation base rank adaptation, stock cycling, and tableau wrapping techniques.",
   keywords: [
     "canfield solitaire strategy",
     "canfield solitaire winning strategy",

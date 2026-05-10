@@ -10,7 +10,7 @@ import { ContentHero, SectionHeading, CardSection, ContentBody, TocPills, CtaSec
 export const metadata: Metadata = {
   title: "Types of Solitaire Card Games | 20 Solitaire Variants Explained",
   description:
-    "Explore 20 types of solitaire card games — from Klondike and Spider to FreeCell, Pyramid, and beyond. Difficulty ratings, rules overview, and how each variant compares. Find your next favorite solitaire game.",
+    "Explore 20 types of solitaire — Klondike, Spider, FreeCell, Pyramid, and beyond. Difficulty ratings, rules, and how each variant compares.",
   keywords: [
     "types of solitaire",
     "solitaire card games",
@@ -693,6 +693,8 @@ export default function SolitaireTypesPage() {
           <SectionHeading variant="dark" sub="Continue Learning">Related Guides</SectionHeading>
           <ContentBody variant="dark" className="grid gap-4 md:grid-cols-3">
             <ContentLinkCard href="/freecell-variants" title="FreeCell Variants" description="Explore Baker's Game, Eight Off, Sea Towers, and other FreeCell spin-offs." />
+            <ContentLinkCard href="/patience-solitaire" title="Solitaire vs Patience" description="Why the same family of games has different names across English-speaking regions." />
+            <ContentLinkCard href="/solitaire-rules-by-country" title="Rules by Country" description="How solitaire names and house rules vary around the world." />
             <ContentLinkCard href="/freecell-vs-klondike" title="FreeCell vs Klondike" description="How FreeCell compares to the world's most popular solitaire game." />
             <ContentLinkCard href="/freecell-vs-spider" title="FreeCell vs Spider" description="Side-by-side comparison of two fan-favorite solitaire games." />
           </ContentBody>

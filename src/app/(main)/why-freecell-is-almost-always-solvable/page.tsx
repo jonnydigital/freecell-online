@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   title:
     "Why FreeCell Is Almost Always Solvable | The Math Behind 99.999% Winnability",
   description:
-    "Discover why nearly every FreeCell deal is solvable \u2014 the mathematical design principles, state space analysis, and structural features that make FreeCell the most skill-based solitaire game ever created.",
+    "Why nearly every FreeCell deal is solvable: the design principles, state space analysis, and structural features that make it the most skill-based solitaire.",
   keywords: [
     "why is freecell solvable",
     "freecell solvability math",

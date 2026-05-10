@@ -45,7 +45,7 @@ const FAQS = [
 export const metadata: Metadata = {
   title: `Spider Solitaire Records and Notable Achievements | ${siteConfig.siteName}`,
   description:
-    "A look at Spider Solitaire records: fastest wins by suit count, win streaks, fewest-move games, computer solver benchmarks, community leaderboards, verification challenges, and tips for setting personal bests.",
+    "Spider Solitaire records: fastest wins by suit count, win streaks, fewest-move games, solver benchmarks, and tips for setting personal bests.",
   keywords: [
     "spider solitaire records",
     "spider solitaire world record",

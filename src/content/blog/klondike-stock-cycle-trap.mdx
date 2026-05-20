@@ -1,0 +1,125 @@
+---
+title: "Why Klondike Is Harder Than It Looks: The Stock-Cycle Trap"
+slug: "klondike-stock-cycle-trap"
+date: "2026-05-20"
+description: "Intermediate Klondike players plateau because of one overlooked problem: the stock cycle trap. Here is what it is and how to escape it."
+author: "J. Foye"
+tags: ["klondike", "strategy", "stock-pile", "intermediate"]
+sites: ["playklondikeonline"]
+---
+
+There's a specific moment that every intermediate Klondike player knows. You've uncovered most of the tableau. The foundations are moving. You feel like you're winning. Then you cycle through the stock pile twice, nothing plays, and the game quietly dies.
+
+This is the stock-cycle trap, and it ends more winnable games than any other single pattern. It's not bad luck. It's a structural problem that develops over the course of the game from decisions that looked fine at the time.
+
+## Key Takeaways
+
+- The stock-cycle trap occurs when the waste pile and tableau are mutually blocked: no waste card plays to the tableau, and no tableau move changes which waste card is accessible
+- It almost always develops from mid-game decisions, not end-game positions
+- The trap is harder to escape in Draw-3 because fewer cards are accessible per pass
+- Prevention requires tracking stock dependencies, not just responding to what's currently visible
+- Recognizing a trapped game earlier saves time and mental energy
+
+## What the Stock-Cycle Trap Looks Like
+
+Picture this position: your waste pile is showing the J♠. The J♠ could go on the Q♦ in column 4, except the Q♦ has a 7♣ sitting on top of it that you can't move anywhere useful. The 7♣ wants to go on an 8♦ or 8♥, but both 8s are buried face-down in column 6 and column 7.
+
+You draw from the stock. Nothing plays. You draw again. Nothing plays. You've seen every stock card at least once and none of them play to the tableau either, because the tableau sequences that could receive them are all blocked by cards two or three steps down a dependency chain.
+
+You're in the trap. The game is effectively over, even though the foundations aren't full and a third of the tableau is still face-down.
+
+What makes this a trap rather than just a stuck position is that the blockage is circular. The stock can't play to the tableau because the tableau is frozen. The tableau is frozen because certain cards can't move until the stock is unblocked. Neither side can move first.
+
+## How the Trap Forms (The Three Contributing Decisions)
+
+The stock-cycle trap almost never appears from nowhere. It builds from a pattern of three types of decisions that individually look fine.
+
+**Decision 1: Playing stock cards onto partially-blocked tableau columns.**
+
+Early in the game, you have a waste card that plays legally to column 5. You play it. Reasonable. But column 5's bottom is now covered, and two cards below the new addition are still face-down. You've built the column taller without uncovering anything, and now the useful card in the middle of that sequence is harder to reach.
+
+Repeat this 4 or 5 times across different columns and you've slowly made the tableau denser without revealing new information.
+
+**Decision 2: Sending mid-rank cards to the foundation before the same-color cards beneath them are visible.**
+
+This one is covered in beginner guides, but it has a stock-specific consequence. When you send a 6♦ to the foundation and both black 5s are still face-down, you've created a future moment where: the 5♣ will eventually appear on the tableau and need a 4♦ sitting on a 5♦ sitting on a 6♦. But the 6♦ is on the foundation. That sequence breaks.
+
+Broken sequences become the specific cards that block stock plays later.
+
+**Decision 3: Cycling through the stock too fast in Draw-3.**
+
+In Draw-3, skipping a card (not playing it even though you could) changes the stock's phase. Beginners learn this as the "hold-back" principle. What they often miss is the inverse: playing a card you didn't need to play also shifts the phase, and not always in your favor.
+
+If you play a stock card just because it was legal (placing a 9♣ on the 10♦ when you didn't need to), you've shifted every subsequent draw. The card that would have appeared at position 7 in the next cycle now appears at position 6 or 8. Over 20 or 30 draws, these unnecessary plays scramble the sequence.
+
+## Recognizing the Trap Early
+
+The trap is hard to escape once you're in it, but it's identifiable 5 to 10 moves before it locks completely.
+
+Watch for these signals:
+
+**The waste pile is consistently showing cards you've seen before without new plays.** In Draw-3, if you're on your third pass through the stock and the same 5 cards keep appearing in the waste without moving to the tableau, the sequence has locked.
+
+**Every tableau column's bottom card is blocked by a card one or two levels deep.** When every column bottom needs something that's sitting under two other cards, mobility has collapsed. Each move requires two prerequisite moves that also each require prerequisites.
+
+**Your empty columns have been empty for more than one full stock cycle.** An empty column waiting for a King that never appears is a symptom. Either the King is at the bottom of a deep column (still accessible in theory) or the King is buried past the current stock cycle's reachable positions.
+
+## Escaping the Trap
+
+Escaping a stock-cycle trap requires finding the one card that can break the circular blockage. That card almost always exists, and finding it is the actual skill.
+
+Work backward from the circular block. In the example above: J♠ needs Q♦ clear. Q♦ needs 7♣ moved. 7♣ needs an 8. Both 8s are face-down. Which column are they in? What's above each 8? Can either be reached?
+
+If the 8♦ is in column 6 under a 3♠, and the 3♠ could go on the 4♦ already showing in column 2, that's your move. It doesn't touch the stock at all. It's a pure tableau move that breaks the chain.
+
+Most trapped positions have one unlocking move of this type. Players miss it because they're focused on the stock and the waste, not on the full dependency map of the tableau.
+
+**The systematic approach:** When you feel stuck, draw a mental dependency map. Start from the card in the waste pile you need to play. What does the target column need to do first? What does *that* require? Keep tracing until you either find a free card at the end of the chain, or confirm the chain is actually circular (genuinely stuck).
+
+This process takes 60 to 90 seconds on a complex position. It finds solutions that 20 stock cycles wouldn't.
+
+## Prevention: Stock Dependency Tracking
+
+The best way to avoid the trap is to track stock dependencies before you need to.
+
+After your first pass through the stock, you know the order of the remaining cards. You know which cards are sitting behind which others. Before making any tableau move, ask: does this move change what will be accessible in the next stock cycle?
+
+Specifically, watch for "choke cards." A choke card is a mid-rank card that multiple sequence chains need. If 6♥ is still in the stock, and both 7♠ and 7♣ are accessible on the tableau, the 6♥ will probably need to go on one of them. If both 7s are already buried under new cards before 6♥ appears in the waste, the 6♥ has nowhere to go when it arrives.
+
+Preventing this means keeping at least one landing spot open for each high-value stock card before it reaches the waste.
+
+For the full treatment of opening moves and stock-aware play from the first deal, see the [Klondike opening strategy guide](/klondike-opening-strategy).
+
+## The Draw-1 Version of This Problem
+
+Draw-1 has a version of the stock-cycle trap too, though it's milder. In Draw-1, you see every stock card every cycle, so the "inaccessible card" problem doesn't exist. But the circular tableau blockage does.
+
+In Draw-1, the trap looks like this: every waste card plays to a tableau column whose bottom is itself blocked. The tableau is fully locked. You cycle through the waste pile three times and nothing moves.
+
+This version is rarer in Draw-1 because with every card accessible, it's much easier to find the one unlocking move. But players who rush through stock cycles without scanning the tableau first can still end up here.
+
+The solution is identical: trace the dependency chain, find the free card at the end, make the unlocking move.
+
+[Play Klondike Solitaire](/klondike) and watch for the moment the cycle starts to lock. Catching it early is the whole skill.
+
+## Frequently Asked Questions
+
+### Is the stock-cycle trap always preventable?
+
+No. Some deals have stock sequences that produce this trap regardless of play. Computer solvers identify these deals as genuinely unwinnable (around 18 to 21 percent of Draw-3 deals by most estimates). But a meaningful portion of traps in player games are preventable with better stock tracking and dependency awareness. If you're hitting the trap in most games, it's preventable. If you're hitting it occasionally, you may be encountering genuinely difficult deals.
+
+### How does the trap differ between Draw-1 and Draw-3?
+
+In Draw-3, the trap is harder to escape because fewer cards are accessible per pass (roughly one-third). In Draw-1, every card is accessible every cycle, so the "which card is coming next" dimension doesn't apply. Tableau blockage still occurs in Draw-1, but the fix (find the unlocking tableau move) is usually reachable. In Draw-3, the unlocking move might exist but the card you need might not appear in the waste until two more cycles, by which point the position has worsened.
+
+### What's the difference between a trapped game and a stuck game?
+
+A stuck game has no legal moves at all. A trapped game has legal moves but none of them advance toward a win. Trapped games can run for many more moves (cycling through the stock feels like action) while making no real progress. Players stay in trapped games too long because moves are still available, which feels like the game is still alive.
+
+### Can you predict the stock-cycle trap from the deal?
+
+Partially. If the first draw reveals several cards that pile onto the same tableau column while no foundation cards appear, and the tableau's longest columns stay face-down, that's an early signal. The trap isn't guaranteed from this setup, but it's more likely. Strong players adjust their opening strategy when they see these signals: they prioritize uncovering long columns over building sequences that might become over-tall.
+
+### Is the stock-cycle trap discussed in classic card game literature?
+
+The phenomenon is described (without the "trap" terminology) in older card game books as "tableau lock" or simply a "blocked position." The specific mechanism in Draw-3 (the cycle phase and hold-back strategy) appears in computational solitaire research from the 2000s. Most practical discussion of it exists in player forums and strategy threads rather than formal literature.

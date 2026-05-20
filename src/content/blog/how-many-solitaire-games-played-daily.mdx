@@ -1,0 +1,131 @@
+---
+title: "How Many Solitaire Games Are Played Every Day? An Honest Estimate"
+slug: "how-many-solitaire-games-played-daily"
+date: "2026-05-20"
+description: "A Fermi estimation of global daily solitaire plays, using public data on internet traffic, app downloads, and desktop usage. Transparent methodology, honest uncertainty."
+author: "J. Foye"
+tags: ["solitaire", "data", "research"]
+sites: ["solitairestack"]
+---
+
+Nobody publishes the global daily solitaire play count. No trade association tracks it, no app store releases aggregate session data, and the major platforms treat play statistics as proprietary. So the only honest approach is to estimate from the evidence that does exist, show every step, and be explicit about where the uncertainty is large.
+
+This is a Fermi estimation. Fermi estimates are back-of-envelope calculations that use known quantities to bracket an unknown one. The goal isn't precision -- it's a defensible order of magnitude.
+
+## Key Takeaways
+
+- The global daily solitaire play count is plausibly between **150 million and 600 million games** per day, with a central estimate around 300 million.
+- Mobile solitaire apps account for more than half of all plays, followed by browser-based solitaire and then legacy desktop games.
+- The Microsoft era seeded the behavior in hundreds of millions of people; mobile platforms scaled it.
+- This estimate carries significant uncertainty -- it could realistically be off by a factor of 2 in either direction.
+- Even the low-end estimate (150 million games per day) is roughly 55 billion games per year, which puts solitaire in a category by itself as the most-played card game on earth.
+
+## The Inputs Available
+
+A useful Fermi estimation needs at least one anchor -- a known number you can work outward from. Here, we have several partial anchors.
+
+**App store download data.** Solitaire apps have been consistently among the most-downloaded free game categories on both iOS and Android since app stores launched. According to App Annie and Sensor Tower historical reporting (2018-2022), solitaire games collectively averaged 3-5 million new downloads per month globally. That's a download rate, not a play rate -- but it gives us a sense of the active install base.
+
+**SimilarWeb traffic data.** The top browser-based solitaire sites receive aggregate traffic in the range of 50-100 million monthly visits. The top player, Solitaired, reported 23 million monthly sessions publicly. Solitaire.org, WorldOfSolitaire, and Microsoft Solitaire Collection's web version collectively add several times that.
+
+**Microsoft Solitaire Collection.** Microsoft stated in 2012 that Solitaire had been installed on over 1 billion Windows devices. The standalone Solitaire Collection app for Windows 10/11 has been downloaded over 100 million times from the Microsoft Store, and Microsoft has claimed over 35 million monthly active users for that app alone (2019 statement).
+
+**Steam and secondary platforms.** Smaller but not negligible. Classic Solitaire Klondike on Steam has several hundred thousand reviews, suggesting millions of total players.
+
+## Building the Estimate
+
+### Piece 1: Mobile Apps
+
+The global smartphone user base is approximately 4.9 billion as of 2025. Research on mobile gaming habits (including data from Newzoo and Statista) consistently places the share of smartphone owners who have played at least one mobile game in a given month at around 60-65%, or roughly 3 billion people.
+
+Among mobile gamers, solitaire is one of the oldest and most widely distributed game categories. Casual and mid-core gaming surveys (including a 2021 Google Play data brief and independent surveys by Nansen/App Annie) suggest that about 8-12% of mobile gamers play card and puzzle games -- a category dominated by solitaire variants -- in a given week. That gives us roughly 240-360 million weekly mobile solitaire players.
+
+If the average solitaire session produces **1.5 games** (some players finish one, many play two or three), and each player plays on about 4 of 7 days per week, we get:
+
+- 300 million weekly players x (4/7) x 1.5 games = **257 million games per day** from mobile alone.
+
+That's the middle of a wide range. If the "% play card games" figure is 8% rather than 12%, the answer drops to about 170 million per day. If average session length is 2 games, it rises to 340 million.
+
+### Piece 2: Browser-Based Solitaire
+
+The top browser solitaire sites collectively attract somewhere between 50-120 million monthly visits. Assuming each visit involves 2 games on average (a common session pattern for browser card games), that's 100-240 million browser games per month, or **3-8 million per day** from this segment.
+
+Browser solitaire is a smaller piece than mobile but still meaningful, particularly among desktop workers who play during breaks.
+
+### Piece 3: Desktop Apps (Windows, macOS)
+
+Microsoft Solitaire Collection's 35 million claimed monthly active users -- assuming an average of 3 games per session and sessions on perhaps 3 days per week -- produces roughly:
+
+- 35M users x (3/7) sessions/day x 3 games = **45 million games per day** from the Windows app alone.
+
+This may be high; the 35 million MAU figure is now several years old and predates shifts toward mobile. A more conservative 20 million active desktop users at 3 games per session and 3 days per week gives about **26 million games per day**.
+
+### Piece 4: Other Platforms
+
+Pre-installed solitaire on older Windows versions still runs on hundreds of millions of PCs in developing markets. Physical card solitaire (still played without digital devices) adds a tail that is genuinely unquantifiable. Browser extensions, smart TV apps, and embedded games in portals add smaller contributions. Combined, these might add 10-30 million games per day.
+
+### The Total
+
+| Segment | Central Estimate | Low Estimate | High Estimate |
+|---|---|---|---|
+| Mobile apps | 250M/day | 170M/day | 340M/day |
+| Browser solitaire | 5M/day | 3M/day | 8M/day |
+| Desktop apps (Windows) | 35M/day | 20M/day | 50M/day |
+| Other platforms | 15M/day | 5M/day | 30M/day |
+| **Total** | **305M/day** | **198M/day** | **428M/day** |
+
+**Central estimate: 300 million solitaire games per day.**
+
+## Where This Could Be Wrong
+
+The biggest uncertainty is in the mobile piece. The "% of mobile gamers who play card games in a given week" figure is poorly documented and varies substantially by market. Markets like India, where Klondike and Rummy-style apps have massive userbases, could push the global figure higher. Markets where gaming habits lean toward multiplayer social games could pull it lower.
+
+The average-games-per-session assumption also matters a lot. If the real number is 1 game rather than 1.5, the total drops by a third.
+
+Most importantly: solitaire has a long tail. There are thousands of solitaire apps, many with small but loyal userbases that never appear in top-download charts. The long tail could easily add 20-30% to any estimate based on the top apps.
+
+## What This Number Means
+
+300 million games per day is roughly 110 billion games per year. Compare that to chess: Chess.com reported 14 billion games played in 2023, its highest year ever. Solitaire, at even the low estimate, is played at roughly ten times the volume of chess.
+
+The comparison illustrates something about solitaire's real nature: it is not primarily a game played for competition or skill development, though it can be those things. It is primarily a utility -- a way to fill dead time, decompress between tasks, and occupy hands and eyes without requiring concentration. At that scale, the meaningful competition isn't other card games. It's scrolling.
+
+That behavioral framing matters for understanding the solitaire audience. The people driving these numbers are mostly not enthusiasts. They are casual players who return to the same game repeatedly -- for the same reason people make the same coffee every morning. Comfort and routine, not variety and discovery.
+
+For more on how solitaire fits into daily routines, see our [guide to solitaire for every mood](/solitaire-for-every-mood) and the [solitaire games directory](/games).
+
+## Sources and Transparency
+
+The following sources were used for anchor figures in this estimate:
+
+- Microsoft Solitaire Collection MAU claim (Microsoft press statement, 2019)
+- App download rate data: Sensor Tower top-category reports, 2020-2022
+- Mobile gaming penetration: Newzoo Global Mobile Games Report, 2023
+- Browser traffic: SimilarWeb public estimates for top solitaire sites, 2024
+- Chess.com game volume: chess.com annual report, 2023
+
+Figures not sourced above (session length, games per session) are reasonable assumptions based on common patterns in casual gaming research. They are the weakest links in the chain.
+
+If you want to pressure-test this estimate or have better data, the structure above makes it easy to substitute your own inputs.
+
+## Frequently Asked Questions
+
+**How confident should I be in the 300 million figure?**
+
+It's an order-of-magnitude estimate, not a precise count. The real number is probably somewhere between 150 million and 600 million per day. The 300 million figure is defensible as a central estimate given the inputs available, but treat it as a bracket, not a data point.
+
+**Does physical card solitaire count in this estimate?**
+
+No. Physical play is genuinely unquantifiable and is not included. Given that physical card play has declined substantially since the 1990s while digital play has grown, physical games are probably a small fraction of total games -- but this is itself an estimate.
+
+**Is solitaire really bigger than chess?**
+
+Yes, by a large margin when measuring total games played. Chess is played with more competitive intensity and receives more media coverage, but solitaire has far more casual daily players. The audiences barely overlap.
+
+**Which solitaire variant accounts for most plays?**
+
+Klondike (classic draw-1 or draw-3 solitaire) almost certainly accounts for the largest share -- perhaps 60-70% of all solitaire games played -- because it was the default game on Windows, is the most widely distributed on mobile, and is what most people mean when they say "solitaire." [Play Free Cell](/freecell) for a completely different experience.
+
+**Why don't gaming companies publish this data?**
+
+Aggregate play counts would help competitors benchmark market share and could affect advertiser negotiations. Most companies treat engagement metrics as proprietary. The exception is when companies choose to share impressive numbers in press releases, which is where the Microsoft and Chess.com figures above come from.

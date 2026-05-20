@@ -1,0 +1,117 @@
+---
+title: "Klondike Draw-3 Strategy: The Cycle Math That Wins More Games"
+slug: "klondike-draw-3-cycle-math"
+date: "2026-05-20"
+description: "Most Draw-3 players lose to the cycle math, not bad luck. Here is how stock sequencing works and which cards are worth holding back."
+author: "J. Foye"
+tags: ["klondike", "draw-3", "strategy", "probability"]
+sites: ["playklondikeonline"]
+---
+
+Draw-3 Klondike has roughly a 10 to 20 percent win rate for most players. That sounds brutal, but a meaningful chunk of those losses aren't bad luck. They're losses caused by playing Draw-3 the same way you'd play Draw-1, which is the wrong mental model entirely.
+
+The game changes because the stock pile is a cycle with a fixed structure. Once you understand that structure, you can work with it instead of against it.
+
+## Key Takeaways
+
+- In Draw-3, only every third card in the stock is accessible per pass. With 24 stock cards, that's roughly 8 cards per pass
+- The stock sequence is fixed until you change it by playing cards
+- Playing or not playing a tableau move changes which stock cards become accessible on the next cycle
+- The "hold-back" principle: sometimes the right move is to skip a tableau play specifically to shift what the next stock pass exposes
+- Foundation timing is more constrained in Draw-3 because unplayable cards stay blocked longer
+
+## How the Cycle Actually Works
+
+Deal a fresh game and imagine the stock pile has 24 cards, numbered 1 through 24 from bottom to top. When you draw the first group of three, you see cards 24, 23, and 22 (top of the pile). Only card 24 is playable.
+
+If you play card 24, the next draw exposes cards 21, 22, and 23. Card 21 is now on top.
+
+If you skip card 24 (don't play it), the next draw exposes cards 21, 22, and 23 with card 23 now buried under 24. Card 21 is still on top, but card 24 stays in place, shifting the entire sequence back by one.
+
+This is the mechanism that makes Draw-3 a different game. Every decision to play or not play a visible card changes which cards will be accessible on the next cycle. Over 3 or 4 passes through the stock, those decisions compound.
+
+## The Cards-Per-Pass Calculation
+
+With 24 cards in the stock, a full cycle gives you access to exactly 8 cards (24 divided by 3). Each of those 8 cards sits at position 1, 4, 7, 10, 13, 16, 19, and 22 in the original stock ordering.
+
+As you play cards from the stock (and from the tableau), the stock shrinks. A 21-card stock gives you 7 accessible cards per cycle. 18 cards gives you 6.
+
+The implication: **early in the game, when the stock is fullest, you have the fewest accessible cards relative to the total deck.** You're seeing roughly 33 percent of available stock cards per pass. Late in the game, if you've played aggressively, you might see 50 to 60 percent.
+
+This is why Draw-3 games often feel like they open up in the middle. They do. The denominator is shrinking.
+
+## Which Cards Are Worth Holding Back
+
+The hold-back principle sounds counterintuitive: sometimes you should skip playing a legal stock card specifically to shift the sequence.
+
+Here's a concrete example. Suppose your stock currently exposes: K♠, 8♥, 4♦ (top three). The 8♥ could go on a 9♣ in the tableau. Behind the K♠ in the next group of three is a 6♥ that you desperately need to uncover a buried Ace.
+
+If you play the 8♥, the next draw exposes the group containing the 6♥ as normal. Fine.
+
+But if you *don't* play the 8♥ and instead draw again, the 8♥ stays in place. Now the next draw exposes the group behind K♠, 8♥, 4♦ shifted by one position. The 6♥ might now be on top of its group instead of buried.
+
+This sounds like a small difference. Over 20 to 30 draws, it determines whether critical cards are consistently accessible or consistently blocked.
+
+**The practical rule:** Before playing any stock card, ask whether playing it would change which card you'll see two draws from now in a useful direction. If the card you're skipping over is more valuable than the card in hand, skip.
+
+## What the Stock Sequence Tells You
+
+After your first full pass through the stock, you know the order of every unplayed stock card. You may not have written it down, but you can reason about it.
+
+Specifically: you know which cards are one, two, and three positions behind any currently visible card. That knowledge is actionable.
+
+If the 3♠ is currently on top of the waste pile and you know from your first pass that the A♣ is three cards behind it in the sequence, you now know that playing the 3♠ and two other stock cards will expose the A♣. You can plan three moves ahead specifically to reach it.
+
+Strong Draw-3 players do this tracking mentally. You don't need perfect recall. You need to remember the positions of 3 to 5 cards you're urgently waiting for.
+
+For a fuller breakdown of how Draw-1 and Draw-3 differ structurally, see [Klondike Draw 1 vs Draw 3](/klondike/draw-1-vs-draw-3).
+
+## Foundation Timing in Draw-3
+
+Foundation timing is trickier in Draw-3 than in Draw-1, for one specific reason: if a card on the tableau is needed but currently buried, and a higher card of the same suit is already on the foundation, you're stuck until the buried card is uncovered.
+
+The standard advice (don't rush cards to the foundation) applies here with extra force. In Draw-3, you have fewer accessible cards per pass, which means a misplaced foundation card blocks you for longer before you can correct the situation.
+
+The safe rule in Draw-3: **wait until all cards of the same color and adjacent rank are face-up before sending a card to the foundation.** If red 6s are going to the foundation but there are still black 7s face-down somewhere, slow down.
+
+## The Three-Pass Rule
+
+If you've gone through the stock three full times and made no progress, the game is almost certainly stuck. Not definitely, but almost certainly.
+
+Progress means: a face-down card was flipped, a foundation card was placed, or a column was cleared. If you're cycling through a 15-card stock three times and playing nothing, the stock has locked. You're missing either a tableau move (go back and look) or the game is genuinely unwinnable.
+
+Most Draw-3 games that feel stuck at two passes still have one good tableau move left that reopens the stock. Scan the columns carefully before declaring stuck.
+
+[Play Klondike Solitaire](/klondike) and test this against a live Draw-3 game.
+
+## Probability: What Your Actual Win Rate Means
+
+A 10 to 15 percent Draw-3 win rate (common for players who've been playing casually for a year or more) isn't mainly a luck problem. Computer solvers achieve roughly 35 to 40 percent on the same deals.
+
+That gap (your 10 to 15 versus a solver's 35 to 40) is almost entirely strategy. The deals aren't harder for you than for the solver. The solver knows the stock sequence and makes hold-back decisions optimally. You don't yet.
+
+Closing even half that gap, from 12 percent to 24 percent, doubles your win rate. Stock sequencing is the single highest-leverage improvement a Draw-3 player can make.
+
+For a broader set of strategic techniques, the [Klondike winning strategies guide](/klondike/winning-strategies) covers tableau management alongside the stock concepts discussed here.
+
+## Frequently Asked Questions
+
+### How many cards are accessible on each pass through a Draw-3 stock?
+
+With a full 24-card stock, exactly 8 cards are accessible per pass (positions 1, 4, 7, 10, 13, 16, 19, and 22 from top). As cards are played and the stock shrinks, that number decreases. A 15-card stock gives you 5 accessible cards per pass.
+
+### Can I count cards in the Draw-3 stock to know what's coming?
+
+Yes, and experienced players do exactly this. You don't need to track all 24 cards. Tracking 4 or 5 key cards you're waiting for (buried Aces, critical middle-rank cards) is usually enough to make useful sequencing decisions. After your first full pass through the stock, you have the information you need.
+
+### Should I play every stock card I can play in Draw-3?
+
+Not always. The hold-back principle means sometimes skipping a legal play is the better choice if it shifts the sequence to expose a more useful card on the next draw. Evaluate whether the card two or three positions behind the current one is more valuable before committing.
+
+### What's the theoretical win rate ceiling for Draw-3 Klondike?
+
+Computer analysis puts it at roughly 35 to 40 percent for Draw-3 with unlimited passes. With a three-pass limit (a stricter rule some versions use), that ceiling drops to around 10 to 15 percent even for optimal play. The specific percentage varies slightly across different research implementations, but the consensus is in that range.
+
+### Is Draw-3 ever actually easier than Draw-1?
+
+No. Draw-1 has a higher win rate at every skill level. Draw-3 is preferred in competitive contexts because its lower win rate creates more meaningful differentiation between players. But "easier" and "more strategic" are different things. If you want to win more games, play Draw-1. If you want a harder puzzle, play Draw-3.

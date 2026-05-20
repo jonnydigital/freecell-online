@@ -1,0 +1,112 @@
+---
+title: "Spider Solitaire Win Rates: What Real Players Actually Average Across Difficulties"
+slug: "spider-solitaire-win-rates"
+date: "2026-05-20"
+description: "Win rate figures for Spider Solitaire vary widely by source. Here's what community data and simulation research actually suggest, with honest notes on uncertainty."
+author: "J. Foye"
+tags: ["spider", "win-rate", "statistics", "research"]
+sites: ["playspidersolitaireonline"]
+---
+
+Win rate figures get thrown around a lot in Spider Solitaire discussions. Someone says 1-suit is "easy, around 90%" and 4-suit is "nearly impossible." But where do those numbers come from? Are they measured from real player populations, computer simulations, or just vibes?
+
+The honest answer is: a mix of all three, and the sourcing often isn't clear. This piece lays out what's actually known, what's estimated, and where the uncertainty genuinely lies.
+
+## Key Takeaways
+
+- Reported win rates for Spider vary significantly depending on whether they come from player self-reports, app leaderboards, or computational simulation.
+- 1-suit win rates in the 85-95% range are fairly well-supported across multiple sources.
+- 2-suit win rates around 40-55% are commonly cited but have wider variance in reported figures.
+- 4-suit win rates are the least settled: figures range from roughly 8% to 20% depending on the source and the assumed player skill level.
+- No large-scale, peer-reviewed study of Spider Solitaire win rates exists. Treat all figures as estimates.
+
+## Why Win Rates Are Hard to Pin Down
+
+Before looking at numbers, it helps to understand why they vary so much.
+
+**The skill gap is enormous.** A beginner playing 4-suit Spider might win 1 in 50 games. An expert might win 1 in 7. Any win rate figure is implicitly tied to a skill level. When a source doesn't specify, the number is nearly useless.
+
+**Many games are abandoned.** Players quit losing games before they formally lose. Apps that track "completion" rather than "outcome" will show inflated win rates because they only count finished games. Players who quit the moment a game looks unwinnable skew the data significantly.
+
+**Winnable vs. winnability.** A game being "winnable" (solvable by a perfect player) is different from a game being "won" by real players. Even solvable deals get lost due to mistakes. The gap between theoretical winnability and actual win rate is especially large in 4-suit Spider.
+
+**Self-selection in online data.** Players who post stats publicly tend to be more engaged and better than the average player. Forum win rates and leaderboard averages skew upward.
+
+## 1-Suit Spider: The Most Consistent Figures
+
+1-suit Spider is the best-documented of the three modes, and the figures are the most consistent.
+
+Multiple sources, including community tracking on solitaire forums and data from major solitaire apps, point to win rates in the 85-95% range for regular players who know the basics. Players who apply deliberate strategy (prioritize reveals, protect empty columns, delay stock deals) tend to cluster toward the 90-95% end.
+
+A 2002 analysis by Solitaire researcher Michael Shackleford (known for applied probability work on card games) referenced estimated Spider 1-suit winnability as very high, though his focus was on casino-style solitaire variants rather than standard Spider. The 90%+ figure is consistent with what computational solvers suggest: most 1-suit deals are theoretically solvable, and with careful play most solvable deals are actually won.
+
+The main caveat: "careful play" is doing real work in that sentence. A beginner who doesn't understand empty column management or who over-deals from the stock will win far fewer than 90%.
+
+## 2-Suit Spider: A Reasonable Middle Estimate
+
+2-suit figures are cited most often in the 40-55% range for experienced players.
+
+This range appears in solitaire community discussions (including active threads on Reddit's r/solitaire and BoardGameGeek's solitaire forums) and is roughly consistent with app-reported averages where users have logged several hundred games. The variance is higher than 1-suit, partly because 2-suit has a larger luck component: the suit distribution of the initial deal can produce positions where even strong players have no winning line.
+
+Some app-reported averages are lower. Players who track their own stats over 100+ games often report rates between 35-50%. The 55% end likely reflects both better-than-average players and some abandonment-bias in the underlying data.
+
+A figure of roughly 40-50% for a skilled but not expert player is reasonable. Treat anything above 55% or below 30% for regular 2-suit play with skepticism unless the source explains how it was measured.
+
+## 4-Suit Spider: The Widest Uncertainty
+
+4-suit Spider win rates are the most contested and the least reliable.
+
+Figures cited in popular sources range from about 8% to 20%. The Microsoft Solitaire Collection, one of the largest solitaire platforms with a significant user base, has at various points reported average 4-suit win rates in the 10-15% range for players who complete games rather than forfeit them. But "players who complete games" is a self-selected group of more committed players, so even this figure is likely above the general population average.
+
+Computational estimates also vary. Solver programs achieve higher win rates than humans because they can evaluate future states exhaustively, but even solvers don't achieve 100% on 4-suit Spider, because some deals are genuinely unwinnable regardless of play quality. The exact proportion of unwinnable 4-suit deals isn't publicly documented with precision.
+
+The honest position: 4-suit win rates are somewhere in the 8-20% range for players who regularly play the mode and take it seriously. Figures below 5% probably reflect beginners. Figures above 25% are likely from either very elite players or datasets with abandonment bias.
+
+## What These Figures Mean in Practice
+
+If you're using win rates to set expectations, here's the practical version.
+
+In 1-suit Spider, losing a game should prompt you to think about what went wrong. You almost certainly had a winnable game. The loss was probably recoverable with different moves earlier.
+
+In 2-suit Spider, losing roughly half your games is normal and not a sign of poor play. The luck component is real. Some deals just don't have a winning line regardless of decisions.
+
+In 4-suit Spider, losing 85-90% of your games is the expected outcome even with strong play. Winning one in ten is a good result. Winning one in five is excellent. This is what makes 4-suit Spider genuinely different as an experience: you're playing to make the most of a probably-losing game, not to execute a known-winnable plan.
+
+If you want to build your win rate in 4-suit specifically, the [Spider endgame strategy guide](/spider-endgame-strategy) covers the decision points where expert and intermediate players most often diverge.
+
+## How Player Stats Compare to Theoretical Maximums
+
+One way to assess your own win rate is to compare against theoretical winnability estimates.
+
+For 1-suit Spider, most analysts believe 95%+ of deals are theoretically solvable with perfect play. A player winning 90% of 1-suit games is extracting most of the winnable deals they're given. Significant improvement headroom exists but it's narrowing.
+
+For 2-suit Spider, theoretical winnability estimates vary. Some computational approaches suggest around 50-60% of 2-suit deals are solvable; others suggest higher. A player winning 40-45% of games may be losing some winnable games to suboptimal moves, or may be in the normal range for the luck distribution they've encountered. Hard to know without seeing the individual games.
+
+For 4-suit Spider, theoretical winnability is harder to establish. The game tree is enormous, and exhaustive solver analysis of 4-suit Spider deals is computationally expensive. The practical implication is that when you lose a 4-suit game, you often can't know whether the game was winnable or not. That uncertainty is part of the mode's character.
+
+## A Note on Tracking Your Own Win Rate
+
+If you want reliable data on your own performance, track it yourself over a meaningful sample. For 1-suit and 2-suit, 50 games gives a reasonable estimate. For 4-suit, you need 100+ games to see a stable rate, because the variance is so high.
+
+Track whether you completed the game or forfeited. Track the outcome separately from abandoned games. If your app doesn't do this automatically, a simple tally in a notes app works.
+
+Your own tracked data, even imperfect, is more useful for understanding your performance than population averages. Comparing your 4-suit win rate to a community average of 12% tells you something. Comparing it to your own win rate from three months ago tells you more.
+
+Ready to build your numbers? [Play Spider Solitaire](/spider) and start a 20-game tracking run to establish your baseline.
+
+## Frequently Asked Questions
+
+**Are these win rates measured by a scientific study?**
+No published peer-reviewed study on Spider Solitaire win rates exists as of 2026. Figures come from app-reported aggregates, player self-reporting on forums, and estimates from computational solvers. They're informative but not rigorously sourced. This article reflects that uncertainty explicitly.
+
+**Can a perfect player win 100% of Spider games?**
+No. Some deals across all three difficulty modes are theoretically unwinnable regardless of play quality, meaning no sequence of legal moves leads to a completed board. The proportion is lowest in 1-suit and highest in 4-suit, but unwinnable deals exist in all three. For more on winnability, see [is Spider Solitaire winnable](/spider/is-spider-solitaire-winnable).
+
+**Why do different apps show different win rates for the same difficulty?**
+Apps define "win rate" differently: some include abandoned games in the denominator, some don't. Player populations also differ. A casual mobile app will show lower average win rates than a desktop client used by enthusiasts. Neither number is wrong, they're just measuring different populations.
+
+**Is a 15% win rate in 4-suit bad?**
+No. A 15% win rate in 4-suit Spider is in the normal range for experienced players. If you're winning 15% of serious 4-suit games over a 100+ game sample, you're playing well.
+
+**Does using undo affect win rate meaningfully?**
+Yes, significantly. Players who use undo liberally in 1-suit games can push win rates above 95% because they can reverse bad decisions. Win rates without undo reflect actual decision quality more accurately. If you're trying to improve, playing with limited or no undo gives more useful feedback.

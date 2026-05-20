@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "metrics:pull": "node scripts/pull-public-metrics.mjs",
+    "metrics:google": "node scripts/pull-google-metrics.mjs",
     "indexnow:submit": "node scripts/indexnow-submit-sitemap.mjs"
   },
   "dependencies": {

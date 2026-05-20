@@ -1,8 +1,7 @@
 {
-  "date": "2026-04-17",
-  "lastPulledBy": "public-metrics-audit (claude)",
+  "date": "2026-05-03",
+  "lastPulledBy": "scripts/pull-public-metrics.mjs",
   "notes": "Refreshed after 22 days stale. GA4/GSC/AdSense still require manual pull (no OAuth creds in repo). This file now tracks public-observable signals pulled via WebSearch site: queries and direct sitemap fetches.",
-
   "network_state": {
     "live_domains": 4,
     "live_since": {
@@ -12,7 +11,6 @@
       "playspidersolitaireonline": "2026-04-06"
     }
   },
-
   "sitemap_url_counts": {
     "note": "Pre-fix counts measured live at 2026-04-17. Post-fix = projected after commit 0959cde deploys. Delta driven by adding 23 orphan pillar pages + authors/[slug] to the sitemap.",
     "playfreecellonline_pre": 93,
@@ -26,7 +24,6 @@
     "network_total_pre": 252,
     "network_total_post": 281
   },
-
   "google_indexation": {
     "method": "site: query via WebSearch",
     "pulled_at": "2026-04-17",
@@ -38,7 +35,6 @@
     "indexation_rate": "2.4% (6/252)",
     "caveat": "Google `site:` is an underestimate vs GSC Coverage truth. See gsc_performance_live below for real numbers."
   },
-
   "gsc_performance_live": {
     "pulled_at": "2026-04-17 via Chrome MCP (search.google.com/search-console)",
     "window": "last 3 months where available; newer domains show shorter window",
@@ -49,20 +45,69 @@
       "avg_position": 62.7,
       "total_queries_tracked": 109,
       "top_queries_by_impressions": [
-        {"q": "freecell online", "imp": 90, "pos": 73.9},
-        {"q": "freecell free online", "imp": 53, "pos": 69.6},
-        {"q": "free cell online", "imp": 29, "pos": 76.9},
-        {"q": "play freecell", "imp": 22, "pos": 59.0},
-        {"q": "free cell", "imp": 19, "pos": 71.6},
-        {"q": "freecell play online", "imp": 17, "pos": 69.5}
+        {
+          "q": "freecell online",
+          "imp": 90,
+          "pos": 73.9
+        },
+        {
+          "q": "freecell free online",
+          "imp": 53,
+          "pos": 69.6
+        },
+        {
+          "q": "free cell online",
+          "imp": 29,
+          "pos": 76.9
+        },
+        {
+          "q": "play freecell",
+          "imp": 22,
+          "pos": 59
+        },
+        {
+          "q": "free cell",
+          "imp": 19,
+          "pos": 71.6
+        },
+        {
+          "q": "freecell play online",
+          "imp": 17,
+          "pos": 69.5
+        }
       ],
       "best_ranking_queries": [
-        {"q": "freecell unsolvable", "imp": 2, "pos": 24.5, "note": "Our best striking-distance opportunity"},
-        {"q": "unsolvable freecell", "imp": 1, "pos": 34.0},
-        {"q": "free cells online", "imp": 1, "pos": 36.0},
-        {"q": "freecell unsolvable games", "imp": 1, "pos": 37.0},
-        {"q": "freecell 11982", "imp": 1, "pos": 41.0},
-        {"q": "freecell impossible games", "imp": 1, "pos": 43.0}
+        {
+          "q": "freecell unsolvable",
+          "imp": 2,
+          "pos": 24.5,
+          "note": "Our best striking-distance opportunity"
+        },
+        {
+          "q": "unsolvable freecell",
+          "imp": 1,
+          "pos": 34
+        },
+        {
+          "q": "free cells online",
+          "imp": 1,
+          "pos": 36
+        },
+        {
+          "q": "freecell unsolvable games",
+          "imp": 1,
+          "pos": 37
+        },
+        {
+          "q": "freecell 11982",
+          "imp": 1,
+          "pos": 41
+        },
+        {
+          "q": "freecell impossible games",
+          "imp": 1,
+          "pos": 43
+        }
       ],
       "sitemap_last_submitted": "2026-04-18",
       "sitemap_discovered_pages": 16669,
@@ -75,10 +120,27 @@
       "avg_position": 25.5,
       "total_queries_tracked": 38,
       "best_ranking_queries": [
-        {"q": "solitaire stack", "imp": 2, "pos": 2.5, "note": "BRAND query ranks page 1 — working as designed"},
-        {"q": "stack em up solitaire", "imp": 1, "pos": 29.0},
-        {"q": "freecell download no ads", "imp": 1, "pos": 35.0},
-        {"q": "original freecell game free download no ads", "imp": 3, "pos": 41.0}
+        {
+          "q": "solitaire stack",
+          "imp": 2,
+          "pos": 2.5,
+          "note": "BRAND query ranks page 1 — working as designed"
+        },
+        {
+          "q": "stack em up solitaire",
+          "imp": 1,
+          "pos": 29
+        },
+        {
+          "q": "freecell download no ads",
+          "imp": 1,
+          "pos": 35
+        },
+        {
+          "q": "original freecell game free download no ads",
+          "imp": 3,
+          "pos": 41
+        }
       ],
       "sitemap_last_submitted": "2026-04-18",
       "sitemap_discovered_pages": 132,
@@ -92,8 +154,16 @@
       "total_queries_tracked": 5,
       "window_days": 10,
       "best_ranking_queries": [
-        {"q": "least moves to win solitaire", "imp": 1, "pos": 43.0},
-        {"q": "quickest game of solitaire", "imp": 1, "pos": 54.0}
+        {
+          "q": "least moves to win solitaire",
+          "imp": 1,
+          "pos": 43
+        },
+        {
+          "q": "quickest game of solitaire",
+          "imp": 1,
+          "pos": 54
+        }
       ],
       "sitemap_last_submitted": "2026-04-18",
       "sitemap_discovered_pages": 16
@@ -106,9 +176,21 @@
       "total_queries_tracked": 44,
       "window_days": 10,
       "top_queries_by_impressions": [
-        {"q": "easy freecell", "imp": 3, "pos": 43.7},
-        {"q": "how do you play freecell", "imp": 3, "pos": 56.3},
-        {"q": "freecell how to play", "imp": 3, "pos": 70.0}
+        {
+          "q": "easy freecell",
+          "imp": 3,
+          "pos": 43.7
+        },
+        {
+          "q": "how do you play freecell",
+          "imp": 3,
+          "pos": 56.3
+        },
+        {
+          "q": "freecell how to play",
+          "imp": 3,
+          "pos": 70
+        }
       ],
       "anomaly": "All 44 Spider-domain queries are FreeCell-related. Google indexed the Spider domain showing FreeCell pages before route-ownership canonicalization. Resubmitted sitemap (now clean 16 Spider-only URLs) and IndexNow should accelerate re-crawl.",
       "sitemap_last_submitted": "2026-04-18",
@@ -120,15 +202,31 @@
       "striking_distance_queries": "0 at positions 5-20 yet. Best is 'solitaire stack' at 2.5 (brand). Next tier is 'freecell unsolvable' cluster at 24-43 — primary optimization target for 2026-04-17 ship."
     }
   },
-
   "health_checks": {
     "pulled_at": "2026-04-17",
-    "playfreecellonline_home": {"status": 200, "title_ok": true, "h1_ok": true, "canonical_ok": true, "noindex": false},
-    "solitairestack_home":    {"status": 200, "title_ok": true, "h1_ok": true, "canonical_ok": true, "noindex": false},
-    "playspidersolitaireonline_home": {"status": 200, "title_ok": true, "h1_ok": true, "canonical_ok": true, "noindex": false},
+    "playfreecellonline_home": {
+      "status": 200,
+      "title_ok": true,
+      "h1_ok": true,
+      "canonical_ok": true,
+      "noindex": false
+    },
+    "solitairestack_home": {
+      "status": 200,
+      "title_ok": true,
+      "h1_ok": true,
+      "canonical_ok": true,
+      "noindex": false
+    },
+    "playspidersolitaireonline_home": {
+      "status": 200,
+      "title_ok": true,
+      "h1_ok": true,
+      "canonical_ok": true,
+      "noindex": false
+    },
     "robots_txt_all_domains": "Allow: / + sitemap declared (verified)"
   },
-
   "infra": {
     "adsense_client_id": "ca-pub-3083538874906149",
     "adsense_approved": true,
@@ -150,7 +248,6 @@
     "indexnow_key": "75622f7c3eade87b0d7df27ff6087255",
     "indexnow_last_submit": "2026-04-17 — all 281 network URLs pinged, all HTTP 202"
   },
-
   "competitor_reference": {
     "123freecell_monthly_visits_est": 795000,
     "online_solitaire_monthly_visits_est": 1000000,
@@ -160,7 +257,6 @@
       "online_solitaire_monthly": 10000
     }
   },
-
   "ga4_live": {
     "pulled_at": "2026-04-17 via Chrome MCP (analytics.google.com)",
     "window": "Apr 11-17 2026 (last 7 days) + Mar 21-Apr 17 2026 (last 28 days where available)",
@@ -180,24 +276,71 @@
       "event_count_28d": 1900,
       "pageviews_7d": 201,
       "sessions_7d": 134,
-      "sessions_by_channel_7d": {"organic": 89, "direct": 28, "unassigned": 16, "referral": 1},
+      "sessions_by_channel_7d": {
+        "organic": 89,
+        "direct": 28,
+        "unassigned": 16,
+        "referral": 1
+      },
       "top_pages_7d": [
-        {"page": "FreeCell Solver", "views": 52},
-        {"page": "Solitaire Stack (home)", "views": 40},
-        {"page": "Types of Solitaire 20 Variants", "views": 8},
-        {"page": "Play FreeCell Online", "views": 7},
-        {"page": "FreeCell Rules", "views": 5},
-        {"page": "FreeCell Statistics & Win Rates", "views": 4},
-        {"page": "La Belle Lucie Solitaire", "views": 3}
+        {
+          "page": "FreeCell Solver",
+          "views": 52
+        },
+        {
+          "page": "Solitaire Stack (home)",
+          "views": 40
+        },
+        {
+          "page": "Types of Solitaire 20 Variants",
+          "views": 8
+        },
+        {
+          "page": "Play FreeCell Online",
+          "views": 7
+        },
+        {
+          "page": "FreeCell Rules",
+          "views": 5
+        },
+        {
+          "page": "FreeCell Statistics & Win Rates",
+          "views": 4
+        },
+        {
+          "page": "La Belle Lucie Solitaire",
+          "views": 3
+        }
       ],
       "top_countries_7d": [
-        {"country": "United States", "users": 58},
-        {"country": "Canada", "users": 11},
-        {"country": "Singapore", "users": 11},
-        {"country": "United Kingdom", "users": 8},
-        {"country": "Brazil", "users": 3},
-        {"country": "France", "users": 3},
-        {"country": "Australia", "users": 2}
+        {
+          "country": "United States",
+          "users": 58
+        },
+        {
+          "country": "Canada",
+          "users": 11
+        },
+        {
+          "country": "Singapore",
+          "users": 11
+        },
+        {
+          "country": "United Kingdom",
+          "users": 8
+        },
+        {
+          "country": "Brazil",
+          "users": 3
+        },
+        {
+          "country": "France",
+          "users": 3
+        },
+        {
+          "country": "Australia",
+          "users": 2
+        }
       ]
     },
     "playfreecellonline": {
@@ -208,21 +351,59 @@
       "event_count_7d": 177,
       "pageviews_7d": 82,
       "sessions_7d": 31,
-      "sessions_by_channel_7d": {"direct": 21, "organic": 5, "unassigned": 4, "referral": 1},
+      "sessions_by_channel_7d": {
+        "direct": 21,
+        "organic": 5,
+        "unassigned": 4,
+        "referral": 1
+      },
       "top_pages_7d": [
-        {"page": "Play FreeCell Online (home)", "views": 51},
-        {"page": "FreeCell Game #1 - First MS deal", "views": 7},
-        {"page": "FreeCell Solver", "views": 6},
-        {"page": "About PlayFreeCellOnline.com", "views": 3},
-        {"page": "25 FreeCell Tips & Tricks", "views": 2},
-        {"page": "Baker's Game", "views": 2},
-        {"page": "Easy FreeCell", "views": 2}
+        {
+          "page": "Play FreeCell Online (home)",
+          "views": 51
+        },
+        {
+          "page": "FreeCell Game #1 - First MS deal",
+          "views": 7
+        },
+        {
+          "page": "FreeCell Solver",
+          "views": 6
+        },
+        {
+          "page": "About PlayFreeCellOnline.com",
+          "views": 3
+        },
+        {
+          "page": "25 FreeCell Tips & Tricks",
+          "views": 2
+        },
+        {
+          "page": "Baker's Game",
+          "views": 2
+        },
+        {
+          "page": "Easy FreeCell",
+          "views": 2
+        }
       ],
       "top_countries_7d": [
-        {"country": "United States", "users": 9},
-        {"country": "India", "users": 5},
-        {"country": "Germany", "users": 4},
-        {"country": "Singapore", "users": 2}
+        {
+          "country": "United States",
+          "users": 9
+        },
+        {
+          "country": "India",
+          "users": 5
+        },
+        {
+          "country": "Germany",
+          "users": 4
+        },
+        {
+          "country": "Singapore",
+          "users": 2
+        }
       ]
     },
     "playklondikeonline": {
@@ -232,14 +413,28 @@
       "active_users_28d": 11,
       "pageviews_7d": 5,
       "sessions_7d": 5,
-      "sessions_by_channel_7d": {"direct": 5},
+      "sessions_by_channel_7d": {
+        "direct": 5
+      },
       "top_pages_7d": [
-        {"page": "Play Klondike Solitaire (home)", "views": 4},
-        {"page": "Klondike Tips & Tricks", "views": 1}
+        {
+          "page": "Play Klondike Solitaire (home)",
+          "views": 4
+        },
+        {
+          "page": "Klondike Tips & Tricks",
+          "views": 1
+        }
       ],
       "top_countries_7d": [
-        {"country": "United States", "users": 4},
-        {"country": "China", "users": 1}
+        {
+          "country": "United States",
+          "users": 4
+        },
+        {
+          "country": "China",
+          "users": 1
+        }
       ],
       "note": "Smallest spoke. Only direct traffic — organic hasn't caught it yet. Expect lift after today's sitemap resubmit + IndexNow."
     },
@@ -252,13 +447,24 @@
       "active_users_28d_growth_pct": 175,
       "pageviews_7d": 7,
       "sessions_7d": 7,
-      "sessions_by_channel_7d": {"direct": 7},
+      "sessions_by_channel_7d": {
+        "direct": 7
+      },
       "top_pages_7d": [
-        {"page": "Play Spider Solitaire (home)", "views": 7}
+        {
+          "page": "Play Spider Solitaire (home)",
+          "views": 7
+        }
       ],
       "top_countries_7d": [
-        {"country": "United States", "users": 6},
-        {"country": "Italy", "users": 1}
+        {
+          "country": "United States",
+          "users": 6
+        },
+        {
+          "country": "Italy",
+          "users": 1
+        }
       ],
       "note": "Only homepage has engagement. The 4 new pillar pages shipped today (9781b70) + IndexNow ping should broaden engagement surface."
     },
@@ -268,7 +474,6 @@
       "Freecell spoke is 68% direct traffic — likely people typing the URL or returning. Good brand stickiness but organic trailing."
     ]
   },
-
   "ga4_last_known": {
     "as_of": "2026-03-26",
     "source": "stale — see ga4_live block above for 2026-04-17 Chrome MCP pull",
@@ -276,7 +481,6 @@
     "sessions_7d": 34,
     "pageViews_7d": 83
   },
-
   "blockers_and_actions": {
     "needs_user_action": [
       "GA4/AdSense: pull 7d numbers and overwrite ga4_last_known block"
@@ -289,5 +493,73 @@
       "Outreach Wave 1 send",
       "Mediavine Grow install (defer until AdSense starts producing income)"
     ]
+  },
+  "last_pull_iso": "2026-05-03T15:34:13.883Z",
+  "sitemap_url_counts_live": {
+    "playfreecellonline": 96,
+    "solitairestack": 151,
+    "playklondikeonline": 22,
+    "playspidersolitaireonline": 17,
+    "network_total": 286
+  },
+  "google_indexation_live": {
+    "playfreecellonline": null,
+    "solitairestack": null,
+    "playklondikeonline": null,
+    "playspidersolitaireonline": null,
+    "network_total": 0,
+    "note": "Google often rate-limits automated `site:` queries. null = couldn't read a count this pull; trust GSC for truth."
+  },
+  "health_checks_live": {
+    "playfreecellonline": {
+      "status": 200,
+      "title_ok": true,
+      "h1_ok": true,
+      "canonical_ok": true,
+      "noindex": false
+    },
+    "solitairestack": {
+      "status": 200,
+      "title_ok": true,
+      "h1_ok": true,
+      "canonical_ok": true,
+      "noindex": false
+    },
+    "playklondikeonline": {
+      "status": 200,
+      "title_ok": true,
+      "h1_ok": true,
+      "canonical_ok": true,
+      "noindex": false
+    },
+    "playspidersolitaireonline": {
+      "status": 200,
+      "title_ok": true,
+      "h1_ok": true,
+      "canonical_ok": true,
+      "noindex": false
+    }
+  },
+  "robots_txt_live": {
+    "playfreecellonline": {
+      "status": 200,
+      "sitemap_declared": true,
+      "allow_all": true
+    },
+    "solitairestack": {
+      "status": 200,
+      "sitemap_declared": true,
+      "allow_all": true
+    },
+    "playklondikeonline": {
+      "status": 200,
+      "sitemap_declared": true,
+      "allow_all": true
+    },
+    "playspidersolitaireonline": {
+      "status": 200,
+      "sitemap_declared": true,
+      "allow_all": true
+    }
   }
 }

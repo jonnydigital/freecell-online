@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import dynamic from 'next/dynamic';
-import Link from 'next/link';
+import Link from '@/components/NetworkLink';
 import { absoluteUrl, siteConfig } from '@/lib/siteConfig';
 import { WIN_RATES } from '@/lib/winRateData';
 import { featuredGames, faqItems } from '@/lib/hubContent';

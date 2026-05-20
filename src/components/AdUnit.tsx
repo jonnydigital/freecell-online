@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { isHubSite } from '@/lib/siteConfig';
 
+const CONSENT_KEY = 'cookie_consent';
+
 interface AdUnitProps {
   slot?: string;
   format?: 'auto' | 'horizontal' | 'vertical' | 'rectangle' | 'fluid';
@@ -27,13 +29,46 @@ interface AdUnitProps {
 const HUB_ADS_SUPPRESSED =
   isHubSite && process.env.NEXT_PUBLIC_ADSENSE_APPROVED !== 'true';
 
+function hasAdConsent(): boolean {
+  try {
+    return localStorage.getItem(CONSENT_KEY) === 'accepted';
+  } catch {
+    return false;
+  }
+}
+
 export default function AdUnit({ slot, format = 'auto', layout, className = '', width, height }: AdUnitProps) {
   const adRef = useRef<HTMLModElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const pushed = useRef(false);
   const [collapsed, setCollapsed] = useState(false);
+  const [consentAccepted, setConsentAccepted] = useState(false);
 
   useEffect(() => {
+    setConsentAccepted(hasAdConsent());
+
+    const onConsentChange = () => {
+      setConsentAccepted(hasAdConsent());
+      setCollapsed(false);
+      pushed.current = false;
+    };
+    const onStorage = (event: StorageEvent) => {
+      if (event.key !== CONSENT_KEY) return;
+      setConsentAccepted(hasAdConsent());
+      setCollapsed(false);
+      pushed.current = false;
+    };
+
+    window.addEventListener('cookie-consent-change', onConsentChange);
+    window.addEventListener('storage', onStorage);
+    return () => {
+      window.removeEventListener('cookie-consent-change', onConsentChange);
+      window.removeEventListener('storage', onStorage);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!consentAccepted) return;
     if (pushed.current) return;
 
     let attempts = 0;
@@ -60,10 +95,11 @@ export default function AdUnit({ slot, format = 'auto', layout, className = '', 
 
     // Small initial delay to let AdSense script load
     setTimeout(tryPush, 200);
-  }, []);
+  }, [consentAccepted]);
 
   // Watch for unfilled ad status and collapse the container
   useEffect(() => {
+    if (!consentAccepted) return;
     const insEl = adRef.current;
     if (!insEl) return;
 
@@ -88,9 +124,9 @@ export default function AdUnit({ slot, format = 'auto', layout, className = '', 
       observer.disconnect();
       clearTimeout(fallbackTimer);
     };
-  }, []);
+  }, [consentAccepted]);
 
-  if (collapsed || HUB_ADS_SUPPRESSED) return null;
+  if (collapsed || HUB_ADS_SUPPRESSED || !consentAccepted) return null;
 
   const isFixedSize = width && height;
   const isFluid = format === 'fluid';

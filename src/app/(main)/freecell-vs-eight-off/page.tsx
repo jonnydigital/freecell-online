@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import Link from "next/link";
+import Link from "@/components/NetworkLink";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import { canonicalUrlFor, isOwnedBy } from "@/lib/routeOwnership";
@@ -163,13 +163,6 @@ export default function FreecellVsEightOffPage() {
       applicationCategory: "GameApplication",
       operatingSystem: "Any",
       offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-      aggregateRating: {
-        "@type": "AggregateRating",
-        ratingValue: "4.8",
-        ratingCount: "3241",
-        bestRating: "5",
-        worstRating: "1",
-      },
     },
     {
       "@context": "https://schema.org",

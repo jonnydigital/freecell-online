@@ -4,6 +4,10 @@ import { useState, useEffect } from 'react';
 
 const CONSENT_KEY = 'cookie_consent';
 
+function notifyConsentChange(value: 'accepted' | 'declined') {
+  window.dispatchEvent(new CustomEvent('cookie-consent-change', { detail: value }));
+}
+
 export default function CookieConsent() {
   const [visible, setVisible] = useState(false);
 
@@ -15,8 +19,7 @@ export default function CookieConsent() {
         // Must appear promptly regardless of splash screen state.
         setTimeout(() => setVisible(true), 1000);
       }
-      // Note: AdSense is loaded unconditionally via the root layout script tag.
-      // Cookie consent controls personalization, not script loading.
+      // Analytics and ad scripts are loaded only after explicit acceptance.
     } catch {
       // localStorage blocked
     }
@@ -24,11 +27,13 @@ export default function CookieConsent() {
 
   const handleAccept = () => {
     try { localStorage.setItem(CONSENT_KEY, 'accepted'); } catch {}
+    notifyConsentChange('accepted');
     setVisible(false);
   };
 
   const handleDecline = () => {
     try { localStorage.setItem(CONSENT_KEY, 'declined'); } catch {}
+    notifyConsentChange('declined');
     setVisible(false);
   };
 

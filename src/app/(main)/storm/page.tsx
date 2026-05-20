@@ -48,13 +48,6 @@ export default function Page() {
       priceCurrency: 'USD',
     },
     url: absoluteUrl('/storm'),
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: '4.7',
-      ratingCount: '523',
-      bestRating: '5',
-      worstRating: '1',
-    },
   };
 
   const faqJsonLd = {

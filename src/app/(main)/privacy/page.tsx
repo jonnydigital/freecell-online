@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
-import { canonicalUrlFor } from "@/lib/routeOwnership";
 import ContentLayout from "@/components/ContentLayout";
 import { ContentHero, SectionHeading, CardSection, ContentBody, CtaSection, JsonLd, ContentLinkCard } from "@/components/content";
 
@@ -8,7 +7,7 @@ export const metadata: Metadata = {
   title: `Privacy Policy | ${siteConfig.siteName}`,
   description: `How ${siteConfig.siteName} handles game data, analytics, advertising cookies, and contact requests.`,
   alternates: {
-    canonical: canonicalUrlFor("/privacy"),
+    canonical: absoluteUrl("/privacy"),
   },
 };
 
@@ -126,8 +125,9 @@ export default function PrivacyPage() {
                 >
                   adssettings.google.com
                 </a>
-                . Declining the cookie banner does not remove all technical
-                cookies, but it lets us record your preference for this browser.
+                . Declining the cookie banner keeps analytics and advertising
+                scripts unloaded for this browser unless you later change your
+                preference.
               </p>
             </div>
 
@@ -223,7 +223,8 @@ export default function PrivacyPage() {
           <ContentBody className="grid gap-4 md:grid-cols-3">
             <ContentLinkCard variant="felt" href="/about" title="About Us" description={`The story behind ${siteConfig.siteName} and our mission.`} />
             <ContentLinkCard variant="felt" href="/terms" title="Terms of Service" description="The formal agreement governing your use of our platform." />
-            <ContentLinkCard variant="felt" href="/how-to-play" title="How to Play" description="Learn FreeCell rules and start playing right away." />
+            <ContentLinkCard variant="felt" href="/sitemap" title="Sitemap" description="Browse every game, guide, and policy page in one place." />
+            <ContentLinkCard variant="felt" href={siteConfig.primaryGamePath} title={`Play ${siteConfig.brandName}`} description="Start playing on the main game page." />
           </ContentBody>
         </CardSection>
 

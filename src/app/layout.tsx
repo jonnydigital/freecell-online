@@ -1,27 +1,60 @@
 import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
-import { siteConfig } from "@/lib/siteConfig";
+import AdSenseScript from "@/components/AdSenseScript";
+import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfair" });
 
+const metadataKeywords =
+  siteConfig.key === "playklondikeonline"
+    ? [
+        "klondike",
+        "klondike solitaire",
+        "klondike online",
+        "play klondike",
+        "classic solitaire",
+        "solitaire online",
+        "no download",
+      ]
+    : siteConfig.key === "playspidersolitaireonline"
+      ? [
+          "spider solitaire",
+          "spider solitaire online",
+          "play spider solitaire",
+          "1 suit spider solitaire",
+          "4 suit spider solitaire",
+          "solitaire online",
+          "no download",
+        ]
+      : siteConfig.key === "solitairestack"
+        ? [
+            "solitaire",
+            "solitaire games",
+            "solitaire online",
+            "free solitaire",
+            "card games",
+            "no download",
+          ]
+        : [
+            "freecell",
+            "freecell online",
+            "play freecell",
+            "freecell solitaire",
+            "free card game",
+            "solitaire online",
+            "no download",
+          ];
+
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   alternates: {
-    canonical: './',
+    canonical: absoluteUrl('/'),
   },
   title: siteConfig.defaultTitle,
   description: siteConfig.defaultDescription,
-  keywords: [
-    "freecell",
-    "freecell online",
-    "play freecell",
-    "freecell solitaire",
-    "free card game",
-    "solitaire online",
-    "no download",
-  ],
+  keywords: metadataKeywords,
   openGraph: {
     title: siteConfig.defaultTitle,
     description: siteConfig.defaultDescription,
@@ -74,11 +107,6 @@ export default function RootLayout({
         <link rel="icon" href="/icons/favicon.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3083538874906149"
-          crossOrigin="anonymous"
-        />
-        <script
           id="ld-organization"
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
@@ -91,6 +119,7 @@ export default function RootLayout({
         />
       </head>
       <body className={`${inter.variable} ${playfair.variable} ${inter.className}`}>
+        <AdSenseScript />
         {children}
       </body>
     </html>

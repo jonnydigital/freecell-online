@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/NetworkLink";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import { JsonLd } from "@/components/content";
@@ -80,13 +80,6 @@ export default function Page() {
     genre: "Card Game",
     gamePlatform: "Web Browser",
     url: absoluteUrl("/golf"),
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "4.5",
-      ratingCount: "1312",
-      bestRating: "5",
-      worstRating: "1",
-    },
   };
 
   const faqJsonLd = {

@@ -48,6 +48,10 @@ const SPIDER_ONLY: RouteOwnership = {
   owners: ['playspidersolitaireonline'],
   primaryOwner: 'playspidersolitaireonline',
 };
+const ALL_SITES_TRUST: RouteOwnership = {
+  owners: ['solitairestack', 'playfreecellonline', 'playklondikeonline', 'playspidersolitaireonline'],
+  primaryOwner: 'solitairestack',
+};
 
 export const ROUTE_OWNERSHIP: Record<string, RouteOwnership> = {
   // ==========================================================================
@@ -110,12 +114,14 @@ export const ROUTE_OWNERSHIP: Record<string, RouteOwnership> = {
   '/popular-solitaire-by-state': HUB_ONLY,
   '/solitaire-game-finder': HUB_ONLY,
 
-  // Corporate / legal pages (all hub-owned)
-  '/about': HUB_ONLY,
-  '/contact': HUB_ONLY,
-  '/privacy': HUB_ONLY,
-  '/terms': HUB_ONLY,
-  '/sitemap': HUB_ONLY,
+  // Corporate / legal pages. Each AdSense-reviewed domain needs local,
+  // crawlable trust pages even when the hub remains the network-level
+  // canonical for broader editorial policy content.
+  '/about': ALL_SITES_TRUST,
+  '/contact': ALL_SITES_TRUST,
+  '/privacy': ALL_SITES_TRUST,
+  '/terms': ALL_SITES_TRUST,
+  '/sitemap': ALL_SITES_TRUST,
 
   // Blog — shared across sites but hub is canonical
   '/blog': {

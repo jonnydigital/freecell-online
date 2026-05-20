@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState, useCallback } from 'react';
-import Link from 'next/link';
+import Link from '@/components/NetworkLink';
 import { gameBridge } from '../game/GameBridge';
 import { RotateCcw, RotateCw, Lightbulb, Share2, Home, Zap, Trophy, ArrowLeft, Timer, Shuffle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';

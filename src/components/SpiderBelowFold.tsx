@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
+import Link from '@/components/NetworkLink';
 import AdUnit from '@/components/AdUnit';
 import ScrollUnlock from '@/components/ScrollUnlock';
 import { absoluteUrl, gameUrl } from '@/lib/siteConfig';

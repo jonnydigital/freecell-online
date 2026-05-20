@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import Link from "next/link";
+import Link from "@/components/NetworkLink";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import { siteCopy } from "@/lib/siteCopy";
@@ -851,6 +851,16 @@ export default function FreecellVsSpiderPage() {
                   href: "/spider",
                   title: "Play Spider Solitaire",
                   desc: "Try Spider Solitaire free in your browser.",
+                },
+                {
+                  href: "/spider/klondike-vs-spider",
+                  title: "Klondike vs Spider",
+                  desc: "Compare Spider with the other mainstream classic.",
+                },
+                {
+                  href: "/spider-vs-scorpion",
+                  title: "Spider vs Scorpion",
+                  desc: "See how Spider differs from a stricter same-suit cousin.",
                 },
                 {
                   href: "/strategy",

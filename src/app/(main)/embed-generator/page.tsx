@@ -128,6 +128,7 @@ export default function EmbedGeneratorPage() {
           </h2>
           <div className="grid sm:grid-cols-3 gap-4">
             <ContentLinkCard href="/strategy" title="Strategy Guide" description="Master the tactics behind every winning game." />
+            <ContentLinkCard href="/embed" title="Embed Overview" description="See the public embed page and why the iframe is free, ad-free, and link-friendly." />
             <ContentLinkCard href="/freecell-probability" title="Probability & Math" description="The combinatorics that make FreeCell almost always solvable." />
             <ContentLinkCard href="/freecell-cheat-sheet" title="Cheat Sheet" description="Quick-reference rules and tips for every skill level." />
           </div>

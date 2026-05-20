@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from '@/components/NetworkLink';
 import { type DealInfo } from '@/lib/curatedDeals';
 
 interface GameDealInfoProps {

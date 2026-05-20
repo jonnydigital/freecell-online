@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/NetworkLink";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import ContentLayout from "@/components/ContentLayout";
@@ -742,6 +742,9 @@ export default function SpiderStrategyPage() {
               <ContentLinkCard href="/spider/how-to-play" title="How to Play Spider" description="Complete rules and setup guide" />
               <ContentLinkCard href="/spider/tips" title="Tips & Tricks" description="Quick tips for immediate improvement" />
               <ContentLinkCard href="/spider/1-suit-vs-2-suit-vs-4-suit" title="1-Suit vs 2-Suit vs 4-Suit" description="Compare difficulty levels" />
+              <ContentLinkCard href="/spider/faq" title="Spider FAQ" description="Rules and strategy answers for common Spider questions" />
+              <ContentLinkCard href="/spider-world-records" title="Spider World Records" description="Notable Spider Solitaire feats and record-tracking context" />
+              <ContentLinkCard href="/spider/klondike-vs-spider" title="Klondike vs Spider" description="Compare Spider's packing puzzle with classic Klondike" />
               <ContentLinkCard href="/freecell-vs-spider" title="FreeCell vs Spider" description="How the two games compare" />
               <ContentLinkCard href="/" title="Play FreeCell" description="The classic strategic solitaire" />
             </div>

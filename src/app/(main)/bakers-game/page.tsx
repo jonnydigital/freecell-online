@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from '@/components/NetworkLink';
 import type { Metadata } from 'next';
 import { absoluteUrl, siteConfig } from '@/lib/siteConfig';
 import BakersGamePage from './BakersGamePage';
@@ -44,13 +44,6 @@ export default function Page() {
     genre: "Card Game",
     gamePlatform: "Web Browser",
     url: absoluteUrl('/bakers-game'),
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "4.8",
-      ratingCount: "1203",
-      bestRating: "5",
-      worstRating: "1",
-    },
   };
 
   const faqJsonLd = {

@@ -3,7 +3,8 @@ export type AuthorSlug =
   | 'the-strategy-desk'
   | 'the-history-desk'
   | 'the-rules-desk'
-  | 'the-research-desk';
+  | 'the-research-desk'
+  | 'j-foye';
 
 export interface SocialLink {
   platform: string;
@@ -101,6 +102,25 @@ export const AUTHORS: Record<AuthorSlug, Author> = {
     avatarUrl: '/authors/rules-desk.png',
     joinedDate: '2026-01-15',
     contactUrl: 'mailto:rules@solitairestack.com',
+  },
+  'j-foye': {
+    slug: 'j-foye',
+    name: 'J. Foye',
+    shortName: 'J. Foye',
+    role: 'Editor & Founder',
+    expertise: [
+      'editorial direction',
+      'product',
+      'solitaire portfolio strategy',
+      'site standards',
+    ],
+    bioShort:
+      'J. Foye is the editor and founder of the Solitaire Stack network. Builds the products, hires the desks, runs the editorial standards, and signs off on every page. Reach out at jonnydigital1@gmail.com for editorial questions, corrections, or partnerships.',
+    bioFull:
+      'J. Foye founded the Solitaire Stack network in early 2026 to build a solitaire reference that respects the reader. Background in product and software with a long-running interest in card-game probability and the strange history of patience games. Day-to-day work is editorial direction, product, and oversight: shaping the house style across the network of sites, working with the four specialty desks (Strategy, History, Rules, Research), and signing off on the editorial standards, fact-checking policy, and correction policy that govern every page. Personally responsible for the final read of any major reference page on the network and for every public correction. Public contact for editorial questions, source disagreements, partnerships, or fact-check disputes is jonnydigital1@gmail.com. The network is operated as an independent publisher with no third-party editorial influence.',
+    avatarUrl: '/authors/j-foye.png',
+    joinedDate: '2026-01-15',
+    contactUrl: 'mailto:jonnydigital1@gmail.com',
   },
   'the-research-desk': {
     slug: 'the-research-desk',

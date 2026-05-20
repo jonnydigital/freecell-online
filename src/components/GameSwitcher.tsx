@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import Link from 'next/link';
+import Link from '@/components/NetworkLink';
 import { ChevronDown } from 'lucide-react';
 import { isHubSite, gameUrl } from '@/lib/siteConfig';
 

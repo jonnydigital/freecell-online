@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
-import { canonicalUrlFor } from "@/lib/routeOwnership";
 import ContentLayout from "@/components/ContentLayout";
 import { ContentHero, SectionHeading, CardSection, ContentBody, CtaSection, JsonLd, ContentLinkCard } from "@/components/content";
 
@@ -8,7 +7,7 @@ export const metadata: Metadata = {
   title: `Terms of Service | ${siteConfig.siteName}`,
   description: `Terms of Service for ${siteConfig.siteName}`,
   alternates: {
-    canonical: canonicalUrlFor("/terms"),
+    canonical: absoluteUrl("/terms"),
   },
 };
 
@@ -68,7 +67,7 @@ export default function TermsPage() {
                 <li className="flex items-start gap-2">
                   <span className="text-[#B8860B] shrink-0">{"\u2713"}</span>
                   <span>
-                    FreeCell rules are public domain; our design and code are
+                    Solitaire rules are public domain; our design and code are
                     not
                   </span>
                 </li>
@@ -109,7 +108,7 @@ export default function TermsPage() {
               </h3>
               <p className="text-[#444444] leading-relaxed">
                 We grant you a personal, non-exclusive license to play
-                FreeCell in your browser for entertainment purposes. No
+                solitaire in your browser for entertainment purposes. No
                 commercial use or data scraping is permitted.
               </p>
             </div>
@@ -124,7 +123,7 @@ export default function TermsPage() {
                 03. Intellectual Property
               </h3>
               <p className="text-[#444444] leading-relaxed">
-                The game mechanics of FreeCell are public domain. However,
+                The game mechanics of traditional solitaire card games are public domain. However,
                 our specific design, code, and professional assets are owned
                 by {siteConfig.siteName}.
               </p>
@@ -155,22 +154,21 @@ export default function TermsPage() {
           <ContentBody className="grid gap-4 md:grid-cols-3">
             <ContentLinkCard variant="felt" href="/about" title="About Us" description={`The story behind ${siteConfig.siteName} and our mission.`} />
             <ContentLinkCard variant="felt" href="/privacy" title="Privacy Policy" description="How we handle data and protect your privacy." />
-            <ContentLinkCard variant="felt" href="/how-to-play" title="How to Play" description="Learn FreeCell rules and start playing right away." />
+            <ContentLinkCard variant="felt" href={siteConfig.primaryGamePath} title={`Play ${siteConfig.brandName}`} description="Start playing on the main game page." />
           </ContentBody>
         </CardSection>
 
         {/* ── CTA ── */}
         <CtaSection
-          heading="Play FreeCell Now"
+          heading={`Play ${siteConfig.brandName} Now`}
           body={
             <>
-              Jump into a game of FreeCell — no downloads, no sign-ups, just
-              pure strategy.
+              Jump into a solitaire game with no downloads and no sign-ups.
             </>
           }
-          primaryLabel="Play FreeCell Now"
+          primaryLabel={`Play ${siteConfig.brandName} Now`}
           secondaryLabel="Learn the Rules"
-          secondaryHref="/how-to-play"
+          secondaryHref={siteConfig.primaryGamePath}
         />
       </main>
     </ContentLayout>

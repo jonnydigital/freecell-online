@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useSolver } from '@/hooks/useSolver';
 import { describeSolution } from '@/solver/FreeCellSolver';
-import Link from 'next/link';
+import Link from '@/components/NetworkLink';
 
 const UNSOLVABLE_DEALS = [11982, 146692, 186216, 455889, 495340, 512118, 517776, 781948];
 

@@ -1,10 +1,20 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import Script from 'next/script';
 import { siteConfig } from '@/lib/siteConfig';
 
 // Use site config first, fall back to env var for backward compatibility
 const GA_MEASUREMENT_ID = siteConfig.gaMeasurementId || process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+const CONSENT_KEY = 'cookie_consent';
+
+function hasConsent(): boolean {
+  try {
+    return localStorage.getItem(CONSENT_KEY) === 'accepted';
+  } catch {
+    return false;
+  }
+}
 
 /**
  * Google Analytics 4 script component.
@@ -12,7 +22,25 @@ const GA_MEASUREMENT_ID = siteConfig.gaMeasurementId || process.env.NEXT_PUBLIC_
  * Each site deployment (playfreecellonline.com, solitairestack.com) can have its own GA4 property.
  */
 export default function Analytics() {
-  if (!GA_MEASUREMENT_ID) return null;
+  const [enabled, setEnabled] = useState(false);
+
+  useEffect(() => {
+    setEnabled(hasConsent());
+
+    const onConsentChange = () => setEnabled(hasConsent());
+    const onStorage = (event: StorageEvent) => {
+      if (event.key === CONSENT_KEY) setEnabled(hasConsent());
+    };
+
+    window.addEventListener('cookie-consent-change', onConsentChange);
+    window.addEventListener('storage', onStorage);
+    return () => {
+      window.removeEventListener('cookie-consent-change', onConsentChange);
+      window.removeEventListener('storage', onStorage);
+    };
+  }, []);
+
+  if (!GA_MEASUREMENT_ID || !enabled) return null;
 
   return (
     <>

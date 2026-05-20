@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import Link from "next/link";
+import Link from "@/components/NetworkLink";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import { canonicalUrlFor, isOwnedBy } from "@/lib/routeOwnership";
@@ -753,16 +753,20 @@ export default function GamesPage() {
           master the specific mechanics and improve your win rate.
         </p>
         <div className="grid sm:grid-cols-2 gap-3">
-          <ContentLinkCard href="/tips" title="FreeCell Tips" description="Practical tips to win more FreeCell games" />
-          <ContentLinkCard href="/spider/tips" title="Spider Tips" description="Tips for 1-suit, 2-suit, and 4-suit modes" />
-          <ContentLinkCard href="/pyramid/tips" title="Pyramid Tips" description="Pair-matching strategy and stock pile management" />
-          <ContentLinkCard href="/klondike/tips" title="Klondike Tips" description="Tips for Draw 1 and Draw 3 Klondike" />
-          <ContentLinkCard href="/spider/strategy" title="Spider Strategy" description="Advanced Spider Solitaire techniques" />
-          <ContentLinkCard href="/pyramid/strategy" title="Pyramid Strategy" description="Expert-level Pyramid Solitaire play" />
-          <ContentLinkCard href="/bakers-game/strategy" title="Baker's Game Strategy" description="Same-suit stacking tactics and planning" />
-          <ContentLinkCard href="/eight-off/strategy" title="Eight Off Strategy" description="Managing 8 free cells effectively" />
-        </div>
-      </section>
+            <ContentLinkCard href="/tips" title="FreeCell Tips" description="Practical tips to win more FreeCell games" />
+            <ContentLinkCard href="/spider/tips" title="Spider Tips" description="Tips for 1-suit, 2-suit, and 4-suit modes" />
+            <ContentLinkCard href="/spider/faq" title="Spider FAQ" description="Quick answers about suits, stock rules, empty columns, and winnability." />
+            <ContentLinkCard href="/pyramid/tips" title="Pyramid Tips" description="Pair-matching strategy and stock pile management" />
+            <ContentLinkCard href="/klondike/tips" title="Klondike Tips" description="Tips for Draw 1 and Draw 3 Klondike" />
+            <ContentLinkCard href="/klondike-cheat-sheet" title="Klondike Cheat Sheet" description="A fast rules and decision reference for Draw 1, Draw 3, and Vegas scoring." />
+            <ContentLinkCard href="/spider/strategy" title="Spider Strategy" description="Advanced Spider Solitaire techniques" />
+            <ContentLinkCard href="/spider-world-records" title="Spider World Records" description="Fast solves, difficult achievements, and how Spider records are tracked." />
+            <ContentLinkCard href="/pyramid/strategy" title="Pyramid Strategy" description="Expert-level Pyramid Solitaire play" />
+            <ContentLinkCard href="/bakers-game/strategy" title="Baker's Game Strategy" description="Same-suit stacking tactics and planning" />
+            <ContentLinkCard href="/eight-off/strategy" title="Eight Off Strategy" description="Managing 8 free cells effectively" />
+            <ContentLinkCard href="/klondike-vs-pyramid" title="Klondike vs Pyramid" description="Compare the classic tableau game with a fast pair-matching solitaire." />
+          </div>
+        </section>
 
       <div className="mb-10 max-w-3xl mx-auto">
         <CtaSection

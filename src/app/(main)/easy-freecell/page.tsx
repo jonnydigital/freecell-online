@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from '@/components/NetworkLink';
 import type { Metadata } from 'next';
 import { absoluteUrl, siteConfig } from '@/lib/siteConfig';
 import EasyFreeCellPage from './EasyFreeCellPage';
@@ -93,13 +93,6 @@ export default function Page() {
       '@type': 'Offer',
       price: '0',
       priceCurrency: 'USD',
-    },
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: '4.6',
-      ratingCount: '1148',
-      bestRating: '5',
-      worstRating: '1',
     },
   };
 

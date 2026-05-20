@@ -1,5 +1,7 @@
 import { Suspense } from "react";
 import Analytics from "@/components/Analytics";
+import MediavineGrowScript from "@/components/MediavineGrowScript";
+import AdsterraScript from "@/components/AdsterraScript";
 import CookieConsent from "@/components/CookieConsent";
 import ThemeInitializer from "@/components/ThemeInitializer";
 import AccessibilityInitializer from "@/components/AccessibilityInitializer";
@@ -22,6 +24,8 @@ export default function MainLayout({
       <ThemeInitializer />
       <AccessibilityInitializer />
       <Analytics />
+      <MediavineGrowScript />
+      <AdsterraScript />
       <script
         id="ld-webapplication-site"
         type="application/ld+json"

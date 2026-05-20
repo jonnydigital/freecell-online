@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/NetworkLink";
 import { siteConfig } from "@/lib/siteConfig";
 
 interface ContentHeaderProps {
@@ -16,11 +16,27 @@ export default function ContentHeader({ variant = "dark" }: ContentHeaderProps) 
           { href: "/freecell-vs-klondike", label: "Compare" },
           { href: "/freecell-for-beginners", label: "Guides" },
         ]
+      : siteConfig.key === "playklondikeonline"
+        ? [
+            { href: "/klondike/how-to-play", label: "Rules" },
+            { href: "/klondike/strategy", label: "Strategy" },
+            { href: "/klondike/tips", label: "Tips" },
+            { href: "/klondike/faq", label: "FAQ" },
+            { href: "/blog", label: "Blog" },
+          ]
+      : siteConfig.key === "playspidersolitaireonline"
+        ? [
+            { href: "/spider/how-to-play", label: "Rules" },
+            { href: "/spider/strategy", label: "Strategy" },
+            { href: "/spider/tips", label: "Tips" },
+            { href: "/spider/faq", label: "FAQ" },
+            { href: "/blog", label: "Blog" },
+          ]
       : [
-          { href: "/how-to-play", label: "Rules" },
-          { href: "/strategy", label: "Strategy" },
-          { href: "/tips", label: "Tips" },
-          { href: "/faq", label: "FAQ" },
+          { href: "/freecell/how-to-play", label: "Rules" },
+          { href: "/freecell/strategy", label: "Strategy" },
+          { href: "/freecell/tips", label: "Tips" },
+          { href: "/freecell-for-beginners", label: "Guides" },
           { href: "/blog", label: "Blog" },
         ];
 
@@ -61,7 +77,7 @@ export default function ContentHeader({ variant = "dark" }: ContentHeaderProps) 
         href={siteConfig.primaryGamePath}
         className="px-4 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider bg-[#D4AF37] hover:bg-[#c9a432] text-[#1a1a0a] transition-colors"
       >
-        Play FreeCell
+        Play {siteConfig.footerWordmark}
       </Link>
     </nav>
   );

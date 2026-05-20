@@ -1,7 +1,7 @@
 'use client';
 
 import { useMemo } from 'react';
-import Link from 'next/link';
+import Link from '@/components/NetworkLink';
 import { Trophy, ArrowLeft } from 'lucide-react';
 import { absoluteUrl } from '@/lib/siteConfig';
 import { loadAchievements, CATEGORY_LABELS, ALL_CATEGORIES } from '@/lib/achievements';

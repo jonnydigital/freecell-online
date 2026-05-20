@@ -4,11 +4,19 @@ import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { useDomKlondikeStore, domKlondikeStore } from '@/lib/dom-klondike/useDomKlondikeStore';
 import DomKlondikeBoard from './DomKlondikeBoard';
 import { KlondikeDrawMode } from '@/engine/KlondikeEngine';
-import Link from 'next/link';
+import Link from '@/components/NetworkLink';
 import { isHubSite } from '@/lib/siteConfig';
 import { Undo2, RotateCcw, Lightbulb, Home } from 'lucide-react';
 import GameSwitcher from '../GameSwitcher';
 import AdUnit from '../AdUnit';
+import {
+  trackAbandoned,
+  trackGameStart,
+  trackHint,
+  trackMove,
+  trackUndo,
+  trackWin,
+} from '@/lib/analytics';
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -44,6 +52,8 @@ export default function DomKlondikeShell({ initialDrawMode = 1 }: DomKlondikeShe
   const getEngine = useDomKlondikeStore((s) => s.getEngine);
 
   const [showWinModal, setShowWinModal] = useState(false);
+  const trackedGameStartRef = useRef<number | null>(null);
+  const trackedMoveCountRef = useRef(moveCount);
 
   // Timer
   useEffect(() => {
@@ -66,9 +76,39 @@ export default function DomKlondikeShell({ initialDrawMode = 1 }: DomKlondikeShe
   useEffect(() => {
     if (isWon && winProcessedRef.current !== gameNumber) {
       winProcessedRef.current = gameNumber;
+      trackWin(timerSeconds, moveCount);
       setTimeout(() => setShowWinModal(true), 500);
     }
-  }, [isWon, gameNumber]);
+  }, [isWon, gameNumber, timerSeconds, moveCount]);
+
+  // Analytics for the DOM Klondike engine.
+  useEffect(() => {
+    if (!gameNumber || trackedGameStartRef.current === gameNumber) return;
+    trackedGameStartRef.current = gameNumber;
+    trackedMoveCountRef.current = moveCount;
+    trackGameStart(gameNumber, 'klondike', `draw-${drawMode}`);
+  }, [gameNumber, moveCount, drawMode]);
+
+  useEffect(() => {
+    if (moveCount > trackedMoveCountRef.current) {
+      for (let i = trackedMoveCountRef.current; i < moveCount; i++) {
+        trackMove('tap');
+      }
+    }
+    trackedMoveCountRef.current = moveCount;
+  }, [moveCount]);
+
+  const handleNewGame = useCallback(() => {
+    if (timerStarted && !isWon) {
+      trackAbandoned();
+    }
+    newGame();
+  }, [timerStarted, isWon, newGame]);
+
+  const handleUndo = useCallback(() => {
+    undo();
+    trackUndo();
+  }, [undo]);
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -77,20 +117,21 @@ export default function DomKlondikeShell({ initialDrawMode = 1 }: DomKlondikeShe
       if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
 
       if (e.ctrlKey || e.metaKey) {
-        if (e.key === 'z') { e.preventDefault(); undo(); return; }
+        if (e.key === 'z') { e.preventDefault(); handleUndo(); return; }
         return;
       }
 
       const key = e.key.toLowerCase();
-      if (key === 'z') { e.preventDefault(); undo(); return; }
-      if (key === 'n') { e.preventDefault(); newGame(); return; }
+      if (key === 'z') { e.preventDefault(); handleUndo(); return; }
+      if (key === 'n') { e.preventDefault(); handleNewGame(); return; }
     };
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
-  }, [undo, newGame]);
+  }, [handleUndo, handleNewGame]);
 
   // Hint
   const handleHint = useCallback(() => {
+    trackHint();
     const engine = getEngine();
     const hint = engine.getHint();
     if (hint) {
@@ -182,13 +223,13 @@ export default function DomKlondikeShell({ initialDrawMode = 1 }: DomKlondikeShe
 
         {/* Right: Action buttons */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-          <button onClick={undo} title="Undo" style={{ padding: '8px', borderRadius: '8px', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.6)', cursor: 'pointer' }}>
+          <button onClick={handleUndo} title="Undo" style={{ padding: '8px', borderRadius: '8px', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.6)', cursor: 'pointer' }}>
             <Undo2 size={16} />
           </button>
           <button onClick={handleHint} title="Hint" style={{ padding: '8px', borderRadius: '8px', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.6)', cursor: 'pointer' }}>
             <Lightbulb size={16} />
           </button>
-          <button onClick={() => newGame()} title="New Game" style={{ padding: '6px 14px', borderRadius: '8px', background: 'rgba(212,175,55,0.15)', border: '1px solid rgba(212,175,55,0.3)', color: '#D4AF37', fontSize: '12px', fontWeight: 600, cursor: 'pointer' }}>
+          <button onClick={handleNewGame} title="New Game" style={{ padding: '6px 14px', borderRadius: '8px', background: 'rgba(212,175,55,0.15)', border: '1px solid rgba(212,175,55,0.3)', color: '#D4AF37', fontSize: '12px', fontWeight: 600, cursor: 'pointer' }}>
             New Deal
           </button>
         </div>
@@ -275,7 +316,7 @@ export default function DomKlondikeShell({ initialDrawMode = 1 }: DomKlondikeShe
                 Share Result
               </button>
               <button
-                onClick={() => { setShowWinModal(false); newGame(); }}
+                  onClick={() => { setShowWinModal(false); newGame(); }}
                 style={{
                   padding: '10px 24px',
                   borderRadius: '10px',

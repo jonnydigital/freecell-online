@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/NetworkLink";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import { JsonLd } from "@/components/content";
@@ -78,13 +78,6 @@ export default function Page() {
       priceCurrency: "USD",
     },
     url: absoluteUrl("/calculation"),
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "4.5",
-      ratingCount: "654",
-      bestRating: "5",
-      worstRating: "1",
-    },
   };
 
   const breadcrumbJsonLd = {

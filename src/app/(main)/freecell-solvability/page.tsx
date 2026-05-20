@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import Link from "next/link";
+import Link from "@/components/NetworkLink";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import { canonicalUrlFor, isOwnedBy } from "@/lib/routeOwnership";
@@ -884,6 +884,12 @@ export default function FreecellSolvabilityPage() {
             />
             <ContentLinkCard
               variant="dark"
+              href="/unsolvable-freecell-deals"
+              title="All Unsolvable FreeCell Deals"
+              description="The full catalog of confirmed impossible deals, including the seven extended-range cases beyond #11982."
+            />
+            <ContentLinkCard
+              variant="dark"
               href="/famous-freecell-deals"
               title="Famous FreeCell Deals"
               description="A gallery of the deals that made FreeCell community history."
@@ -899,6 +905,12 @@ export default function FreecellSolvabilityPage() {
               href="/freecell-probability"
               title="FreeCell Probability"
               description="A probability-first look at which patterns show up in random deals and why."
+            />
+            <ContentLinkCard
+              variant="dark"
+              href="/freecell-world-records"
+              title="FreeCell World Records"
+              description="Fast solves, streaks, and community records from the same deal-number tradition."
             />
             <ContentLinkCard
               variant="dark"

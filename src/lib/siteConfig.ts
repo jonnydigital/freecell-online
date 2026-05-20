@@ -1,3 +1,5 @@
+import { ownerOf, canonicalUrlFor } from './routeOwnership';
+
 export type SiteKey = 'playfreecellonline' | 'solitairestack' | 'playklondikeonline' | 'playspidersolitaireonline';
 
 export interface SiteConfig {
@@ -159,4 +161,30 @@ export function gameUrl(path: string): string {
   }
 
   return `${ownerConfig.url}${path}`;
+}
+
+/**
+ * Returns the correct href for a link based on the current site and the
+ * link target's route ownership. When the current site owns the target
+ * path, returns the relative path (normal internal link). When ownership
+ * lives on a different domain, returns the absolute canonical URL so the
+ * browser never visits the hub→spoke 301 redirect — which preserves crawl
+ * budget and link equity, and eliminates GSC "Page with redirect" noise.
+ *
+ * Pass-through cases (unchanged):
+ *   - Absolute URLs (http://, https://, mailto:, tel:)
+ *   - In-page anchors (#section)
+ *   - Empty / undefined hrefs
+ */
+export function crossDomainHref(path: string | undefined | null): string {
+  if (!path) return '';
+  // Pass through anything that's not a relative path.
+  if (/^([a-z]+:|#|\/\/)/i.test(path)) return path;
+  if (!path.startsWith('/')) return path;
+
+  const ownership = ownerOf(path);
+  if (ownership.owners.includes(siteConfig.key)) {
+    return path;
+  }
+  return canonicalUrlFor(path);
 }

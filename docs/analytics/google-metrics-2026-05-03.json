@@ -1,0 +1,54 @@
+{
+  "pulled_at": "2026-05-03T17:36:30.907Z",
+  "window": "last 30 days through yesterday",
+  "ga4": null,
+  "adsense": null,
+  "errors": [
+    {
+      "source": "ga4",
+      "message": "Request had insufficient authentication scopes.",
+      "status": 403,
+      "body": {
+        "error": {
+          "code": 403,
+          "message": "Request had insufficient authentication scopes.",
+          "status": "PERMISSION_DENIED",
+          "details": [
+            {
+              "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+              "reason": "ACCESS_TOKEN_SCOPE_INSUFFICIENT",
+              "domain": "googleapis.com",
+              "metadata": {
+                "method": "google.analytics.data.v1beta.BetaAnalyticsData.RunReport",
+                "service": "analyticsdata.googleapis.com"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "source": "adsense",
+      "message": "Request had insufficient authentication scopes.",
+      "status": 403,
+      "body": {
+        "error": {
+          "code": 403,
+          "message": "Request had insufficient authentication scopes.",
+          "status": "PERMISSION_DENIED",
+          "details": [
+            {
+              "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+              "reason": "ACCESS_TOKEN_SCOPE_INSUFFICIENT",
+              "domain": "googleapis.com",
+              "metadata": {
+                "method": "google.ads.adsense.management.v2.Accounts.ListAccounts",
+                "service": "adsense.googleapis.com"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -16,9 +16,10 @@ const nextConfig: NextConfig = {
   async rewrites() {
     return [
       {
-        // Serve ads.txt from the API route — the App Router route at
-        // /ads.txt gets intercepted by Vercel's CDN redirect on spoke
-        // domains, but /api/ads-txt works. This rewrite bridges the gap.
+        // Mirror of the vercel.json /ads.txt rewrite — vercel.json wins in
+        // production (where Vercel's CDN applies it before edge redirects),
+        // but vercel.json is not consulted by `next dev`, so this rewrite
+        // is the local-dev equivalent.
         source: '/ads.txt',
         destination: '/api/ads-txt',
       },

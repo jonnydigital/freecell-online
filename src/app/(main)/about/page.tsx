@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation";
-import Link from "next/link";
+import Link from "@/components/NetworkLink";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
-import { canonicalUrlFor, isOwnedBy } from "@/lib/routeOwnership";
+import { isOwnedBy } from "@/lib/routeOwnership";
 import AdUnit from "@/components/AdUnit";
 import ContentLayout from "@/components/ContentLayout";
 import {
@@ -39,15 +39,36 @@ export const metadata: Metadata = {
     card: "summary_large_image",
   },
   alternates: {
-    canonical: canonicalUrlFor("/about"),
+    canonical: absoluteUrl("/about"),
   },
 };
 
 const PUBLISHED_DATE = "2026-04-05";
 const UPDATED_DATE = "2026-04-05";
 
+const SPOKE_FOCUS: Record<string, { game: string; specifics: string }> = {
+  playfreecellonline: {
+    game: "FreeCell Solitaire",
+    specifics:
+      "the Microsoft deal numbers, daily challenges, solvers, leaderboards, and FreeCell-specific editorial",
+  },
+  playklondikeonline: {
+    game: "Klondike Solitaire",
+    specifics:
+      "draw-1 and draw-3 rules, Vegas scoring, opening and endgame strategy, and beginner-friendly Klondike guides",
+  },
+  playspidersolitaireonline: {
+    game: "Spider Solitaire",
+    specifics:
+      "1-, 2-, and 4-suit variants, column management, winning-probability research, and Spider-specific strategy",
+  },
+};
+
 export default function AboutPage() {
   if (!isOwnedBy("/about", siteConfig.key)) notFound();
+
+  const isHub = siteConfig.key === "solitairestack";
+  const spokeFocus = SPOKE_FOCUS[siteConfig.key];
 
   const jsonLd = [
     {
@@ -141,17 +162,34 @@ export default function AboutPage() {
               reading ten surface-level pages to learn what one careful page
               should have told them.
             </p>
-            <p>
-              The network is organized as a hub at {siteConfig.siteName} plus
-              a set of spoke domains that cover individual games in depth:
-              FreeCell, Klondike, and Spider each have their own home. The
-              hub handles cross-game reference material &mdash; comparison
-              pages, history, taxonomy, rules glossary, and the editorial
-              infrastructure you are reading right now. The spokes handle
-              the everyday tools players need: deal numbers, solvers, daily
-              challenges, statistics. Wherever you land, the editorial
-              standards are the same.
-            </p>
+            {isHub ? (
+              <p>
+                The network is organized as a hub at {siteConfig.siteName} plus
+                a set of spoke domains that cover individual games in depth:
+                FreeCell, Klondike, and Spider each have their own home. The
+                hub handles cross-game reference material &mdash; comparison
+                pages, history, taxonomy, rules glossary, and the editorial
+                infrastructure you are reading right now. The spokes handle
+                the everyday tools players need: deal numbers, solvers, daily
+                challenges, statistics. Wherever you land, the editorial
+                standards are the same.
+              </p>
+            ) : (
+              <p>
+                {siteConfig.siteName} is the {spokeFocus?.game} home in a
+                network of focused solitaire sites operated by the same
+                editorial team. We cover {spokeFocus?.specifics}. The hub at{" "}
+                <Link
+                  href="https://solitairestack.com"
+                  className="text-[#D4AF37] hover:underline"
+                >
+                  SolitaireStack.com
+                </Link>{" "}
+                handles cross-game reference material &mdash; comparison
+                pages, taxonomy, history, and rules glossary. Wherever you
+                land in the network, the editorial standards are the same.
+              </p>
+            )}
           </ContentBody>
         </CardSection>
 
@@ -182,12 +220,29 @@ export default function AboutPage() {
               rolling schedule so they stay accurate as games, rules, and
               player understanding evolve.
             </p>
-            <p>
-              The network launched as a small collection of FreeCell pages and
-              has grown into a hub at {siteConfig.siteName} plus a family of
-              spoke domains covering FreeCell, Klondike, and Spider. The
-              editorial model, however, has stayed the same from day one.
-            </p>
+            {isHub ? (
+              <p>
+                The network launched as a small collection of FreeCell pages
+                and has grown into a hub at {siteConfig.siteName} plus a
+                family of spoke domains covering FreeCell, Klondike, and
+                Spider. The editorial model, however, has stayed the same
+                from day one.
+              </p>
+            ) : (
+              <p>
+                The network launched as a small collection of FreeCell pages
+                and grew into a hub at{" "}
+                <Link
+                  href="https://solitairestack.com"
+                  className="text-[#D4AF37] hover:underline"
+                >
+                  SolitaireStack.com
+                </Link>{" "}
+                with focused spoke sites &mdash; including this one &mdash;
+                covering FreeCell, Klondike, and Spider in depth. The
+                editorial model has stayed the same from day one.
+              </p>
+            )}
           </ContentBody>
         </CardSection>
 

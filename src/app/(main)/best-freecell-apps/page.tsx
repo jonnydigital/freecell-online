@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/NetworkLink";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import ContentLayout from "@/components/ContentLayout";
@@ -902,6 +902,12 @@ export default function BestFreeCellAppsPage() {
                 title="Microsoft FreeCell"
                 description="The history of Windows FreeCell and how to play the same deals online."
                 icon="🖥"
+              />
+              <ContentLinkCard
+                href="/freecell-no-ads"
+                title="FreeCell Without a Download"
+                description="Compare browser play, desktop clients, and safer ad-light options."
+                icon="♣"
               />
             </div>
           </ContentBody>

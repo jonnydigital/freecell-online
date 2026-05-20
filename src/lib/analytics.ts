@@ -1,21 +1,25 @@
 /**
  * Analytics abstraction layer
  *
- * Supports GA4 via gtag. All events are typed for the FreeCell game.
+ * Supports GA4 via gtag. All events are typed for solitaire gameplay.
  * If no analytics script is loaded, calls are silently dropped.
  */
 
+const CONSENT_KEY = 'cookie_consent';
+
+type EventParams = Record<string, string | number | boolean | undefined>;
+
 // Custom game events
 export type GameEvent =
-  | { name: 'game_start'; params: { game_number: number } }
-  | { name: 'game_win'; params: { time_seconds: number; moves: number; hints_used: number; undos_used: number } }
-  | { name: 'game_abandoned'; params: { move_count: number; time_played: number; last_action: string } }
-  | { name: 'game_restart'; params: { move_count: number } }
-  | { name: 'hint_used'; params: { move_count: number; game_number: number } }
-  | { name: 'undo_used'; params: { move_count: number; game_number: number } }
-  | { name: 'time_to_first_move'; params: { seconds: number } }
-  | { name: 'interaction_type'; params: { type: 'drag' | 'tap' } }
-  | { name: 'game_deadlock'; params: { move_count: number; game_number: number } };
+  | { name: 'game_start'; params: EventParams }
+  | { name: 'game_win'; params: EventParams }
+  | { name: 'game_abandoned'; params: EventParams }
+  | { name: 'game_restart'; params: EventParams }
+  | { name: 'hint_used'; params: EventParams }
+  | { name: 'undo_used'; params: EventParams }
+  | { name: 'time_to_first_move'; params: EventParams }
+  | { name: 'interaction_type'; params: EventParams }
+  | { name: 'game_deadlock'; params: EventParams };
 
 declare global {
   interface Window {
@@ -24,11 +28,21 @@ declare global {
   }
 }
 
+export function hasAnalyticsConsent(): boolean {
+  if (typeof window === 'undefined') return false;
+  try {
+    return window.localStorage.getItem(CONSENT_KEY) === 'accepted';
+  } catch {
+    return false;
+  }
+}
+
 /**
  * Send a custom game event to analytics
  */
 export function trackEvent(event: GameEvent): void {
   if (typeof window === 'undefined') return;
+  if (!hasAnalyticsConsent()) return;
 
   // GA4 via gtag
   if (window.gtag) {
@@ -43,10 +57,36 @@ export function trackEvent(event: GameEvent): void {
 }
 
 /**
+ * Track client-side URL changes that use history.replaceState/pushState.
+ */
+export function trackPageView(path?: string): void {
+  if (typeof window === 'undefined') return;
+  if (!hasAnalyticsConsent()) return;
+
+  const pagePath = path ?? `${window.location.pathname}${window.location.search}`;
+  const params = {
+    page_path: pagePath,
+    page_location: `${window.location.origin}${pagePath}`,
+    page_title: document.title,
+  };
+
+  if (window.gtag) {
+    window.gtag('event', 'page_view', params);
+    return;
+  }
+
+  if (window.dataLayer) {
+    window.dataLayer.push({ event: 'page_view', ...params });
+  }
+}
+
+/**
  * Session-level tracking state for computing aggregate metrics
  */
 class GameSession {
   gameNumber: number = 0;
+  gameName: string = 'freecell';
+  gameVariant: string | undefined;
   moveCount: number = 0;
   hintsUsed: number = 0;
   undosUsed: number = 0;
@@ -55,8 +95,10 @@ class GameSession {
   lastAction: string = 'none';
   interactionTypes: Set<string> = new Set();
 
-  reset(gameNumber: number): void {
+  reset(gameNumber: number, gameName = 'freecell', gameVariant?: string): void {
     this.gameNumber = gameNumber;
+    this.gameName = gameName;
+    this.gameVariant = gameVariant;
     this.moveCount = 0;
     this.hintsUsed = 0;
     this.undosUsed = 0;
@@ -69,6 +111,14 @@ class GameSession {
   get timePlayedSeconds(): number {
     return Math.round((Date.now() - this.startTime) / 1000);
   }
+
+  get baseParams(): EventParams {
+    return {
+      game_number: this.gameNumber,
+      game_name: this.gameName,
+      game_variant: this.gameVariant,
+    };
+  }
 }
 
 export const gameSession = new GameSession();
@@ -76,9 +126,9 @@ export const gameSession = new GameSession();
 /**
  * Track game start
  */
-export function trackGameStart(gameNumber: number): void {
-  gameSession.reset(gameNumber);
-  trackEvent({ name: 'game_start', params: { game_number: gameNumber } });
+export function trackGameStart(gameNumber: number, gameName = 'freecell', gameVariant?: string): void {
+  gameSession.reset(gameNumber, gameName, gameVariant);
+  trackEvent({ name: 'game_start', params: gameSession.baseParams });
 }
 
 /**
@@ -92,8 +142,14 @@ export function trackMove(interactionType: 'drag' | 'tap'): void {
   if (!gameSession.firstMoveTracked) {
     gameSession.firstMoveTracked = true;
     const seconds = gameSession.timePlayedSeconds;
-    trackEvent({ name: 'time_to_first_move', params: { seconds } });
-    trackEvent({ name: 'interaction_type', params: { type: interactionType } });
+    trackEvent({
+      name: 'time_to_first_move',
+      params: { ...gameSession.baseParams, seconds },
+    });
+    trackEvent({
+      name: 'interaction_type',
+      params: { ...gameSession.baseParams, type: interactionType },
+    });
   }
 }
 
@@ -105,7 +161,7 @@ export function trackHint(): void {
   gameSession.lastAction = 'hint';
   trackEvent({
     name: 'hint_used',
-    params: { move_count: gameSession.moveCount, game_number: gameSession.gameNumber },
+    params: { ...gameSession.baseParams, move_count: gameSession.moveCount },
   });
 }
 
@@ -117,7 +173,7 @@ export function trackUndo(): void {
   gameSession.lastAction = 'undo';
   trackEvent({
     name: 'undo_used',
-    params: { move_count: gameSession.moveCount, game_number: gameSession.gameNumber },
+    params: { ...gameSession.baseParams, move_count: gameSession.moveCount },
   });
 }
 
@@ -128,6 +184,7 @@ export function trackWin(timeSeconds: number, moves: number): void {
   trackEvent({
     name: 'game_win',
     params: {
+      ...gameSession.baseParams,
       time_seconds: timeSeconds,
       moves,
       hints_used: gameSession.hintsUsed,
@@ -144,6 +201,7 @@ export function trackAbandoned(): void {
   trackEvent({
     name: 'game_abandoned',
     params: {
+      ...gameSession.baseParams,
       move_count: gameSession.moveCount,
       time_played: gameSession.timePlayedSeconds,
       last_action: gameSession.lastAction,
@@ -155,7 +213,10 @@ export function trackAbandoned(): void {
  * Track game restart
  */
 export function trackRestart(): void {
-  trackEvent({ name: 'game_restart', params: { move_count: gameSession.moveCount } });
+  trackEvent({
+    name: 'game_restart',
+    params: { ...gameSession.baseParams, move_count: gameSession.moveCount },
+  });
 }
 
 /**
@@ -164,6 +225,6 @@ export function trackRestart(): void {
 export function trackDeadlock(): void {
   trackEvent({
     name: 'game_deadlock',
-    params: { move_count: gameSession.moveCount, game_number: gameSession.gameNumber },
+    params: { ...gameSession.baseParams, move_count: gameSession.moveCount },
   });
 }

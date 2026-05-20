@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import Link from 'next/link';
+import Link from '@/components/NetworkLink';
 import { getDailySeed, formatTime } from '@/lib/dailyChallenge';
 import { absoluteUrl, siteConfig } from '@/lib/siteConfig';
 

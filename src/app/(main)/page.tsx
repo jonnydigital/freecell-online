@@ -9,7 +9,6 @@ import SpiderBelowFold from '@/components/SpiderBelowFold';
 import KlondikeGamePage from './klondike/KlondikeGamePage';
 import SpiderGamePage from './spider/SpiderGamePage';
 import { absoluteUrl, isHubSite, isKlondikeSite, isSpiderSite, siteConfig } from '@/lib/siteConfig';
-import { canonicalUrlFor } from '@/lib/routeOwnership';
 import { shouldUseDomEngine } from '@/lib/useDomEngine';
 
 function buildMetadata(): Metadata {
@@ -35,7 +34,7 @@ function buildMetadata(): Metadata {
         type: 'website',
       },
       alternates: {
-        canonical: canonicalUrlFor('/'),
+        canonical: absoluteUrl('/'),
       },
       twitter: { card: 'summary_large_image' },
     };
@@ -62,7 +61,7 @@ function buildMetadata(): Metadata {
         type: 'website',
       },
       alternates: {
-        canonical: canonicalUrlFor('/'),
+        canonical: absoluteUrl('/'),
       },
       twitter: { card: 'summary_large_image' },
     };
@@ -88,7 +87,7 @@ function buildMetadata(): Metadata {
         type: 'website',
       },
       alternates: {
-        canonical: canonicalUrlFor('/'),
+        canonical: absoluteUrl('/'),
       },
       twitter: { card: 'summary_large_image' },
     };
@@ -113,7 +112,7 @@ function buildMetadata(): Metadata {
       type: 'website',
     },
     alternates: {
-      canonical: canonicalUrlFor('/'),
+      canonical: absoluteUrl('/'),
     },
     twitter: { card: 'summary_large_image' },
   };

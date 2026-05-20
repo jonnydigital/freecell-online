@@ -246,6 +246,17 @@ const contentPages = [
  * owner's sitemap lists it to avoid duplicate canonical signals to Google.
  */
 function isPrimaryOwnerOfPath(path: string): boolean {
+  if (
+    path === '/' ||
+    path === '/about' ||
+    path === '/contact' ||
+    path === '/privacy' ||
+    path === '/terms' ||
+    path === '/sitemap'
+  ) {
+    return true;
+  }
+
   return ownerOf(path).primaryOwner === siteConfig.key;
 }
 

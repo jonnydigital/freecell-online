@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import Link from "next/link";
+import Link from "@/components/NetworkLink";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import { canonicalUrlFor, isOwnedBy } from "@/lib/routeOwnership";
@@ -671,6 +671,12 @@ export default function SolitaireHistoryPage() {
               href="/microsoft-freecell"
               title="Microsoft FreeCell"
               description="The history of Microsoft's FreeCell implementation, from Jim Horne's 1991 port to the Microsoft Solitaire Collection."
+            />
+            <ContentLinkCard
+              variant="dark"
+              href="/how-solitaire-changed-windows"
+              title="How Solitaire Changed Windows"
+              description="How Microsoft's card games shaped mouse training, workplace computing, and the default meaning of solitaire."
             />
             <ContentLinkCard
               variant="dark"

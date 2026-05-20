@@ -9,7 +9,7 @@
  * plain text so we don't cross-link to a 404.
  */
 
-import Link from "next/link";
+import Link from "@/components/NetworkLink";
 import { getAuthor } from "@/lib/authors";
 import { siteConfig } from "@/lib/siteConfig";
 import { isOwnedBy } from "@/lib/routeOwnership";

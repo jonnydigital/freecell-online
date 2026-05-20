@@ -14,7 +14,7 @@
  */
 
 import { useMemo, useState } from "react";
-import Link from "next/link";
+import Link from "@/components/NetworkLink";
 import {
   GAME_COLORS,
   GAME_HREFS,

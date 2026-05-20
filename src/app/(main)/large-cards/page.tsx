@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from '@/components/NetworkLink';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { absoluteUrl, siteConfig } from '@/lib/siteConfig';

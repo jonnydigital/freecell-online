@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/NetworkLink";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import ContentLayout from "@/components/ContentLayout";
@@ -630,6 +630,9 @@ export default function KlondikeStrategyPage() {
               <ContentLinkCard href="/klondike/tips" title="Klondike Tips & Tricks" description="Quick, practical tips for all skill levels." />
               <ContentLinkCard href="/klondike/winning-strategies" title="Winning Strategies" description="Advanced tactics and statistical analysis." />
               <ContentLinkCard href="/klondike/draw-1-vs-draw-3" title="Draw 1 vs Draw 3" description="Complete comparison of Klondike draw modes." />
+              <ContentLinkCard href="/klondike-cheat-sheet" title="Klondike Cheat Sheet" description="Quick-reference rules, draw-mode notes, and scoring reminders." />
+              <ContentLinkCard href="/klondike-endgame-strategy" title="Klondike Endgame Strategy" description="How to finish won positions without locking key cards too early." />
+              <ContentLinkCard href="/klondike-world-records" title="Klondike World Records" description="Fast solves, fewest-move records, and how serious players measure performance." />
             </ContentBody>
           </CardSection>
 
@@ -649,6 +652,7 @@ export default function KlondikeStrategyPage() {
               <ContentLinkCard href="/klondike" title="Play Klondike Solitaire" description="Play online for free, no download" />
               <ContentLinkCard href="/klondike/how-to-play" title="How to Play Klondike" description="Complete rules and setup guide" />
               <ContentLinkCard href="/klondike/faq" title="Klondike FAQ" description="Common questions answered" />
+              <ContentLinkCard href="/klondike-for-seniors" title="Klondike for Seniors" description="Accessible settings, slower play, and beginner-friendly habits" />
               <ContentLinkCard href="/freecell-vs-klondike" title="FreeCell vs Klondike" description="Head-to-head comparison" />
               <ContentLinkCard href="/solitaire-types" title="Types of Solitaire" description="20 solitaire variants compared" />
               <ContentLinkCard href="/" title="Play FreeCell" description="The classic strategic solitaire" />

@@ -4,7 +4,7 @@ import { MDXRemote } from 'next-mdx-remote';
 import { serialize } from 'next-mdx-remote/serialize';
 import { useEffect, useState } from 'react';
 import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
-import Link from 'next/link';
+import Link from '@/components/NetworkLink';
 import AdUnit from './AdUnit';
 
 const components = {

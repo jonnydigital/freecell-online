@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import Link from 'next/link';
+import Link from '@/components/NetworkLink';
 import type { Metadata } from 'next';
 import { absoluteUrl, siteConfig } from '@/lib/siteConfig';
 import { canonicalUrlFor, isOwnedBy } from '@/lib/routeOwnership';
@@ -291,6 +291,9 @@ export default function FreecellNoAdsPage() {
             <ContentLinkCard href="/freecell-game-11982" title="FreeCell Deal #11982" description="The famous impossible deal — proven unsolvable by exhaustive computer search." />
             <ContentLinkCard href="/microsoft-freecell" title="Microsoft FreeCell History" description="How the game became a Windows staple and why those 32,000 numbered deals still matter." />
             <ContentLinkCard href="/best-freecell-apps" title="Best FreeCell Apps" description="A comparison of FreeCell apps across Windows, macOS, iOS, and Android." />
+            <ContentLinkCard href="/download" title="FreeCell Download Guide" description="When a browser game is safer than a download, and when a native app still makes sense." />
+            <ContentLinkCard href="/best-klondike-apps" title="Best Klondike Apps" description="Compare Klondike browser games, mobile apps, and desktop options." />
+            <ContentLinkCard href="/best-spider-solitaire-apps" title="Best Spider Apps" description="Compare Spider apps by suit modes, ad load, statistics, and offline support." />
           </ContentBody>
         </CardSection>
 

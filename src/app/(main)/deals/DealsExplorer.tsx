@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
+import Link from '@/components/NetworkLink';
 import { useRouter } from 'next/navigation';
 import { Search, Shuffle, ChevronDown, ChevronUp } from 'lucide-react';
 import AdUnit from '@/components/AdUnit';

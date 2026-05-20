@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import Link from 'next/link';
+import Link from '@/components/NetworkLink';
 import type { Metadata } from 'next';
 import { absoluteUrl, siteConfig } from '@/lib/siteConfig';
 import { canonicalUrlFor, isOwnedBy } from '@/lib/routeOwnership';
@@ -95,7 +95,7 @@ export default function FreecellVariantsPage() {
         'A comprehensive guide to every FreeCell variant, from beginner-friendly Easy FreeCell to expert 1-Cell FreeCell, plus competitive modes.',
       author: {
         '@type': 'Organization',
-        name: 'Solitaire Stack Editorial Team',
+        name: siteConfig.siteName,
         url: absoluteUrl('/authors/editorial-team'),
       },
       publisher: {

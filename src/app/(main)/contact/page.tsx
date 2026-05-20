@@ -1,8 +1,6 @@
-import { notFound } from "next/navigation";
-import Link from "next/link";
+import Link from "@/components/NetworkLink";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
-import { canonicalUrlFor, isOwnedBy } from "@/lib/routeOwnership";
 import { AUTHORS } from "@/lib/authors";
 import ContentLayout from "@/components/ContentLayout";
 import {
@@ -35,7 +33,7 @@ export const metadata: Metadata = {
   },
   twitter: { card: "summary_large_image" },
   alternates: {
-    canonical: canonicalUrlFor("/contact"),
+    canonical: absoluteUrl("/contact"),
   },
 };
 
@@ -49,7 +47,7 @@ interface DeskRow {
   purpose: string;
 }
 
-const DESK_ROUTING: DeskRow[] = [
+const HUB_DESK_ROUTING: DeskRow[] = [
   {
     name: AUTHORS["the-strategy-desk"].name,
     email: "strategy@solitairestack.com",
@@ -87,9 +85,20 @@ const DESK_ROUTING: DeskRow[] = [
   },
 ];
 
-export default function ContactPage() {
-  if (!isOwnedBy("/contact", siteConfig.key)) notFound();
+const DESK_ROUTING: DeskRow[] =
+  siteConfig.key === "solitairestack"
+    ? HUB_DESK_ROUTING
+    : [
+        {
+          name: `${siteConfig.brandName} Support`,
+          email: siteConfig.privacyEmail,
+          profileHref: "/contact",
+          purpose:
+            "Game feedback, corrections, privacy requests, accessibility issues, and general questions about this site.",
+        },
+      ];
 
+export default function ContactPage() {
   const jsonLd = [
     {
       "@context": "https://schema.org",
@@ -308,26 +317,26 @@ export default function ContactPage() {
             <ContentLinkCard
               variant="dark"
               href="/about"
-              title="About the Network"
-              description="Our mission, founding story, editorial model, and the five desks."
+              title={`About ${siteConfig.siteName}`}
+              description="Our mission, editorial model, and site ownership information."
             />
             <ContentLinkCard
               variant="dark"
-              href="/editorial-standards"
-              title="Editorial Standards"
-              description="Independence, sourcing, evidence standards, AI usage, and disclosure."
+              href="/privacy"
+              title="Privacy Policy"
+              description="How this site handles game data, analytics, advertising, and contact requests."
             />
             <ContentLinkCard
               variant="dark"
-              href="/fact-checking-policy"
-              title="Fact-Checking Policy"
-              description="How we verify rule, history, probability, and strategy claims."
+              href="/terms"
+              title="Terms of Service"
+              description="The terms that govern use of the site and game."
             />
             <ContentLinkCard
               variant="dark"
-              href="/correction-policy"
-              title="Correction Policy"
-              description="How we correct errors in published articles, including retractions."
+              href="/sitemap"
+              title="Sitemap"
+              description="Browse the game pages, guides, and policy pages available on this site."
             />
           </ContentBody>
         </CardSection>

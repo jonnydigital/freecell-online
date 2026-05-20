@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/NetworkLink";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import ContentLayout from "@/components/ContentLayout";
@@ -511,6 +511,8 @@ export default function KlondikeTipsPage() {
             <ContentLinkCard href="/klondike/strategy" title="Klondike Strategy Guide" description="In-depth strategies for winning more games." />
             <ContentLinkCard href="/klondike/winning-strategies" title="Winning Strategies" description="Advanced tactics and statistical analysis." />
             <ContentLinkCard href="/klondike/how-to-play" title="How to Play Klondike" description="Complete rules and setup guide." />
+            <ContentLinkCard href="/klondike-cheat-sheet" title="Klondike Cheat Sheet" description="A quick reference for rules, draw modes, scoring, and common decisions." />
+            <ContentLinkCard href="/klondike-vs-pyramid" title="Klondike vs Pyramid" description="Compare classic tableau play with Pyramid's pair-matching pace." />
           </ContentBody>
         </CardSection>
       </div>

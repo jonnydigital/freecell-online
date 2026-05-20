@@ -4,10 +4,17 @@ import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { useDomSpiderStore, domSpiderStore } from '@/lib/dom-spider/useDomSpiderStore';
 import DomSpiderBoard from './DomSpiderBoard';
 import { SpiderDifficulty } from '@/engine/SpiderEngine';
-import Link from 'next/link';
-import { Undo2, Lightbulb } from 'lucide-react';
+import Link from '@/components/NetworkLink';
+import { Undo2 } from 'lucide-react';
 import GameSwitcher from '../GameSwitcher';
 import AdUnit from '../AdUnit';
+import {
+  trackAbandoned,
+  trackGameStart,
+  trackMove,
+  trackUndo,
+  trackWin,
+} from '@/lib/analytics';
 
 function formatTime(seconds: number): string {
   const m = Math.floor(seconds / 60);
@@ -34,6 +41,8 @@ export default function DomSpiderShell({ initialDifficulty = '1-suit' }: DomSpid
   const moveHistory = useDomSpiderStore((s) => s.moveHistory);
 
   const [showWinModal, setShowWinModal] = useState(false);
+  const trackedGameStartRef = useRef<number | null>(null);
+  const trackedMoveCountRef = useRef(moveCount);
 
   // Timer
   useEffect(() => {
@@ -57,9 +66,39 @@ export default function DomSpiderShell({ initialDifficulty = '1-suit' }: DomSpid
   useEffect(() => {
     if (isWon && winProcessedRef.current !== gameNumber) {
       winProcessedRef.current = gameNumber;
+      trackWin(timerSeconds, moveCount);
       setTimeout(() => setShowWinModal(true), 500);
     }
-  }, [isWon, gameNumber]);
+  }, [isWon, gameNumber, timerSeconds, moveCount]);
+
+  // Analytics for the DOM Spider engine.
+  useEffect(() => {
+    if (!gameNumber || trackedGameStartRef.current === gameNumber) return;
+    trackedGameStartRef.current = gameNumber;
+    trackedMoveCountRef.current = moveCount;
+    trackGameStart(gameNumber, 'spider', difficulty);
+  }, [gameNumber, moveCount, difficulty]);
+
+  useEffect(() => {
+    if (moveCount > trackedMoveCountRef.current) {
+      for (let i = trackedMoveCountRef.current; i < moveCount; i++) {
+        trackMove('tap');
+      }
+    }
+    trackedMoveCountRef.current = moveCount;
+  }, [moveCount]);
+
+  const handleNewGame = useCallback(() => {
+    if (timerStarted && !isWon) {
+      trackAbandoned();
+    }
+    newGame();
+  }, [timerStarted, isWon, newGame]);
+
+  const handleUndo = useCallback(() => {
+    undo();
+    trackUndo();
+  }, [undo]);
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -68,17 +107,17 @@ export default function DomSpiderShell({ initialDifficulty = '1-suit' }: DomSpid
       if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
 
       if (e.ctrlKey || e.metaKey) {
-        if (e.key === 'z') { e.preventDefault(); undo(); return; }
+        if (e.key === 'z') { e.preventDefault(); handleUndo(); return; }
         return;
       }
 
       const key = e.key.toLowerCase();
-      if (key === 'z') { e.preventDefault(); undo(); return; }
-      if (key === 'n') { e.preventDefault(); newGame(); return; }
+      if (key === 'z') { e.preventDefault(); handleUndo(); return; }
+      if (key === 'n') { e.preventDefault(); handleNewGame(); return; }
     };
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
-  }, [undo, newGame]);
+  }, [handleUndo, handleNewGame]);
 
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
   const suitLabels: Record<SpiderDifficulty, string> = isMobile
@@ -165,7 +204,7 @@ export default function DomSpiderShell({ initialDifficulty = '1-suit' }: DomSpid
         {/* Right: Action buttons */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
           <button
-            onClick={undo}
+            onClick={handleUndo}
             disabled={moveHistory.length === 0}
             title="Undo (Ctrl+Z)"
             style={{
@@ -185,7 +224,7 @@ export default function DomSpiderShell({ initialDifficulty = '1-suit' }: DomSpid
             <Undo2 size={14} />
             {!isMobile && 'Undo'}
           </button>
-          <button onClick={() => newGame()} title="New Game" style={{ padding: '6px 14px', borderRadius: '8px', background: 'rgba(212,175,55,0.15)', border: '1px solid rgba(212,175,55,0.3)', color: '#D4AF37', fontSize: '12px', fontWeight: 600, cursor: 'pointer' }}>
+          <button onClick={handleNewGame} title="New Game" style={{ padding: '6px 14px', borderRadius: '8px', background: 'rgba(212,175,55,0.15)', border: '1px solid rgba(212,175,55,0.3)', color: '#D4AF37', fontSize: '12px', fontWeight: 600, cursor: 'pointer' }}>
             New Deal
           </button>
         </div>

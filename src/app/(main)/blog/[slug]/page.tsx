@@ -7,7 +7,7 @@ import AdUnit from "@/components/AdUnit";
 import ContentLayout from "@/components/ContentLayout";
 import { ContentHero, CardSection, ContentBody, CtaSection, JsonLd } from "@/components/content";
 import BlogPostContent from "@/components/BlogPostContent";
-import Link from "next/link";
+import Link from "@/components/NetworkLink";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -55,7 +55,7 @@ export default async function BlogPostPage({ params }: Props) {
     "@type": "Article",
     headline: post.title,
     description: post.description,
-    author: { "@type": "Organization", name: post.author },
+    author: { "@type": "Person", name: post.author },
     publisher: { "@type": "Organization", name: siteConfig.siteName },
     datePublished: post.date,
     dateModified: post.date,

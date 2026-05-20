@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/NetworkLink";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import { JsonLd } from "@/components/content";
@@ -77,13 +77,6 @@ export default function Page() {
       priceCurrency: "USD",
     },
     url: absoluteUrl("/bisley"),
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "4.6",
-      ratingCount: "712",
-      bestRating: "5",
-      worstRating: "1",
-    },
   };
 
   const breadcrumbJsonLd = {

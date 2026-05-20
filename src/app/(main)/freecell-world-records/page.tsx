@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import Link from 'next/link';
+import Link from '@/components/NetworkLink';
 import type { Metadata } from 'next';
 import { absoluteUrl, siteConfig } from '@/lib/siteConfig';
 import { canonicalUrlFor, isOwnedBy } from '@/lib/routeOwnership';
@@ -87,7 +87,7 @@ export default function FreecellWorldRecordsPage() {
         'A look at the reported FreeCell world records — fastest completions, longest win streaks, the Deal #11982 saga, and how the community tracks its greatest achievements.',
       author: {
         '@type': 'Organization',
-        name: 'Solitaire Stack Editorial Team',
+        name: siteConfig.siteName,
         url: absoluteUrl('/authors/editorial-team'),
       },
       publisher: {

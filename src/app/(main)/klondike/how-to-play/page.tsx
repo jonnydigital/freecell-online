@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
+import Link from '@/components/NetworkLink';
 import { absoluteUrl, siteConfig } from '@/lib/siteConfig';
 import ContentLayout from '@/components/ContentLayout';
 import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionHeading, ContentBody } from '@/components/content';

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/NetworkLink";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import SpiderGamePage from "./SpiderGamePage";
@@ -71,13 +71,6 @@ export default function Page() {
     genre: "Card Game",
     gamePlatform: "Web Browser",
     url: absoluteUrl("/spider"),
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "4.7",
-      ratingCount: "2891",
-      bestRating: "5",
-      worstRating: "1",
-    },
   };
 
   const appJsonLd = {
@@ -544,6 +537,51 @@ export default function Page() {
               1-Suit vs 2-Suit vs 4-Suit
             </Link>{" "}
             — Compare difficulty levels and find your match
+          </li>
+          <li>
+            <Link
+              href="/spider/faq"
+              className="text-[#D4AF37] hover:underline"
+            >
+              Spider Solitaire FAQ
+            </Link>{" "}
+            — Answers about stock deals, empty columns, suits, and winnability
+          </li>
+          <li>
+            <Link
+              href="/best-spider-solitaire-apps"
+              className="text-[#D4AF37] hover:underline"
+            >
+              Best Spider Solitaire Apps
+            </Link>{" "}
+            — Compare browser, mobile, and desktop Spider options
+          </li>
+          <li>
+            <Link
+              href="/spider-world-records"
+              className="text-[#D4AF37] hover:underline"
+            >
+              Spider Solitaire World Records
+            </Link>{" "}
+            — Fast solves, difficult feats, and how Spider achievements are tracked
+          </li>
+          <li>
+            <Link
+              href="/spider-for-seniors"
+              className="text-[#D4AF37] hover:underline"
+            >
+              Spider Solitaire for Seniors
+            </Link>{" "}
+            — Accessibility tips and gentler ways to learn Spider
+          </li>
+          <li>
+            <Link
+              href="/spider-vs-scorpion"
+              className="text-[#D4AF37] hover:underline"
+            >
+              Spider vs Scorpion
+            </Link>{" "}
+            — Compare Spider with another same-suit packing game
           </li>
           <li>
             <Link

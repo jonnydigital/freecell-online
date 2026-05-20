@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/NetworkLink";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import { JsonLd } from "@/components/content";
@@ -51,13 +51,6 @@ export default function Page() {
       priceCurrency: "USD",
     },
     url: absoluteUrl("/canfield"),
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "4.5",
-      ratingCount: "1186",
-      bestRating: "5",
-      worstRating: "1",
-    },
   };
 
   const breadcrumbJsonLd = {

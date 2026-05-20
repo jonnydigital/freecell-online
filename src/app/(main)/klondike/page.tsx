@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/NetworkLink";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import { JsonLd } from "@/components/content";
@@ -89,13 +89,6 @@ export default function Page() {
     genre: "Card Game",
     gamePlatform: "Web Browser",
     url: absoluteUrl("/klondike"),
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "4.7",
-      ratingCount: "2547",
-      bestRating: "5",
-      worstRating: "1",
-    },
   };
 
   const breadcrumbJsonLd = {
@@ -491,6 +484,15 @@ export default function Page() {
               Klondike FAQ
             </Link>{" "}
             — Common questions answered
+          </li>
+          <li>
+            <Link
+              href="/best-klondike-apps"
+              className="text-[#D4AF37] hover:underline"
+            >
+              Best Klondike Apps
+            </Link>{" "}
+            — Compare browser, mobile, and desktop Klondike options
           </li>
           <li>
             <Link

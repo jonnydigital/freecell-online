@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from '@/components/NetworkLink';
 import { siteConfig } from '@/lib/siteConfig';
 import { isOwnedBy } from '@/lib/routeOwnership';
 

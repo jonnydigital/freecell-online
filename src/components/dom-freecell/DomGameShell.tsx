@@ -26,7 +26,7 @@ import DomBoard from './DomBoard';
 import { useHint } from './useHint';
 import { announceToScreenReader } from '@/lib/accessibility';
 import AdUnit from '@/components/AdUnit';
-import Link from 'next/link';
+import Link from '@/components/NetworkLink';
 import { isHubSite } from '@/lib/siteConfig';
 import SidebarDailyChallenge from '../sidebar/SidebarDailyChallenge';
 import SidebarLeaderboard from '../sidebar/SidebarLeaderboard';
@@ -34,6 +34,17 @@ import SidebarAchievements from '../sidebar/SidebarAchievements';
 import SidebarStats from '../sidebar/SidebarStats';
 import Leaderboard from '../Leaderboard';
 import GameSwitcher from '../GameSwitcher';
+import {
+  trackAbandoned,
+  trackDeadlock,
+  trackGameStart,
+  trackHint,
+  trackMove,
+  trackPageView,
+  trackRestart,
+  trackUndo,
+  trackWin,
+} from '@/lib/analytics';
 
 // Variant display names
 const VARIANT_NAMES: Record<string, string> = {
@@ -314,6 +325,8 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
   // Track whether we've already processed a win for a given game
   const winProcessedRef = useRef<number | null>(null);
   const prevGameNumberRef = useRef(gameNumber);
+  const trackedGameStartRef = useRef<number | null>(null);
+  const trackedMoveCountRef = useRef(moveCount);
 
   // ── Init: start with specified game, load stats, first-visit tutorial ──
   useEffect(() => {
@@ -382,6 +395,7 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
   useEffect(() => {
     if (isWon && winProcessedRef.current !== gameNumber) {
       winProcessedRef.current = gameNumber;
+      trackWin(timerSeconds, moveCount);
       setShowWin(true);
       setShowConfetti(true);
       // Auto-clear confetti after animation completes
@@ -444,6 +458,23 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isWon, gameNumber, timerSeconds, moveCount, undosUsed, solver]);
 
+  // ── Analytics: game starts and first-move timing for the DOM engine ──
+  useEffect(() => {
+    if (!gameNumber || trackedGameStartRef.current === gameNumber) return;
+    trackedGameStartRef.current = gameNumber;
+    trackedMoveCountRef.current = moveCount;
+    trackGameStart(gameNumber, 'freecell', storeVariant);
+  }, [gameNumber, moveCount, storeVariant]);
+
+  useEffect(() => {
+    if (moveCount > trackedMoveCountRef.current && !replayMode) {
+      for (let i = trackedMoveCountRef.current; i < moveCount; i++) {
+        trackMove('tap');
+      }
+    }
+    trackedMoveCountRef.current = moveCount;
+  }, [moveCount, replayMode]);
+
   // ── Leaderboard submission on daily challenge win ──
   useEffect(() => {
     if (!isWon || !isDailyGame || !gameNumber) return;
@@ -471,6 +502,7 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
   // ── Deadlock announcement ──
   useEffect(() => {
     if (noMovesAvailable && !isWon) {
+      trackDeadlock();
       announceToScreenReader('No legal moves remaining. Game is deadlocked.', 'assertive');
     }
   }, [noMovesAvailable, isWon]);
@@ -492,7 +524,11 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
     if (typeof window !== 'undefined' && gameNumber && !replayMode && !isHubSite) {
       const isLabRoute = window.location.pathname.startsWith('/lab/');
       if (!isLabRoute) {
-        window.history.replaceState({}, '', '/game/' + gameNumber);
+        const nextPath = '/game/' + gameNumber;
+        if (window.location.pathname !== nextPath) {
+          window.history.replaceState({}, '', nextPath);
+          trackPageView(nextPath);
+        }
       }
     }
   }, [gameNumber, replayMode]);
@@ -531,6 +567,7 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
   const handleNewGame = useCallback(() => {
     // Record loss if abandoning an in-progress game
     if (timerStarted && !isWon) {
+      trackAbandoned();
       setStats((prev) => {
         const updated = recordLoss(prev);
         saveStats(updated);
@@ -566,11 +603,13 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
     clearHint();
     if (replayMode) { setGhostPlaying(false); solver.reset(); stopReplay(); }
     restart();
+    trackRestart();
     announceToScreenReader('Game restarted.');
   }, [restart, clearHint, replayMode, solver, stopReplay]);
 
   const handleUndo = useCallback(() => {
     undo();
+    trackUndo();
     setUndosUsed((prev) => prev + 1);
     announceToScreenReader('Move undone');
   }, [undo]);
@@ -582,6 +621,7 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
 
   const handleHint = useCallback(() => {
     const found = requestHint();
+    trackHint();
     setHintsUsed((prev) => prev + 1);
     if (hintToastTimerRef.current) clearTimeout(hintToastTimerRef.current);
     if (found) {
@@ -674,6 +714,7 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
   const handlePlayNumber = useCallback((num: number) => {
     // Record loss if abandoning an in-progress game
     if (timerStarted && !isWon) {
+      trackAbandoned();
       setStats((prev) => {
         const updated = recordLoss(prev);
         saveStats(updated);
@@ -709,6 +750,7 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
   const handlePlayDaily = useCallback((seed: number) => {
     // Record loss if abandoning an in-progress game
     if (timerStarted && !isWon) {
+      trackAbandoned();
       setStats((prev) => {
         const updated = recordLoss(prev);
         saveStats(updated);

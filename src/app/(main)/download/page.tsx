@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/NetworkLink";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import AdUnit from "@/components/AdUnit";
@@ -631,6 +631,26 @@ export default function DownloadFreecellPage() {
                 href="/microsoft-freecell"
                 title="Microsoft FreeCell"
                 description="The story of the classic Windows game and how to play the same deals online."
+              />
+              <ContentLinkCard
+                href="/freecell-no-ads"
+                title="FreeCell With No Download"
+                description="Compare browser play, desktop clients, and paid ad-free options before installing anything."
+              />
+              <ContentLinkCard
+                href="/best-freecell-apps"
+                title="Best FreeCell Apps"
+                description="Compare FreeCell sites and apps across browsers, Windows, macOS, iOS, and Android."
+              />
+              <ContentLinkCard
+                href="/best-klondike-apps"
+                title="Best Klondike Apps"
+                description="Find a Klondike app or browser game with fair ads, undo, and Draw 1/Draw 3 support."
+              />
+              <ContentLinkCard
+                href="/best-spider-solitaire-apps"
+                title="Best Spider Apps"
+                description="Compare Spider Solitaire apps and sites for suit modes, ads, statistics, and offline play."
               />
               <ContentLinkCard
                 href="/solver"

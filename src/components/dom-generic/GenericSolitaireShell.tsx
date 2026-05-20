@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import Link from 'next/link';
+import Link from '@/components/NetworkLink';
 import { isHubSite } from '@/lib/siteConfig';
 import GameSwitcher from '../GameSwitcher';
 import AdUnit from '../AdUnit';

@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import Link from "next/link";
+import Link from "@/components/NetworkLink";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import { canonicalUrlFor, isOwnedBy } from "@/lib/routeOwnership";
@@ -62,7 +62,7 @@ export default function SolitaireGamesGuidePage() {
       dateModified: UPDATED_DATE,
       author: {
         "@type": "Organization",
-        name: "Solitaire Stack Editorial Team",
+        name: siteConfig.siteName,
         url: absoluteUrl("/authors/editorial-team"),
       },
       publisher: {
@@ -926,6 +926,36 @@ export default function SolitaireGamesGuidePage() {
               href="/solitaire-history"
               title="Solitaire History"
               description="A documented timeline of the game from late-1700s Europe to Microsoft Windows and the modern web."
+            />
+            <ContentLinkCard
+              variant="dark"
+              href="/how-solitaire-changed-windows"
+              title="How Solitaire Changed Windows"
+              description="The deeper story of how Microsoft's solitaire games taught mouse control and shaped office computing."
+            />
+            <ContentLinkCard
+              variant="dark"
+              href="/patience-solitaire"
+              title="Patience Solitaire"
+              description="Why many English-speaking countries use patience instead of solitaire, and how the terms overlap."
+            />
+            <ContentLinkCard
+              variant="dark"
+              href="/solitaire-rules-by-country"
+              title="Solitaire Rules by Country"
+              description="How patience traditions, names, and house rules shift across regions."
+            />
+            <ContentLinkCard
+              variant="dark"
+              href="/spider-vs-scorpion"
+              title="Spider vs Scorpion"
+              description="Compare two suit-building packer games with very different movement rules."
+            />
+            <ContentLinkCard
+              variant="dark"
+              href="/spider/klondike-vs-spider"
+              title="Klondike vs Spider"
+              description="A focused comparison for players choosing between the two mainstream classics."
             />
             <ContentLinkCard
               variant="dark"

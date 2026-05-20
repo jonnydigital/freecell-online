@@ -1,12 +1,13 @@
-import Link from "next/link";
+import Link from "@/components/NetworkLink";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
+import { isOwnedBy } from "@/lib/routeOwnership";
 import ContentLayout from "@/components/ContentLayout";
 import { ContentHero, CardSection, JsonLd } from "@/components/content";
 
 export const metadata: Metadata = {
   title: `Sitemap | ${siteConfig.siteName} — All Pages`,
-  description: `Browse every page on ${siteConfig.siteName}. Find FreeCell guides, strategy tips, game variants, comparisons, and more — all in one place.`,
+  description: `Browse every page on ${siteConfig.siteName}. Find game pages, strategy guides, policy pages, and more in one place.`,
   openGraph: {
     title: `Sitemap | ${siteConfig.siteName}`,
     description: `Complete directory of every page on ${siteConfig.siteName}.`,
@@ -14,12 +15,24 @@ export const metadata: Metadata = {
     siteName: siteConfig.siteName,
     type: "website",
   },
+  alternates: {
+    canonical: absoluteUrl("/sitemap"),
+  },
 };
 
 /* ── Link groups ── */
 
+const homeLink =
+  siteConfig.key === "playklondikeonline"
+    ? { href: "/", label: "Klondike Solitaire", desc: "Classic Draw 1 and Draw 3 solitaire" }
+    : siteConfig.key === "playspidersolitaireonline"
+      ? { href: "/", label: "Spider Solitaire", desc: "One-, two-, and four-suit Spider" }
+      : siteConfig.key === "solitairestack"
+        ? { href: "/", label: siteConfig.brandName, desc: "Browse the solitaire game network" }
+        : { href: "/", label: "FreeCell", desc: "Classic FreeCell solitaire" };
+
 const playLinks = [
-  { href: "/", label: "FreeCell", desc: "Classic FreeCell solitaire" },
+  homeLink,
   { href: "/bakers-game", label: "Baker's Game", desc: "Build by suit instead of alternating color" },
   { href: "/eight-off", label: "Eight Off", desc: "Eight free cells, suit-only building" },
   { href: "/spider", label: "Spider Solitaire", desc: "Two-deck solitaire with same-suit runs" },
@@ -59,6 +72,11 @@ const learnLinks = [
 const exploreLinks = [
   { href: "/history", label: "FreeCell History", desc: "From 1978 PLATO to Windows" },
   { href: "/microsoft-freecell", label: "Microsoft FreeCell", desc: "The iconic Windows game" },
+  { href: "/download", label: "FreeCell Download Guide", desc: "Browser play vs native installs" },
+  { href: "/freecell-no-ads", label: "FreeCell Without a Download", desc: "Ad-light and no-install options" },
+  { href: "/best-freecell-apps", label: "Best FreeCell Apps", desc: "FreeCell app and site roundup" },
+  { href: "/best-klondike-apps", label: "Best Klondike Apps", desc: "Klondike app and site roundup" },
+  { href: "/best-spider-solitaire-apps", label: "Best Spider Solitaire Apps", desc: "Spider app and site roundup" },
   { href: "/patience-solitaire", label: "Patience Solitaire", desc: "Complete guide to patience card games" },
   { href: "/solitaire-types", label: "Solitaire Types", desc: "20+ solitaire variants compared" },
   { href: "/freecell-variants", label: "FreeCell Variants", desc: "All FreeCell variant modes" },
@@ -162,6 +180,14 @@ function SitemapGroup({
   icon: string;
   links: { href: string; label: string; desc: string }[];
 }) {
+  const visibleLinks = links.filter((link) => {
+    if (!link.href.startsWith("/")) return true;
+    if (link.href === "/") return true;
+    return isOwnedBy(link.href, siteConfig.key);
+  });
+
+  if (visibleLinks.length === 0) return null;
+
   return (
     <CardSection>
       <div className="px-6 sm:px-8 md:px-10 pt-8 pb-0">
@@ -175,7 +201,7 @@ function SitemapGroup({
       </div>
       <div className="px-6 sm:px-8 md:px-10 py-6">
         <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-3">
-          {links.map((link) => (
+          {visibleLinks.map((link) => (
             <li key={link.href}>
               <Link
                 href={link.href}

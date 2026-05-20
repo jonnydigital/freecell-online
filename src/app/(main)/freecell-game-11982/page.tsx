@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from '@/components/NetworkLink';
 import type { Metadata } from 'next';
 import { absoluteUrl, siteConfig } from '@/lib/siteConfig';
 import AdUnit from '@/components/AdUnit';
@@ -374,6 +374,7 @@ export default function FreecellGame11982Page() {
               <ContentLinkCard href="/tips" title="Tips and Tricks" description="Quick tactical advice you can apply during live play to avoid dead-end positions." />
               <ContentLinkCard href="/hard-freecell-games" title="Hard FreeCell Games" description="Learn what makes a deal difficult and how to attack narrow positions without burning space." />
               <ContentLinkCard href="/is-every-freecell-game-winnable" title="Is Every Game Winnable?" description="The full answer to FreeCell&apos;s most common question, with practical advice for stuck positions." />
+              <ContentLinkCard href="/unsolvable-freecell-deals" title="All Unsolvable FreeCell Deals" description="See every confirmed impossible deal and how solver verification separates proof from legend." />
               <ContentLinkCard href="/winning-deals" title="Winning Deals" description="Browse deals with known solutions and study the move sequences that crack them open." />
               <ContentLinkCard href="/freecell-probability" title="Probability &amp; Math" description="The combinatorics behind FreeCell solvability and what makes Deal #11982 mathematically unique." />
               <ContentLinkCard href="/statistics" title="Statistics" description="Track your win rate, streaks, and performance across different deal difficulties." />

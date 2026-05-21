@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
 import AdSenseScript from "@/components/AdSenseScript";
-import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
+import { siteConfig } from "@/lib/siteConfig";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
@@ -50,7 +50,14 @@ const metadataKeywords =
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   alternates: {
-    canonical: absoluteUrl('/'),
+    // Relative './' is resolved by Next.js per-page against metadataBase +
+    // pathname, so every page that inherits this root layout default gets a
+    // SELF-referential canonical (e.g. /strategy -> https://host/strategy).
+    // Do NOT use an absolute root URL here (e.g. absoluteUrl('/')): that
+    // hard-codes the homepage as the canonical for every inheriting page,
+    // collapsing the entire site to its root in Google's index. Pages that
+    // need a cross-domain owner canonical set their own alternates.canonical.
+    canonical: './',
   },
   title: siteConfig.defaultTitle,
   description: siteConfig.defaultDescription,

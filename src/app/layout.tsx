@@ -49,14 +49,14 @@ const metadataKeywords =
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
+  // Self-referential canonical: the relative './' is resolved by Next.js
+  // per-page against metadataBase + pathname, so each page that inherits this
+  // default gets its OWN URL as canonical (e.g. /strategy -> host/strategy).
+  // Never hard-code an absolute root URL here — that points every inheriting
+  // page at the homepage and collapses the site to its root in Google's index.
+  // Guarded by scripts/audit-canonicals.mjs (root layout check); see QA report
+  // 2026-05-21. Pages needing a cross-domain owner canonical set their own.
   alternates: {
-    // Relative './' is resolved by Next.js per-page against metadataBase +
-    // pathname, so every page that inherits this root layout default gets a
-    // SELF-referential canonical (e.g. /strategy -> https://host/strategy).
-    // Do NOT use an absolute root URL here (e.g. absoluteUrl('/')): that
-    // hard-codes the homepage as the canonical for every inheriting page,
-    // collapsing the entire site to its root in Google's index. Pages that
-    // need a cross-domain owner canonical set their own alternates.canonical.
     canonical: './',
   },
   title: siteConfig.defaultTitle,

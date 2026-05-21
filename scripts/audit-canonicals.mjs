@@ -58,6 +58,7 @@ const __dirname = path.dirname(__filename);
 const REPO_ROOT = path.resolve(__dirname, '..');
 const ROUTE_OWNERSHIP_TS = path.join(REPO_ROOT, 'src/lib/routeOwnership.ts');
 const APP_MAIN_DIR = path.join(REPO_ROOT, 'src/app/(main)');
+const ROOT_LAYOUT_TS = path.join(REPO_ROOT, 'src/app/layout.tsx');
 
 const SITE_DOMAINS = {
   solitairestack: 'https://solitairestack.com',
@@ -501,6 +502,40 @@ const pageFiles = [...walkPageTsx(APP_MAIN_DIR)].sort();
 const results = pageFiles.map(auditFile);
 
 // ---------------------------------------------------------------------------
+// Root layout default canonical check
+// ---------------------------------------------------------------------------
+// Pages WITHOUT their own alternates.canonical (MISSING above) inherit the
+// root layout's default. That default MUST be the relative self-referential
+// './' value, which Next.js resolves per-page against metadataBase + pathname.
+// If it is an absolute URL (e.g. absoluteUrl('/') or 'https://host/'), every
+// inheriting page canonicalises to the homepage, collapsing the whole site to
+// its root in Google's index. Regression shipped 2026-05-20 (commit e408d21),
+// caught 2026-05-21 — this check exists so it cannot happen silently again.
+function auditRootLayout() {
+  let src;
+  try {
+    src = fs.readFileSync(ROOT_LAYOUT_TS, 'utf8');
+  } catch (err) {
+    return { status: 'ERROR', found: null, note: err.message };
+  }
+  const found = extractCanonical(src);
+  if (!found) return { status: 'MISSING', found: null };
+  // Acceptable: a relative self-referential value ('./' or '.').
+  if (found.kind === 'string' && (found.value === './' || found.value === '.')) {
+    return { status: 'OK', found: found.raw };
+  }
+  // Broken: absoluteUrl(...) or an absolute/bare-root string hard-codes one
+  // URL as the canonical for every page that inherits this default.
+  if (found.kind === 'absoluteUrl' || found.kind === 'string') {
+    return { status: 'BROKEN', found: found.raw };
+  }
+  // Anything else we can't statically resolve — flag for manual review.
+  return { status: 'REVIEW', found: found.raw };
+}
+
+const layoutResult = auditRootLayout();
+
+// ---------------------------------------------------------------------------
 // Output
 // ---------------------------------------------------------------------------
 const counts = {
@@ -518,6 +553,20 @@ function printHuman() {
   console.log('Scanning: src/app/(main)/**/page.tsx');
   console.log(`Routes in ownership map: ${Object.keys(ROUTE_OWNERSHIP).length}`);
   console.log(`Page files found: ${results.length}`);
+  console.log('');
+  console.log('Root layout default canonical (src/app/layout.tsx):');
+  if (layoutResult.status === 'OK') {
+    console.log(`   OK — relative self-referential default: ${layoutResult.found}`);
+  } else if (layoutResult.status === 'BROKEN') {
+    console.log(`   BROKEN — default is ${layoutResult.found}`);
+    console.log(`   This hard-codes ONE canonical for every page that lacks its`);
+    console.log(`   own alternates.canonical, collapsing each site to its root in`);
+    console.log(`   Google's index. Use a relative './' default instead.`);
+  } else if (layoutResult.status === 'MISSING') {
+    console.log(`   WARN — no default canonical found; MISSING pages emit none.`);
+  } else {
+    console.log(`   ${layoutResult.status} — ${layoutResult.found ?? layoutResult.note}`);
+  }
   console.log('');
   console.log(`OK: ${counts.OK}`);
   console.log(`DYNAMIC (canonicalUrlFor): ${counts.DYNAMIC}`);
@@ -612,6 +661,7 @@ if (opts.json) {
         routesInOwnershipMap: Object.keys(ROUTE_OWNERSHIP).length,
         pageFilesFound: results.length,
         counts,
+        rootLayoutCanonical: layoutResult,
         results,
       },
       null,
@@ -622,6 +672,8 @@ if (opts.json) {
   printHuman();
 }
 
-const hasIssues = counts.MISMATCH > 0 || counts.MISSING > 0;
+const layoutBroken =
+  layoutResult.status === 'BROKEN' || layoutResult.status === 'ERROR';
+const hasIssues = counts.MISMATCH > 0 || counts.MISSING > 0 || layoutBroken;
 if (opts.failOnIssues && hasIssues) process.exit(1);
 process.exit(0);

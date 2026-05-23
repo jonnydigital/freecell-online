@@ -41,7 +41,7 @@ const FAQS = [
 export const metadata: Metadata = {
   title: `Spider Solitaire Opening Strategy — First 10 Moves That Matter | ${siteConfig.siteName}`,
   description:
-    "Master the Spider Solitaire opening. Learn which cards to move first, when to break suit, how to read the initial deal, and the priority system that separates winning openings from losing ones.",
+    "Master the Spider Solitaire opening: which cards to move first, when to break suit, how to read the deal, and the priority system behind winning starts.",
   keywords: [
     "spider solitaire opening strategy",
     "spider solitaire first moves",

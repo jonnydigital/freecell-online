@@ -8,7 +8,7 @@ import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionH
 export const metadata: Metadata = {
   title: "Aces Up Solitaire Strategy Guide | Winning Techniques & Tips",
   description:
-    "Master Aces Up Solitaire with proven strategies for discard hierarchy, empty column management, suit tracking, and ace preservation. Boost your win rate from 10% to 25% with expert techniques.",
+    "Master Aces Up Solitaire: discard hierarchy, empty-column management, suit tracking, and ace preservation. Lift your win rate from 10% to 25%.",
   keywords: [
     "aces up solitaire strategy",
     "aces up solitaire winning strategy",

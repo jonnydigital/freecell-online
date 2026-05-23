@@ -10,7 +10,7 @@ import AuthorBio from "@/components/content/AuthorBio";
 export const metadata: Metadata = {
   title: "Bristol Solitaire | Play Online Free — Fan Layout Card Game",
   description:
-    "Play Bristol Solitaire online for free. Deal 8 fans of 3 cards, use 3 reserve piles, and build foundations A→K by suit. Any-suit tableau building with the unique Kings restriction. No download required.",
+    "Play Bristol Solitaire online for free. Deal 8 fans of 3, use 3 reserves, build foundations A→K by suit with the unique Kings rule. No download required.",
   keywords: [
     "bristol solitaire",
     "bristol solitaire online",

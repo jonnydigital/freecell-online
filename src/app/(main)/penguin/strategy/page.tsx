@@ -8,7 +8,7 @@ import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionH
 export const metadata: Metadata = {
   title: "Penguin Solitaire Strategy Guide | Winning Techniques & Tips",
   description:
-    "Master Penguin Solitaire with advanced strategies for flipper management, base rank adaptation, same-suit sequence building, and empty column tactics. Win more games with expert methods.",
+    "Master Penguin Solitaire: flipper management, base-rank adaptation, same-suit sequence building, and empty-column tactics. Win more with expert methods.",
   keywords: [
     "penguin solitaire strategy",
     "penguin solitaire winning strategy",

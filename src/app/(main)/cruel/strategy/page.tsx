@@ -8,7 +8,7 @@ import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionH
 export const metadata: Metadata = {
   title: "Cruel Solitaire Strategy Guide | Master the Predictable Redeal",
   description:
-    "Master Cruel Solitaire with expert strategies for exploiting the deterministic redeal mechanic, pre-redeal planning, foundation timing, and pile management. Win more games by thinking two states ahead.",
+    "Master Cruel Solitaire: exploit the deterministic redeal, plan before redealing, time foundations, and win more by thinking two states ahead.",
   keywords: [
     "cruel solitaire strategy",
     "cruel solitaire winning strategy",

@@ -10,7 +10,7 @@ import AuthorBio from "@/components/content/AuthorBio";
 export const metadata: Metadata = {
   title: "Baker's Dozen Solitaire | Play Online Free — 13-Column Patience Card Game",
   description:
-    "Play Baker's Dozen Solitaire online for free. A classic patience card game with 13 columns, Kings-to-bottom setup rule, and no free cells. Build down regardless of suit. No download required.",
+    "Play Baker's Dozen Solitaire online for free. 13 columns, Kings-to-bottom setup, no free cells, build down regardless of suit. No download required.",
   keywords: [
     "bakers dozen solitaire",
     "bakers dozen solitaire online",

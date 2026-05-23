@@ -10,7 +10,7 @@ import MoreGames from '@/components/MoreGames';
 export const metadata: Metadata = {
   title: "Clock Solitaire | Play Clock Patience Online Free — Card Game",
   description:
-    "Play Clock Solitaire (Clock Patience) online for free. Deal 52 cards into a clock face and flip cards to their matching positions. A classic luck-based patience game. No download required.",
+    "Play Clock Solitaire (Clock Patience) online for free. Deal 52 cards into a clock face and flip cards to their positions. A classic luck-based game.",
   keywords: [
     "clock solitaire",
     "clock patience",

@@ -8,7 +8,7 @@ import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionH
 export const metadata: Metadata = {
   title: "Accordion Solitaire Tips & Tricks | Compress the Row Like a Pro",
   description:
-    "Master Accordion Solitaire with practical tips on matching by rank vs suit, the 1-left vs 3-left rule, look-ahead strategy, chain reactions, and managing the extremely low ~2% win rate.",
+    "Master Accordion Solitaire: matching by rank vs suit, the 1-left vs 3-left rule, look-ahead play, chain reactions, and the very low ~2% win rate.",
   keywords: [
     "accordion solitaire tips",
     "accordion solitaire strategy",

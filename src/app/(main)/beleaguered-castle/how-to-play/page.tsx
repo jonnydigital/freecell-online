@@ -8,7 +8,7 @@ import NetworkCrossLinks from "@/components/NetworkCrossLinks";
 export const metadata: Metadata = {
   title: "How to Play Beleaguered Castle | Rules & Strategy Guide",
   description:
-    "Learn how to play Beleaguered Castle solitaire with complete rules, setup guide, and winning strategies. Zero free cells, aces pre-placed on foundations, descending-rank stacking regardless of suit.",
+    "Learn how to play Beleaguered Castle: complete rules, setup, and strategy. Zero free cells, aces pre-placed, descending stacking regardless of suit.",
   keywords: [
     "beleaguered castle rules",
     "how to play beleaguered castle",

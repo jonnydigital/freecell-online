@@ -9,7 +9,7 @@ import AuthorByline from "@/components/content/AuthorByline";
 export const metadata: Metadata = {
   title: "Klondike Solitaire for Beginners — Your First Game Guide",
   description:
-    "New to Klondike Solitaire? This step-by-step beginner guide walks you through setup, basic rules, your first game, building foundations, when to draw from the stock, and common mistakes to avoid.",
+    "New to Klondike? A step-by-step beginner guide: setup, basic rules, your first game, building foundations, drawing from stock, and common mistakes.",
   keywords: [
     "klondike solitaire for beginners",
     "klondike solitaire beginner guide",

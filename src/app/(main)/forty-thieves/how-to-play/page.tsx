@@ -8,7 +8,7 @@ import AdUnit from "@/components/AdUnit";
 export const metadata: Metadata = {
   title: "How to Play Forty Thieves Solitaire | Rules, Setup & Strategy",
   description:
-    "Learn how to play Forty Thieves Solitaire with our complete guide. Rules for same-suit building, single card moves, stock management, and winning strategies for this challenging 2-deck game.",
+    "Learn how to play Forty Thieves Solitaire: rules for same-suit building, single-card moves, stock management, and strategy for this tough two-deck game.",
   keywords: [
     "how to play forty thieves solitaire",
     "forty thieves solitaire rules",

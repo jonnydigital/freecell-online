@@ -8,7 +8,7 @@ import { ContentHero, SectionHeading, CardSection, ContentBody, TocPills, CtaSec
 export const metadata: Metadata = {
   title: "25 FreeCell Tips & Tricks | Quick Ways to Win More Games",
   description:
-    "25 actionable FreeCell tips and tricks to improve your win rate immediately. Quick, scannable advice for beginners and intermediate players — from first-move strategy to endgame technique.",
+    "25 actionable FreeCell tips to improve your win rate fast. Quick, scannable advice for beginners and intermediate players, from first move to endgame.",
   keywords: [
     "freecell tips",
     "freecell tricks",

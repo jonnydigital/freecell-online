@@ -8,7 +8,7 @@ import AdUnit from "@/components/AdUnit";
 export const metadata: Metadata = {
   title: "Eight Off Strategy Guide — Making the Most of 8 Reserve Cells",
   description:
-    "Master Eight Off solitaire with our in-depth strategy guide. Learn reserve cell management, same-suit sequencing, opening analysis, and how Eight Off differs from FreeCell and Baker's Game.",
+    "Master Eight Off Solitaire: reserve-cell management, same-suit sequencing, opening analysis, and how Eight Off differs from FreeCell and Baker's Game.",
   keywords: [
     "eight off strategy",
     "eight off solitaire tips",

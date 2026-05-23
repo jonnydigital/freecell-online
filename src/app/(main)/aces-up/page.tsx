@@ -10,7 +10,7 @@ import AuthorBio from "@/components/content/AuthorBio";
 export const metadata: Metadata = {
   title: "Aces Up Solitaire | Play Idiot's Delight Online Free — Card Game",
   description:
-    "Play Aces Up Solitaire (Idiot's Delight) online for free. Remove lower-ranked cards of the same suit until only four Aces remain. A classic patience game with a ~10% win rate. No download required.",
+    "Play Aces Up Solitaire (Idiot's Delight) online for free. Remove lower same-suit cards until only four Aces remain. ~10% win rate. No download required.",
   keywords: [
     "aces up solitaire",
     "idiot's delight solitaire",

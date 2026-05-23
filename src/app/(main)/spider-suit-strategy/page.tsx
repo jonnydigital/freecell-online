@@ -56,7 +56,7 @@ const FAQS = [
 export const metadata: Metadata = {
   title: `1-Suit vs 2-Suit vs 4-Suit Spider: Strategic Transitions | ${siteConfig.siteName}`,
   description:
-    "The three Spider Solitaire difficulty modes play like three different games. A deep guide to what changes tactically between 1-suit, 2-suit, and 4-suit, how skills transfer, and when to step down difficulty.",
+    "Spider's 1-suit, 2-suit, and 4-suit modes play like three different games. A deep guide to what changes tactically and when to step down difficulty.",
   keywords: [
     "spider suit strategy",
     "1 suit spider solitaire",

@@ -22,7 +22,7 @@ const UPDATED_DATE = "2026-04-05";
 export const metadata: Metadata = {
   title: `Klondike Vegas Scoring: Strategy and Economics | ${siteConfig.siteName}`,
   description:
-    "Klondike Vegas scoring explained: the rules, the expected-value math, when to concede, Draw 1 vs Draw 3 in Vegas mode, session bankroll strategy, and whether Vegas is beatable long term.",
+    "Klondike Vegas scoring explained: the rules, expected-value math, when to concede, Draw 1 vs Draw 3, bankroll strategy, and whether it's beatable.",
   keywords: [
     "klondike vegas scoring",
     "vegas solitaire",

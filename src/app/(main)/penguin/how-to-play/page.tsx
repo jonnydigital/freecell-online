@@ -8,7 +8,7 @@ import NetworkCrossLinks from "@/components/NetworkCrossLinks";
 export const metadata: Metadata = {
   title: "How to Play Penguin Solitaire | Rules & Strategy Guide",
   description:
-    "Learn how to play Penguin Solitaire with complete rules, setup guide, and winning strategies. Dynamic beak card, foundation wrapping, same-suit tableau building, and flipper cell mechanics explained.",
+    "Learn how to play Penguin Solitaire: complete rules, setup, the dynamic beak card, foundation wrapping, same-suit building, and flipper-cell mechanics.",
   keywords: [
     "penguin solitaire rules",
     "how to play penguin solitaire",

@@ -23,7 +23,7 @@ const ROUTE = "/freecell-mastery";
 export const metadata: Metadata = {
   title: `FreeCell Mastery: From Beginner to Expert | ${siteConfig.siteName}`,
   description:
-    "A complete FreeCell mastery guide: the four pillars of play, opening theory, cell economics, supermoves, endgame technique, Microsoft deal distribution, and tournament-level preparation.",
+    "A complete FreeCell mastery guide: the four pillars of play, opening theory, cell economics, supermoves, endgame technique, and tournament preparation.",
   keywords: [
     "freecell mastery",
     "freecell expert strategy",

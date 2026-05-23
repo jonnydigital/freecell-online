@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   title:
     "FreeCell vs Baker\u2019s Game | The Same Layout, Very Different Strategy",
   description:
-    "FreeCell vs Baker\u2019s Game compared head to head \u2014 same-suit vs alternating-color building, win rates, difficulty, strategy depth, and which open solitaire game suits your skill level.",
+    "FreeCell vs Baker's Game, head to head: same-suit vs alternating-color building, win rates, difficulty, strategy depth, and which suits your skill level.",
   keywords: [
     "freecell vs bakers game",
     "bakers game vs freecell",

@@ -8,7 +8,7 @@ import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionH
 export const metadata: Metadata = {
   title: "Accordion Solitaire Strategy Guide | Winning Techniques & Tips",
   description:
-    "Master Accordion Solitaire with proven strategies for row scanning, three-position matching, cascade planning, and restart decisions. Improve your win rate in one of solitaire's hardest variants.",
+    "Master Accordion Solitaire: row scanning, three-position matching, cascade planning, and restart decisions. Improve at one of solitaire's hardest games.",
   keywords: [
     "accordion solitaire strategy",
     "accordion solitaire winning strategy",

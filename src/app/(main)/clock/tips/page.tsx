@@ -8,7 +8,7 @@ import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionH
 export const metadata: Metadata = {
   title: "Clock Solitaire Tips & Tricks | Understanding the Pure-Luck Classic",
   description:
-    "Everything you need to know about Clock Solitaire — why there are no decisions to make, what determines the ~1% win rate, how to appreciate the elegant chain-reaction mechanic, and games to try next.",
+    "Everything to know about Clock Solitaire: why there are no decisions, what drives the ~1% win rate, the chain-reaction mechanic, and games to try next.",
   keywords: [
     "clock solitaire tips",
     "clock solitaire strategy",

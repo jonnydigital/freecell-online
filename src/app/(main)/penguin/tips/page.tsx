@@ -8,7 +8,7 @@ import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionH
 export const metadata: Metadata = {
   title: "Penguin Solitaire Tips & Tricks | Master the Beak Card Variant",
   description:
-    "Master Penguin Solitaire with practical tips on beak card analysis, flipper cell management, same-suit sequence building, wrapping foundations, and empty column strategy. ~90-95% winnable.",
+    "Master Penguin Solitaire: beak-card analysis, flipper cells, same-suit building, wrapping foundations, and empty-column play. ~90-95% winnable.",
   keywords: [
     "penguin solitaire tips",
     "penguin solitaire strategy",

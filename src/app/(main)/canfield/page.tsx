@@ -10,7 +10,7 @@ import MoreGames from '@/components/MoreGames';
 export const metadata: Metadata = {
   title: "Canfield Solitaire | Play Online Free — No Download",
   description:
-    "Play Canfield Solitaire online for free. Build four foundations up in suit from a random base rank with wrapping. Reserve pile, stock draws of three, and unlimited redeals. Undo, hints, mobile-friendly.",
+    "Play Canfield Solitaire online for free. Build foundations up in suit from a random base with wrapping, reserve pile, stock-of-three, unlimited redeals.",
   keywords: [
     "canfield solitaire",
     "canfield solitaire online",

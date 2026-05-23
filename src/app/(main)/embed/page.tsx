@@ -10,7 +10,7 @@ import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionH
 export const metadata: Metadata = {
   title: "Embed Free FreeCell Solitaire on Your Website | No Cost, No Ads",
   description:
-    "Add a free, ad-free, playable FreeCell solitaire game to your website or blog. Copy one line of code — works on WordPress, Squarespace, Wix, HTML, and any platform that supports iframes.",
+    "Add a free, ad-free, playable FreeCell game to your site or blog. Copy one line of code — works on WordPress, Squarespace, Wix, HTML, and any iframe host.",
   keywords: [
     "embed freecell",
     "freecell widget",

@@ -18,7 +18,7 @@ import AuthorByline from "@/components/content/AuthorByline";
 export const metadata: Metadata = {
   title: `Unsolvable FreeCell: All 8 Impossible Games Proven So Far`,
   description:
-    "All 8 unsolvable FreeCell deals — proven impossible by exhaustive computer search. Deal #11982 and the 7 others discovered in the million-deal extended set, with the math behind why they cannot be won.",
+    "All 8 unsolvable FreeCell deals, proven impossible by exhaustive search — deal #11982 and the 7 others, plus the math behind why they can't be won.",
   keywords: [
     "unsolvable freecell",
     "freecell unsolvable games",

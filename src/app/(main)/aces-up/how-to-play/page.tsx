@@ -8,7 +8,7 @@ import NetworkCrossLinks from "@/components/NetworkCrossLinks";
 export const metadata: Metadata = {
   title: "How to Play Aces Up Solitaire | Idiot's Delight Rules & Strategy Guide",
   description:
-    "Learn how to play Aces Up Solitaire (Idiot's Delight) with complete rules, strategy tips, and history. Understand the discard mechanic, empty pile tactics, and how to improve your ~10% win rate.",
+    "Learn how to play Aces Up (Idiot's Delight): rules, strategy, and history. The discard mechanic, empty-pile tactics, and beating the ~10% win rate.",
   keywords: [
     "aces up solitaire rules",
     "how to play aces up",

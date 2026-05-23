@@ -10,7 +10,7 @@ import AuthorBio from "@/components/content/AuthorBio";
 export const metadata: Metadata = {
   title: "Calculation Solitaire | Play Online Free — Math-Based Card Game",
   description:
-    "Play Calculation Solitaire online for free. Build four foundations using different counting intervals (1s, 2s, 3s, 4s). Suit doesn't matter — only rank and math skills. No download required.",
+    "Play Calculation Solitaire online for free. Build four foundations on counting intervals (1s, 2s, 3s, 4s) — suit doesn't matter, only rank. No download.",
   keywords: [
     "calculation solitaire",
     "calculation solitaire online",

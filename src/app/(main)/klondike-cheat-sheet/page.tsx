@@ -9,7 +9,7 @@ import AuthorByline from "@/components/content/AuthorByline";
 export const metadata: Metadata = {
   title: "Klondike Solitaire Cheat Sheet — Quick Rules Reference",
   description:
-    "Printable Klondike Solitaire cheat sheet covering setup, card movement rules, Draw 1 vs Draw 3 differences, scoring systems, keyboard shortcuts, and a decision flowchart. Bookmark this quick reference.",
+    "A printable Klondike Solitaire cheat sheet: setup, card-movement rules, Draw 1 vs Draw 3, scoring, keyboard shortcuts, and a decision flowchart.",
   keywords: [
     "klondike solitaire cheat sheet",
     "solitaire quick reference",

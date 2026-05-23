@@ -10,7 +10,7 @@ import MoreGames from '@/components/MoreGames';
 export const metadata: Metadata = {
   title: "Cruel Solitaire | Play Online Free — Redeal Patience Card Game",
   description:
-    "Play Cruel Solitaire online for free. A patience card game with 12 piles, same-suit building, and a unique redeal mechanic. Aces start on foundations, build up by suit. No download required.",
+    "Play Cruel Solitaire online for free. 12 piles, same-suit building, and a unique redeal. Aces start on foundations; build up by suit. No download required.",
   keywords: [
     "cruel solitaire",
     "cruel solitaire online",

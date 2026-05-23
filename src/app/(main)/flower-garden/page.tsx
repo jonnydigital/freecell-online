@@ -10,7 +10,7 @@ import AuthorBio from "@/components/content/AuthorBio";
 export const metadata: Metadata = {
   title: "Flower Garden Solitaire | Play Online Free — Bouquet Reserve Card Game",
   description:
-    "Play Flower Garden Solitaire online for free. A classic patience game with a 16-card bouquet reserve — every card available to play anytime. 6 columns, build down regardless of suit. No download required.",
+    "Play Flower Garden Solitaire online for free. A 16-card bouquet reserve, 6 columns, build down any suit. Hints, undo, mobile-friendly. No download.",
   keywords: [
     "flower garden solitaire",
     "flower garden solitaire online",

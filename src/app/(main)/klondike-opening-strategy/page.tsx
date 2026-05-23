@@ -13,7 +13,7 @@ const UPDATED_DATE = "2026-04-12";
 export const metadata: Metadata = {
   title: `Klondike Solitaire Opening Strategy — Setting Up for Success | ${siteConfig.siteName}`,
   description:
-    "Master the opening moves in Klondike Solitaire. Learn when to move Aces, how to expose face-down cards, King placement strategy, Draw 1 vs Draw 3 openings, and the moves that look good but cost you games.",
+    "Master Klondike's opening moves: when to play Aces, exposing face-down cards, King placement, Draw 1 vs Draw 3, and traps that quietly cost you games.",
   keywords: [
     "klondike opening strategy",
     "klondike solitaire opening moves",

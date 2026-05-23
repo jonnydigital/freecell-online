@@ -56,7 +56,7 @@ const UPDATED_DATE = "2026-04-12";
 export const metadata: Metadata = {
   title: `Spider Solitaire for Beginners — Learn to Play Step by Step | ${siteConfig.siteName}`,
   description:
-    "A complete beginner's guide to Spider Solitaire. Learn the rules, understand the three difficulty levels, walk through your first 1-suit game, and avoid the mistakes that trip up new players.",
+    "A complete beginner's guide to Spider Solitaire: the rules, the three difficulty levels, your first 1-suit game, and the mistakes that trip up newcomers.",
   keywords: [
     "spider solitaire for beginners",
     "how to play spider solitaire",

@@ -10,7 +10,7 @@ import AuthorBio from "@/components/content/AuthorBio";
 export const metadata: Metadata = {
   title: "Seahaven Towers Solitaire | Play Online Free — Strategic Card Game",
   description:
-    "Play Seahaven Towers online for free. Build same-suit sequences from Ace to King using 10 tableau columns and 4 free cells. Single-card moves, Kings-only empty columns. No download required.",
+    "Play Seahaven Towers online for free. Build same-suit Ace-to-King sequences with 10 columns and 4 free cells; single-card moves, Kings-only columns.",
   keywords: [
     "seahaven towers",
     "seahaven towers solitaire",

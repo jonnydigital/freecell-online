@@ -49,7 +49,7 @@ const FAQS = [
 export const metadata: Metadata = {
   title: `Spider Solitaire Endgame Strategy -- Closing Out the Win | ${siteConfig.siteName}`,
   description:
-    "Master the Spider Solitaire endgame: suit completion sequencing, empty column management after the last stock deal, deadlock avoidance, and when to accept a loss. A tactical guide for the final stretch.",
+    "Master the Spider Solitaire endgame: suit-completion sequencing, empty-column management after the last deal, deadlock avoidance, and when to fold.",
   keywords: [
     "spider solitaire endgame",
     "spider solitaire endgame strategy",

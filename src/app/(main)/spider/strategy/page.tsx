@@ -8,7 +8,7 @@ import AdUnit from "@/components/AdUnit";
 export const metadata: Metadata = {
   title: "Spider Solitaire Strategy Guide | Tips to Win More Games",
   description:
-    "Master Spider Solitaire with our in-depth strategy guide. Expert tips for 1-suit, 2-suit, and 4-suit difficulty levels. Learn when to deal, how to manage empty columns, and avoid common mistakes.",
+    "Master Spider Solitaire with an in-depth strategy guide. Tips for 1-, 2-, and 4-suit play: when to deal, how to manage empty columns, and what to avoid.",
   keywords: [
     "spider solitaire strategy",
     "spider solitaire tips",

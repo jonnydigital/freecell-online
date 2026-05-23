@@ -8,7 +8,7 @@ import NetworkCrossLinks from "@/components/NetworkCrossLinks";
 export const metadata: Metadata = {
   title: "How to Play Clock Solitaire | Clock Patience Rules & Guide",
   description:
-    "Learn how to play Clock Solitaire (Clock Patience) with complete rules, setup guide, and history. Understand the clock face layout, win conditions, and why this classic game has only a 1% win rate.",
+    "Learn how to play Clock Solitaire (Clock Patience): complete rules, setup, and history. The clock-face layout, win conditions, and the ~1% win rate.",
   keywords: [
     "clock solitaire rules",
     "how to play clock solitaire",

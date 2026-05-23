@@ -8,7 +8,7 @@ import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionH
 export const metadata: Metadata = {
   title: "Scorpion Solitaire Tips & Tricks | Tame the Hardest Spider Variant",
   description:
-    "Master Scorpion Solitaire with 7 proven tips. Learn to build in-suit sequences, manage face-down cards, use the reserve deal wisely, and dominate empty columns with Kings-only strategy.",
+    "Master Scorpion Solitaire with 7 proven tips: build in-suit sequences, manage face-down cards, use the reserve deal wisely, and dominate empty columns.",
   keywords: [
     "scorpion solitaire tips",
     "scorpion solitaire tips and tricks",

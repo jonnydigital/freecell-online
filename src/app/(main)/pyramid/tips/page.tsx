@@ -8,7 +8,7 @@ import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionH
 export const metadata: Metadata = {
   title: "Pyramid Solitaire Tips & Tricks | Clear the Pyramid More Often",
   description:
-    "Practical Pyramid Solitaire tips that will immediately improve your win rate. Learn when to remove Kings, how to scan before matching, stock pile cycling strategy, and when to restart a lost game.",
+    "Practical Pyramid Solitaire tips to lift your win rate: when to remove Kings, how to scan before matching, stock-cycling strategy, and when to restart.",
   keywords: [
     "pyramid solitaire tips",
     "pyramid solitaire tips and tricks",

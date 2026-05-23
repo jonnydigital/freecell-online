@@ -10,7 +10,7 @@ import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionH
 export const metadata: Metadata = {
   title: "Solitaire for Beginners | Complete Guide to Getting Started",
   description:
-    "New to solitaire? This complete beginner's guide covers everything you need to know — core concepts, the 5 best starter games, common mistakes to avoid, and how to build your skills from your very first game.",
+    "New to solitaire? A complete beginner's guide: core concepts, the 5 best starter games, common mistakes to avoid, and how to build skills from game one.",
   keywords: [
     "solitaire for beginners",
     "how to play solitaire",

@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   title:
     "FreeCell vs Eight Off | More Free Cells, Tougher Rules",
   description:
-    "FreeCell vs Eight Off compared head to head \u2014 4 vs 8 free cells, alternating-color vs same-suit building, win rates, difficulty, and which open solitaire game suits your play level.",
+    "FreeCell vs Eight Off, head to head: 4 vs 8 free cells, alternating-color vs same-suit building, win rates, difficulty, and which one suits your level.",
   keywords: [
     "freecell vs eight off",
     "eight off vs freecell",

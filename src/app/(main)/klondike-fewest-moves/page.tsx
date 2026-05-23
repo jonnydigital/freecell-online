@@ -17,7 +17,7 @@ import {
 export const metadata: Metadata = {
   title: 'Fewest Moves to Win Klondike Solitaire: What Counts, What Records Exist',
   description:
-    'The answer to "what is the least moves to win Klondike solitaire" depends on how you count. A plain-English guide to move counting, shortest-game records, and how to finish faster in your own play.',
+    'What\'s the fewest moves to win Klondike? It depends how you count. A plain-English guide to move counting, shortest-game records, and finishing faster.',
   keywords: [
     'least moves to win solitaire',
     'fewest moves klondike',

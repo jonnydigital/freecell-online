@@ -8,7 +8,7 @@ import { ContentHero, SectionHeading, CardSection, ContentBody, CtaSection, Cont
 export const metadata: Metadata = {
   title: "Daily FreeCell Challenge | A New Puzzle Every Day",
   description:
-    "Play today's Daily FreeCell Challenge — the same deal for every player worldwide. Build your winning streak, compete on time and moves, and sharpen your card game skills with a fresh puzzle every day.",
+    "Play today's Daily FreeCell Challenge — the same deal for every player worldwide. Build your streak, compete on time and moves, fresh puzzle each day.",
   keywords: [
     "daily freecell",
     "freecell daily challenge",

@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title:
     "FreeCell Winning Deals & Statistics | Easiest & Hardest Game Numbers",
   description:
-    "FreeCell statistics, win rates, and deal analysis. Discover which game numbers are easiest, which are hardest, and which are unsolvable. Data on the famous 32,000 Microsoft FreeCell deals.",
+    "FreeCell stats, win rates, and deal analysis. See which game numbers are easiest, hardest, and unsolvable across the famous 32,000 Microsoft deals.",
   keywords: [
     "freecell winnable games",
     "freecell statistics",

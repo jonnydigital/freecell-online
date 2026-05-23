@@ -56,7 +56,7 @@ const FAQS = [
 export const metadata: Metadata = {
   title: `Spider Winnability: What the Numbers Say | ${siteConfig.siteName}`,
   description:
-    "A research-desk deep dive into Spider Solitaire winnability: 1-suit, 2-suit, and 4-suit win rates, solver analysis, the random deal problem, skill curves, methodology, and how Spider compares to FreeCell.",
+    "A deep dive into Spider Solitaire winnability: 1-, 2-, and 4-suit win rates, solver analysis, the random-deal problem, and how it compares to FreeCell.",
   keywords: [
     "spider solitaire win rate",
     "spider solitaire winnable",

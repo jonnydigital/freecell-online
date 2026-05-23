@@ -23,7 +23,7 @@ const PAGE_PATH = "/popular-solitaire-by-state";
 export const metadata: Metadata = {
   title: "The Most Popular Solitaire Game in Every US State",
   description:
-    "An interactive state-by-state map of America's favourite solitaire variants. FreeCell dominates the Mid-Atlantic and Midwest, Spider owns the Mountain West and coast, and Pyramid leads across the Deep South.",
+    "An interactive state-by-state map of America's favorite solitaire variants — where FreeCell, Spider, and Pyramid each dominate, and why.",
   keywords: [
     "most popular solitaire by state",
     "solitaire popularity map",

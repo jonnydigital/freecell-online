@@ -8,7 +8,7 @@ import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionH
 export const metadata: Metadata = {
   title: "Yukon Solitaire Strategy Guide | Advanced Winning Techniques",
   description:
-    "Master Yukon Solitaire with advanced strategies for face-down card liberation, King placement optimization, column clearing sequences, and multi-move planning. Win more games with proven methods.",
+    "Master Yukon Solitaire: liberating face-down cards, King placement, column-clearing sequences, and multi-move planning. Win more with proven methods.",
   keywords: [
     "yukon solitaire strategy",
     "yukon solitaire winning strategy",

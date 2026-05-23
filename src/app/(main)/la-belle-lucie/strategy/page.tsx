@@ -8,7 +8,7 @@ import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionH
 export const metadata: Metadata = {
   title: "La Belle Lucie Strategy Guide | Fan Solitaire Winning Techniques",
   description:
-    "Master La Belle Lucie with expert strategies for fan analysis, redeal planning, foundation timing, buried card recovery, and the merci rule. Win more games of this classic fan solitaire.",
+    "Master La Belle Lucie: fan analysis, redeal planning, foundation timing, buried-card recovery, and the merci rule. Win more of this classic fan game.",
   keywords: [
     "la belle lucie strategy",
     "la belle lucie solitaire strategy",

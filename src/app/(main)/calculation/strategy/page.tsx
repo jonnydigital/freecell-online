@@ -8,7 +8,7 @@ import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionH
 export const metadata: Metadata = {
   title: "Calculation Solitaire Strategy Guide | Master Modular Arithmetic",
   description:
-    "Master Calculation Solitaire with expert strategies for mod-13 arithmetic sequences, waste pile management, lookahead planning, and foundation priority. Win more games by thinking mathematically.",
+    "Master Calculation Solitaire: mod-13 arithmetic sequences, waste-pile management, lookahead planning, and foundation priority. Win by thinking ahead.",
   keywords: [
     "calculation solitaire strategy",
     "calculation solitaire winning strategy",

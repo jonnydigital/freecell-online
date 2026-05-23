@@ -10,7 +10,7 @@ import AuthorBio from "@/components/content/AuthorBio";
 export const metadata: Metadata = {
   title: "Scorpion Solitaire | Play Online Free — Strategic Card Game",
   description:
-    "Play Scorpion Solitaire online for free. Build same-suit sequences from King to Ace in this challenging 7-column card game. Move any face-up card and all cards below it. No download required.",
+    "Play Scorpion Solitaire online for free. Build same-suit King-to-Ace sequences in this tough 7-column game; move any face-up card and all below it.",
   keywords: [
     "scorpion solitaire",
     "scorpion solitaire online",

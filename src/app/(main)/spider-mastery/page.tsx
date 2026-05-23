@@ -56,7 +56,7 @@ const UPDATED_DATE = "2026-04-05";
 export const metadata: Metadata = {
   title: `Spider Solitaire Mastery: The Complete Guide | ${siteConfig.siteName}`,
   description:
-    "The complete guide to Spider Solitaire mastery: the two-deck puzzle, four strategic pillars, opening principles, column-clearing framework, stock management, and the ten mistakes that cost games.",
+    "The complete guide to Spider Solitaire mastery: the two-deck puzzle, four strategic pillars, opening principles, stock management, and ten costly mistakes.",
   keywords: [
     "spider solitaire mastery",
     "spider solitaire guide",

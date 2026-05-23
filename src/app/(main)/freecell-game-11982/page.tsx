@@ -8,7 +8,7 @@ import { SectionHeading, CardSection, ContentBody, CtaSection, ContentLinkCard, 
 export const metadata: Metadata = {
   title: 'FreeCell #11982: The Unsolvable & Impossible Deal',
   description:
-    'FreeCell 11982 is the only proven unsolvable, impossible deal — the one FreeCell game no human or computer has ever won. Why it cannot be solved, how it was found, and why players still try.',
+    'FreeCell 11982 is the only proven unsolvable deal — the one game no human or computer has won. Why it can\'t be solved and how it was discovered.',
   keywords: [
     'freecell 11982',
     'freecell game 11982',

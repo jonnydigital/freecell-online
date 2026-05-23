@@ -8,7 +8,7 @@ import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionH
 export const metadata: Metadata = {
   title: "Baker's Game Tips & Tricks | Master Same-Suit Stacking",
   description:
-    "Improve your Baker's Game win rate with expert tips on same-suit sequencing, free cell management, empty cascade tactics, and avoiding common FreeCell habits. ~75% of deals are solvable.",
+    "Improve your Baker's Game win rate: same-suit sequencing, free-cell management, empty-cascade tactics, and avoiding old FreeCell habits. ~75% solvable.",
   keywords: [
     "bakers game tips",
     "bakers game solitaire tips",

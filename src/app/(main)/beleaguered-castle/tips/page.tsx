@@ -8,7 +8,7 @@ import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionH
 export const metadata: Metadata = {
   title: "Beleaguered Castle Tips & Tricks | Conquer the No-Free-Cell Challenge",
   description:
-    "7 expert tips to win Beleaguered Castle Solitaire. Master empty column tactics, rank-only building, foundation order planning, and ace strategies to beat this brutal no-free-cell variant.",
+    "7 expert tips for Beleaguered Castle: empty-column tactics, rank-only building, foundation-order planning, and ace strategy for this brutal variant.",
   keywords: [
     "beleaguered castle tips",
     "beleaguered castle strategy",

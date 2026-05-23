@@ -23,7 +23,7 @@ const UPDATED_DATE = "2026-04-05";
 export const metadata: Metadata = {
   title: `The History of Solitaire: From Patience to Windows and Beyond | ${siteConfig.siteName}`,
   description:
-    "A documented history of solitaire: late-1700s European origins, Victorian patience anthologies, Napoleon legend, Klondike and Canfield, Windows Solitaire, FreeCell, and the internet age.",
+    "A documented history of solitaire: late-1700s European origins, Victorian patience books, the Napoleon legend, Klondike, Canfield, and Windows Solitaire.",
   keywords: [
     "history of solitaire",
     "solitaire origins",

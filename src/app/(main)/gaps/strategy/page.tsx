@@ -8,7 +8,7 @@ import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionH
 export const metadata: Metadata = {
   title: "Gaps Solitaire Strategy Guide | Winning Techniques & Expert Tips",
   description:
-    "Master Gaps Solitaire with advanced strategies for gap positioning, 2-placement priority, King management, reshuffle timing, and left-to-right building. Win more games with expert methods.",
+    "Master Gaps Solitaire: gap positioning, 2-placement priority, King management, reshuffle timing, and left-to-right building. Win more with expert play.",
   keywords: [
     "gaps solitaire strategy",
     "gaps solitaire winning strategy",

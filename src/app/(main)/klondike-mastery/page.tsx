@@ -22,7 +22,7 @@ const UPDATED_DATE = "2026-04-05";
 export const metadata: Metadata = {
   title: `Klondike Solitaire: The Complete Mastery Guide | ${siteConfig.siteName}`,
   description:
-    "The complete Klondike Solitaire mastery guide: layout logic, opening moves, Draw 1 vs Draw 3, midgame management, waste-pile tactics, endgame technique, and the ten most common mistakes.",
+    "The complete Klondike mastery guide: layout logic, opening moves, Draw 1 vs Draw 3, midgame and waste-pile tactics, endgame, and ten common mistakes.",
   keywords: [
     "klondike mastery",
     "klondike solitaire guide",

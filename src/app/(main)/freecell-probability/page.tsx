@@ -8,7 +8,7 @@ import { SectionHeading, CardSection, ContentBody, CtaSection, ContentLinkCard, 
 export const metadata: Metadata = {
   title: 'FreeCell Probability & Mathematics — The Numbers Behind the Game',
   description:
-    'The mathematics of FreeCell Solitaire: how deals are generated, why 99.999% are solvable, the role of free cells in the move space, and why player win rates differ from theoretical solvability.',
+    'The mathematics of FreeCell: how deals are generated, why 99.999% are solvable, the role of free cells, and why player win rates trail solvability.',
   keywords: [
     'freecell probability',
     'freecell mathematics',

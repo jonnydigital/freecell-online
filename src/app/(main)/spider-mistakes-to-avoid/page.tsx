@@ -23,7 +23,7 @@ const UPDATED_DATE = "2026-04-12";
 export const metadata: Metadata = {
   title: `12 Spider Solitaire Mistakes That Kill Your Win Rate | ${siteConfig.siteName}`,
   description:
-    "Twelve common Spider Solitaire mistakes that cost games and how to fix them. Learn why mixing suits, dealing too early, wasting empty columns, and other tactical errors destroy your win rate.",
+    "Twelve common Spider Solitaire mistakes that cost games — and how to fix them. Why mixing suits, dealing early, and wasting empty columns kill win rates.",
   keywords: [
     "spider solitaire mistakes",
     "spider solitaire tips",

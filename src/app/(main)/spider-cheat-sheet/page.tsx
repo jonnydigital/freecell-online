@@ -23,7 +23,7 @@ const UPDATED_DATE = "2026-04-12";
 export const metadata: Metadata = {
   title: `Spider Solitaire Cheat Sheet — Quick Reference Card | ${siteConfig.siteName}`,
   description:
-    "A printable quick-reference cheat sheet for Spider Solitaire: setup rules, move rules, dealing rules, win conditions by suit count, strategy tips, key statistics, keyboard shortcuts, and common patterns.",
+    "A printable Spider Solitaire cheat sheet: setup, move and dealing rules, win conditions by suit count, strategy tips, key stats, and keyboard shortcuts.",
   keywords: [
     "spider solitaire cheat sheet",
     "spider solitaire rules quick reference",

@@ -8,7 +8,7 @@ import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionH
 export const metadata: Metadata = {
   title: "How to Play Bristol Solitaire | Rules & Complete Guide",
   description:
-    "Learn how to play Bristol Solitaire with complete rules, fan building, stock dealing, reserve piles, foundation building, Kings restriction, and winning strategies for this classic patience game.",
+    "Learn how to play Bristol Solitaire: complete rules for fan building, stock dealing, reserve piles, foundations, the Kings restriction, and strategy.",
   keywords: [
     "bristol solitaire rules",
     "how to play bristol solitaire",

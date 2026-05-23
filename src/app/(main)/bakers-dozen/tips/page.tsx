@@ -8,7 +8,7 @@ import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionH
 export const metadata: Metadata = {
   title: "Baker's Dozen Solitaire Tips & Tricks | Win More with 13 Columns",
   description:
-    "Boost your Baker's Dozen Solitaire win rate with practical tips on foundation building, column management, Kings-to-bottom strategy, and maintaining access to low cards. ~65-75% winnable.",
+    "Boost your Baker's Dozen win rate: foundation building, column management, the Kings-to-bottom rule, and access to low cards. ~65-75% winnable.",
   keywords: [
     "bakers dozen solitaire tips",
     "bakers dozen solitaire strategy",

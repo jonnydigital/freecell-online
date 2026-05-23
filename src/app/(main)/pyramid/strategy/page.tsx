@@ -8,7 +8,7 @@ import AdUnit from "@/components/AdUnit";
 export const metadata: Metadata = {
   title: "Pyramid Solitaire Strategy Guide | Tips to Win More Games",
   description:
-    "Master Pyramid Solitaire with proven strategies. Learn card counting, uncovering priorities, stock pile management, and the decision frameworks that separate winning players from losing ones.",
+    "Master Pyramid Solitaire with proven strategies: card counting, uncovering priorities, stock-pile management, and the decisions that separate winners.",
   keywords: [
     "pyramid solitaire strategy",
     "pyramid solitaire tips",

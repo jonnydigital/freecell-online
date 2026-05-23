@@ -8,7 +8,7 @@ import AdUnit from "@/components/AdUnit";
 export const metadata: Metadata = {
   title: "Baker's Game Strategy Guide — Master Same-Suit Building",
   description:
-    "In-depth Baker's Game strategy guide. Learn same-suit sequencing, free cell management, empty cascade tactics, and how to avoid common FreeCell habits that hurt your Baker's Game win rate.",
+    "In-depth Baker's Game strategy: same-suit sequencing, free-cell management, empty-cascade tactics, and the FreeCell habits that hurt your win rate.",
   keywords: [
     "baker's game strategy",
     "baker's game tips",

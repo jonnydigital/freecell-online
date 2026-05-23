@@ -8,7 +8,7 @@ import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionH
 export const metadata: Metadata = {
   title: "La Belle Lucie Tips & Tricks | Win the Fan Patience Game",
   description:
-    "Expert La Belle Lucie tips to boost your win rate. Master fan mechanics, redeal strategy, the merci rule, foundation timing, and same-suit building to conquer this classic patience game.",
+    "Expert La Belle Lucie tips to boost your win rate: fan mechanics, redeal strategy, the merci rule, foundation timing, and same-suit building.",
   keywords: [
     "la belle lucie tips",
     "la belle lucie strategy",

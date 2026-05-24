@@ -507,7 +507,7 @@ export default function GamesPage() {
       <ContentHero
         title="Free Solitaire Games Online"
         kicker={<>All Games</>}
-        subtitle="Thirteen playable solitaire games plus competitive modes — all free, no download required. From beginner-friendly Easy FreeCell to the brutal 4-suit Spider challenge."
+        subtitle="28 playable solitaire games plus competitive modes — all free, no download required. From beginner-friendly Easy FreeCell to the brutal 4-suit Spider challenge."
         breadcrumbs={[{ label: "Home", href: "/" }]}
       />
 

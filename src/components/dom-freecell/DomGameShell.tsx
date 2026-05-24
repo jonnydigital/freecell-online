@@ -787,7 +787,7 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
     {/* Game Container — sticky outer has NO overflow so scroll events pass through to document */}
     <div
       data-scroll-role="game-sticky-shell"
-      className="min-w-0 flex-1 h-[100dvh] lg:sticky lg:top-4 lg:my-2"
+      className="min-w-0 lg:flex-1 h-[100dvh] lg:sticky lg:top-4 lg:my-2"
       style={{ height: 'calc(100dvh - 1rem)' }}
     >
     <div

@@ -10,7 +10,7 @@ import MoreGames from '@/components/MoreGames';
 export const metadata: Metadata = {
   title: "Forty Thieves Solitaire | Play Online Free — 2-Deck Challenge",
   description:
-    "Play Forty Thieves Solitaire online for free. The classic 2-deck patience game also known as Napoleon at St Helena. Same-suit building, 10 columns, 8 foundations. No download required.",
+    "Play Forty Thieves Solitaire free — the 2-deck patience game also known as Napoleon at St Helena. Same-suit building, 10 columns, 8 foundations. No download.",
   keywords: [
     "forty thieves solitaire",
     "forty thieves card game",

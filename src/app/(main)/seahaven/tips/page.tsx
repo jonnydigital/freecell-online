@@ -8,7 +8,7 @@ import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionH
 export const metadata: Metadata = {
   title: "Seahaven Towers Tips & Tricks | Master the FreeCell Cousin",
   description:
-    "7 expert tips and tricks for Seahaven Towers Solitaire. Master free cell management, same-suit building, Kings-only columns, tower strategy, and foundation timing to win more games.",
+    "7 expert tips for Seahaven Towers Solitaire. Master free cell management, same-suit building, Kings-only columns, tower strategy, foundation timing.",
   keywords: [
     "seahaven towers tips",
     "seahaven towers strategy",

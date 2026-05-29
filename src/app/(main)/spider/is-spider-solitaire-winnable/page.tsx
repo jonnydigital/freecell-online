@@ -8,7 +8,7 @@ import { SectionHeading, CardSection, ContentBody, CtaSection, ContentLinkCard, 
 export const metadata: Metadata = {
   title: 'Is Spider Solitaire Winnable? Win Rates by Suit Count',
   description:
-    'Can you win every Spider Solitaire game? 1-suit is nearly always solvable, but 4-suit Spider defeats most players. See real win rates, solvability stats, and tips to win more games.',
+    'Can you win every Spider Solitaire game? 1-suit is nearly always solvable, 4-suit defeats most players. Real win rates, solvability stats, tips to win more.',
   keywords: [
     'is spider solitaire winnable',
     'spider solitaire win rate',

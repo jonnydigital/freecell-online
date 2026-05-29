@@ -8,7 +8,7 @@ import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionH
 export const metadata: Metadata = {
   title: "Aces Up Solitaire Tips & Tricks | Master the Art of Discarding",
   description:
-    "Master Aces Up Solitaire (Idiot's Delight) with practical tips on discard order, empty pile management, Ace protection, suit tracking, stock timing, and embracing the ~10% win rate.",
+    "Master Aces Up Solitaire (Idiot's Delight) with tips on discard order, empty pile management, Ace protection, suit tracking, stock timing. ~10% win rate.",
   keywords: [
     "aces up solitaire tips",
     "aces up solitaire strategy",

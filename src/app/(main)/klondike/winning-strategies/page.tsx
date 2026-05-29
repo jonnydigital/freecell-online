@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   title:
     "How to Win Solitaire Every Time | Klondike Winning Strategies & Statistics",
   description:
-    "Can you win Klondike Solitaire every time? Statistical analysis of winnable games, advanced decision trees, Draw 1 vs Draw 3 tactics, and the strategies that push win rates above 80%.",
+    "Can you win Klondike every time? Statistical analysis of winnable games, decision trees, Draw 1 vs Draw 3 tactics, strategies pushing win rates above 80%.",
   keywords: [
     "how to win solitaire every time",
     "solitaire winning strategy",

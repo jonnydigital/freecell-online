@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   title:
     "Famous FreeCell Game Numbers | Legendary Deals Every Player Should Know",
   description:
-    "The most famous FreeCell game numbers explained \u2014 Deal #11982 (the impossible one), #617 (the easiest), the Microsoft 32,000 set, and the deal numbers that made FreeCell history.",
+    "Famous FreeCell game numbers explained — Deal #11982 (impossible), #617 (easiest), the Microsoft 32,000 set, and the deal numbers that made FreeCell history.",
   keywords: [
     "famous freecell game numbers",
     "freecell deal 11982",

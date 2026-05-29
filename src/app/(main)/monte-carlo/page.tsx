@@ -10,7 +10,7 @@ import AuthorBio from "@/components/content/AuthorBio";
 export const metadata: Metadata = {
   title: "Monte Carlo Solitaire | Play Online Free — 5x5 Grid Pair-Matching Game",
   description:
-    "Play Monte Carlo Solitaire online for free. Match and remove adjacent pairs of same-rank cards from a 5x5 grid. Consolidate and deal new cards to clear all 52. No download required.",
+    "Play Monte Carlo Solitaire free. Match and remove adjacent same-rank pairs from a 5x5 grid. Consolidate and deal new cards to clear all 52. No download.",
   keywords: [
     "monte carlo solitaire",
     "monte carlo solitaire online",

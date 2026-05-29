@@ -8,7 +8,7 @@ import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionH
 export const metadata: Metadata = {
   title: "Spider Solitaire Tips & Tricks | Win More Games in 2026",
   description:
-    "Practical Spider Solitaire tips for beginners and experienced players. Learn the #1 rule that separates winners from losers, plus specific advice for 1-suit, 2-suit, and 4-suit games.",
+    "Practical Spider Solitaire tips for beginners and experts. The #1 rule that separates winners from losers, plus advice for 1-suit, 2-suit, and 4-suit games.",
   keywords: [
     "spider solitaire tips",
     "spider solitaire tips and tricks",

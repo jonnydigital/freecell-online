@@ -8,7 +8,7 @@ import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionH
 export const metadata: Metadata = {
   title: "Monte Carlo Solitaire Tips & Tricks | Master the Pair-Matching Grid",
   description:
-    "Improve your Monte Carlo Solitaire win rate with practical tips on pair selection order, edge awareness, consolidation timing, rank tracking, and grid visualization. ~5-10% winnable.",
+    "Improve your Monte Carlo Solitaire win rate with tips on pair selection, edge awareness, consolidation timing, and rank tracking. ~5-10% winnable.",
   keywords: [
     "monte carlo solitaire tips",
     "monte carlo solitaire strategy",

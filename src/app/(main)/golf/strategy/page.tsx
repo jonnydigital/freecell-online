@@ -8,7 +8,7 @@ import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionH
 export const metadata: Metadata = {
   title: "Golf Solitaire Strategy Guide | Score Under Par Every Time",
   description:
-    "Master Golf Solitaire with proven strategies for tableau scanning, run building, stock pile timing, and scoring optimization. Learn to avoid Kings, count cards, and finish under par.",
+    "Master Golf Solitaire with strategies for tableau scanning, run building, stock timing, and scoring. Avoid Kings, count cards, finish under par.",
   keywords: [
     "golf solitaire strategy",
     "golf solitaire tips",

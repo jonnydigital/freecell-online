@@ -23,7 +23,7 @@ const ROUTE = '/freecell-variants';
 export const metadata: Metadata = {
   title: 'FreeCell Variants — 9+ Ways to Play FreeCell Solitaire',
   description:
-    'Explore every FreeCell variant: classic FreeCell, Baker\'s Game, Eight Off, reduced-cell modes, daily challenges, and competitive speed modes. Find the version that fits your skill level.',
+    'Explore every FreeCell variant: classic, Baker\'s Game, Eight Off, reduced-cell modes, daily challenges, and speed modes. Find the version that fits your skill.',
   keywords: [
     'freecell variants',
     'freecell game variations',

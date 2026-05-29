@@ -9,7 +9,7 @@ import SolverWidget from "./SolverWidget";
 export const metadata: Metadata = {
   title: "FreeCell Solver | Solve Any Deal Instantly",
   description:
-    "Use our free FreeCell solver to find step-by-step solutions for any game number. Powered by an A* search algorithm that explores up to 300,000 game states to solve deals in seconds.",
+    "Use our free FreeCell solver to find step-by-step solutions for any game number. A* search exploring up to 300,000 game states to solve deals in seconds.",
   keywords: [
     "freecell solver",
     "freecell solution finder",

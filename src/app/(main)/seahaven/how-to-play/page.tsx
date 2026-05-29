@@ -8,7 +8,7 @@ import NetworkCrossLinks from "@/components/NetworkCrossLinks";
 export const metadata: Metadata = {
   title: "How to Play Seahaven Towers | Rules & Strategy Guide",
   description:
-    "Learn how to play Seahaven Towers with complete rules, setup guide, and winning strategies. 10 columns, 4 free cells, same-suit stacking, single-card moves, Kings-only empty columns.",
+    "Learn how to play Seahaven Towers with full rules and winning strategy. 10 columns, 4 free cells, same-suit stacking, single-card moves, Kings-only empties.",
   keywords: [
     "seahaven towers rules",
     "how to play seahaven towers",

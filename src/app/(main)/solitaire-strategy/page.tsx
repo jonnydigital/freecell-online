@@ -23,7 +23,7 @@ const UPDATED_DATE = "2026-04-05";
 export const metadata: Metadata = {
   title: `Solitaire Strategy Fundamentals | ${siteConfig.siteName}`,
   description:
-    "Cross-game strategic principles that apply to every solitaire variant: visibility, commitment, sequencing, optionality, reading the deal, openings, midgame, endgame, and common errors.",
+    "Strategy principles for every solitaire variant: visibility, commitment, sequencing, optionality, reading the deal, openings, midgame, endgame, errors.",
   keywords: [
     "solitaire strategy",
     "solitaire fundamentals",

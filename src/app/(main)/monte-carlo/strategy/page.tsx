@@ -8,7 +8,7 @@ import AdUnit from "@/components/AdUnit";
 export const metadata: Metadata = {
   title: "Monte Carlo Solitaire Strategy Guide — Master Pair Matching",
   description:
-    "In-depth Monte Carlo Solitaire strategy guide. Learn adjacency mechanics, pair prioritization, consolidation planning, draw pile management, and how to clear all 52 cards consistently.",
+    "Monte Carlo Solitaire strategy: adjacency mechanics, pair prioritization, consolidation planning, draw management, and clearing all 52 cards consistently.",
   keywords: [
     "monte carlo solitaire strategy",
     "monte carlo solitaire tips",

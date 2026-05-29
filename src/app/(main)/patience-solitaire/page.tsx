@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   title:
     "Patience Solitaire — The Complete Guide to the Classic Card Game",
   description:
-    "Everything about patience solitaire: what it is, how it differs from solitaire, types of patience games, history, rules, and where to play the best patience card games online for free.",
+    "Patience solitaire explained: what it is, how it differs from solitaire, types of patience games, history, rules, and where to play the best games online free.",
   keywords: [
     "patience solitaire",
     "patience card game",

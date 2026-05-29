@@ -8,7 +8,7 @@ import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionH
 export const metadata: Metadata = {
   title: "Clock Solitaire Strategy Guide | Winning Techniques & Tips",
   description:
-    "Understand Clock Solitaire (Clock Patience) strategy, win rate math, probability awareness, and variants that add real decision-making. Learn what makes this luck-based classic tick.",
+    "Clock Solitaire strategy, win rate math, probability awareness, and variants that add real decision-making. What makes this luck-based classic tick.",
   keywords: [
     "clock solitaire strategy",
     "clock patience strategy",

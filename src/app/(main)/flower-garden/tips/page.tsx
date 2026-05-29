@@ -8,7 +8,7 @@ import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionH
 export const metadata: Metadata = {
   title: "Flower Garden Solitaire Tips & Tricks | Master the 16-Card Bouquet",
   description:
-    "Improve your Flower Garden Solitaire win rate with practical tips on bouquet management, empty column creation, foundation building, and strategic reserve deployment. ~30-40% winnable.",
+    "Improve your Flower Garden Solitaire win rate with tips on bouquet management, empty columns, foundation building, and reserve deployment. ~30-40% winnable.",
   keywords: [
     "flower garden solitaire tips",
     "flower garden solitaire strategy",

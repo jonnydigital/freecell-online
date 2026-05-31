@@ -5,8 +5,6 @@ import Link from '@/components/NetworkLink';
 import AdUnit from '@/components/AdUnit';
 import ScrollUnlock from '@/components/ScrollUnlock';
 import { absoluteUrl, gameUrl } from '@/lib/siteConfig';
-import StarRatingWidget from '@/components/StarRatingWidget';
-import PlayerTestimonials from '@/components/PlayerTestimonials';
 
 const faqItems = [
   {
@@ -137,11 +135,6 @@ export default function FreecellBelowFold() {
             </p>
           </div>
 
-          {/* ── Star Rating ── */}
-          <div className="mt-6 flex justify-center">
-            <StarRatingWidget />
-          </div>
-
           {/* ── Ad between hero and how-to-play ── */}
           <AdUnit className="my-8" />
 
@@ -232,9 +225,6 @@ export default function FreecellBelowFold() {
               ))}
             </div>
           </section>
-
-          {/* ── Player Testimonials ── */}
-          <PlayerTestimonials />
 
           {/* ── FAQ ── */}
           <section className="mt-10" itemScope itemType="https://schema.org/FAQPage">

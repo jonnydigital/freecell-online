@@ -8,7 +8,7 @@ import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionH
 export const metadata: Metadata = {
   title: "Forty Thieves Solitaire Tips & Strategy | Win the Hardest Solitaire",
   description:
-    "8 practical tips to beat Forty Thieves Solitaire. Master empty column strategy, same-suit building discipline, stock management, and ace priorities to boost your ~10% win rate.",
+    "8 practical tips to beat Forty Thieves Solitaire. Master empty columns, same-suit discipline, stock management, and ace priorities. ~10% win rate.",
   keywords: [
     "forty thieves tips",
     "forty thieves strategy",

@@ -8,7 +8,7 @@ import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionH
 export const metadata: Metadata = {
   title: "Calculation Solitaire Tips & Tricks | Master the Math-Based Game",
   description:
-    "Improve your Calculation Solitaire win rate with practical tips on waste pile organization, foundation sequences, buffer management, and King placement strategy. ~30-40% winnable.",
+    "Improve your Calculation Solitaire win rate with tips on waste organization, foundation sequences, buffer management, and King strategy. 30-40% winnable.",
   keywords: [
     "calculation solitaire tips",
     "calculation solitaire strategy",

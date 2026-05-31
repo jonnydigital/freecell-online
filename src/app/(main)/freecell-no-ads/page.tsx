@@ -17,7 +17,7 @@ import {
 export const metadata: Metadata = {
   title: 'FreeCell Without a Download: Honest Guide to No-Ads Options',
   description:
-    'Looking for FreeCell with no download and no ads? Here is an honest guide to every way you can play — browser-based, desktop apps, and the risks of "free FreeCell download" sites.',
+    "Want FreeCell with no download and no ads? An honest guide to every way to play — browser, desktop apps, and the risks of \"free download\" sites.",
   keywords: [
     'freecell no ads',
     'freecell download no ads',

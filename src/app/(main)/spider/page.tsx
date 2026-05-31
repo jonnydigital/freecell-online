@@ -9,7 +9,7 @@ import AuthorBio from "@/components/content/AuthorBio";
 export const metadata: Metadata = {
   title: "Spider Solitaire | Play Online Free — 1, 2 & 4 Suit",
   description:
-    "Play Spider Solitaire online for free. Choose 1-suit, 2-suit, or 4-suit difficulty. The classic 2-deck patience game with undo, hints, and statistics. No download required.",
+    "Play Spider Solitaire online free. 1-suit, 2-suit, or 4-suit difficulty. The classic 2-deck patience game with undo, hints, and statistics.",
   keywords: [
     "spider solitaire",
     "spider solitaire online",

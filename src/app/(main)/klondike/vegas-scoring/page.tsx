@@ -8,7 +8,7 @@ import { ContentHero, JsonLd, CtaSection, CardSection, SectionHeading, ContentBo
 export const metadata: Metadata = {
   title: "Klondike Vegas Scoring Explained | How Casino Solitaire Points Work",
   description:
-    "Complete guide to Klondike Solitaire Vegas scoring \u2014 how the $52 buy-in works, how to turn a profit, cumulative vs single-game scoring, and strategies to maximize your score.",
+    "Complete Klondike Vegas scoring guide — $52 buy-in, turning a profit, cumulative vs single-game scoring, and strategies to maximize your score.",
   keywords: [
     "klondike vegas scoring",
     "vegas solitaire scoring",

@@ -51,7 +51,7 @@ const FAQS = [
 export const metadata: Metadata = {
   title: `Emptying Columns: Advanced Spider Tactics | ${siteConfig.siteName}`,
   description:
-    "A deep guide to empty columns in Spider Solitaire — why they are the most valuable resource, how to create them, how to defend them, and how to avoid the traps of filling too early.",
+    "A deep guide to empty columns in Spider Solitaire: why they are valuable, how to create them, how to defend them, and the trap of filling too early.",
   keywords: [
     "spider empty columns",
     "spider column tactics",

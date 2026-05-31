@@ -8,7 +8,7 @@ import { SectionHeading, CardSection, ContentBody, CtaSection, ContentLinkCard, 
 export const metadata: Metadata = {
   title: 'FreeCell for Seniors — A Perfect Brain-Training Card Game',
   description:
-    'FreeCell Solitaire is ideal for seniors: all cards visible, no time pressure, unlimited undo, and real cognitive benefits. Learn why FreeCell is the perfect daily brain exercise.',
+    "FreeCell is ideal for seniors: all cards visible, no time pressure, unlimited undo, real cognitive benefits. Why it is the perfect daily brain exercise.",
   keywords: [
     'freecell for seniors',
     'freecell brain training',

@@ -8,7 +8,7 @@ import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionH
 export const metadata: Metadata = {
   title: "Bisley Solitaire Tips & Tricks | Master Dual-Direction Foundations",
   description:
-    "Master Bisley Solitaire with practical tips on dual-direction foundation building, meeting-point planning, flexible tableau building, and King foundation timing. ~70-80% winnable.",
+    "Master Bisley Solitaire with tips on dual-direction foundations, meeting-point planning, flexible tableau building, and King timing. 70-80% winnable.",
   keywords: [
     "bisley solitaire tips",
     "bisley solitaire strategy",

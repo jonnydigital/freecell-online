@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   title:
     "Solitaire Rules by Country | How Patience Varies Around the World",
   description:
-    "Discover how solitaire rules differ across countries and cultures. From French Patience origins to American Klondike dominance, explore the global history of solitaire card games.",
+    "How solitaire rules differ across countries and cultures. From French Patience origins to American Klondike dominance, explore the global history.",
   keywords: [
     "solitaire rules by country",
     "patience card game history",

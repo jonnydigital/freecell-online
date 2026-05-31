@@ -10,7 +10,7 @@ import AuthorBio from "@/components/content/AuthorBio";
 export const metadata: Metadata = {
   title: "Gaps Solitaire (Montana) | Play Online Free — Grid Puzzle Card Game",
   description:
-    "Play Gaps Solitaire online for free. Arrange cards in a 4×13 grid — fill the gaps to build suit sequences from 2 to King. Also known as Montana Solitaire. No download required.",
+    "Play Gaps Solitaire online for free. Arrange cards in a 4×13 grid — fill gaps to build suit sequences 2 to King. Also known as Montana Solitaire.",
   keywords: [
     "gaps solitaire",
     "gaps solitaire online",

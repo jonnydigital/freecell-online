@@ -8,7 +8,7 @@ import { ContentHero, SectionHeading, CardSection, ContentBody, TocPills, CtaSec
 export const metadata: Metadata = {
   title: "FreeCell for Beginners | Easy Step-by-Step Guide to Your First Game",
   description:
-    "Learn FreeCell from scratch with this ultra-simple beginner guide. Short sentences, clear explanations, and a step-by-step walkthrough of your first game. No experience needed.",
+    "Learn FreeCell from scratch with this ultra-simple beginner guide. Short sentences, clear explanations, and a step-by-step first-game walkthrough.",
   keywords: [
     "freecell for beginners",
     "how to play freecell for beginners",

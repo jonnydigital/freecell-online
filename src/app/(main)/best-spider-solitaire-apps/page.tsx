@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   title:
     "Best Spider Solitaire Apps & Sites in 2026 | Honest Roundup",
   description:
-    "An honest editorial roundup of the best Spider Solitaire apps and websites in 2026. Browser games, mobile apps, and desktop options reviewed for ad load, features, and playability.",
+    "An editorial roundup of the best Spider Solitaire apps and websites in 2026 — browser games, mobile apps, and desktops reviewed for ads and play.",
   keywords: [
     "best spider solitaire app",
     "spider solitaire online free",

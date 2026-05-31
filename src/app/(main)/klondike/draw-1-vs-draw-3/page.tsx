@@ -8,7 +8,7 @@ import AdUnit from "@/components/AdUnit";
 export const metadata: Metadata = {
   title: "Draw 1 vs Draw 3 Solitaire | Klondike Comparison Guide (2026)",
   description:
-    "Draw 1 vs Draw 3 Klondike Solitaire — complete comparison of rules, win rates, strategy depth, and difficulty. Learn which mode suits your skill level with data-backed analysis.",
+    "Draw 1 vs Draw 3 Klondike Solitaire — full comparison of rules, win rates, strategy depth, and difficulty. Which mode suits your skill level.",
   keywords: [
     "draw 1 vs draw 3 solitaire",
     "klondike draw 1 vs draw 3",

@@ -8,7 +8,7 @@ import AdUnit from '@/components/AdUnit';
 export const metadata: Metadata = {
   title: 'How to Play Klondike Solitaire | Complete Rules & Setup Guide',
   description:
-    'Learn how to play Klondike Solitaire — the classic card game everyone calls "Solitaire." Complete rules, setup instructions, dealing variants, scoring systems, and beginner tips.',
+    "Learn Klondike Solitaire — the classic everyone calls \"Solitaire.\" Rules, setup, dealing variants, scoring systems, and beginner tips.",
   keywords: [
     'how to play klondike solitaire',
     'klondike solitaire rules',

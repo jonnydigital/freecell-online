@@ -49,7 +49,7 @@ const games = [
     difficulty: "Medium",
     difficultyColor: "text-amber-400",
     description:
-      "The classic strategic solitaire game. Use four free cells as temporary storage to move cards between eight cascading columns. Build foundation piles from Ace to King by suit.",
+      "Classic strategic solitaire. Use four free cells as temporary storage to move cards between eight cascading columns. Build foundations Ace-to-King by suit.",
     stats: "Win rate: ~82% · 4 free cells · 8 columns",
     winRate: "~82%",
     columns: 8,
@@ -63,7 +63,7 @@ const games = [
     difficulty: "Hard",
     difficultyColor: "text-red-400",
     description:
-      "FreeCell's tougher cousin. Same layout, same four free cells — but you must build tableau columns by suit instead of alternating colors. Far fewer moves are available at any given time.",
+      "FreeCell's tougher cousin. Same layout, same four free cells — but tableau columns build by suit instead of alternating colors. Far fewer legal moves at any time.",
     stats: "Win rate: ~75% · Same-suit stacking · 4 free cells",
     winRate: "~75%",
     columns: 8,
@@ -77,7 +77,7 @@ const games = [
     difficulty: "Hard",
     difficultyColor: "text-red-400",
     description:
-      "Eight free cells instead of four — but you need them, because stacking is same-suit only. The unique layout deals cards into eight columns of six, with four cards going directly to the reserve.",
+      "Eight free cells instead of four — and you'll need them, because stacking is same-suit only. Eight columns of six cards, with four dealt straight to the reserve.",
     stats: "Win rate: ~70% · 8 free cells · Same-suit stacking",
     winRate: "~70%",
     columns: 8,
@@ -91,7 +91,7 @@ const games = [
     difficulty: "Easy–Hard",
     difficultyColor: "text-amber-400",
     description:
-      "Build complete King-to-Ace sequences in suit across ten columns. Choose 1-suit (beginner), 2-suit (intermediate), or 4-suit (expert) mode. One of the most popular solitaire games ever made.",
+      "Build complete King-to-Ace in-suit sequences across ten columns. Pick 1-suit (beginner), 2-suit (intermediate), or 4-suit (expert). One of the most popular solitaire games.",
     stats: "1-suit: ~90% · 2-suit: ~50% · 4-suit: ~33%",
     winRate: "33–90%",
     columns: 10,
@@ -105,7 +105,7 @@ const games = [
     difficulty: "Medium",
     difficultyColor: "text-amber-400",
     description:
-      "The game most people call \"Solitaire.\" Deal from a stock pile onto seven cascading columns, building down in alternating colors. Move Aces to foundations and work up to Kings. Draw 1 or Draw 3 modes.",
+      "The game most people call \"Solitaire.\" Deal from stock onto seven cascading columns, build down in alternating colors, move Aces to foundations. Draw 1 or Draw 3 modes.",
     stats: "Draw 1: ~82% · Draw 3: ~62% · 7 columns",
     winRate: "62–82%",
     columns: 7,
@@ -119,7 +119,7 @@ const games = [
     difficulty: "Hard",
     difficultyColor: "text-red-400",
     description:
-      "A completely different solitaire experience. Cards are dealt in a pyramid shape — pair exposed cards that add up to 13 to remove them. Kings are removed solo. Clear the entire pyramid to win.",
+      "A completely different solitaire experience. Cards deal into a pyramid — pair exposed cards that sum to 13 to remove them. Kings clear solo. Clear the pyramid to win.",
     stats: "Win rate: ~30% · Pair-matching · 28-card pyramid",
     winRate: "~30%",
     columns: 7,
@@ -133,7 +133,7 @@ const games = [
     difficulty: "Medium",
     difficultyColor: "text-amber-400",
     description:
-      "Clear three overlapping peaks by moving cards that are ±1 rank from the waste pile top. Kings wrap to Aces and vice versa. Build streaks of consecutive moves for bonus points — the longer your streak, the higher your score.",
+      "Clear three overlapping peaks by playing cards ±1 rank from the waste top. Kings wrap to Aces. Build consecutive streaks for bonus points — longer streak, higher score.",
     stats: "Win rate: ~90% · Streak scoring · 3 peaks",
     winRate: "~90%",
     columns: 10,
@@ -147,7 +147,7 @@ const games = [
     difficulty: "Easy–Medium",
     difficultyColor: "text-emerald-400",
     description:
-      "The fastest solitaire game — clear seven columns by playing cards ±1 rank to the waste pile. Lower score is better, just like the sport. Wrapping enabled (K↔A). Quick games, streak scoring, and satisfying chain reactions.",
+      "The fastest solitaire — clear seven columns by playing cards ±1 rank to the waste. Lower score wins, just like the sport. K↔A wrapping, streak scoring, chain reactions.",
     stats: "Win rate: ~90% · Streak scoring · 7 columns × 5 cards",
     winRate: "~90%",
     columns: 7,
@@ -161,7 +161,7 @@ const games = [
     difficulty: "Medium–Hard",
     difficultyColor: "text-amber-400",
     description:
-      "A Klondike variant where all 52 cards are dealt and any face-up card can be moved regardless of sequence. No stock pile — every card is in play from the start. Deep strategy required.",
+      "A Klondike variant: all 52 cards dealt, any face-up card moves regardless of sequence. No stock pile — every card is in play from the start. Deep strategy required.",
     stats: "Win rate: ~30% · No stock pile · 7 columns",
     winRate: "~30%",
     columns: 7,
@@ -175,7 +175,7 @@ const games = [
     difficulty: "Hard",
     difficultyColor: "text-red-400",
     description:
-      "A casino-origin solitaire game where foundations build up from a randomly determined base rank with wrapping. Features a 13-card reserve pile, four compact tableau columns, and draw-three stock with unlimited redeals.",
+      "Casino-origin solitaire: foundations build up from a random base rank with wrapping. 13-card reserve, four compact tableau columns, draw-three stock with unlimited redeals.",
     stats: "Win rate: ~10% · Random base rank · 4 columns + reserve",
     winRate: "~10%",
     columns: 4,
@@ -245,7 +245,7 @@ const games = [
     difficulty: "Medium",
     difficultyColor: "text-amber-400",
     description:
-      "A random beak card sets the foundation base rank for all four suits. Build up by suit with wrapping (K\u2192A\u21922), build tableau down by same suit, and manage a single flipper cell. Every deal is unique.",
+      "A random beak card sets the foundation base rank for all four suits. Build up by suit with wrapping (K\u2192A\u21922), tableau down by suit, manage one flipper cell. Every deal unique.",
     stats: "Win rate: ~90\u201395% \u00b7 1 deck \u00b7 7 columns \u00b7 1 flipper cell",
     winRate: "~90\u201395%",
     columns: 7,
@@ -287,7 +287,7 @@ const games = [
     difficulty: "Very Hard",
     difficultyColor: "text-red-500",
     description:
-      "52 cards in a row. Move cards onto their left neighbor (1 or 3 positions) when they match by rank or suit. Compress the entire row into a single pile to win. One of the hardest solitaire games at ~1-2% win rate.",
+      "52 cards in a row. Move cards onto their left neighbor (1 or 3 positions) when they match by rank or suit. Compress to a single pile to win. Among the hardest at ~1-2% win rate.",
     stats: "Win rate: ~1\u20132% \u00b7 1 deck \u00b7 52 positions \u00b7 Rank or suit matching",
     winRate: "~1\u20132%",
     columns: 52,
@@ -301,7 +301,7 @@ const games = [
     difficulty: "Hard",
     difficultyColor: "text-orange-500",
     description:
-      "52 cards dealt into 18 fans of 3 (plus 1 of 1). Same-suit descending stacking, top card only. 2 shuffled redeals allowed. On the final deal, the Merci rule lets you draw one buried card. An elegant classic.",
+      "52 cards in 18 fans of 3 (plus 1 of 1). Same-suit descending stacking, top card only. 2 shuffled redeals. On the final deal, the Merci rule lets you draw one buried card. Elegant classic.",
     stats: "Win rate: ~15\u201320% \u00b7 1 deck \u00b7 18 fans \u00b7 Same suit descending",
     winRate: "~15\u201320%",
     columns: 18,
@@ -315,7 +315,7 @@ const games = [
     difficulty: "Medium",
     difficultyColor: "text-yellow-400",
     description:
-      "Dual-direction foundations \u2014 aces build up while kings build down, meeting in the middle. 48 cards dealt into 13 columns with flexible same-suit up-or-down stacking. Only top cards move, empty columns stay empty. A rewarding patience game.",
+      "Dual-direction foundations \u2014 aces build up, kings build down, meeting in the middle. 48 cards in 13 columns with flexible same-suit up-or-down stacking. Only top cards move.",
     stats: "Win rate: ~70\u201380% \u00b7 1 deck \u00b7 13 columns \u00b7 Same suit up/down",
     winRate: "~70\u201380%",
     columns: 13,
@@ -329,7 +329,7 @@ const games = [
     difficulty: "Medium",
     difficultyColor: "text-yellow-400",
     description:
-      "All 52 cards dealt face-up into 13 columns of 4. Kings are moved to the bottom of their columns before play begins. Build down regardless of suit, single cards only. Empty columns can't be filled. A classic patience game with perfect information.",
+      "All 52 cards face-up in 13 columns of 4. Kings move to the bottom before play. Build down regardless of suit, single cards only. Empty columns can't be filled. Perfect information.",
     stats: "Win rate: ~65\u201375% \u00b7 1 deck \u00b7 13 columns \u00b7 Any suit descending",
     winRate: "~65\u201375%",
     columns: 13,
@@ -343,7 +343,7 @@ const games = [
     difficulty: "Hard",
     difficultyColor: "text-red-400",
     description:
-      "All 52 cards dealt face-up into a 4×13 grid. Remove the Aces to create gaps, then slide cards into gaps — each must be one rank higher and the same suit as the card to its left. 2 redeals allowed. A challenging grid-based patience puzzle.",
+      "All 52 cards face-up in a 4×13 grid. Remove Aces to create gaps, then slide cards into gaps — each one rank higher and the same suit as the card to its left. 2 redeals allowed.",
     stats: "Win rate: ~10\u201320% \u00b7 1 deck \u00b7 4×13 grid \u00b7 Same suit ascending",
     winRate: "~10\u201320%",
     columns: 13,
@@ -357,7 +357,7 @@ const games = [
     difficulty: "Medium",
     difficultyColor: "text-yellow-400",
     description:
-      "A math-based solitaire where suit doesn't matter — only rank. Build four foundations using counting intervals of 1, 2, 3, and 4, wrapping around from King to Ace. Strategic waste pile management is the key to winning.",
+      "A math-based solitaire — only rank matters. Build four foundations on counting intervals of 1, 2, 3, and 4, wrapping King to Ace. Strategic waste-pile management is the key.",
     stats: "Win rate: ~30\u201340% \u00b7 1 deck \u00b7 4 foundations \u00b7 Rank only (no suit)",
     winRate: "~30\u201340%",
     columns: 4,
@@ -385,7 +385,7 @@ const games = [
     difficulty: "Easy",
     difficultyColor: "text-emerald-400",
     description:
-      "A pair-matching patience game on a 5×5 grid. Remove pairs of equal-rank cards that touch horizontally, vertically, or diagonally. When you stall, consolidate the layout and deal fresh cards. Clear all 52 to win.",
+      "Pair-matching patience on a 5×5 grid. Remove pairs of equal-rank cards that touch horizontally, vertically, or diagonally. When stalled, consolidate and deal fresh. Clear all 52.",
     stats: "Win rate: ~50% · 1 deck · 5×5 grid · Pair to same rank",
     winRate: "~50%",
     columns: 5,
@@ -399,7 +399,7 @@ const games = [
     difficulty: "Hard",
     difficultyColor: "text-red-400",
     description:
-      "Also known as Idiot's Delight. Deal four cards at a time onto four piles and remove the lower-ranked card whenever two same-suit cards share the top. Win by reducing the deck to just four Aces. Pure tactical discarding — no foundations, no stacking.",
+      "Also known as Idiot's Delight. Deal four at a time onto four piles, remove the lower-ranked card when two same-suit tops share. Win by reducing the deck to four Aces. No foundations.",
     stats: "Win rate: ~10% · 1 deck · 4 piles · Discard same-suit lows",
     winRate: "~10%",
     columns: 4,
@@ -413,7 +413,7 @@ const games = [
     difficulty: "Medium",
     difficultyColor: "text-amber-400",
     description:
-      "Eight fans of three cards plus three reserve piles. Build foundations Ace through King by suit, with tableau building down by any suit. Kings can never move from the tableau to another column. A flexible single-deck patience that rewards careful sequencing.",
+      "Eight fans of three cards plus three reserve piles. Foundations build Ace-to-King by suit, tableau builds down by any suit. Kings can't move from tableau to another column.",
     stats: "Win rate: ~25–35% · 1 deck · 8 fans + 3 reserves · Down, any suit",
     winRate: "~25–35%",
     columns: 8,
@@ -427,7 +427,7 @@ const games = [
     difficulty: "Medium",
     difficultyColor: "text-amber-400",
     description:
-      "A 16-card open reserve called the bouquet — every reserve card is playable any time — paired with six tableau columns. Build foundations up by suit and tableau down regardless of suit. Empty columns can be filled with any card. Strategic and forgiving.",
+      "A 16-card open reserve (the bouquet) — every reserve card playable any time — with six tableau columns. Foundations up by suit, tableau down by any suit. Empty columns take any card.",
     stats: "Win rate: ~70–80% · 1 deck · 6 columns · 16-card reserve",
     winRate: "~70–80%",
     columns: 6,

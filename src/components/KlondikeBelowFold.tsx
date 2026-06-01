@@ -5,8 +5,6 @@ import Link from '@/components/NetworkLink';
 import AdUnit from '@/components/AdUnit';
 import ScrollUnlock from '@/components/ScrollUnlock';
 import { absoluteUrl, gameUrl } from '@/lib/siteConfig';
-import StarRatingWidget from '@/components/StarRatingWidget';
-import PlayerTestimonials from '@/components/PlayerTestimonials';
 
 const faqItems = [
   {
@@ -132,11 +130,6 @@ export default function KlondikeBelowFold() {
             </p>
           </div>
 
-          {/* ── Star Rating ── */}
-          <div className="mt-6 flex justify-center">
-            <StarRatingWidget storageKey="klondike-star-rating-v1" baseCount={1876} baseAvg={4.7} />
-          </div>
-
           {/* ── Ad between hero and how-to-play ── */}
           <AdUnit className="my-8" />
 
@@ -229,9 +222,6 @@ export default function KlondikeBelowFold() {
               ))}
             </div>
           </section>
-
-          {/* ── Player Testimonials ── */}
-          <PlayerTestimonials game="klondike" />
 
           {/* ── FAQ ── */}
           <section className="mt-10" itemScope itemType="https://schema.org/FAQPage">

@@ -25,6 +25,30 @@ Full detail lives in the memory file `project_adsense_low_value_rejection.md`.
 
 ---
 
+## 🕰 Back history — how we got here (full narrative)
+For the team picking this up: this is the chronological story so you understand *why* each decision was made.
+
+1. **The trigger (2026-05-31).** AdSense reviewed solitairestack.com and returned **"Your site isn't ready to show ads → We found some policy violations → Low value content."** Site ownership was already verified (green check); "Low value content" was the *only* violation. Links in the rejection were the generic boilerplate set (minimum content requirements, unique high-quality content, thin content, webmaster guidelines) — not page-specific findings.
+
+2. **First pass: ruled out the obvious.** Checked the live site and code. Homepage ~4,500 words SSR, interiors 1,200–3,500w, `robots.txt` allow-all, valid 170-URL sitemap, `ads.txt` with correct pub ID, self-referential canonicals, healthy internal linking. Conclusion: **this is NOT a content-quantity/thinness problem** — so "add more words" would have been the wrong fix.
+
+3. **Multi-agent deep dive.** Ran 5 parallel expert agents, each a different lens, each grounded in the live AdSense policy docs + live site:
+   - **Policy literalist:** mapped the site against every citable policy clause. Verdict: passes on thinness; at-risk on doorway footprint + scaled content; flagged a possibly-missing persistent nav bar.
+   - **Scaled/duplicate-content auditor:** ~80% confidence the rejection is driven by ~70 copy-pasted-template variant pages + a 4-domain network off one codebase. Found the "Madlib" tells (swapped-variable FAQs).
+   - **Human-reviewer simulation:** flagged the fabricated social proof and faceless "Desk" bylines and the off-hub redirects as the things a reviewer reacts to; ~60% content/trust, ~25% redirect/doorway, ~15% age.
+   - **Domain-maturity auditor:** domain created **2026-03-07 (~85 days)**, zero Wayback history, ~10–15 pages indexed; concluded newness/crawl-budget is a major driver. (Also debunked the "established sibling" idea — playfreecellonline.com is 2026-02-20, also a newborn.)
+   - **Competitor reverse-engineer:** approved solitaire competitors (123freecell, world-of-solitaire) are thin but 10–18 yrs old → age is a lever we can't copy; for a young site the path is original data + trust signals + traffic.
+
+4. **Verified the agents' concrete claims in code (didn't take them on faith).** Confirmed REAL: `StarRatingWidget` (hardcoded 4.8★/3,241 fake ratings + `AggregateRating` schema) and `PlayerTestimonials` (invented named reviewers + `Review` schema). Confirmed FALSE ALARMS: the `99.999%` solvability stat is legitimate/explained; `easy-freecell`'s schema is harmless `SoftwareApplication`; GA4 *is* mounted; there *is* a header nav.
+
+5. **Owner decisions.** When offered scope choices, the owner chose **Phase 0 only** (safe trust fixes) for now, and to **leave the Spider/Klondike off-hub 301 redirects as-is**. So the structural/de-template work (Section B below) is deliberately deferred, not forgotten.
+
+6. **Indexing investigation (live GSC, owner pushed to act directly).** Initially suspected GSC wasn't set up — wrong: it's verified as a **URL-prefix property**. Real finding: **28 indexed / 13 benignly not-indexed**, known-pages had fallen from ~200 (March) to ~41, and the **sitemap was last read Apr 18** (6 weeks stale) — key pages showed "Discovered/Crawled – not indexed" and even "URL unknown to Google / no referring sitemaps detected." Root cause = stale sitemap + young-domain crawl budget, **not** a technical bug.
+
+7. **Actions taken** (see next section). Phase 0 shipped (PR #3, merged), sitemap resubmitted, priority indexing requested. Remaining Request-Indexing pages were interrupted by a flaky Chrome extension.
+
+---
+
 ## ✅ What was already done (verify this first)
 1. **PR #3 merged to `main`** (commit `c97d14d`): deleted `StarRatingWidget.tsx` (hardcoded "4.8★/3,241 ratings" + `AggregateRating` microdata) and `PlayerTestimonials.tsx` (invented reviewers + `schema.org/Review`); removed from FreecellBelowFold/KlondikeBelowFold/SpiderBelowFold. 322 deletions, typecheck clean.
 2. **Google Search Console** (property type = **URL-prefix** `https://solitairestack.com/`, under jonnydigital1@gmail.com):

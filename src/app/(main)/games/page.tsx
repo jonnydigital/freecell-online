@@ -245,7 +245,7 @@ const games = [
     difficulty: "Medium",
     difficultyColor: "text-amber-400",
     description:
-      "A random beak card sets the foundation base rank for all four suits. Build up by suit with wrapping (K\u2192A\u21922), tableau down by suit, manage one flipper cell. Every deal unique.",
+      "A random beak card sets all four foundation base ranks. Build up by suit with K\u2192A\u21922 wrapping, tableau down by suit, manage one flipper cell.",
     stats: "Win rate: ~90\u201395% \u00b7 1 deck \u00b7 7 columns \u00b7 1 flipper cell",
     winRate: "~90\u201395%",
     columns: 7,
@@ -259,7 +259,7 @@ const games = [
     difficulty: "Hard",
     difficultyColor: "text-red-400",
     description:
-      "12 piles of 4 cards, same-suit building, and a unique redeal mechanic. Gather all tableau cards and re-deal in groups of 4 without shuffling. Aces pre-placed, unlimited redeals.",
+      "12 piles of 4, same-suit building, unique redeal mechanic. Gather and re-deal in groups of 4 without shuffling. Aces pre-placed, unlimited redeals.",
     stats: "Win rate: ~25\u201330% \u00b7 1 deck \u00b7 12 piles \u00b7 Unlimited redeals",
     winRate: "~25\u201330%",
     columns: 12,
@@ -287,7 +287,7 @@ const games = [
     difficulty: "Very Hard",
     difficultyColor: "text-red-500",
     description:
-      "52 cards in a row. Move cards onto their left neighbor (1 or 3 positions) when they match by rank or suit. Compress to a single pile to win. Among the hardest at ~1-2% win rate.",
+      "52 cards in a row. Move cards onto their left neighbor (1 or 3 positions) matching by rank or suit. Compress to one pile. ~1–2% win rate — brutal.",
     stats: "Win rate: ~1\u20132% \u00b7 1 deck \u00b7 52 positions \u00b7 Rank or suit matching",
     winRate: "~1\u20132%",
     columns: 52,
@@ -301,7 +301,7 @@ const games = [
     difficulty: "Hard",
     difficultyColor: "text-orange-500",
     description:
-      "52 cards in 18 fans of 3 (plus 1 of 1). Same-suit descending stacking, top card only. 2 shuffled redeals. On the final deal, the Merci rule lets you draw one buried card. Elegant classic.",
+      "52 cards in 18 fans of 3 + 1 of 1. Same-suit descending, top card only. 2 shuffled redeals, plus the Merci rule to draw one buried card on the final.",
     stats: "Win rate: ~15\u201320% \u00b7 1 deck \u00b7 18 fans \u00b7 Same suit descending",
     winRate: "~15\u201320%",
     columns: 18,
@@ -315,7 +315,7 @@ const games = [
     difficulty: "Medium",
     difficultyColor: "text-yellow-400",
     description:
-      "Dual-direction foundations \u2014 aces build up, kings build down, meeting in the middle. 48 cards in 13 columns with flexible same-suit up-or-down stacking. Only top cards move.",
+      "Dual-direction foundations \u2014 aces build up, kings build down, meeting in the middle. 48 cards in 13 columns, flexible same-suit stacking.",
     stats: "Win rate: ~70\u201380% \u00b7 1 deck \u00b7 13 columns \u00b7 Same suit up/down",
     winRate: "~70\u201380%",
     columns: 13,
@@ -329,7 +329,7 @@ const games = [
     difficulty: "Medium",
     difficultyColor: "text-yellow-400",
     description:
-      "All 52 cards face-up in 13 columns of 4. Kings move to the bottom before play. Build down regardless of suit, single cards only. Empty columns can't be filled. Perfect information.",
+      "All 52 cards face-up in 13 columns of 4. Kings move to the bottom before play. Build down any suit, single cards only. Empty columns stay empty.",
     stats: "Win rate: ~65\u201375% \u00b7 1 deck \u00b7 13 columns \u00b7 Any suit descending",
     winRate: "~65\u201375%",
     columns: 13,
@@ -343,7 +343,7 @@ const games = [
     difficulty: "Hard",
     difficultyColor: "text-red-400",
     description:
-      "All 52 cards face-up in a 4×13 grid. Remove Aces to create gaps, then slide cards into gaps — each one rank higher and the same suit as the card to its left. 2 redeals allowed.",
+      "All 52 cards in a 4×13 grid. Remove Aces to create gaps, then slide cards in — each one rank higher and same suit as the left neighbor. 2 redeals.",
     stats: "Win rate: ~10\u201320% \u00b7 1 deck \u00b7 4×13 grid \u00b7 Same suit ascending",
     winRate: "~10\u201320%",
     columns: 13,
@@ -357,7 +357,7 @@ const games = [
     difficulty: "Medium",
     difficultyColor: "text-yellow-400",
     description:
-      "A math-based solitaire — only rank matters. Build four foundations on counting intervals of 1, 2, 3, and 4, wrapping King to Ace. Strategic waste-pile management is the key.",
+      "A math-based solitaire — only rank matters. Build four foundations on counting intervals of 1, 2, 3, and 4, wrapping King to Ace. Waste-pile play is key.",
     stats: "Win rate: ~30\u201340% \u00b7 1 deck \u00b7 4 foundations \u00b7 Rank only (no suit)",
     winRate: "~30\u201340%",
     columns: 4,
@@ -371,7 +371,7 @@ const games = [
     difficulty: "Easy",
     difficultyColor: "text-emerald-400",
     description:
-      "Perfect for beginners. Aces and 2s are pre-placed on the foundations, giving you a massive head start. Learn FreeCell fundamentals without the frustration of getting stuck early.",
+      "Perfect for beginners. Aces and 2s pre-placed on the foundations for a head start. Learn FreeCell fundamentals without getting stuck early.",
     stats: "Win rate: ~95% · Pre-placed aces/2s · Beginner-friendly",
     winRate: "~95%",
     columns: 8,
@@ -385,7 +385,7 @@ const games = [
     difficulty: "Easy",
     difficultyColor: "text-emerald-400",
     description:
-      "Pair-matching patience on a 5×5 grid. Remove pairs of equal-rank cards that touch horizontally, vertically, or diagonally. When stalled, consolidate and deal fresh. Clear all 52.",
+      "Pair-matching patience on a 5×5 grid. Remove pairs of equal-rank cards that touch horizontally, vertically, or diagonally. Clear all 52 to win.",
     stats: "Win rate: ~50% · 1 deck · 5×5 grid · Pair to same rank",
     winRate: "~50%",
     columns: 5,
@@ -399,7 +399,7 @@ const games = [
     difficulty: "Hard",
     difficultyColor: "text-red-400",
     description:
-      "Also known as Idiot's Delight. Deal four at a time onto four piles, remove the lower-ranked card when two same-suit tops share. Win by reducing the deck to four Aces. No foundations.",
+      "Also called Idiot's Delight. Deal four at a time onto four piles; remove the lower card when two same-suit tops share. Reduce the deck to four Aces.",
     stats: "Win rate: ~10% · 1 deck · 4 piles · Discard same-suit lows",
     winRate: "~10%",
     columns: 4,
@@ -427,7 +427,7 @@ const games = [
     difficulty: "Medium",
     difficultyColor: "text-amber-400",
     description:
-      "A 16-card open reserve (the bouquet) — every reserve card playable any time — with six tableau columns. Foundations up by suit, tableau down by any suit. Empty columns take any card.",
+      "A 16-card open reserve (the bouquet) — every reserve card playable any time — with six tableau columns. Foundations up by suit, tableau down by any.",
     stats: "Win rate: ~70–80% · 1 deck · 6 columns · 16-card reserve",
     winRate: "~70–80%",
     columns: 6,

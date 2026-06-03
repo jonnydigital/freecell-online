@@ -10,7 +10,7 @@ import { ContentHero, SectionHeading, CardSection, ContentBody, CtaSection, Cont
 export const metadata: Metadata = {
   title: 'Every Solitaire Game Ranked by Difficulty (2026) | Easiest to Hardest',
   description:
-    'All 28 solitaire games ranked from easiest to hardest. Difficulty tiers, win rates, and what makes each game challenging. Find the right solitaire game for your skill level.',
+    'All 28 solitaire games ranked easiest to hardest. Difficulty tiers, win rates, and what makes each game challenging. Find the right game for your skill.',
   keywords: [
     'solitaire games ranked by difficulty',
     'easiest solitaire games',

@@ -8,7 +8,7 @@ import DealsExplorer from "./DealsExplorer";
 export const metadata: Metadata = {
   title: "FreeCell Deal Explorer | Browse & Play Specific Game Numbers",
   description:
-    "Browse FreeCell game numbers by difficulty, explore curated collections of famous deals, beginner-friendly games, and expert challenges. Jump to any deal from 1 to 1,000,000.",
+    "Browse FreeCell game numbers by difficulty — curated collections of famous deals, beginner-friendly games, and expert challenges. Deals 1 to 1,000,000.",
   keywords: [
     "freecell game numbers",
     "freecell deals",

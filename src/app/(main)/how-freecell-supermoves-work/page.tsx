@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   title:
     "How FreeCell Supermoves Work | The Math Behind Multi-Card Moves",
   description:
-    "Understand FreeCell supermoves \u2014 the formula for moving multiple cards at once, how free cells and empty columns multiply your capacity, and advanced supermove strategy.",
+    "Understand FreeCell supermoves \u2014 the formula for moving multiple cards at once, how free cells and empty columns multiply capacity, and advanced strategy.",
   keywords: [
     "freecell supermoves",
     "freecell supermove formula",

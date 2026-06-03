@@ -10,7 +10,7 @@ import AuthorBio from "@/components/content/AuthorBio";
 export const metadata: Metadata = {
   title: "TriPeaks Solitaire | Play Online Free — No Download",
   description:
-    "Play TriPeaks Solitaire online for free. Clear three peaks by playing cards one rank higher or lower than the waste pile. Streak scoring, undo, hints. No download required.",
+    "Play TriPeaks Solitaire online free. Clear three peaks by playing cards ±1 rank from the waste pile. Streak scoring, undo, hints. No download required.",
   keywords: [
     "tripeaks solitaire",
     "tripeaks solitaire online",

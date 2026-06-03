@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   title:
     "FreeCell Endgame Strategy | How to Close Out Every Winnable Deal",
   description:
-    "Master FreeCell endgame strategy \u2014 when to trigger auto-complete, resolving foundation order deadlocks, late-game free cell management, and avoiding last-minute losses.",
+    "FreeCell endgame strategy \u2014 when to trigger auto-complete, resolving foundation deadlocks, late-game free cell management, and avoiding late losses.",
   keywords: [
     "freecell endgame strategy",
     "freecell endgame tips",

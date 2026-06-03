@@ -15,7 +15,7 @@ const ROUTE = '/freecell-world-records';
 export const metadata: Metadata = {
   title: 'FreeCell World Records: Fastest Times, Longest Streaks, and Community Feats',
   description:
-    'Explore reported FreeCell world records — fastest completion times, longest win streaks, the history of Deal #11982, and how the community tracks its greatest achievements.',
+    'Reported FreeCell world records — fastest completion times, longest win streaks, the story of Deal #11982, and how the community tracks achievements.',
   keywords: [
     'freecell world records',
     'freecell fastest time',

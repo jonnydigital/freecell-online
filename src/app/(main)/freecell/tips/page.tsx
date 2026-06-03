@@ -8,7 +8,7 @@ import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionH
 export const metadata: Metadata = {
   title: "FreeCell Tips & Tricks | Expert Strategy for Higher Win Rates",
   description:
-    "8 expert FreeCell tips and tricks to boost your win rate. Master the supermove formula, free cell management, cascade strategy, and advanced techniques used by top players.",
+    "8 expert FreeCell tips to boost your win rate — supermove formula, free cell management, cascade strategy, and advanced techniques used by top players.",
   keywords: [
     "freecell tips",
     "freecell tricks",

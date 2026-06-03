@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   title:
     "FreeCell Opening Strategy | How to Start Every Game Strong",
   description:
-    "Master FreeCell opening strategy \u2014 first-move priorities, board scanning techniques, when to use free cells early, Ace liberation, and patterns that set up winning games.",
+    "Master FreeCell opening strategy \u2014 first-move priorities, board scanning, when to use free cells early, Ace liberation, and winning-setup patterns.",
   keywords: [
     "freecell opening strategy",
     "freecell first move",

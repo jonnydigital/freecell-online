@@ -8,7 +8,7 @@ import AdUnit from "@/components/AdUnit";
 export const metadata: Metadata = {
   title: "How to Play Spider Solitaire | Rules, Setup & Complete Guide",
   description:
-    "Learn how to play Spider Solitaire with our complete guide. Rules for 1-suit, 2-suit, and 4-suit variants, step-by-step instructions, tips for beginners, and expert strategies.",
+    "Learn how to play Spider Solitaire — rules for 1-suit, 2-suit, and 4-suit variants, step-by-step instructions, beginner tips, and expert strategies.",
   keywords: [
     "how to play spider solitaire",
     "spider solitaire rules",

@@ -8,7 +8,7 @@ import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionH
 export const metadata: Metadata = {
   title: "Cruel Solitaire Tips & Tricks | Beat the Redeal Puzzle",
   description:
-    "7 expert tips to win Cruel Solitaire. Master redeal mechanics, same-suit building, foundation timing, and single-card strategy to beat this deceptively tough patience game.",
+    "7 expert tips to win Cruel Solitaire — master redeal mechanics, same-suit building, foundation timing, and single-card strategy to beat this tough game.",
   keywords: [
     "cruel solitaire tips",
     "cruel solitaire strategy",

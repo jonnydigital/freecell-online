@@ -23,7 +23,7 @@ const UPDATED_DATE = "2026-04-05";
 export const metadata: Metadata = {
   title: `The Complete Guide to Solitaire Games | ${siteConfig.siteName}`,
   description:
-    "Our master guide to solitaire: the seven game families, how to pick your first variant, difficulty progression, rule differences across variants, and 100 games worth knowing.",
+    "Master solitaire guide: seven game families, how to pick your first variant, difficulty progression, rule differences, and 100 games worth knowing.",
   keywords: [
     "solitaire games guide",
     "types of solitaire",

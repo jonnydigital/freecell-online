@@ -6,7 +6,7 @@ import MoreGames from '@/components/MoreGames';
 export const metadata: Metadata = {
   title: '2-Cell FreeCell — Very Challenging FreeCell Variant | Play Online Free',
   description:
-    'Play 2-Cell FreeCell online for free. A very challenging FreeCell variant with only two free cells. Sharpen your skills with this tough solitaire puzzle. No download required.',
+    'Play 2-Cell FreeCell online for free — a tough variant with only two free cells. Sharpen your skills with this challenging solitaire puzzle. No download.',
   keywords: [
     '2 cell freecell',
     'two cell freecell',

@@ -8,7 +8,7 @@ import AdUnit from "@/components/AdUnit";
 export const metadata: Metadata = {
   title: "How to Play TriPeaks Solitaire | Rules, Setup & Complete Guide",
   description:
-    "Learn how to play TriPeaks Solitaire with our complete guide. Rules for playing cards ±1 rank, three-peak layout, streak scoring, stock pile mechanics, and winning strategies.",
+    "Learn how to play TriPeaks Solitaire — rules for ±1 rank play, three-peak layout, streak scoring, stock pile mechanics, and winning strategies.",
   keywords: [
     "how to play tripeaks solitaire",
     "tripeaks solitaire rules",

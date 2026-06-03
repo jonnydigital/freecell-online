@@ -8,7 +8,7 @@ import AdUnit from "@/components/AdUnit";
 export const metadata: Metadata = {
   title: "FreeCell Strategy Guide — Win More Games with Expert Tactics",
   description:
-    "In-depth FreeCell strategy guide covering free cell management, empty column tactics, supermoves, move planning, and advanced techniques to dramatically improve your win rate.",
+    "In-depth FreeCell strategy: free cell management, empty column tactics, supermoves, move planning, and advanced techniques to boost your win rate.",
   keywords: [
     "freecell strategy",
     "how to win freecell",

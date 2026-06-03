@@ -108,7 +108,11 @@ export const ROUTE_OWNERSHIP: Record<string, RouteOwnership> = {
   '/how-we-test-solitaire-games': HUB_ONLY,
   '/our-solitaire-methodology': HUB_ONLY,
   '/editorial-standards': HUB_ONLY,
+  '/fact-checking-policy': HUB_ONLY,
+  '/correction-policy': HUB_ONLY,
   '/solitaire-win-rates': HUB_ONLY,
+  '/solitaire-win-rates.json': HUB_ONLY,
+  '/freecell-unsolvable-deals.json': HUB_ONLY,
 
   // Hub linkbait / interactive tools
   '/popular-solitaire-by-state': HUB_ONLY,

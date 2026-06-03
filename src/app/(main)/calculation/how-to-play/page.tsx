@@ -54,7 +54,7 @@ export default function CalculationHowToPlay() {
 
   const faqs = [
     {
-      question: "What makes Calculation Solitaire different from other solitaire games?",
+      question: "How do Calculation's arithmetic foundations change the game?",
       answer:
         "Calculation is unique because suit is completely irrelevant — only rank matters. The four foundations each build using a different counting interval (by 1s, 2s, 3s, and 4s), wrapping around from King back to Ace. This mathematical structure makes it more of a number puzzle than a traditional card game. With skilled play, it has one of the higher win rates among patience games.",
     },

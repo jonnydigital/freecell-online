@@ -88,7 +88,12 @@ const organizationJsonLd = {
   "@type": "Organization",
   name: siteConfig.siteName,
   url: siteConfig.url,
-  foundingDate: "2022-01-01",
+  foundingDate: "2026-01-15",
+  founder: {
+    "@type": "Person",
+    name: "J. Foye",
+    url: `${siteConfig.url}/authors/j-foye`,
+  },
   contactPoint: {
     "@type": "ContactPoint",
     contactType: "Editorial",

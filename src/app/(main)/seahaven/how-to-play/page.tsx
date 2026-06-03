@@ -105,7 +105,7 @@ export default function SeahavenHowToPlay() {
       },
       {
         "@type": "Question",
-        name: "Is Seahaven Towers harder than FreeCell?",
+        name: "How does Seahaven Towers' difficulty compare with FreeCell?",
         acceptedAnswer: {
           "@type": "Answer",
           text: "Seahaven Towers is generally considered harder than standard FreeCell due to same-suit stacking (limiting which cards stack where), single-card-only moves, and the Kings-only empty column restriction. However, the 10-column layout and high skill-ceiling win rate make it very satisfying to master.",
@@ -430,7 +430,7 @@ export default function SeahavenHowToPlay() {
               </p>
             </div>
             <div>
-              <h3 className="font-semibold text-white/90 mb-2">Is Seahaven harder than FreeCell?</h3>
+              <h3 className="font-semibold text-white/90 mb-2">How does Seahaven compare with FreeCell?</h3>
               <p className="leading-relaxed">
                 Seahaven is generally harder due to same-suit stacking, single-card moves,
                 and Kings-only empty columns. However, the 10-column layout partially

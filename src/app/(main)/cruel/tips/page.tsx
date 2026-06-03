@@ -52,7 +52,7 @@ const faqs = [
       "In most versions of Cruel Solitaire, including our online version, you get unlimited redeals. However, since the redeal is deterministic (no shuffling), repeating the same redeal without making any moves in between will produce the exact same layout. You need to move at least one card between redeals for the redistribution to change. Unlimited redeals does not mean unlimited chances — you still need to plan carefully.",
   },
   {
-    question: "Is Cruel Solitaire harder than FreeCell?",
+    question: "How does Cruel's difficulty compare with FreeCell?",
     answer:
       "Cruel Solitaire is generally considered harder than FreeCell. FreeCell has a win rate above 99% for solvable deals (roughly 82% of all deals are solvable with perfect play), while Cruel Solitaire has a much lower win rate — typically around 40-50% even with skilled play. The single-card-move restriction combined with the redeal mechanic makes Cruel a more demanding puzzle.",
   },

@@ -1,4 +1,4 @@
-import { isHubSite, isKlondikeSite, isSpiderSite, siteConfig } from '@/lib/siteConfig';
+import { isHubSite, isKlondikeSite, isSpiderSite } from '@/lib/siteConfig';
 
 // All four network properties
 const ALL_SITES = {
@@ -24,8 +24,10 @@ function getLinks() {
 }
 
 export default function NetworkCrossLinks() {
+  if (isHubSite) return null;
+
   const links = getLinks();
-  const heading = isHubSite ? 'From Our Network' : 'More Solitaire Games';
+  const heading = 'More Solitaire Games';
 
   return (
     <aside className="mt-10 pt-6 border-t border-white/10">

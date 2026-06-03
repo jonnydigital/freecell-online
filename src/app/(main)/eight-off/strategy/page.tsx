@@ -41,7 +41,7 @@ const faqs = [
       "Eight Off has 8 reserve cells (also called free cells), which is double the 4 free cells in standard FreeCell and Baker's Game. However, 4 of those 8 cells start the game occupied by cards from the deal, so you effectively begin with only 4 empty reserve cells. The extra storage compensates for the same-suit stacking restriction, but filling all 8 cells is still a critical mistake that will usually end the game.",
   },
   {
-    question: "Is Eight Off harder than FreeCell?",
+    question: "How does Eight Off's difficulty compare with FreeCell?",
     answer:
       "Yes, Eight Off is harder than standard FreeCell despite having more reserve cells. The same-suit stacking rule dramatically limits your legal moves in the tableau. In FreeCell, any card can go on either of two colors; in Eight Off, each card fits only one specific card. The 8 reserve cells partially compensate for this difficulty, bringing the solvability rate to roughly 85-90% — harder than FreeCell's 99.999% but easier than Baker's Game's approximately 75%.",
   },

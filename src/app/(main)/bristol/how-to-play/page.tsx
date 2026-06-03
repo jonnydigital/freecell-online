@@ -40,7 +40,7 @@ export const metadata: Metadata = {
 
 const faqs = [
   {
-    question: "What makes Bristol Solitaire different from other solitaire games?",
+    question: "How do Bristol's flexible fans and King restriction interact?",
     answer:
       "Bristol Solitaire is unique because tableau building ignores suit and color entirely — you can place any card on any other card as long as it is one rank lower. This makes building sequences much more flexible than games like FreeCell or Klondike. However, Bristol offsets this freedom with a strict Kings restriction: Kings cannot be placed in empty fans, which limits your maneuvering space significantly.",
   },
@@ -65,7 +65,7 @@ const faqs = [
       "Bristol Solitaire has an estimated win rate of approximately 5-10% with skilled play. The game is moderately difficult — more forgiving than Accordion or La Belle Lucie but harder than FreeCell or Klondike. The flexible any-suit building rule helps, but the Kings restriction and limited reserve pile access create significant strategic challenges.",
   },
   {
-    question: "Is Bristol Solitaire harder than FreeCell?",
+    question: "How does Bristol's difficulty compare with FreeCell?",
     answer:
       "Yes, Bristol is generally harder than FreeCell. FreeCell has a win rate of approximately 82% with skilled play, while Bristol sits around 5-10%. The key difference is that FreeCell gives you 4 free cells for temporary storage and lets you see all cards from the start, while Bristol has hidden information in the stock and more restrictive movement rules for reserve piles.",
   },

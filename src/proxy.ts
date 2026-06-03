@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { ownerOf, SITE_DOMAINS, type RouteOwnership } from '@/lib/routeOwnership';
+import { robotsHeaderForPath } from '@/lib/searchIndexing';
 import type { SiteKey } from '@/lib/siteConfig';
 
 /**
@@ -33,7 +34,12 @@ function shouldSkipOwnershipCheck(pathname: string): boolean {
 }
 
 export function proxy(request: NextRequest) {
-  const host = request.headers.get('host') || '';
+  const rawHost = request.headers.get('host') || '';
+  const forwardedHost = request.headers.get('x-forwarded-host')?.split(',')[0]?.trim();
+  const host =
+    rawHost.startsWith('localhost') || rawHost.startsWith('127.0.0.1')
+      ? forwardedHost || rawHost
+      : rawHost;
 
   // www → non-www redirect (production only)
   if (host.startsWith('www.')) {
@@ -73,7 +79,13 @@ export function proxy(request: NextRequest) {
     }
   }
 
-  return NextResponse.next();
+  const response = NextResponse.next();
+  if (siteKey) {
+    const robotsHeader = robotsHeaderForPath(pathname, siteKey);
+    if (robotsHeader) response.headers.set('X-Robots-Tag', robotsHeader);
+  }
+
+  return response;
 }
 
 export const config = {

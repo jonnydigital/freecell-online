@@ -54,7 +54,7 @@ export default function FlowerGardenHowToPlay() {
 
   const faqs = [
     {
-      question: "What makes Flower Garden different from other solitaire games?",
+      question: "How does the bouquet reserve change Flower Garden?",
       answer:
         "Flower Garden's signature feature is the 16-card bouquet reserve. Every card in the bouquet is available to play at any time — to foundations or tableau columns. This is like having 16 pre-loaded free cells. Combined with the ability to build down regardless of suit and fill empty columns with any card, Flower Garden offers a unique balance of freedom and challenge.",
     },
@@ -79,7 +79,7 @@ export default function FlowerGardenHowToPlay() {
         "The bouquet is your most powerful tool. Use bouquet cards to fill foundations directly when possible. Place bouquet cards on tableau columns strategically to uncover key cards. Try to play bouquet cards that help create descending sequences in the tableau, and prioritize playing bouquet cards that match your immediate needs rather than depleting the bouquet randomly.",
     },
     {
-      question: "Is Flower Garden harder than FreeCell?",
+      question: "How does Flower Garden's difficulty compare with FreeCell?",
       answer:
         "Flower Garden is generally harder than FreeCell (30-40% win rate vs 70-80%). Despite having a larger reserve (16 bouquet cards vs 4 free cells), the restriction to single-card moves and any-suit building make it harder to organize columns efficiently. FreeCell's alternating-color building provides more natural ordering.",
     },

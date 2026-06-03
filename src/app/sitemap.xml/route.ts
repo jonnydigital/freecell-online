@@ -2,6 +2,7 @@ import { absoluteUrl, isHubSite, siteConfig } from '@/lib/siteConfig';
 import { sitemapGameNumbers, isHighPriorityDeal } from '@/lib/curatedDeals';
 import { getAllPosts } from '@/lib/blog';
 import { ownerOf } from '@/lib/routeOwnership';
+import { shouldIndexPath } from '@/lib/searchIndexing';
 import { AUTHORS, type AuthorSlug } from '@/lib/authors';
 
 /**
@@ -41,6 +42,8 @@ const contentPages = [
   { path: '/how-we-test-solitaire-games', changeFrequency: 'yearly', priority: 0.6 },
   { path: '/our-solitaire-methodology', changeFrequency: 'yearly', priority: 0.6 },
   { path: '/editorial-standards', changeFrequency: 'yearly', priority: 0.6 },
+  { path: '/fact-checking-policy', changeFrequency: 'yearly', priority: 0.6 },
+  { path: '/correction-policy', changeFrequency: 'yearly', priority: 0.6 },
   // Hub research / linkbait
   { path: '/solitaire-win-rates', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/popular-solitaire-by-state', changeFrequency: 'monthly', priority: 0.7 },
@@ -260,23 +263,27 @@ function isPrimaryOwnerOfPath(path: string): boolean {
   return ownerOf(path).primaryOwner === siteConfig.key;
 }
 
+function shouldIncludeInSitemap(path: string): boolean {
+  return isPrimaryOwnerOfPath(path) && shouldIndexPath(path, siteConfig.key);
+}
+
 function buildXml(): string {
   const staticEntries = contentPages
-    .filter((p) => isPrimaryOwnerOfPath(p.path))
+    .filter((p) => shouldIncludeInSitemap(p.path))
     .map(
       (p) =>
         `  <url>\n    <loc>${absoluteUrl(p.path)}</loc>\n    <lastmod>${LASTMOD}</lastmod>\n    <changefreq>${p.changeFrequency}</changefreq>\n    <priority>${p.priority}</priority>\n  </url>`
     );
 
   // Author profile pages (E-E-A-T signals, masthead)
-  const authorEntries = isPrimaryOwnerOfPath('/authors/[slug]')
+  const authorEntries = shouldIncludeInSitemap('/authors/[slug]')
     ? (Object.keys(AUTHORS) as AuthorSlug[]).map(
         (slug) =>
           `  <url>\n    <loc>${absoluteUrl(`/authors/${slug}`)}</loc>\n    <lastmod>${LASTMOD}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.5</priority>\n  </url>`
       )
     : [];
 
-  const gameEntries = isPrimaryOwnerOfPath('/game/[number]')
+  const gameEntries = shouldIncludeInSitemap('/game/[number]')
     ? sitemapGameNumbers.map(
         (num) =>
           `  <url>\n    <loc>${absoluteUrl(`/game/${num}`)}</loc>\n    <lastmod>${LASTMOD}</lastmod>\n    <changefreq>yearly</changefreq>\n    <priority>${isHighPriorityDeal(num) ? 0.6 : 0.4}</priority>\n  </url>`
@@ -284,12 +291,12 @@ function buildXml(): string {
     : [];
 
   const blogEntries: string[] = [];
-  if (isPrimaryOwnerOfPath('/blog')) {
+  if (shouldIncludeInSitemap('/blog')) {
     blogEntries.push(
       `  <url>\n    <loc>${absoluteUrl('/blog')}</loc>\n    <lastmod>${LASTMOD}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>0.7</priority>\n  </url>`
     );
   }
-  if (isPrimaryOwnerOfPath('/blog/[slug]')) {
+  if (shouldIncludeInSitemap('/blog/[slug]')) {
     const blogPosts = getAllPosts();
     for (const post of blogPosts) {
       blogEntries.push(

@@ -63,7 +63,7 @@ const faqs = [
       "The stock contains 28 cards (52 minus the 24 dealt to the 8 fans). Dealing 3 at a time means roughly 9 deals, with the last deal distributing the remaining 1 card. Each deal places one card on each of the 3 reserve piles, so you need to think about what gets buried on each pile with every deal.",
   },
   {
-    question: "Is Bristol Solitaire easier or harder than FreeCell?",
+    question: "How does Bristol Solitaire's difficulty compare with FreeCell?",
     answer:
       "Bristol Solitaire has a lower win rate than FreeCell. While FreeCell is solvable in roughly 99% of deals, Bristol is estimated to be winnable in around 5–10% of deals. The kings restriction, limited reserve storage, and no-redeal rule make it significantly more challenging. However, the any-suit building rule gives you more flexibility in the tableau than many other solitaire variants.",
   },

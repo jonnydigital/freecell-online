@@ -78,7 +78,7 @@ export default function KlondikeCheatSheetPage() {
       {/* Main Content */}
       <main className="max-w-4xl mx-auto px-6 sm:px-10 lg:px-12 pb-20 flex flex-col gap-6">
         <article className="space-y-6">
-          <AuthorByline authorSlug="rules-desk" publishedDate="2026-04-12" />
+          <AuthorByline authorSlug="the-rules-desk" publishedDate="2026-04-12" />
 
           {/* ── Setup at a Glance ── */}
           <section>

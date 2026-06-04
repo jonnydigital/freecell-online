@@ -73,9 +73,10 @@ export default async function AuthorProfilePage({ params }: Props) {
 
   const mdx = getAuthorMdx(slug);
   const canonical = canonicalUrlFor(`/authors/${slug}`);
+  const personId = `${canonical}#person`;
 
   const personJsonLd = {
-    "@context": "https://schema.org",
+    "@id": personId,
     "@type": "Person",
     name: author.name,
     jobTitle: author.role,
@@ -88,6 +89,20 @@ export default async function AuthorProfilePage({ params }: Props) {
       url: siteConfig.url,
     },
     ...(author.contactUrl ? { email: author.contactUrl.replace(/^mailto:/, "") } : {}),
+  };
+
+  const profilePageJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    name: `${author.name} profile`,
+    url: canonical,
+    dateCreated: author.joinedDate,
+    mainEntity: personJsonLd,
+    isPartOf: {
+      "@type": "WebSite",
+      name: siteConfig.siteName,
+      url: siteConfig.url,
+    },
   };
 
   const breadcrumbJsonLd = {
@@ -117,7 +132,7 @@ export default async function AuthorProfilePage({ params }: Props) {
 
   return (
     <ContentLayout variant="dark">
-      <JsonLd data={personJsonLd} />
+      <JsonLd data={profilePageJsonLd} />
       <JsonLd data={breadcrumbJsonLd} />
 
       <ContentHero

@@ -73,7 +73,7 @@ Request indexing only for high-value indexable pages.
 | `https://solitairestack.com/freecell-vs-eight-off` | 2026-06-03 | Not indexed: Discovered - currently not indexed | Added to the priority crawl queue. |
 | `https://solitairestack.com/about` | 2026-06-03 | Not indexed: URL is unknown to Google | Added to the priority crawl queue. |
 | `https://solitairestack.com/solitaire-rules-by-country` | 2026-06-03 inspected | Indexed | Already on Google; request skipped. |
-| `https://solitairestack.com/freecell-no-ads` | 2026-06-03 quota blocked | Not indexed: Discovered - currently not indexed | Search Console returned `Quota Exceeded`: "Sorry--we couldn't process this request because you've exceeded your daily quota. Please try submitting this again tomorrow." Retry after the quota resets. |
+| `https://solitairestack.com/freecell-no-ads` | 2026-06-03 quota blocked; 2026-06-04 10:12 EDT quota still blocked | Not indexed: Discovered - currently not indexed | Sitemap detected; no referring page detected. Search Console returned `Quota Exceeded`: "Sorry--we couldn't process this request because you've exceeded your daily quota. Please try submitting this again tomorrow." Retry after the rolling quota resets. |
 
 Do not request indexing for intentionally noindexed detail pages such as `/accordion/how-to-play`, `/bisley/strategy`, or `/cruel/tips`.
 

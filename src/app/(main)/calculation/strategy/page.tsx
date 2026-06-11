@@ -40,7 +40,7 @@ export const metadata: Metadata = {
 
 const faqs = [
   {
-    question: "What makes Calculation Solitaire different from other solitaire games?",
+    question: "Why is Calculation a rank-counting puzzle instead of a suit-building game?",
     answer:
       "Calculation is unique because it removes all element of luck from the gameplay. Every card is dealt face-up one at a time from a single deck, and the four foundations follow fixed arithmetic sequences (counting by 1, 2, 3, and 4 modulo 13). Winning depends entirely on your ability to manage four waste piles strategically — there is no hidden information, no shuffling, and no randomness after the initial deck order. It is one of the few solitaire games where a skilled player can win nearly every deal.",
   },

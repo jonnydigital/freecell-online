@@ -54,7 +54,7 @@ export default function AccordionHowToPlay() {
 
   const faqs = [
     {
-      question: "What makes Accordion Solitaire different from other solitaire games?",
+      question: "How does Accordion's leftward compression puzzle work?",
       answer:
         "Accordion is unique because all 52 cards are visible from the start in a single row, and moves compress the row by removing positions. There are no foundations, no tableau columns, and no stock pile. The entire game is about compressing a row of cards by matching rank or suit, moving only 1 or 3 positions to the left.",
     },
@@ -84,7 +84,7 @@ export default function AccordionHowToPlay() {
         "There is no quick way to determine if a deal is winnable before playing. The game's complexity makes it impractical to solve computationally for most deals. Part of Accordion's charm is not knowing whether victory is possible — you play each deal hoping for the best and learning from the patterns.",
     },
     {
-      question: "Is Accordion Solitaire harder than FreeCell?",
+      question: "Why is Accordion one of the hardest solitaire games?",
       answer:
         "Yes, significantly. FreeCell has a win rate of approximately 82% with skilled play, while Accordion's win rate is just 1-2%. However, the difficulty is fundamentally different: FreeCell requires deep tactical planning, while Accordion combines pattern recognition with a large element of luck in the deal.",
     },

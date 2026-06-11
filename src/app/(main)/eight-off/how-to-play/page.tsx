@@ -70,7 +70,7 @@ const faqs = [
       "You can move a same-suit sequence as a group. The maximum number of cards you can move depends on empty free cells and empty cascades (that you can fill with Kings). The formula is (1 + empty free cells) × 2^(empty cascades with available Kings). In practice, the King-only restriction on empty cascades limits supermove potential.",
   },
   {
-    question: "Is Eight Off harder than FreeCell?",
+    question: "How does Eight Off's difficulty compare with FreeCell?",
     answer:
       "Yes, Eight Off is harder than standard FreeCell despite having more free cells. The same-suit stacking rule and King-only empty cascade restriction add significant strategic complexity. However, it is easier than Baker's Game, which has only 4 free cells with same-suit stacking.",
   },

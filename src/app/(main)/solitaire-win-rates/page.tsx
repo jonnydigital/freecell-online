@@ -21,10 +21,12 @@ import {
   type SimulationEntry,
   type SimulationMethodology,
 } from "@/lib/winRateSimulations";
+import unsolvableDeals from "@/data/freeCellUnsolvableDeals.json";
 
 const PUBLISHED_DATE = "2026-04-05";
 const UPDATED_DATE = "2026-04-05";
 const PAGE_PATH = "/solitaire-win-rates";
+const FREECELL_UNSOLVABLE_DEALS = unsolvableDeals.entries;
 
 export const metadata: Metadata = {
   title: "Solitaire Win Rates: A Researched Database | SolitaireStack",
@@ -137,7 +139,12 @@ export default function SolitaireWinRatesPage() {
         {
           "@type": "DataDownload",
           encodingFormat: "application/json",
-          contentUrl: absoluteUrl("/solitaire-win-rates"),
+          contentUrl: absoluteUrl("/solitaire-win-rates.json"),
+        },
+        {
+          "@type": "DataDownload",
+          encodingFormat: "application/json",
+          contentUrl: absoluteUrl("/freecell-unsolvable-deals.json"),
         },
       ],
     },
@@ -329,9 +336,15 @@ export default function SolitaireWinRatesPage() {
             <p>
               The dataset is also published under Creative Commons Attribution
               4.0. If you want to cite these numbers in your own work, please
-              do — link back to this page and the primary sources listed in
-              each row, and we will happily help you interpret the
-              methodology.
+              do — download the{" "}
+              <Link
+                href="/solitaire-win-rates.json"
+                className="text-[#D4AF37]/85 hover:text-[#D4AF37] hover:underline"
+              >
+                machine-readable JSON dataset
+              </Link>
+              , link back to this page and the primary sources listed in each
+              row, and we will happily help you interpret the methodology.
             </p>
 
             <div className="mt-4 overflow-x-auto rounded-lg border border-white/10">
@@ -530,6 +543,99 @@ export default function SolitaireWinRatesPage() {
               while the game itself remains deep, and that combination is
               why it is the most-studied solitaire variant in the academic
               literature.
+            </p>
+          </ContentBody>
+        </CardSection>
+
+        {/* Deal-level FreeCell proof table */}
+        <CardSection variant="dark">
+          <SectionHeading variant="dark" sub="Deal-Level Data" id="freecell-deal-proof" icon={"\u2666"}>
+            The known impossible FreeCell deals
+          </SectionHeading>
+          <ContentBody variant="dark" className="space-y-5">
+            <p>
+              FreeCell is the only game in this database where we can point
+              to specific impossible deal numbers. The original Microsoft
+              library has one confirmed impossible deal, #11982. In the
+              first 1,000,000 Microsoft-compatible deals, the commonly cited
+              impossible set contains eight deals total. That is the source
+              behind the 99.9992% figure in the table.
+            </p>
+            <p>
+              We publish the deal list separately from the article because
+              it is the kind of claim readers should be able to audit without
+              copying numbers out of prose. Download the{" "}
+              <Link
+                href="/freecell-unsolvable-deals.json"
+                className="text-[#D4AF37]/85 hover:text-[#D4AF37] hover:underline"
+              >
+                known impossible FreeCell deals JSON
+              </Link>
+              {" "}or test any deal in the{" "}
+              <Link href="/solver" className="text-[#D4AF37]/85 hover:text-[#D4AF37] hover:underline">
+                browser FreeCell solver
+              </Link>
+              . The solver may report a failure when it exhausts its search
+              budget, so only the deal numbers below should be treated as
+              known impossible records.
+            </p>
+
+            <div className="mt-4 overflow-x-auto rounded-lg border border-white/10">
+              <table className="w-full min-w-[620px] border-collapse text-left text-sm">
+                <thead>
+                  <tr className="border-b border-[#D4AF37]/30 bg-white/[0.03]">
+                    <th className="py-3 px-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#D4AF37]">
+                      Deal
+                    </th>
+                    <th className="py-3 px-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#D4AF37]">
+                      Range
+                    </th>
+                    <th className="py-3 px-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#D4AF37]">
+                      Status
+                    </th>
+                    <th className="py-3 px-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#D4AF37]">
+                      Note
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {FREECELL_UNSOLVABLE_DEALS.map((deal, idx) => (
+                    <tr
+                      key={deal.dealNumber}
+                      className={`border-b border-white/5 align-top ${
+                        idx % 2 === 0 ? "bg-white/[0.02]" : ""
+                      }`}
+                    >
+                      <td className="py-3 px-3 font-mono text-white">
+                        <Link
+                          href={`/game/${deal.dealNumber}`}
+                          className="text-[#D4AF37]/85 hover:text-[#D4AF37] hover:underline"
+                        >
+                          #{deal.dealNumber}
+                        </Link>
+                      </td>
+                      <td className="py-3 px-3 text-xs text-white/60">
+                        {deal.range === "original-32000"
+                          ? "Microsoft 1-32,000"
+                          : "Microsoft 1-1,000,000"}
+                      </td>
+                      <td className="py-3 px-3 text-xs text-white/60">
+                        {deal.proofStatus.replaceAll("-", " ")}
+                      </td>
+                      <td className="py-3 px-3 text-xs leading-snug text-white/60">
+                        {deal.note}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p className="text-xs text-white/45">
+              Dataset generated {new Date(unsolvableDeals.generatedAt).toISOString().slice(0, 10)} ·{" "}
+              {unsolvableDeals.population.knownUnsolvableCount} known impossible deals ·{" "}
+              {unsolvableDeals.population.solvabilityPercent}% solvability across the first{" "}
+              {unsolvableDeals.population.dealNumberMax.toLocaleString("en-US")} Microsoft-compatible
+              deals.
             </p>
           </ContentBody>
         </CardSection>

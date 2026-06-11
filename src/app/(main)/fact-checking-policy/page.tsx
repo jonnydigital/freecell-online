@@ -41,7 +41,7 @@ export const metadata: Metadata = {
 };
 
 const PUBLISHED_DATE = "2026-04-05";
-const UPDATED_DATE = "2026-04-05";
+const UPDATED_DATE = "2026-06-01";
 
 export default function FactCheckingPolicyPage() {
   if (!isOwnedBy("/fact-checking-policy", siteConfig.key)) notFound();
@@ -55,9 +55,9 @@ export default function FactCheckingPolicyPage() {
       datePublished: PUBLISHED_DATE,
       dateModified: UPDATED_DATE,
       author: {
-        "@type": "Organization",
-        name: "Solitaire Stack Editorial Team",
-        url: absoluteUrl("/authors/editorial-team"),
+        "@type": "Person",
+        name: "J. Foye",
+        url: absoluteUrl("/authors/j-foye"),
       },
       publisher: {
         "@type": "Organization",
@@ -94,7 +94,7 @@ export default function FactCheckingPolicyPage() {
       <main className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-10 pb-20 flex flex-col gap-6">
         <div className="-mt-4 mb-2 flex justify-center">
           <AuthorByline
-            authorSlug="editorial-team"
+            authorSlug="j-foye"
             publishedDate={PUBLISHED_DATE}
             updatedDate={UPDATED_DATE}
           />

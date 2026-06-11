@@ -54,7 +54,7 @@ export default function BisleyHowToPlay() {
 
   const faqs = [
     {
-      question: "What makes Bisley different from other solitaire games?",
+      question: "How do Bisley's two foundation directions change the game?",
       answer:
         "Bisley's signature feature is dual-direction foundations. Aces build up by suit while kings build down by suit. When ascending and descending piles of the same suit meet, that suit is complete. This two-way approach gives you much more flexibility than traditional one-direction foundation games. Combined with the ability to build tableau cards up OR down by same suit, Bisley is one of the most tactically flexible patience games.",
     },
@@ -79,7 +79,7 @@ export default function BisleyHowToPlay() {
         "No. Empty columns cannot be filled with any card in Bisley. Once a column is cleared, it remains empty for the rest of the game. This is a critical constraint — while it's tempting to clear columns quickly, doing so reduces your available play space and can lead to deadlocks.",
     },
     {
-      question: "Is Bisley harder than FreeCell?",
+      question: "How does Bisley's difficulty compare with FreeCell?",
       answer:
         "Bisley and FreeCell have similar overall win rates (both around 70-80%), but they feel quite different. Bisley gives you more building flexibility (up or down, same suit) and dual-direction foundations, but no free cells and no ability to fill empty columns. FreeCell gives you four temporary storage cells and empty columns, but has stricter building rules (alternating color, descending only).",
     },

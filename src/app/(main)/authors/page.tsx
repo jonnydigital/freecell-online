@@ -45,22 +45,29 @@ export default function AuthorsPage() {
   if (!isOwnedBy("/authors", siteConfig.key)) notFound();
 
   const authors = getAllAuthors();
+  const canonical = canonicalUrlFor("/authors");
+  const authorListId = `${canonical}#author-list`;
 
-  const profilePageJsonLd = {
+  const collectionPageJsonLd = {
     "@context": "https://schema.org",
-    "@type": "ProfilePage",
+    "@type": "CollectionPage",
     name: "The Solitaire Stack Editorial Team",
-    url: canonicalUrlFor("/authors"),
+    url: canonical,
     about: {
       "@type": "Organization",
       name: siteConfig.siteName,
       url: siteConfig.url,
     },
+    mainEntity: {
+      "@id": authorListId,
+    },
   };
 
   const itemListJsonLd = {
     "@context": "https://schema.org",
+    "@id": authorListId,
     "@type": "ItemList",
+    name: "Solitaire Stack editors and subject-matter desks",
     itemListElement: authors.map((author, index) => ({
       "@type": "ListItem",
       position: index + 1,
@@ -101,7 +108,7 @@ export default function AuthorsPage() {
 
   return (
     <ContentLayout variant="dark">
-      <JsonLd data={profilePageJsonLd} />
+      <JsonLd data={collectionPageJsonLd} />
       <JsonLd data={itemListJsonLd} />
       <JsonLd data={breadcrumbJsonLd} />
 
@@ -143,7 +150,7 @@ export default function AuthorsPage() {
               <span className="text-white">research</span>, draft, desk
               review, fact-check, copy edit, publish, then revisit on a
               rolling schedule. Dates on articles are real update dates, not
-              auto-bumped timestamps. When we're wrong, we correct in public.
+              auto-bumped timestamps. When we&apos;re wrong, we correct in public.
             </p>
           </ContentBody>
         </CardSection>

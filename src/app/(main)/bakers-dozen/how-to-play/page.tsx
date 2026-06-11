@@ -55,7 +55,7 @@ export default function BakersDozenHowToPlay() {
 
   const faqs = [
     {
-      question: "What makes Baker's Dozen different from other solitaire games?",
+      question: "Why does Baker's Dozen move Kings before play begins?",
       answer:
         "Baker's Dozen has two signature features. First, before play begins, all Kings are moved to the bottom of their columns — this prevents them from blocking other cards. Second, you build down on the tableau regardless of suit (any suit on any suit), which gives more flexibility than same-suit games. Combined with 13 columns and no free cells, it creates a unique strategic experience.",
     },

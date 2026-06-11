@@ -1,5 +1,7 @@
 # AdSense Phase 0 Re-Submission Checklist
 
+> **Superseded note (2026-06-01):** this file is retained as historical context only. The current recovery plan and re-review gate live in `docs/adsense-recovery-task.md`, `docs/adsense-review-request-checklist.md`, and `docs/adsense-review-submission-package.md`. Those newer files supersede the dates, sitemap counts, and submission instructions below.
+
 **Target site:** solitairestack.com (hub)
 **Rejection date:** 2026-04-05
 **Rejection reason:** "Low value content"

@@ -54,7 +54,7 @@ export default function LaBelleLucieHowToPlay() {
 
   const faqs = [
     {
-      question: "What makes La Belle Lucie different from other solitaire games?",
+      question: "Why do La Belle Lucie's fans, redeals, and Merci rule matter?",
       answer:
         "La Belle Lucie stands out for three reasons: cards are dealt into small fans of 3 (creating a distinctive visual layout), redeals involve actual shuffling (unlike Cruel where order is preserved), and the Merci rule lets you rescue one buried card on the final deal. This combination creates a unique blend of strategy and luck.",
     },
@@ -84,7 +84,7 @@ export default function LaBelleLucieHowToPlay() {
         "Both use same-suit tableau building, but La Belle Lucie deals into fans of 3 (vs Cruel's piles of 4), allows only 2 shuffled redeals (vs Cruel's unlimited order-preserving redeals), includes all cards in the deal (Cruel pre-places aces), and offers the unique Merci rule on the final deal.",
     },
     {
-      question: "Is La Belle Lucie harder than FreeCell?",
+      question: "How does La Belle Lucie's difficulty compare with FreeCell?",
       answer:
         "Yes, significantly. FreeCell has a ~82% win rate while La Belle Lucie sits around 15-20%. FreeCell gives you four free cells as temporary storage and allows moving any face-up card in a sequence. La Belle Lucie restricts you to top cards only, has no free cells, and empty fans can't be filled. The limited redeals and single Merci provide some relief, but the game remains quite challenging.",
     },

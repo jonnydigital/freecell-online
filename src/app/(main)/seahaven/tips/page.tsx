@@ -52,7 +52,7 @@ const faqs = [
       "No. In Seahaven Towers, only Kings can be placed in empty tableau columns. This is one of the biggest differences from FreeCell, where any card can fill an empty cascade. The Kings-only restriction means you must plan carefully before clearing a column — if you do not have a King ready, the empty column is wasted space until one becomes available.",
   },
   {
-    question: "Is Seahaven Towers harder than FreeCell?",
+    question: "How does Seahaven Towers' difficulty compare with FreeCell?",
     answer:
       "Seahaven Towers is generally considered slightly harder than standard FreeCell. While both games have high win rates with expert play (FreeCell ~82%, Seahaven ~85-90%), Seahaven's same-suit building rule, Kings-only empty columns, and starting with 2 occupied free cells create different challenges. Many players find the same-suit restriction the hardest adjustment coming from FreeCell.",
   },

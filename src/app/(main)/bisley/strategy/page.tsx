@@ -39,7 +39,7 @@ export const metadata: Metadata = {
 
 const faqs = [
   {
-    question: "What makes Bisley Solitaire different from other solitaire games?",
+    question: "Why do Bisley's meeting foundations create unusual decisions?",
     answer:
       "Bisley's defining feature is its dual-direction foundation building. Aces build up in suit (A-2-3...K) while Kings build down in suit (K-Q-J...A), and the two foundation rows of the same suit eventually meet in the middle. This creates a unique strategic challenge where you must decide whether to build a card upward from Aces or wait for it to be placed downward from Kings. Combined with all 52 cards being dealt face-up into 13 columns, it is a pure open-information game with no stock or redeal.",
   },

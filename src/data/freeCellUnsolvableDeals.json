@@ -1,0 +1,69 @@
+{
+  "generatedAt": "2026-06-01T00:00:00.000Z",
+  "dataset": "Known unsolvable Microsoft FreeCell deals",
+  "ruleset": "Microsoft-compatible FreeCell: four free cells, eight tableau columns, four foundations, and legal single-card moves. Supermoves are treated as shorthand for legal single-card move sequences.",
+  "population": {
+    "name": "First 1,000,000 Microsoft-numbered FreeCell deals",
+    "dealNumberMin": 1,
+    "dealNumberMax": 1000000,
+    "knownUnsolvableCount": 8,
+    "knownSolvableCount": 999992,
+    "solvabilityPercent": 99.9992
+  },
+  "verificationStatus": "published-community-solver-record",
+  "methodologyNotes": [
+    "Deal #11982 is the only unsolvable deal in the original Microsoft 1-32,000 set recorded by the Internet FreeCell Project.",
+    "The seven later deal numbers are the commonly cited impossible deals from the extended Microsoft-compatible 1,000,000-deal range.",
+    "This dataset records known unsolvable deals from published FreeCell solver/community records. It is not a new first-party exhaustive search run."
+  ],
+  "entries": [
+    {
+      "dealNumber": 11982,
+      "range": "original-32000",
+      "proofStatus": "proven-unsolvable-by-exhaustive-search",
+      "note": "The only unsolvable deal in the original Microsoft 32,000-deal set."
+    },
+    {
+      "dealNumber": 146692,
+      "range": "extended-million",
+      "proofStatus": "published-unsolvable-record",
+      "note": "One of seven additional impossible deals reported in the first 1,000,000 Microsoft-compatible deals."
+    },
+    {
+      "dealNumber": 186216,
+      "range": "extended-million",
+      "proofStatus": "published-unsolvable-record",
+      "note": "One of seven additional impossible deals reported in the first 1,000,000 Microsoft-compatible deals."
+    },
+    {
+      "dealNumber": 455889,
+      "range": "extended-million",
+      "proofStatus": "published-unsolvable-record",
+      "note": "One of seven additional impossible deals reported in the first 1,000,000 Microsoft-compatible deals."
+    },
+    {
+      "dealNumber": 495340,
+      "range": "extended-million",
+      "proofStatus": "published-unsolvable-record",
+      "note": "One of seven additional impossible deals reported in the first 1,000,000 Microsoft-compatible deals."
+    },
+    {
+      "dealNumber": 512118,
+      "range": "extended-million",
+      "proofStatus": "published-unsolvable-record",
+      "note": "One of seven additional impossible deals reported in the first 1,000,000 Microsoft-compatible deals."
+    },
+    {
+      "dealNumber": 517776,
+      "range": "extended-million",
+      "proofStatus": "published-unsolvable-record",
+      "note": "One of seven additional impossible deals reported in the first 1,000,000 Microsoft-compatible deals."
+    },
+    {
+      "dealNumber": 781948,
+      "range": "extended-million",
+      "proofStatus": "published-unsolvable-record",
+      "note": "One of seven additional impossible deals reported in the first 1,000,000 Microsoft-compatible deals."
+    }
+  ]
+}

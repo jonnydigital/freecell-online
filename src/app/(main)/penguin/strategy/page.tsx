@@ -60,7 +60,7 @@ const faqs = [
       "Only cards one rank below the foundation base rank can fill empty columns. If the base rank is 7, only 6s can go into empty columns. This is a critical constraint — it means empty columns are far less flexible than in FreeCell, where any card can fill an empty cascade. Creating empty columns is valuable only when you have the right rank card available or expect one to appear soon.",
   },
   {
-    question: "Is Penguin Solitaire harder than FreeCell?",
+    question: "How does Penguin's difficulty compare with FreeCell?",
     answer:
       "Penguin is generally harder than standard FreeCell. The same-suit building restriction eliminates roughly three-quarters of the placement options you would have with alternating-color building. The single flipper versus four free cells dramatically reduces your temporary storage. However, Penguin compensates slightly with seven tableau columns instead of eight. Skilled players win around 40% of Penguin deals versus 80-90% in FreeCell.",
   },

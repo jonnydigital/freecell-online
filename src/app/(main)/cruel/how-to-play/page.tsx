@@ -54,7 +54,7 @@ export default function CruelHowToPlay() {
 
   const faqs = [
     {
-      question: "What makes Cruel Solitaire different from other solitaire games?",
+      question: "How does Cruel's redeal mechanic change the game?",
       answer:
         "Cruel Solitaire is unique because of its redeal mechanic. When you get stuck, you can gather all tableau cards and re-deal them in groups of 4 without shuffling. The card order is preserved, only the grouping changes. Combined with same-suit building and 12 small piles, it creates a distinct strategic experience.",
     },
@@ -84,7 +84,7 @@ export default function CruelHowToPlay() {
         "Cruel and Perseverance are close relatives. The primary difference is that Cruel requires same-suit tableau building (e.g., 5\u2660 on 6\u2660), while Perseverance typically allows alternating-color building (e.g., 5\u2660 on 6\u2665). Some Perseverance variants also limit the number of redeals to 2 or 3.",
     },
     {
-      question: "Is Cruel Solitaire harder than FreeCell?",
+      question: "How does Cruel's difficulty compare with FreeCell?",
       answer:
         "Cruel has a lower win rate (~25-30%) compared to FreeCell (~82%), making it statistically harder. However, the difficulty feels different: FreeCell requires deep tactical planning with visible information, while Cruel combines tactical play with strategic redeal timing. The unlimited redeals provide a safety net that FreeCell lacks.",
     },

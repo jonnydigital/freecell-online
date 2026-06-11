@@ -153,12 +153,17 @@
   --deal-stagger: 10ms;
 }
 
-/* ---- Card back (face-down) ---- */
+/* ---- Card back (face-down): classic casino lattice ----
+   Pattern pitch scales with card size so the lattice stays crisp on
+   mobile (≈39px cards) instead of aliasing into moiré like the old
+   fixed 4px crosshatch. White rim → navy field → fine diamond lattice
+   → inner frame → subtle top sheen. */
 
 .dom-card-back {
+  /* Crisp ivory rim like a real printed card back */
   background:
     linear-gradient(var(--card-back-bg), var(--card-back-bg)) padding-box,
-    linear-gradient(135deg, var(--card-back-rim-light), var(--card-back-rim-dark)) border-box;
+    linear-gradient(160deg, var(--card-back-rim-light), var(--card-back-rim-dark)) border-box;
   border: 2px solid transparent;
   cursor: default;
   overflow: hidden;
@@ -167,34 +172,67 @@
 .dom-card-back::before {
   content: '';
   position: absolute;
-  inset: 5px;
-  border-radius: calc(var(--card-border-radius) - 4px);
-  border: 1.5px solid var(--card-back-border);
+  inset: clamp(3px, calc(var(--card-width) * 0.055), 6px);
+  border-radius: calc(var(--card-border-radius) - 3px);
+  border: 1px solid var(--card-back-border);
+  /* Lattice geometry scales with the card */
+  --lattice-pitch: clamp(8px, calc(var(--card-width) * 0.12), 14px);
+  --lattice-line: clamp(1px, calc(var(--lattice-pitch) * 0.14), 1.5px);
   background:
     repeating-linear-gradient(
       45deg,
-      transparent,
-      transparent 4px,
-      var(--card-back-pattern) 4px,
-      var(--card-back-pattern) 5px
+      var(--card-back-pattern) 0,
+      var(--card-back-pattern) var(--lattice-line),
+      transparent var(--lattice-line),
+      transparent var(--lattice-pitch)
     ),
     repeating-linear-gradient(
       -45deg,
-      transparent,
-      transparent 4px,
-      var(--card-back-pattern) 4px,
-      var(--card-back-pattern) 5px
+      var(--card-back-pattern) 0,
+      var(--card-back-pattern) var(--lattice-line),
+      transparent var(--lattice-line),
+      transparent var(--lattice-pitch)
     ),
+    radial-gradient(ellipse 120% 80% at 50% 0%, var(--card-back-sheen), transparent 60%),
     var(--card-back-bg);
   pointer-events: none;
 }
 
+/* Center medallion: rotated diamond echoing the lattice, kept faint so it
+   reads as engraving rather than a logo. Hidden on very small cards. */
+.dom-card-back::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 34%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%) rotate(45deg);
+  border: 1px solid var(--card-back-border);
+  border-radius: 14%;
+  background: linear-gradient(
+    135deg,
+    var(--card-back-medallion-hi),
+    var(--card-back-medallion-lo)
+  );
+  pointer-events: none;
+}
+
+@media (max-width: 767px) {
+  .dom-card-back::after {
+    display: none; /* too small to read below ~54px card width */
+  }
+}
+
 :root {
-  --card-back-bg: #1a4a8a;
-  --card-back-pattern: rgba(255, 255, 255, 0.1);
-  --card-back-border: rgba(255, 255, 255, 0.25);
-  --card-back-rim-light: #2a5a9a;
-  --card-back-rim-dark: #0e3060;
+  --card-back-bg: #163a74;
+  --card-back-pattern: rgba(255, 255, 255, 0.13);
+  --card-back-border: rgba(255, 255, 255, 0.28);
+  --card-back-rim-light: #f6f4ec;
+  --card-back-rim-dark: #d8d4c6;
+  --card-back-sheen: rgba(255, 255, 255, 0.09);
+  --card-back-medallion-hi: rgba(255, 255, 255, 0.1);
+  --card-back-medallion-lo: rgba(255, 255, 255, 0.015);
 }
 
 /* Smooth position transitions when not being dragged */

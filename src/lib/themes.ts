@@ -3,31 +3,51 @@
 export interface ThemeDefinition {
   id: string;
   name: string;
-  feltColor: string;        // hex - Phaser canvas background
-  feltNoiseLight: string;   // hex - light specks in felt noise
-  feltNoiseDark: string;    // hex - dark specks in felt noise
+  feltColor: string;        // hex - mid felt tone / Phaser canvas background
+  feltNoiseLight: string;   // hex - felt vignette highlight (center)
+  feltNoiseDark: string;    // hex - light specks in felt noise (legacy)
   vignetteAlpha: number;    // base alpha for vignette edge darkening
   cardBack: 'classic' | 'blue' | 'red' | 'ornate';
   // Derived UI colors for React components
   ui: {
     base: string;           // full-page background
-    dark: string;           // toolbar, footer
+    dark: string;           // toolbar, footer, felt vignette edge
     mid: string;            // game container
     accent: string;         // buttons, slot outlines
     accentHover: string;    // button hover
     border: string;         // subtle borders
     panel: string;          // modal/panel bg
   };
+  // Optional card/table styling overrides (fall back to stylesheet defaults)
+  card?: {
+    face?: string;            // CSS background-image for the card face
+    suitRed?: string;
+    suitBlack?: string;
+    foundationAccent?: string;     // foundation slot ring color
+    foundationAccentSoft?: string; // foundation watermark / inner ring
+    courtFont?: string;            // font for J/Q/K index letters
+  };
 }
+
+// Defaults applied when a theme doesn't override a card/table property,
+// so switching themes always resets cleanly.
+const CARD_DEFAULTS = {
+  face: 'linear-gradient(168deg, #ffffff 0%, #fbf9f4 55%, #f3efe6 100%)',
+  suitRed: '#c8102e',
+  suitBlack: '#1b1b1f',
+  foundationAccent: 'rgba(212, 175, 55, 0.35)',
+  foundationAccentSoft: 'rgba(212, 175, 55, 0.30)',
+  courtFont: "Georgia, 'Times New Roman', serif",
+};
 
 export const themes: ThemeDefinition[] = [
   {
-    id: 'classic-green',
-    name: 'Classic Green',
-    feltColor: '#0a3d0a',
-    feltNoiseLight: '#1a5c1a',
-    feltNoiseDark: '#062e06',
-    vignetteAlpha: 0.12,
+    id: 'casino',
+    name: 'Casino',
+    feltColor: '#114a27',
+    feltNoiseLight: '#1c6b39',
+    feltNoiseDark: '#0c3b1f',
+    vignetteAlpha: 0.16,
     cardBack: 'classic',
     ui: {
       base: '#0e4020',
@@ -37,6 +57,61 @@ export const themes: ThemeDefinition[] = [
       accentHover: '#2a8a2d',
       border: '#2a7c2a',
       panel: '#0d2f0d',
+    },
+    card: {
+      foundationAccent: 'rgba(212, 175, 55, 0.38)',
+      foundationAccentSoft: 'rgba(212, 175, 55, 0.32)',
+    },
+  },
+  {
+    id: 'classic',
+    name: 'Classic',
+    feltColor: '#347a51',
+    feltNoiseLight: '#46996a',
+    feltNoiseDark: '#245839',
+    vignetteAlpha: 0.12,
+    cardBack: 'classic',
+    ui: {
+      base: '#2a6342',
+      dark: '#245839',
+      mid: '#347a51',
+      accent: '#2f7d4f',
+      accentHover: '#3a9a63',
+      border: '#3f8c5c',
+      panel: '#1f4d33',
+    },
+    card: {
+      face: '#ffffff',
+      suitRed: '#d4202a',
+      suitBlack: '#111111',
+      foundationAccent: 'rgba(255, 255, 255, 0.28)',
+      foundationAccentSoft: 'rgba(255, 255, 255, 0.26)',
+    },
+  },
+  {
+    id: 'modern',
+    name: 'Modern',
+    feltColor: '#161f29',
+    feltNoiseLight: '#243747',
+    feltNoiseDark: '#0e141b',
+    vignetteAlpha: 0.18,
+    cardBack: 'blue',
+    ui: {
+      base: '#0e141b',
+      dark: '#0b1118',
+      mid: '#1b2733',
+      accent: '#2f3e52',
+      accentHover: '#3d5066',
+      border: '#3a4a5e',
+      panel: '#141d26',
+    },
+    card: {
+      face: '#ffffff',
+      suitRed: '#e8384f',
+      suitBlack: '#1b2733',
+      foundationAccent: 'rgba(120, 140, 255, 0.45)',
+      foundationAccentSoft: 'rgba(150, 170, 255, 0.40)',
+      courtFont: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
     },
   },
   {
@@ -93,24 +168,6 @@ export const themes: ThemeDefinition[] = [
       panel: '#18182c',
     },
   },
-  {
-    id: 'slate',
-    name: 'Slate',
-    feltColor: '#2d3436',
-    feltNoiseLight: '#4a5154',
-    feltNoiseDark: '#1a1f20',
-    vignetteAlpha: 0.12,
-    cardBack: 'classic',
-    ui: {
-      base: '#232829',
-      dark: '#1e2324',
-      mid: '#383f42',
-      accent: '#4a5154',
-      accentHover: '#5a6366',
-      border: '#5a6366',
-      panel: '#282e30',
-    },
-  },
 ];
 
 export function getThemeById(id: string): ThemeDefinition {
@@ -129,6 +186,15 @@ export function applyThemeCssVars(theme: ThemeDefinition): void {
   root.style.setProperty('--theme-panel', theme.ui.panel);
   root.style.setProperty('--felt-color', theme.feltColor);
   root.style.setProperty('--felt-color-light', theme.feltNoiseLight);
+
+  // Card / table styling — always set (with fallback) so themes reset cleanly
+  const c = theme.card ?? {};
+  root.style.setProperty('--card-face', c.face ?? CARD_DEFAULTS.face);
+  root.style.setProperty('--suit-red', c.suitRed ?? CARD_DEFAULTS.suitRed);
+  root.style.setProperty('--suit-black', c.suitBlack ?? CARD_DEFAULTS.suitBlack);
+  root.style.setProperty('--foundation-accent', c.foundationAccent ?? CARD_DEFAULTS.foundationAccent);
+  root.style.setProperty('--foundation-accent-soft', c.foundationAccentSoft ?? CARD_DEFAULTS.foundationAccentSoft);
+  root.style.setProperty('--court-font', c.courtFont ?? CARD_DEFAULTS.courtFont);
 }
 
 /** Convert hex color string (#rrggbb) to Phaser integer (0xRRGGBB) */

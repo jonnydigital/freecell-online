@@ -397,6 +397,89 @@ export class FreeCellEngine {
   }
 
   /**
+   * Move a single eligible card to its foundation (free cells first, then
+   * cascade tops), ignoring the "safe to auto-move" heuristic. Returns the
+   * move made, or null if none is available. Used to drive a staggered
+   * auto-finish animation, one card at a time.
+   */
+  playOneToFoundation(): Move | null {
+    for (let i = 0; i < this.state.freeCells.length; i++) {
+      const card = this.state.freeCells[i];
+      if (card && card.canMoveToFoundation(this.getFoundationTop(card.suit))) {
+        const move = this.executeMove(
+          { type: 'freecell', index: i },
+          { type: 'foundation', suit: card.suit }
+        );
+        move.isAutoMove = true;
+        return move;
+      }
+    }
+    for (let i = 0; i < 8; i++) {
+      const cascade = this.state.cascades[i];
+      if (cascade.length === 0) continue;
+      const card = cascade[cascade.length - 1];
+      if (card.canMoveToFoundation(this.getFoundationTop(card.suit))) {
+        const move = this.executeMove(
+          { type: 'cascade', index: i },
+          { type: 'foundation', suit: card.suit }
+        );
+        move.isAutoMove = true;
+        return move;
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Sweep every available card to its foundation, ignoring the
+   * "safe to auto-move" heuristic. Intended for auto-finishing a board
+   * that is already solved (see isAutoCompletable). Returns the moves made.
+   */
+  playAllToFoundations(): Move[] {
+    const moves: Move[] = [];
+    let moved = true;
+
+    while (moved) {
+      moved = false;
+
+      // Free cells
+      for (let i = 0; i < this.state.freeCells.length; i++) {
+        const card = this.state.freeCells[i];
+        if (card && card.canMoveToFoundation(this.getFoundationTop(card.suit))) {
+          const move = this.executeMove(
+            { type: 'freecell', index: i },
+            { type: 'foundation', suit: card.suit }
+          );
+          move.isAutoMove = true;
+          moves.push(move);
+          moved = true;
+          break;
+        }
+      }
+      if (moved) continue;
+
+      // Cascade tops
+      for (let i = 0; i < 8; i++) {
+        const cascade = this.state.cascades[i];
+        if (cascade.length === 0) continue;
+        const card = cascade[cascade.length - 1];
+        if (card.canMoveToFoundation(this.getFoundationTop(card.suit))) {
+          const move = this.executeMove(
+            { type: 'cascade', index: i },
+            { type: 'foundation', suit: card.suit }
+          );
+          move.isAutoMove = true;
+          moves.push(move);
+          moved = true;
+          break;
+        }
+      }
+    }
+
+    return moves;
+  }
+
+  /**
    * Check if the game is won (all foundations complete with Kings)
    */
   private checkWin(): void {

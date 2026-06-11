@@ -123,6 +123,33 @@ function snapshotEngine(engine: FreeCellEngine): Pick<
   };
 }
 
+/** Delay between each card in the auto-finish victory cascade (ms). */
+const AUTO_FINISH_STEP_MS = 90;
+
+/**
+ * Drive the auto-finish: move one card to its foundation, update the store,
+ * then schedule the next on a short timer. Each step animates via the CSS
+ * settle transition, producing a staggered "victory cascade".
+ */
+function scheduleAutoFinish(
+  set: (partial: Partial<DomFreecellState>) => void,
+  get: () => DomFreecellState,
+): void {
+  const step = () => {
+    const move = _engine.playOneToFoundation();
+    if (!move) return;
+    const snapshot = snapshotEngine(_engine);
+    set({
+      ...snapshot,
+      moveHistory: [...get().moveHistory, move],
+    });
+    if (!snapshot.isWon) {
+      setTimeout(step, AUTO_FINISH_STEP_MS);
+    }
+  };
+  setTimeout(step, AUTO_FINISH_STEP_MS);
+}
+
 // ---------------------------------------------------------------------------
 // Store
 // ---------------------------------------------------------------------------
@@ -197,6 +224,13 @@ export const domFreecellStore = create<DomFreecellState>()((set, get) => ({
     const move = _engine.executeMove(from, to);
     const autoMoves = _engine.autoMoveToFoundations();
 
+    // Auto-finish: once the board is mathematically solved (free cells empty,
+    // every cascade in descending order), sweep the remaining cards to the
+    // foundations one at a time so the player doesn't have to click out a
+    // won game. The staggered timer gives a satisfying victory cascade
+    // (each card glides up via the CSS settle transition).
+    const shouldAutoFinish = !_engine.getState().isWon && _engine.isAutoCompletable();
+
     // Record all moves for undo (manual move + auto-moves)
     const history = get().moveHistory;
     const snapshot = snapshotEngine(_engine);
@@ -211,6 +245,10 @@ export const domFreecellStore = create<DomFreecellState>()((set, get) => ({
       timerStarted: true,
       noMovesAvailable: noMoves,
     });
+
+    if (shouldAutoFinish) {
+      scheduleAutoFinish(set, get);
+    }
 
     return true;
   },

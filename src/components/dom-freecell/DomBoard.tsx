@@ -292,7 +292,7 @@ export default function DomBoard({ hint }: DomBoardProps) {
         }}
       >
         {/* 4 Free cells */}
-        <div style={{ display: 'flex', gap: 'var(--pile-gap)' }}>
+        <div style={{ display: 'flex', gap: 'calc(var(--pile-gap) * 0.5)' }}>
           {freeCells.map((card, i) => (
             <div
               key={`fc-${i}`}
@@ -325,7 +325,7 @@ export default function DomBoard({ hint }: DomBoardProps) {
         </div>
 
         {/* 4 Foundations */}
-        <div style={{ display: 'flex', gap: 'var(--pile-gap)' }}>
+        <div style={{ display: 'flex', gap: 'calc(var(--pile-gap) * 0.5)' }}>
           {FOUNDATION_SUITS.map((suit) => {
             const pile = foundations.get(suit) ?? [];
             const topCard = pile.length > 0 ? pile[pile.length - 1] : null;

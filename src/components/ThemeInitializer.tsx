@@ -21,8 +21,10 @@ const ThemeInitializer = () => {
     window.addEventListener('themeChange', handler);
 
     // Also re-apply on mount in case blocking script missed (e.g. client nav)
-    const storedThemeName = localStorage.getItem('theme-name') || 'Classic Green';
-    const currentTheme = themes.find(t => t.name === storedThemeName) || themes[0];
+    const storedThemeId = localStorage.getItem('theme-id');
+    const currentTheme = storedThemeId
+      ? themes.find(t => t.id === storedThemeId) || themes[0]
+      : themes[0];
     applyThemeCssVars(currentTheme);
 
     return () => window.removeEventListener('themeChange', handler);

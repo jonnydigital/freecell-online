@@ -9,31 +9,45 @@
   --card-height: 147px;
   --card-border-radius: 9px;
 
-  /* Card face */
-  --card-bg: #fafaf8;
-  --card-border: 1px solid rgba(0, 0, 0, 0.12);
+  /* Card face — themeable. --card-face may be a gradient; --card-bg is a flat fallback. */
+  --card-bg: #fbf9f4;
+  --card-face: linear-gradient(168deg, #ffffff 0%, #fbf9f4 55%, #f3efe6 100%);
+  --card-border: 1px solid rgba(0, 0, 0, 0.06);
 
-  /* Shadows */
-  --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.08);
-  --card-shadow-dragging: 0 8px 24px rgba(0, 0, 0, 0.2),
-    0 2px 8px rgba(0, 0, 0, 0.12);
+  /* Shadows — layered so cards lift off the felt with real depth */
+  --card-shadow: 0 1px 1px rgba(0, 0, 0, 0.10), 0 3px 6px rgba(0, 0, 0, 0.14),
+    0 10px 20px rgba(0, 0, 0, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  --card-shadow-dragging: 0 16px 40px rgba(0, 0, 0, 0.35),
+    0 4px 12px rgba(0, 0, 0, 0.2);
 
-  /* Suit colors */
-  --suit-red: #d42a2a;
-  --suit-black: #1a1a1a;
+  /* Suit colors — themeable */
+  --suit-red: #c8102e;
+  --suit-black: #1b1b1f;
 
-  /* Empty slot */
-  --slot-bg: rgba(255, 255, 255, 0.04);
-  --slot-border: 1px solid rgba(255, 255, 255, 0.12);
+  /* Empty slot — inset well */
+  --slot-bg: rgba(0, 0, 0, 0.18);
+  --slot-border: 1px solid rgba(255, 255, 255, 0.10);
   --slot-border-radius: 8px;
+  --slot-inset-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.32);
+  /* Foundation accent ring — themeable (gold for Casino) */
+  --foundation-accent: rgba(212, 175, 55, 0.35);
+  --foundation-accent-soft: rgba(212, 175, 55, 0.30);
+
+  /* Pip & court sizing (overridden per-breakpoint on the board surface) */
+  --pip-size: 22px;
+  --court-letter-size: 0.52;
+  --court-font: Georgia, 'Times New Roman', serif;
 
   /* Cascade overlap — visible portion of each stacked card */
   --cascade-overlap: 32px;
 }
 
 .dom-board-surface {
-  /* 460px = sidebar 380 + layout gap 16 + container padding 32 + board padding buffer 32 */
-  --card-width: clamp(86px, calc((100vw - 460px) / 8.6), 125px);
+  /* 490px reserves sidebar (380) + layout gap + container/board padding.
+     Divisor 9 = 8 columns + inter-column gaps + board padding, with margin so
+     the row never exceeds the board. Min 58px lets cards shrink at narrow
+     desktop widths (≈1024–1200px) instead of overflowing under the sidebar. */
+  --card-width: clamp(58px, calc((100vw - 490px) / 9), 125px);
   --card-height: calc(var(--card-width) * 1.4);
   --card-border-radius: clamp(8px, calc(var(--card-width) * 0.085), 10px);
   --cascade-overlap: clamp(24px, calc(var(--card-width) * 0.3), 36px);
@@ -47,6 +61,24 @@
   --card-suit-small-size: clamp(13px, calc(var(--card-width) * 0.135), 16px);
   --card-center-suit-size: clamp(34px, calc(var(--card-width) * 0.37), 44px);
   --slot-label-size: clamp(22px, calc(var(--card-width) * 0.24), 28px);
+  /* Uniform across ranks; capped near 0.2×card so 8/9/10 center pips don't crowd. */
+  --pip-size: clamp(13px, calc(var(--card-width) * 0.2), 25px);
+}
+
+/* ---- Felt surface: subtle vignette + fabric texture (consumes theme vars) ----
+   Kept gentle so it blends into the surrounding table at any board height,
+   rather than reading as a dark-bottomed panel. */
+.dom-board-surface {
+  background-color: var(--felt-color, #0e4020);
+  background-image:
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse 130% 95% at 50% 42%,
+      var(--felt-color-light, #1f6e22) 0%,
+      var(--felt-color, #0e4020) 58%,
+      color-mix(in srgb, var(--felt-color, #0e4020) 78%, #000) 100%);
+  background-size: 220px 220px, cover;
+  border-radius: 14px;
+  box-shadow: inset 0 0 70px rgba(0, 0, 0, 0.20), inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 /* Tablet: no sidebar, game takes full width — 768–1023px */
@@ -75,6 +107,7 @@
     --card-suit-small-size: clamp(7px, calc(var(--card-width) * 0.16), 12px);
     --card-center-suit-size: clamp(14px, calc(var(--card-width) * 0.36), 24px);
     --slot-label-size: clamp(9px, calc(var(--card-width) * 0.24), 18px);
+    --pip-size: clamp(5px, calc(var(--card-width) * 0.2), 13px);
   }
 }
 
@@ -117,6 +150,7 @@
   width: var(--card-width);
   height: var(--card-height);
   background: var(--card-bg);
+  background-image: var(--card-face);
   border: var(--card-border);
   border-radius: var(--card-border-radius);
   box-shadow: var(--card-shadow);
@@ -228,6 +262,7 @@
   flex-direction: column;
   align-items: center;
   line-height: 1;
+  z-index: 2;
 }
 
 .dom-card__corner--tl {
@@ -252,11 +287,58 @@
   line-height: 1.1;
 }
 
-/* Center suit symbol */
+/* Center suit symbol (Ace) */
 .dom-card__center-suit {
   font-size: var(--card-center-suit-size);
   line-height: 1;
-  opacity: 0.85;
+  opacity: 0.92;
+}
+
+/* ---- Pip layout (number cards 2–10) ---- */
+.dom-card__pips {
+  position: absolute;
+  inset: 16% 18%;
+  font-size: var(--pip-size);
+}
+
+.dom-card__pip {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  font-size: 1em;
+  line-height: 1;
+}
+
+.dom-card__pip--flip {
+  transform: translate(-50%, -50%) rotate(180deg);
+}
+
+/* ---- Court cards (J / Q / K) ---- */
+.dom-card__court {
+  position: absolute;
+  inset: 20% 15%;
+  border-radius: calc(var(--card-border-radius) - 4px);
+  border: 1.5px solid rgba(0, 0, 0, 0.10);
+  background: linear-gradient(160deg, rgba(212, 175, 55, 0.10), rgba(212, 175, 55, 0.02));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.dom-card__court-letter {
+  font-family: var(--court-font);
+  font-size: calc(var(--card-width) * var(--court-letter-size));
+  font-weight: 700;
+  opacity: 0.92;
+  z-index: 1;
+}
+
+.dom-card__court-wm {
+  position: absolute;
+  font-size: calc(var(--card-width) * 0.9);
+  line-height: 1;
+  opacity: 0.10;
 }
 
 /* Suit color modifiers */
@@ -287,15 +369,28 @@
   border-radius: var(--slot-border-radius);
   background: var(--slot-bg);
   border: var(--slot-border);
+  box-shadow: var(--slot-inset-shadow);
   display: flex;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
 }
 
+/* Foundation slots read as targets: accent ring + suit watermark */
+.dom-pile--foundation .dom-pile__slot {
+  border-color: var(--foundation-accent);
+  box-shadow: var(--slot-inset-shadow), inset 0 0 0 1px var(--foundation-accent-soft);
+}
+
+.dom-pile--foundation .dom-pile__slot-label {
+  color: var(--foundation-accent-soft);
+  font-size: calc(var(--slot-label-size) * 1.3);
+  opacity: 0.9;
+}
+
 .dom-pile__slot-label {
   font-size: var(--slot-label-size);
-  color: rgba(255, 255, 255, 0.32);
+  color: rgba(255, 255, 255, 0.30);
   user-select: none;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
     Arial, sans-serif;

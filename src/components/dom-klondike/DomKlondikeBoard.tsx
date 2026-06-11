@@ -179,11 +179,12 @@ export default function DomKlondikeBoard() {
             </DomPile>
           </div>
 
-          {/* Waste pile */}
+          {/* Waste pile — unlabeled: an empty outlined slot beside the stock
+              reads as the discard space; the old "W" letter looked unfinished */}
           <div
             style={{ position: 'relative', width: 'var(--card-width)', height: 'var(--card-height)' }}
           >
-            <DomPile type="freecell" label="W">
+            <DomPile type="freecell">
               {wasteTopCard && (
                 <DomCard
                   card={wasteTopCard as any}

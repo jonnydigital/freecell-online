@@ -10,7 +10,7 @@ import MoreGames from '@/components/MoreGames';
 export const metadata: Metadata = {
   title: "Accordion Solitaire | Play Online Free — Compress-the-Row Card Game",
   description:
-    "Play Accordion Solitaire online for free. Compress 52 face-up cards into a single pile by matching rank or suit. Move cards 1 or 3 positions left. No download required.",
+    "Play Accordion Solitaire online for free. Compress 52 face-up cards into one pile by matching rank or suit, moving 1 or 3 positions left.",
   keywords: [
     "accordion solitaire",
     "accordion solitaire online",

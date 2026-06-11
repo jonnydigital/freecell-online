@@ -8,7 +8,7 @@ import AdUnit from "@/components/AdUnit";
 export const metadata: Metadata = {
   title: "How to Play Golf Solitaire | Rules, Setup & Complete Guide",
   description:
-    "Learn how to play Golf Solitaire with our complete guide. Rules for playing cards ±1 rank from seven columns to the waste pile, stock mechanics, and winning strategies.",
+    "Learn how to play Golf Solitaire: rules for playing cards ±1 rank from seven columns to the waste pile, stock mechanics, and winning strategies.",
   keywords: [
     "how to play golf solitaire",
     "golf solitaire rules",

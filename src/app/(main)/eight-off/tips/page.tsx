@@ -8,7 +8,7 @@ import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionH
 export const metadata: Metadata = {
   title: "Eight Off Solitaire Tips & Tricks | Master 8 Reserve Cells",
   description:
-    "Win more Eight Off Solitaire games with expert tips on reserve cell management, same-suit sequencing, King-only fills, and opening analysis. ~90% of deals are solvable.",
+    "Win more Eight Off games: reserve cell management, same-suit sequencing, King-only fills, and opening analysis. ~90% of deals are solvable.",
   keywords: [
     "eight off solitaire tips",
     "eight off tips",

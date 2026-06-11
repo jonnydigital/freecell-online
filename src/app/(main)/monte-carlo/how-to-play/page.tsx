@@ -8,7 +8,7 @@ import NetworkCrossLinks from "@/components/NetworkCrossLinks";
 export const metadata: Metadata = {
   title: "How to Play Monte Carlo Solitaire | Rules & Strategy Guide",
   description:
-    "Learn how to play Monte Carlo Solitaire with complete rules, pair-matching strategy, consolidation tips, and winning techniques for this classic 5x5 grid patience game.",
+    "Learn how to play Monte Carlo Solitaire: complete rules, pair-matching strategy, and consolidation tips for the classic 5x5 grid patience game.",
   keywords: [
     "monte carlo solitaire rules",
     "how to play monte carlo solitaire",

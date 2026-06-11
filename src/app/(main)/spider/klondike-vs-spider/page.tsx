@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   title:
     "Klondike vs Spider Solitaire | Which Classic Solitaire Is Right for You?",
   description:
-    "Klondike vs Spider Solitaire compared head to head \u2014 rules, difficulty, win rates, strategy depth, variants, and which classic solitaire game fits your play style.",
+    "Klondike vs Spider Solitaire compared — rules, difficulty, win rates, strategy depth, and which classic fits your play style.",
   keywords: [
     "klondike vs spider solitaire",
     "spider vs klondike",

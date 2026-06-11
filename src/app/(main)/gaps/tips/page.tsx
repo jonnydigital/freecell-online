@@ -8,7 +8,7 @@ import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionH
 export const metadata: Metadata = {
   title: "Gaps (Montana) Solitaire Tips & Tricks | Master the Grid Puzzle",
   description:
-    "Improve your Gaps Solitaire win rate with practical tips on dead gap avoidance, 2s-first strategy, chain thinking, redeal timing, and row-by-row focus. ~10-20% winnable.",
+    "Improve your Gaps Solitaire win rate: dead-gap avoidance, 2s-first strategy, chain thinking, and redeal timing. ~10-20% winnable.",
   keywords: [
     "gaps solitaire tips",
     "montana solitaire tips",

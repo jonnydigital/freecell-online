@@ -10,7 +10,7 @@ import AuthorBio from "@/components/content/AuthorBio";
 export const metadata: Metadata = {
   title: "Golf Solitaire | Play Online Free — No Download",
   description:
-    "Play Golf Solitaire online for free. Clear seven columns by playing cards one rank higher or lower than the waste pile. Streak scoring, undo, hints. No download required.",
+    "Play Golf Solitaire online for free. Clear seven columns by matching cards one rank up or down from the waste pile. Streak scoring, undo, hints.",
   keywords: [
     "golf solitaire",
     "golf solitaire online",

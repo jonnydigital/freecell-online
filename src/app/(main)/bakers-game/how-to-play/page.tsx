@@ -8,7 +8,7 @@ import AdUnit from "@/components/AdUnit";
 export const metadata: Metadata = {
   title: "How to Play Baker's Game | Rules, Setup & Complete Guide",
   description:
-    "Learn how to play Baker's Game with our complete guide. Same-suit stacking rules, 4 free cells, foundation building, and strategies for this challenging FreeCell variant.",
+    "Learn how to play Baker's Game: same-suit stacking, 4 free cells, foundation building, and strategy for this tough FreeCell variant.",
   keywords: [
     "how to play baker's game",
     "baker's game rules",

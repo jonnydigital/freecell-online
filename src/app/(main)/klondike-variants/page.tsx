@@ -22,7 +22,7 @@ const UPDATED_DATE = "2026-04-05";
 export const metadata: Metadata = {
   title: `Klondike Solitaire Variants: Thoughtful to Westcliff | ${siteConfig.siteName}`,
   description:
-    "A tour of the Klondike family: Thoughtful Solitaire, Easthaven, Westcliff, Whitehead, Russian Solitaire, Yukon, Joker Klondike, Vegas Klondike, and the Spider connection.",
+    "A tour of the Klondike family: Thoughtful, Easthaven, Westcliff, Whitehead, Russian Solitaire, Yukon, Vegas scoring, and the Spider connection.",
   keywords: [
     "klondike variants",
     "klondike solitaire variants",

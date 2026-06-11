@@ -8,7 +8,7 @@ import AdUnit from "@/components/AdUnit";
 export const metadata: Metadata = {
   title: "How to Play Pyramid Solitaire | Rules, Setup & Complete Guide",
   description:
-    "Learn how to play Pyramid Solitaire with our complete guide. Rules for pairing cards that total 13, pyramid layout, stock and waste pile mechanics, and winning strategies.",
+    "Learn how to play Pyramid Solitaire: pair cards that total 13, pyramid layout, stock and waste mechanics, and winning strategies.",
   keywords: [
     "how to play pyramid solitaire",
     "pyramid solitaire rules",

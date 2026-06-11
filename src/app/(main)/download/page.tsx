@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   title:
     "Download FreeCell — Play Free on Any Device | No App Store Needed",
   description:
-    "Download FreeCell as a free web app on any device — PC, Mac, iPhone, Android. Install in seconds, play offline, no app store required. Always updated, zero storage bloat.",
+    "Download FreeCell as a free web app on PC, Mac, iPhone, or Android. Install in seconds, play offline, no app store needed.",
   keywords: [
     "freecell download",
     "freecell app",

@@ -8,7 +8,7 @@ import AdUnit from "@/components/AdUnit";
 export const metadata: Metadata = {
   title: "How to Play Yukon Solitaire | Rules, Setup & Complete Guide",
   description:
-    "Learn how to play Yukon Solitaire with our complete guide. Rules for moving any face-up card, tableau building, foundation strategies, and how Yukon differs from Klondike.",
+    "Learn how to play Yukon Solitaire: move any face-up card, tableau building, foundation strategy, and how Yukon differs from Klondike.",
   keywords: [
     "how to play yukon solitaire",
     "yukon solitaire rules",

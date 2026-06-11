@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   title:
     "FreeCell vs Spider Solitaire | Which Card Game Should You Play?",
   description:
-    "FreeCell vs Spider Solitaire compared head to head — difficulty, strategy, win rates, rules, and which game suits your play style. A detailed breakdown for card game fans.",
+    "FreeCell vs Spider Solitaire compared head to head — difficulty, strategy, win rates, rules, and which game fits your play style.",
   keywords: [
     "freecell vs spider solitaire",
     "freecell or spider",

@@ -8,7 +8,7 @@ import AdUnit from "@/components/AdUnit";
 export const metadata: Metadata = {
   title: "Klondike Solitaire Strategy Guide — Tips to Win More Games",
   description:
-    "Master Klondike Solitaire with proven strategies for Draw 1 and Draw 3. Learn stock-pass discipline, empty column tactics, foundation timing, and common traps to avoid.",
+    "Master Klondike Solitaire with proven Draw 1 and Draw 3 strategies: stock-pass discipline, empty column tactics, and traps to avoid.",
   keywords: [
     "klondike solitaire strategy",
     "klondike solitaire tips",

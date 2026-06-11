@@ -11,10 +11,15 @@ interface PageMetaStampProps {
   variant?: "inline" | "standalone";
 }
 
+// timeZone MUST be pinned: date-only ISO strings parse as UTC midnight, and
+// formatting them in the runtime's local zone makes the server (UTC) render a
+// different day than clients west of UTC — a hydration text mismatch (React
+// #418) that forces a client re-render and duplicated JSON-LD scripts.
 const DATE_FORMATTER = new Intl.DateTimeFormat("en-US", {
   year: "numeric",
   month: "long",
   day: "numeric",
+  timeZone: "UTC",
 });
 
 function formatDate(iso: string): string {

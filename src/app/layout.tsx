@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
 import AdSenseScript from "@/components/AdSenseScript";
 import { siteConfig } from "@/lib/siteConfig";
@@ -46,6 +46,18 @@ const metadataKeywords =
             "solitaire online",
             "no download",
           ];
+
+// Use Next's Viewport API instead of a manual <meta name="viewport"> tag.
+// With a manual tag, Next 13+ ALSO injects its default viewport meta
+// (width=device-width, initial-scale=1) after ours; the later tag wins and
+// silently drops viewport-fit=cover, breaking safe-area-inset-* CSS on
+// notched iPhones. Found in QA 2026-06-12 (duplicate viewport tags in SSR).
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#0a3d0a",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -109,8 +121,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-        <meta name="theme-color" content="#0a3d0a" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="apple-mobile-web-app-title" content={siteConfig.appleWebAppTitle} />

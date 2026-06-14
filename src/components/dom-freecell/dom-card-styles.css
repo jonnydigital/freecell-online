@@ -110,6 +110,31 @@
   }
 }
 
+/* ── Wide generic cascade boards (>8 columns: Forty Thieves 10, Bristol 11, etc.) ──
+   Card width scales from --cascade-count (set inline by GenericCascadeBoard) so every
+   column fits at any viewport. This replaces a former inline --card-width override that
+   pinned a 60px floor with a desktop-only formula, which beat the mobile media query and
+   overflowed phones horizontally (Forty Thieves: 10×60px = 600px in a 384px viewport). */
+.dom-board-surface[data-wide="true"] {
+  --card-width: clamp(60px, calc((100vw - 288px) / (var(--cascade-count) * 1.08)), 100px);
+}
+
+/* Wide boards, tablet (no sidebar) 768–1023px */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .dom-board-surface[data-wide="true"] {
+    --card-width: clamp(46px, calc((100vw - 110px) / (var(--cascade-count) * 1.06)), 90px);
+  }
+}
+
+/* Wide boards, mobile ≤767px — scale down so all columns fit, no horizontal overflow */
+@media (max-width: 767px) {
+  .dom-board-surface[data-wide="true"] {
+    --card-width: clamp(22px, calc((100vw - 56px) / var(--cascade-count)), 50px);
+    --cascade-overlap: clamp(8px, calc(var(--card-width) * 0.3), 14px);
+    --pile-gap: clamp(1px, 0.5vw, 4px);
+  }
+}
+
 /* ---- Base card ---- */
 
 .dom-card {

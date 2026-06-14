@@ -47,20 +47,22 @@ export default function GenericCascadeBoard({
   const wasteTopCard = waste && waste.length > 0 ? waste[waste.length - 1] : null;
   const reserveTopCard = reserve && reserve.length > 0 ? reserve[reserve.length - 1] : null;
 
-  // Override --card-width CSS variable for wide layouts (>8 cascades, e.g. Bristol's 11).
-  // The default formula in dom-card-styles.css is designed for 8 columns; with more columns
-  // we scale the divisor proportionally so all cards fit without overflow.
+  // Wide layouts (>8 cascades, e.g. Forty Thieves 10, Bristol 11). The default card-width
+  // formula in dom-card-styles.css is tuned for 8 columns; for more columns we expose the
+  // count to CSS via --cascade-count and let the .dom-board-surface[data-wide] rules scale
+  // card width responsively (desktop/tablet/mobile). NB: do NOT set --card-width inline here
+  // — an inline value beats the mobile @media rule and pins a 60px floor, which overflowed
+  // phones horizontally (Forty Thieves: 10×60px = 600px in a 384px viewport).
+  const wideLayout = cascades.length > 8;
   const cardWidthOverride = useMemo(() => {
-    if (cascades.length <= 8) return {};
-    const divisor = (cascades.length * 1.08).toFixed(1); // ~1.08× accounts for pile gaps
-    return {
-      '--card-width': `clamp(60px, calc((100vw - 288px) / ${divisor}), 100px)`,
-    } as React.CSSProperties;
-  }, [cascades.length]);
+    if (!wideLayout) return {};
+    return { '--cascade-count': String(cascades.length) } as React.CSSProperties;
+  }, [wideLayout, cascades.length]);
 
   return (
     <div
       className="dom-board-surface"
+      data-wide={wideLayout ? 'true' : undefined}
       ref={boardRef}
       onClick={onBoardClick}
       style={{

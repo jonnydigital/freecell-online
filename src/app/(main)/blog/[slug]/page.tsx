@@ -29,13 +29,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const canonicalSite = getCanonicalSiteForPost(post);
   const canonicalUrl = `${SITE_DOMAINS[canonicalSite]}/blog/${post.slug}`;
 
+  // Prefer a concise SEO meta when provided; the visible hero subtitle still
+  // uses the longer post.description.
+  const metaDescription = post.metaDescription ?? post.description;
+
   return {
     title: `${post.title} | FreeCell Blog`,
-    description: post.description,
+    description: metaDescription,
     alternates: { canonical: canonicalUrl },
     openGraph: {
       title: post.title,
-      description: post.description,
+      description: metaDescription,
       type: "article",
       publishedTime: post.date,
       authors: [post.author],

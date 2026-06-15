@@ -25,6 +25,13 @@ export interface BlogPost {
   title: string;
   date: string;
   description: string;
+  /**
+   * Optional SEO meta description (<=160 chars). When set, it overrides
+   * `description` for the page <meta>/OpenGraph tags only — the visible hero
+   * subtitle continues to use `description`. Lets long, reader-facing subtitles
+   * coexist with concise, non-truncated search snippets.
+   */
+  metaDescription?: string;
   author: string;
   tags: string[];
   content: string;
@@ -91,6 +98,7 @@ export function getAllPosts(options?: GetAllPostsOptions): BlogPost[] {
       title: data.title || '',
       date: data.date || '',
       description: data.description || '',
+      metaDescription: data.metaDescription || undefined,
       author: data.author || siteConfig.siteName,
       tags: data.tags || [],
       content,

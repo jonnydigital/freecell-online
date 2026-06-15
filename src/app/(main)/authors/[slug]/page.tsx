@@ -47,7 +47,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const canonical = canonicalUrlFor(`/authors/${slug}`);
   const title = `${author.name} — ${author.role} | ${siteConfig.siteName}`;
-  const description = author.bioShort;
+  const description = author.metaDescription ?? author.bioShort;
 
   return {
     title,

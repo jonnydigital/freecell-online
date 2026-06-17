@@ -22,8 +22,7 @@ const ROUTE = "/freecell-solvability";
 
 export const metadata: Metadata = {
   title: `FreeCell Solvability: The Math Behind the Game | ${siteConfig.siteName}`,
-  description:
-    "How solvable is FreeCell really? We walk through the famous 99.9987% figure, the unsolvable deals, academic solver research, and what the numbers mean for human play.",
+  description: "How solvable is FreeCell really? The famous 99.9987% figure, the unsolvable deals, academic solver research, and what the numbers mean for play.",
   keywords: [
     "freecell solvability",
     "freecell unsolvable deals",

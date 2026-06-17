@@ -7,8 +7,7 @@ import { SectionHeading, CardSection, ContentBody, CtaSection, ContentLinkCard, 
 
 export const metadata: Metadata = {
   title: 'FreeCell Hints Explained: When To Use Them and When To Stop',
-  description:
-    'Learn how FreeCell hint systems work, when hints help you improve, when they hold you back, and how they differ from solvers. A practical guide to smarter practice.',
+  description: 'How FreeCell hint systems work, when hints help you improve, when they hold you back, and how they differ from solvers. A guide to smarter practice.',
   keywords: [
     'freecell hints',
     'freecell hint system',

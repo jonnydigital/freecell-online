@@ -20,8 +20,7 @@ const UPDATED_DATE = "2026-04-12";
 
 export const metadata: Metadata = {
   title: `Klondike Solitaire Records and Achievements | ${siteConfig.siteName}`,
-  description:
-    "Fastest Klondike wins, longest win streaks, fewest-move finishes, solvability research, and competitive solitaire milestones. Verified records and honest estimates.",
+  description: "Fastest Klondike wins, longest win streaks, fewest-move finishes, and solvability research. Verified records and honest competitive estimates.",
   keywords: [
     "klondike solitaire records",
     "solitaire world records",

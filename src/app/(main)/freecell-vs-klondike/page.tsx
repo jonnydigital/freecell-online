@@ -12,8 +12,7 @@ import { ContentHero, SectionHeading, CardSection, ContentBody, CtaSection, Json
 export const metadata: Metadata = {
   title:
     "FreeCell vs Klondike Solitaire | Which Classic Card Game Is Right for You?",
-  description:
-    "FreeCell vs Klondike Solitaire compared head to head — rules, strategy, win rates, difficulty, luck vs skill, and which classic solitaire game suits your play style.",
+  description: "FreeCell vs Klondike Solitaire, head to head: rules, strategy, win rates, difficulty, luck vs skill, and which classic game suits your play style.",
   keywords: [
     "freecell vs klondike",
     "freecell or klondike",

@@ -7,8 +7,7 @@ import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
   title: "How to Play Canfield Solitaire | Rules, Setup & Complete Guide",
-  description:
-    "Learn how to play Canfield Solitaire with our complete guide. Rules for the reserve pile, foundation base rank, tableau building, stock draws, and winning strategies.",
+  description: "Learn how to play Canfield Solitaire: rules for the reserve pile, foundation base rank, tableau building, stock draws, and winning strategies.",
   keywords: [
     "how to play canfield solitaire",
     "canfield solitaire rules",

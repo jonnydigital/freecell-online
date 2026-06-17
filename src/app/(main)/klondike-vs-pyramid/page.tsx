@@ -12,8 +12,7 @@ import { ContentHero, SectionHeading, CardSection, ContentBody, CtaSection, Json
 export const metadata: Metadata = {
   title:
     "Klondike vs Pyramid Solitaire | Building vs Pairing Card Games Compared",
-  description:
-    "Klondike vs Pyramid Solitaire compared head to head. Rules, win rates, strategy, difficulty, and whether a building game or a pairing game suits your play style.",
+  description: "Klondike vs Pyramid Solitaire, head to head: rules, win rates, strategy, difficulty, and whether a building game or a pairing game suits you.",
   keywords: [
     "klondike vs pyramid solitaire",
     "klondike or pyramid",

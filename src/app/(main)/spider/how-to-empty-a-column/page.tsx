@@ -7,8 +7,7 @@ import { ContentHero, JsonLd, CtaSection, CardSection, SectionHeading, ContentBo
 
 export const metadata: Metadata = {
   title: "How to Empty a Column in Spider Solitaire | The #1 Winning Move",
-  description:
-    "Learn why empty columns are the most powerful tool in Spider Solitaire and exactly how to create them. Step-by-step strategies for 1-suit, 2-suit, and 4-suit games.",
+  description: "Why empty columns are the most powerful tool in Spider Solitaire and exactly how to create them. Step-by-step tactics for 1-, 2-, and 4-suit games.",
   keywords: [
     "spider solitaire empty column",
     "how to empty a column spider solitaire",

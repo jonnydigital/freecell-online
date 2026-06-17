@@ -7,8 +7,7 @@ import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
   title: "How to Play Eight Off Solitaire | Rules, Setup & Complete Guide",
-  description:
-    "Learn how to play Eight Off Solitaire with our complete guide. 8 free cells, same-suit stacking, King-only empty fills, and strategies for this FreeCell variant.",
+  description: "Learn how to play Eight Off Solitaire: 8 free cells, same-suit stacking, King-only empty fills, and strategy for this challenging FreeCell variant.",
   keywords: [
     "how to play eight off",
     "eight off solitaire rules",

@@ -7,8 +7,7 @@ import { SectionHeading, CardSection, ContentBody, CtaSection, ContentLinkCard, 
 
 export const metadata: Metadata = {
   title: 'FreeCell Mistakes to Avoid: 8 Errors That Cost You Games',
-  description:
-    'Stop losing FreeCell games to the same mistakes. Learn the 8 most common errors — from filling free cells too early to ignoring empty columns — and how to fix them.',
+  description: 'Stop losing FreeCell to the same mistakes. The 8 most common errors, from filling free cells too early to ignoring empty columns, and how to fix them.',
   keywords: [
     'freecell mistakes',
     'common freecell mistakes',

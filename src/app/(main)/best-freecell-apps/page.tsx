@@ -15,8 +15,7 @@ import {
 
 export const metadata: Metadata = {
   title: "Best FreeCell Apps & Sites in 2026 | Free Online Options Compared",
-  description:
-    "Compare the best FreeCell apps and websites in 2026. We review free online FreeCell games, mobile apps, and desktop options so you can find the perfect way to play.",
+  description: "Compare the best FreeCell apps and websites in 2026. We review free online games, mobile apps, and desktop options to find your perfect way to play.",
   keywords: [
     "best freecell app",
     "freecell online free",

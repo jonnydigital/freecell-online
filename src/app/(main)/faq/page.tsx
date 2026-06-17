@@ -44,7 +44,7 @@ const FREECELL_FAQ: FaqVariant = {
   metadataTitle:
     "FreeCell FAQ | Answers to Every Question About FreeCell Solitaire",
   metadataDescription:
-    "Frequently asked questions about FreeCell Solitaire. Is every game winnable? How many cards can you move? What's a good win rate? Get expert answers to all your FreeCell questions.",
+    "Frequently asked questions about FreeCell Solitaire. Is every game winnable? How many cards can you move? What's a good win rate? Expert answers inside.",
   metadataKeywords: [
     "freecell faq",
     "freecell questions",
@@ -247,7 +247,7 @@ const HUB_FAQ: FaqVariant = {
     "Answers to the most common questions about solitaire — rules, variants, win rates, and how to pick the right game for you.",
   metadataTitle: "Solitaire FAQ | Rules, Variants & Strategy Answers",
   metadataDescription:
-    "Answers to the most common solitaire questions. What are the different variants? Which are skill-based vs luck-based? How do you pick the right one? Expert guidance across every major solitaire game.",
+    "Answers to the most common solitaire questions: the variants, which are skill-based vs luck-based, and how to pick the right game for you.",
   metadataKeywords: [
     "solitaire faq",
     "solitaire variants",
@@ -445,7 +445,7 @@ const KLONDIKE_FAQ: FaqVariant = {
     "Answers to the most common questions about Klondike Solitaire — the classic card game most people just call \u201CSolitaire.\u201D",
   metadataTitle: "Klondike Solitaire FAQ | Draw 1, Draw 3 & Vegas Scoring Answers",
   metadataDescription:
-    "Answers to common Klondike Solitaire questions. Draw 1 vs Draw 3, Vegas scoring, win rates, and strategy. Everything you need to know about the world\u2019s most popular card game.",
+    "Answers to common Klondike Solitaire questions: Draw 1 vs Draw 3, Vegas scoring, win rates, and strategy for the world's most popular card game.",
   metadataKeywords: [
     "klondike faq",
     "klondike solitaire questions",

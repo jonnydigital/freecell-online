@@ -7,8 +7,7 @@ import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionH
 
 export const metadata: Metadata = {
   title: "Golf Solitaire Tips & Tricks | Clear the Tableau More Often",
-  description:
-    "Practical Golf Solitaire tips to boost your win rate. Learn column scanning, streak building, King-Ace wrapping, stock conservation, and when to restart a lost game.",
+  description: "Practical Golf Solitaire tips to boost your win rate: column scanning, streak building, King-Ace wrapping, stock conservation, and when to restart.",
   keywords: [
     "golf solitaire tips",
     "golf solitaire strategy",

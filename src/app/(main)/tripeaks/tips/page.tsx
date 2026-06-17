@@ -7,8 +7,7 @@ import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionH
 
 export const metadata: Metadata = {
   title: "TriPeaks Solitaire Tips & Tricks | Win More Games in 2026",
-  description:
-    "Master TriPeaks Solitaire with proven tips for streak building, peak clearing order, stock management, and card counting. Boost your win rate from beginner to expert.",
+  description: "Master TriPeaks Solitaire with proven tips for streak building, peak clearing order, stock management, and card counting to boost your win rate.",
   keywords: [
     "tripeaks tips",
     "tripeaks solitaire strategy",

@@ -7,8 +7,7 @@ import NetworkCrossLinks from "@/components/NetworkCrossLinks";
 
 export const metadata: Metadata = {
   title: "How to Play Scorpion Solitaire | Rules & Strategy Guide",
-  description:
-    "Learn how to play Scorpion Solitaire with complete rules, setup guide, and winning strategies. Move any face-up card, build same-suit K→A runs, and clear the tableau.",
+  description: "Learn how to play Scorpion Solitaire: complete rules, setup, and winning strategy. Move any face-up card, build same-suit K-A runs, clear the tableau.",
   keywords: [
     "scorpion solitaire rules",
     "how to play scorpion solitaire",

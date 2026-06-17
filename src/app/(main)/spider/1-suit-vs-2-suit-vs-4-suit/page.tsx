@@ -7,8 +7,7 @@ import { SectionHeading, CardSection, ContentBody, CtaSection, ContentLinkCard, 
 
 export const metadata: Metadata = {
   title: 'Spider Solitaire: 1-Suit vs 2-Suit vs 4-Suit Compared',
-  description:
-    'Compare Spider Solitaire difficulty levels — 1-suit, 2-suit, and 4-suit. Learn the rule differences, strategy changes, win rates, and which mode fits your skill level.',
+  description: 'Compare Spider Solitaire 1-suit, 2-suit, and 4-suit modes. Rule differences, strategy changes, win rates, and which difficulty fits your skill level.',
   keywords: [
     'spider solitaire 1 suit vs 4 suit',
     'spider solitaire difficulty levels',

@@ -7,8 +7,7 @@ import NetworkCrossLinks from "@/components/NetworkCrossLinks";
 
 export const metadata: Metadata = {
   title: "How to Play Calculation Solitaire | Rules & Strategy Guide",
-  description:
-    "Learn how to play Calculation Solitaire with complete rules, foundation sequences, waste pile strategy, and winning techniques for this math-based patience game.",
+  description: "Learn how to play Calculation Solitaire: complete rules, foundation sequences, waste pile strategy, and winning techniques for this math-based game.",
   keywords: [
     "calculation solitaire rules",
     "how to play calculation solitaire",

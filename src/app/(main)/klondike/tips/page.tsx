@@ -7,8 +7,7 @@ import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
   title: "Klondike Solitaire Tips & Tricks | Win More Games in 2026",
-  description:
-    "Practical Klondike Solitaire tips for beginners and experienced players. 8 actionable tips that will immediately improve your win rate in Draw 1 and Draw 3 games.",
+  description: "Practical Klondike Solitaire tips for beginners and experts. 8 actionable tips that immediately improve your win rate in Draw 1 and Draw 3 games.",
   keywords: [
     "solitaire tips",
     "klondike tips",

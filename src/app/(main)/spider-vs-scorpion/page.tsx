@@ -11,8 +11,7 @@ import { ContentHero, SectionHeading, CardSection, ContentBody, CtaSection, Json
 export const metadata: Metadata = {
   title:
     "Spider vs Scorpion Solitaire | Two Tough Tableau Games Compared",
-  description:
-    "Spider Solitaire vs Scorpion Solitaire compared head to head. Rules, difficulty, win rates, strategy depth, and which tableau-building game suits your play style.",
+  description: "Spider Solitaire vs Scorpion, head to head: rules, difficulty, win rates, strategy depth, and which tableau-building game suits your play style.",
   keywords: [
     "spider vs scorpion solitaire",
     "scorpion vs spider solitaire",

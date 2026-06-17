@@ -20,8 +20,7 @@ const UPDATED_DATE = "2026-04-12";
 
 export const metadata: Metadata = {
   title: `Klondike Solitaire for Seniors — A Comfortable Guide | ${siteConfig.siteName}`,
-  description:
-    "A warm, practical guide to playing Klondike Solitaire online for seniors. Easy-to-read cards, Draw 1 mode, cognitive benefits, and tips for building a daily routine.",
+  description: "A warm, practical guide to playing Klondike Solitaire online for seniors: easy-to-read cards, Draw 1 mode, cognitive benefits, and daily-routine tips.",
   keywords: [
     "klondike solitaire for seniors",
     "solitaire for older adults",

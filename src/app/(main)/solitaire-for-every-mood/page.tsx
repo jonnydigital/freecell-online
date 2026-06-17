@@ -22,8 +22,7 @@ const UPDATED_DATE = "2026-04-05";
 
 export const metadata: Metadata = {
   title: `Solitaire for Every Mood: Matching Games to Moments | ${siteConfig.siteName}`,
-  description:
-    "The right solitaire for every mental state: 5-minute breaks, deep focus work, relaxation, brain training, seniors, solo commutes, and teaching card games to children.",
+  description: "The right solitaire for every mood: 5-minute breaks, deep focus, relaxation, brain training, seniors, commutes, and teaching kids card games.",
   keywords: [
     "solitaire for relaxation",
     "solitaire for focus",

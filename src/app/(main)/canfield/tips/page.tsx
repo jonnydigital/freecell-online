@@ -7,8 +7,7 @@ import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionH
 
 export const metadata: Metadata = {
   title: "Canfield Solitaire Tips & Tricks | Beat the Casino's Favorite",
-  description:
-    "Practical Canfield Solitaire tips to boost your win rate. Learn reserve pile management, foundation base rank strategy, stock cycling discipline, and when to restart.",
+  description: "Practical Canfield Solitaire tips to boost your win rate: reserve pile management, foundation base rank strategy, stock cycling, and when to restart.",
   keywords: [
     "canfield solitaire tips",
     "canfield solitaire strategy",

@@ -18,7 +18,7 @@ import AuthorByline from "@/components/content/AuthorByline";
 export const metadata: Metadata = {
   title: `How Solitaire Changed Windows (And Vice Versa) | ${siteConfig.siteName}`,
   description:
-    "A cultural and technical history of Windows Solitaire — from Paul Alfille's PLATO FreeCell and Wes Cherry's 1990 port to the Microsoft Solitaire Collection.",
+    "A cultural and technical history of Windows Solitaire — Paul Alfille's PLATO FreeCell, Wes Cherry's 1990 port, and the Microsoft Solitaire Collection.",
   keywords: [
     "history of windows solitaire",
     "wes cherry solitaire",

@@ -10,7 +10,7 @@ import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionH
 export const metadata: Metadata = {
   title: "Free Solitaire Games Online | Play 28+ Card Games for Free",
   description:
-    "Play the best free solitaire games online — FreeCell, Spider, Klondike, Pyramid, Baker's Game, Eight Off, and more. No download, no sign-up. Play instantly.",
+    "Play the best free solitaire games online — FreeCell, Spider, Klondike, Pyramid, Baker's Game, Eight Off, and more. No download, no sign-up.",
   keywords: [
     "solitaire games online free",
     "free card games online",

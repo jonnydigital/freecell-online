@@ -18,7 +18,7 @@ import AuthorByline from "@/components/content/AuthorByline";
 
 export const metadata: Metadata = {
   title: `About ${siteConfig.siteName} | Our Mission, Editorial Model & Research Process`,
-  description: `${siteConfig.siteName} is a branded solitaire content network with five editorial desks. Learn our mission, founding story, research process, and editorial standards.`,
+  description: `${siteConfig.siteName} is a branded solitaire content network with five editorial desks. Learn our mission, founding story, research process, and standards.`,
   keywords: [
     "about solitaire stack",
     "solitaire editorial team",

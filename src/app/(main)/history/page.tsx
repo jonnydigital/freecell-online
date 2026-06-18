@@ -9,7 +9,7 @@ import { SectionHeading, CardSection, ContentBody, CtaSection, ContentLinkCard, 
 export const metadata: Metadata = {
   title: "History of FreeCell | Who Invented FreeCell Solitaire?",
   description:
-    "The complete history of FreeCell — from Paul Alfille's 1978 PLATO original to Microsoft Windows. Baker's Game roots, deal #11982, and the one unsolvable game.",
+    "The complete history of FreeCell — from Paul Alfille's 1978 PLATO original to Microsoft Windows. Baker's Game roots, deal #11982, and the unsolvable deal.",
   keywords: [
     "freecell history",
     "who invented freecell",

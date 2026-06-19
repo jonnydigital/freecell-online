@@ -53,6 +53,17 @@ export default function Page() {
     url: absoluteUrl("/yukon"),
   };
 
+  const gameJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Game",
+    name: appJsonLd.name,
+    description: appJsonLd.description,
+    numberOfPlayers: 1,
+    genre: "Card Game",
+    gamePlatform: "Web Browser",
+    url: appJsonLd.url,
+  };
+
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -122,6 +133,7 @@ export default function Page() {
   return (
     <>
       <JsonLd data={appJsonLd} />
+      <JsonLd data={gameJsonLd} />
       <JsonLd data={breadcrumbJsonLd} />
       <JsonLd data={faqJsonLd} />
       <YukonGamePage />

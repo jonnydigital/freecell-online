@@ -5,7 +5,7 @@ import { ContentHero, SectionHeading, CardSection, ContentBody, CtaSection, Json
 
 export const metadata: Metadata = {
   title: `Terms of Service | ${siteConfig.siteName}`,
-  description: `Terms of Service for ${siteConfig.siteName}`,
+  description: `Read the Terms of Service for ${siteConfig.siteName}: the rules and conditions covering your use of our free online solitaire games and website.`,
   alternates: {
     canonical: absoluteUrl("/terms"),
   },

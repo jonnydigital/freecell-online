@@ -2,10 +2,11 @@
 // Network-first for code, cache-first for card images
 // Posts 'SW_UPDATED' to clients when a new version activates
 
-const CACHE_NAME = 'freecell-v3';
+const CACHE_NAME = 'freecell-v4';
 
 const PRECACHE_URLS = [
   '/',
+  '/offline',
   '/manifest.json',
   '/icons/icon.svg',
 ];
@@ -54,6 +55,22 @@ self.addEventListener('fetch', (event) => {
           return response;
         });
       })
+    );
+    return;
+  }
+
+  // Navigations: network-first, then cached page, then the friendly offline fallback.
+  if (request.mode === 'navigate') {
+    event.respondWith(
+      fetch(request)
+        .then((response) => {
+          if (response.ok) {
+            const clone = response.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(request, clone));
+          }
+          return response;
+        })
+        .catch(() => caches.match(request).then((cached) => cached || caches.match('/offline')))
     );
     return;
   }

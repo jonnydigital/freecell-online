@@ -1,3 +1,12 @@
+
+## 2026-06-25 (OpenClaw Evening Heartbeat)
+
+### Shipped
+- **Offline mode polish** — added a friendly `/offline` fallback page for disconnected users, with clear CTAs back to the cached game and install page.
+- **Service worker fallback** — bumped cache to `freecell-v4`, precaches `/offline`, and routes failed navigations to the offline page instead of leaving users on a browser error.
+
+---
+
 # FreeCell Online — Changelog
 
 ## 2026-04-04 (Saturday 2:30 AM Build)

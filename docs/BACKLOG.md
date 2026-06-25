@@ -47,7 +47,7 @@
 
 ## 🟢 Nice to Have
 14. **Multiplayer daily challenge** — compete on same seed
-15. **Offline mode polish** — better offline UX
+15. ~~**Offline mode polish**~~ ✅ SHIPPED 2026-06-25 — friendly `/offline` fallback page, SW navigation fallback, cache bumped to v4
 16. **i18n** — multi-language
 17. ~~**Accessibility** — screen reader, high contrast~~ ✅ SHIPPED 03-05 — High contrast mode, screen reader announcements (aria-live), reduced motion toggle, skip-to-game link, focus indicators
 18. **Community/forum** — user feedback channel *(Green Felt model, builds loyalty)*

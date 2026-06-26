@@ -1,4 +1,10 @@
 
+## 2026-06-26 (OpenClaw Evening Heartbeat)
+
+### Shipped
+- **Resume notice polish** — successful saved-game restores now show a compact dismissible "Game resumed" notice with the deal number, move count, and elapsed time, plus a screen-reader announcement.
+- Build passed with Node 22 via `npm run build`.
+
 ## 2026-06-26 (OpenClaw Overnight Build)
 
 ### Shipped

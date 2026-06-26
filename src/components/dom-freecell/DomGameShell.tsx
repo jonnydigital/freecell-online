@@ -139,6 +139,12 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
   const [hintToast, setHintToast] = useState<string | null>(null);
   const [bookmarked, setBookmarked] = useState(false);
   const hintToastTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const resumeNoticeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [resumeNotice, setResumeNotice] = useState<{
+    gameNumber: number;
+    moveCount: number;
+    elapsedSeconds: number;
+  } | null>(null);
   const [undosUsed, setUndosUsed] = useState(0);
   const [leaderboardEntries, setLeaderboardEntries] = useState<LeaderboardEntry[]>([]);
   const [leaderboardRank, setLeaderboardRank] = useState<number | undefined>();
@@ -208,6 +214,7 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
   useEffect(() => {
     return () => {
       if (idleTimerRef.current) clearTimeout(idleTimerRef.current);
+      if (resumeNoticeTimerRef.current) clearTimeout(resumeNoticeTimerRef.current);
     };
   }, []);
 
@@ -363,6 +370,14 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
           timerStarted: saved.elapsedSeconds > 0,
         });
         setBookmarked(isBookmarked(saved.gameNumber, currentVariant));
+        setResumeNotice({
+          gameNumber: saved.gameNumber,
+          moveCount: saved.moveCount,
+          elapsedSeconds: saved.elapsedSeconds,
+        });
+        announceToScreenReader(`Resumed game ${saved.gameNumber} with ${saved.moveCount} moves.`);
+        if (resumeNoticeTimerRef.current) clearTimeout(resumeNoticeTimerRef.current);
+        resumeNoticeTimerRef.current = setTimeout(() => setResumeNotice(null), 5500);
       } else {
         clearGameState();
         if (initialGameNumber) {
@@ -616,6 +631,7 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
     setHintsUsed(0);
     setUndosUsed(0);
     setStreakMilestone(null);
+    setResumeNotice(null);
     clearHint();
     if (replayMode) { setGhostPlaying(false); solver.reset(); stopReplay(); }
     newGame();
@@ -631,6 +647,7 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
     setHintsUsed(0);
     setUndosUsed(0);
     setStreakMilestone(null);
+    setResumeNotice(null);
     clearHint();
     if (replayMode) { setGhostPlaying(false); solver.reset(); stopReplay(); }
     restart();
@@ -763,6 +780,7 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
     setHintsUsed(0);
     setUndosUsed(0);
     setStreakMilestone(null);
+    setResumeNotice(null);
     clearHint();
     newGame(num);
   }, [newGame, clearHint, timerStarted, isWon, moveCount, timerSeconds, gameNumber]);
@@ -797,6 +815,7 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
     setHintsUsed(0);
     setUndosUsed(0);
     setStreakMilestone(null);
+    setResumeNotice(null);
     clearHint();
     newGame(seed);
   }, [newGame, clearHint, timerStarted, isWon, moveCount, timerSeconds, gameNumber]);
@@ -1058,6 +1077,34 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
         >
           <DomBoard hint={hint} />
         </div>
+
+        {/* Resume Notice */}
+        {resumeNotice && !isWon && (
+          <div className="absolute top-3 right-3 z-20 max-w-[calc(100%-1.5rem)] animate-in fade-in slide-in-from-top-2 duration-200">
+            <div
+              className="flex items-start gap-3 rounded-xl px-4 py-3 text-sm shadow-xl backdrop-blur-sm"
+              style={{
+                background: 'color-mix(in srgb, var(--theme-panel, #0d2f0d) 92%, transparent)',
+                border: '1px solid color-mix(in srgb, var(--theme-border, #2a7c2a) 55%, transparent)',
+                color: 'rgba(255,255,255,0.86)',
+              }}
+            >
+              <div className="min-w-0">
+                <div className="font-semibold text-[#D4AF37]">Game resumed</div>
+                <div className="mt-0.5 text-xs text-white/60">
+                  #{resumeNotice.gameNumber} · {resumeNotice.moveCount} moves · {formatTime(resumeNotice.elapsedSeconds)}
+                </div>
+              </div>
+              <button
+                onClick={() => setResumeNotice(null)}
+                className="mt-0.5 shrink-0 text-white/35 hover:text-white/75 transition-colors"
+                aria-label="Dismiss resume notice"
+              >
+                <X size={14} />
+              </button>
+            </div>
+          </div>
+        )}
 
         {/* Hint Banner */}
         {hint && !isWon && (

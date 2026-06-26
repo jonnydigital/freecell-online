@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
+import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import {
   Calendar,
@@ -35,6 +36,7 @@ const MONTH_NAMES = [
 ];
 
 export default function DailyChallengeCalendar() {
+  const router = useRouter();
   const today = getTodayStr();
   const todayDate = new Date(today + 'T12:00:00');
   const [year, setYear] = useState(todayDate.getFullYear());
@@ -100,7 +102,7 @@ export default function DailyChallengeCalendar() {
   function handleDayClick(dateStr: string) {
     if (dateStr > today) return;
     const seed = getDailySeed(dateStr);
-    window.location.href = '/?game=' + seed;
+    router.push('/?game=' + seed);
   }
 
   if (!data) {

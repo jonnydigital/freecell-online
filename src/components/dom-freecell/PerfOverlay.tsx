@@ -11,7 +11,7 @@
 
 'use client';
 
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { perfMetrics, PerformanceReport } from '@/lib/dom-freecell/instrumentation';
 import { useDomFreecellStore } from '@/lib/dom-freecell/useDomFreecellStore';
 
@@ -63,25 +63,24 @@ export const PerfOverlay: React.FC<PerfOverlayProps> = ({ visible }) => {
   const frameCountRef = useRef(0);
   const lastFpsCalcRef = useRef(0);
 
-  // Poll the report and compute live FPS during drag via rAF
-  const tick = useCallback((timestamp: number) => {
-    frameCountRef.current++;
-
-    // Recalculate FPS every 500ms
-    if (timestamp - lastFpsCalcRef.current >= 500) {
-      const elapsed = timestamp - lastFpsCalcRef.current;
-      const fps = (frameCountRef.current / elapsed) * 1000;
-      setLiveFps(fps);
-      frameCountRef.current = 0;
-      lastFpsCalcRef.current = timestamp;
-    }
-
-    setReport(perfMetrics.getReport());
-    rafRef.current = requestAnimationFrame(tick);
-  }, []);
-
   useEffect(() => {
     if (!show) return;
+
+    const tick = (timestamp: number) => {
+      frameCountRef.current++;
+
+      // Recalculate FPS every 500ms
+      if (timestamp - lastFpsCalcRef.current >= 500) {
+        const elapsed = timestamp - lastFpsCalcRef.current;
+        const fps = (frameCountRef.current / elapsed) * 1000;
+        setLiveFps(fps);
+        frameCountRef.current = 0;
+        lastFpsCalcRef.current = timestamp;
+      }
+
+      setReport(perfMetrics.getReport());
+      rafRef.current = requestAnimationFrame(tick);
+    };
 
     // Start polling when overlay is visible
     lastFpsCalcRef.current = performance.now();
@@ -89,7 +88,7 @@ export const PerfOverlay: React.FC<PerfOverlayProps> = ({ visible }) => {
     rafRef.current = requestAnimationFrame(tick);
 
     return () => cancelAnimationFrame(rafRef.current);
-  }, [show, tick]);
+  }, [show]);
 
   // Also refresh report on drag end
   useEffect(() => {

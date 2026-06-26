@@ -101,7 +101,7 @@ export default function DomKlondikeBoard() {
   // Foundation sparkle state
   const [sparkles, setSparkles] = useState<{ id: number; suit: Suit }[]>([]);
   const prevFoundationSizes = useRef<Map<Suit, number>>(new Map());
-  let sparkleId = useRef(0);
+  const sparkleId = useRef(0);
 
   useEffect(() => {
     const newSparkles: { id: number; suit: Suit }[] = [];

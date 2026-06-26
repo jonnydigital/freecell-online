@@ -1,4 +1,11 @@
 
+## 2026-06-26 (OpenClaw Overnight Build)
+
+### Shipped
+- **Resume unfinished FreeCell games after reload** — FreeCell now saves in-progress deals locally after moves, undo, and redo, including the deal number, variant, move history, move count, and elapsed time.
+- **Safe restore path** — reloads restore by replaying saved moves against a fresh engine, discard invalid saved states, and clear progress on new game, restart, or win.
+- Build passed with Node 22 via `npm run build`.
+
 ## 2026-06-25 (OpenClaw Evening Heartbeat)
 
 ### Shipped

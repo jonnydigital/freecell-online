@@ -3,7 +3,7 @@
 import React, { useEffect, useState, useCallback, useMemo, useRef } from 'react';
 import { useDomFreecellStore } from '@/lib/dom-freecell/useDomFreecellStore';
 import { GameStats, createEmptyStats, recordWin, recordLoss, getWinPercent } from '@/lib/stats';
-import { loadStats, saveStats, saveStarRating, GameSettings, loadSettings, saveSettings, toggleBookmark, isBookmarked } from '@/lib/storage';
+import { loadStats, saveStats, saveStarRating, GameSettings, loadSettings, saveSettings, toggleBookmark, isBookmarked, loadGameState, clearGameState } from '@/lib/storage';
 import { recordGameResult } from '@/lib/gameHistory';
 import { getTodaysSeed, getTodayStr, isTodayCompleted, getCurrentStreak, recordDailyCompletion } from '@/lib/dailyChallenge';
 import { soundManager } from '@/lib/sounds';
@@ -340,9 +340,39 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
     if (initialGameNumber && initialGameNumber === getTodaysSeed()) {
       setIsDailyGame(true);
     }
-    if (initialGameNumber) {
+    const saved = loadGameState();
+    const currentVariant = variant || 'freecell';
+    if (
+      saved &&
+      saved.variant === currentVariant &&
+      saved.moveHistory.length > 0 &&
+      (!initialGameNumber || initialGameNumber === saved.gameNumber)
+    ) {
+      const store = useDomFreecellStore.getState();
+      store.newGame(saved.gameNumber);
+      let allSucceeded = true;
+      for (const move of saved.moveHistory) {
+        if (!store.tryMove(move.from as never, move.to as never)) {
+          allSucceeded = false;
+          break;
+        }
+      }
+      if (allSucceeded) {
+        useDomFreecellStore.setState({
+          timerSeconds: saved.elapsedSeconds,
+          timerStarted: saved.elapsedSeconds > 0,
+        });
+        setBookmarked(isBookmarked(saved.gameNumber, currentVariant));
+      } else {
+        clearGameState();
+        if (initialGameNumber) {
+          newGame(initialGameNumber);
+          setBookmarked(isBookmarked(initialGameNumber, currentVariant));
+        }
+      }
+    } else if (initialGameNumber) {
       newGame(initialGameNumber);
-      setBookmarked(isBookmarked(initialGameNumber, variant || 'freecell'));
+      setBookmarked(isBookmarked(initialGameNumber, currentVariant));
     }
     // Show tutorial on first visit
     try {
@@ -396,6 +426,7 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
     if (isWon && winProcessedRef.current !== gameNumber) {
       winProcessedRef.current = gameNumber;
       trackWin(timerSeconds, moveCount);
+      clearGameState();
       setShowWin(true);
       setShowConfetti(true);
       // Auto-clear confetti after animation completes

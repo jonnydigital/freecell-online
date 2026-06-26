@@ -1,5 +1,5 @@
 # FreeCell Online — Feature Backlog
-*Ranked by impact × effort. Updated 2026-03-12.*
+*Ranked by impact × effort. Updated 2026-06-26.*
 
 ## 🚨 P0: Critical Bug
 1. ~~**🔴 Mobile card rendering broken**~~ ✅ FIXED 03-02 — Root cause: `recreateAllCardSprites()` used PNG asset keys that were never loaded. On resize (common on mobile), cards became empty containers. Fixed with procedural rendering matching `createCardSprite()`.
@@ -48,16 +48,17 @@
 ## 🟢 Nice to Have
 14. **Multiplayer daily challenge** — compete on same seed
 15. ~~**Offline mode polish**~~ ✅ SHIPPED 2026-06-25 — friendly `/offline` fallback page, SW navigation fallback, cache bumped to v4
-16. **i18n** — multi-language
-17. ~~**Accessibility** — screen reader, high contrast~~ ✅ SHIPPED 03-05 — High contrast mode, screen reader announcements (aria-live), reduced motion toggle, skip-to-game link, focus indicators
-18. **Community/forum** — user feedback channel *(Green Felt model, builds loyalty)*
-19. ~~**Animation speed setting**~~ ✅ SHIPPED — slow/normal/fast toggle in Settings panel, wired to game engine multiplier *(cardgames.io feature)*
-20. ~~**Sound pitch variation**~~ ✅ SHIPPED 03-03 — higher rank = higher pitch on foundation *(polish item from 02-26 analysis)*
-21. ~~**Dynamic OG Images + Twitter Cards**~~ ✅ SHIPPED 03-05 — Rich social preview images for all pages + per-game dynamic OG for /game/[number] routes. Twitter summary_large_image cards site-wide.
-22. ~~**"Relaxed mode"**~~ ✅ SHIPPED 03-09 — Elderly-friendly option: hides timer display, coffee icon indicator, gold info banner. Settings > Accessibility toggle. *(Reddit r/balatro insight — FreeCell audience skews older, accessibility matters)*
-26. ~~**Easy FreeCell variant**~~ ✅ SHIPPED 03-10 — New `/easy-freecell` game mode: aces and 2s start pre-placed on foundations. Beginner-friendly on-ramp, 1000+ word SEO content page, FAQPage schema. *(Solitaired competitive response + "easy freecell" keyword opportunity)*
-23. **Submit to solitaireblog.com** — Martin Petroff reviews 80+ solitaire sites with ratings. Backlink + visibility opportunity. *(Wait for custom domain)*
-24. ~~**Fix mobile gold rectangle**~~ ✅ FIXED 03-10 — Was idle auto-hint glow (gold border) appearing after 8s even before first move. Now auto-hint effects only trigger after user makes at least 1 move. Also suppressed focus-visible outline on game container.
+16. ~~**Resume unfinished FreeCell games after reload**~~ ✅ SHIPPED 2026-06-26 — persists game number, variant, move history, move count, and elapsed time; restores by replaying moves and clears saved state on new/restart/win
+17. **i18n** — multi-language
+18. ~~**Accessibility** — screen reader, high contrast~~ ✅ SHIPPED 03-05 — High contrast mode, screen reader announcements (aria-live), reduced motion toggle, skip-to-game link, focus indicators
+19. **Community/forum** — user feedback channel *(Green Felt model, builds loyalty)*
+20. ~~**Animation speed setting**~~ ✅ SHIPPED — slow/normal/fast toggle in Settings panel, wired to game engine multiplier *(cardgames.io feature)*
+21. ~~**Sound pitch variation**~~ ✅ SHIPPED 03-03 — higher rank = higher pitch on foundation *(polish item from 02-26 analysis)*
+22. ~~**Dynamic OG Images + Twitter Cards**~~ ✅ SHIPPED 03-05 — Rich social preview images for all pages + per-game dynamic OG for /game/[number] routes. Twitter summary_large_image cards site-wide.
+23. ~~**"Relaxed mode"**~~ ✅ SHIPPED 03-09 — Elderly-friendly option: hides timer display, coffee icon indicator, gold info banner. Settings > Accessibility toggle. *(Reddit r/balatro insight — FreeCell audience skews older, accessibility matters)*
+24. ~~**Easy FreeCell variant**~~ ✅ SHIPPED 03-10 — New `/easy-freecell` game mode: aces and 2s start pre-placed on foundations. Beginner-friendly on-ramp, 1000+ word SEO content page, FAQPage schema. *(Solitaired competitive response + "easy freecell" keyword opportunity)*
+25. **Submit to solitaireblog.com** — Martin Petroff reviews 80+ solitaire sites with ratings. Backlink + visibility opportunity. *(Wait for custom domain)*
+26. ~~**Fix mobile gold rectangle**~~ ✅ FIXED 03-10 — Was idle auto-hint glow (gold border) appearing after 8s even before first move. Now auto-hint effects only trigger after user makes at least 1 move. Also suppressed focus-visible outline on game container.
 
 ## ⏳ Blocked (Needs Jonathan)
 - ~~**Custom domain** — playfreecellonline.com → Vercel DNS~~ ✅ LIVE as of 2026-03-13!

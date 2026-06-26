@@ -10,6 +10,7 @@ import { create } from 'zustand';
 import { FreeCellEngine, GameState, GameVariant, Location, Move } from '@/engine/FreeCellEngine';
 import { Card, Suit } from '@/engine/Card';
 import type { SolverMove } from '@/solver/FreeCellSolver';
+import { saveGameState, clearGameState } from '@/lib/storage';
 
 // ---------------------------------------------------------------------------
 // Drag state – only source + card ids live in Zustand (change = 1 render).
@@ -108,6 +109,17 @@ export interface DomFreecellState {
 let _variant: GameVariant = 'freecell';
 let _engine: FreeCellEngine = new FreeCellEngine(1, _variant);
 
+/** Persist current game state to localStorage for resume-on-reload */
+function persistState(state: Pick<DomFreecellState, 'gameNumber' | 'moveHistory' | 'moveCount' | 'timerSeconds'>) {
+  saveGameState({
+    gameNumber: state.gameNumber,
+    variant: _variant,
+    moveHistory: state.moveHistory.map((m) => ({ from: m.from as never, to: m.to as never })),
+    moveCount: state.moveCount,
+    elapsedSeconds: state.timerSeconds,
+  });
+}
+
 function snapshotEngine(engine: FreeCellEngine): Pick<
   DomFreecellState,
   'cascades' | 'freeCells' | 'foundations' | 'gameNumber' | 'moveCount' | 'isWon'
@@ -148,6 +160,7 @@ export const domFreecellStore = create<DomFreecellState>()((set, get) => ({
     _variant = variant;
     const num = Math.floor(Math.random() * 1_000_000) + 1;
     _engine = new FreeCellEngine(num, _variant);
+    clearGameState();
     set({
       ...snapshotEngine(_engine),
       variant: _variant,
@@ -164,6 +177,7 @@ export const domFreecellStore = create<DomFreecellState>()((set, get) => ({
   newGame: (gameNumber?: number) => {
     const num = gameNumber ?? Math.floor(Math.random() * 1_000_000) + 1;
     _engine = new FreeCellEngine(num, _variant);
+    clearGameState();
     set({
       ...snapshotEngine(_engine),
       dragState: null,
@@ -179,6 +193,7 @@ export const domFreecellStore = create<DomFreecellState>()((set, get) => ({
   restart: () => {
     const num = get().gameNumber;
     _engine = new FreeCellEngine(num, _variant);
+    clearGameState();
     set({
       ...snapshotEngine(_engine),
       dragState: null,
@@ -204,13 +219,20 @@ export const domFreecellStore = create<DomFreecellState>()((set, get) => ({
     // Deadlock detection: check if any legal moves remain (only if not won)
     const noMoves = !snapshot.isWon && !_engine.hasLegalMoves();
 
+    const newMoveHistory = [...history, move, ...autoMoves];
     set({
       ...snapshot,
-      moveHistory: [...history, move, ...autoMoves],
+      moveHistory: newMoveHistory,
       redoStack: [], // Clear redo on new manual move
       timerStarted: true,
       noMovesAvailable: noMoves,
     });
+
+    if (!snapshot.isWon) {
+      persistState({ gameNumber: snapshot.gameNumber, moveHistory: newMoveHistory, moveCount: snapshot.moveCount, timerSeconds: get().timerSeconds });
+    } else {
+      clearGameState();
+    }
 
     return true;
   },
@@ -334,12 +356,19 @@ export const domFreecellStore = create<DomFreecellState>()((set, get) => ({
       ? [...redoStack, { manualMove: undoneManual, autoMoves: undoneAutoMoves }]
       : redoStack;
 
+    const snapshot = snapshotEngine(_engine);
     set({
-      ...snapshotEngine(_engine),
+      ...snapshot,
       moveHistory: newHistory,
       redoStack: newRedoStack,
       noMovesAvailable: false, // undoing always opens up moves
     });
+
+    if (newHistory.length > 0) {
+      persistState({ gameNumber: snapshot.gameNumber, moveHistory: newHistory, moveCount: snapshot.moveCount, timerSeconds: get().timerSeconds });
+    } else {
+      clearGameState();
+    }
   },
 
   redo: () => {
@@ -359,13 +388,20 @@ export const domFreecellStore = create<DomFreecellState>()((set, get) => ({
     const snapshot = snapshotEngine(_engine);
     const noMoves = !snapshot.isWon && !_engine.hasLegalMoves();
 
+    const newMoveHistory = [...history, move, ...autoMoves];
     set({
       ...snapshot,
-      moveHistory: [...history, move, ...autoMoves],
+      moveHistory: newMoveHistory,
       redoStack: newRedoStack,
       timerStarted: true,
       noMovesAvailable: noMoves,
     });
+
+    if (!snapshot.isWon) {
+      persistState({ gameNumber: snapshot.gameNumber, moveHistory: newMoveHistory, moveCount: snapshot.moveCount, timerSeconds: get().timerSeconds });
+    } else {
+      clearGameState();
+    }
   },
 
   tickTimer: () => {

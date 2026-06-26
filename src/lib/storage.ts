@@ -50,9 +50,8 @@ export interface GameSettings {
 
 export interface SavedGameState {
   gameNumber: number;
-  cascades: string[][];     // card IDs
-  freeCells: (string | null)[];
-  foundations: Record<string, string[]>;
+  variant: string;
+  moveHistory: Array<{ from: { type: string; index?: number; suit?: string; cardIndex?: number }; to: { type: string; index?: number; suit?: string; cardIndex?: number } }>;
   moveCount: number;
   elapsedSeconds: number;
 }

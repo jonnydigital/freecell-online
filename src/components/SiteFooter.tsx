@@ -167,6 +167,7 @@ export default function SiteFooter() {
           { href: '/freecell-cheat-sheet', label: 'Cheat Sheet' },
           { href: '/freecell-for-beginners', label: 'Beginner Guide' },
           { href: '/freecell-for-seniors', label: 'FreeCell for Seniors' },
+          { href: '/freecell-video-tutorial', label: 'Video Tutorial' },
           { href: '/large-cards', label: 'Large Cards Mode' },
           { href: '/freecell-hints-explained', label: 'Hints Explained' },
           { href: '/glossary', label: 'Glossary' },

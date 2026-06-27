@@ -1,4 +1,10 @@
 
+## 2026-06-27 (OpenClaw Overnight Build)
+
+### Shipped
+- **FreeCell video tutorial page** — added `/freecell-video-tutorial` with a chaptered tutorial player slot, beginner walkthrough transcript, practice links, sitemap inclusion, footer discovery, and FreeCell-specific route ownership for clean indexing.
+- Build passed with Node 22 via `npm run build`.
+
 ## 2026-06-26 (OpenClaw Evening Heartbeat)
 
 ### Shipped

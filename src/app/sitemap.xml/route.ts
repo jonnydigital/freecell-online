@@ -106,6 +106,7 @@ const contentPages = [
   { path: '/spider-winnability', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/spider-variants', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/freecell-hints-explained', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/freecell-video-tutorial', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/freecell-world-records', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/klondike', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/klondike/how-to-play', changeFrequency: 'monthly', priority: 0.8 },

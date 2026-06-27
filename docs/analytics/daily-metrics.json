@@ -1,5 +1,5 @@
 {
-  "date": "2026-06-26",
+  "date": "2026-06-27",
   "lastPulledBy": "scripts/pull-public-metrics.mjs",
   "notes": "Refreshed after 22 days stale. GA4/GSC/AdSense still require manual pull (no OAuth creds in repo). This file now tracks public-observable signals pulled via WebSearch site: queries and direct sitemap fetches.",
   "network_state": {
@@ -494,13 +494,13 @@
       "Mediavine Grow install (defer until AdSense starts producing income)"
     ]
   },
-  "last_pull_iso": "2026-06-26T13:48:10.221Z",
+  "last_pull_iso": "2026-06-27T10:17:27.411Z",
   "sitemap_url_counts_live": {
-    "playfreecellonline": 102,
+    "playfreecellonline": 103,
     "solitairestack": 121,
     "playklondikeonline": 28,
     "playspidersolitaireonline": 23,
-    "network_total": 274
+    "network_total": 275
   },
   "google_indexation_live": {
     "playfreecellonline": null,

@@ -1,4 +1,10 @@
 
+## 2026-06-27 (OpenClaw Evening Heartbeat)
+
+### Shipped
+- **Saved game available prompt** — when a player opens a different numbered FreeCell deal while another in-progress game is saved locally, the board now offers a compact Resume prompt instead of silently ignoring the saved progress.
+- Build passed with Node 22 via `npm run lint && npm run build` (`lint` still reports the repo's existing warning backlog, with no errors).
+
 ## 2026-06-27 (OpenClaw Overnight Build)
 
 ### Shipped

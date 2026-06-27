@@ -3,7 +3,7 @@
 import React, { useEffect, useState, useCallback, useMemo, useRef } from 'react';
 import { useDomFreecellStore } from '@/lib/dom-freecell/useDomFreecellStore';
 import { GameStats, createEmptyStats, recordWin, recordLoss, getWinPercent } from '@/lib/stats';
-import { loadStats, saveStats, saveStarRating, GameSettings, loadSettings, saveSettings, toggleBookmark, isBookmarked, loadGameState, clearGameState } from '@/lib/storage';
+import { loadStats, saveStats, saveStarRating, GameSettings, SavedGameState, loadSettings, saveSettings, toggleBookmark, isBookmarked, loadGameState, clearGameState } from '@/lib/storage';
 import { recordGameResult } from '@/lib/gameHistory';
 import { getTodaysSeed, getTodayStr, isTodayCompleted, getCurrentStreak, recordDailyCompletion } from '@/lib/dailyChallenge';
 import { soundManager } from '@/lib/sounds';
@@ -145,6 +145,7 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
     moveCount: number;
     elapsedSeconds: number;
   } | null>(null);
+  const [savedGamePrompt, setSavedGamePrompt] = useState<SavedGameState | null>(null);
   const [undosUsed, setUndosUsed] = useState(0);
   const [leaderboardEntries, setLeaderboardEntries] = useState<LeaderboardEntry[]>([]);
   const [leaderboardRank, setLeaderboardRank] = useState<number | undefined>();
@@ -216,6 +217,41 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
       if (idleTimerRef.current) clearTimeout(idleTimerRef.current);
       if (resumeNoticeTimerRef.current) clearTimeout(resumeNoticeTimerRef.current);
     };
+  }, []);
+
+  const restoreSavedGame = useCallback((saved: SavedGameState, currentVariant: string): boolean => {
+    const store = useDomFreecellStore.getState();
+    store.newGame(saved.gameNumber);
+
+    let allSucceeded = true;
+    for (const move of saved.moveHistory) {
+      if (!store.tryMove(move.from as never, move.to as never)) {
+        allSucceeded = false;
+        break;
+      }
+    }
+
+    if (!allSucceeded) {
+      clearGameState();
+      setSavedGamePrompt(null);
+      return false;
+    }
+
+    useDomFreecellStore.setState({
+      timerSeconds: saved.elapsedSeconds,
+      timerStarted: saved.elapsedSeconds > 0,
+    });
+    setBookmarked(isBookmarked(saved.gameNumber, currentVariant));
+    setSavedGamePrompt(null);
+    setResumeNotice({
+      gameNumber: saved.gameNumber,
+      moveCount: saved.moveCount,
+      elapsedSeconds: saved.elapsedSeconds,
+    });
+    announceToScreenReader(`Resumed game ${saved.gameNumber} with ${saved.moveCount} moves.`);
+    if (resumeNoticeTimerRef.current) clearTimeout(resumeNoticeTimerRef.current);
+    resumeNoticeTimerRef.current = setTimeout(() => setResumeNotice(null), 5500);
+    return true;
   }, []);
 
   // ── Solver / Ghost Mode ──
@@ -349,45 +385,23 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
     }
     const saved = loadGameState();
     const currentVariant = variant || 'freecell';
-    if (
-      saved &&
-      saved.variant === currentVariant &&
-      saved.moveHistory.length > 0 &&
-      (!initialGameNumber || initialGameNumber === saved.gameNumber)
-    ) {
-      const store = useDomFreecellStore.getState();
-      store.newGame(saved.gameNumber);
-      let allSucceeded = true;
-      for (const move of saved.moveHistory) {
-        if (!store.tryMove(move.from as never, move.to as never)) {
-          allSucceeded = false;
-          break;
-        }
-      }
-      if (allSucceeded) {
-        useDomFreecellStore.setState({
-          timerSeconds: saved.elapsedSeconds,
-          timerStarted: saved.elapsedSeconds > 0,
-        });
-        setBookmarked(isBookmarked(saved.gameNumber, currentVariant));
-        setResumeNotice({
-          gameNumber: saved.gameNumber,
-          moveCount: saved.moveCount,
-          elapsedSeconds: saved.elapsedSeconds,
-        });
-        announceToScreenReader(`Resumed game ${saved.gameNumber} with ${saved.moveCount} moves.`);
-        if (resumeNoticeTimerRef.current) clearTimeout(resumeNoticeTimerRef.current);
-        resumeNoticeTimerRef.current = setTimeout(() => setResumeNotice(null), 5500);
-      } else {
-        clearGameState();
-        if (initialGameNumber) {
+    const canRestoreSaved = saved && saved.variant === currentVariant && saved.moveHistory.length > 0;
+    if (canRestoreSaved) {
+      if (!initialGameNumber || initialGameNumber === saved.gameNumber) {
+        const restored = restoreSavedGame(saved, currentVariant);
+        if (!restored && initialGameNumber) {
           newGame(initialGameNumber);
           setBookmarked(isBookmarked(initialGameNumber, currentVariant));
         }
+      } else {
+        setSavedGamePrompt(saved);
       }
     } else if (initialGameNumber) {
+      if (saved) clearGameState();
       newGame(initialGameNumber);
       setBookmarked(isBookmarked(initialGameNumber, currentVariant));
+    } else if (saved) {
+      clearGameState();
     }
     // Show tutorial on first visit
     try {
@@ -399,6 +413,10 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (moveCount > 0) setSavedGamePrompt(null);
+  }, [moveCount]);
 
   // ── Timer tick ──
   useEffect(() => {
@@ -632,6 +650,7 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
     setUndosUsed(0);
     setStreakMilestone(null);
     setResumeNotice(null);
+    setSavedGamePrompt(null);
     clearHint();
     if (replayMode) { setGhostPlaying(false); solver.reset(); stopReplay(); }
     newGame();
@@ -648,6 +667,7 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
     setUndosUsed(0);
     setStreakMilestone(null);
     setResumeNotice(null);
+    setSavedGamePrompt(null);
     clearHint();
     if (replayMode) { setGhostPlaying(false); solver.reset(); stopReplay(); }
     restart();
@@ -781,6 +801,7 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
     setUndosUsed(0);
     setStreakMilestone(null);
     setResumeNotice(null);
+    setSavedGamePrompt(null);
     clearHint();
     newGame(num);
   }, [newGame, clearHint, timerStarted, isWon, moveCount, timerSeconds, gameNumber]);
@@ -816,6 +837,7 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
     setUndosUsed(0);
     setStreakMilestone(null);
     setResumeNotice(null);
+    setSavedGamePrompt(null);
     clearHint();
     newGame(seed);
   }, [newGame, clearHint, timerStarted, isWon, moveCount, timerSeconds, gameNumber]);
@@ -1099,6 +1121,40 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
                 onClick={() => setResumeNotice(null)}
                 className="mt-0.5 shrink-0 text-white/35 hover:text-white/75 transition-colors"
                 aria-label="Dismiss resume notice"
+              >
+                <X size={14} />
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Saved Game Prompt */}
+        {savedGamePrompt && !isWon && moveCount === 0 && (
+          <div className="absolute top-3 right-3 z-20 max-w-[calc(100%-1.5rem)] animate-in fade-in slide-in-from-top-2 duration-200">
+            <div
+              className="flex items-start gap-3 rounded-xl px-4 py-3 text-sm shadow-xl backdrop-blur-sm"
+              style={{
+                background: 'color-mix(in srgb, var(--theme-panel, #0d2f0d) 92%, transparent)',
+                border: '1px solid color-mix(in srgb, var(--theme-border, #2a7c2a) 55%, transparent)',
+                color: 'rgba(255,255,255,0.86)',
+              }}
+            >
+              <div className="min-w-0">
+                <div className="font-semibold text-[#D4AF37]">Saved game available</div>
+                <div className="mt-0.5 text-xs text-white/60">
+                  #{savedGamePrompt.gameNumber} · {savedGamePrompt.moveCount} moves · {formatTime(savedGamePrompt.elapsedSeconds)}
+                </div>
+                <button
+                  onClick={() => restoreSavedGame(savedGamePrompt, variant || 'freecell')}
+                  className="mt-2 rounded-full bg-[#D4AF37] px-3 py-1 text-xs font-semibold text-[#113817] transition-colors hover:bg-[#f0c85b]"
+                >
+                  Resume
+                </button>
+              </div>
+              <button
+                onClick={() => setSavedGamePrompt(null)}
+                className="mt-0.5 shrink-0 text-white/35 hover:text-white/75 transition-colors"
+                aria-label="Dismiss saved game prompt"
               >
                 <X size={14} />
               </button>

@@ -48,7 +48,7 @@
 ## 🟢 Nice to Have
 14. **Multiplayer daily challenge** — compete on same seed
 15. ~~**Offline mode polish**~~ ✅ SHIPPED 2026-06-25 — friendly `/offline` fallback page, SW navigation fallback, cache bumped to v4
-16. ~~**Resume unfinished FreeCell games after reload**~~ ✅ SHIPPED 2026-06-26 — persists game number, variant, move history, move count, and elapsed time; restores by replaying moves, clears saved state on new/restart/win, and shows a dismissible resume notice after restore
+16. ~~**Resume unfinished FreeCell games after reload**~~ ✅ SHIPPED 2026-06-26 — persists game number, variant, move history, move count, and elapsed time; restores by replaying moves, clears saved state on new/restart/win, shows a dismissible resume notice after restore, and now prompts when a different numbered deal has saved progress available
 17. **i18n** — multi-language
 18. ~~**Accessibility** — screen reader, high contrast~~ ✅ SHIPPED 03-05 — High contrast mode, screen reader announcements (aria-live), reduced motion toggle, skip-to-game link, focus indicators
 19. **Community/forum** — user feedback channel *(Green Felt model, builds loyalty)*

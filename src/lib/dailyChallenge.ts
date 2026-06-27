@@ -5,8 +5,6 @@
  * tracks completion, streaks, and sharing.
  */
 
-import { siteConfig } from './siteConfig';
-
 const DAILY_CHALLENGE_KEY = 'freecell_daily_challenge';
 
 export interface DailyCompletion {
@@ -54,6 +52,14 @@ export function getTodayStr(): string {
 /** Get today's daily challenge game number */
 export function getTodaysSeed(): number {
   return getDailySeed(getTodayStr());
+}
+
+/** Get seconds until the next local daily challenge reset. */
+export function getSecondsUntilNextDailyReset(): number {
+  const now = new Date();
+  const nextReset = new Date(now);
+  nextReset.setHours(24, 0, 0, 0);
+  return Math.max(0, Math.ceil((nextReset.getTime() - now.getTime()) / 1000));
 }
 
 /** Load daily challenge data from localStorage */

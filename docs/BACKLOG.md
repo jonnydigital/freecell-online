@@ -100,6 +100,7 @@
 - [x] Auto-complete acceleration (shipped 02-27)
 - [x] Cascade settling stagger (shipped 02-27)
 - [x] SEO: Glossary/terminology page (shipped 02-28)
+- [x] Daily Challenge completed-state return loop — countdown to next unlock plus Replay Deal link (shipped 2026-06-27)
 
 ---
 

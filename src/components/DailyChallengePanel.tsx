@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import Link from 'next/link';
+import { useState, useMemo, useEffect } from 'react';
 import {
   loadDailyData,
   getTodayStr,
@@ -9,6 +10,7 @@ import {
   getMonthDays,
   getFirstDayOfWeek,
   getCurrentStreak,
+  getSecondsUntilNextDailyReset,
   DailyChallengeData,
 } from '../lib/dailyChallenge';
 
@@ -24,11 +26,24 @@ const MONTH_NAMES = [
   'July', 'August', 'September', 'October', 'November', 'December',
 ];
 
+function formatCountdown(totalSeconds: number): string {
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+
+  if (hours > 0) {
+    return `${hours}h ${String(minutes).padStart(2, '0')}m`;
+  }
+
+  return `${minutes}m ${String(seconds).padStart(2, '0')}s`;
+}
+
 export default function DailyChallengePanel({ isOpen, onClose, onPlayDaily }: Props) {
   const today = new Date();
   const [viewYear, setViewYear] = useState(today.getFullYear());
   const [viewMonth, setViewMonth] = useState(today.getMonth());
   const [copied, setCopied] = useState(false);
+  const [secondsUntilReset, setSecondsUntilReset] = useState(0);
 
   const data: DailyChallengeData = useMemo(() => loadDailyData(), [isOpen]);
   const todayStr = getTodayStr();
@@ -38,6 +53,16 @@ export default function DailyChallengePanel({ isOpen, onClose, onPlayDaily }: Pr
 
   const days = useMemo(() => getMonthDays(viewYear, viewMonth), [viewYear, viewMonth]);
   const firstDay = useMemo(() => getFirstDayOfWeek(viewYear, viewMonth), [viewYear, viewMonth]);
+
+  useEffect(() => {
+    if (!isOpen || !todayCompleted) return;
+
+    const updateCountdown = () => setSecondsUntilReset(getSecondsUntilNextDailyReset());
+    updateCountdown();
+    const timer = window.setInterval(updateCountdown, 1000);
+
+    return () => window.clearInterval(timer);
+  }, [isOpen, todayCompleted]);
 
   const prevMonth = () => {
     if (viewMonth === 0) {
@@ -102,12 +127,25 @@ export default function DailyChallengePanel({ isOpen, onClose, onPlayDaily }: Pr
               <div className="text-sm text-white/70 mb-2">
                 {data.completedDays[todayStr].moves} moves &middot; {Math.floor(data.completedDays[todayStr].time / 60)}:{String(data.completedDays[todayStr].time % 60).padStart(2, '0')}
               </div>
-              <button
-                onClick={handleShare}
-                className="px-4 py-1.5 bg-[#2a7c2a] hover:bg-[#3a9c3a] text-sm rounded transition-colors"
-              >
-                {copied ? 'Copied!' : 'Share Result'}
-              </button>
+              <div className="mb-3 rounded-md bg-black/20 px-3 py-2 text-xs text-white/65">
+                Next challenge unlocks in{' '}
+                <span className="font-semibold text-yellow-200">{formatCountdown(secondsUntilReset)}</span>
+              </div>
+              <div className="flex flex-wrap justify-center gap-2">
+                <button
+                  onClick={handleShare}
+                  className="px-4 py-1.5 bg-[#2a7c2a] hover:bg-[#3a9c3a] text-sm rounded transition-colors"
+                >
+                  {copied ? 'Copied!' : 'Share Result'}
+                </button>
+                <Link
+                  href={`/game/${todaySeed}`}
+                  onClick={onClose}
+                  className="px-4 py-1.5 bg-white/10 hover:bg-white/15 text-sm rounded transition-colors"
+                >
+                  Replay Deal
+                </Link>
+              </div>
             </div>
           ) : (
             <button

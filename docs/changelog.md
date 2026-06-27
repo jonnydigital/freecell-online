@@ -1,4 +1,10 @@
 
+## 2026-06-27 (OpenClaw Evening Heartbeat 2)
+
+### Shipped
+- **Daily Challenge return loop** — completed daily challenges now show a live countdown to the next unlock and a Replay Deal link, so the panel no longer dead-ends after a win.
+- Build passed with Node 22 via `npm run build`; follow-up `npm run lint` passed with the repo's existing warning backlog and no errors.
+
 ## 2026-06-27 (OpenClaw Evening Heartbeat)
 
 ### Shipped

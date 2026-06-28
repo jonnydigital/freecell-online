@@ -50,6 +50,7 @@ const playLinks = [
   { href: "/deals", label: "Deal Explorer", desc: "Search and browse any deal number" },
   { href: "/solver", label: "FreeCell Solver", desc: "Get step-by-step solutions" },
   { href: "/leaderboard", label: "Leaderboard", desc: "Top times and scores" },
+  { href: "/community", label: "Community", desc: "Share results, report deals, and suggest improvements" },
   { href: "/achievements", label: "Achievements", desc: "Unlock milestones and badges" },
   { href: "/stats", label: "Your Stats", desc: "Personal game statistics" },
   { href: "/statistics", label: "Statistics & Win Rates", desc: "Track your win rate and performance" },

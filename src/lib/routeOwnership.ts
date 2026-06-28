@@ -221,6 +221,7 @@ export const ROUTE_OWNERSHIP: Record<string, RouteOwnership> = {
   '/deals': FREECELL_ONLY,
   '/solver': FREECELL_ONLY,
   '/download': FREECELL_ONLY,
+  '/community': FREECELL_ONLY,
   '/leaderboard': FREECELL_ONLY,
   '/statistics': FREECELL_ONLY,
   '/stats': FREECELL_ONLY,

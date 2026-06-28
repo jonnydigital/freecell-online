@@ -266,6 +266,7 @@ export default function SiteFooter() {
           { href: '/daily-freecell', label: 'Daily FreeCell' },
           { href: '/freecell-vs-spider', label: 'FreeCell vs Spider' },
           { href: '/best-freecell-apps', label: 'Best FreeCell Apps' },
+          { href: '/community', label: 'Community' },
           { href: '/leaderboard', label: 'Leaderboard' },
           { href: '/deals', label: 'Deal Explorer' },
           { href: '/solver', label: 'Solver' },
@@ -310,6 +311,7 @@ export default function SiteFooter() {
 
   const moreLinks = visibleLinks([
     { href: '/stats', label: 'Your Stats' },
+    { href: '/community', label: 'Community' },
     { href: '/about', label: 'About' },
     { href: '/contact', label: 'Contact' },
     { href: '/editorial-standards', label: 'Editorial Standards' },

@@ -4,6 +4,7 @@
 ### Shipped
 - **FreeCell community hub** — added `/community` as a lightweight player feedback and sharing page for daily challenge results, deal-specific reports, feature suggestions, and accessibility notes.
 - Added FreeCell route ownership, XML sitemap inclusion, HTML sitemap discovery, and footer links so the page serves and indexes cleanly on `playfreecellonline.com`.
+- **Win-screen community loop** — added a compact post-win prompt that sends players to `/community` when they want to share a result, report a tricky deal, or suggest a feature.
 - Build passed with Node 22 via `npm run build` (existing multi-lockfile workspace-root warning remains).
 
 ## 2026-06-27 (OpenClaw Evening Heartbeat 2)

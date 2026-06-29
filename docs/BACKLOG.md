@@ -51,7 +51,7 @@
 16. ~~**Resume unfinished FreeCell games after reload**~~ ✅ SHIPPED 2026-06-26 — persists game number, variant, move history, move count, and elapsed time; restores by replaying moves, clears saved state on new/restart/win, shows a dismissible resume notice after restore, and now prompts when a different numbered deal has saved progress available
 17. **i18n** — multi-language
 18. ~~**Accessibility** — screen reader, high contrast~~ ✅ SHIPPED 03-05 — High contrast mode, screen reader announcements (aria-live), reduced motion toggle, skip-to-game link, focus indicators
-19. ~~**Community/forum**~~ ✅ SHIPPED 2026-06-28 — `/community` player hub for sharing daily results, reporting deal-specific issues, and suggesting features. Added route ownership, XML sitemap entry, HTML sitemap entry, and footer links. *(Green Felt model, builds loyalty)*
+19. ~~**Community/forum**~~ ✅ SHIPPED 2026-06-28 — `/community` player hub for sharing daily results, reporting deal-specific issues, and suggesting features. Added route ownership, XML sitemap entry, HTML sitemap entry, footer links, and a post-win community prompt. *(Green Felt model, builds loyalty)*
 20. ~~**Animation speed setting**~~ ✅ SHIPPED — slow/normal/fast toggle in Settings panel, wired to game engine multiplier *(cardgames.io feature)*
 21. ~~**Sound pitch variation**~~ ✅ SHIPPED 03-03 — higher rank = higher pitch on foundation *(polish item from 02-26 analysis)*
 22. ~~**Dynamic OG Images + Twitter Cards**~~ ✅ SHIPPED 03-05 — Rich social preview images for all pages + per-game dynamic OG for /game/[number] routes. Twitter summary_large_image cards site-wide.
@@ -102,6 +102,7 @@
 - [x] SEO: Glossary/terminology page (shipped 02-28)
 - [x] Daily Challenge completed-state return loop — countdown to next unlock plus Replay Deal link (shipped 2026-06-27)
 - [x] Community page — player hub for daily-result sharing, deal reports, and feature suggestions (shipped 2026-06-28)
+- [x] Win-screen community prompt — post-win link to share a result, report a deal, or suggest features (shipped 2026-06-28)
 
 ---
 

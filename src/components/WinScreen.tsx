@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useMemo, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Shuffle, Calendar, Trophy, Share2, Eye, Zap } from 'lucide-react';
+import { Shuffle, Calendar, Trophy, Share2, Eye, Zap, MessageSquare } from 'lucide-react';
 import { saveStarRating } from '@/lib/storage';
 import { absoluteUrl, siteConfig } from '@/lib/siteConfig';
 import { getShareText as getDailyShareText } from '@/lib/dailyChallenge';
@@ -291,6 +291,24 @@ export default function WinScreen({
             />
           </motion.div>
         )}
+
+        <motion.a
+          href="/community"
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.9 }}
+          className="mb-5 flex items-start gap-3 rounded-xl border border-white/[0.08] bg-white/[0.04] p-3.5 text-left transition-colors hover:border-[#D4AF37]/40 hover:bg-white/[0.06]"
+        >
+          <MessageSquare size={18} className="mt-0.5 shrink-0 text-[#D4AF37]" />
+          <span>
+            <span className="block text-sm font-semibold text-white">
+              Share this win or report the deal
+            </span>
+            <span className="mt-1 block text-xs leading-relaxed text-white/55">
+              Send daily results, tricky deal notes, and feature ideas to the FreeCell community hub.
+            </span>
+          </span>
+        </motion.a>
 
         <div className="flex flex-col gap-3.5">
           <button

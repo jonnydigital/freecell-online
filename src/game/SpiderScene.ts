@@ -900,24 +900,24 @@ export class SpiderScene extends Phaser.Scene {
     const canvas = this.game.canvas;
     let md = false;
 
-    canvas.addEventListener('mousedown', (e) => {
+    this.trackDomListener(canvas, 'mousedown', ((e: MouseEvent) => {
       const rect = canvas.getBoundingClientRect();
       const x = (e.clientX - rect.left) * (canvas.width / rect.width);
       const y = (e.clientY - rect.top) * (canvas.height / rect.height);
       md = true;
       this.tryStartDrag(x, y);
-    });
+    }) as EventListener);
 
-    canvas.addEventListener('mousemove', (e) => {
+    this.trackDomListener(canvas, 'mousemove', ((e: MouseEvent) => {
       if (!md || !this.isDragging) return;
       const rect = canvas.getBoundingClientRect();
       this.activeDragTarget = {
         x: (e.clientX - rect.left) * (canvas.width / rect.width),
         y: (e.clientY - rect.top) * (canvas.height / rect.height)
       };
-    });
+    }) as EventListener);
 
-    canvas.addEventListener('mouseup', (e) => {
+    this.trackDomListener(canvas, 'mouseup', ((e: MouseEvent) => {
       if (!md) return;
       md = false;
       if (this.isDragging) {
@@ -927,22 +927,22 @@ export class SpiderScene extends Phaser.Scene {
           (e.clientY - rect.top) * (canvas.height / rect.height)
         );
       }
-    });
+    }) as EventListener);
   }
 
   private setupTouchInput(): void {
     const canvas = this.game.canvas;
 
-    canvas.addEventListener('touchstart', (e) => {
+    this.trackDomListener(canvas, 'touchstart', ((e: TouchEvent) => {
       e.preventDefault();
       const rect = canvas.getBoundingClientRect();
       this.tryStartDrag(
         (e.touches[0].clientX - rect.left) * (canvas.width / rect.width),
         (e.touches[0].clientY - rect.top) * (canvas.height / rect.height)
       );
-    }, { passive: false });
+    }) as EventListener, { passive: false });
 
-    canvas.addEventListener('touchmove', (e) => {
+    this.trackDomListener(canvas, 'touchmove', ((e: TouchEvent) => {
       e.preventDefault();
       if (!this.isDragging) return;
       const rect = canvas.getBoundingClientRect();
@@ -950,9 +950,9 @@ export class SpiderScene extends Phaser.Scene {
         x: (e.touches[0].clientX - rect.left) * (canvas.width / rect.width),
         y: (e.touches[0].clientY - rect.top) * (canvas.height / rect.height)
       };
-    }, { passive: false });
+    }) as EventListener, { passive: false });
 
-    canvas.addEventListener('touchend', (e) => {
+    this.trackDomListener(canvas, 'touchend', ((e: TouchEvent) => {
       e.preventDefault();
       if (this.isDragging) {
         const rect = canvas.getBoundingClientRect();
@@ -961,6 +961,6 @@ export class SpiderScene extends Phaser.Scene {
           (e.changedTouches[0].clientY - rect.top) * (canvas.height / rect.height)
         );
       }
-    }, { passive: false });
+    }) as EventListener, { passive: false });
   }
 }

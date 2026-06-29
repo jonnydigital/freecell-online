@@ -1,4 +1,10 @@
 
+## 2026-06-29 (OpenClaw Evening Build)
+
+### Shipped
+- **Spider input listener cleanup** — routed Spider Solitaire mouse/touch canvas handlers through the scene's tracked DOM listener registry so shutdown removes them cleanly and repeated game/session restarts cannot accumulate duplicate drag handlers.
+- Build passed with Node 22 via `npm run build` (existing multi-lockfile workspace-root warning remains).
+
 ## 2026-06-29 (OpenClaw Overnight Build)
 
 ### Shipped

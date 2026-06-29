@@ -110,6 +110,33 @@
   }
 }
 
+/* ── Pyramid Solitaire: seven-card base with overlapped triangular rows ── */
+
+.dom-board-surface[data-game="pyramid"] {
+  --card-width: clamp(72px, calc((100vw - 420px) / 7.4), 116px);
+  --pyramid-row-step: calc(var(--card-height) * 0.45);
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .dom-board-surface[data-game="pyramid"] {
+    --card-width: clamp(66px, calc((100vw - 120px) / 7.3), 100px);
+  }
+}
+
+@media (max-width: 767px) {
+  .dom-board-surface[data-game="pyramid"] {
+    --card-width: clamp(36px, calc((100vw - 42px) / 7), 54px);
+    --pyramid-row-step: calc(var(--card-height) * 0.43);
+  }
+}
+
+.pyramid-empty-slot {
+  border: var(--slot-border);
+  border-radius: var(--slot-border-radius);
+  background: rgba(255, 255, 255, 0.025);
+  box-sizing: border-box;
+}
+
 /* ── Wide generic cascade boards (>8 columns: Forty Thieves 10, Bristol 11, etc.) ──
    Card width scales from --cascade-count (set inline by GenericCascadeBoard) so every
    column fits at any viewport. This replaces a former inline --card-width override that

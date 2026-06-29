@@ -1,4 +1,11 @@
 
+## 2026-06-29 (OpenClaw Overnight Build)
+
+### Shipped
+- **Pyramid Solitaire triangular board** — replaced the generic cascade adapter on `/pyramid` with a dedicated seven-row pyramid layout, preserving stock, waste, recycle, hint, undo, and King removal behavior.
+- Added responsive Pyramid card sizing so the triangular layout fits desktop, tablet, and mobile widths without falling back to a 7-column cascade.
+- Build passed with Node 22 via `npm run build` (existing multi-lockfile workspace-root warning remains); production smoke check returned 200 for `/pyramid`.
+
 ## 2026-06-28 (OpenClaw Overnight Build)
 
 ### Shipped

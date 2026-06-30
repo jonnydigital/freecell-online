@@ -137,6 +137,33 @@
   box-sizing: border-box;
 }
 
+/* ── TriPeaks Solitaire: ten-card base with three overlapped peaks ── */
+
+.dom-board-surface[data-game="tripeaks"] {
+  --card-width: clamp(58px, calc((100vw - 450px) / 10.4), 94px);
+  --tripeaks-row-step: calc(var(--card-height) * 0.42);
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .dom-board-surface[data-game="tripeaks"] {
+    --card-width: clamp(52px, calc((100vw - 120px) / 10.2), 82px);
+  }
+}
+
+@media (max-width: 767px) {
+  .dom-board-surface[data-game="tripeaks"] {
+    --card-width: clamp(28px, calc((100vw - 42px) / 10), 46px);
+    --tripeaks-row-step: calc(var(--card-height) * 0.4);
+  }
+}
+
+.tripeaks-empty-slot {
+  border: var(--slot-border);
+  border-radius: var(--slot-border-radius);
+  background: rgba(255, 255, 255, 0.025);
+  box-sizing: border-box;
+}
+
 /* ── Wide generic cascade boards (>8 columns: Forty Thieves 10, Bristol 11, etc.) ──
    Card width scales from --cascade-count (set inline by GenericCascadeBoard) so every
    column fits at any viewport. This replaces a former inline --card-width override that

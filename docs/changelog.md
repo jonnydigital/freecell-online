@@ -1,4 +1,11 @@
 
+## 2026-06-30 (OpenClaw Evening Build)
+
+### Shipped
+- **TriPeaks canonical three-peak layout** — replaced the generic cascade adapter on `/tripeaks` with a dedicated four-row TriPeaks board using the engine's native peak coordinates, stock, waste, score, streak, undo, and hint behavior.
+- Added responsive TriPeaks card sizing so the 10-card base fits desktop, tablet, and true 375px mobile iframe widths without reverting to a row-as-column cascade.
+- Verification: `npm run build` passed with Node 22 (existing multi-lockfile workspace-root warning remains); local desktop screenshot and 375px iframe smoke screenshot both rendered the three-peak board cleanly.
+
 ## 2026-06-30 (OpenClaw Morning Heartbeat)
 
 ### Shipped

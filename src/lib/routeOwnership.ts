@@ -286,6 +286,7 @@ export const ROUTE_OWNERSHIP: Record<string, RouteOwnership> = {
   // Daily challenges (FreeCell-specific)
   '/daily-freecell': FREECELL_ONLY,
   '/daily-freecell/calendar': FREECELL_ONLY,
+  '/daily-freecell/room': FREECELL_ONLY,
   '/daily-freecell/share/[date]': FREECELL_ONLY,
 
   // ==========================================================================

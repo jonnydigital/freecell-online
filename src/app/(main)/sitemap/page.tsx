@@ -42,6 +42,7 @@ const playLinks = [
   { href: "/storm", label: "Storm Mode", desc: "Five timed games — race the clock" },
   { href: "/daily-freecell", label: "Daily FreeCell", desc: "A new deal every day" },
   { href: "/daily-freecell/calendar", label: "Challenge Calendar", desc: "Browse past daily challenges" },
+  { href: "/daily-freecell/room", label: "Daily Room", desc: "Challenge friends on today's shared deal" },
   { href: "/freecell/1-cell", label: "1-Cell FreeCell", desc: "One free cell — expert difficulty" },
   { href: "/freecell/2-cell", label: "2-Cell FreeCell", desc: "Two free cells — advanced" },
   { href: "/freecell/3-cell", label: "3-Cell FreeCell", desc: "Three free cells — intermediate" },

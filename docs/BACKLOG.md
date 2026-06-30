@@ -46,7 +46,7 @@
 39. ~~**Bristol Solitaire game page**~~ ✅ SHIPPED 03-29 — Playable game page for Bristol, the last variant without one. BristolGamePage DOM adapter (8 fans + 3 reserves), full SEO page with FAQPage + WebApplication + BreadcrumbList schema, 6 FAQs, any-suit building, Kings restriction, stock dealing, auto-place, hints, undo. All 25 variants now playable. *(Gap analysis — Bristol had engine + content but no game page, dead-end links from tips/how-to-play)*
 
 ## 🟢 Nice to Have
-14. **Multiplayer daily challenge** — compete on same seed
+14. ~~**Multiplayer daily challenge**~~ ✅ SHIPPED 2026-06-30 — `/daily-freecell/room` gives players an inviteable shared daily room with today's seed, play/rank/invite actions, fair scoring rules, sitemap/footer discovery, and daily challenge cross-linking.
 15. ~~**Offline mode polish**~~ ✅ SHIPPED 2026-06-25 — friendly `/offline` fallback page, SW navigation fallback, cache bumped to v4
 16. ~~**Resume unfinished FreeCell games after reload**~~ ✅ SHIPPED 2026-06-26 — persists game number, variant, move history, move count, and elapsed time; restores by replaying moves, clears saved state on new/restart/win, shows a dismissible resume notice after restore, and now prompts when a different numbered deal has saved progress available
 17. **i18n** — multi-language
@@ -105,6 +105,7 @@
 - [x] Community page — player hub for daily-result sharing, deal reports, and feature suggestions (shipped 2026-06-28)
 - [x] Win-screen community prompt — post-win link to share a result, report a deal, or suggest features (shipped 2026-06-28)
 - [x] Pyramid triangular board layout — real 7-row Pyramid play surface with responsive sizing and waste pairing (shipped 2026-06-29)
+- [x] Daily FreeCell Room — inviteable shared daily challenge page for competing on today's same seed (shipped 2026-06-30)
 
 ---
 

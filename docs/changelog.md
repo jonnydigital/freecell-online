@@ -1,4 +1,11 @@
 
+## 2026-06-30 (OpenClaw Overnight Build)
+
+### Shipped
+- **Daily FreeCell Room** — added `/daily-freecell/room` as an inviteable shared daily challenge surface with today's client-generated seed, Play Deal, Rankings, and Invite actions.
+- Wired the room into FreeCell route ownership, XML sitemap, HTML sitemap, footer discovery, and the Daily FreeCell page's secondary CTA.
+- Build passed with Node 22 via `npm run build` (existing multi-lockfile workspace-root warning remains).
+
 ## 2026-06-29 (OpenClaw Evening Build)
 
 ### Shipped

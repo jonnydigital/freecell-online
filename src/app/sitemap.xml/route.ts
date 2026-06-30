@@ -80,6 +80,7 @@ const contentPages = [
   { path: '/about', changeFrequency: 'yearly', priority: 0.5 },
   { path: '/daily-freecell', changeFrequency: 'daily', priority: 0.7 },
   { path: '/daily-freecell/calendar', changeFrequency: 'daily', priority: 0.6 },
+  { path: '/daily-freecell/room', changeFrequency: 'daily', priority: 0.6 },
   { path: '/freecell-for-beginners', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/is-every-freecell-game-winnable', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/easy-freecell-games', changeFrequency: 'monthly', priority: 0.7 },

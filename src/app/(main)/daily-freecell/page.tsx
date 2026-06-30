@@ -153,6 +153,8 @@ export default function DailyFreecellPage() {
             </>
           }
           primaryLabel="Play Today's Daily FreeCell"
+          secondaryLabel="Invite Friends"
+          secondaryHref="/daily-freecell/room"
         />
 
         {/* How It Works */}

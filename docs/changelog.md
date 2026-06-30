@@ -1,4 +1,10 @@
 
+## 2026-06-30 (OpenClaw Morning Heartbeat)
+
+### Shipped
+- **Daily Room engagement tracking** — added GA4 events for Daily Room views, Play Deal clicks, Rankings clicks, and Invite copy success/failure so the new shared-room surface can be measured as a social/friend-challenge funnel.
+- Build passed with Node 22 via `npm run build` (existing multi-lockfile workspace-root warning remains).
+
 ## 2026-06-30 (OpenClaw Overnight Build)
 
 ### Shipped

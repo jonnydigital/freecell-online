@@ -1,9 +1,15 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { CalendarDays, Copy, Play, Trophy, Users } from 'lucide-react';
 import Link from '@/components/NetworkLink';
 import { getDailySeed, getTodayStr } from '@/lib/dailyChallenge';
+import {
+  trackDailyRoomInviteCopy,
+  trackDailyRoomPlayClick,
+  trackDailyRoomRankingsClick,
+  trackDailyRoomView,
+} from '@/lib/analytics';
 
 function formatDisplayDate(dateStr: string): string {
   const date = new Date(`${dateStr}T12:00:00`);
@@ -21,6 +27,10 @@ export default function DailyChallengeRoomClient() {
   const seed = useMemo(() => getDailySeed(today), [today]);
   const roomUrl = `https://playfreecellonline.com/daily-freecell/room`;
 
+  useEffect(() => {
+    trackDailyRoomView(seed, today);
+  }, [seed, today]);
+
   async function copyInvite() {
     const invite = [
       `Join today's FreeCell room: Game #${seed}`,
@@ -32,9 +42,11 @@ export default function DailyChallengeRoomClient() {
     try {
       await navigator.clipboard.writeText(invite);
       setCopied(true);
+      trackDailyRoomInviteCopy(seed, today, true);
       window.setTimeout(() => setCopied(false), 1800);
     } catch {
       setCopied(false);
+      trackDailyRoomInviteCopy(seed, today, false);
     }
   }
 
@@ -56,6 +68,7 @@ export default function DailyChallengeRoomClient() {
         <div className="grid gap-2 sm:grid-cols-3 md:min-w-[30rem]">
           <Link
             href={`/game/${seed}`}
+            onClick={() => trackDailyRoomPlayClick(seed, today)}
             className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-yellow-500 px-4 py-2.5 text-sm font-bold text-[#113411] transition-colors hover:bg-yellow-300"
           >
             <Play size={17} aria-hidden="true" />
@@ -63,6 +76,7 @@ export default function DailyChallengeRoomClient() {
           </Link>
           <Link
             href="/leaderboard"
+            onClick={() => trackDailyRoomRankingsClick(seed, today)}
             className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-white/10 bg-white/[0.06] px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-white/[0.1]"
           >
             <Trophy size={17} aria-hidden="true" />

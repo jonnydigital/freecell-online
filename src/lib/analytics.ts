@@ -19,7 +19,11 @@ export type GameEvent =
   | { name: 'undo_used'; params: EventParams }
   | { name: 'time_to_first_move'; params: EventParams }
   | { name: 'interaction_type'; params: EventParams }
-  | { name: 'game_deadlock'; params: EventParams };
+  | { name: 'game_deadlock'; params: EventParams }
+  | { name: 'daily_room_view'; params: EventParams }
+  | { name: 'daily_room_play_click'; params: EventParams }
+  | { name: 'daily_room_rankings_click'; params: EventParams }
+  | { name: 'daily_room_invite_copy'; params: EventParams };
 
 declare global {
   interface Window {
@@ -226,5 +230,33 @@ export function trackDeadlock(): void {
   trackEvent({
     name: 'game_deadlock',
     params: { ...gameSession.baseParams, move_count: gameSession.moveCount },
+  });
+}
+
+export function trackDailyRoomView(seed: number, date: string): void {
+  trackEvent({
+    name: 'daily_room_view',
+    params: { game_number: seed, daily_date: date },
+  });
+}
+
+export function trackDailyRoomPlayClick(seed: number, date: string): void {
+  trackEvent({
+    name: 'daily_room_play_click',
+    params: { game_number: seed, daily_date: date },
+  });
+}
+
+export function trackDailyRoomRankingsClick(seed: number, date: string): void {
+  trackEvent({
+    name: 'daily_room_rankings_click',
+    params: { game_number: seed, daily_date: date },
+  });
+}
+
+export function trackDailyRoomInviteCopy(seed: number, date: string, success: boolean): void {
+  trackEvent({
+    name: 'daily_room_invite_copy',
+    params: { game_number: seed, daily_date: date, success },
   });
 }

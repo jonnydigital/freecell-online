@@ -4,6 +4,21 @@ import React, { useEffect, useState, useCallback, useMemo, useRef } from 'react'
 import GenericSolitaireShell from './GenericSolitaireShell';
 import GenericCascadeBoard from './GenericCascadeBoard';
 import { Card, Suit } from '@/engine/Card';
+import type { GameVariant } from '@/lib/storage';
+
+// Games whose slug maps directly to a GameVariant stats bucket. Anything not
+// listed here simply doesn't record stats (never falls back to freecell_stats).
+const STATS_VARIANTS = new Set<string>([
+  'pyramid', 'tripeaks', 'golf', 'yukon', 'canfield', 'forty-thieves',
+  'scorpion', 'seahaven', 'beleaguered-castle', 'penguin', 'cruel', 'clock',
+  'accordion', 'la-belle-lucie', 'bisley', 'aces-up', 'flower-garden',
+  'bakers-dozen', 'gaps', 'calculation', 'bristol', 'monte-carlo',
+]);
+
+function variantFromHref(gameHref: string): GameVariant | undefined {
+  const slug = gameHref.replace(/^\//, '').split('/')[0];
+  return STATS_VARIANTS.has(slug) ? (slug as GameVariant) : undefined;
+}
 
 interface GameAdapter {
   createEngine: (gameNumber: number) => any;
@@ -150,10 +165,11 @@ export default function GenericGamePage({ gameName, gameIcon, gameHref, adapter 
       isWon={state.isWon}
       timerSeconds={timerSeconds}
       timerStarted={timerStarted}
-      onNewGame={newGame}
+      onNewGame={() => newGame()}
       onUndo={adapter.undo ? handleUndo : undefined}
       onHint={adapter.getHint ? handleHint : undefined}
       onTickTimer={() => setTimerSeconds(s => s + 1)}
+      variant={variantFromHref(gameHref)}
     >
       <GenericCascadeBoard
         cascades={state.cascades}

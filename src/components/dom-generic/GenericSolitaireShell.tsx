@@ -3,6 +3,8 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Link from '@/components/NetworkLink';
 import { isHubSite } from '@/lib/siteConfig';
+import { loadStats, saveStats, type GameVariant } from '@/lib/storage';
+import { recordWin, recordLoss, getWinPercent, type GameStats } from '@/lib/stats';
 import GameSwitcher from '../GameSwitcher';
 import AdUnit from '../AdUnit';
 
@@ -75,6 +77,14 @@ interface GenericSolitaireShellProps {
   onTickTimer: () => void;
   extraToolbar?: React.ReactNode;
   extraStats?: React.ReactNode;
+  /** When set, wins/losses are recorded to per-variant localStorage stats. */
+  variant?: GameVariant;
+}
+
+interface WinRecord {
+  stats: GameStats;
+  newBestTime: boolean;
+  newBestMoves: boolean;
 }
 
 export default function GenericSolitaireShell({
@@ -93,10 +103,21 @@ export default function GenericSolitaireShell({
   onTickTimer,
   extraToolbar,
   extraStats,
+  variant,
 }: GenericSolitaireShellProps) {
   const [showWinModal, setShowWinModal] = useState(false);
   const [showShortcuts, setShowShortcuts] = useState(false);
+  const [winRecord, setWinRecord] = useState<WinRecord | null>(null);
   const toggleShortcuts = useCallback(() => setShowShortcuts(v => !v), []);
+
+  // Abandoning an in-progress game counts as a loss so win % stays honest.
+  const handleNewGame = useCallback(() => {
+    if (variant && !isWon && moveCount > 0) {
+      saveStats(recordLoss(loadStats(variant)), variant);
+    }
+    setShowWinModal(false);
+    onNewGame();
+  }, [variant, isWon, moveCount, onNewGame]);
 
   // Keyboard shortcuts: Z/Ctrl+Z = Undo, N = New Game, H = Hint, ? = Shortcuts
   useEffect(() => {
@@ -111,13 +132,13 @@ export default function GenericSolitaireShell({
 
       const key = e.key.toLowerCase();
       if (key === 'z' && onUndo) { e.preventDefault(); onUndo(); return; }
-      if (key === 'n') { e.preventDefault(); onNewGame(); return; }
+      if (key === 'n') { e.preventDefault(); handleNewGame(); return; }
       if (key === 'h' && onHint) { e.preventDefault(); onHint(); return; }
       if (e.key === '?') { e.preventDefault(); toggleShortcuts(); return; }
     };
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
-  }, [onUndo, onNewGame, onHint, toggleShortcuts]);
+  }, [onUndo, handleNewGame, onHint, toggleShortcuts]);
 
   // Timer
   useEffect(() => {
@@ -126,14 +147,24 @@ export default function GenericSolitaireShell({
     return () => clearInterval(id);
   }, [timerStarted, isWon, onTickTimer]);
 
-  // Win detection
+  // Win detection — record the win to per-variant stats before showing the modal
   const winProcessedRef = useRef<number | null>(null);
   useEffect(() => {
     if (isWon && winProcessedRef.current !== gameNumber) {
       winProcessedRef.current = gameNumber;
+      if (variant) {
+        const prev = loadStats(variant);
+        const next = recordWin(prev, timerSeconds, moveCount);
+        saveStats(next, variant);
+        setWinRecord({
+          stats: next,
+          newBestTime: prev.bestTime !== null && timerSeconds < prev.bestTime,
+          newBestMoves: prev.leastMoves !== null && moveCount < prev.leastMoves,
+        });
+      }
       setTimeout(() => setShowWinModal(true), 500);
     }
-  }, [isWon, gameNumber]);
+  }, [isWon, gameNumber, variant, timerSeconds, moveCount]);
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', background: 'var(--theme-dark, #0a3310)' }}>
@@ -163,7 +194,7 @@ export default function GenericSolitaireShell({
           {onHint && (
             <button onClick={onHint} title="Hint" style={{ padding: '8px', borderRadius: '8px', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.6)', cursor: 'pointer' }}>💡</button>
           )}
-          <button onClick={onNewGame} title="New Game" style={{ padding: '6px 14px', borderRadius: '8px', background: 'rgba(212,175,55,0.15)', border: '1px solid rgba(212,175,55,0.3)', color: '#D4AF37', fontSize: '12px', fontWeight: 600, cursor: 'pointer' }}>New Deal</button>
+          <button onClick={handleNewGame} title="New Game" style={{ padding: '6px 14px', borderRadius: '8px', background: 'rgba(212,175,55,0.15)', border: '1px solid rgba(212,175,55,0.3)', color: '#D4AF37', fontSize: '12px', fontWeight: 600, cursor: 'pointer' }}>New Deal</button>
           <div style={{ position: 'relative' }}>
             <button onClick={toggleShortcuts} title="Keyboard Shortcuts (?)" style={{ padding: '8px', borderRadius: '8px', background: showShortcuts ? 'rgba(212,175,55,0.15)' : 'rgba(255,255,255,0.04)', border: `1px solid ${showShortcuts ? 'rgba(212,175,55,0.3)' : 'rgba(255,255,255,0.08)'}`, color: showShortcuts ? '#D4AF37' : 'rgba(255,255,255,0.6)', cursor: 'pointer', fontSize: '14px', lineHeight: 1 }}>⌨</button>
             {showShortcuts && <KeyboardShortcutsPopover hasUndo={!!onUndo} hasHint={!!onHint} onClose={() => setShowShortcuts(false)} />}
@@ -185,10 +216,36 @@ export default function GenericSolitaireShell({
           <div onClick={(e) => e.stopPropagation()} style={{ background: 'linear-gradient(135deg, #0f3a0f, #1a5c1a)', borderRadius: '20px', padding: '40px', textAlign: 'center', border: '2px solid rgba(212,175,55,0.3)', maxWidth: '400px', width: '90%' }}>
             <div style={{ fontSize: '48px', marginBottom: '16px' }}>🎉</div>
             <h2 style={{ color: '#D4AF37', fontSize: '24px', fontWeight: 700, marginBottom: '8px' }}>You Won!</h2>
-            <p style={{ color: 'rgba(255,255,255,0.7)', marginBottom: '8px' }}>{gameName} completed in {moveCount} moves</p>
-            <p style={{ color: 'rgba(255,255,255,0.5)', marginBottom: '24px' }}>Time: {formatTime(timerSeconds)}</p>
+            <p style={{ color: 'rgba(255,255,255,0.7)', marginBottom: '8px' }}>
+              {gameName} completed in {moveCount} moves
+              {winRecord?.newBestMoves && <span style={{ color: '#D4AF37' }}> — new best!</span>}
+            </p>
+            <p style={{ color: 'rgba(255,255,255,0.5)', marginBottom: winRecord ? '16px' : '24px' }}>
+              Time: {formatTime(timerSeconds)}
+              {winRecord?.newBestTime && <span style={{ color: '#D4AF37' }}> — new best!</span>}
+            </p>
+            {winRecord && (
+              <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', padding: '12px 16px', marginBottom: '24px', background: 'rgba(0,0,0,0.25)', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.06)' }}>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontSize: '10px', fontWeight: 700, color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Won</div>
+                  <div style={{ fontSize: '18px', fontWeight: 700, color: 'rgba(255,255,255,0.85)' }}>{winRecord.stats.gamesWon}</div>
+                </div>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontSize: '10px', fontWeight: 700, color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Win Rate</div>
+                  <div style={{ fontSize: '18px', fontWeight: 700, color: 'rgba(255,255,255,0.85)' }}>{getWinPercent(winRecord.stats)}%</div>
+                </div>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontSize: '10px', fontWeight: 700, color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Streak</div>
+                  <div style={{ fontSize: '18px', fontWeight: 700, color: 'rgba(255,255,255,0.85)' }}>{winRecord.stats.currentStreak}</div>
+                </div>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontSize: '10px', fontWeight: 700, color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Best Time</div>
+                  <div style={{ fontSize: '18px', fontWeight: 700, color: 'rgba(255,255,255,0.85)', fontFamily: 'monospace' }}>{winRecord.stats.bestTime !== null ? formatTime(winRecord.stats.bestTime) : '--'}</div>
+                </div>
+              </div>
+            )}
             <div style={{ display: 'flex', gap: '12px', justifyContent: 'center' }}>
-              <button onClick={() => { setShowWinModal(false); onNewGame(); }} style={{ padding: '10px 24px', borderRadius: '10px', background: 'rgba(212,175,55,0.2)', border: '1px solid rgba(212,175,55,0.4)', color: '#D4AF37', fontWeight: 600, cursor: 'pointer' }}>New Game</button>
+              <button onClick={handleNewGame} style={{ padding: '10px 24px', borderRadius: '10px', background: 'rgba(212,175,55,0.2)', border: '1px solid rgba(212,175,55,0.4)', color: '#D4AF37', fontWeight: 600, cursor: 'pointer' }}>New Game</button>
               <Link href="/" style={{ padding: '10px 24px', borderRadius: '10px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.6)', fontWeight: 600, textDecoration: 'none' }}>Home</Link>
             </div>
           </div>

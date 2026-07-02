@@ -9,6 +9,8 @@ import { isHubSite } from '@/lib/siteConfig';
 import { Undo2, RotateCcw, Lightbulb, Home } from 'lucide-react';
 import GameSwitcher from '../GameSwitcher';
 import AdUnit from '../AdUnit';
+import { loadStats, saveStats } from '@/lib/storage';
+import { recordWin, recordLoss, getWinPercent, type GameStats } from '@/lib/stats';
 import {
   trackAbandoned,
   trackGameStart,
@@ -52,6 +54,7 @@ export default function DomKlondikeShell({ initialDrawMode = 1 }: DomKlondikeShe
   const getEngine = useDomKlondikeStore((s) => s.getEngine);
 
   const [showWinModal, setShowWinModal] = useState(false);
+  const [winStats, setWinStats] = useState<GameStats | null>(null);
   const trackedGameStartRef = useRef<number | null>(null);
   const trackedMoveCountRef = useRef(moveCount);
 
@@ -77,6 +80,9 @@ export default function DomKlondikeShell({ initialDrawMode = 1 }: DomKlondikeShe
     if (isWon && winProcessedRef.current !== gameNumber) {
       winProcessedRef.current = gameNumber;
       trackWin(timerSeconds, moveCount);
+      const next = recordWin(loadStats('klondike'), timerSeconds, moveCount);
+      saveStats(next, 'klondike');
+      setWinStats(next);
       setTimeout(() => setShowWinModal(true), 500);
     }
   }, [isWon, gameNumber, timerSeconds, moveCount]);
@@ -101,6 +107,8 @@ export default function DomKlondikeShell({ initialDrawMode = 1 }: DomKlondikeShe
   const handleNewGame = useCallback(() => {
     if (timerStarted && !isWon) {
       trackAbandoned();
+      // Abandoning an in-progress game counts as a loss so win % stays honest.
+      saveStats(recordLoss(loadStats('klondike')), 'klondike');
     }
     newGame();
   }, [timerStarted, isWon, newGame]);
@@ -287,9 +295,29 @@ export default function DomKlondikeShell({ initialDrawMode = 1 }: DomKlondikeShe
             <p style={{ color: 'rgba(255,255,255,0.7)', marginBottom: '8px' }}>
               Game #{gameNumber} completed in {moveCount} moves
             </p>
-            <p style={{ color: 'rgba(255,255,255,0.5)', marginBottom: '24px' }}>
+            <p style={{ color: 'rgba(255,255,255,0.5)', marginBottom: winStats ? '16px' : '24px' }}>
               Time: {formatTime(timerSeconds)}
             </p>
+            {winStats && (
+              <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', padding: '12px 16px', marginBottom: '24px', background: 'rgba(0,0,0,0.25)', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.06)' }}>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontSize: '10px', fontWeight: 700, color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Won</div>
+                  <div style={{ fontSize: '18px', fontWeight: 700, color: 'rgba(255,255,255,0.85)' }}>{winStats.gamesWon}</div>
+                </div>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontSize: '10px', fontWeight: 700, color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Win Rate</div>
+                  <div style={{ fontSize: '18px', fontWeight: 700, color: 'rgba(255,255,255,0.85)' }}>{getWinPercent(winStats)}%</div>
+                </div>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontSize: '10px', fontWeight: 700, color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Streak</div>
+                  <div style={{ fontSize: '18px', fontWeight: 700, color: 'rgba(255,255,255,0.85)' }}>{winStats.currentStreak}</div>
+                </div>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontSize: '10px', fontWeight: 700, color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Best Time</div>
+                  <div style={{ fontSize: '18px', fontWeight: 700, color: 'rgba(255,255,255,0.85)', fontFamily: 'monospace' }}>{winStats.bestTime !== null ? formatTime(winStats.bestTime) : '--'}</div>
+                </div>
+              </div>
+            )}
             <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
               <button
                 onClick={async () => {

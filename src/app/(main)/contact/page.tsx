@@ -15,7 +15,7 @@ import AuthorByline from "@/components/content/AuthorByline";
 
 export const metadata: Metadata = {
   title: `Contact ${siteConfig.siteName} | Reach the Editorial Team`,
-  description: `Contact ${siteConfig.siteName}. Desk-by-desk email addresses for strategy, history, rules, research, and editorial questions. We reply within three business days.`,
+  description: `Contact ${siteConfig.siteName}. Desk-by-desk email addresses for strategy, history, rules, research, and editorial questions. Replies within 3 business days.`,
   keywords: [
     "contact solitaire stack",
     "solitaire stack editorial team",

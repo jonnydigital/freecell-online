@@ -1,4 +1,10 @@
 
+## 2026-07-02 (OpenClaw Evening Heartbeat)
+
+### Shipped
+- **Spanish home overlay date polish** — the localized FreeCell route now formats the home overlay date with the Spanish locale instead of English weekday/month names.
+- Verification: `npm run build` passed with Node 22 (existing multi-lockfile workspace-root warning and edge-runtime static-generation warning remain).
+
 ## 2026-07-02 (OpenClaw Overnight Build)
 
 ### Shipped

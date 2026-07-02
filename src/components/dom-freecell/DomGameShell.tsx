@@ -62,6 +62,7 @@ type DomGameLocale = 'en' | 'es';
 const UI_COPY = {
   en: {
     appTitle: 'FreeCell Online',
+    dateLocale: 'en-US',
     time: 'Time',
     moves: 'Moves',
     movesShort: 'moves',
@@ -151,6 +152,7 @@ const UI_COPY = {
   },
   es: {
     appTitle: 'FreeCell en Espanol',
+    dateLocale: 'es',
     time: 'Tiempo',
     moves: 'Movs.',
     movesShort: 'movs.',
@@ -1964,7 +1966,7 @@ function DomHomeOverlay({
   const streak = useMemo(() => getCurrentStreak(), []);
   const winRate = stats.gamesPlayed > 0 ? getWinPercent(stats) : 0;
 
-  const dateDisplay = new Date().toLocaleDateString('en-US', {
+  const dateDisplay = new Date().toLocaleDateString(copy.dateLocale, {
     weekday: 'long',
     month: 'long',
     day: 'numeric',

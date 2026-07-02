@@ -113,6 +113,11 @@ function buildMetadata(): Metadata {
     },
     alternates: {
       canonical: absoluteUrl('/'),
+      languages: {
+        en: absoluteUrl('/'),
+        es: absoluteUrl('/freecell-en-espanol/jugar'),
+        'x-default': absoluteUrl('/'),
+      },
     },
     twitter: { card: 'summary_large_image' },
   };

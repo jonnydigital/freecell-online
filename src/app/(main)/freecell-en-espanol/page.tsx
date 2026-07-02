@@ -1,6 +1,7 @@
 import Link from "@/components/NetworkLink";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
+import { canonicalUrlFor } from "@/lib/routeOwnership";
 import AdUnit from "@/components/AdUnit";
 import ContentLayout from "@/components/ContentLayout";
 import {
@@ -39,6 +40,11 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: absoluteUrl(PAGE_PATH),
+    languages: {
+      es: absoluteUrl(PAGE_PATH),
+      en: canonicalUrlFor("/freecell/how-to-play"),
+      "x-default": canonicalUrlFor("/freecell/how-to-play"),
+    },
   },
   twitter: {
     card: "summary_large_image",

@@ -1,6 +1,7 @@
 import Link from "@/components/NetworkLink";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
+import { canonicalUrlFor } from "@/lib/routeOwnership";
 import ContentLayout from "@/components/ContentLayout";
 import AdUnit from "@/components/AdUnit";
 import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionHeading, ContentBody, RelatedArticles } from "@/components/content";
@@ -31,6 +32,14 @@ export const metadata: Metadata = {
     url: absoluteUrl("/freecell/how-to-play"),
     siteName: siteConfig.siteName,
     type: "article",
+  },
+  alternates: {
+    canonical: canonicalUrlFor("/freecell/how-to-play"),
+    languages: {
+      en: canonicalUrlFor("/freecell/how-to-play"),
+      es: canonicalUrlFor("/freecell-en-espanol"),
+      "x-default": canonicalUrlFor("/freecell/how-to-play"),
+    },
   },
   twitter: {
     card: "summary_large_image",

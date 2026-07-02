@@ -25,6 +25,11 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: absoluteUrl(PAGE_PATH),
+    languages: {
+      es: absoluteUrl(PAGE_PATH),
+      en: absoluteUrl('/'),
+      'x-default': absoluteUrl('/'),
+    },
   },
   twitter: {
     card: 'summary_large_image',

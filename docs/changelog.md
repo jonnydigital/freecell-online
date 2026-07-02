@@ -1,4 +1,19 @@
 
+## 2026-07-02 (OpenClaw Overnight Build)
+
+### Shipped
+- **Playable FreeCell en Espanol UI** — added `/freecell-en-espanol/jugar` with Spanish metadata, Game/Breadcrumb schema, and the DOM FreeCell client running with Spanish controls.
+- Localized the main FreeCell game chrome for Spanish play: time/moves labels, new deal, undo/redo, hints, saved-game prompts, deadlock overlay, share copy, mobile controls, home overlay, and settings drawer.
+- Wired the Spanish play route into route ownership, XML sitemap, HTML sitemap, footer discovery, and the Spanish landing page CTAs.
+- Verification: `npm run build` passed with Node 22 (existing multi-lockfile workspace-root warning remains; Node 18 shell still fails because Next.js requires >=20.9).
+
+## 2026-07-01 (OpenClaw Overnight Build)
+
+### Shipped
+- **FreeCell en Espanol landing page** — added `/freecell-en-espanol` as the first i18n content slice with Spanish rules, movement guidance, quick strategy, vocabulary, FAQ schema, and play CTAs.
+- Wired the Spanish page into FreeCell route ownership, XML sitemap, HTML sitemap, and footer discovery.
+- Verification: `npm run build` passed with Node 22 (existing multi-lockfile workspace-root warning remains).
+
 ## 2026-06-30 (OpenClaw Evening Build)
 
 ### Shipped

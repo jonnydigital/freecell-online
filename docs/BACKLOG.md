@@ -49,7 +49,7 @@
 14. ~~**Multiplayer daily challenge**~~ ✅ SHIPPED 2026-06-30 — `/daily-freecell/room` gives players an inviteable shared daily room with today's seed, play/rank/invite actions, fair scoring rules, sitemap/footer discovery, and daily challenge cross-linking.
 15. ~~**Offline mode polish**~~ ✅ SHIPPED 2026-06-25 — friendly `/offline` fallback page, SW navigation fallback, cache bumped to v4
 16. ~~**Resume unfinished FreeCell games after reload**~~ ✅ SHIPPED 2026-06-26 — persists game number, variant, move history, move count, and elapsed time; restores by replaying moves, clears saved state on new/restart/win, shows a dismissible resume notice after restore, and now prompts when a different numbered deal has saved progress available
-17. **i18n** — multi-language
+17. **i18n** — multi-language. First slice shipped 2026-07-01 with `/freecell-en-espanol` Spanish rules/play landing page. Playable Spanish UI shipped 2026-07-02 at `/freecell-en-espanol/jugar`; next step is additional language hubs and deeper modal localization.
 18. ~~**Accessibility** — screen reader, high contrast~~ ✅ SHIPPED 03-05 — High contrast mode, screen reader announcements (aria-live), reduced motion toggle, skip-to-game link, focus indicators
 19. ~~**Community/forum**~~ ✅ SHIPPED 2026-06-28 — `/community` player hub for sharing daily results, reporting deal-specific issues, and suggesting features. Added route ownership, XML sitemap entry, HTML sitemap entry, footer links, and a post-win community prompt. *(Green Felt model, builds loyalty)*
 20. ~~**Pyramid triangular board layout**~~ ✅ SHIPPED 2026-06-29 — replaced the generic cascade rendering on `/pyramid` with a real seven-row Pyramid layout, responsive card sizing, stock/waste/recycle controls, and direct exposed-card pairing. *(Carried QA bug from June research logs)*
@@ -108,6 +108,8 @@
 - [x] Pyramid triangular board layout — real 7-row Pyramid play surface with responsive sizing and waste pairing (shipped 2026-06-29)
 - [x] TriPeaks canonical three-peak layout — real 4-row TriPeaks play surface with responsive 10-card base, stock/waste controls, score/streak stats, hint, and undo (shipped 2026-06-30)
 - [x] Daily FreeCell Room — inviteable shared daily challenge page for competing on today's same seed (shipped 2026-06-30)
+- [x] FreeCell en Espanol landing page — first i18n content slice with Spanish rules, vocabulary, FAQ schema, sitemap/footer discovery (shipped 2026-07-01)
+- [x] Playable FreeCell en Espanol UI — Spanish game route with translated core game chrome, prompts, share text, mobile controls, settings, sitemap/footer discovery (shipped 2026-07-02)
 
 ---
 

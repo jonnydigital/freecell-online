@@ -57,6 +57,181 @@ const VARIANT_NAMES: Record<string, string> = {
   'freecell-3cell': '3-Cell FreeCell',
 };
 
+type DomGameLocale = 'en' | 'es';
+
+const UI_COPY = {
+  en: {
+    appTitle: 'FreeCell Online',
+    time: 'Time',
+    moves: 'Moves',
+    movesShort: 'moves',
+    gameBoard: 'FreeCell game board',
+    gameNumberTitle: 'Click to enter a game number',
+    enterGameNumberTitle: 'Enter game number',
+    newDeal: 'New Deal',
+    newGame: 'New Game',
+    menu: 'Menu',
+    new: 'New',
+    undo: 'Undo',
+    redo: 'Redo',
+    hint: 'Hint',
+    unmute: 'Unmute',
+    mute: 'Mute',
+    ghostMode: 'Ghost Mode',
+    ghostModeTitle: 'Ghost Mode — watch the solver play',
+    bookmarkGame: 'Bookmark Game',
+    removeBookmark: 'Remove Bookmark',
+    statistics: 'Statistics',
+    settings: 'Settings',
+    gameResumed: 'Game resumed',
+    savedGameAvailable: 'Saved game available',
+    resume: 'Resume',
+    dismissResumeNotice: 'Dismiss resume notice',
+    dismissSavedGamePrompt: 'Dismiss saved game prompt',
+    dismissHint: 'Dismiss hint',
+    autoFinish: 'Auto-Finish',
+    solving: 'Solving...',
+    solverFailed: 'Could not find a solution',
+    dismiss: 'Dismiss',
+    noMovesNeeded: 'No moves needed',
+    noMoreMoves: 'No More Moves',
+    noMoreMovesBody: 'The game has reached a state with no legal moves remaining.',
+    undoLastMove: 'Undo Last Move',
+    restartDeal: 'Restart Deal',
+    giveUpNewDeal: 'Give up & New Deal',
+    playSpecificGame: 'Play Specific Game',
+    enterNumberPrompt: 'Enter a game number (1 - 9,999,999):',
+    gameNumberPlaceholder: 'e.g. 12345',
+    gameNumberError: 'Enter a number between 1 and 9,999,999',
+    cancel: 'Cancel',
+    play: 'Play',
+    close: 'Close',
+    todaysChallenge: "Today's Challenge",
+    completed: 'Completed',
+    playTodaysChallenge: "Play Today's Challenge",
+    copied: 'Copied!',
+    share: 'Share',
+    played: 'Played',
+    win: 'Win',
+    streak: 'Streak',
+    howToPlay: 'How to Play',
+    strategy: 'Strategy',
+    badges: 'Badges',
+    shortcuts: 'Shortcuts',
+    cardBack: 'Card Back',
+    audio: 'Audio',
+    soundEffects: 'Sound Effects',
+    soundEffectsDescription: 'Card placement and game sounds',
+    animationSpeed: 'Animation Speed',
+    gameplay: 'Gameplay',
+    autoFinishDescription: 'Auto-finish when game is clearly won',
+    oneTapMoves: 'One-Tap Moves',
+    oneTapMovesDescription: 'Move cards on single click',
+    tryThisMove: 'Try this move!',
+    noHintsAvailable: 'No hints available — try undoing a move',
+    gameBookmarked: (gameNumber: number) => `Game #${gameNumber} bookmarked`,
+    bookmarkRemoved: 'Bookmark removed',
+    shareText: (gameNumber: number, shareUrl: string) =>
+      `I'm playing FreeCell Game #${gameNumber} — can you beat it? ${shareUrl}`,
+    shareTitle: 'FreeCell Online',
+    resumedAnnouncement: (gameNumber: number, moveCount: number) =>
+      `Resumed game ${gameNumber} with ${moveCount} moves.`,
+    winAnnouncement: (moveCount: number) => `Congratulations! You won in ${moveCount} moves.`,
+    deadlockAnnouncement: 'No legal moves remaining. Game is deadlocked.',
+    gameRestartedAnnouncement: 'Game restarted.',
+    moveUndoneAnnouncement: 'Move undone',
+    moveRedoneAnnouncement: 'Move redone',
+    hintShownAnnouncement: 'Hint shown',
+    autoCompletingAnnouncement: 'Auto-completing game',
+  },
+  es: {
+    appTitle: 'FreeCell en Espanol',
+    time: 'Tiempo',
+    moves: 'Movs.',
+    movesShort: 'movs.',
+    gameBoard: 'Tablero de FreeCell',
+    gameNumberTitle: 'Haz clic para escribir un numero de partida',
+    enterGameNumberTitle: 'Escribir numero de partida',
+    newDeal: 'Nueva partida',
+    newGame: 'Nueva partida',
+    menu: 'Menu',
+    new: 'Nueva',
+    undo: 'Deshacer',
+    redo: 'Rehacer',
+    hint: 'Pista',
+    unmute: 'Activar sonido',
+    mute: 'Silenciar',
+    ghostMode: 'Modo fantasma',
+    ghostModeTitle: 'Modo fantasma — mira jugar al solucionador',
+    bookmarkGame: 'Guardar partida',
+    removeBookmark: 'Quitar guardado',
+    statistics: 'Estadisticas',
+    settings: 'Ajustes',
+    gameResumed: 'Partida reanudada',
+    savedGameAvailable: 'Hay una partida guardada',
+    resume: 'Reanudar',
+    dismissResumeNotice: 'Cerrar aviso de reanudacion',
+    dismissSavedGamePrompt: 'Cerrar aviso de partida guardada',
+    dismissHint: 'Cerrar pista',
+    autoFinish: 'Terminar auto',
+    solving: 'Resolviendo...',
+    solverFailed: 'No se encontro una solucion',
+    dismiss: 'Cerrar',
+    noMovesNeeded: 'No hacen falta movimientos',
+    noMoreMoves: 'Sin mas movimientos',
+    noMoreMovesBody: 'La partida llego a un punto sin movimientos legales.',
+    undoLastMove: 'Deshacer ultimo movimiento',
+    restartDeal: 'Reiniciar partida',
+    giveUpNewDeal: 'Rendirse y nueva partida',
+    playSpecificGame: 'Jugar partida especifica',
+    enterNumberPrompt: 'Escribe un numero de partida (1 - 9,999,999):',
+    gameNumberPlaceholder: 'ej. 12345',
+    gameNumberError: 'Escribe un numero entre 1 y 9,999,999',
+    cancel: 'Cancelar',
+    play: 'Jugar',
+    close: 'Cerrar',
+    todaysChallenge: 'Reto de hoy',
+    completed: 'Completado',
+    playTodaysChallenge: 'Jugar el reto de hoy',
+    copied: 'Copiado',
+    share: 'Compartir',
+    played: 'Jugadas',
+    win: 'Victorias',
+    streak: 'Racha',
+    howToPlay: 'Como jugar',
+    strategy: 'Estrategia',
+    badges: 'Logros',
+    shortcuts: 'Atajos',
+    cardBack: 'Dorso',
+    audio: 'Audio',
+    soundEffects: 'Sonidos',
+    soundEffectsDescription: 'Sonidos de cartas y partida',
+    animationSpeed: 'Velocidad',
+    gameplay: 'Juego',
+    autoFinishDescription: 'Termina automaticamente cuando la partida ya esta ganada',
+    oneTapMoves: 'Un toque',
+    oneTapMovesDescription: 'Mueve cartas con un solo clic',
+    tryThisMove: 'Prueba este movimiento',
+    noHintsAvailable: 'No hay pistas disponibles; prueba deshacer un movimiento',
+    gameBookmarked: (gameNumber: number) => `Partida #${gameNumber} guardada`,
+    bookmarkRemoved: 'Guardado eliminado',
+    shareText: (gameNumber: number, shareUrl: string) =>
+      `Estoy jugando FreeCell partida #${gameNumber}. Puedes superarla? ${shareUrl}`,
+    shareTitle: 'FreeCell en Espanol',
+    resumedAnnouncement: (gameNumber: number, moveCount: number) =>
+      `Partida ${gameNumber} reanudada con ${moveCount} movimientos.`,
+    winAnnouncement: (moveCount: number) => `Felicidades. Ganaste en ${moveCount} movimientos.`,
+    deadlockAnnouncement: 'No quedan movimientos legales. La partida esta bloqueada.',
+    gameRestartedAnnouncement: 'Partida reiniciada.',
+    moveUndoneAnnouncement: 'Movimiento deshecho',
+    moveRedoneAnnouncement: 'Movimiento rehecho',
+    hintShownAnnouncement: 'Pista mostrada',
+    autoCompletingAnnouncement: 'Terminando la partida automaticamente',
+  },
+} as const;
+
+type DomGameCopy = (typeof UI_COPY)[DomGameLocale];
+
 // ---------------------------------------------------------------------------
 // Props
 // ---------------------------------------------------------------------------
@@ -64,6 +239,7 @@ const VARIANT_NAMES: Record<string, string> = {
 interface DomGameShellProps {
   initialGameNumber?: number;
   variant?: import('@/engine/FreeCellEngine').GameVariant;
+  locale?: DomGameLocale;
 }
 
 // ---------------------------------------------------------------------------
@@ -86,7 +262,8 @@ function getStarCount(moves: number): number {
 // DomGameShell
 // ---------------------------------------------------------------------------
 
-export default function DomGameShell({ initialGameNumber, variant }: DomGameShellProps) {
+export default function DomGameShell({ initialGameNumber, variant, locale = 'en' }: DomGameShellProps) {
+  const copy = UI_COPY[locale];
   // ── Zustand selectors ──
   const gameNumber = useDomFreecellStore((s) => s.gameNumber);
   const moveCount = useDomFreecellStore((s) => s.moveCount);
@@ -248,11 +425,11 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
       moveCount: saved.moveCount,
       elapsedSeconds: saved.elapsedSeconds,
     });
-    announceToScreenReader(`Resumed game ${saved.gameNumber} with ${saved.moveCount} moves.`);
+    announceToScreenReader(copy.resumedAnnouncement(saved.gameNumber, saved.moveCount));
     if (resumeNoticeTimerRef.current) clearTimeout(resumeNoticeTimerRef.current);
     resumeNoticeTimerRef.current = setTimeout(() => setResumeNotice(null), 5500);
     return true;
-  }, []);
+  }, [copy]);
 
   // ── Solver / Ghost Mode ──
   const solver = useSolver();
@@ -464,7 +641,7 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
       setShowConfetti(true);
       // Auto-clear confetti after animation completes
       setTimeout(() => setShowConfetti(false), 5000);
-      announceToScreenReader(`Congratulations! You won in ${moveCount} moves.`, 'assertive');
+      announceToScreenReader(copy.winAnnouncement(moveCount), 'assertive');
 
       // If Ghost Mode replay was active, auto-stop it so win screen is clean
       if (replayMode) {
@@ -567,7 +744,7 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
   useEffect(() => {
     if (noMovesAvailable && !isWon) {
       trackDeadlock();
-      announceToScreenReader('No legal moves remaining. Game is deadlocked.', 'assertive');
+      announceToScreenReader(copy.deadlockAnnouncement, 'assertive');
     }
   }, [noMovesAvailable, isWon]);
 
@@ -587,7 +764,8 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
   useEffect(() => {
     if (typeof window !== 'undefined' && gameNumber && !replayMode && !isHubSite) {
       const isLabRoute = window.location.pathname.startsWith('/lab/');
-      if (!isLabRoute) {
+      const isLocalizedGameRoute = window.location.pathname.startsWith('/freecell-en-espanol/jugar');
+      if (!isLabRoute && !isLocalizedGameRoute) {
         const nextPath = '/game/' + gameNumber;
         if (window.location.pathname !== nextPath) {
           window.history.replaceState({}, '', nextPath);
@@ -672,19 +850,19 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
     if (replayMode) { setGhostPlaying(false); solver.reset(); stopReplay(); }
     restart();
     trackRestart();
-    announceToScreenReader('Game restarted.');
+    announceToScreenReader(copy.gameRestartedAnnouncement);
   }, [restart, clearHint, replayMode, solver, stopReplay]);
 
   const handleUndo = useCallback(() => {
     undo();
     trackUndo();
     setUndosUsed((prev) => prev + 1);
-    announceToScreenReader('Move undone');
+    announceToScreenReader(copy.moveUndoneAnnouncement);
   }, [undo]);
 
   const handleRedo = useCallback(() => {
     redo();
-    announceToScreenReader('Move redone');
+    announceToScreenReader(copy.moveRedoneAnnouncement);
   }, [redo]);
 
   const handleHint = useCallback(() => {
@@ -693,11 +871,11 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
     setHintsUsed((prev) => prev + 1);
     if (hintToastTimerRef.current) clearTimeout(hintToastTimerRef.current);
     if (found) {
-      setHintToast('💡 Try this move!');
-      announceToScreenReader('Hint shown');
+      setHintToast(`💡 ${copy.tryThisMove}`);
+      announceToScreenReader(copy.hintShownAnnouncement);
     } else {
-      setHintToast('No hints available — try undoing a move');
-      announceToScreenReader('No hints available');
+      setHintToast(copy.noHintsAvailable);
+      announceToScreenReader(copy.noHintsAvailable);
     }
     hintToastTimerRef.current = setTimeout(() => setHintToast(null), 2500);
   }, [requestHint]);
@@ -715,7 +893,7 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
   const handleBookmark = useCallback(() => {
     const added = toggleBookmark(gameNumber, storeVariant);
     setBookmarked(added);
-    setHintToast(added ? `Game #${gameNumber} bookmarked` : 'Bookmark removed');
+    setHintToast(added ? copy.gameBookmarked(gameNumber) : copy.bookmarkRemoved);
     if (hintToastTimerRef.current) clearTimeout(hintToastTimerRef.current);
     hintToastTimerRef.current = setTimeout(() => setHintToast(null), 2000);
   }, [gameNumber, storeVariant]);
@@ -728,7 +906,7 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
   }, []);
 
   const handleAutoComplete = useCallback(() => {
-    announceToScreenReader('Auto-completing game');
+    announceToScreenReader(copy.autoCompletingAnnouncement);
     setIsAutoCompletable(false);
 
     const STEP_MS = 28; // ms between each card moving to foundation
@@ -763,11 +941,11 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
 
   const handleShareGame = useCallback(async () => {
     const shareUrl = `${window.location.origin}/game/${gameNumber}`;
-    const shareText = `I'm playing FreeCell Game #${gameNumber} — can you beat it? ${shareUrl}`;
+    const shareText = copy.shareText(gameNumber, shareUrl);
 
     if (navigator.share) {
       try {
-        await navigator.share({ title: 'FreeCell Online', text: shareText });
+        await navigator.share({ title: copy.shareTitle, text: shareText });
         return;
       } catch { /* fall through to clipboard */ }
     }
@@ -809,7 +987,7 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
   const handleGameInputSubmit = useCallback(() => {
     const num = parseInt(gameInputValue, 10);
     if (isNaN(num) || num < 1 || num > 9999999) {
-      setGameInputError('Enter a number between 1 and 9,999,999');
+      setGameInputError(copy.gameNumberError);
       return;
     }
     setGameInputValue('');
@@ -905,7 +1083,7 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
               color: 'rgba(255,255,255,0.35)',
               textTransform: 'uppercase',
               letterSpacing: '0.15em',
-            }}>Time</span>
+            }}>{copy.time}</span>
             <span style={{
               fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace',
               fontSize: '16px',
@@ -925,7 +1103,7 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
               color: 'rgba(255,255,255,0.35)',
               textTransform: 'uppercase',
               letterSpacing: '0.15em',
-            }}>Moves</span>
+            }}>{copy.moves}</span>
             <span style={{
               fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace',
               fontSize: '16px',
@@ -953,7 +1131,7 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
               letterSpacing: '0.02em',
             }}
             className="hover:text-white/70 transition-colors"
-            title="Click to enter a game number"
+            title={copy.gameNumberTitle}
           >
             #{gameNumber}
           </button>
@@ -977,7 +1155,7 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
               letterSpacing: '0.03em',
             }}
           >
-            New Deal
+            {copy.newDeal}
           </button>
         </div>
       </div>
@@ -993,21 +1171,21 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
-          <SubBarBtn onClick={handleUndo} title="Undo (Z)" disabled={!canUndo}>
+          <SubBarBtn onClick={handleUndo} title={`${copy.undo} (Z)`} disabled={!canUndo}>
             <RotateCcw size={15} />
           </SubBarBtn>
-          <SubBarBtn onClick={handleRedo} title="Redo (Ctrl+Y)" disabled={!canRedo}>
+          <SubBarBtn onClick={handleRedo} title={`${copy.redo} (Ctrl+Y)`} disabled={!canRedo}>
             <RotateCw size={15} />
           </SubBarBtn>
         </div>
 
         <div style={{ width: '1px', height: '16px', background: 'rgba(255,255,255,0.06)', margin: '0 8px' }} />
 
-        <SubBarBtn onClick={handleHint} title="Hint (H)">
+        <SubBarBtn onClick={handleHint} title={`${copy.hint} (H)`}>
           <Lightbulb size={15} />
         </SubBarBtn>
 
-        <SubBarBtn onClick={handleToggleMute} title={isMuted ? 'Unmute' : 'Mute'}>
+        <SubBarBtn onClick={handleToggleMute} title={isMuted ? copy.unmute : copy.mute}>
           {isMuted ? <VolumeX size={15} /> : <Volume2 size={15} />}
         </SubBarBtn>
 
@@ -1015,23 +1193,23 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
 
         <SubBarBtn
           onClick={handleGhostMode}
-          title="Ghost Mode — watch the solver play"
+          title={copy.ghostModeTitle}
           disabled={replayMode || solver.status === 'solving'}
         >
           <Ghost size={15} />
         </SubBarBtn>
 
-        <SubBarBtn onClick={handleBookmark} title={bookmarked ? 'Remove Bookmark' : 'Bookmark Game'}>
+        <SubBarBtn onClick={handleBookmark} title={bookmarked ? copy.removeBookmark : copy.bookmarkGame}>
           <Bookmark size={15} fill={bookmarked ? '#D4AF37' : 'none'} color={bookmarked ? '#D4AF37' : 'currentColor'} />
         </SubBarBtn>
 
         <div style={{ width: '1px', height: '16px', background: 'rgba(255,255,255,0.06)', margin: '0 8px' }} />
 
-        <SubBarBtn onClick={() => setShowStats(true)} title="Statistics">
+        <SubBarBtn onClick={() => setShowStats(true)} title={copy.statistics}>
           <Trophy size={15} />
         </SubBarBtn>
 
-        <SubBarBtn onClick={() => setShowSettings(true)} title="Settings">
+        <SubBarBtn onClick={() => setShowSettings(true)} title={copy.settings}>
           <Settings size={15} />
         </SubBarBtn>
       </div>
@@ -1059,7 +1237,7 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
               padding: 0,
             }}
             className="active:text-white transition-colors"
-            title="Enter game number"
+            title={copy.enterGameNumberTitle}
           >
             #{gameNumber}
           </button>
@@ -1078,7 +1256,7 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
               fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace',
               fontVariantNumeric: 'tabular-nums',
               color: 'rgba(250,204,21,0.7)',
-            }}>{moveCount} moves</span>
+            }}>{moveCount} {copy.movesShort}</span>
           </div>
         </div>
       )}
@@ -1089,7 +1267,7 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
         data-scroll-role="game-board-region"
         className={`relative flex-1 overflow-clip${isIdleHint ? ' dom-board--idle-hint' : ''}`}
         role="main"
-        aria-label="FreeCell game board"
+        aria-label={copy.gameBoard}
       >
         <div
           className="absolute inset-0 overflow-clip px-2 py-2 sm:px-4 sm:py-4 lg:px-5 lg:py-5"
@@ -1112,15 +1290,15 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
               }}
             >
               <div className="min-w-0">
-                <div className="font-semibold text-[#D4AF37]">Game resumed</div>
+                <div className="font-semibold text-[#D4AF37]">{copy.gameResumed}</div>
                 <div className="mt-0.5 text-xs text-white/60">
-                  #{resumeNotice.gameNumber} · {resumeNotice.moveCount} moves · {formatTime(resumeNotice.elapsedSeconds)}
+                  #{resumeNotice.gameNumber} · {resumeNotice.moveCount} {copy.movesShort} · {formatTime(resumeNotice.elapsedSeconds)}
                 </div>
               </div>
               <button
                 onClick={() => setResumeNotice(null)}
                 className="mt-0.5 shrink-0 text-white/35 hover:text-white/75 transition-colors"
-                aria-label="Dismiss resume notice"
+                aria-label={copy.dismissResumeNotice}
               >
                 <X size={14} />
               </button>
@@ -1140,21 +1318,21 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
               }}
             >
               <div className="min-w-0">
-                <div className="font-semibold text-[#D4AF37]">Saved game available</div>
+                <div className="font-semibold text-[#D4AF37]">{copy.savedGameAvailable}</div>
                 <div className="mt-0.5 text-xs text-white/60">
-                  #{savedGamePrompt.gameNumber} · {savedGamePrompt.moveCount} moves · {formatTime(savedGamePrompt.elapsedSeconds)}
+                  #{savedGamePrompt.gameNumber} · {savedGamePrompt.moveCount} {copy.movesShort} · {formatTime(savedGamePrompt.elapsedSeconds)}
                 </div>
                 <button
                   onClick={() => restoreSavedGame(savedGamePrompt, variant || 'freecell')}
                   className="mt-2 rounded-full bg-[#D4AF37] px-3 py-1 text-xs font-semibold text-[#113817] transition-colors hover:bg-[#f0c85b]"
                 >
-                  Resume
+                  {copy.resume}
                 </button>
               </div>
               <button
                 onClick={() => setSavedGamePrompt(null)}
                 className="mt-0.5 shrink-0 text-white/35 hover:text-white/75 transition-colors"
-                aria-label="Dismiss saved game prompt"
+                aria-label={copy.dismissSavedGamePrompt}
               >
                 <X size={14} />
               </button>
@@ -1177,7 +1355,7 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
               <button
                 onClick={clearHint}
                 className="ml-1 text-white/30 hover:text-white/60 transition-colors flex-shrink-0"
-                aria-label="Dismiss hint"
+                aria-label={copy.dismissHint}
               >
                 <X size={14} />
               </button>
@@ -1192,7 +1370,7 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
               onClick={handleAutoComplete}
               className="px-5 py-2.5 bg-yellow-500 hover:bg-yellow-400 text-black font-bold text-sm rounded-lg shadow-lg animate-bounce transition-colors"
             >
-              Auto-Finish
+              {copy.autoFinish}
             </button>
           </div>
         )}
@@ -1202,7 +1380,7 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
           <div className="absolute top-3 left-1/2 -translate-x-1/2 z-10">
             <div className="px-5 py-2.5 rounded-lg shadow-lg text-white/80 text-sm font-medium flex items-center gap-2" style={{ backgroundColor: 'color-mix(in srgb, var(--theme-panel) 95%, transparent)', border: '1px solid color-mix(in srgb, var(--theme-border) 60%, transparent)' }}>
               <div className="w-4 h-4 border-2 border-white/30 border-t-emerald-400 rounded-full animate-spin" />
-              Solving...
+              {copy.solving}
             </div>
           </div>
         )}
@@ -1211,8 +1389,8 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
         {solver.status === 'failed' && (
           <div className="absolute top-3 left-1/2 -translate-x-1/2 z-10">
             <div className="px-5 py-2.5 bg-[#2f0d0d]/95 border border-[#7c2a2a]/60 rounded-lg shadow-lg text-white/80 text-sm font-medium">
-              Could not find a solution
-              <button onClick={() => solver.reset()} className="ml-3 text-white/50 hover:text-white underline">Dismiss</button>
+              {copy.solverFailed}
+              <button onClick={() => solver.reset()} className="ml-3 text-white/50 hover:text-white underline">{copy.dismiss}</button>
             </div>
           </div>
         )}
@@ -1225,10 +1403,10 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
               <div className="flex items-center justify-between mb-5">
                 <h3 className="text-base font-bold text-white flex items-center gap-2.5">
                   <Ghost size={18} className="text-emerald-400" />
-                  Ghost Mode
+                  {copy.ghostMode}
                 </h3>
                 <div className="flex items-center gap-3 text-sm">
-                  <span className="text-white/50">Moves: <span className="text-emerald-400 font-bold">{solver.totalMoveCount}</span></span>
+                  <span className="text-white/50">{copy.moves}: <span className="text-emerald-400 font-bold">{solver.totalMoveCount}</span></span>
                   <button onClick={handleGhostStop} className="text-white/50 hover:text-white transition-colors ml-1 p-1">
                     <X size={18} />
                   </button>
@@ -1246,7 +1424,7 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
               {/* Move list */}
               <div className="bg-black/30 rounded-xl p-4 mb-5 min-h-[100px] max-h-[160px] overflow-hidden">
                 {ghostDescriptions.length === 0 ? (
-                  <div className="text-white/30 text-center text-sm py-6">No moves needed</div>
+                  <div className="text-white/30 text-center text-sm py-6">{copy.noMovesNeeded}</div>
                 ) : (
                   <div className="space-y-1">
                     {(() => {
@@ -1413,9 +1591,9 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
                 <AlertTriangle size={32} />
               </div>
               <div>
-                <h2 className="text-2xl font-black text-gray-900 mb-2">No More Moves</h2>
+                <h2 className="text-2xl font-black text-gray-900 mb-2">{copy.noMoreMoves}</h2>
                 <p className="text-gray-600 leading-relaxed">
-                  The game has reached a state with no legal moves remaining.
+                  {copy.noMoreMovesBody}
                 </p>
               </div>
               <div className="flex flex-col w-full gap-3">
@@ -1424,20 +1602,20 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
                   className="w-full py-3 px-6 bg-[var(--theme-accent)] hover:bg-[var(--theme-accent-hover)] text-white rounded-xl font-bold flex items-center justify-center gap-2 transition-all active:scale-95 shadow-md"
                 >
                   <ChevronLeft size={20} />
-                  Undo Last Move
+                  {copy.undoLastMove}
                 </button>
                 <button
                   onClick={handleRestart}
                   className="w-full py-3 px-6 bg-white border-2 border-gray-100 hover:border-gray-200 text-gray-700 rounded-xl font-bold flex items-center justify-center gap-2 transition-all active:scale-95"
                 >
                   <RotateCcw size={18} />
-                  Restart Deal
+                  {copy.restartDeal}
                 </button>
                 <button
                   onClick={handleNewGame}
                   className="mt-2 text-gray-400 hover:text-gray-600 font-medium text-sm transition-colors py-1"
                 >
-                  Give up &amp; New Deal
+                  {copy.giveUpNewDeal}
                 </button>
               </div>
             </div>
@@ -1447,10 +1625,10 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
         {/* ── Landscape floating undo/redo ── */}
         {isLandscapeMobile && (
           <div className="absolute bottom-2 right-2 z-20 flex gap-1.5 md:hidden">
-            <button onClick={handleUndo} className={`p-2 bg-black/40 active:bg-black/60 rounded-lg ${canUndo ? 'text-white/70' : 'text-white/20'}`} title="Undo" disabled={!canUndo}>
+            <button onClick={handleUndo} className={`p-2 bg-black/40 active:bg-black/60 rounded-lg ${canUndo ? 'text-white/70' : 'text-white/20'}`} title={copy.undo} disabled={!canUndo}>
               <RotateCcw size={18} />
             </button>
-            <button onClick={handleRedo} className={`p-2 bg-black/40 active:bg-black/60 rounded-lg ${canRedo ? 'text-white/70' : 'text-white/20'}`} title="Redo" disabled={!canRedo}>
+            <button onClick={handleRedo} className={`p-2 bg-black/40 active:bg-black/60 rounded-lg ${canRedo ? 'text-white/70' : 'text-white/20'}`} title={copy.redo} disabled={!canRedo}>
               <RotateCw size={18} />
             </button>
           </div>
@@ -1469,19 +1647,19 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
             boxShadow: '0 -4px 20px rgba(0,0,0,0.4)',
           }}
         >
-          <MobileBtn onClick={() => setShowHome(true)} label="Menu" highlight>
+          <MobileBtn onClick={() => setShowHome(true)} label={copy.menu} highlight>
             <Home size={20} />
           </MobileBtn>
-          <MobileBtn onClick={handleNewGame} label="New">
+          <MobileBtn onClick={handleNewGame} label={copy.new}>
             <Shuffle size={20} />
           </MobileBtn>
-          <MobileBtn onClick={handleUndo} label="Undo" disabled={!canUndo}>
+          <MobileBtn onClick={handleUndo} label={copy.undo} disabled={!canUndo}>
             <RotateCcw size={20} />
           </MobileBtn>
-          <MobileBtn onClick={handleRedo} label="Redo" disabled={!canRedo}>
+          <MobileBtn onClick={handleRedo} label={copy.redo} disabled={!canRedo}>
             <RotateCw size={20} />
           </MobileBtn>
-          <MobileBtn onClick={handleHint} label="Hint">
+          <MobileBtn onClick={handleHint} label={copy.hint}>
             <Lightbulb size={20} />
           </MobileBtn>
         </div>
@@ -1501,6 +1679,7 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
           shareStatus={shareStatus}
           isMuted={isMuted}
           onToggleMute={handleToggleMute}
+          copy={copy}
         />
       )}
 
@@ -1516,15 +1695,15 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
               className="bg-[var(--theme-panel)] border border-white/10 rounded-2xl shadow-2xl max-w-sm w-full p-5 text-white"
               onClick={(e) => e.stopPropagation()}
             >
-              <h2 className="text-lg font-bold mb-3">Play Specific Game</h2>
-              <p className="text-sm text-white/60 mb-3">Enter a game number (1 - 9,999,999):</p>
+              <h2 className="text-lg font-bold mb-3">{copy.playSpecificGame}</h2>
+              <p className="text-sm text-white/60 mb-3">{copy.enterNumberPrompt}</p>
               <input
                 type="number"
                 value={gameInputValue}
                 onChange={(e) => { setGameInputValue(e.target.value); setGameInputError(''); }}
                 onKeyDown={(e) => e.key === 'Enter' && handleGameInputSubmit()}
                 className="w-full px-3 py-2 rounded text-white placeholder-white/30 mb-2 focus:outline-none" style={{ backgroundColor: 'color-mix(in srgb, var(--theme-accent) 30%, transparent)', border: '1px solid color-mix(in srgb, var(--theme-accent) 50%, transparent)' }}
-                placeholder="e.g. 12345"
+                placeholder={copy.gameNumberPlaceholder}
                 min={1}
                 max={9999999}
                 autoFocus
@@ -1535,13 +1714,13 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
                   onClick={() => setShowGameInput(false)}
                   className="flex-1 px-3 py-2 text-sm rounded transition-colors" style={{ backgroundColor: 'color-mix(in srgb, var(--theme-accent) 40%, transparent)' }}
                 >
-                  Cancel
+                  {copy.cancel}
                 </button>
                 <button
                   onClick={handleGameInputSubmit}
                   className="flex-1 px-3 py-2 text-sm bg-[var(--theme-accent)] hover:bg-[var(--theme-accent-hover)] rounded transition-colors font-medium"
                 >
-                  Play
+                  {copy.play}
                 </button>
               </div>
             </div>
@@ -1555,6 +1734,7 @@ export default function DomGameShell({ initialGameNumber, variant }: DomGameShel
           settings={settings}
           onUpdateSettings={handleUpdateSettings}
           onClose={() => setShowSettings(false)}
+          copy={copy}
         />
       )}
 
@@ -1752,6 +1932,7 @@ function DomHomeOverlay({
   shareStatus,
   isMuted,
   onToggleMute,
+  copy,
 }: {
   onClose: () => void;
   onNewGame: () => void;
@@ -1764,6 +1945,7 @@ function DomHomeOverlay({
   shareStatus: 'idle' | 'copied';
   isMuted: boolean;
   onToggleMute: () => void;
+  copy: DomGameCopy;
 }) {
   const todaySeed = getTodaysSeed();
   const todayCompleted = isTodayCompleted();
@@ -1807,13 +1989,13 @@ function DomHomeOverlay({
             id="home-overlay-title"
             className="text-3xl font-bold text-[#D4AF37]"
           >
-            FreeCell Online
+            {copy.appTitle}
           </h2>
           <p className="text-white/40 text-sm mt-2 tracking-wide">{dateDisplay}</p>
           <button
             onClick={onClose}
             className="absolute top-5 right-6 text-white/30 hover:text-white transition-colors p-2"
-            aria-label="Close"
+            aria-label={copy.close}
           >
             <X size={22} />
           </button>
@@ -1826,15 +2008,15 @@ function DomHomeOverlay({
             {/* Daily Challenge */}
             {todayCompleted ? (
               <div className="text-center bg-black/20 border border-[#c9a84c]/30 rounded-2xl py-6 px-6">
-                <div className="text-sm text-white/40 mb-1 uppercase tracking-widest">Today&apos;s Challenge</div>
-                <div className="text-[#D4AF37] font-bold text-xl mt-1">Completed</div>
+                <div className="text-sm text-white/40 mb-1 uppercase tracking-widest">{copy.todaysChallenge}</div>
+                <div className="text-[#D4AF37] font-bold text-xl mt-1">{copy.completed}</div>
               </div>
             ) : (
               <button
                 onClick={() => onPlayDaily(todaySeed)}
                 className="w-full text-lg font-bold py-4 px-6 rounded-2xl bg-[#D4AF37] text-[var(--theme-dark)] hover:bg-[#e5c04a] transition-all active:scale-[0.98] shadow-lg shadow-[#D4AF37]/20"
               >
-                Play Today&apos;s Challenge
+                {copy.playTodaysChallenge}
               </button>
             )}
 
@@ -1845,7 +2027,7 @@ function DomHomeOverlay({
                 className="flex items-center justify-center gap-3 py-4 px-5 rounded-2xl bg-white/[0.04] border border-white/[0.07] hover:bg-white/[0.08] active:scale-[0.97] transition-all"
               >
                 <Shuffle size={20} className="text-[#D4AF37] shrink-0" />
-                <span className="text-base font-medium text-white/75">New Game</span>
+                <span className="text-base font-medium text-white/75">{copy.newGame}</span>
               </button>
               <button
                 onClick={onShareGame}
@@ -1853,7 +2035,7 @@ function DomHomeOverlay({
               >
                 <Share2 size={20} className="text-[#D4AF37] shrink-0" />
                 <span className="text-base font-medium text-white/75">
-                  {shareStatus === 'copied' ? 'Copied!' : 'Share'}
+                  {shareStatus === 'copied' ? copy.copied : copy.share}
                 </span>
               </button>
             </div>
@@ -1864,9 +2046,9 @@ function DomHomeOverlay({
               className="w-full flex items-center justify-center px-6 py-5 bg-white/[0.04] border border-white/[0.07] rounded-2xl hover:bg-white/[0.07] transition-colors relative"
             >
               <div className="flex items-center gap-8 text-base text-white/60">
-                <span><strong className="text-[#D4AF37] text-lg">{stats.gamesPlayed}</strong> Played</span>
-                <span><strong className="text-[#D4AF37] text-lg">{winRate}%</strong> Win</span>
-                {streak > 0 && <span><strong className="text-[#D4AF37] text-lg">{streak}</strong> Streak</span>}
+                <span><strong className="text-[#D4AF37] text-lg">{stats.gamesPlayed}</strong> {copy.played}</span>
+                <span><strong className="text-[#D4AF37] text-lg">{winRate}%</strong> {copy.win}</span>
+                {streak > 0 && <span><strong className="text-[#D4AF37] text-lg">{streak}</strong> {copy.streak}</span>}
               </div>
               <span className="absolute right-5 text-white/20">&rarr;</span>
             </button>
@@ -1875,19 +2057,19 @@ function DomHomeOverlay({
             <div className="grid grid-cols-4 gap-3 text-center pt-2">
               <button onClick={onShowSettings} className="flex flex-col items-center gap-2.5 py-5 px-3 rounded-2xl hover:bg-white/[0.05] transition-colors">
                 <Settings size={26} className="text-[#D4AF37]" />
-                <span className="text-xs text-white/50 font-medium">Settings</span>
+                <span className="text-xs text-white/50 font-medium">{copy.settings}</span>
               </button>
               <a href="/how-to-play" className="flex flex-col items-center gap-2.5 py-5 px-3 rounded-2xl hover:bg-white/[0.05] transition-colors">
                 <HelpCircle size={26} className="text-[#D4AF37]" />
-                <span className="text-xs text-white/50 font-medium">How to Play</span>
+                <span className="text-xs text-white/50 font-medium">{copy.howToPlay}</span>
               </a>
               <a href="/strategy" className="flex flex-col items-center gap-2.5 py-5 px-3 rounded-2xl hover:bg-white/[0.05] transition-colors">
                 <Swords size={26} className="text-[#D4AF37]" />
-                <span className="text-xs text-white/50 font-medium">Strategy</span>
+                <span className="text-xs text-white/50 font-medium">{copy.strategy}</span>
               </a>
               <button onClick={onShowAchievements} className="flex flex-col items-center gap-2.5 py-5 px-3 rounded-2xl hover:bg-white/[0.05] transition-colors">
                 <Trophy size={26} className="text-[#D4AF37]" />
-                <span className="text-xs text-white/50 font-medium">Badges</span>
+                <span className="text-xs text-white/50 font-medium">{copy.badges}</span>
               </button>
             </div>
 
@@ -1898,14 +2080,14 @@ function DomHomeOverlay({
                 className="flex items-center gap-2.5 text-white/40 hover:text-white/70 px-5 py-3 rounded-xl hover:bg-white/[0.04] transition-colors text-sm"
               >
                 {isMuted ? <VolumeX size={18} /> : <Volume2 size={18} />}
-                <span>{isMuted ? 'Unmute' : 'Mute'}</span>
+                <span>{isMuted ? copy.unmute : copy.mute}</span>
               </button>
               <button
                 onClick={onShowShortcuts}
                 className="flex items-center gap-2.5 text-white/40 hover:text-white/70 px-5 py-3 rounded-xl hover:bg-white/[0.04] transition-colors text-sm"
               >
                 <span className="font-bold text-lg">?</span>
-                <span>Shortcuts</span>
+                <span>{copy.shortcuts}</span>
               </button>
             </div>
           </div>
@@ -1923,10 +2105,12 @@ function DomSettingsPanel({
   settings,
   onUpdateSettings,
   onClose,
+  copy,
 }: {
   settings: GameSettings;
   onUpdateSettings: (s: GameSettings) => void;
   onClose: () => void;
+  copy: DomGameCopy;
 }) {
   const [selectedBack, setSelectedBack] = useState(getSelectedCardBack);
   const cardBackCanvasRefs = useRef<Map<string, HTMLCanvasElement>>(new Map());
@@ -1952,7 +2136,7 @@ function DomSettingsPanel({
         <div className="p-8 border-b border-white/[0.07] flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Settings className="text-[#D4AF37]" size={24} />
-            <h2 className="text-xl font-bold text-white">Settings</h2>
+            <h2 className="text-xl font-bold text-white">{copy.settings}</h2>
           </div>
           <button onClick={onClose} className="p-2 text-white/30 hover:text-white transition-colors">
             <X size={20} />
@@ -1965,7 +2149,7 @@ function DomSettingsPanel({
           <section className="space-y-4">
             <div className="flex items-center gap-2">
               <Layers size={16} className="text-[#D4AF37]/60" />
-              <h3 className="text-[10px] font-black uppercase tracking-widest text-white/30">Card Back</h3>
+              <h3 className="text-[10px] font-black uppercase tracking-widest text-white/30">{copy.cardBack}</h3>
             </div>
             <div className="grid grid-cols-4 gap-2">
               {cardBackDesigns.map((design) => {
@@ -1989,10 +2173,10 @@ function DomSettingsPanel({
 
           {/* Sound */}
           <section className="space-y-4">
-            <h3 className="text-[10px] font-black uppercase tracking-widest text-white/30">Audio</h3>
+            <h3 className="text-[10px] font-black uppercase tracking-widest text-white/30">{copy.audio}</h3>
             <ToggleRow
-              label="Sound Effects"
-              description="Card placement and game sounds"
+              label={copy.soundEffects}
+              description={copy.soundEffectsDescription}
               enabled={settings.soundEnabled}
               onToggle={() => onUpdateSettings({ ...settings, soundEnabled: !settings.soundEnabled })}
             />
@@ -2000,7 +2184,7 @@ function DomSettingsPanel({
 
           {/* Animation Speed */}
           <section className="space-y-4">
-            <h3 className="text-[10px] font-black uppercase tracking-widest text-white/30">Animation Speed</h3>
+            <h3 className="text-[10px] font-black uppercase tracking-widest text-white/30">{copy.animationSpeed}</h3>
             <div className="grid grid-cols-3 gap-2">
               {(['slow', 'normal', 'fast'] as const).map((speed) => (
                 <button
@@ -2020,16 +2204,16 @@ function DomSettingsPanel({
 
           {/* Gameplay toggles */}
           <section className="space-y-4">
-            <h3 className="text-[10px] font-black uppercase tracking-widest text-white/30">Gameplay</h3>
+            <h3 className="text-[10px] font-black uppercase tracking-widest text-white/30">{copy.gameplay}</h3>
             <ToggleRow
-              label="Auto-Finish"
-              description="Auto-finish when game is clearly won"
+              label={copy.autoFinish}
+              description={copy.autoFinishDescription}
               enabled={settings.autoFinish}
               onToggle={() => onUpdateSettings({ ...settings, autoFinish: !settings.autoFinish })}
             />
             <ToggleRow
-              label="One-Tap Moves"
-              description="Move cards on single click"
+              label={copy.oneTapMoves}
+              description={copy.oneTapMovesDescription}
               enabled={settings.autoMove}
               onToggle={() => onUpdateSettings({ ...settings, autoMove: !settings.autoMove })}
             />

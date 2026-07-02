@@ -166,6 +166,8 @@ export default function SiteFooter() {
           { href: '/freecell-mistakes-to-avoid', label: 'Common Mistakes' },
           { href: '/freecell-opening-strategy', label: 'Opening Strategy' },
           { href: '/freecell-cheat-sheet', label: 'Cheat Sheet' },
+          { href: '/freecell-en-espanol', label: 'FreeCell en Espanol' },
+          { href: '/freecell-en-espanol/jugar', label: 'Jugar en Espanol' },
           { href: '/freecell-for-beginners', label: 'Beginner Guide' },
           { href: '/freecell-for-seniors', label: 'FreeCell for Seniors' },
           { href: '/freecell-video-tutorial', label: 'Video Tutorial' },

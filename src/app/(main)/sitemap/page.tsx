@@ -33,6 +33,7 @@ const homeLink =
 
 const playLinks = [
   homeLink,
+  { href: "/freecell-en-espanol/jugar", label: "FreeCell en Espanol", desc: "Playable Spanish FreeCell UI" },
   { href: "/bakers-game", label: "Baker's Game", desc: "Build by suit instead of alternating color" },
   { href: "/eight-off", label: "Eight Off", desc: "Eight free cells, suit-only building" },
   { href: "/spider", label: "Spider Solitaire", desc: "Two-deck solitaire with same-suit runs" },
@@ -60,6 +61,7 @@ const playLinks = [
 const learnLinks = [
   { href: "/how-to-play", label: "How to Play FreeCell", desc: "Complete rules tutorial" },
   { href: "/freecell-rules", label: "FreeCell Rules", desc: "Quick-reference rule card" },
+  { href: "/freecell-en-espanol", label: "FreeCell en Espanol", desc: "Spanish FreeCell rules and play guide" },
   { href: "/freecell-for-beginners", label: "FreeCell for Beginners", desc: "Step-by-step beginner guide" },
   { href: "/freecell-for-seniors", label: "FreeCell for Seniors", desc: "Accessibility and cognitive benefits" },
   { href: "/strategy", label: "Strategy Guide", desc: "Beginner to expert strategy" },

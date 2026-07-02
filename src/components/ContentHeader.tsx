@@ -75,9 +75,9 @@ export default function ContentHeader({ variant = "dark" }: ContentHeaderProps) 
 
       <Link
         href={siteConfig.primaryGamePath}
-        className="px-4 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider bg-[#D4AF37] hover:bg-[#c9a432] text-[#1a1a0a] transition-colors"
+        className="shrink-0 px-3 sm:px-4 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider bg-[#D4AF37] hover:bg-[#c9a432] text-[#1a1a0a] transition-colors"
       >
-        Play {siteConfig.footerWordmark}
+        Play <span className="hidden sm:inline">{siteConfig.footerWordmark}</span>
       </Link>
     </nav>
   );

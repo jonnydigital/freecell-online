@@ -66,12 +66,13 @@ const DomGameShell = dynamic(() => import('./dom-freecell/DomGameShell'), {
 interface DomFreecellClientProps {
   initialGameNumber?: number;
   variant?: import('@/engine/FreeCellEngine').GameVariant;
+  locale?: 'en' | 'es';
 }
 
-export default function DomFreecellClient({ initialGameNumber, variant }: DomFreecellClientProps) {
+export default function DomFreecellClient({ initialGameNumber, variant, locale }: DomFreecellClientProps) {
   return (
     <GameErrorBoundary>
-      <DomGameShell initialGameNumber={initialGameNumber} variant={variant} />
+      <DomGameShell initialGameNumber={initialGameNumber} variant={variant} locale={locale} />
     </GameErrorBoundary>
   );
 }

@@ -115,6 +115,7 @@ export default function Page() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
+      <h1 className="sr-only">Puzzle Storm — Solve FreeCell Against the Clock</h1>
       <StormPage />
     </>
   );

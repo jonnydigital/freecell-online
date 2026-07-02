@@ -111,9 +111,9 @@ export default function Page() {
       />
       <TwoCellPage />
       <article className="max-w-3xl mx-auto px-6 py-12 text-white/80 bg-[#072907]">
-        <h2 className="text-3xl font-bold text-[#D4AF37] mb-6">
+        <h1 className="text-3xl font-bold text-[#D4AF37] mb-6">
           2-Cell FreeCell: Half the Storage, Double the Challenge
-        </h2>
+        </h1>
 
         <p className="mb-4 leading-relaxed">
           2-Cell FreeCell takes the beloved classic and cuts your safety net in half.

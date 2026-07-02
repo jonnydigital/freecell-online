@@ -50,6 +50,7 @@ export default function Page() {
           }),
         }}
       />
+      <h1 className="sr-only">Puzzle Streak — How Many FreeCell Games Can You Win in a Row?</h1>
       <StreakPage />
     </>
   );

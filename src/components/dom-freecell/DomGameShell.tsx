@@ -123,6 +123,11 @@ const UI_COPY = {
     soundEffects: 'Sound Effects',
     soundEffectsDescription: 'Card placement and game sounds',
     animationSpeed: 'Animation Speed',
+    animationSpeeds: {
+      slow: 'slow',
+      normal: 'normal',
+      fast: 'fast',
+    },
     gameplay: 'Gameplay',
     autoFinishDescription: 'Auto-finish when game is clearly won',
     oneTapMoves: 'One-Tap Moves',
@@ -207,6 +212,11 @@ const UI_COPY = {
     soundEffects: 'Sonidos',
     soundEffectsDescription: 'Sonidos de cartas y partida',
     animationSpeed: 'Velocidad',
+    animationSpeeds: {
+      slow: 'lenta',
+      normal: 'normal',
+      fast: 'rapida',
+    },
     gameplay: 'Juego',
     autoFinishDescription: 'Termina automaticamente cuando la partida ya esta ganada',
     oneTapMoves: 'Un toque',
@@ -1580,6 +1590,7 @@ export default function DomGameShell({ initialGameNumber, variant, locale = 'en'
             leaderboardRank={leaderboardRank}
             leaderboardLoading={leaderboardLoading}
             playerId={getPlayerId()}
+            locale={locale}
           />
         )}
 
@@ -2196,7 +2207,7 @@ function DomSettingsPanel({
                       : 'bg-white/[0.04] border border-white/[0.07] text-white/40 hover:bg-white/[0.08] hover:text-white/60'
                   }`}
                 >
-                  {speed}
+                  {copy.animationSpeeds[speed]}
                 </button>
               ))}
             </div>

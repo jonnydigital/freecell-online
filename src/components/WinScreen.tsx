@@ -17,6 +17,65 @@ const VARIANT_META: Record<string, { path: string; name: string }> = {
   'freecell-3cell': { path: '/freecell/3-cell', name: '3-Cell FreeCell' },
 };
 
+type WinScreenLocale = 'en' | 'es';
+
+const WIN_COPY = {
+  en: {
+    title: 'You Win!',
+    gameLabel: (gameNumber: number) => `Game #${gameNumber}`,
+    newBest: 'New Best!',
+    points: 'pts',
+    moveBonus: (value: number) => `Moves +${value}`,
+    timeBonus: (value: number) => `Speed +${value}`,
+    hintPenalty: (value: number) => `Hints -${value}`,
+    screenshotCard: 'Screenshot this card to share!',
+    time: 'Time',
+    moves: 'Moves',
+    hints: 'Hints',
+    analyzing: 'Analyzing optimal solution...',
+    optimal: 'Optimal:',
+    perfect: 'Perfect!',
+    extraMoves: (value: number) => `(+${value} extra)`,
+    ranked: (rank: number) => `Ranked #${rank} on today's leaderboard`,
+    communityTitle: 'Share this win or report the deal',
+    communityBody: 'Send daily results, tricky deal notes, and feature ideas to the FreeCell community hub.',
+    playAgain: 'Play Again',
+    copied: 'Copied!',
+    shareResults: 'Share Results',
+    dailyChallenge: 'Daily Challenge',
+    viewOptimalSolution: 'View Optimal Solution',
+    shareSolved: (gameName: string, gameNumber: number, moves: number, time: string, stars: string, score: number, gameUrl: string) =>
+      `I solved ${gameName} Game #${gameNumber} in ${moves} moves (${time})! ${stars}\nScore: ${score.toLocaleString()} pts\nCan you beat it? ${gameUrl}`,
+  },
+  es: {
+    title: 'Ganaste!',
+    gameLabel: (gameNumber: number) => `Partida #${gameNumber}`,
+    newBest: 'Nuevo record!',
+    points: 'pts',
+    moveBonus: (value: number) => `Movs. +${value}`,
+    timeBonus: (value: number) => `Rapidez +${value}`,
+    hintPenalty: (value: number) => `Pistas -${value}`,
+    screenshotCard: 'Haz una captura de esta tarjeta para compartirla.',
+    time: 'Tiempo',
+    moves: 'Movs.',
+    hints: 'Pistas',
+    analyzing: 'Analizando la solucion optima...',
+    optimal: 'Optimo:',
+    perfect: 'Perfecto!',
+    extraMoves: (value: number) => `(+${value} extra)`,
+    ranked: (rank: number) => `Puesto #${rank} en la clasificacion de hoy`,
+    communityTitle: 'Comparte esta victoria o reporta la partida',
+    communityBody: 'Envia resultados diarios, notas sobre partidas dificiles e ideas para mejorar al centro de comunidad de FreeCell.',
+    playAgain: 'Jugar otra vez',
+    copied: 'Copiado!',
+    shareResults: 'Compartir resultado',
+    dailyChallenge: 'Reto diario',
+    viewOptimalSolution: 'Ver solucion optima',
+    shareSolved: (gameName: string, gameNumber: number, moves: number, time: string, stars: string, score: number, gameUrl: string) =>
+      `Resolvi ${gameName} partida #${gameNumber} en ${moves} movimientos (${time})! ${stars}\nPuntuacion: ${score.toLocaleString()} pts\nPuedes superarla? ${gameUrl}`,
+  },
+} as const;
+
 interface WinScreenProps {
   gameNumber: number;
   time: number;
@@ -34,6 +93,7 @@ interface WinScreenProps {
   leaderboardRank?: number;
   leaderboardLoading?: boolean;
   playerId?: string;
+  locale?: WinScreenLocale;
 }
 
 function getStarCount(moves: number): number {
@@ -101,7 +161,9 @@ export default function WinScreen({
   leaderboardRank,
   leaderboardLoading,
   playerId,
+  locale = 'en',
 }: WinScreenProps) {
+  const copy = WIN_COPY[locale];
   const [visible, setVisible] = useState(false);
   const [shareStatus, setShareStatus] = useState<'idle' | 'copying' | 'copied'>('idle');
 
@@ -131,7 +193,7 @@ export default function WinScreen({
       const gameUrl = meta
         ? absoluteUrl(`${meta.path}?game=${gameNumber}`)
         : absoluteUrl(`/game/${gameNumber}`);
-      shareText = `I solved ${gameName} Game #${gameNumber} in ${moves} moves (${formatTime(time)})! ${starEmoji}\nScore: ${score.total.toLocaleString()} pts\nCan you beat it? ${gameUrl}`;
+      shareText = copy.shareSolved(gameName, gameNumber, moves, formatTime(time), starEmoji, score.total, gameUrl);
     }
 
     if (navigator.share) {
@@ -161,8 +223,8 @@ export default function WinScreen({
     <div className="absolute inset-0 z-[2000] flex items-center justify-center animate-in fade-in duration-500 overflow-y-auto py-6 backdrop-blur-sm">
       <div className="bg-[#0d2f0d]/95 border border-[#2a7c2a]/60 rounded-2xl shadow-2xl p-8 sm:p-10 max-w-md w-[92%] text-center backdrop-blur-sm my-auto">
         <Trophy size={52} className="mx-auto text-yellow-400 mb-4" />
-        <h2 className="text-3xl font-bold text-yellow-400 mb-1.5">You Win!</h2>
-        <p className="text-white/50 text-sm mb-1">Game #{gameNumber}</p>
+        <h2 className="text-3xl font-bold text-yellow-400 mb-1.5">{copy.title}</h2>
+        <p className="text-white/50 text-sm mb-1">{copy.gameLabel(gameNumber)}</p>
 
         {/* Star Rating */}
         <div className="flex items-center justify-center gap-2 mb-2">
@@ -190,7 +252,7 @@ export default function WinScreen({
             transition={{ delay: 1.0 }}
             className="text-xs font-bold text-yellow-300 mb-3"
           >
-            New Best!
+            {copy.newBest}
           </motion.div>
         )}
         {!isNewBest && <div className="mb-3" />}
@@ -205,12 +267,12 @@ export default function WinScreen({
           <div className="flex items-center justify-center gap-2 mb-2">
             <Zap size={16} className="text-yellow-400" />
             <span className="text-3xl font-black text-white tabular-nums">{animatedScore.toLocaleString()}</span>
-            <span className="text-xs text-white/40 mt-1.5">pts</span>
+            <span className="text-xs text-white/40 mt-1.5">{copy.points}</span>
           </div>
           <div className="flex justify-center gap-4 text-[10px] text-white/40">
-            {score.moveBonus > 0 && <span>Moves +{score.moveBonus}</span>}
-            {score.timeBonus > 0 && <span>Speed +{score.timeBonus}</span>}
-            {score.hintPenalty > 0 && <span>Hints -{score.hintPenalty}</span>}
+            {score.moveBonus > 0 && <span>{copy.moveBonus(score.moveBonus)}</span>}
+            {score.timeBonus > 0 && <span>{copy.timeBonus(score.timeBonus)}</span>}
+            {score.hintPenalty > 0 && <span>{copy.hintPenalty(score.hintPenalty)}</span>}
           </div>
         </motion.div>
 
@@ -225,7 +287,7 @@ export default function WinScreen({
               streak={streak}
             />
             <p className="text-white/30 text-[10px] mt-2 text-center">
-              Screenshot this card to share!
+              {copy.screenshotCard}
             </p>
           </div>
         )}
@@ -233,29 +295,29 @@ export default function WinScreen({
         <div className="grid grid-cols-3 gap-6 mb-5">
           <div>
             <div className="text-2xl font-bold text-white">{formatTime(time)}</div>
-            <div className="text-xs text-white/50 mt-1">Time</div>
+            <div className="text-xs text-white/50 mt-1">{copy.time}</div>
           </div>
           <div>
             <div className="text-2xl font-bold text-white">{moves}</div>
-            <div className="text-xs text-white/50 mt-1">Moves</div>
+            <div className="text-xs text-white/50 mt-1">{copy.moves}</div>
           </div>
           <div>
             <div className="text-2xl font-bold text-white">{hintsUsed}</div>
-            <div className="text-xs text-white/50 mt-1">Hints</div>
+            <div className="text-xs text-white/50 mt-1">{copy.hints}</div>
           </div>
         </div>
 
         {/* Solver Analysis */}
         {solverStatus === 'solving' && (
-          <div className="text-sm text-white/40 mb-5 animate-pulse">Analyzing optimal solution...</div>
+          <div className="text-sm text-white/40 mb-5 animate-pulse">{copy.analyzing}</div>
         )}
         {solverStatus === 'solved' && optimalMoves !== undefined && (
           <div className="text-sm text-white/60 mb-5">
-            Optimal: <span className="text-emerald-400 font-bold">{optimalMoves}</span> moves
+            {copy.optimal} <span className="text-emerald-400 font-bold">{optimalMoves}</span> {copy.moves.toLowerCase()}
             {moves <= optimalMoves ? (
-              <span className="text-yellow-400 ml-1 font-semibold">Perfect!</span>
+              <span className="text-yellow-400 ml-1 font-semibold">{copy.perfect}</span>
             ) : (
-              <span className="text-white/40 ml-1">(+{moves - optimalMoves} extra)</span>
+              <span className="text-white/40 ml-1">{copy.extraMoves(moves - optimalMoves)}</span>
             )}
           </div>
         )}
@@ -270,7 +332,7 @@ export default function WinScreen({
             className="mb-5 py-3 px-4 bg-yellow-500/10 border border-yellow-500/20 rounded-xl"
           >
             <p className="text-xs text-yellow-400 font-bold">
-              Ranked #{leaderboardRank} on today&apos;s leaderboard
+              {copy.ranked(leaderboardRank)}
             </p>
           </motion.div>
         )}
@@ -302,10 +364,10 @@ export default function WinScreen({
           <MessageSquare size={18} className="mt-0.5 shrink-0 text-[#D4AF37]" />
           <span>
             <span className="block text-sm font-semibold text-white">
-              Share this win or report the deal
+              {copy.communityTitle}
             </span>
             <span className="mt-1 block text-xs leading-relaxed text-white/55">
-              Send daily results, tricky deal notes, and feature ideas to the FreeCell community hub.
+              {copy.communityBody}
             </span>
           </span>
         </motion.a>
@@ -316,14 +378,14 @@ export default function WinScreen({
             className="flex items-center justify-center gap-2 w-full py-3.5 bg-[#1a5c1a] hover:bg-[#2a7c2a] text-white font-semibold rounded-xl transition-colors"
           >
             <Shuffle size={18} />
-            Play Again
+            {copy.playAgain}
           </button>
           <button
             onClick={handleShare}
             className="flex items-center justify-center gap-2 w-full py-3.5 bg-[#D4AF37] hover:bg-[#c9a84c] text-black font-bold rounded-xl transition-colors"
           >
             <Share2 size={18} />
-            {shareStatus === 'copied' ? 'Copied!' : 'Share Results'}
+            {shareStatus === 'copied' ? copy.copied : copy.shareResults}
           </button>
           {(!variant || variant === 'freecell') && (
             <button
@@ -331,7 +393,7 @@ export default function WinScreen({
               className="flex items-center justify-center gap-2 w-full py-3.5 bg-yellow-700/80 hover:bg-yellow-600 text-white font-semibold rounded-xl transition-colors"
             >
               <Calendar size={18} />
-              Daily Challenge
+              {copy.dailyChallenge}
             </button>
           )}
           {solverStatus === 'solved' && onViewSolution && (
@@ -340,7 +402,7 @@ export default function WinScreen({
               className="flex items-center justify-center gap-2 w-full py-3.5 bg-emerald-800/80 hover:bg-emerald-700 text-white font-semibold rounded-xl transition-colors"
             >
               <Eye size={18} />
-              View Optimal Solution
+              {copy.viewOptimalSolution}
             </button>
           )}
         </div>

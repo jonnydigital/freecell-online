@@ -5,6 +5,17 @@ import { isOwnedBy } from '@/lib/routeOwnership';
 type FooterLink = { href: string; label: string };
 
 /**
+ * The four network properties, shown in the footer network strip on every
+ * site. Order is hub-first so the parent brand always leads.
+ */
+const NETWORK_SITES: { key: string; href: string; label: string; tagline: string }[] = [
+  { key: 'solitairestack', href: 'https://solitairestack.com', label: 'Solitaire Stack', tagline: '28+ solitaire games' },
+  { key: 'playfreecellonline', href: 'https://playfreecellonline.com', label: 'FreeCell Online', tagline: 'Daily challenges & 32,000+ deals' },
+  { key: 'playklondikeonline', href: 'https://playklondikeonline.com', label: 'Klondike Online', tagline: 'Classic solitaire, Draw 1 & 3' },
+  { key: 'playspidersolitaireonline', href: 'https://playspidersolitaireonline.com', label: 'Spider Solitaire Online', tagline: '1, 2 & 4 suit difficulty' },
+];
+
+/**
  * Hides any link whose route is not owned by the current site. External links
  * (http/https, mailto, etc.) are always kept — those are cross-network links
  * handled by NetworkCrossLinks and similar components.
@@ -393,13 +404,46 @@ export default function SiteFooter() {
           </div>
         </div>
 
+        {/* Network strip — unified branding across all four properties */}
+        <div className="border-t border-white/5 pt-6 mb-6">
+          <h3 className="text-sm font-bold text-[#D4AF37] uppercase tracking-wider mb-4">
+            The Solitaire Stack Network
+          </h3>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            {NETWORK_SITES.map((site) => {
+              const isCurrent = site.key === siteConfig.key;
+              return isCurrent ? (
+                <div
+                  key={site.key}
+                  className="rounded-lg px-4 py-3 bg-white/[0.07] border border-[#D4AF37]/30"
+                  aria-current="true"
+                >
+                  <span className="block text-sm font-semibold text-white">{site.label}</span>
+                  <span className="block text-xs text-white/50 mt-0.5">{site.tagline}</span>
+                  <span className="block text-[10px] uppercase tracking-wider text-[#D4AF37]/80 mt-1.5">You are here</span>
+                </div>
+              ) : (
+                <a
+                  key={site.key}
+                  href={site.href}
+                  rel="noopener"
+                  className="rounded-lg px-4 py-3 bg-white/[0.03] border border-white/5 hover:bg-white/[0.07] hover:border-[#D4AF37]/20 transition-all"
+                >
+                  <span className="block text-sm font-semibold text-white/80">{site.label}</span>
+                  <span className="block text-xs text-white/40 mt-0.5">{site.tagline}</span>
+                </a>
+              );
+            })}
+          </div>
+        </div>
+
         {/* Bottom bar */}
         <div className="border-t border-white/5 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <Link href="/" className="text-lg font-black uppercase tracking-tighter text-white/60 hover:text-white transition-colors">
             {siteConfig.footerWordmark}<span className="text-[#D4AF37]">.</span>
           </Link>
           <p className="text-xs text-white/50">
-            © {new Date().getFullYear()} {siteConfig.brandName}. Free to play, no download required.
+            © {new Date().getFullYear()} {siteConfig.brandName}. Part of the Solitaire Stack network. Free to play, no download required.
           </p>
         </div>
       </div>

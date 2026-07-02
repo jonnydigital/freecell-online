@@ -95,6 +95,16 @@ export const metadata: Metadata = {
   },
 };
 
+// All four network domains. `sameAs` on every site + `parentOrganization` on
+// spokes tells Google the properties are one publisher entity (the Solitaire
+// Stack network) rather than unrelated look-alike sites.
+const NETWORK_URLS = [
+  "https://solitairestack.com",
+  "https://playfreecellonline.com",
+  "https://playklondikeonline.com",
+  "https://playspidersolitaireonline.com",
+];
+
 const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
@@ -111,6 +121,14 @@ const organizationJsonLd = {
     contactType: "Editorial",
     email: siteConfig.privacyEmail,
   },
+  sameAs: NETWORK_URLS.filter((url) => url !== siteConfig.url),
+  ...(siteConfig.key !== "solitairestack" && {
+    parentOrganization: {
+      "@type": "Organization",
+      name: "Solitaire Stack",
+      url: "https://solitairestack.com",
+    },
+  }),
 };
 
 export default function RootLayout({

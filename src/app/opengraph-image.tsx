@@ -154,7 +154,7 @@ export default function OGImage() {
             display: 'flex',
           }}
         >
-          {siteConfig.domain}
+          {siteConfig.domain} • SOLITAIRE STACK NETWORK
         </div>
       </div>
     ),

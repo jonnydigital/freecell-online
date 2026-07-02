@@ -1,6 +1,6 @@
 import { absoluteUrl, isHubSite, siteConfig } from '@/lib/siteConfig';
 import { sitemapGameNumbers, isHighPriorityDeal } from '@/lib/curatedDeals';
-import { getAllPosts } from '@/lib/blog';
+import { getAllPosts, getCanonicalSiteForPost } from '@/lib/blog';
 import { ownerOf } from '@/lib/routeOwnership';
 import { shouldIndexPath } from '@/lib/searchIndexing';
 import { AUTHORS, type AuthorSlug } from '@/lib/authors';
@@ -295,19 +295,22 @@ function buildXml(): string {
       )
     : [];
 
-  const blogEntries: string[] = [];
-  if (shouldIncludeInSitemap('/blog')) {
+  // Blog: every site serves its own filtered post set (Wave 11 filter flip),
+  // so each site's sitemap lists its own /blog index plus only the posts whose
+  // canonical owner is this site. Posts served here but canonicalized to a
+  // sister domain (e.g. hub serving FreeCell-owned posts) are excluded —
+  // listing a URL whose canonical points elsewhere is a sitemap/canonical
+  // mismatch Google flags.
+  const blogEntries: string[] = [
+    `  <url>\n    <loc>${absoluteUrl('/blog')}</loc>\n    <lastmod>${LASTMOD}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>0.7</priority>\n  </url>`,
+  ];
+  const blogPosts = getAllPosts({ site: siteConfig.key }).filter(
+    (post) => getCanonicalSiteForPost(post) === siteConfig.key
+  );
+  for (const post of blogPosts) {
     blogEntries.push(
-      `  <url>\n    <loc>${absoluteUrl('/blog')}</loc>\n    <lastmod>${LASTMOD}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>0.7</priority>\n  </url>`
+      `  <url>\n    <loc>${absoluteUrl(`/blog/${post.slug}`)}</loc>\n    <lastmod>${LASTMOD}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.6</priority>\n  </url>`
     );
-  }
-  if (shouldIncludeInSitemap('/blog/[slug]')) {
-    const blogPosts = getAllPosts();
-    for (const post of blogPosts) {
-      blogEntries.push(
-        `  <url>\n    <loc>${absoluteUrl(`/blog/${post.slug}`)}</loc>\n    <lastmod>${LASTMOD}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.6</priority>\n  </url>`
-      );
-    }
   }
 
   return `<?xml version="1.0" encoding="UTF-8"?>

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
-import { getAllSlugs, getCanonicalSiteForPost, getPostBySlug } from "@/lib/blog";
+import { getAllPosts, getBlogIdentity, getCanonicalSiteForPost, getPostBySlug } from "@/lib/blog";
 import { SITE_DOMAINS } from "@/lib/routeOwnership";
 import AdUnit from "@/components/AdUnit";
 import ContentLayout from "@/components/ContentLayout";
@@ -13,8 +13,16 @@ interface Props {
   params: Promise<{ slug: string }>;
 }
 
+// Wave 11 filter flip: only prerender posts this site serves. Posts that
+// exist in the network but aren't served here 301 to their canonical owner
+// (see servedHere check below), preserving equity on previously-indexed URLs.
 export async function generateStaticParams() {
-  return getAllSlugs().map((slug) => ({ slug }));
+  return getAllPosts({ site: siteConfig.key }).map((post) => ({ slug: post.slug }));
+}
+
+function isServedHere(post: { sites?: string[] }): boolean {
+  const sites = post.sites ?? ["solitairestack"];
+  return sites.includes(siteConfig.key);
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -34,7 +42,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const metaDescription = post.metaDescription ?? post.description;
 
   return {
-    title: `${post.title} | FreeCell Blog`,
+    title: `${post.title} | ${getBlogIdentity().name}`,
     description: metaDescription,
     alternates: { canonical: canonicalUrl },
     openGraph: {
@@ -53,6 +61,12 @@ export default async function BlogPostPage({ params }: Props) {
   const { slug } = await params;
   const post = getPostBySlug(slug);
   if (!post) notFound();
+
+  // Post exists in the network but isn't served on this domain — 301 to its
+  // canonical owner so old cross-domain URLs keep their link equity.
+  if (!isServedHere(post)) {
+    permanentRedirect(`${SITE_DOMAINS[getCanonicalSiteForPost(post)]}/blog/${post.slug}`);
+  }
 
   const articleJsonLd = {
     "@context": "https://schema.org",
@@ -148,7 +162,7 @@ export default async function BlogPostPage({ params }: Props) {
 
         <CtaSection
           heading="Try These Strategies Now"
-          body="Put what you've learned into practice with a game of FreeCell."
+          body={getBlogIdentity().ctaBody}
           secondaryLabel="More Tips"
           secondaryHref="/tips"
         />

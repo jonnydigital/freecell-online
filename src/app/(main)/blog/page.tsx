@@ -1,22 +1,23 @@
 import Link from "@/components/NetworkLink";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
-import { canonicalUrlFor } from "@/lib/routeOwnership";
-import { getAllPosts } from "@/lib/blog";
+import { getAllPosts, getBlogIdentity } from "@/lib/blog";
 import ContentLayout from "@/components/ContentLayout";
 import AdUnit from "@/components/AdUnit";
 import { ContentHero, CardSection, ContentBody, CtaSection, JsonLd } from "@/components/content";
 
+const blogIdentity = getBlogIdentity();
+
 export const metadata: Metadata = {
-  title: "FreeCell Blog | Strategy Tips, History & News",
-  description: `Expert FreeCell strategy articles, game history, tips, and news. Improve your win rate with in-depth guides from the ${siteConfig.siteName} team.`,
-  // Blog index is hub-owned — canonical points at solitairestack.com/blog
-  // regardless of which spoke renders the page.
-  alternates: { canonical: canonicalUrlFor("/blog") },
+  title: `${blogIdentity.name} | Strategy Tips, History & News`,
+  description: `Expert strategy articles, game history, tips, and news. Improve your win rate with in-depth guides from the ${siteConfig.siteName} team.`,
+  // Each site's blog index lists only the posts that site owns/serves, so the
+  // index is unique content per domain and self-canonical (Wave 11 filter flip).
+  alternates: { canonical: absoluteUrl("/blog") },
 };
 
 export default function BlogIndexPage() {
-  const posts = getAllPosts();
+  const posts = getAllPosts({ site: siteConfig.key });
 
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",
@@ -30,8 +31,8 @@ export default function BlogIndexPage() {
   const blogJsonLd = {
     "@context": "https://schema.org",
     "@type": "Blog",
-    name: "FreeCell Blog",
-    description: "Expert FreeCell strategy articles, game history, tips, and news.",
+    name: blogIdentity.name,
+    description: blogIdentity.subtitle,
     url: absoluteUrl("/blog"),
     publisher: { "@type": "Organization", name: siteConfig.siteName },
   };
@@ -41,10 +42,7 @@ export default function BlogIndexPage() {
       <JsonLd data={breadcrumbJsonLd} />
       <JsonLd data={blogJsonLd} />
 
-      <ContentHero
-        title="FreeCell Blog"
-        subtitle="Strategy deep-dives, game history, tips, and everything FreeCell. Written by players, for players."
-      />
+      <ContentHero title={blogIdentity.name} subtitle={blogIdentity.subtitle} />
 
       <main className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-10 pb-20 flex flex-col gap-6">
         <AdUnit className="-my-1" />
@@ -97,7 +95,7 @@ export default function BlogIndexPage() {
 
         <CtaSection
           heading="Ready to Play?"
-          body="Put these strategies to the test in a real game of FreeCell."
+          body={blogIdentity.ctaBody}
           secondaryLabel="Strategy Guide"
           secondaryHref="/strategy"
         />

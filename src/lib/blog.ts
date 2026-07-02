@@ -130,6 +130,43 @@ export function getAllSlugs(): string[] {
 }
 
 /**
+ * Per-site blog branding. Each site's blog is its own publication with a
+ * unique post set (see the site filter in getAllPosts), so the name, hero
+ * copy, and CTA must be site-specific — a "FreeCell Blog" header on the
+ * Spider domain reads as syndication to users and AdSense reviewers alike.
+ */
+const BLOG_IDENTITY: Record<SiteKey, { name: string; subtitle: string; ctaBody: string }> = {
+  playfreecellonline: {
+    name: 'FreeCell Blog',
+    subtitle:
+      'Strategy deep-dives, game history, tips, and everything FreeCell. Written by players, for players.',
+    ctaBody: 'Put these strategies to the test in a real game of FreeCell.',
+  },
+  solitairestack: {
+    name: 'Solitaire Stack Blog',
+    subtitle:
+      'Rankings, comparisons, history, and research across the whole solitaire family — from Klondike to the obscure variants.',
+    ctaBody: 'Pick any of our 28+ solitaire games and put these ideas into practice.',
+  },
+  playklondikeonline: {
+    name: 'Klondike Blog',
+    subtitle:
+      'Klondike strategy, draw-1 vs draw-3 analysis, Vegas scoring, and the history of the classic solitaire game.',
+    ctaBody: 'Put these strategies to the test in a real game of Klondike Solitaire.',
+  },
+  playspidersolitaireonline: {
+    name: 'Spider Solitaire Blog',
+    subtitle:
+      'Spider strategy, suit-mode analysis, column tactics, and winning-probability research for 1, 2, and 4 suits.',
+    ctaBody: 'Put these strategies to the test in a real game of Spider Solitaire.',
+  },
+};
+
+export function getBlogIdentity(siteKey?: SiteKey): { name: string; subtitle: string; ctaBody: string } {
+  return BLOG_IDENTITY[siteKey ?? siteConfig.key];
+}
+
+/**
  * Return the canonical SiteKey for a post — the first entry in its `sites`
  * array, falling back to 'solitairestack' (the hub) when the post declares
  * no sites. This is what rel=canonical tags should point to so that each

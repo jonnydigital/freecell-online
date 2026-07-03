@@ -116,7 +116,9 @@ const UI_COPY = {
     win: 'Win',
     streak: 'Streak',
     howToPlay: 'How to Play',
+    howToPlayHref: '/how-to-play',
     strategy: 'Strategy',
+    strategyHref: '/strategy',
     badges: 'Badges',
     shortcuts: 'Shortcuts',
     cardBack: 'Card Back',
@@ -140,8 +142,10 @@ const UI_COPY = {
     shareText: (gameNumber: number, shareUrl: string) =>
       `I'm playing FreeCell Game #${gameNumber} — can you beat it? ${shareUrl}`,
     shareTitle: 'FreeCell Online',
+    sharePath: (gameNumber: number) => `/game/${gameNumber}`,
     resumedAnnouncement: (gameNumber: number, moveCount: number) =>
       `Resumed game ${gameNumber} with ${moveCount} moves.`,
+    newGameStartedAnnouncement: 'New game started.',
     winAnnouncement: (moveCount: number) => `Congratulations! You won in ${moveCount} moves.`,
     deadlockAnnouncement: 'No legal moves remaining. Game is deadlocked.',
     gameRestartedAnnouncement: 'Game restarted.',
@@ -206,7 +210,9 @@ const UI_COPY = {
     win: 'Victorias',
     streak: 'Racha',
     howToPlay: 'Como jugar',
+    howToPlayHref: '/freecell-en-espanol',
     strategy: 'Estrategia',
+    strategyHref: '/strategy',
     badges: 'Logros',
     shortcuts: 'Atajos',
     cardBack: 'Dorso',
@@ -230,8 +236,10 @@ const UI_COPY = {
     shareText: (gameNumber: number, shareUrl: string) =>
       `Estoy jugando FreeCell partida #${gameNumber}. Puedes superarla? ${shareUrl}`,
     shareTitle: 'FreeCell en Espanol',
+    sharePath: (gameNumber: number) => `/freecell-en-espanol/jugar?game=${gameNumber}`,
     resumedAnnouncement: (gameNumber: number, moveCount: number) =>
       `Partida ${gameNumber} reanudada con ${moveCount} movimientos.`,
+    newGameStartedAnnouncement: 'Nueva partida iniciada.',
     winAnnouncement: (moveCount: number) => `Felicidades. Ganaste en ${moveCount} movimientos.`,
     deadlockAnnouncement: 'No quedan movimientos legales. La partida esta bloqueada.',
     gameRestartedAnnouncement: 'Partida reiniciada.',
@@ -844,7 +852,7 @@ export default function DomGameShell({ initialGameNumber, variant, locale = 'en'
     clearHint();
     if (replayMode) { setGhostPlaying(false); solver.reset(); stopReplay(); }
     newGame();
-    announceToScreenReader('New game started.');
+    announceToScreenReader(copy.newGameStartedAnnouncement);
   }, [newGame, clearHint, replayMode, solver, stopReplay, timerStarted, isWon, moveCount, timerSeconds, gameNumber]);
 
   const handleRestart = useCallback(() => {
@@ -952,7 +960,7 @@ export default function DomGameShell({ initialGameNumber, variant, locale = 'en'
   }, [getEngine]);
 
   const handleShareGame = useCallback(async () => {
-    const shareUrl = `${window.location.origin}/game/${gameNumber}`;
+    const shareUrl = `${window.location.origin}${copy.sharePath(gameNumber)}`;
     const shareText = copy.shareText(gameNumber, shareUrl);
 
     if (navigator.share) {
@@ -2072,11 +2080,11 @@ function DomHomeOverlay({
                 <Settings size={26} className="text-[#D4AF37]" />
                 <span className="text-xs text-white/50 font-medium">{copy.settings}</span>
               </button>
-              <a href="/how-to-play" className="flex flex-col items-center gap-2.5 py-5 px-3 rounded-2xl hover:bg-white/[0.05] transition-colors">
+              <a href={copy.howToPlayHref} className="flex flex-col items-center gap-2.5 py-5 px-3 rounded-2xl hover:bg-white/[0.05] transition-colors">
                 <HelpCircle size={26} className="text-[#D4AF37]" />
                 <span className="text-xs text-white/50 font-medium">{copy.howToPlay}</span>
               </a>
-              <a href="/strategy" className="flex flex-col items-center gap-2.5 py-5 px-3 rounded-2xl hover:bg-white/[0.05] transition-colors">
+              <a href={copy.strategyHref} className="flex flex-col items-center gap-2.5 py-5 px-3 rounded-2xl hover:bg-white/[0.05] transition-colors">
                 <Swords size={26} className="text-[#D4AF37]" />
                 <span className="text-xs text-white/50 font-medium">{copy.strategy}</span>
               </a>

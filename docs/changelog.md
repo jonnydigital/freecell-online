@@ -1,4 +1,10 @@
 
+## 2026-07-03 (OpenClaw Overnight Heartbeat)
+
+### Shipped
+- **Spanish route secondary polish** — the `/freecell-en-espanol/jugar` home overlay now links its "Como jugar" action back to the Spanish FreeCell hub, shares localized Spanish play URLs with the current game number, and announces new deals in Spanish for screen-reader users.
+- Verification: `npm run build` passed with Node 22 (existing multi-lockfile workspace-root warning and edge-runtime static-generation warning remain).
+
 ## 2026-07-02 (OpenClaw Evening Heartbeat)
 
 ### Shipped

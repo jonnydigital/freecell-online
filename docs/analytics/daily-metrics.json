@@ -1,7 +1,7 @@
 {
-  "date": "2026-07-01",
-  "lastPulledBy": "scripts/pull-public-metrics.mjs",
-  "notes": "Refreshed after 22 days stale. GA4/GSC/AdSense still require manual pull (no OAuth creds in repo). This file now tracks public-observable signals pulled via WebSearch site: queries and direct sitemap fetches.",
+  "date": "2026-07-03",
+  "lastPulledBy": "openclaw heartbeat browser manual GA4 pull",
+  "notes": "Updated 2026-07-03 with a manual GA4 Home pull for PlayFreeCellOnline.com. Deeper sessions/page reports were not refreshed because the GA4 report navigation was flaky; home-card and realtime metrics are current.",
   "network_state": {
     "live_domains": 4,
     "live_since": {
@@ -258,8 +258,8 @@
     }
   },
   "ga4_live": {
-    "pulled_at": "2026-04-17 via Chrome MCP (analytics.google.com)",
-    "window": "Apr 11-17 2026 (last 7 days) + Mar 21-Apr 17 2026 (last 28 days where available)",
+    "pulled_at": "2026-07-03T17:16:00Z via OpenClaw browser (analytics.google.com)",
+    "window": "Last 7 days home-card pull for PlayFreeCellOnline.com; deeper report snapshot not refreshed in this pass",
     "network_total_7d": {
       "active_users": 141,
       "sessions": 177,
@@ -346,9 +346,9 @@
     "playfreecellonline": {
       "property_id": "531359003",
       "measurement_id": "G-8N85JJPLED",
-      "active_users_7d": 22,
+      "active_users_7d": 20,
       "active_users_7d_growth_pct": 450,
-      "event_count_7d": 177,
+      "event_count_7d": 199,
       "pageviews_7d": 82,
       "sessions_7d": 31,
       "sessions_by_channel_7d": {
@@ -404,7 +404,15 @@
           "country": "Singapore",
           "users": 2
         }
-      ]
+      ],
+      "property_name": "PlayFreeCellOnline.com",
+      "active_users_7d_change_pct": -4.8,
+      "event_count_7d_change_pct": 4.2,
+      "key_events_7d": 0,
+      "new_users_7d": 16,
+      "new_users_7d_change_pct": -20,
+      "realtime_active_users_30m": 0,
+      "source_note": "GA4 Home card only. Sessions, pageviews, channels, and top pages remain from the previous full manual pull until report navigation is refreshed."
     },
     "playklondikeonline": {
       "property_id": "531330279",
@@ -475,16 +483,20 @@
     ]
   },
   "ga4_last_known": {
-    "as_of": "2026-03-26",
-    "source": "stale — see ga4_live block above for 2026-04-17 Chrome MCP pull",
+    "as_of": "2026-07-03",
+    "source": "OpenClaw browser GA4 Home card for property p531359003 / PlayFreeCellOnline.com",
     "activeUsers_7d": 20,
-    "sessions_7d": 34,
-    "pageViews_7d": 83
+    "activeUsers_7d_change_pct": -4.8,
+    "eventCount_7d": 199,
+    "eventCount_7d_change_pct": 4.2,
+    "keyEvents_7d": 0,
+    "newUsers_7d": 16,
+    "newUsers_7d_change_pct": -20,
+    "realtimeActiveUsers_30m": 0,
+    "caveat": "Sessions/pageviews/channels were not refreshed in this pass; use ga4_live.playfreecellonline source_note."
   },
   "blockers_and_actions": {
-    "needs_user_action": [
-      "GA4/AdSense: pull 7d numbers and overwrite ga4_last_known block"
-    ],
+    "needs_user_action": [],
     "completed_2026_04_20": [
       "GA4 <-> GSC linking for all 4 properties (resolved property/stream ambiguity via gtag cross-reference on live sites). Final mapping: 525799022/G-988ZBJSKVJ->solitairestack.com, 531359003/G-8N85JJPLED->playfreecellonline.com, 531330279/G-9MJ1PYWNRR->playklondikeonline.com, 531391445/G-WZX8LMFDP8->playspidersolitaireonline.com. 525799022 is confirmed as the repurposed solitairestack tracker (its GA4 name + stream URL are stale from its FreeCell origin, but the live gtag install on solitairestack.com uses G-988ZBJSKVJ)."
     ],
@@ -492,9 +504,12 @@
       "Bing Webmaster Tools (working around via IndexNow instead)",
       "Outreach Wave 1 send",
       "Mediavine Grow install (defer until AdSense starts producing income)"
+    ],
+    "open_followups": [
+      "Refresh FreeCell GA4 report snapshot for sessions/pageviews/channels/top pages when GA4 report navigation is stable."
     ]
   },
-  "last_pull_iso": "2026-07-01T02:06:38.958Z",
+  "last_pull_iso": "2026-07-03T17:16:00Z",
   "sitemap_url_counts_live": {
     "playfreecellonline": 105,
     "solitairestack": 121,

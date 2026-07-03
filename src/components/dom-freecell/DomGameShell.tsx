@@ -212,7 +212,7 @@ const UI_COPY = {
     howToPlay: 'Como jugar',
     howToPlayHref: '/freecell-en-espanol',
     strategy: 'Estrategia',
-    strategyHref: '/strategy',
+    strategyHref: '/freecell-en-espanol#estrategia',
     badges: 'Logros',
     shortcuts: 'Atajos',
     cardBack: 'Dorso',

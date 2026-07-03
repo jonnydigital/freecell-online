@@ -27,6 +27,7 @@ export const metadata: Metadata = {
     canonical: absoluteUrl(PAGE_PATH),
     languages: {
       es: absoluteUrl(PAGE_PATH),
+      fr: absoluteUrl('/freecell-en-francais/jouer'),
       en: absoluteUrl('/'),
       'x-default': absoluteUrl('/'),
     },
@@ -64,6 +65,7 @@ export default function SpanishFreeCellPlayPage() {
     <>
       <script id="ld-game-freecell-es" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(gameJsonLd) }} />
       <script id="ld-breadcrumb-freecell-es-play" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+      <h1 className="sr-only">Jugar a FreeCell en Espanol — Gratis Online</h1>
       <DomFreecellClient locale="es" />
     </>
   );

@@ -65,6 +65,7 @@ export default function FrenchFreeCellPlayPage() {
     <>
       <script id="ld-game-freecell-fr" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(gameJsonLd) }} />
       <script id="ld-breadcrumb-freecell-fr-play" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+      <h1 className="sr-only">Jouer a FreeCell en Francais — Gratuit en Ligne</h1>
       <DomFreecellClient locale="fr" />
     </>
   );

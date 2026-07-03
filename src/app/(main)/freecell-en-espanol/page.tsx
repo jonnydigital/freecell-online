@@ -42,6 +42,7 @@ export const metadata: Metadata = {
     canonical: absoluteUrl(PAGE_PATH),
     languages: {
       es: absoluteUrl(PAGE_PATH),
+      fr: absoluteUrl("/freecell-en-francais"),
       en: canonicalUrlFor("/freecell/how-to-play"),
       "x-default": canonicalUrlFor("/freecell/how-to-play"),
     },

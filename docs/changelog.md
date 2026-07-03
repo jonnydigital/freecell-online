@@ -1,4 +1,10 @@
 
+## 2026-07-03 (OpenClaw Evening Heartbeat)
+
+### Shipped
+- **Spanish/French language switchers** — added visible language-switch links to `/freecell-en-espanol` and `/freecell-en-francais` so visitors can move between English, Spanish, and French guide pages without relying only on hreflang.
+- Verification: `npm run build` passed with Node 22 (existing multi-lockfile workspace-root warning and edge-runtime static-generation warning remain).
+
 ## 2026-07-03 (OpenClaw Morning Heartbeat)
 
 ### Shipped

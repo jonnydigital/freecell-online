@@ -175,6 +175,24 @@ export default function FreeCellEnFrancaisPage() {
         </div>
       </nav>
 
+      <div className="mx-auto mb-10 max-w-4xl px-5 sm:px-8 lg:px-10">
+        <div className="flex flex-wrap items-center justify-center gap-2 text-sm text-[#6B7280]">
+          <span className="mr-1 font-medium text-white/75">Aussi disponible :</span>
+          <Link
+            href="/freecell/how-to-play"
+            className="rounded-full border border-white/15 px-3 py-1.5 text-white transition hover:border-white/30 hover:bg-white/10"
+          >
+            English
+          </Link>
+          <Link
+            href="/freecell-en-espanol"
+            className="rounded-full border border-white/15 px-3 py-1.5 text-white transition hover:border-white/30 hover:bg-white/10"
+          >
+            Espanol
+          </Link>
+        </div>
+      </div>
+
       <main className="mx-auto flex max-w-5xl flex-col gap-6 px-4 pb-20 sm:px-6">
         <CardSection id="jouer" variant="dark">
           <SectionHeading variant="dark" sub="Commencer ici" id="jouer-heading">

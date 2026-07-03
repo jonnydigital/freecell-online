@@ -124,6 +124,24 @@ export default function FreecellHowToPlayPage() {
         breadcrumbs={[{ label: "Home", href: "/" }, { label: "FreeCell", href: "/freecell" }]}
       />
 
+      <div className="mx-auto mb-10 max-w-3xl px-5 sm:px-0">
+        <div className="flex flex-wrap items-center justify-center gap-2 text-sm text-white/60">
+          <span className="mr-1 font-medium text-white/75">Also available:</span>
+          <Link
+            href="/freecell-en-espanol"
+            className="rounded-full border border-white/15 px-3 py-1.5 text-white transition hover:border-white/30 hover:bg-white/10"
+          >
+            Español
+          </Link>
+          <Link
+            href="/freecell-en-francais"
+            className="rounded-full border border-white/15 px-3 py-1.5 text-white transition hover:border-white/30 hover:bg-white/10"
+          >
+            Français
+          </Link>
+        </div>
+      </div>
+
       {/* Quick Summary */}
       <div className="bg-white/[0.04] border border-white/10 rounded-xl p-6 mb-10 max-w-3xl mx-auto">
         <h2 className="text-lg font-bold text-[var(--gold)] mb-3">

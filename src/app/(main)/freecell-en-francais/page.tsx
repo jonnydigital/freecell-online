@@ -188,7 +188,7 @@ export default function FreeCellEnFrancaisPage() {
             href="/freecell-en-espanol"
             className="rounded-full border border-white/15 px-3 py-1.5 text-white transition hover:border-white/30 hover:bg-white/10"
           >
-            Espanol
+            Español
           </Link>
         </div>
       </div>

@@ -1,4 +1,10 @@
 
+## 2026-07-03 (OpenClaw Overnight Build)
+
+### Shipped
+- **FreeCell en Francais landing page** — added `/freecell-en-francais` as the next i18n content hub with French rules, movement guidance, quick strategy, vocabulary, FAQ schema, hreflang discovery, sitemap inclusion, HTML sitemap listing, footer link, and FreeCell route ownership.
+- Verification: `npm run build` passed with Node 22 (existing multi-lockfile workspace-root warning and edge-runtime static-generation warning remain; default Node 18 still fails because Next.js requires >=20.9).
+
 ## 2026-07-03 (OpenClaw Overnight Heartbeat)
 
 ### Shipped

@@ -38,6 +38,7 @@ export const metadata: Metadata = {
     languages: {
       en: canonicalUrlFor("/freecell/how-to-play"),
       es: canonicalUrlFor("/freecell-en-espanol"),
+      fr: canonicalUrlFor("/freecell-en-francais"),
       "x-default": canonicalUrlFor("/freecell/how-to-play"),
     },
   },

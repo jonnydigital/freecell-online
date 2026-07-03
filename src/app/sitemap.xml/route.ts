@@ -83,6 +83,7 @@ const contentPages = [
   { path: '/daily-freecell/room', changeFrequency: 'daily', priority: 0.6 },
   { path: '/freecell-en-espanol', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/freecell-en-espanol/jugar', changeFrequency: 'daily', priority: 0.7 },
+  { path: '/freecell-en-francais', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/freecell-for-beginners', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/is-every-freecell-game-winnable', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/easy-freecell-games', changeFrequency: 'monthly', priority: 0.7 },

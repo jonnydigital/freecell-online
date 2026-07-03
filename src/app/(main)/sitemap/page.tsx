@@ -34,6 +34,7 @@ const homeLink =
 const playLinks = [
   homeLink,
   { href: "/freecell-en-espanol/jugar", label: "FreeCell en Espanol", desc: "Playable Spanish FreeCell UI" },
+  { href: "/freecell-en-francais/jouer", label: "FreeCell en Francais", desc: "Playable French FreeCell UI" },
   { href: "/bakers-game", label: "Baker's Game", desc: "Build by suit instead of alternating color" },
   { href: "/eight-off", label: "Eight Off", desc: "Eight free cells, suit-only building" },
   { href: "/spider", label: "Spider Solitaire", desc: "Two-deck solitaire with same-suit runs" },

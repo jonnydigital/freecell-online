@@ -57,7 +57,7 @@ const VARIANT_NAMES: Record<string, string> = {
   'freecell-3cell': '3-Cell FreeCell',
 };
 
-type DomGameLocale = 'en' | 'es';
+type DomGameLocale = 'en' | 'es' | 'fr';
 
 const UI_COPY = {
   en: {
@@ -247,6 +247,100 @@ const UI_COPY = {
     moveRedoneAnnouncement: 'Movimiento rehecho',
     hintShownAnnouncement: 'Pista mostrada',
     autoCompletingAnnouncement: 'Terminando la partida automaticamente',
+  },
+  fr: {
+    appTitle: 'FreeCell en Francais',
+    dateLocale: 'fr',
+    time: 'Temps',
+    moves: 'Coups',
+    movesShort: 'coups',
+    gameBoard: 'Tableau de FreeCell',
+    gameNumberTitle: 'Cliquez pour saisir un numero de partie',
+    enterGameNumberTitle: 'Saisir un numero de partie',
+    newDeal: 'Nouvelle donne',
+    newGame: 'Nouvelle partie',
+    menu: 'Menu',
+    new: 'Nouvelle',
+    undo: 'Annuler',
+    redo: 'Retablir',
+    hint: 'Indice',
+    unmute: 'Activer le son',
+    mute: 'Couper le son',
+    ghostMode: 'Mode fantome',
+    ghostModeTitle: 'Mode fantome - regardez le solveur jouer',
+    bookmarkGame: 'Sauvegarder la partie',
+    removeBookmark: 'Retirer la sauvegarde',
+    statistics: 'Statistiques',
+    settings: 'Reglages',
+    gameResumed: 'Partie reprise',
+    savedGameAvailable: 'Partie sauvegardee disponible',
+    resume: 'Reprendre',
+    dismissResumeNotice: 'Fermer l avis de reprise',
+    dismissSavedGamePrompt: 'Fermer l avis de partie sauvegardee',
+    dismissHint: 'Fermer l indice',
+    autoFinish: 'Fin auto',
+    solving: 'Resolution...',
+    solverFailed: 'Aucune solution trouvee',
+    dismiss: 'Fermer',
+    noMovesNeeded: 'Aucun coup necessaire',
+    noMoreMoves: 'Plus aucun coup',
+    noMoreMovesBody: 'La partie est arrivee a un etat sans mouvement legal.',
+    undoLastMove: 'Annuler le dernier coup',
+    restartDeal: 'Recommencer la donne',
+    giveUpNewDeal: 'Abandonner et nouvelle donne',
+    playSpecificGame: 'Jouer une partie precise',
+    enterNumberPrompt: 'Saisissez un numero de partie (1 - 9,999,999):',
+    gameNumberPlaceholder: 'ex. 12345',
+    gameNumberError: 'Saisissez un numero entre 1 et 9,999,999',
+    cancel: 'Annuler',
+    play: 'Jouer',
+    close: 'Fermer',
+    todaysChallenge: 'Defi du jour',
+    completed: 'Termine',
+    playTodaysChallenge: 'Jouer le defi du jour',
+    copied: 'Copie!',
+    share: 'Partager',
+    played: 'Jouees',
+    win: 'Victoires',
+    streak: 'Serie',
+    howToPlay: 'Regles',
+    howToPlayHref: '/freecell-en-francais',
+    strategy: 'Strategie',
+    strategyHref: '/freecell-en-francais#strategie',
+    badges: 'Badges',
+    shortcuts: 'Raccourcis',
+    cardBack: 'Dos',
+    audio: 'Audio',
+    soundEffects: 'Sons',
+    soundEffectsDescription: 'Sons de cartes et de partie',
+    animationSpeed: 'Vitesse',
+    animationSpeeds: {
+      slow: 'lente',
+      normal: 'normale',
+      fast: 'rapide',
+    },
+    gameplay: 'Jeu',
+    autoFinishDescription: 'Termine automatiquement quand la partie est clairement gagnee',
+    oneTapMoves: 'Un clic',
+    oneTapMovesDescription: 'Deplacer les cartes en un seul clic',
+    tryThisMove: 'Essayez ce coup',
+    noHintsAvailable: 'Aucun indice disponible; essayez d annuler un coup',
+    gameBookmarked: (gameNumber: number) => `Partie #${gameNumber} sauvegardee`,
+    bookmarkRemoved: 'Sauvegarde retiree',
+    shareText: (gameNumber: number, shareUrl: string) =>
+      `Je joue a FreeCell partie #${gameNumber}. Pouvez-vous faire mieux? ${shareUrl}`,
+    shareTitle: 'FreeCell en Francais',
+    sharePath: (gameNumber: number) => `/freecell-en-francais/jouer?game=${gameNumber}`,
+    resumedAnnouncement: (gameNumber: number, moveCount: number) =>
+      `Partie ${gameNumber} reprise avec ${moveCount} coups.`,
+    newGameStartedAnnouncement: 'Nouvelle partie commencee.',
+    winAnnouncement: (moveCount: number) => `Bravo. Vous avez gagne en ${moveCount} coups.`,
+    deadlockAnnouncement: 'Aucun mouvement legal restant. La partie est bloquee.',
+    gameRestartedAnnouncement: 'Partie recommencee.',
+    moveUndoneAnnouncement: 'Coup annule',
+    moveRedoneAnnouncement: 'Coup retabli',
+    hintShownAnnouncement: 'Indice affiche',
+    autoCompletingAnnouncement: 'Fin automatique de la partie',
   },
 } as const;
 
@@ -784,7 +878,9 @@ export default function DomGameShell({ initialGameNumber, variant, locale = 'en'
   useEffect(() => {
     if (typeof window !== 'undefined' && gameNumber && !replayMode && !isHubSite) {
       const isLabRoute = window.location.pathname.startsWith('/lab/');
-      const isLocalizedGameRoute = window.location.pathname.startsWith('/freecell-en-espanol/jugar');
+      const isLocalizedGameRoute =
+        window.location.pathname.startsWith('/freecell-en-espanol/jugar') ||
+        window.location.pathname.startsWith('/freecell-en-francais/jouer');
       if (!isLabRoute && !isLocalizedGameRoute) {
         const nextPath = '/game/' + gameNumber;
         if (window.location.pathname !== nextPath) {

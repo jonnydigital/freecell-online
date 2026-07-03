@@ -245,6 +245,7 @@ export const ROUTE_OWNERSHIP: Record<string, RouteOwnership> = {
   '/freecell-en-espanol': FREECELL_ONLY,
   '/freecell-en-espanol/jugar': FREECELL_ONLY,
   '/freecell-en-francais': FREECELL_ONLY,
+  '/freecell-en-francais/jouer': FREECELL_ONLY,
   '/freecell-for-beginners': FREECELL_ONLY,
   '/freecell-for-seniors': FREECELL_ONLY,
   '/freecell-rules': FREECELL_ONLY,

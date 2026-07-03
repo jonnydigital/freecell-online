@@ -116,6 +116,7 @@ function buildMetadata(): Metadata {
       languages: {
         en: absoluteUrl('/'),
         es: absoluteUrl('/freecell-en-espanol/jugar'),
+        fr: absoluteUrl('/freecell-en-francais/jouer'),
         'x-default': absoluteUrl('/'),
       },
     },

@@ -180,6 +180,7 @@ export default function SiteFooter() {
           { href: '/freecell-en-espanol', label: 'FreeCell en Espanol' },
           { href: '/freecell-en-espanol/jugar', label: 'Jugar en Espanol' },
           { href: '/freecell-en-francais', label: 'FreeCell en Francais' },
+          { href: '/freecell-en-francais/jouer', label: 'Jouer en Francais' },
           { href: '/freecell-for-beginners', label: 'Beginner Guide' },
           { href: '/freecell-for-seniors', label: 'FreeCell for Seniors' },
           { href: '/freecell-video-tutorial', label: 'Video Tutorial' },

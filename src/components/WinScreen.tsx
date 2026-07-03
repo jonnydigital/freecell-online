@@ -17,7 +17,7 @@ const VARIANT_META: Record<string, { path: string; name: string }> = {
   'freecell-3cell': { path: '/freecell/3-cell', name: '3-Cell FreeCell' },
 };
 
-type WinScreenLocale = 'en' | 'es';
+type WinScreenLocale = 'en' | 'es' | 'fr';
 
 const WIN_COPY = {
   en: {
@@ -73,6 +73,33 @@ const WIN_COPY = {
     viewOptimalSolution: 'Ver solucion optima',
     shareSolved: (gameName: string, gameNumber: number, moves: number, time: string, stars: string, score: number, gameUrl: string) =>
       `Resolvi ${gameName} partida #${gameNumber} en ${moves} movimientos (${time})! ${stars}\nPuntuacion: ${score.toLocaleString()} pts\nPuedes superarla? ${gameUrl}`,
+  },
+  fr: {
+    title: 'Gagne!',
+    gameLabel: (gameNumber: number) => `Partie #${gameNumber}`,
+    newBest: 'Nouveau record!',
+    points: 'pts',
+    moveBonus: (value: number) => `Coups +${value}`,
+    timeBonus: (value: number) => `Vitesse +${value}`,
+    hintPenalty: (value: number) => `Indices -${value}`,
+    screenshotCard: 'Faites une capture de cette carte pour la partager.',
+    time: 'Temps',
+    moves: 'Coups',
+    hints: 'Indices',
+    analyzing: 'Analyse de la solution optimale...',
+    optimal: 'Optimal:',
+    perfect: 'Parfait!',
+    extraMoves: (value: number) => `(+${value} en plus)`,
+    ranked: (rank: number) => `Classe #${rank} au classement du jour`,
+    communityTitle: 'Partagez cette victoire ou signalez la donne',
+    communityBody: 'Envoyez vos resultats, notes sur les parties difficiles et idees au hub communautaire FreeCell.',
+    playAgain: 'Rejouer',
+    copied: 'Copie!',
+    shareResults: 'Partager',
+    dailyChallenge: 'Defi quotidien',
+    viewOptimalSolution: 'Voir la solution optimale',
+    shareSolved: (gameName: string, gameNumber: number, moves: number, time: string, stars: string, score: number, gameUrl: string) =>
+      `J ai resolu ${gameName} partie #${gameNumber} en ${moves} coups (${time})! ${stars}\nScore: ${score.toLocaleString()} pts\nPouvez-vous faire mieux? ${gameUrl}`,
   },
 } as const;
 

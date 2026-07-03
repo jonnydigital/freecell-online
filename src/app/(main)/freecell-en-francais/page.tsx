@@ -14,6 +14,7 @@ import {
 } from "@/components/content";
 
 const PAGE_PATH = "/freecell-en-francais";
+const PLAY_PATH = "/freecell-en-francais/jouer";
 
 export const metadata: Metadata = {
   title: "FreeCell en Francais | Jouer Gratuitement et Apprendre les Regles",
@@ -191,7 +192,7 @@ export default function FreeCellEnFrancaisPage() {
             </p>
             <div className="flex flex-wrap gap-3 pt-2">
               <Link
-                href="/"
+                href={PLAY_PATH}
                 className="rounded-md bg-[#D4AF37] px-5 py-3 text-sm font-semibold text-[#0b2a0b] transition hover:bg-[#f0ce63]"
               >
                 Jouer maintenant
@@ -320,8 +321,8 @@ export default function FreeCellEnFrancaisPage() {
         <CtaSection
           heading="Pret a jouer?"
           body="Commencez une partie classique, essayez une partie facile, ou consultez le guide complet si vous voulez plus de details."
-          primaryHref="/"
-          primaryLabel="Jouer a FreeCell"
+          primaryHref={PLAY_PATH}
+          primaryLabel="Jouer en francais"
           secondaryHref="/easy-freecell"
           secondaryLabel="Essayer Easy FreeCell"
         />

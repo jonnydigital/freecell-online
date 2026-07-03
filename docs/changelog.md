@@ -1,4 +1,12 @@
 
+## 2026-07-03 (OpenClaw Morning Heartbeat)
+
+### Shipped
+- **Playable FreeCell en Francais UI** — added `/freecell-en-francais/jouer` with French metadata, Game/Breadcrumb schema, and the DOM FreeCell client running with French controls.
+- Localized the main FreeCell game chrome for French play: time/moves labels, new deal, undo/redo, hints, saved-game prompts, deadlock overlay, share copy, mobile controls, home overlay, settings drawer, and win screen.
+- Wired the French play route into route ownership, XML sitemap, HTML sitemap, footer discovery, and the French landing page CTAs.
+- Verification: `npm run build` passed with Node 22 (existing multi-lockfile workspace-root warning and edge-runtime static-generation warning remain).
+
 ## 2026-07-03 (OpenClaw Overnight Build)
 
 ### Shipped

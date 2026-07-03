@@ -20,6 +20,8 @@ const eslintConfig = defineConfig([
     "dump-dom.js",
     "run-qa.js",
     "screenshot-test.js",
+    // Local scratch space for QA/audit one-offs — never app code
+    "tmp/**",
   ]),
   {
     rules: {

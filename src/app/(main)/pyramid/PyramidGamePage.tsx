@@ -205,6 +205,9 @@ function PyramidBoard({
 
 export default function PyramidGamePage() {
   const engineRef = useRef<PyramidEngine | null>(null);
+  // Render-safe mirror of engineRef — refs must not be read during render
+  // (react-hooks/refs); the engine identity only changes on newGame.
+  const [engine, setEngine] = useState<PyramidEngine | null>(null);
   const [state, setState] = useState<PyramidSnapshot | null>(null);
   const [timerStarted, setTimerStarted] = useState(false);
   const [timerSeconds, setTimerSeconds] = useState(0);
@@ -217,6 +220,7 @@ export default function PyramidGamePage() {
   const newGame = useCallback(() => {
     const gameNumber = Math.floor(Math.random() * 1_000_000) + 1;
     engineRef.current = createEngine(gameNumber);
+    setEngine(engineRef.current);
     setTimerStarted(false);
     setTimerSeconds(0);
     setSelection(null);
@@ -375,7 +379,7 @@ export default function PyramidGamePage() {
     );
   }, [state]);
 
-  if (!state || !engineRef.current) {
+  if (!state || !engine) {
     return (
       <div className="flex items-center justify-center h-screen bg-[#0a3d0a]">
         <p className="text-white/60">Loading...</p>
@@ -402,7 +406,7 @@ export default function PyramidGamePage() {
       <PyramidBoard
         state={state}
         selected={selection}
-        engine={engineRef.current}
+        engine={engine}
         onSelect={handleSelect}
         onStockClick={handleStockClick}
         onClearSelection={() => setSelection(null)}

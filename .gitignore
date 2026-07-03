@@ -54,3 +54,7 @@ next-env.d.ts
 # claude-code agents + next backup
 .agents/
 .next.bak/
+
+# claude worktrees + local scratch (worktree gitlink broke CI checkout cleanup)
+.claude/worktrees/
+tmp/

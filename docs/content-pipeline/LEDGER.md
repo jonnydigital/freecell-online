@@ -1,0 +1,12 @@
+# Content & Change Ledger
+
+Append-only coordination log for every automated producer writing into this repo.
+**Rule: every producer run appends one row before pushing.** Check recent rows
+before picking topics — do not duplicate or overlap work another producer
+landed this week.
+
+| Date | Producer | Type | Paths / slugs | Target site(s) |
+|------|----------|------|---------------|----------------|
+| 2026-07-02 | session (interactive) | content | klondike-which-column-to-dig-first, spider-solitaire-when-to-deal | klondike, spider |
+| 2026-07-03 | cowork-daily-review | locale+fix | freecell-en-francais (+/jouer), es hreflang/H1 fixes | freecell |
+| 2026-07-03 | session (interactive) | fix | CI lint gate repair (Pyramid/TriPeaks refs, worktree gitlink) | all |

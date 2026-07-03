@@ -36,6 +36,12 @@ rules. If you add a producer, register it here.
   `.claude/skills/solitaire-content-writer/SKILL.md`. Lint/tsc gate and
   coordination note are embedded in the routine prompt (updated 2026-07-03).
 
+### Friday property scorecard (cloud routine `trig_01D1eRmhXZyKKd5j9HURynsA`)
+- **Cadence:** Fridays 13:00 UTC
+- **Mandate:** run `npm run scorecard`, commit the dated report + ledger row
+  (docs-only push), digest deltas and new failures in its summary. Measures
+  only — fixes belong to the daily review agent.
+
 ### CI (GitHub Actions, `.github/workflows/ci.yml`)
 - **Cadence:** every push/PR to main
 - **Mandate:** lint (blocking) → jest → build. This is the backstop for rule 1;

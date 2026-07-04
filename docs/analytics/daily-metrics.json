@@ -1,7 +1,7 @@
 {
-  "date": "2026-07-03",
+  "date": "2026-07-04",
   "lastPulledBy": "openclaw heartbeat browser manual GA4 pull",
-  "notes": "Updated 2026-07-03 with a manual GA4 Home pull for PlayFreeCellOnline.com. Deeper sessions/page reports were not refreshed because the GA4 report navigation was flaky; home-card and realtime metrics are current.",
+  "notes": "Updated 2026-07-04 with GA4 Home last-7-days metrics and Games reporting acquisition/engagement snapshots for PlayFreeCellOnline.com. Reports snapshot itself is not configured, so sessions/pageviews by channel are partly from GA4 Games reports and prior full pull where noted.",
   "network_state": {
     "live_domains": 4,
     "live_since": {
@@ -258,8 +258,8 @@
     }
   },
   "ga4_live": {
-    "pulled_at": "2026-07-03T17:16:00Z via OpenClaw browser (analytics.google.com)",
-    "window": "Last 7 days home-card pull for PlayFreeCellOnline.com; deeper report snapshot not refreshed in this pass",
+    "pulled_at": "2026-07-04T11:46:00Z via OpenClaw browser (analytics.google.com)",
+    "window": "PlayFreeCellOnline.com daily pull: Home card Last 7 days plus Games reporting Acquisition/Engagement default Last 28 days",
     "network_total_7d": {
       "active_users": 141,
       "sessions": 177,
@@ -346,9 +346,8 @@
     "playfreecellonline": {
       "property_id": "531359003",
       "measurement_id": "G-8N85JJPLED",
-      "active_users_7d": 20,
-      "active_users_7d_growth_pct": 450,
-      "event_count_7d": 199,
+      "active_users_7d": 19,
+      "event_count_7d": 198,
       "pageviews_7d": 82,
       "sessions_7d": 31,
       "sessions_by_channel_7d": {
@@ -406,13 +405,43 @@
         }
       ],
       "property_name": "PlayFreeCellOnline.com",
-      "active_users_7d_change_pct": -4.8,
+      "active_users_7d_change_pct": -13.6,
       "event_count_7d_change_pct": 4.2,
       "key_events_7d": 0,
-      "new_users_7d": 16,
-      "new_users_7d_change_pct": -20,
+      "new_users_7d": 15,
+      "new_users_7d_change_pct": -28.6,
       "realtime_active_users_30m": 0,
-      "source_note": "GA4 Home card only. Sessions, pageviews, channels, and top pages remain from the previous full manual pull until report navigation is refreshed."
+      "source_note": "GA4 Home card exposed current 7-day active users/events/key events/new users/realtime. GA4 Games Acquisition and Engagement reports exposed default Last 28 days; report snapshot is unconfigured. Older 7-day pageview/session/top-page fields may remain from previous full manual pull until detailed report navigation is refreshed.",
+      "active_users_28d": 73,
+      "new_users_28d": 67,
+      "pageviews_28d_from_event_count": 407,
+      "sessions_28d_from_session_start_events": 122,
+      "engagement_events_28d": 83,
+      "game_starts_28d": 162,
+      "scroll_events_28d": 17,
+      "interaction_type_events_28d": 16,
+      "avg_engagement_time_per_active_user_28d": "1m 34s",
+      "engaged_sessions_per_active_user_28d": 1.2,
+      "avg_engagement_time_per_session_28d": "56s",
+      "user_stickiness_28d": {
+        "dau_mau_pct": 3.9,
+        "dau_wau_pct": 15.8,
+        "wau_mau_pct": 25
+      },
+      "acquisition_28d_new_users_by_channel": {
+        "Organic Search": 44,
+        "Direct": 13,
+        "Referral": 5,
+        "AI Assistant": 4,
+        "Unassigned": 1
+      },
+      "retained_prior_full_pull_fields": [
+        "pageviews_7d",
+        "sessions_7d",
+        "sessions_by_channel_7d",
+        "top_pages_7d",
+        "top_countries_7d"
+      ]
     },
     "playklondikeonline": {
       "property_id": "531330279",
@@ -477,9 +506,9 @@
       "note": "Only homepage has engagement. The 4 new pillar pages shipped today (9781b70) + IndexNow ping should broaden engagement surface."
     },
     "recommendations_from_ga4": [
-      "Link GSC to each GA4 property (1-min setup per) so landing-page queries flow into GA4 reports. GA4 itself surfaced this recommendation.",
-      "Hub (solitairestack) is the growth engine: 89 of 134 weekly sessions are organic. That's the domain with 3 months of age; spokes are still new.",
-      "Freecell spoke is 68% direct traffic — likely people typing the URL or returning. Good brand stickiness but organic trailing."
+      "Keep watching localized i18n pages separately once GSC has data; today's German route is too fresh for meaningful per-language search performance.",
+      "Add explicit locale/page_language analytics parameters to game events so Spanish, French, German, and English play routes can be compared before GSC query data matures.",
+      "Organic Search drove 44 of 67 new users over the 28-day PlayFreeCellOnline.com acquisition view; prioritize searchable content/internal links over purely cosmetic game polish today."
     ]
   },
   "ga4_last_known": {
@@ -509,7 +538,7 @@
       "Refresh FreeCell GA4 report snapshot for sessions/pageviews/channels/top pages when GA4 report navigation is stable."
     ]
   },
-  "last_pull_iso": "2026-07-03T17:16:00Z",
+  "last_pull_iso": "2026-07-04T11:46:00Z",
   "sitemap_url_counts_live": {
     "playfreecellonline": 105,
     "solitairestack": 121,

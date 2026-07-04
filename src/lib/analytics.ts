@@ -8,6 +8,7 @@
 const CONSENT_KEY = 'cookie_consent';
 
 type EventParams = Record<string, string | number | boolean | undefined>;
+type GameLocale = 'en' | 'es' | 'fr' | 'de';
 
 // Custom game events
 export type GameEvent =
@@ -91,6 +92,7 @@ class GameSession {
   gameNumber: number = 0;
   gameName: string = 'freecell';
   gameVariant: string | undefined;
+  gameLocale: GameLocale = 'en';
   moveCount: number = 0;
   hintsUsed: number = 0;
   undosUsed: number = 0;
@@ -99,10 +101,11 @@ class GameSession {
   lastAction: string = 'none';
   interactionTypes: Set<string> = new Set();
 
-  reset(gameNumber: number, gameName = 'freecell', gameVariant?: string): void {
+  reset(gameNumber: number, gameName = 'freecell', gameVariant?: string, gameLocale: GameLocale = 'en'): void {
     this.gameNumber = gameNumber;
     this.gameName = gameName;
     this.gameVariant = gameVariant;
+    this.gameLocale = gameLocale;
     this.moveCount = 0;
     this.hintsUsed = 0;
     this.undosUsed = 0;
@@ -121,6 +124,8 @@ class GameSession {
       game_number: this.gameNumber,
       game_name: this.gameName,
       game_variant: this.gameVariant,
+      game_locale: this.gameLocale,
+      page_language: this.gameLocale,
     };
   }
 }
@@ -130,8 +135,13 @@ export const gameSession = new GameSession();
 /**
  * Track game start
  */
-export function trackGameStart(gameNumber: number, gameName = 'freecell', gameVariant?: string): void {
-  gameSession.reset(gameNumber, gameName, gameVariant);
+export function trackGameStart(
+  gameNumber: number,
+  gameName = 'freecell',
+  gameVariant?: string,
+  gameLocale: GameLocale = 'en'
+): void {
+  gameSession.reset(gameNumber, gameName, gameVariant, gameLocale);
   trackEvent({ name: 'game_start', params: gameSession.baseParams });
 }
 

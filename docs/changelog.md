@@ -2,6 +2,8 @@
 ## 2026-07-04 (OpenClaw Overnight Build)
 
 ### Shipped
+- **Localized FreeCell analytics params** — game events emitted from DOM FreeCell now include `game_locale` and `page_language` so English, Spanish, French, and German play routes can be compared in GA4 before Search Console has mature per-language data.
+- Fixed the localized play-route URL guard so `/freecell-auf-deutsch/spielen` does not rewrite to `/game/{number}` when a German deal starts.
 - **FreeCell auf Deutsch landing page** — added `/freecell-auf-deutsch` as the next i18n content hub with German rules, legal moves, beginner strategy, vocabulary, FAQ schema, hreflang discovery, sitemap inclusion, HTML sitemap listing, footer link, and FreeCell route ownership.
 - **Playable FreeCell auf Deutsch UI** — added `/freecell-auf-deutsch/spielen` with German metadata, Game/Breadcrumb schema, and the DOM FreeCell client running with German controls.
 - Localized the main FreeCell game chrome for German play: time/move labels, new deal, undo/redo, hints, saved-game prompts, deadlock overlay, share copy/URL, mobile controls, home overlay, settings drawer, screen-reader announcements, and win-screen copy.

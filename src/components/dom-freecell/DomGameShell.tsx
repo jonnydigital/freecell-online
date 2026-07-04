@@ -912,8 +912,8 @@ export default function DomGameShell({ initialGameNumber, variant, locale = 'en'
     if (!gameNumber || trackedGameStartRef.current === gameNumber) return;
     trackedGameStartRef.current = gameNumber;
     trackedMoveCountRef.current = moveCount;
-    trackGameStart(gameNumber, 'freecell', storeVariant);
-  }, [gameNumber, moveCount, storeVariant]);
+    trackGameStart(gameNumber, 'freecell', storeVariant, locale);
+  }, [gameNumber, moveCount, storeVariant, locale]);
 
   useEffect(() => {
     if (moveCount > trackedMoveCountRef.current && !replayMode) {
@@ -974,7 +974,8 @@ export default function DomGameShell({ initialGameNumber, variant, locale = 'en'
       const isLabRoute = window.location.pathname.startsWith('/lab/');
       const isLocalizedGameRoute =
         window.location.pathname.startsWith('/freecell-en-espanol/jugar') ||
-        window.location.pathname.startsWith('/freecell-en-francais/jouer');
+        window.location.pathname.startsWith('/freecell-en-francais/jouer') ||
+        window.location.pathname.startsWith('/freecell-auf-deutsch/spielen');
       if (!isLabRoute && !isLocalizedGameRoute) {
         const nextPath = '/game/' + gameNumber;
         if (window.location.pathname !== nextPath) {

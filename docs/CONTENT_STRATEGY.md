@@ -147,6 +147,54 @@ Each day should produce one of these:
 - Most evergreen pages should include FAQ-ready questions
 - Use first-hand clarity and examples, not empty "benefits" copy
 
+## Localization Policy (Locale Gate)
+
+Localized pages are a growth lever, but half-built locales read as doorway
+pages to a search reviewer and put the whole network's trust signals at risk.
+So localization is gated, not banned.
+
+### A locale ships complete or it does not ship
+
+A new locale may go live only when every one of these is true:
+
+- a localized landing page with a single localized H1
+- a localized play route (the playable board) with its own localized H1
+- localized play UI: the in-game controls and labels are translated, not just
+  the surrounding copy
+- reciprocal hreflang across ALL locale siblings, including the default, so
+  every locale in the set points at every other locale and back
+- the core cluster is reachable in the locale: play, rules, and strategy
+- a self-referential canonical on each locale page
+
+If any of these is missing, the locale is incomplete and is either finished
+before launch or rolled back. Do not ship a landing page without its play
+route, and never advertise a locale in hreflang that returns a 404.
+
+### Governance
+
+- No new locale or route family lands without a referenced plan in
+  `docs/plans/`. New localized content is the weekly content routine's lane;
+  the daily review audits existing locales and fixes what it finds.
+- Every producer run appends a row to `docs/content-pipeline/LEDGER.md` before
+  pushing, and reads recent rows first to avoid overlap.
+- Locale pages are audited on a rotating basis: H1 count, reciprocal hreflang,
+  localized UI, and that each advertised alternate returns 200.
+
+### Current locale set (audited 2026-07-04, all pass)
+
+The FreeCell property runs four locales, each with a landing page plus a
+localized play route, all sharing one reciprocal hreflang cluster
+(`de`, `en`, `es`, `fr`, `x-default`):
+
+- English (default): `/freecell/how-to-play` and the main board
+- Spanish: `/freecell-en-espanol` and `/freecell-en-espanol/jugar`
+- French: `/freecell-en-francais` and `/freecell-en-francais/jouer`
+- German: `/freecell-auf-deutsch` and `/freecell-auf-deutsch/spielen`
+
+All eight pages return 200 with exactly one H1, a self-referential canonical,
+localized UI, and the complete reciprocal hreflang set. This is the bar any
+future locale must clear before launch.
+
 ## Priority Backlog
 
 These are the best content additions to add now.

@@ -17,7 +17,7 @@ const VARIANT_META: Record<string, { path: string; name: string }> = {
   'freecell-3cell': { path: '/freecell/3-cell', name: '3-Cell FreeCell' },
 };
 
-type WinScreenLocale = 'en' | 'es' | 'fr';
+type WinScreenLocale = 'en' | 'es' | 'fr' | 'de';
 
 const WIN_COPY = {
   en: {
@@ -100,6 +100,33 @@ const WIN_COPY = {
     viewOptimalSolution: 'Voir la solution optimale',
     shareSolved: (gameName: string, gameNumber: number, moves: number, time: string, stars: string, score: number, gameUrl: string) =>
       `J ai resolu ${gameName} partie #${gameNumber} en ${moves} coups (${time})! ${stars}\nScore: ${score.toLocaleString()} pts\nPouvez-vous faire mieux? ${gameUrl}`,
+  },
+  de: {
+    title: 'Gewonnen!',
+    gameLabel: (gameNumber: number) => `Partie #${gameNumber}`,
+    newBest: 'Neue Bestleistung!',
+    points: 'Pkt.',
+    moveBonus: (value: number) => `Zuege +${value}`,
+    timeBonus: (value: number) => `Tempo +${value}`,
+    hintPenalty: (value: number) => `Hinweise -${value}`,
+    screenshotCard: 'Machen Sie einen Screenshot dieser Karte zum Teilen.',
+    time: 'Zeit',
+    moves: 'Zuege',
+    hints: 'Hinweise',
+    analyzing: 'Optimale Loesung wird analysiert...',
+    optimal: 'Optimal:',
+    perfect: 'Perfekt!',
+    extraMoves: (value: number) => `(+${value} extra)`,
+    ranked: (rank: number) => `Rang #${rank} in der heutigen Bestenliste`,
+    communityTitle: 'Diesen Sieg teilen oder die Partie melden',
+    communityBody: 'Senden Sie Tagesergebnisse, Hinweise zu schwierigen Partien und Ideen an den FreeCell-Community-Hub.',
+    playAgain: 'Nochmal spielen',
+    copied: 'Kopiert!',
+    shareResults: 'Ergebnis teilen',
+    dailyChallenge: 'Tages-Challenge',
+    viewOptimalSolution: 'Optimale Loesung ansehen',
+    shareSolved: (gameName: string, gameNumber: number, moves: number, time: string, stars: string, score: number, gameUrl: string) =>
+      `Ich habe ${gameName} Partie #${gameNumber} in ${moves} Zuegen geloest (${time})! ${stars}\nPunkte: ${score.toLocaleString()} Pkt.\nSchaffen Sie es besser? ${gameUrl}`,
   },
 } as const;
 

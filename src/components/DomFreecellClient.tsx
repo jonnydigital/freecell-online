@@ -66,7 +66,7 @@ const DomGameShell = dynamic(() => import('./dom-freecell/DomGameShell'), {
 interface DomFreecellClientProps {
   initialGameNumber?: number;
   variant?: import('@/engine/FreeCellEngine').GameVariant;
-  locale?: 'en' | 'es' | 'fr';
+  locale?: 'en' | 'es' | 'fr' | 'de';
 }
 
 export default function DomFreecellClient({ initialGameNumber, variant, locale }: DomFreecellClientProps) {

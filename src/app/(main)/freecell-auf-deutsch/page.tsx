@@ -216,10 +216,10 @@ export default function FreeCellAufDeutschPage() {
             </p>
             <div className="flex flex-wrap gap-3 pt-2">
               <Link
-                href="/"
+                href="/freecell-auf-deutsch/spielen"
                 className="rounded-md bg-[#D4AF37] px-5 py-3 text-sm font-semibold text-[#0b2a0b] transition hover:bg-[#f0ce63]"
               >
-                Jetzt spielen
+                Auf Deutsch spielen
               </Link>
               <Link
                 href="/freecell-for-beginners"

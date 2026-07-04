@@ -64,6 +64,7 @@ const learnLinks = [
   { href: "/freecell-rules", label: "FreeCell Rules", desc: "Quick-reference rule card" },
   { href: "/freecell-en-espanol", label: "FreeCell en Espanol", desc: "Spanish FreeCell rules and play guide" },
   { href: "/freecell-en-francais", label: "FreeCell en Francais", desc: "French FreeCell rules and play guide" },
+  { href: "/freecell-auf-deutsch", label: "FreeCell auf Deutsch", desc: "German FreeCell rules and play guide" },
   { href: "/freecell-for-beginners", label: "FreeCell for Beginners", desc: "Step-by-step beginner guide" },
   { href: "/freecell-for-seniors", label: "FreeCell for Seniors", desc: "Accessibility and cognitive benefits" },
   { href: "/strategy", label: "Strategy Guide", desc: "Beginner to expert strategy" },

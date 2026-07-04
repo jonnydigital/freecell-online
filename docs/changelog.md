@@ -1,4 +1,11 @@
 
+## 2026-07-04 (OpenClaw Overnight Build)
+
+### Shipped
+- **FreeCell auf Deutsch landing page** — added `/freecell-auf-deutsch` as the next i18n content hub with German rules, legal moves, beginner strategy, vocabulary, FAQ schema, hreflang discovery, sitemap inclusion, HTML sitemap listing, footer link, and FreeCell route ownership.
+- Cross-linked the English, Spanish, French, and German guide pages through visible language switchers.
+- Verification: `npm run build` passed with Node 22 (existing multi-lockfile workspace-root warning and edge-runtime static-generation warning remain; default Node 18 still fails because Next.js requires >=20.9).
+
 ## 2026-07-03 (OpenClaw Evening Heartbeat)
 
 ### Shipped

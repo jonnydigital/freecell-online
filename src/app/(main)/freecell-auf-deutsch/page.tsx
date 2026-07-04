@@ -13,27 +13,26 @@ import {
   SectionHeading,
 } from "@/components/content";
 
-const PAGE_PATH = "/freecell-en-espanol";
-const PLAY_PATH = "/freecell-en-espanol/jugar";
+const PAGE_PATH = "/freecell-auf-deutsch";
 
 export const metadata: Metadata = {
-  title: "FreeCell en Espanol | Juega Gratis y Aprende las Reglas",
+  title: "FreeCell auf Deutsch | Kostenlos Spielen und Regeln Lernen",
   description:
-    "Juega FreeCell gratis en linea y aprende las reglas en espanol: objetivo, movimientos legales, celdas libres, bases y consejos para principiantes.",
+    "Spielen Sie FreeCell kostenlos online und lernen Sie die Regeln auf Deutsch: Ziel, erlaubte Zuege, freie Zellen, Ablagestapel und Tipps fuer den Start.",
   keywords: [
-    "freecell en espanol",
-    "freecell gratis",
-    "freecell online espanol",
-    "solitario freecell en espanol",
-    "jugar freecell gratis",
-    "reglas de freecell",
-    "freecell para principiantes",
-    "solitario gratis online",
+    "freecell auf deutsch",
+    "freecell kostenlos",
+    "freecell online deutsch",
+    "freecell solitaire deutsch",
+    "freecell spielen",
+    "freecell regeln",
+    "freecell fuer anfaenger",
+    "solitaer kostenlos online",
   ],
   openGraph: {
-    title: "FreeCell en Espanol | Juega Gratis y Aprende las Reglas",
+    title: "FreeCell auf Deutsch | Kostenlos Spielen und Regeln Lernen",
     description:
-      "Una guia clara en espanol para jugar FreeCell gratis: reglas, movimientos, estrategia inicial y enlaces para empezar una partida.",
+      "Ein klarer deutscher FreeCell-Guide mit Regeln, erlaubten Zuegen, Strategie fuer Einsteiger und Links zum kostenlosen Spiel.",
     url: absoluteUrl(PAGE_PATH),
     siteName: siteConfig.siteName,
     type: "article",
@@ -41,10 +40,10 @@ export const metadata: Metadata = {
   alternates: {
     canonical: absoluteUrl(PAGE_PATH),
     languages: {
-      es: absoluteUrl(PAGE_PATH),
-      fr: absoluteUrl("/freecell-en-francais"),
-      de: absoluteUrl("/freecell-auf-deutsch"),
+      de: absoluteUrl(PAGE_PATH),
       en: canonicalUrlFor("/freecell/how-to-play"),
+      es: absoluteUrl("/freecell-en-espanol"),
+      fr: absoluteUrl("/freecell-en-francais"),
       "x-default": canonicalUrlFor("/freecell/how-to-play"),
     },
   },
@@ -54,44 +53,44 @@ export const metadata: Metadata = {
 };
 
 const tocItems = [
-  { href: "#jugar", icon: "\u2660", label: "Jugar" },
-  { href: "#reglas", icon: "\u2665", label: "Reglas" },
-  { href: "#movimientos", icon: "\u2666", label: "Movimientos" },
-  { href: "#estrategia", icon: "\u2663", label: "Estrategia" },
-  { href: "#vocabulario", icon: "\u2660", label: "Vocabulario" },
+  { href: "#spielen", icon: "\u2660", label: "Spielen" },
+  { href: "#regeln", icon: "\u2665", label: "Regeln" },
+  { href: "#zuege", icon: "\u2666", label: "Zuege" },
+  { href: "#strategie", icon: "\u2663", label: "Strategie" },
+  { href: "#begriffe", icon: "\u2660", label: "Begriffe" },
 ];
 
 const faqItems = [
   {
-    question: "Es gratis jugar FreeCell aqui?",
+    question: "Kann ich FreeCell hier kostenlos spielen?",
     answer:
-      "Si. Puedes jugar FreeCell gratis en el navegador, sin descargar nada y sin crear una cuenta.",
+      "Ja. FreeCell laeuft kostenlos direkt im Browser, ohne Download, ohne Konto und mit beliebig vielen neuen Spielen.",
   },
   {
-    question: "FreeCell es un juego de suerte?",
+    question: "Ist FreeCell Glueck oder Strategie?",
     answer:
-      "FreeCell tiene muy poca suerte porque todas las cartas estan visibles desde el primer movimiento. Casi todas las partidas se pueden ganar con buena estrategia.",
+      "FreeCell ist vor allem Strategie, weil alle 52 Karten von Anfang an sichtbar sind. Fast jede Partie ist mit guter Planung loesbar.",
   },
   {
-    question: "Que son las celdas libres?",
+    question: "Wofuer sind die freien Zellen da?",
     answer:
-      "Las celdas libres son cuatro espacios temporales donde puedes guardar una carta. Son utiles, pero conviene mantener algunas vacias para mover secuencias largas.",
+      "Die freien Zellen sind vier Zwischenplaetze. Jede freie Zelle kann genau eine Karte halten und hilft dabei, Spalten freizulegen oder Kartenfolgen umzubauen.",
   },
   {
-    question: "Como gano una partida de FreeCell?",
+    question: "Wie gewinnt man FreeCell?",
     answer:
-      "Ganas cuando mueves las 52 cartas a las cuatro bases, una base por palo, desde As hasta Rey.",
+      "Sie gewinnen, wenn alle 52 Karten auf den vier Ablagestapeln liegen, jeweils nach Farbe vom Ass bis zum Koenig.",
   },
 ];
 
-export default function FreeCellEnEspanolPage() {
+export default function FreeCellAufDeutschPage() {
   const jsonLd = [
     {
       "@context": "https://schema.org",
       "@type": "Article",
-      headline: "FreeCell en Espanol: Guia para Jugar Gratis",
+      headline: "FreeCell auf Deutsch: Regeln und kostenlos spielen",
       description:
-        "Guia en espanol para aprender FreeCell, jugar gratis en linea y entender las reglas basicas.",
+        "Deutscher FreeCell-Guide mit Regeln, Ziel des Spiels, erlaubten Zuegen und Tipps fuer Einsteiger.",
       author: {
         "@type": "Organization",
         name: siteConfig.siteName,
@@ -100,15 +99,15 @@ export default function FreeCellEnEspanolPage() {
         "@type": "Organization",
         name: siteConfig.siteName,
       },
-      datePublished: "2026-07-01",
-      dateModified: "2026-07-02",
-      inLanguage: "es",
+      datePublished: "2026-07-04",
+      dateModified: "2026-07-04",
+      inLanguage: "de",
       mainEntityOfPage: absoluteUrl(PAGE_PATH),
     },
     {
       "@context": "https://schema.org",
       "@type": "FAQPage",
-      inLanguage: "es",
+      inLanguage: "de",
       mainEntity: faqItems.map((faq) => ({
         "@type": "Question",
         name: faq.question,
@@ -122,8 +121,8 @@ export default function FreeCellEnEspanolPage() {
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
       itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Inicio", item: absoluteUrl("/") },
-        { "@type": "ListItem", position: 2, name: "FreeCell en Espanol", item: absoluteUrl(PAGE_PATH) },
+        { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
+        { "@type": "ListItem", position: 2, name: "FreeCell auf Deutsch", item: absoluteUrl(PAGE_PATH) },
       ],
     },
   ];
@@ -141,18 +140,18 @@ export default function FreeCellEnEspanolPage() {
               </Link>
             </li>
             <li className="text-[#6B7280]/40" aria-hidden="true">/</li>
-            <li className="text-[#6B7280]/70">FreeCell en Espanol</li>
+            <li className="text-[#6B7280]/70">FreeCell auf Deutsch</li>
           </ol>
         </nav>
         <h1
-          className="mx-auto mb-4 max-w-[18rem] text-3xl font-semibold leading-tight text-[#D4AF37] sm:max-w-3xl sm:text-5xl lg:text-6xl"
+          className="mx-auto mb-4 max-w-[20rem] text-3xl font-semibold leading-tight text-[#D4AF37] sm:max-w-3xl sm:text-5xl lg:text-6xl"
           style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
         >
-          FreeCell <span className="sm:whitespace-nowrap">en Espanol</span>
+          FreeCell <span className="sm:whitespace-nowrap">auf Deutsch</span>
         </h1>
         <p className="mx-auto max-w-2xl text-base leading-7 text-[#6B7280] sm:text-xl sm:leading-8">
-          Juega FreeCell gratis en linea y aprende las reglas con una guia clara en espanol.
-          Todas las cartas estan visibles, no hay descargas, y puedes empezar una partida en segundos.
+          Spielen Sie FreeCell kostenlos online und lernen Sie die Regeln mit einem einfachen deutschen Guide.
+          Alle Karten sind sichtbar, es gibt keinen Download, und eine neue Partie startet sofort.
         </p>
         <div className="mt-8 flex items-center justify-center gap-3">
           <div className="h-px w-10 bg-gradient-to-r from-transparent to-[#D4AF37]/50" />
@@ -178,7 +177,7 @@ export default function FreeCellEnEspanolPage() {
 
       <div className="mx-auto mb-10 max-w-4xl px-5 sm:px-8 lg:px-10">
         <div className="flex flex-wrap items-center justify-center gap-2 text-sm text-[#6B7280]">
-          <span className="mr-1 font-medium text-white/75">Tambien disponible:</span>
+          <span className="mr-1 font-medium text-white/75">Auch verfuegbar:</span>
           <Link
             href="/freecell/how-to-play"
             className="rounded-full border border-white/15 px-3 py-1.5 text-white transition hover:border-white/30 hover:bg-white/10"
@@ -186,48 +185,47 @@ export default function FreeCellEnEspanolPage() {
             English
           </Link>
           <Link
+            href="/freecell-en-espanol"
+            className="rounded-full border border-white/15 px-3 py-1.5 text-white transition hover:border-white/30 hover:bg-white/10"
+          >
+            Espanol
+          </Link>
+          <Link
             href="/freecell-en-francais"
             className="rounded-full border border-white/15 px-3 py-1.5 text-white transition hover:border-white/30 hover:bg-white/10"
           >
-            Français
-          </Link>
-          <Link
-            href="/freecell-auf-deutsch"
-            className="rounded-full border border-white/15 px-3 py-1.5 text-white transition hover:border-white/30 hover:bg-white/10"
-          >
-            Deutsch
+            Francais
           </Link>
         </div>
       </div>
 
       <main className="mx-auto flex max-w-5xl flex-col gap-6 px-4 pb-20 sm:px-6">
-        <CardSection id="jugar" variant="dark">
-          <SectionHeading variant="dark" sub="Empieza aqui" id="jugar-heading">
-            Jugar FreeCell gratis
+        <CardSection id="spielen" variant="dark">
+          <SectionHeading variant="dark" sub="Direkt starten" id="spielen-heading">
+            FreeCell kostenlos spielen
           </SectionHeading>
           <ContentBody variant="dark" className="space-y-5">
             <p>
-              FreeCell es un solitario de estrategia con una regla que lo hace especial:
-              puedes ver las 52 cartas desde el inicio. No hay cartas ocultas ni mazo de
-              robo. La partida depende de tus decisiones.
+              FreeCell ist ein Solitaer-Spiel mit offenem Spielfeld. Alle 52 Karten liegen sichtbar
+              in acht Spalten, deshalb geht es weniger um Glueck und mehr um Planung, Reihenfolge
+              und geschicktes Nutzen der freien Zellen.
             </p>
             <p>
-              Tambien puedes jugar con la interfaz principal en espanol: nueva partida,
-              pistas, deshacer, ajustes, partida guardada y reto diario usan etiquetas claras
-              para empezar sin traducir mentalmente cada control.
+              Die klassische Partie ist sofort spielbar: mit nummerierten Deals, Rueckgaengig-Funktion,
+              Hinweisen, taeglicher Herausforderung und lokaler Speicherung im Browser.
             </p>
             <div className="flex flex-wrap gap-3 pt-2">
               <Link
-                href={PLAY_PATH}
+                href="/"
                 className="rounded-md bg-[#D4AF37] px-5 py-3 text-sm font-semibold text-[#0b2a0b] transition hover:bg-[#f0ce63]"
               >
-                Jugar ahora
+                Jetzt spielen
               </Link>
               <Link
                 href="/freecell-for-beginners"
                 className="rounded-md border border-white/15 px-5 py-3 text-sm font-semibold text-white transition hover:border-white/30 hover:bg-white/10"
               >
-                Guia para principiantes
+                Einsteiger-Guide
               </Link>
             </div>
           </ContentBody>
@@ -235,21 +233,21 @@ export default function FreeCellEnEspanolPage() {
 
         <AdUnit className="-my-1" />
 
-        <CardSection id="reglas" variant="dark">
-          <SectionHeading variant="dark" sub="Objetivo" id="reglas-heading">
-            Reglas basicas de FreeCell
+        <CardSection id="regeln" variant="dark">
+          <SectionHeading variant="dark" sub="Ziel des Spiels" id="regeln-heading">
+            FreeCell-Regeln auf einen Blick
           </SectionHeading>
           <ContentBody variant="dark" className="space-y-5">
             <p>
-              El objetivo es mover todas las cartas a las cuatro bases. Cada base
-              corresponde a un palo: picas, corazones, diamantes o treboles. Las bases
-              empiezan con el As y suben en orden: 2, 3, 4, 5, 6, 7, 8, 9, 10, J, Q, K.
+              Ziel ist es, alle Karten auf die vier Ablagestapel zu bringen. Jeder Ablagestapel
+              gehoert zu einer Farbe: Pik, Herz, Karo oder Kreuz. Die Stapel beginnen mit dem Ass
+              und steigen der Reihe nach bis zum Koenig.
             </p>
             <div className="grid gap-4 md:grid-cols-3">
               {[
-                { value: "8", label: "columnas", text: "Todas las cartas empiezan boca arriba en el centro." },
-                { value: "4", label: "celdas libres", text: "Cada una guarda una sola carta temporalmente." },
-                { value: "4", label: "bases", text: "Construye cada palo desde As hasta Rey." },
+                { value: "8", label: "Spalten", text: "Alle Karten starten offen in der Mitte des Spielfelds." },
+                { value: "4", label: "freie Zellen", text: "Jede Zelle speichert genau eine Karte als Zwischenplatz." },
+                { value: "4", label: "Ablagestapel", text: "Bauen Sie jede Farbe vom Ass bis zum Koenig auf." },
               ].map((item) => (
                 <div key={item.label} className="rounded-lg border border-white/10 bg-white/[0.05] p-5 text-center">
                   <div className="text-3xl font-bold text-white">{item.value}</div>
@@ -261,27 +259,27 @@ export default function FreeCellEnEspanolPage() {
           </ContentBody>
         </CardSection>
 
-        <CardSection id="movimientos" variant="dark">
-          <SectionHeading variant="dark" sub="Que puedes hacer" id="movimientos-heading">
-            Movimientos legales
+        <CardSection id="zuege" variant="dark">
+          <SectionHeading variant="dark" sub="Erlaubte Aktionen" id="zuege-heading">
+            Legale Zuege
           </SectionHeading>
           <div className="space-y-4 px-8 py-6 sm:px-10 md:px-12">
             {[
               {
-                title: "Columna a columna",
-                text: "Coloca una carta sobre otra de un rango superior y color opuesto. Por ejemplo, un 7 rojo puede ir sobre un 8 negro.",
+                title: "Spalte zu Spalte",
+                text: "Legen Sie eine Karte auf eine Karte mit dem naechsthoeheren Rang und der Gegenfarbe. Eine rote 7 passt zum Beispiel auf eine schwarze 8.",
               },
               {
-                title: "Carta a celda libre",
-                text: "Puedes mover cualquier carta disponible a una celda libre vacia. Cada celda libre solo acepta una carta.",
+                title: "Karte in eine freie Zelle",
+                text: "Eine verfuegbare Karte darf in eine leere freie Zelle gelegt werden. Jede freie Zelle haelt nur eine Karte.",
               },
               {
-                title: "Carta a base",
-                text: "Mueve una carta a su base cuando sea el siguiente rango del mismo palo. Los Ases empiezan las bases.",
+                title: "Karte auf den Ablagestapel",
+                text: "Eine Karte darf auf ihren Ablagestapel, wenn sie die naechste Karte derselben Farbe ist. Asse starten die Stapel.",
               },
               {
-                title: "Columna vacia",
-                text: "Una columna vacia acepta cualquier carta o secuencia valida. Las columnas vacias son las herramientas mas poderosas del juego.",
+                title: "Leere Spalte",
+                text: "Eine leere Spalte akzeptiert jede Karte oder gueltige Kartenfolge. Leere Spalten sind die staerkste Ressource im Spiel.",
               },
             ].map((move) => (
               <div key={move.title} className="rounded-lg border border-white/10 bg-white/[0.05] p-5">
@@ -292,47 +290,47 @@ export default function FreeCellEnEspanolPage() {
           </div>
         </CardSection>
 
-        <CardSection id="estrategia" variant="dark">
-          <SectionHeading variant="dark" sub="Primeras victorias" id="estrategia-heading">
-            Consejos rapidos
+        <CardSection id="strategie" variant="dark">
+          <SectionHeading variant="dark" sub="Besser starten" id="strategie-heading">
+            Schnelle Tipps
           </SectionHeading>
           <ContentBody variant="dark">
             <ul className="space-y-3">
-              <li>Busca los Ases antes de mover cartas. Liberarlos temprano abre las bases.</li>
-              <li>No llenes las cuatro celdas libres sin un plan para vaciarlas.</li>
-              <li>Intenta crear una columna vacia; aumenta mucho tu capacidad de mover secuencias.</li>
-              <li>Construye secuencias largas alternando colores, pero no entierres cartas bajas importantes.</li>
-              <li>Usa deshacer para aprender. En FreeCell, revisar un mal movimiento es parte del progreso.</li>
+              <li>Suchen Sie zuerst nach Assen und niedrigen Karten, damit die Ablagestapel wachsen koennen.</li>
+              <li>Fuellen Sie nicht alle vier freien Zellen, ohne einen klaren Weg zum Leeren zu haben.</li>
+              <li>Eine leere Spalte ist oft wertvoller als eine freie Zelle, weil sie laengere Kartenfolgen ermoeglicht.</li>
+              <li>Bauen Sie absteigende Reihen mit wechselnden Farben, aber begraben Sie wichtige kleine Karten nicht.</li>
+              <li>Nutzen Sie Rueckgaengig als Lernwerkzeug. Bei FreeCell ist Ausprobieren ein sinnvoller Teil der Strategie.</li>
             </ul>
           </ContentBody>
         </CardSection>
 
-        <CardSection id="vocabulario" variant="dark">
-          <SectionHeading variant="dark" sub="Terminos utiles" id="vocabulario-heading">
-            Vocabulario ingles-espanol
+        <CardSection id="begriffe" variant="dark">
+          <SectionHeading variant="dark" sub="Nuetzliche Worte" id="begriffe-heading">
+            Englisch-deutsches Vokabular
           </SectionHeading>
           <div className="grid gap-3 px-8 py-6 sm:px-10 md:grid-cols-2 md:px-12">
             {[
-              ["Free cells", "Celdas libres"],
-              ["Foundations", "Bases"],
-              ["Cascades", "Columnas"],
-              ["Tableau", "Area de juego"],
-              ["Undo", "Deshacer"],
-              ["Hint", "Pista"],
-              ["New Deal", "Nueva partida"],
-              ["Move", "Movimiento"],
-            ].map(([english, spanish]) => (
+              ["Free cells", "Freie Zellen"],
+              ["Foundations", "Ablagestapel"],
+              ["Cascades", "Spalten"],
+              ["Tableau", "Spielfeld"],
+              ["Undo", "Rueckgaengig"],
+              ["Hint", "Hinweis"],
+              ["New Deal", "Neue Partie"],
+              ["Move", "Zug"],
+            ].map(([english, german]) => (
               <div key={english} className="flex items-center justify-between rounded-md border border-white/10 bg-white/[0.04] px-4 py-3">
                 <span className="text-sm font-semibold text-white">{english}</span>
-                <span className="text-sm text-white/65">{spanish}</span>
+                <span className="text-sm text-white/65">{german}</span>
               </div>
             ))}
           </div>
         </CardSection>
 
         <CardSection variant="dark">
-          <SectionHeading variant="dark" sub="Preguntas frecuentes">
-            FAQ en espanol
+          <SectionHeading variant="dark" sub="Haeufige Fragen">
+            FreeCell FAQ auf Deutsch
           </SectionHeading>
           <div className="space-y-4 px-8 py-6 sm:px-10 md:px-12">
             {faqItems.map((faq) => (
@@ -345,18 +343,18 @@ export default function FreeCellEnEspanolPage() {
         </CardSection>
 
         <CtaSection
-          heading="Listo para jugar?"
-          body="Empieza con una partida clasica, prueba una partida facil, o consulta la guia completa de reglas si quieres mas detalle."
-          primaryHref={PLAY_PATH}
-          primaryLabel="Jugar en espanol"
+          heading="Bereit fuer eine Partie?"
+          body="Starten Sie FreeCell sofort, probieren Sie eine leichtere Variante, oder lesen Sie die vollstaendigen Regeln fuer mehr Details."
+          primaryHref="/"
+          primaryLabel="FreeCell spielen"
           secondaryHref="/easy-freecell"
-          secondaryLabel="Probar Easy FreeCell"
+          secondaryLabel="Easy FreeCell testen"
         />
 
         <div className="grid gap-4 md:grid-cols-3">
-          <ContentLinkCard href="/freecell-rules" title="FreeCell Rules" description="Referencia completa de reglas en ingles." />
-          <ContentLinkCard href="/tips" title="Tips & Tricks" description="Consejos rapidos para ganar mas partidas." />
-          <ContentLinkCard href="/deals" title="Deal Explorer" description="Busca partidas por numero y practica deals concretos." />
+          <ContentLinkCard href="/freecell-rules" title="FreeCell Rules" description="Vollstaendige Regelreferenz auf Englisch." />
+          <ContentLinkCard href="/tips" title="Tips & Tricks" description="Kurze Tipps, um oefter zu gewinnen." />
+          <ContentLinkCard href="/deals" title="Deal Explorer" description="Finden Sie eine Partie per Nummer und ueben Sie gezielt." />
         </div>
       </main>
     </ContentLayout>

@@ -10,3 +10,4 @@ landed this week.
 | 2026-07-02 | session (interactive) | content | klondike-which-column-to-dig-first, spider-solitaire-when-to-deal | klondike, spider |
 | 2026-07-03 | cowork-daily-review | locale+fix | freecell-en-francais (+/jouer), es hreflang/H1 fixes | freecell |
 | 2026-07-03 | session (interactive) | fix | CI lint gate repair (Pyramid/TriPeaks refs, worktree gitlink) | all |
+| 2026-07-04 | cowork-daily-review | qa+docs | docs/CONTENT_STRATEGY.md (locale gate policy), docs/QA_REPORT_2026-07-04.md, docs/research/competitor-log.csv | freecell (+network locale policy) |

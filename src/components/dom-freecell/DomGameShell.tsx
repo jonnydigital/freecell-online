@@ -2024,6 +2024,23 @@ export default function DomGameShell({ initialGameNumber, variant, locale = 'en'
           </div>
         )}
 
+        {/* ── Landscape floating status (time / moves) ── */}
+        {isLandscapeMobile && (
+          <div
+            className="absolute top-1 left-1/2 -translate-x-1/2 z-20 flex items-center gap-3 rounded-lg bg-black/40 px-3 py-1 md:hidden pointer-events-none"
+            style={{
+              fontSize: '11px',
+              fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace',
+              fontVariantNumeric: 'tabular-nums',
+            }}
+            aria-hidden="true"
+          >
+            <span style={{ color: 'rgba(255,255,255,0.5)' }}>#{gameNumber}</span>
+            <span style={{ color: 'rgba(255,255,255,0.7)' }}>{timerDisplay}</span>
+            <span style={{ color: 'rgba(250,204,21,0.7)' }}>{moveCount} {copy.movesShort}</span>
+          </div>
+        )}
+
         {/* ── Landscape floating undo/redo ── */}
         {isLandscapeMobile && (
           <div className="absolute bottom-2 right-2 z-20 flex gap-1.5 md:hidden">

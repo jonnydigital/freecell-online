@@ -1,7 +1,7 @@
 {
-  "date": "2026-07-04",
+  "date": "2026-07-05",
   "lastPulledBy": "openclaw heartbeat browser manual GA4 pull",
-  "notes": "Updated 2026-07-04 with GA4 Home last-7-days metrics and Games reporting acquisition/engagement snapshots for PlayFreeCellOnline.com. Reports snapshot itself is not configured, so sessions/pageviews by channel are partly from GA4 Games reports and prior full pull where noted.",
+  "notes": "Updated 2026-07-05 with GA4 Home 28-day highlight plus Last 7 days country/page/channel/event cards for FreeCell Online. Reports snapshot is still not configured; current pull used GA4 Home visible cards.",
   "network_state": {
     "live_domains": 4,
     "live_since": {
@@ -605,5 +605,92 @@
       "sitemap_declared": true,
       "allow_all": true
     }
+  },
+  "daily": {
+    "date": "2026-07-05",
+    "measurementId": "G-988ZBJSKVJ",
+    "ga4Property": "p525799022",
+    "headline28Days": {
+      "activeUsers": 28,
+      "activeUsersChangePercent": 80.3,
+      "eventCount": 474,
+      "eventCountChangePercent": 41.1,
+      "keyEvents": 0,
+      "newUsers": 26,
+      "newUsersChangePercent": 81
+    },
+    "last7Days": {
+      "activeUsers": 7,
+      "activeUsersChangePercent": 22.2,
+      "oneDayActiveUsers": 3,
+      "oneDayChangePercent": 0,
+      "pageViews": 29,
+      "sessions": 15,
+      "gameStarts": 13,
+      "userEngagementEvents": 7,
+      "firstVisits": 4,
+      "hintsUsed": 1,
+      "realtimeUsers": 0
+    },
+    "countries": {
+      "United States": 6,
+      "China": 1,
+      "United Kingdom": 0,
+      "Vietnam": 0
+    },
+    "sessionsByChannel": {
+      "Direct": 9,
+      "Organic Search": 5,
+      "Referral": 1,
+      "Unassigned": 2
+    },
+    "topPages": [
+      {
+        "title": "Solitaire Stack | Play FreeCell, Spider Solitaire, and More",
+        "views": 10,
+        "changePercent": -25
+      },
+      {
+        "title": "Play FreeCell Online for Free | No Download Required",
+        "views": 5,
+        "changePercent": -25
+      },
+      {
+        "title": "Free Solitaire Games Online | Play 28+ Card Games for Free",
+        "views": 3,
+        "changePercent": 0
+      },
+      {
+        "title": "Bristol Solitaire | Play Online Free — Fan Layout Card Game",
+        "views": 1,
+        "changePercent": -50
+      },
+      {
+        "title": "How to Play Forty Thieves Solitaire | Rules, Setup & Strategy",
+        "views": 2,
+        "changePercent": 100
+      },
+      {
+        "title": "Clock Solitaire | Play Clock Patience Online Free — Card Game",
+        "views": 1,
+        "changePercent": 0
+      },
+      {
+        "title": "FreeCell Strategy Guide | How to Win FreeCell — Beginner to Expert Tips",
+        "views": 1,
+        "changePercent": 0
+      }
+    ],
+    "events": {
+      "page_view": 29,
+      "session_start": 15,
+      "game_start": 13,
+      "user_engagement": 7,
+      "first_visit": 4,
+      "hint_used": 1
+    },
+    "feedbackCount": 0,
+    "feedbackNote": "No local data/feedback.json found in repo/runtime paths during heartbeat check.",
+    "taskPicked": "Start Portuguese i18n slice: /freecell-em-portugues and /freecell-em-portugues/jogar with reciprocal hreflang, localized DOM game copy, sitemap/footer/discovery, and changelog/backlog updates."
   }
 }

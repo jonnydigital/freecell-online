@@ -17,7 +17,7 @@ const VARIANT_META: Record<string, { path: string; name: string }> = {
   'freecell-3cell': { path: '/freecell/3-cell', name: '3-Cell FreeCell' },
 };
 
-type WinScreenLocale = 'en' | 'es' | 'fr' | 'de' | 'it';
+type WinScreenLocale = 'en' | 'es' | 'fr' | 'de' | 'it' | 'pt';
 
 const WIN_COPY = {
   en: {
@@ -154,6 +154,33 @@ const WIN_COPY = {
     viewOptimalSolution: 'Vedi soluzione ottimale',
     shareSolved: (gameName: string, gameNumber: number, moves: number, time: string, stars: string, score: number, gameUrl: string) =>
       `Ho risolto ${gameName} partita #${gameNumber} in ${moves} mosse (${time})! ${stars}\nPunteggio: ${score.toLocaleString()} pt\nRiesci a batterla? ${gameUrl}`,
+  },
+  pt: {
+    title: 'Voce venceu!',
+    gameLabel: (gameNumber: number) => `Partida #${gameNumber}`,
+    newBest: 'Novo recorde!',
+    points: 'pts',
+    moveBonus: (value: number) => `Jogadas +${value}`,
+    timeBonus: (value: number) => `Velocidade +${value}`,
+    hintPenalty: (value: number) => `Dicas -${value}`,
+    screenshotCard: 'Faca uma captura deste cartao para compartilhar.',
+    time: 'Tempo',
+    moves: 'Jogadas',
+    hints: 'Dicas',
+    analyzing: 'Analisando a solucao ideal...',
+    optimal: 'Ideal:',
+    perfect: 'Perfeito!',
+    extraMoves: (value: number) => `(+${value} extra)`,
+    ranked: (rank: number) => `Posicao #${rank} no ranking de hoje`,
+    communityTitle: 'Compartilhe esta vitoria ou relate a partida',
+    communityBody: 'Envie resultados diarios, notas sobre partidas dificeis e ideias para o hub da comunidade FreeCell.',
+    playAgain: 'Jogar de novo',
+    copied: 'Copiado!',
+    shareResults: 'Compartilhar resultado',
+    dailyChallenge: 'Desafio diario',
+    viewOptimalSolution: 'Ver solucao ideal',
+    shareSolved: (gameName: string, gameNumber: number, moves: number, time: string, stars: string, score: number, gameUrl: string) =>
+      `Resolvi ${gameName} partida #${gameNumber} em ${moves} jogadas (${time})! ${stars}\nPontuacao: ${score.toLocaleString()} pts\nConsegue vencer? ${gameUrl}`,
   },
 } as const;
 

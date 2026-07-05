@@ -8,7 +8,7 @@
 const CONSENT_KEY = 'cookie_consent';
 
 type EventParams = Record<string, string | number | boolean | undefined>;
-type GameLocale = 'en' | 'es' | 'fr' | 'de' | 'it';
+type GameLocale = 'en' | 'es' | 'fr' | 'de' | 'it' | 'pt';
 
 // Custom game events
 export type GameEvent =

@@ -185,6 +185,8 @@ export default function SiteFooter() {
           { href: '/freecell-auf-deutsch/spielen', label: 'Auf Deutsch spielen' },
           { href: '/freecell-in-italiano', label: 'FreeCell in Italiano' },
           { href: '/freecell-in-italiano/gioca', label: 'Gioca in Italiano' },
+          { href: '/freecell-em-portugues', label: 'FreeCell em Portugues' },
+          { href: '/freecell-em-portugues/jogar', label: 'Jogar em Portugues' },
           { href: '/freecell-for-beginners', label: 'Beginner Guide' },
           { href: '/freecell-for-seniors', label: 'FreeCell for Seniors' },
           { href: '/freecell-video-tutorial', label: 'Video Tutorial' },

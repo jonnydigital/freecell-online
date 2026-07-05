@@ -57,7 +57,7 @@ const VARIANT_NAMES: Record<string, string> = {
   'freecell-3cell': '3-Cell FreeCell',
 };
 
-type DomGameLocale = 'en' | 'es' | 'fr' | 'de' | 'it';
+type DomGameLocale = 'en' | 'es' | 'fr' | 'de' | 'it' | 'pt';
 
 const UI_COPY = {
   en: {
@@ -529,6 +529,100 @@ const UI_COPY = {
     moveRedoneAnnouncement: 'Mossa ripetuta',
     hintShownAnnouncement: 'Aiuto mostrato',
     autoCompletingAnnouncement: 'Completamento automatico della partita',
+  },
+  pt: {
+    appTitle: 'FreeCell em Portugues',
+    dateLocale: 'pt',
+    time: 'Tempo',
+    moves: 'Jogadas',
+    movesShort: 'jogadas',
+    gameBoard: 'Tabuleiro de FreeCell',
+    gameNumberTitle: 'Clique para inserir um numero de partida',
+    enterGameNumberTitle: 'Inserir numero de partida',
+    newDeal: 'Nova partida',
+    newGame: 'Nova partida',
+    menu: 'Menu',
+    new: 'Nova',
+    undo: 'Desfazer',
+    redo: 'Refazer',
+    hint: 'Dica',
+    unmute: 'Ativar som',
+    mute: 'Silenciar',
+    ghostMode: 'Modo fantasma',
+    ghostModeTitle: 'Modo fantasma - veja o solucionador jogar',
+    bookmarkGame: 'Salvar partida',
+    removeBookmark: 'Remover salvo',
+    statistics: 'Estatisticas',
+    settings: 'Configuracoes',
+    gameResumed: 'Partida retomada',
+    savedGameAvailable: 'Partida salva disponivel',
+    resume: 'Retomar',
+    dismissResumeNotice: 'Fechar aviso de retomada',
+    dismissSavedGamePrompt: 'Fechar aviso de partida salva',
+    dismissHint: 'Fechar dica',
+    autoFinish: 'Final automatico',
+    solving: 'Buscando solucao...',
+    solverFailed: 'Nenhuma solucao encontrada',
+    dismiss: 'Fechar',
+    noMovesNeeded: 'Nenhuma jogada necessaria',
+    noMoreMoves: 'Sem jogadas',
+    noMoreMovesBody: 'A partida chegou a um estado sem jogadas legais.',
+    undoLastMove: 'Desfazer ultima jogada',
+    restartDeal: 'Reiniciar partida',
+    giveUpNewDeal: 'Desistir e nova partida',
+    playSpecificGame: 'Jogar partida especifica',
+    enterNumberPrompt: 'Insira um numero de partida (1 - 9,999,999):',
+    gameNumberPlaceholder: 'ex. 12345',
+    gameNumberError: 'Insira um numero entre 1 e 9,999,999',
+    cancel: 'Cancelar',
+    play: 'Jogar',
+    close: 'Fechar',
+    todaysChallenge: 'Desafio de hoje',
+    completed: 'Concluido',
+    playTodaysChallenge: 'Jogar o desafio de hoje',
+    copied: 'Copiado!',
+    share: 'Compartilhar',
+    played: 'Jogadas',
+    win: 'Vitorias',
+    streak: 'Sequencia',
+    howToPlay: 'Regras',
+    howToPlayHref: '/freecell-em-portugues',
+    strategy: 'Estrategia',
+    strategyHref: '/freecell-em-portugues#estrategia',
+    badges: 'Insignias',
+    shortcuts: 'Atalhos',
+    cardBack: 'Verso',
+    audio: 'Audio',
+    soundEffects: 'Sons',
+    soundEffectsDescription: 'Sons de cartas e partida',
+    animationSpeed: 'Velocidade',
+    animationSpeeds: {
+      slow: 'lenta',
+      normal: 'normal',
+      fast: 'rapida',
+    },
+    gameplay: 'Jogo',
+    autoFinishDescription: 'Finaliza automaticamente quando a partida esta claramente ganha',
+    oneTapMoves: 'Um toque',
+    oneTapMovesDescription: 'Mover cartas com um clique',
+    tryThisMove: 'Tente esta jogada',
+    noHintsAvailable: 'Nenhuma dica disponivel; tente desfazer uma jogada',
+    gameBookmarked: (gameNumber: number) => `Partida #${gameNumber} salva`,
+    bookmarkRemoved: 'Salvo removido',
+    shareText: (gameNumber: number, shareUrl: string) =>
+      `Estou jogando FreeCell partida #${gameNumber}. Consegue vencer? ${shareUrl}`,
+    shareTitle: 'FreeCell em Portugues',
+    sharePath: (gameNumber: number) => `/freecell-em-portugues/jogar?game=${gameNumber}`,
+    resumedAnnouncement: (gameNumber: number, moveCount: number) =>
+      `Partida ${gameNumber} retomada com ${moveCount} jogadas.`,
+    newGameStartedAnnouncement: 'Nova partida iniciada.',
+    winAnnouncement: (moveCount: number) => `Parabens. Voce venceu em ${moveCount} jogadas.`,
+    deadlockAnnouncement: 'Nao restam jogadas legais. A partida esta bloqueada.',
+    gameRestartedAnnouncement: 'Partida reiniciada.',
+    moveUndoneAnnouncement: 'Jogada desfeita',
+    moveRedoneAnnouncement: 'Jogada refeita',
+    hintShownAnnouncement: 'Dica exibida',
+    autoCompletingAnnouncement: 'Finalizando a partida automaticamente',
   },
 } as const;
 
@@ -1070,7 +1164,8 @@ export default function DomGameShell({ initialGameNumber, variant, locale = 'en'
         window.location.pathname.startsWith('/freecell-en-espanol/jugar') ||
         window.location.pathname.startsWith('/freecell-en-francais/jouer') ||
         window.location.pathname.startsWith('/freecell-auf-deutsch/spielen') ||
-        window.location.pathname.startsWith('/freecell-in-italiano/gioca');
+        window.location.pathname.startsWith('/freecell-in-italiano/gioca') ||
+        window.location.pathname.startsWith('/freecell-em-portugues/jogar');
       if (!isLabRoute && !isLocalizedGameRoute) {
         const nextPath = '/game/' + gameNumber;
         if (window.location.pathname !== nextPath) {

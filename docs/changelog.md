@@ -1,4 +1,13 @@
 
+## 2026-07-05 (OpenClaw Morning Heartbeat)
+
+### Shipped
+- **FreeCell em Portugues landing page** — added `/freecell-em-portugues` with Portuguese rules, legal moves, quick strategy, vocabulary, FAQ schema, hreflang discovery, sitemap inclusion, HTML sitemap listing, footer link, and FreeCell route ownership.
+- **Playable FreeCell em Portugues UI** — added `/freecell-em-portugues/jogar` with Portuguese metadata, Game/Breadcrumb schema, and the DOM FreeCell client running with Portuguese controls.
+- Localized the main FreeCell game chrome for Portuguese play: time/move labels, new deal, undo/redo, hints, saved-game prompts, deadlock overlay, share copy/URL, mobile controls, home overlay, settings drawer, screen-reader announcements, analytics locale, and win-screen copy.
+- Expanded reciprocal language discovery across English, Spanish, French, German, Italian, and Portuguese guide/play pages.
+- Verification: `npm run build` passed with Node 22 (existing multi-lockfile workspace-root warning and edge-runtime static-generation warning remain; default Node 18 still fails because Next.js requires >=20.9).
+
 ## 2026-07-05 (OpenClaw Overnight Build)
 
 ### Shipped

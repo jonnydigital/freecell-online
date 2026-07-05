@@ -57,7 +57,7 @@ const VARIANT_NAMES: Record<string, string> = {
   'freecell-3cell': '3-Cell FreeCell',
 };
 
-type DomGameLocale = 'en' | 'es' | 'fr' | 'de';
+type DomGameLocale = 'en' | 'es' | 'fr' | 'de' | 'it';
 
 const UI_COPY = {
   en: {
@@ -435,6 +435,100 @@ const UI_COPY = {
     moveRedoneAnnouncement: 'Zug wiederholt',
     hintShownAnnouncement: 'Hinweis angezeigt',
     autoCompletingAnnouncement: 'Partie wird automatisch beendet',
+  },
+  it: {
+    appTitle: 'FreeCell in Italiano',
+    dateLocale: 'it',
+    time: 'Tempo',
+    moves: 'Mosse',
+    movesShort: 'mosse',
+    gameBoard: 'Tavolo di FreeCell',
+    gameNumberTitle: 'Fai clic per inserire un numero di partita',
+    enterGameNumberTitle: 'Inserisci numero di partita',
+    newDeal: 'Nuova partita',
+    newGame: 'Nuova partita',
+    menu: 'Menu',
+    new: 'Nuova',
+    undo: 'Annulla',
+    redo: 'Ripeti',
+    hint: 'Aiuto',
+    unmute: 'Attiva audio',
+    mute: 'Silenzia',
+    ghostMode: 'Modalita fantasma',
+    ghostModeTitle: 'Modalita fantasma - guarda giocare il risolutore',
+    bookmarkGame: 'Salva partita',
+    removeBookmark: 'Rimuovi salvataggio',
+    statistics: 'Statistiche',
+    settings: 'Impostazioni',
+    gameResumed: 'Partita ripresa',
+    savedGameAvailable: 'Partita salvata disponibile',
+    resume: 'Riprendi',
+    dismissResumeNotice: 'Chiudi avviso di ripresa',
+    dismissSavedGamePrompt: 'Chiudi avviso partita salvata',
+    dismissHint: 'Chiudi aiuto',
+    autoFinish: 'Fine auto',
+    solving: 'Cerco soluzione...',
+    solverFailed: 'Nessuna soluzione trovata',
+    dismiss: 'Chiudi',
+    noMovesNeeded: 'Nessuna mossa necessaria',
+    noMoreMoves: 'Nessuna mossa',
+    noMoreMovesBody: 'La partita ha raggiunto uno stato senza mosse legali.',
+    undoLastMove: 'Annulla ultima mossa',
+    restartDeal: 'Ricomincia partita',
+    giveUpNewDeal: 'Arrenditi e nuova partita',
+    playSpecificGame: 'Gioca partita specifica',
+    enterNumberPrompt: 'Inserisci un numero di partita (1 - 9,999,999):',
+    gameNumberPlaceholder: 'es. 12345',
+    gameNumberError: 'Inserisci un numero tra 1 e 9,999,999',
+    cancel: 'Annulla',
+    play: 'Gioca',
+    close: 'Chiudi',
+    todaysChallenge: 'Sfida di oggi',
+    completed: 'Completata',
+    playTodaysChallenge: 'Gioca la sfida di oggi',
+    copied: 'Copiato!',
+    share: 'Condividi',
+    played: 'Giocate',
+    win: 'Vittorie',
+    streak: 'Serie',
+    howToPlay: 'Regole',
+    howToPlayHref: '/freecell-in-italiano',
+    strategy: 'Strategia',
+    strategyHref: '/freecell-in-italiano#strategia',
+    badges: 'Badge',
+    shortcuts: 'Scorciatoie',
+    cardBack: 'Dorso',
+    audio: 'Audio',
+    soundEffects: 'Suoni',
+    soundEffectsDescription: 'Suoni di carte e partita',
+    animationSpeed: 'Velocita',
+    animationSpeeds: {
+      slow: 'lenta',
+      normal: 'normale',
+      fast: 'rapida',
+    },
+    gameplay: 'Gioco',
+    autoFinishDescription: 'Completa automaticamente quando la partita e chiaramente vinta',
+    oneTapMoves: 'Un tocco',
+    oneTapMovesDescription: 'Muovi le carte con un solo clic',
+    tryThisMove: 'Prova questa mossa',
+    noHintsAvailable: 'Nessun aiuto disponibile; prova ad annullare una mossa',
+    gameBookmarked: (gameNumber: number) => `Partita #${gameNumber} salvata`,
+    bookmarkRemoved: 'Salvataggio rimosso',
+    shareText: (gameNumber: number, shareUrl: string) =>
+      `Sto giocando a FreeCell partita #${gameNumber}. Riesci a batterla? ${shareUrl}`,
+    shareTitle: 'FreeCell in Italiano',
+    sharePath: (gameNumber: number) => `/freecell-in-italiano/gioca?game=${gameNumber}`,
+    resumedAnnouncement: (gameNumber: number, moveCount: number) =>
+      `Partita ${gameNumber} ripresa con ${moveCount} mosse.`,
+    newGameStartedAnnouncement: 'Nuova partita iniziata.',
+    winAnnouncement: (moveCount: number) => `Complimenti. Hai vinto in ${moveCount} mosse.`,
+    deadlockAnnouncement: 'Non restano mosse legali. La partita e bloccata.',
+    gameRestartedAnnouncement: 'Partita ricominciata.',
+    moveUndoneAnnouncement: 'Mossa annullata',
+    moveRedoneAnnouncement: 'Mossa ripetuta',
+    hintShownAnnouncement: 'Aiuto mostrato',
+    autoCompletingAnnouncement: 'Completamento automatico della partita',
   },
 } as const;
 
@@ -975,7 +1069,8 @@ export default function DomGameShell({ initialGameNumber, variant, locale = 'en'
       const isLocalizedGameRoute =
         window.location.pathname.startsWith('/freecell-en-espanol/jugar') ||
         window.location.pathname.startsWith('/freecell-en-francais/jouer') ||
-        window.location.pathname.startsWith('/freecell-auf-deutsch/spielen');
+        window.location.pathname.startsWith('/freecell-auf-deutsch/spielen') ||
+        window.location.pathname.startsWith('/freecell-in-italiano/gioca');
       if (!isLabRoute && !isLocalizedGameRoute) {
         const nextPath = '/game/' + gameNumber;
         if (window.location.pathname !== nextPath) {

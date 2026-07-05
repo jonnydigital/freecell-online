@@ -29,6 +29,7 @@ export const metadata: Metadata = {
       es: absoluteUrl(PAGE_PATH),
       fr: absoluteUrl('/freecell-en-francais/jouer'),
       de: absoluteUrl('/freecell-auf-deutsch/spielen'),
+      it: absoluteUrl('/freecell-in-italiano/gioca'),
       en: absoluteUrl('/'),
       'x-default': absoluteUrl('/'),
     },

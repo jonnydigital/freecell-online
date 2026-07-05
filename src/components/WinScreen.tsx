@@ -17,7 +17,7 @@ const VARIANT_META: Record<string, { path: string; name: string }> = {
   'freecell-3cell': { path: '/freecell/3-cell', name: '3-Cell FreeCell' },
 };
 
-type WinScreenLocale = 'en' | 'es' | 'fr' | 'de';
+type WinScreenLocale = 'en' | 'es' | 'fr' | 'de' | 'it';
 
 const WIN_COPY = {
   en: {
@@ -127,6 +127,33 @@ const WIN_COPY = {
     viewOptimalSolution: 'Optimale Loesung ansehen',
     shareSolved: (gameName: string, gameNumber: number, moves: number, time: string, stars: string, score: number, gameUrl: string) =>
       `Ich habe ${gameName} Partie #${gameNumber} in ${moves} Zuegen geloest (${time})! ${stars}\nPunkte: ${score.toLocaleString()} Pkt.\nSchaffen Sie es besser? ${gameUrl}`,
+  },
+  it: {
+    title: 'Hai vinto!',
+    gameLabel: (gameNumber: number) => `Partita #${gameNumber}`,
+    newBest: 'Nuovo record!',
+    points: 'pt',
+    moveBonus: (value: number) => `Mosse +${value}`,
+    timeBonus: (value: number) => `Velocita +${value}`,
+    hintPenalty: (value: number) => `Aiuti -${value}`,
+    screenshotCard: 'Fai uno screenshot di questa scheda per condividerla.',
+    time: 'Tempo',
+    moves: 'Mosse',
+    hints: 'Aiuti',
+    analyzing: 'Analisi della soluzione ottimale...',
+    optimal: 'Ottimale:',
+    perfect: 'Perfetto!',
+    extraMoves: (value: number) => `(+${value} extra)`,
+    ranked: (rank: number) => `Posizione #${rank} nella classifica di oggi`,
+    communityTitle: 'Condividi la vittoria o segnala la partita',
+    communityBody: 'Invia risultati giornalieri, note su partite difficili e idee all hub della community FreeCell.',
+    playAgain: 'Gioca ancora',
+    copied: 'Copiato!',
+    shareResults: 'Condividi risultato',
+    dailyChallenge: 'Sfida giornaliera',
+    viewOptimalSolution: 'Vedi soluzione ottimale',
+    shareSolved: (gameName: string, gameNumber: number, moves: number, time: string, stars: string, score: number, gameUrl: string) =>
+      `Ho risolto ${gameName} partita #${gameNumber} in ${moves} mosse (${time})! ${stars}\nPunteggio: ${score.toLocaleString()} pt\nRiesci a batterla? ${gameUrl}`,
   },
 } as const;
 

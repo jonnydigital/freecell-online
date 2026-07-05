@@ -44,6 +44,7 @@ export const metadata: Metadata = {
       es: absoluteUrl(PAGE_PATH),
       fr: absoluteUrl("/freecell-en-francais"),
       de: absoluteUrl("/freecell-auf-deutsch"),
+      it: absoluteUrl("/freecell-in-italiano"),
       en: canonicalUrlFor("/freecell/how-to-play"),
       "x-default": canonicalUrlFor("/freecell/how-to-play"),
     },
@@ -196,6 +197,12 @@ export default function FreeCellEnEspanolPage() {
             className="rounded-full border border-white/15 px-3 py-1.5 text-white transition hover:border-white/30 hover:bg-white/10"
           >
             Deutsch
+          </Link>
+          <Link
+            href="/freecell-in-italiano"
+            className="rounded-full border border-white/15 px-3 py-1.5 text-white transition hover:border-white/30 hover:bg-white/10"
+          >
+            Italiano
           </Link>
         </div>
       </div>

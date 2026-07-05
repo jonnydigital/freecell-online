@@ -87,6 +87,8 @@ const contentPages = [
   { path: '/freecell-en-francais/jouer', changeFrequency: 'daily', priority: 0.7 },
   { path: '/freecell-auf-deutsch', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/freecell-auf-deutsch/spielen', changeFrequency: 'daily', priority: 0.7 },
+  { path: '/freecell-in-italiano', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/freecell-in-italiano/gioca', changeFrequency: 'daily', priority: 0.7 },
   { path: '/freecell-for-beginners', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/is-every-freecell-game-winnable', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/easy-freecell-games', changeFrequency: 'monthly', priority: 0.7 },

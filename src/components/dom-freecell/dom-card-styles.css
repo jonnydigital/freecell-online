@@ -72,9 +72,9 @@
     --card-corner-offset-y: clamp(2px, calc(var(--card-width) * 0.06), 5px);
     --card-corner-offset-x: clamp(2px, calc(var(--card-width) * 0.07), 6px);
     --card-rank-size: clamp(8px, calc(var(--card-width) * 0.18), 14px);
-    --card-suit-small-size: clamp(7px, calc(var(--card-width) * 0.16), 12px);
-    --card-center-suit-size: clamp(14px, calc(var(--card-width) * 0.36), 24px);
-    --slot-label-size: clamp(9px, calc(var(--card-width) * 0.24), 18px);
+    --card-suit-small-size: clamp(8px, calc(var(--card-width) * 0.16), 12px);
+    --card-center-suit-size: clamp(15px, calc(var(--card-width) * 0.36), 24px);
+    --slot-label-size: clamp(10px, calc(var(--card-width) * 0.24), 18px);
   }
 }
 

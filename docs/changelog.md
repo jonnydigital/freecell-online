@@ -9,6 +9,7 @@
 - Localized the main FreeCell game chrome for German play: time/move labels, new deal, undo/redo, hints, saved-game prompts, deadlock overlay, share copy/URL, mobile controls, home overlay, settings drawer, screen-reader announcements, and win-screen copy.
 - Wired the German play route into route ownership, XML sitemap, HTML sitemap, footer discovery, hreflang maps, and the German landing page CTA.
 - Cross-linked the English, Spanish, French, and German guide pages through visible language switchers.
+- **Mobile card legibility polish** — raised the smallest mobile FreeCell suit glyph, center suit, and empty-slot label floors by 1px so true-phone card faces stay readable when columns are tightly compressed.
 - Verification: `npm run build` passed with Node 22 (existing multi-lockfile workspace-root warning and edge-runtime static-generation warning remain; default Node 18 still fails because Next.js requires >=20.9).
 
 ## 2026-07-03 (OpenClaw Evening Heartbeat)

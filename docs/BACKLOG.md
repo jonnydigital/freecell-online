@@ -116,6 +116,7 @@
 - [x] Playable FreeCell en Francais UI — French game route with translated core game chrome, win screen, share text, mobile controls, settings, sitemap/footer discovery (shipped 2026-07-03)
 - [x] FreeCell auf Deutsch landing page — German rules, vocabulary, FAQ schema, hreflang, sitemap/footer discovery (shipped 2026-07-04)
 - [x] Playable FreeCell auf Deutsch UI — German game route with translated core game chrome, win screen, share text, mobile controls, settings, sitemap/footer discovery (shipped 2026-07-04)
+- [x] Mobile FreeCell card glyph polish — raised the smallest mobile suit/slot label floors for tighter true-phone readability (shipped 2026-07-04)
 
 ---
 

@@ -13,11 +13,21 @@ import '../dom-freecell/dom-card-styles.css';
 // ---------------------------------------------------------------------------
 const FOUNDATION_SUITS: Suit[] = [Suit.Spades, Suit.Hearts, Suit.Diamonds, Suit.Clubs];
 
+export interface KlondikeHintHighlight {
+  sourceCardIds: string[];
+  sourceLocation: KlondikeLocation;
+  targetLocation: KlondikeLocation;
+}
+
 // ---------------------------------------------------------------------------
 // Board component
 // ---------------------------------------------------------------------------
 
-export default function DomKlondikeBoard() {
+interface DomKlondikeBoardProps {
+  hint?: KlondikeHintHighlight | null;
+}
+
+export default function DomKlondikeBoard({ hint }: DomKlondikeBoardProps) {
   const boardRef = useRef<HTMLDivElement>(null);
 
   const cascades = useDomKlondikeStore((s) => s.cascades);
@@ -36,6 +46,26 @@ export default function DomKlondikeBoard() {
     if (!selection) return new Set<string>();
     return new Set(selection.cardIds);
   }, [selection]);
+
+  const hintSourceIds = useMemo(() => new Set(hint?.sourceCardIds ?? []), [hint]);
+
+  const isHintLocation = useCallback(
+    (location: KlondikeLocation, role: 'source' | 'target') => {
+      if (!hint) return false;
+      const candidate = role === 'source' ? hint.sourceLocation : hint.targetLocation;
+      if (candidate.type !== location.type) return false;
+      switch (location.type) {
+        case 'cascade':
+          return candidate.type === 'cascade' && candidate.index === location.index;
+        case 'foundation':
+          return candidate.type === 'foundation' && candidate.suit === location.suit;
+        case 'stock':
+        case 'waste':
+          return true;
+      }
+    },
+    [hint],
+  );
 
   // Handle click on empty pile for selection-based moves
   const handleEmptyPileClick = useCallback(
@@ -165,7 +195,7 @@ export default function DomKlondikeBoard() {
             <DomPile type="freecell" label="⟲">
               {stock.length > 0 && (
                 <div
-                  className="dom-card dom-card-back"
+                  className={`dom-card dom-card-back${isHintLocation({ type: 'stock' }, 'source') ? ' dom-card--hint-source' : ''}`}
                   style={{
                     position: 'absolute',
                     top: 0,
@@ -184,12 +214,13 @@ export default function DomKlondikeBoard() {
           <div
             style={{ position: 'relative', width: 'var(--card-width)', height: 'var(--card-height)' }}
           >
-            <DomPile type="freecell">
+            <DomPile type="freecell" isHintTarget={isHintLocation({ type: 'waste' }, 'target')}>
               {wasteTopCard && (
                 <DomCard
                   card={wasteTopCard as any}
                   style={{ top: 0, left: 0, cursor: 'pointer' }}
                   zIndex={1}
+                  isHintSource={hintSourceIds.has(wasteTopCard.id)}
                   isSelected={selectedCardIds.has(wasteTopCard.id)}
                   onPointerDown={() => handleCardClick(wasteTopCard.id, [wasteTopCard.id], { type: 'waste' })}
                   onDoubleClick={() => handleDoubleClick(wasteTopCard.id)}
@@ -214,6 +245,7 @@ export default function DomKlondikeBoard() {
                 <DomPile
                   type="foundation"
                   label={SUIT_SYMBOLS[suit]}
+                  isHintTarget={isHintLocation({ type: 'foundation', suit }, 'target')}
                   onClick={selection ? () => handleEmptyPileClick({ type: 'foundation', suit }) : undefined}
                 >
                   {topCard && (
@@ -260,6 +292,7 @@ export default function DomKlondikeBoard() {
             >
               <DomPile
                 type="cascade"
+                isHintTarget={isHintLocation({ type: 'cascade', index: colIdx }, 'target')}
                 onClick={cascade.length === 0 && selection ? () => handleEmptyPileClick({ type: 'cascade', index: colIdx }) : undefined}
               >
                 {cascade.map((card, rowIdx) => {
@@ -311,6 +344,7 @@ export default function DomKlondikeBoard() {
                         cursor: isInRun ? 'grab' : 'default',
                       }}
                       zIndex={rowIdx + 1}
+                      isHintSource={hintSourceIds.has(card.id)}
                       isSelected={selectedCardIds.has(card.id)}
                       onPointerDown={isInRun ? () => handleCardClick(card.id, dragCardIds, srcLoc) : undefined}
                       onDoubleClick={isBottomCard ? () => handleDoubleClick(card.id) : undefined}

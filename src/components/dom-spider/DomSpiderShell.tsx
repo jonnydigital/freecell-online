@@ -2,10 +2,10 @@
 
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { useDomSpiderStore, domSpiderStore } from '@/lib/dom-spider/useDomSpiderStore';
-import DomSpiderBoard from './DomSpiderBoard';
+import DomSpiderBoard, { type SpiderHintHighlight } from './DomSpiderBoard';
 import { SpiderDifficulty } from '@/engine/SpiderEngine';
 import Link from '@/components/NetworkLink';
-import { Undo2 } from 'lucide-react';
+import { Lightbulb, Undo2 } from 'lucide-react';
 import GameSwitcher from '../GameSwitcher';
 import AdUnit from '../AdUnit';
 import { loadStats, saveStats } from '@/lib/storage';
@@ -13,6 +13,7 @@ import { recordWin, recordLoss, getWinPercent, type GameStats } from '@/lib/stat
 import {
   trackAbandoned,
   trackGameStart,
+  trackHint,
   trackMove,
   trackUndo,
   trackWin,
@@ -44,8 +45,18 @@ export default function DomSpiderShell({ initialDifficulty = '1-suit' }: DomSpid
 
   const [showWinModal, setShowWinModal] = useState(false);
   const [winStats, setWinStats] = useState<GameStats | null>(null);
+  const [hintHighlight, setHintHighlight] = useState<SpiderHintHighlight | null>(null);
+  const hintTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const trackedGameStartRef = useRef<number | null>(null);
   const trackedMoveCountRef = useRef(moveCount);
+
+  const clearHint = useCallback(() => {
+    if (hintTimerRef.current) {
+      clearTimeout(hintTimerRef.current);
+      hintTimerRef.current = null;
+    }
+    setHintHighlight(null);
+  }, []);
 
   // Timer
   useEffect(() => {
@@ -90,9 +101,10 @@ export default function DomSpiderShell({ initialDifficulty = '1-suit' }: DomSpid
       for (let i = trackedMoveCountRef.current; i < moveCount; i++) {
         trackMove('tap');
       }
+      clearHint();
     }
     trackedMoveCountRef.current = moveCount;
-  }, [moveCount]);
+  }, [moveCount, clearHint]);
 
   const handleNewGame = useCallback(() => {
     if (timerStarted && !isWon) {
@@ -100,13 +112,32 @@ export default function DomSpiderShell({ initialDifficulty = '1-suit' }: DomSpid
       // Abandoning an in-progress game counts as a loss so win % stays honest.
       saveStats(recordLoss(loadStats('spider')), 'spider');
     }
+    clearHint();
     newGame();
-  }, [timerStarted, isWon, newGame]);
+  }, [timerStarted, isWon, newGame, clearHint]);
 
   const handleUndo = useCallback(() => {
+    clearHint();
     undo();
     trackUndo();
-  }, [undo]);
+  }, [undo, clearHint]);
+
+  const handleHint = useCallback(() => {
+    trackHint();
+    const hint = domSpiderStore.getState().getEngine().getHint();
+    if (!hint) {
+      clearHint();
+      return;
+    }
+
+    clearHint();
+    setHintHighlight({
+      sourceCardIds: hint.cards.map((card) => card.id),
+      sourceLocation: hint.from,
+      targetLocation: hint.to,
+    });
+    hintTimerRef.current = setTimeout(() => setHintHighlight(null), 3500);
+  }, [clearHint]);
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -122,10 +153,19 @@ export default function DomSpiderShell({ initialDifficulty = '1-suit' }: DomSpid
       const key = e.key.toLowerCase();
       if (key === 'z') { e.preventDefault(); handleUndo(); return; }
       if (key === 'n') { e.preventDefault(); handleNewGame(); return; }
+      if (key === 'h') { e.preventDefault(); handleHint(); return; }
     };
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
-  }, [handleUndo, handleNewGame]);
+  }, [handleUndo, handleNewGame, handleHint]);
+
+  useEffect(() => {
+    return () => {
+      if (hintTimerRef.current) {
+        clearTimeout(hintTimerRef.current);
+      }
+    };
+  }, []);
 
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
   const suitLabels: Record<SpiderDifficulty, string> = isMobile
@@ -232,6 +272,26 @@ export default function DomSpiderShell({ initialDifficulty = '1-suit' }: DomSpid
             <Undo2 size={14} />
             {!isMobile && 'Undo'}
           </button>
+          <button
+            onClick={handleHint}
+            title="Hint (H)"
+            style={{
+              padding: '6px 14px',
+              borderRadius: '8px',
+              background: 'rgba(255,255,255,0.04)',
+              border: '1px solid rgba(255,255,255,0.08)',
+              color: 'rgba(255,255,255,0.6)',
+              fontSize: '12px',
+              fontWeight: 600,
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '4px',
+            }}
+          >
+            <Lightbulb size={14} />
+            {!isMobile && 'Hint'}
+          </button>
           <button onClick={handleNewGame} title="New Game" style={{ padding: '6px 14px', borderRadius: '8px', background: 'rgba(212,175,55,0.15)', border: '1px solid rgba(212,175,55,0.3)', color: '#D4AF37', fontSize: '12px', fontWeight: 600, cursor: 'pointer' }}>
             New Deal
           </button>
@@ -241,7 +301,7 @@ export default function DomSpiderShell({ initialDifficulty = '1-suit' }: DomSpid
       {/* Main content */}
       <div style={{ display: 'flex', flex: 1 }}>
         <div style={{ flex: 1, padding: '16px', overflow: 'hidden' }}>
-          <DomSpiderBoard />
+          <DomSpiderBoard hint={hintHighlight} />
         </div>
 
         {/* Sidebar */}

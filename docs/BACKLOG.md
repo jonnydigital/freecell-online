@@ -123,6 +123,7 @@
 - [x] FreeCell guide language switcher polish — centralized visible EN/ES/FR/DE/IT/PT guide-page language links so the completed i18n cluster stays consistent (shipped 2026-07-06)
 - [x] Mobile FreeCell card glyph polish — raised the smallest mobile suit/slot label floors for tighter true-phone readability (shipped 2026-07-04)
 - [x] Mobile haptic feedback — Settings-controlled phone vibration cues for selection, moves, foundation placements, invalid moves, undo, and wins (shipped 2026-07-05)
+- [x] Klondike and Spider teaching hints — Klondike no longer auto-plays hints; Spider now has a hint button/shortcut and both games highlight the recommended source and destination (shipped 2026-07-06)
 
 ---
 

@@ -8,7 +8,17 @@ import DomCard from '../dom-freecell/DomCard';
 import DomPile from '../dom-freecell/DomPile';
 import '../dom-freecell/dom-card-styles.css';
 
-export default function DomSpiderBoard() {
+export interface SpiderHintHighlight {
+  sourceCardIds: string[];
+  sourceLocation: SpiderLocation;
+  targetLocation: SpiderLocation;
+}
+
+interface DomSpiderBoardProps {
+  hint?: SpiderHintHighlight | null;
+}
+
+export default function DomSpiderBoard({ hint }: DomSpiderBoardProps) {
   const boardRef = useRef<HTMLDivElement>(null);
 
   const cascades = useDomSpiderStore((s) => s.cascades);
@@ -23,6 +33,21 @@ export default function DomSpiderBoard() {
     if (!selection) return new Set<string>();
     return new Set(selection.cardIds);
   }, [selection]);
+
+  const hintSourceIds = useMemo(() => new Set(hint?.sourceCardIds ?? []), [hint]);
+
+  const isHintLocation = useCallback(
+    (location: SpiderLocation, role: 'source' | 'target') => {
+      if (!hint) return false;
+      const candidate = role === 'source' ? hint.sourceLocation : hint.targetLocation;
+      if (candidate.type !== location.type) return false;
+      if (location.type === 'cascade') {
+        return candidate.type === 'cascade' && candidate.index === location.index;
+      }
+      return true;
+    },
+    [hint],
+  );
 
   // Valid runs per cascade
   const validRuns = useMemo(() => {
@@ -135,7 +160,7 @@ export default function DomSpiderBoard() {
           {Array.from({ length: stockDeals }, (_, i) => (
             <div
               key={`stock-${i}`}
-              className="dom-card dom-card-back"
+              className={`dom-card dom-card-back${isHintLocation({ type: 'stock' }, 'source') ? ' dom-card--hint-source' : ''}`}
               style={{
                 position: 'absolute',
                 top: 0,
@@ -194,6 +219,7 @@ export default function DomSpiderBoard() {
             >
               <DomPile
                 type="cascade"
+                isHintTarget={isHintLocation({ type: 'cascade', index: colIdx }, 'target')}
                 onClick={cascade.length === 0 && selection ? () => handleEmptyPileClick({ type: 'cascade', index: colIdx }) : undefined}
               >
                 {cascade.map((card, rowIdx) => {
@@ -241,6 +267,7 @@ export default function DomSpiderBoard() {
                         cursor: isInRun ? 'grab' : 'default',
                       }}
                       zIndex={rowIdx + 1}
+                      isHintSource={hintSourceIds.has(card.id)}
                       isSelected={selectedCardIds.has(card.id)}
                       onPointerDown={isInRun ? () => handleCardClick(card.id, dragCardIds, srcLoc) : undefined}
                     />

@@ -1,4 +1,11 @@
 
+## 2026-07-06 (OpenClaw Evening Build)
+
+### Shipped
+- **Klondike and Spider teaching hints** — changed Klondike hints from auto-playing moves to highlighting the source cards and destination pile, matching FreeCell's teaching-first behavior.
+- Added Spider hints end-to-end: engine move recommendations, toolbar/keyboard shortcut support, analytics tracking, stock-deal hints, and board highlights for source runs and destination cascades.
+- Verification: `npm run build` passed with Node 22 (existing multi-lockfile workspace-root warning and edge-runtime static-generation warning remain; default Node 18 still fails because Next.js requires >=20.9).
+
 ## 2026-07-06 (OpenClaw Overnight Build)
 
 ### Shipped

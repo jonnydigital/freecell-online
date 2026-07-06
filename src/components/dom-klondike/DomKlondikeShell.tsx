@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { useDomKlondikeStore, domKlondikeStore } from '@/lib/dom-klondike/useDomKlondikeStore';
-import DomKlondikeBoard from './DomKlondikeBoard';
+import { useDomKlondikeStore } from '@/lib/dom-klondike/useDomKlondikeStore';
+import DomKlondikeBoard, { type KlondikeHintHighlight } from './DomKlondikeBoard';
 import { KlondikeDrawMode } from '@/engine/KlondikeEngine';
 import Link from '@/components/NetworkLink';
 import { isHubSite } from '@/lib/siteConfig';
@@ -55,8 +55,18 @@ export default function DomKlondikeShell({ initialDrawMode = 1 }: DomKlondikeShe
 
   const [showWinModal, setShowWinModal] = useState(false);
   const [winStats, setWinStats] = useState<GameStats | null>(null);
+  const [hintHighlight, setHintHighlight] = useState<KlondikeHintHighlight | null>(null);
+  const hintTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const trackedGameStartRef = useRef<number | null>(null);
   const trackedMoveCountRef = useRef(moveCount);
+
+  const clearHint = useCallback(() => {
+    if (hintTimerRef.current) {
+      clearTimeout(hintTimerRef.current);
+      hintTimerRef.current = null;
+    }
+    setHintHighlight(null);
+  }, []);
 
   // Timer
   useEffect(() => {
@@ -100,9 +110,10 @@ export default function DomKlondikeShell({ initialDrawMode = 1 }: DomKlondikeShe
       for (let i = trackedMoveCountRef.current; i < moveCount; i++) {
         trackMove('tap');
       }
+      clearHint();
     }
     trackedMoveCountRef.current = moveCount;
-  }, [moveCount]);
+  }, [moveCount, clearHint]);
 
   const handleNewGame = useCallback(() => {
     if (timerStarted && !isWon) {
@@ -110,13 +121,31 @@ export default function DomKlondikeShell({ initialDrawMode = 1 }: DomKlondikeShe
       // Abandoning an in-progress game counts as a loss so win % stays honest.
       saveStats(recordLoss(loadStats('klondike')), 'klondike');
     }
+    clearHint();
     newGame();
-  }, [timerStarted, isWon, newGame]);
+  }, [timerStarted, isWon, newGame, clearHint]);
 
   const handleUndo = useCallback(() => {
+    clearHint();
     undo();
     trackUndo();
-  }, [undo]);
+  }, [undo, clearHint]);
+
+  // Hint
+  const handleHint = useCallback(() => {
+    trackHint();
+    const engine = getEngine();
+    const hint = engine.getHint();
+    if (hint) {
+      clearHint();
+      setHintHighlight({
+        sourceCardIds: hint.cards.map((card) => card.id),
+        sourceLocation: hint.from,
+        targetLocation: hint.to,
+      });
+      hintTimerRef.current = setTimeout(() => setHintHighlight(null), 3500);
+    }
+  }, [getEngine, clearHint]);
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -132,25 +161,19 @@ export default function DomKlondikeShell({ initialDrawMode = 1 }: DomKlondikeShe
       const key = e.key.toLowerCase();
       if (key === 'z') { e.preventDefault(); handleUndo(); return; }
       if (key === 'n') { e.preventDefault(); handleNewGame(); return; }
+      if (key === 'h') { e.preventDefault(); handleHint(); return; }
     };
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
-  }, [handleUndo, handleNewGame]);
+  }, [handleUndo, handleNewGame, handleHint]);
 
-  // Hint
-  const handleHint = useCallback(() => {
-    trackHint();
-    const engine = getEngine();
-    const hint = engine.getHint();
-    if (hint) {
-      // For now just auto-execute the hint
-      if (hint.from.type === 'stock' && hint.to.type === 'waste') {
-        domKlondikeStore.getState().drawFromStock();
-      } else {
-        domKlondikeStore.getState().tryMove(hint.from, hint.to);
+  useEffect(() => {
+    return () => {
+      if (hintTimerRef.current) {
+        clearTimeout(hintTimerRef.current);
       }
-    }
-  }, [getEngine]);
+    };
+  }, []);
 
   return (
     <div
@@ -247,7 +270,7 @@ export default function DomKlondikeShell({ initialDrawMode = 1 }: DomKlondikeShe
       <div style={{ display: 'flex', flex: 1 }}>
         {/* Game board */}
         <div style={{ flex: 1, padding: '16px', overflow: 'auto' }}>
-          <DomKlondikeBoard />
+          <DomKlondikeBoard hint={hintHighlight} />
         </div>
 
         {/* Right sidebar (desktop) */}

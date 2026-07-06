@@ -217,6 +217,49 @@ export class SpiderEngine {
         }
     }
 
+    public getHint(): SpiderMove | null {
+        let best: SpiderMove | null = null;
+        let bestScore = -Infinity;
+
+        for (let i = 0; i < this.state.cascades.length; i++) {
+            const source = this.state.cascades[i];
+            const run = this.getValidRun(i);
+            if (run.length === 0) continue;
+
+            const cardIndex = source.length - run.length;
+            const movingCard = run[0];
+            const revealsCard = cardIndex > 0 && !source[cardIndex - 1].isFaceUp;
+
+            for (let j = 0; j < this.state.cascades.length; j++) {
+                if (i === j) continue;
+
+                const target = this.state.cascades[j];
+                const from: SpiderLocation = { type: 'cascade', index: i, cardIndex };
+                const to: SpiderLocation = { type: 'cascade', index: j };
+                if (!this.isLegalMove(from, to)) continue;
+
+                const targetTop = target[target.length - 1];
+                let score = 0;
+                if (revealsCard) score += 100;
+                if (target.length === 0) score += 20;
+                if (targetTop && targetTop.suit === movingCard.suit) score += 40;
+                score += run.length;
+
+                if (score > bestScore) {
+                    bestScore = score;
+                    best = { from, to, cards: run };
+                }
+            }
+        }
+
+        const hasEmptyCascade = this.state.cascades.some((cascade) => cascade.length === 0);
+        if (!best && this.state.stock.length > 0 && !hasEmptyCascade) {
+            return { from: { type: 'stock' }, to: { type: 'cascade', index: 0 }, cards: [], isDeal: true };
+        }
+
+        return best;
+    }
+
     private checkAndRemoveCompletedRuns(cascadeIndex: number): { cards: Card[]; cascadeIndex: number; flippedCard: boolean } | null {
         const cascade = this.state.cascades[cascadeIndex];
         if (cascade.length < 13) return null;

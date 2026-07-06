@@ -4,6 +4,7 @@ import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import { canonicalUrlFor } from "@/lib/routeOwnership";
 import AdUnit from "@/components/AdUnit";
 import ContentLayout from "@/components/ContentLayout";
+import FreecellLanguageSwitcher from "@/components/FreecellLanguageSwitcher";
 import {
   CardSection,
   ContentBody,
@@ -177,26 +178,7 @@ export default function FreeCellItalianPage() {
         </div>
       </nav>
 
-      <div className="mx-auto mb-10 max-w-4xl px-5 sm:px-8 lg:px-10">
-        <div className="flex flex-wrap items-center justify-center gap-2 text-sm text-[#6B7280]">
-          <span className="mr-1 font-medium text-white/75">Disponibile anche:</span>
-          <Link href="/freecell/how-to-play" className="rounded-full border border-white/15 px-3 py-1.5 text-white transition hover:border-white/30 hover:bg-white/10">
-            English
-          </Link>
-          <Link href="/freecell-en-espanol" className="rounded-full border border-white/15 px-3 py-1.5 text-white transition hover:border-white/30 hover:bg-white/10">
-            Espanol
-          </Link>
-          <Link href="/freecell-en-francais" className="rounded-full border border-white/15 px-3 py-1.5 text-white transition hover:border-white/30 hover:bg-white/10">
-            Francais
-          </Link>
-          <Link href="/freecell-auf-deutsch" className="rounded-full border border-white/15 px-3 py-1.5 text-white transition hover:border-white/30 hover:bg-white/10">
-            Deutsch
-          </Link>
-          <Link href="/freecell-em-portugues" className="rounded-full border border-white/15 px-3 py-1.5 text-white transition hover:border-white/30 hover:bg-white/10">
-            Portugues
-          </Link>
-        </div>
-      </div>
+      <FreecellLanguageSwitcher currentLocale="it" label="Disponibile anche:" />
 
       <main className="mx-auto flex max-w-5xl flex-col gap-6 px-4 pb-20 sm:px-6">
         <CardSection id="gioca" variant="dark">

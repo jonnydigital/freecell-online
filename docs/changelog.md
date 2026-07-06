@@ -1,4 +1,11 @@
 
+## 2026-07-06 (OpenClaw Overnight Build)
+
+### Shipped
+- **FreeCell guide language switcher polish** — centralized the visible language switcher used by the English, Spanish, French, German, Italian, and Portuguese FreeCell guide pages.
+- Standardized the six-language discovery links so every guide page exposes the full EN/ES/FR/DE/IT/PT cluster consistently, reducing drift now that the competitor-parity language set is live.
+- Verification: `npm run build` passed with Node 22 (existing multi-lockfile workspace-root warning and edge-runtime static-generation warning remain; default Node 18 still fails because Next.js requires >=20.9).
+
 ## 2026-07-05 (OpenClaw Evening Heartbeat)
 
 ### Shipped

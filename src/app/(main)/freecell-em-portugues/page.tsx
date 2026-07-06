@@ -4,6 +4,7 @@ import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import { canonicalUrlFor } from "@/lib/routeOwnership";
 import AdUnit from "@/components/AdUnit";
 import ContentLayout from "@/components/ContentLayout";
+import FreecellLanguageSwitcher from "@/components/FreecellLanguageSwitcher";
 import {
   CardSection,
   ContentBody,
@@ -168,26 +169,7 @@ export default function FreeCellPortuguesePage() {
         </div>
       </nav>
 
-      <div className="mx-auto mb-10 max-w-4xl px-5 sm:px-8 lg:px-10">
-        <div className="flex flex-wrap items-center justify-center gap-2 text-sm text-[#6B7280]">
-          <span className="mr-1 font-medium text-white/75">Tambem disponivel:</span>
-          {[
-            { href: "/freecell/how-to-play", label: "English" },
-            { href: "/freecell-en-espanol", label: "Espanol" },
-            { href: "/freecell-en-francais", label: "Francais" },
-            { href: "/freecell-auf-deutsch", label: "Deutsch" },
-            { href: "/freecell-in-italiano", label: "Italiano" },
-          ].map((language) => (
-            <Link
-              key={language.href}
-              href={language.href}
-              className="rounded-full border border-white/15 px-3 py-1.5 text-white transition hover:border-white/30 hover:bg-white/10"
-            >
-              {language.label}
-            </Link>
-          ))}
-        </div>
-      </div>
+      <FreecellLanguageSwitcher currentLocale="pt" label="Tambem disponivel:" />
 
       <main className="mx-auto flex max-w-5xl flex-col gap-6 px-4 pb-20 sm:px-6">
         <CardSection id="jogar" variant="dark">

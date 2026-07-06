@@ -1,7 +1,7 @@
 {
-  "date": "2026-07-05",
+  "date": "2026-07-06",
   "lastPulledBy": "openclaw heartbeat browser manual GA4 pull",
-  "notes": "Updated 2026-07-05 with GA4 Home 28-day highlight plus Last 7 days country/page/channel/event cards for FreeCell Online. Reports snapshot is still not configured; current pull used GA4 Home visible cards.",
+  "notes": "Updated 2026-07-06 with GA4 Reports snapshot for FreeCell Online. Pulled Last 28 days headline plus Last 7 days country/page/channel/event cards.",
   "network_state": {
     "live_domains": 4,
     "live_since": {
@@ -538,7 +538,7 @@
       "Refresh FreeCell GA4 report snapshot for sessions/pageviews/channels/top pages when GA4 report navigation is stable."
     ]
   },
-  "last_pull_iso": "2026-07-04T11:46:00Z",
+  "last_pull_iso": "2026-07-06T12:16:00Z",
   "sitemap_url_counts_live": {
     "playfreecellonline": 105,
     "solitairestack": 121,
@@ -607,24 +607,28 @@
     }
   },
   "daily": {
-    "date": "2026-07-05",
-    "measurementId": "G-988ZBJSKVJ",
+    "date": "2026-07-06",
+    "measurementId": "G-8N85JJPLED",
     "ga4Property": "p525799022",
     "headline28Days": {
       "activeUsers": 28,
-      "activeUsersChangePercent": 80.3,
-      "eventCount": 474,
-      "eventCountChangePercent": 41.1,
+      "activeUsersChangePercent": -79.4,
+      "eventCount": 418,
+      "eventCountChangePercent": -48.3,
       "keyEvents": 0,
       "newUsers": 26,
-      "newUsersChangePercent": 81
+      "newUsersChangePercent": -80.2,
+      "averageEngagementTimePerActiveUser": "2m 26s",
+      "totalRevenue": "$0.00"
     },
     "last7Days": {
-      "activeUsers": 7,
-      "activeUsersChangePercent": 22.2,
-      "oneDayActiveUsers": 3,
-      "oneDayChangePercent": 0,
-      "pageViews": 29,
+      "activeUsers": 6,
+      "oneDayActiveUsers": 0,
+      "thirtyDayActiveUsers": 30,
+      "newUsers": 4,
+      "averageEngagementTimePerActiveUser": "6m 01s",
+      "totalRevenue": "$0.00",
+      "pageViews": 26,
       "sessions": 15,
       "gameStarts": 13,
       "userEngagementEvents": 7,
@@ -633,57 +637,48 @@
       "realtimeUsers": 0
     },
     "countries": {
-      "United States": 6,
-      "China": 1,
-      "United Kingdom": 0,
-      "Vietnam": 0
+      "United States": 5,
+      "China": 1
     },
     "sessionsByChannel": {
       "Direct": 9,
-      "Organic Search": 5,
+      "Organic Search": 4,
       "Referral": 1,
-      "Unassigned": 2
+      "Unassigned": 1
     },
     "topPages": [
       {
         "title": "Solitaire Stack | Play FreeCell, Spider Solitaire, and More",
-        "views": 10,
-        "changePercent": -25
+        "views": 10
       },
       {
         "title": "Play FreeCell Online for Free | No Download Required",
-        "views": 5,
-        "changePercent": -25
+        "views": 5
       },
       {
         "title": "Free Solitaire Games Online | Play 28+ Card Games for Free",
-        "views": 3,
-        "changePercent": 0
-      },
-      {
-        "title": "Bristol Solitaire | Play Online Free — Fan Layout Card Game",
-        "views": 1,
-        "changePercent": -50
+        "views": 2
       },
       {
         "title": "How to Play Forty Thieves Solitaire | Rules, Setup & Strategy",
-        "views": 2,
-        "changePercent": 100
+        "views": 2
+      },
+      {
+        "title": "Pyramid Solitaire | Play Online Free — No Download",
+        "views": 2
       },
       {
         "title": "Clock Solitaire | Play Clock Patience Online Free — Card Game",
-        "views": 1,
-        "changePercent": 0
+        "views": 1
       },
       {
         "title": "FreeCell Strategy Guide | How to Win FreeCell — Beginner to Expert Tips",
-        "views": 1,
-        "changePercent": 0
+        "views": 1
       }
     ],
     "events": {
-      "page_view": 29,
-      "session_start": 15,
+      "page_view": 26,
+      "session_start": 14,
       "game_start": 13,
       "user_engagement": 7,
       "first_visit": 4,
@@ -691,6 +686,6 @@
     },
     "feedbackCount": 0,
     "feedbackNote": "No local data/feedback.json found in repo/runtime paths during heartbeat check.",
-    "taskPicked": "Start Portuguese i18n slice: /freecell-em-portugues and /freecell-em-portugues/jogar with reciprocal hreflang, localized DOM game copy, sitemap/footer/discovery, and changelog/backlog updates."
+    "taskPicked": "Analytics review after EN/DE/ES/FR/IT/PT i18n cluster. No code build kicked off because GA4 has only 6 active users over the last 7 days and no localized route signal yet; next useful action is to wait for GSC/GA4 route-level data, then decide which language page to reinforce."
   }
 }

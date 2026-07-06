@@ -121,6 +121,7 @@
 - [x] FreeCell em Portugues landing page — Portuguese rules, vocabulary, FAQ schema, hreflang, sitemap/footer discovery (shipped 2026-07-05)
 - [x] Playable FreeCell em Portugues UI — Portuguese game route with translated core game chrome, win screen, share text, mobile controls, settings, sitemap/footer discovery (shipped 2026-07-05)
 - [x] Mobile FreeCell card glyph polish — raised the smallest mobile suit/slot label floors for tighter true-phone readability (shipped 2026-07-04)
+- [x] Mobile haptic feedback — Settings-controlled phone vibration cues for selection, moves, foundation placements, invalid moves, undo, and wins (shipped 2026-07-05)
 
 ---
 

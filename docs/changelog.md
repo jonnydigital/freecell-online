@@ -1,4 +1,11 @@
 
+## 2026-07-05 (OpenClaw Evening Heartbeat)
+
+### Shipped
+- **Mobile haptic feedback** — added a persisted Haptics setting and short phone vibration cues for card selection, successful moves, foundation placements, invalid moves, undo, and wins in the DOM FreeCell game.
+- Localized the Haptics setting label/description across English, Spanish, French, German, Italian, and Portuguese play routes.
+- Verification: `npm run build` passed with Node 22 (existing multi-lockfile workspace-root warning and edge-runtime static-generation warning remain; default Node 18 still fails because Next.js requires >=20.9).
+
 ## 2026-07-05 (OpenClaw Morning Heartbeat)
 
 ### Shipped

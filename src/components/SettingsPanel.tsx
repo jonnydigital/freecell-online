@@ -199,6 +199,12 @@ export default function SettingsPanel({ isOpen, onClose, settings, onUpdateSetti
                                     enabled={settings.soundEnabled}
                                     onToggle={() => toggleSetting('soundEnabled')}
                                 />
+                                <SettingToggle
+                                    label="Haptics"
+                                    description="Short phone vibrations for moves and errors"
+                                    enabled={settings.hapticsEnabled}
+                                    onToggle={() => toggleSetting('hapticsEnabled')}
+                                />
                             </section>
 
                             {/* Accessibility Section */}

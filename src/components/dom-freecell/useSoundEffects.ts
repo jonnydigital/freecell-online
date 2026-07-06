@@ -9,6 +9,7 @@ import { useEffect, useRef } from 'react';
 import { soundManager } from '@/lib/sounds';
 import { domFreecellStore, DomFreecellState } from '@/lib/dom-freecell/useDomFreecellStore';
 import { Card, Suit } from '@/engine/Card';
+import { triggerHaptic } from '@/lib/haptics';
 
 /** Count total cards across all foundation piles. */
 function foundationTotal(foundations: Map<Suit, Card[]>): number {
@@ -54,11 +55,13 @@ export function useSoundEffects(): void {
       // --- Win ---
       else if (state.isWon && !prev.isWon) {
         soundManager.winFanfare();
+        triggerHaptic('win');
       }
 
       // --- Undo (move history shrank) ---
       else if (state.moveHistory.length < prev.moveHistoryLength) {
         soundManager.undo();
+        triggerHaptic('move');
       }
 
       // --- Move happened (moveCount increased) ---
@@ -74,9 +77,11 @@ export function useSoundEffects(): void {
             }
           });
           soundManager.cardToFoundation(maxRank);
+          triggerHaptic('foundation');
         } else {
           // Regular cascade/freecell placement
           soundManager.cardPlace();
+          triggerHaptic('move');
         }
 
         // Track for combo sounds

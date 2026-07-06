@@ -93,6 +93,9 @@ Cards deeper in cascades should have less shadow. Top cards have more. Creates v
 ### 12. Smooth Resize Transitions (Effort: M) ✅ SHIPPED 2026-03-04
 Current resize snaps everything instantly. Animate card positions during resize for a polished feel.
 
+### 13. Mobile Haptic Feedback (Effort: S) ✅ SHIPPED 2026-07-05
+Short vibration cues on supported phones for card selection, successful moves, foundation placements, invalid moves, undo, and wins. Persists behind a Settings > Haptics toggle and is localized across all current FreeCell play languages.
+
 ---
 
 ## Implementation Order (Recommended)

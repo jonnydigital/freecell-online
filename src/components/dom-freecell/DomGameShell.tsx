@@ -125,6 +125,8 @@ const UI_COPY = {
     audio: 'Audio',
     soundEffects: 'Sound Effects',
     soundEffectsDescription: 'Card placement and game sounds',
+    haptics: 'Haptics',
+    hapticsDescription: 'Short phone vibrations for moves and errors',
     animationSpeed: 'Animation Speed',
     animationSpeeds: {
       slow: 'slow',
@@ -219,6 +221,8 @@ const UI_COPY = {
     audio: 'Audio',
     soundEffects: 'Sonidos',
     soundEffectsDescription: 'Sonidos de cartas y partida',
+    haptics: 'Vibracion',
+    hapticsDescription: 'Vibraciones cortas para movimientos y errores',
     animationSpeed: 'Velocidad',
     animationSpeeds: {
       slow: 'lenta',
@@ -313,6 +317,8 @@ const UI_COPY = {
     audio: 'Audio',
     soundEffects: 'Sons',
     soundEffectsDescription: 'Sons de cartes et de partie',
+    haptics: 'Vibrations',
+    hapticsDescription: 'Vibrations courtes pour les coups et erreurs',
     animationSpeed: 'Vitesse',
     animationSpeeds: {
       slow: 'lente',
@@ -407,6 +413,8 @@ const UI_COPY = {
     audio: 'Audio',
     soundEffects: 'Sounds',
     soundEffectsDescription: 'Karten- und Spielsounds',
+    haptics: 'Vibration',
+    hapticsDescription: 'Kurze Handy-Vibrationen fuer Zuege und Fehler',
     animationSpeed: 'Animationstempo',
     animationSpeeds: {
       slow: 'langsam',
@@ -501,6 +509,8 @@ const UI_COPY = {
     audio: 'Audio',
     soundEffects: 'Suoni',
     soundEffectsDescription: 'Suoni di carte e partita',
+    haptics: 'Vibrazione',
+    hapticsDescription: 'Brevi vibrazioni per mosse ed errori',
     animationSpeed: 'Velocita',
     animationSpeeds: {
       slow: 'lenta',
@@ -595,6 +605,8 @@ const UI_COPY = {
     audio: 'Audio',
     soundEffects: 'Sons',
     soundEffectsDescription: 'Sons de cartas e partida',
+    haptics: 'Vibracao',
+    hapticsDescription: 'Vibracoes curtas para jogadas e erros',
     animationSpeed: 'Velocidade',
     animationSpeeds: {
       slow: 'lenta',
@@ -2598,6 +2610,12 @@ function DomSettingsPanel({
               description={copy.soundEffectsDescription}
               enabled={settings.soundEnabled}
               onToggle={() => onUpdateSettings({ ...settings, soundEnabled: !settings.soundEnabled })}
+            />
+            <ToggleRow
+              label={copy.haptics}
+              description={copy.hapticsDescription}
+              enabled={settings.hapticsEnabled}
+              onToggle={() => onUpdateSettings({ ...settings, hapticsEnabled: !settings.hapticsEnabled })}
             />
           </section>
 

@@ -11,6 +11,7 @@ import { useSoundEffects } from './useSoundEffects';
 import type { HintHighlight } from './useHint';
 import { announceToScreenReader } from '@/lib/accessibility';
 import { playCardSelectSound, playInvalidMoveSound } from './useSoundEffects';
+import { triggerHaptic } from '@/lib/haptics';
 
 // ---------------------------------------------------------------------------
 // Suit ordering for foundations
@@ -203,6 +204,7 @@ export default function DomBoard({ hint }: DomBoardProps) {
         announceToScreenReader('Card moved');
       } else {
         playInvalidMoveSound();
+        triggerHaptic('invalid');
         store.clearSelection();
       }
     },

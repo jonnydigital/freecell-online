@@ -21,6 +21,7 @@ import { domFreecellStore } from '@/lib/dom-freecell/useDomFreecellStore';
 import { resolveDropTarget } from './useDropTarget';
 import { playCardSelectSound, playInvalidMoveSound } from './useSoundEffects';
 import { announceToScreenReader } from '@/lib/accessibility';
+import { triggerHaptic } from '@/lib/haptics';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -227,6 +228,7 @@ export function useDrag({ cardIds, sourceLocation, boardRef }: UseDragOptions): 
         domFreecellStore.getState().startDrag(cardIds, sourceLocation);
         draggingRef.current = true;
         playCardSelectSound();
+        triggerHaptic('select');
         applyPosition(lastPointerX, lastPointerY);
         rafId = requestAnimationFrame(rafLoop);
       }
@@ -261,6 +263,7 @@ export function useDrag({ cardIds, sourceLocation, boardRef }: UseDragOptions): 
               } else {
                 // No auto-move either — select the new card
                 playInvalidMoveSound();
+                triggerHaptic('invalid');
                 store.selectCards(cardIds, sourceLocation);
                 playCardSelectSound();
               }
@@ -277,6 +280,7 @@ export function useDrag({ cardIds, sourceLocation, boardRef }: UseDragOptions): 
             // No auto-move available — select for manual placement
             store.selectCards(cardIds, sourceLocation);
             playCardSelectSound();
+            triggerHaptic('select');
           }
         }
       }
@@ -336,6 +340,7 @@ export function useDrag({ cardIds, sourceLocation, boardRef }: UseDragOptions): 
           }
         } else {
           playInvalidMoveSound();
+          triggerHaptic('invalid');
           announceToScreenReader('Invalid move', 'assertive');
           await snapBack();
         }

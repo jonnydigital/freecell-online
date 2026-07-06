@@ -48,6 +48,7 @@ export interface GameSettings {
   showKeyboardHints: boolean;
   relaxedMode: boolean;
   largeCards: boolean;
+  hapticsEnabled: boolean;
 }
 
 export interface SavedGameState {
@@ -68,6 +69,7 @@ const DEFAULT_SETTINGS: GameSettings = {
   showKeyboardHints: true,
   relaxedMode: false,
   largeCards: false,
+  hapticsEnabled: true,
 };
 
 function isBrowser(): boolean {

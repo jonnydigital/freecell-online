@@ -1,5 +1,5 @@
 # FreeCell Online — Feature Backlog
-*Ranked by impact × effort. Updated 2026-07-06.*
+*Ranked by impact × effort. Updated 2026-07-07.*
 
 ## 🚨 P0: Critical Bug
 1. ~~**🔴 Mobile card rendering broken**~~ ✅ FIXED 03-02 — Root cause: `recreateAllCardSprites()` used PNG asset keys that were never loaded. On resize (common on mobile), cards became empty containers. Fixed with procedural rendering matching `createCardSprite()`.
@@ -61,6 +61,7 @@
 26. ~~**Easy FreeCell variant**~~ ✅ SHIPPED 03-10 — New `/easy-freecell` game mode: aces and 2s start pre-placed on foundations. Beginner-friendly on-ramp, 1000+ word SEO content page, FAQPage schema. *(Solitaired competitive response + "easy freecell" keyword opportunity)*
 27. **Submit to solitaireblog.com** — Martin Petroff reviews 80+ solitaire sites with ratings. Backlink + visibility opportunity. *(Wait for custom domain)*
 28. ~~**Fix mobile gold rectangle**~~ ✅ FIXED 03-10 — Was idle auto-hint glow (gold border) appearing after 8s even before first move. Now auto-hint effects only trigger after user makes at least 1 move. Also suppressed focus-visible outline on game container.
+29. ~~**PWA install CTA / download prominence**~~ ✅ SHIPPED 2026-07-07 — Browser-aware install card in the FreeCell desktop sidebar and mobile menu overlay, with iOS Add to Home Screen guidance, localized EN/ES/FR/DE/IT/PT copy, and install-funnel analytics. *(Competitor gap from repeated online-solitaire.com research: native/PWA download prominence)*
 
 ## ⏳ Blocked (Needs Jonathan)
 - ~~**Custom domain** — playfreecellonline.com → Vercel DNS~~ ✅ LIVE as of 2026-03-13!
@@ -124,6 +125,7 @@
 - [x] Mobile FreeCell card glyph polish — raised the smallest mobile suit/slot label floors for tighter true-phone readability (shipped 2026-07-04)
 - [x] Mobile haptic feedback — Settings-controlled phone vibration cues for selection, moves, foundation placements, invalid moves, undo, and wins (shipped 2026-07-05)
 - [x] Klondike and Spider teaching hints — Klondike no longer auto-plays hints; Spider now has a hint button/shortcut and both games highlight the recommended source and destination (shipped 2026-07-06)
+- [x] PWA install CTA — browser-aware install card in the FreeCell desktop sidebar and mobile menu overlay, with iOS guidance and GA4 install-funnel events (shipped 2026-07-07)
 
 ---
 

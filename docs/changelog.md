@@ -1,4 +1,12 @@
 
+## 2026-07-07 (OpenClaw Overnight Build)
+
+### Shipped
+- **PWA install CTA** — added a browser-aware install prompt to the FreeCell desktop sidebar and mobile menu overlay so eligible Chrome/Edge/Android users can install directly and iOS users get Add to Home Screen guidance.
+- Localized the install CTA copy across English, Spanish, French, German, Italian, and Portuguese play routes.
+- Added GA4 events for install CTA views, prompt opens, outcomes, and dismissals so the install funnel can be measured against the competitor download/PWA gap.
+- Verification: `npm run build` passed with Node 22 (existing multi-lockfile workspace-root warning and edge-runtime static-generation warning remain; default Node 18 still fails because Next.js requires >=20.9).
+
 ## 2026-07-06 (OpenClaw Evening Build)
 
 ### Shipped

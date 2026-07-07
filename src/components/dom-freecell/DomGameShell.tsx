@@ -34,6 +34,7 @@ import SidebarAchievements from '../sidebar/SidebarAchievements';
 import SidebarStats from '../sidebar/SidebarStats';
 import Leaderboard from '../Leaderboard';
 import GameSwitcher from '../GameSwitcher';
+import PwaInstallPrompt from '../PwaInstallPrompt';
 import {
   trackAbandoned,
   trackDeadlock,
@@ -121,6 +122,13 @@ const UI_COPY = {
     strategyHref: '/strategy',
     badges: 'Badges',
     shortcuts: 'Shortcuts',
+    installApp: 'Install App',
+    installAppDescription: 'Keep FreeCell one tap away with fullscreen play and offline support.',
+    installButton: 'Install',
+    iosInstallTitle: 'Add to Home Screen',
+    iosInstallDescription: 'Open Share in Safari, then choose Add to Home Screen for an app-like shortcut.',
+    iosInstallButton: 'Use Share',
+    dismissInstallPrompt: 'Dismiss install prompt',
     cardBack: 'Card Back',
     audio: 'Audio',
     soundEffects: 'Sound Effects',
@@ -217,6 +225,13 @@ const UI_COPY = {
     strategyHref: '/freecell-en-espanol#estrategia',
     badges: 'Logros',
     shortcuts: 'Atajos',
+    installApp: 'Instalar app',
+    installAppDescription: 'Ten FreeCell a un toque, con juego a pantalla completa y soporte sin conexion.',
+    installButton: 'Instalar',
+    iosInstallTitle: 'Agregar a inicio',
+    iosInstallDescription: 'Abre Compartir en Safari y elige Agregar a inicio para crear el acceso directo.',
+    iosInstallButton: 'Usar Compartir',
+    dismissInstallPrompt: 'Cerrar aviso de instalacion',
     cardBack: 'Dorso',
     audio: 'Audio',
     soundEffects: 'Sonidos',
@@ -313,6 +328,13 @@ const UI_COPY = {
     strategyHref: '/freecell-en-francais#strategie',
     badges: 'Badges',
     shortcuts: 'Raccourcis',
+    installApp: 'Installer',
+    installAppDescription: 'Garde FreeCell a un toucher, en plein ecran et disponible hors ligne.',
+    installButton: 'Installer',
+    iosInstallTitle: "Ajouter a l'ecran",
+    iosInstallDescription: "Ouvre Partager dans Safari, puis choisis Ajouter a l'ecran d'accueil.",
+    iosInstallButton: 'Utiliser Partager',
+    dismissInstallPrompt: "Fermer l'invite d'installation",
     cardBack: 'Dos',
     audio: 'Audio',
     soundEffects: 'Sons',
@@ -409,6 +431,13 @@ const UI_COPY = {
     strategyHref: '/freecell-auf-deutsch#strategie',
     badges: 'Abzeichen',
     shortcuts: 'Tastenkurzel',
+    installApp: 'App installieren',
+    installAppDescription: 'FreeCell bleibt nur einen Tipp entfernt, mit Vollbildspiel und Offline-Support.',
+    installButton: 'Installieren',
+    iosInstallTitle: 'Zum Home-Bildschirm',
+    iosInstallDescription: 'Oeffne Teilen in Safari und waehle Zum Home-Bildschirm fuer eine App-Verknuepfung.',
+    iosInstallButton: 'Teilen nutzen',
+    dismissInstallPrompt: 'Installationshinweis schliessen',
     cardBack: 'Kartenruecken',
     audio: 'Audio',
     soundEffects: 'Sounds',
@@ -505,6 +534,13 @@ const UI_COPY = {
     strategyHref: '/freecell-in-italiano#strategia',
     badges: 'Badge',
     shortcuts: 'Scorciatoie',
+    installApp: 'Installa app',
+    installAppDescription: 'Tieni FreeCell a un tocco, con gioco a schermo intero e supporto offline.',
+    installButton: 'Installa',
+    iosInstallTitle: 'Aggiungi alla home',
+    iosInstallDescription: 'Apri Condividi in Safari, poi scegli Aggiungi alla schermata Home.',
+    iosInstallButton: 'Usa Condividi',
+    dismissInstallPrompt: 'Chiudi avviso installazione',
     cardBack: 'Dorso',
     audio: 'Audio',
     soundEffects: 'Suoni',
@@ -601,6 +637,13 @@ const UI_COPY = {
     strategyHref: '/freecell-em-portugues#estrategia',
     badges: 'Insignias',
     shortcuts: 'Atalhos',
+    installApp: 'Instalar app',
+    installAppDescription: 'Deixe o FreeCell a um toque, com tela cheia e suporte offline.',
+    installButton: 'Instalar',
+    iosInstallTitle: 'Adicionar a tela inicial',
+    iosInstallDescription: 'Abra Compartilhar no Safari e escolha Adicionar a tela inicial.',
+    iosInstallButton: 'Usar Compartilhar',
+    dismissInstallPrompt: 'Fechar aviso de instalacao',
     cardBack: 'Verso',
     audio: 'Audio',
     soundEffects: 'Sons',
@@ -2221,6 +2264,18 @@ export default function DomGameShell({ initialGameNumber, variant, locale = 'en'
           onShowFull={() => setShowLeaderboard(true)}
         />
         <SidebarDailyChallenge onPlayDaily={handlePlayDaily} />
+        <PwaInstallPrompt
+          surface="sidebar"
+          copy={{
+            title: copy.installApp,
+            description: copy.installAppDescription,
+            button: copy.installButton,
+            iosTitle: copy.iosInstallTitle,
+            iosDescription: copy.iosInstallDescription,
+            iosButton: copy.iosInstallButton,
+            dismissLabel: copy.dismissInstallPrompt,
+          }}
+        />
         <SidebarAchievements
           onShowFull={() => setShowAchievements(true)}
           refreshKey={newAchievements.length}
@@ -2483,6 +2538,19 @@ function DomHomeOverlay({
               </div>
               <span className="absolute right-5 text-white/20">&rarr;</span>
             </button>
+
+            <PwaInstallPrompt
+              surface="home-overlay"
+              copy={{
+                title: copy.installApp,
+                description: copy.installAppDescription,
+                button: copy.installButton,
+                iosTitle: copy.iosInstallTitle,
+                iosDescription: copy.iosInstallDescription,
+                iosButton: copy.iosInstallButton,
+                dismissLabel: copy.dismissInstallPrompt,
+              }}
+            />
 
             {/* Quick links */}
             <div className="grid grid-cols-4 gap-3 text-center pt-2">

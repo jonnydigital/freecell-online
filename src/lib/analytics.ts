@@ -24,7 +24,11 @@ export type GameEvent =
   | { name: 'daily_room_view'; params: EventParams }
   | { name: 'daily_room_play_click'; params: EventParams }
   | { name: 'daily_room_rankings_click'; params: EventParams }
-  | { name: 'daily_room_invite_copy'; params: EventParams };
+  | { name: 'daily_room_invite_copy'; params: EventParams }
+  | { name: 'pwa_install_cta_view'; params: EventParams }
+  | { name: 'pwa_install_prompt_open'; params: EventParams }
+  | { name: 'pwa_install_result'; params: EventParams }
+  | { name: 'pwa_install_dismiss'; params: EventParams };
 
 declare global {
   interface Window {
@@ -268,5 +272,33 @@ export function trackDailyRoomInviteCopy(seed: number, date: string, success: bo
   trackEvent({
     name: 'daily_room_invite_copy',
     params: { game_number: seed, daily_date: date, success },
+  });
+}
+
+export function trackPwaInstallCtaView(surface: string, mode: string): void {
+  trackEvent({
+    name: 'pwa_install_cta_view',
+    params: { surface, mode },
+  });
+}
+
+export function trackPwaInstallPromptOpen(surface: string, mode: string): void {
+  trackEvent({
+    name: 'pwa_install_prompt_open',
+    params: { surface, mode },
+  });
+}
+
+export function trackPwaInstallResult(surface: string, mode: string, outcome: string): void {
+  trackEvent({
+    name: 'pwa_install_result',
+    params: { surface, mode, outcome },
+  });
+}
+
+export function trackPwaInstallDismiss(surface: string, mode: string): void {
+  trackEvent({
+    name: 'pwa_install_dismiss',
+    params: { surface, mode },
   });
 }

@@ -14,3 +14,4 @@ landed this week.
 | 2026-07-05 | cowork-daily-review | qa+fix | src/components/dom-freecell/DomGameShell.tsx (U6: landscape time/moves readout), docs/QA_REPORT_2026-07-05.md, docs/research/competitor-log.csv | freecell (+network QA: hub, klondike spoke) |
 | 2026-07-06 | weekly-content-pipeline | content | klondike-foundation-timing, spider-solitaire-position-reading | playklondikeonline, playspidersolitaireonline |
 | 2026-07-06 | cowork-daily-review | qa+audit | docs/QA_REPORT_2026-07-06.md, docs/research/competitor-log.csv | freecell (+network QA: hub, spider spoke; U5 IT/PT locale audit) |
+| 2026-07-07 | cowork-daily-review | fix+qa | src/components/HtmlLang.tsx, src/app/(main)/freecell-en-francais/page.tsx (+/jouer), docs/QA_REPORT_2026-07-07.md, docs/research/competitor-log.csv | freecell (+network QA: hub, klondike spoke) |

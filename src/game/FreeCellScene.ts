@@ -1519,7 +1519,7 @@ export class FreeCellScene extends Phaser.Scene {
     // Use raw touch events on the canvas for zero-lag response
     // Phaser's input adds processing overhead — bypassing it for drag gives
     // us direct finger-to-card tracking every frame
-    canvas.addEventListener('touchstart', (e: TouchEvent) => {
+    this.trackDomListener(canvas, 'touchstart', ((e: TouchEvent) => {
       e.preventDefault(); // Kill scroll, zoom, and 300ms tap delay
       if (this.isReplayMode) return;
       if (this.isSettlingDrag) return; // Don't start new drag while cards are settling
@@ -1550,9 +1550,9 @@ export class FreeCellScene extends Phaser.Scene {
 
       // Otherwise, pick up a card for drag
       this.tryTouchPickup(x, y);
-    }, { passive: false });
+    }) as EventListener, { passive: false });
 
-    canvas.addEventListener('touchmove', (e: TouchEvent) => {
+    this.trackDomListener(canvas, 'touchmove', ((e: TouchEvent) => {
       e.preventDefault();
       if (!this.isDragging || this.activeDragCards.length === 0) return;
 
@@ -1567,9 +1567,9 @@ export class FreeCellScene extends Phaser.Scene {
 
       // Just store target — spring physics in update() loop handles the rest
       this.activeDragTarget = { x, y };
-    }, { passive: false });
+    }) as EventListener, { passive: false });
 
-    canvas.addEventListener('touchend', (e: TouchEvent) => {
+    this.trackDomListener(canvas, 'touchend', ((e: TouchEvent) => {
       e.preventDefault();
       const touch = e.changedTouches[0];
       const rect = canvas.getBoundingClientRect();
@@ -1596,12 +1596,12 @@ export class FreeCellScene extends Phaser.Scene {
       } else {
         this.clearActiveDragState(true);
       }
-    }, { passive: false });
+    }) as EventListener, { passive: false });
 
-    canvas.addEventListener('touchcancel', (e: TouchEvent) => {
+    this.trackDomListener(canvas, 'touchcancel', ((e: TouchEvent) => {
       e.preventDefault();
       this.touchDragSnapBack();
-    }, { passive: false });
+    }) as EventListener, { passive: false });
   }
 
   /** Try to pick up a card at the touch point for dragging */
@@ -1767,7 +1767,7 @@ export class FreeCellScene extends Phaser.Scene {
   private setupMouseDrag(): void {
     const canvas = this.game.canvas;
 
-    canvas.addEventListener('mousedown', (e: MouseEvent) => {
+    this.trackDomListener(canvas, 'mousedown', ((e: MouseEvent) => {
       if (e.button !== 0) return; // Left click only
       if (this.isReplayMode) return;
       if (this.isSettlingDrag) return; // Don't start new drag while cards are settling
@@ -1789,9 +1789,9 @@ export class FreeCellScene extends Phaser.Scene {
       // Actual drag starts on first movement past threshold
       this.tryMousePickup(x, y);
       this.mouseDownCardId = this.activeDragCards[0]?.cardData.id ?? null;
-    });
+    }) as EventListener);
 
-    canvas.addEventListener('mousemove', (e: MouseEvent) => {
+    this.trackDomListener(canvas, 'mousemove', ((e: MouseEvent) => {
       if (!this.mouseIsDown) return;
 
       const rect = canvas.getBoundingClientRect();
@@ -1822,9 +1822,9 @@ export class FreeCellScene extends Phaser.Scene {
 
       // Just store target — spring physics in update() loop handles the rest
       this.activeDragTarget = { x, y };
-    });
+    }) as EventListener);
 
-    canvas.addEventListener('mouseup', (e: MouseEvent) => {
+    this.trackDomListener(canvas, 'mouseup', ((e: MouseEvent) => {
       if (e.button !== 0) return;
 
       const rect = canvas.getBoundingClientRect();
@@ -1842,16 +1842,16 @@ export class FreeCellScene extends Phaser.Scene {
         this.clearActiveDragState(true);
       }
       this.mouseIsDown = false;
-    });
+    }) as EventListener);
 
     // Handle mouse leaving the canvas during drag
-    canvas.addEventListener('mouseleave', () => {
+    this.trackDomListener(canvas, 'mouseleave', (() => {
       if (this.isDragging) {
         const snapTargets = this.getSnapBackTargets();
         this.beginSettlingDrag(snapTargets, null);
       }
       this.mouseIsDown = false;
-    });
+    }) as EventListener);
   }
 
   private tryMousePickup(x: number, y: number): void {

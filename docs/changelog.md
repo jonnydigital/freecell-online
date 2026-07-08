@@ -1,4 +1,10 @@
 
+## 2026-07-08 (OpenClaw Evening Build)
+
+### Shipped
+- **FreeCell Phaser input listener cleanup** — routed the raw canvas touch and mouse drag handlers through the scene's existing DOM listener tracker so shutdown removes them cleanly during restarts, route changes, and remounts.
+- Verification: `npm run build` passed with Node 22 (existing multi-lockfile workspace-root warning and edge-runtime static-generation warning remain).
+
 ## 2026-07-08 (OpenClaw Overnight Build)
 
 ### Shipped

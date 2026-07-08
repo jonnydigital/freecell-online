@@ -13,6 +13,100 @@ export interface CardBackDesign {
 const CARD_BACK_STORAGE_KEY = 'freecell-card-back';
 const DEFAULT_CARD_BACK = 'classic-blue';
 
+export interface CardBackCssVars {
+  bg: string;
+  pattern: string;
+  border: string;
+  rimLight: string;
+  rimDark: string;
+  sheen: string;
+  medallionHi: string;
+  medallionLo: string;
+}
+
+export const cardBackCssVars: Record<string, CardBackCssVars> = {
+  'classic-blue': {
+    bg: '#163a74',
+    pattern: 'rgba(255, 255, 255, 0.13)',
+    border: 'rgba(255, 255, 255, 0.28)',
+    rimLight: '#f6f4ec',
+    rimDark: '#d8d4c6',
+    sheen: 'rgba(255, 255, 255, 0.09)',
+    medallionHi: 'rgba(255, 255, 255, 0.1)',
+    medallionLo: 'rgba(255, 255, 255, 0.015)',
+  },
+  'casino-red': {
+    bg: '#8b1a1a',
+    pattern: 'rgba(255, 215, 0, 0.14)',
+    border: 'rgba(255, 215, 0, 0.42)',
+    rimLight: '#fff3d2',
+    rimDark: '#c5a34a',
+    sheen: 'rgba(255, 225, 160, 0.12)',
+    medallionHi: 'rgba(255, 215, 0, 0.16)',
+    medallionLo: 'rgba(120, 25, 20, 0.08)',
+  },
+  'forest-green': {
+    bg: '#1a4a2a',
+    pattern: 'rgba(110, 210, 120, 0.13)',
+    border: 'rgba(125, 210, 130, 0.32)',
+    rimLight: '#edf7e7',
+    rimDark: '#9fb88d',
+    sheen: 'rgba(190, 255, 190, 0.08)',
+    medallionHi: 'rgba(140, 220, 145, 0.13)',
+    medallionLo: 'rgba(10, 60, 25, 0.08)',
+  },
+  midnight: {
+    bg: '#0a0e2a',
+    pattern: 'rgba(185, 200, 255, 0.13)',
+    border: 'rgba(150, 170, 255, 0.3)',
+    rimLight: '#ecefff',
+    rimDark: '#7982aa',
+    sheen: 'rgba(200, 210, 255, 0.11)',
+    medallionHi: 'rgba(185, 200, 255, 0.13)',
+    medallionLo: 'rgba(5, 8, 30, 0.08)',
+  },
+  'royal-purple': {
+    bg: '#2a1048',
+    pattern: 'rgba(210, 180, 255, 0.13)',
+    border: 'rgba(255, 215, 0, 0.34)',
+    rimLight: '#f5edff',
+    rimDark: '#a98ad1',
+    sheen: 'rgba(220, 190, 255, 0.1)',
+    medallionHi: 'rgba(255, 215, 0, 0.14)',
+    medallionLo: 'rgba(40, 16, 70, 0.08)',
+  },
+  'sunset-orange': {
+    bg: '#c04020',
+    pattern: 'rgba(255, 230, 170, 0.14)',
+    border: 'rgba(255, 220, 150, 0.4)',
+    rimLight: '#fff0d8',
+    rimDark: '#c98955',
+    sheen: 'rgba(255, 210, 130, 0.13)',
+    medallionHi: 'rgba(255, 230, 170, 0.16)',
+    medallionLo: 'rgba(120, 20, 40, 0.08)',
+  },
+  'ocean-wave': {
+    bg: '#0a3050',
+    pattern: 'rgba(80, 210, 230, 0.14)',
+    border: 'rgba(80, 200, 220, 0.32)',
+    rimLight: '#e7fbff',
+    rimDark: '#7faec0',
+    sheen: 'rgba(120, 230, 245, 0.1)',
+    medallionHi: 'rgba(90, 210, 230, 0.14)',
+    medallionLo: 'rgba(5, 40, 70, 0.08)',
+  },
+  'carbon-fiber': {
+    bg: '#1a1a1a',
+    pattern: 'rgba(255, 255, 255, 0.08)',
+    border: 'rgba(255, 255, 255, 0.18)',
+    rimLight: '#ededed',
+    rimDark: '#8d8d8d',
+    sheen: 'rgba(255, 255, 255, 0.08)',
+    medallionHi: 'rgba(255, 255, 255, 0.09)',
+    medallionLo: 'rgba(0, 0, 0, 0.12)',
+  },
+};
+
 export function getSelectedCardBack(): string {
   if (typeof window === 'undefined') return DEFAULT_CARD_BACK;
   return localStorage.getItem(CARD_BACK_STORAGE_KEY) || DEFAULT_CARD_BACK;
@@ -21,6 +115,21 @@ export function getSelectedCardBack(): string {
 export function setSelectedCardBack(id: string): void {
   if (typeof window === 'undefined') return;
   localStorage.setItem(CARD_BACK_STORAGE_KEY, id);
+  applyCardBackCssVars(id);
+}
+
+export function applyCardBackCssVars(id: string = getSelectedCardBack()): void {
+  if (typeof document === 'undefined') return;
+  const vars = cardBackCssVars[id] || cardBackCssVars[DEFAULT_CARD_BACK];
+  const root = document.documentElement;
+  root.style.setProperty('--card-back-bg', vars.bg);
+  root.style.setProperty('--card-back-pattern', vars.pattern);
+  root.style.setProperty('--card-back-border', vars.border);
+  root.style.setProperty('--card-back-rim-light', vars.rimLight);
+  root.style.setProperty('--card-back-rim-dark', vars.rimDark);
+  root.style.setProperty('--card-back-sheen', vars.sheen);
+  root.style.setProperty('--card-back-medallion-hi', vars.medallionHi);
+  root.style.setProperty('--card-back-medallion-lo', vars.medallionLo);
 }
 
 // ── Helper drawing functions ──

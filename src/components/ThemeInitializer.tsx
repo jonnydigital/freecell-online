@@ -2,7 +2,8 @@
 'use client';
 
 import { useEffect } from 'react';
-import { themes, applyThemeCssVars } from '../lib/themes';
+import { themes, getThemeById, applyThemeCssVars } from '../lib/themes';
+import { applyCardBackCssVars } from '../game/CardBacks';
 
 /**
  * Listens for runtime theme changes (e.g. from settings UI).
@@ -21,9 +22,13 @@ const ThemeInitializer = () => {
     window.addEventListener('themeChange', handler);
 
     // Also re-apply on mount in case blocking script missed (e.g. client nav)
-    const storedThemeName = localStorage.getItem('theme-name') || 'Classic Green';
-    const currentTheme = themes.find(t => t.name === storedThemeName) || themes[0];
+    const storedThemeId = localStorage.getItem('theme-id');
+    const storedThemeName = localStorage.getItem('theme-name');
+    const currentTheme = storedThemeId
+      ? getThemeById(storedThemeId)
+      : themes.find(t => t.name === storedThemeName) || themes[0];
     applyThemeCssVars(currentTheme);
+    applyCardBackCssVars();
 
     return () => window.removeEventListener('themeChange', handler);
   }, []);

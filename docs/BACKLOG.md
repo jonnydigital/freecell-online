@@ -62,6 +62,7 @@
 27. **Submit to solitaireblog.com** — Martin Petroff reviews 80+ solitaire sites with ratings. Backlink + visibility opportunity. Internal submission packet prepared 2026-07-07 at `docs/outreach/solitaireblog-submission-2026-07-07.md`; external submission/contact still needs Jonathan approval. *(Custom domain is live)*
 28. ~~**Fix mobile gold rectangle**~~ ✅ FIXED 03-10 — Was idle auto-hint glow (gold border) appearing after 8s even before first move. Now auto-hint effects only trigger after user makes at least 1 move. Also suppressed focus-visible outline on game container.
 29. ~~**PWA install CTA / download prominence**~~ ✅ SHIPPED 2026-07-07 — Browser-aware install card in the FreeCell desktop sidebar and mobile menu overlay, with iOS Add to Home Screen guidance, localized EN/ES/FR/DE/IT/PT copy, and install-funnel analytics. *(Competitor gap from repeated online-solitaire.com research: native/PWA download prominence)*
+30. ~~**Card-back customization actually repaints DOM hidden cards**~~ ✅ SHIPPED 2026-07-08 — Existing card-back picker now drives CSS variables for face-down DOM cards across Klondike, Spider, and hidden-card generic variants, with first-paint bootstrap support so saved backs render before React hydrates. *(Competitor gap from repeated online-solitaire.com research: deck/background theming)*
 
 ## ⏳ Blocked (Needs Jonathan)
 - ~~**Custom domain** — playfreecellonline.com → Vercel DNS~~ ✅ LIVE as of 2026-03-13!
@@ -126,6 +127,7 @@
 - [x] Mobile haptic feedback — Settings-controlled phone vibration cues for selection, moves, foundation placements, invalid moves, undo, and wins (shipped 2026-07-05)
 - [x] Klondike and Spider teaching hints — Klondike no longer auto-plays hints; Spider now has a hint button/shortcut and both games highlight the recommended source and destination (shipped 2026-07-06)
 - [x] PWA install CTA — browser-aware install card in the FreeCell desktop sidebar and mobile menu overlay, with iOS guidance and GA4 install-funnel events (shipped 2026-07-07)
+- [x] DOM card-back theming — saved card-back choices now repaint face-down CSS cards and load before first paint (shipped 2026-07-08)
 
 ---
 

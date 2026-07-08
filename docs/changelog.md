@@ -1,4 +1,12 @@
 
+## 2026-07-08 (OpenClaw Overnight Build)
+
+### Shipped
+- **DOM card-back theming wired live** — the existing card-back picker now updates the actual CSS-rendered backs used by hidden-card DOM games such as Klondike, Spider, and generic cascade variants, instead of only saving the preference.
+- Added eight card-back CSS palettes matching the picker thumbnails and applied the saved choice during the blocking first-paint theme script to avoid a blue-back flash on return visits.
+- Fixed the first-paint theme bootstrap to honor modern `theme-id` storage as well as the legacy `theme-name` value.
+- Verification: default `npm run build` still fails under Node 18 because Next.js requires >=20.9; `npm run build` passed with Node 22 (existing multi-lockfile workspace-root warning and edge-runtime static-generation warning remain).
+
 ## 2026-07-07 (OpenClaw Morning Daily Cycle)
 
 ### Added

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import DomFreecellClient from '@/components/DomFreecellClient';
+import HtmlLang from '@/components/HtmlLang';
 import { absoluteUrl, siteConfig } from '@/lib/siteConfig';
 
 const PAGE_PATH = '/freecell-in-italiano/gioca';
@@ -66,6 +67,7 @@ export default function ItalianFreeCellPlayPage() {
 
   return (
     <>
+      <HtmlLang lang="it" />
       <script id="ld-game-freecell-it" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(gameJsonLd) }} />
       <script id="ld-breadcrumb-freecell-it-play" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
       <h1 className="sr-only">Gioca a FreeCell in italiano - gratis online</h1>

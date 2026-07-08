@@ -5,6 +5,7 @@ import { canonicalUrlFor } from "@/lib/routeOwnership";
 import AdUnit from "@/components/AdUnit";
 import ContentLayout from "@/components/ContentLayout";
 import FreecellLanguageSwitcher from "@/components/FreecellLanguageSwitcher";
+import HtmlLang from "@/components/HtmlLang";
 import {
   CardSection,
   ContentBody,
@@ -132,6 +133,7 @@ export default function FreeCellItalianPage() {
 
   return (
     <ContentLayout variant="dark">
+      <HtmlLang lang="it" />
       <JsonLd data={jsonLd} />
 
       <header className="relative mx-auto max-w-4xl overflow-hidden px-5 pb-10 pt-8 text-center sm:px-8 sm:pb-12">

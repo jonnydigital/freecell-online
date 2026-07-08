@@ -7,6 +7,9 @@
 - Fixed the first-paint theme bootstrap to honor modern `theme-id` storage as well as the legacy `theme-name` value.
 - Verification: default `npm run build` still fails under Node 18 because Next.js requires >=20.9; `npm run build` passed with Node 22 (existing multi-lockfile workspace-root warning and edge-runtime static-generation warning remain).
 
+### Daily Cycle
+- Saved the 2026-07-08 GA4 Home-card baseline to `docs/analytics/daily-metrics.json`: 27 active users over 28 days, 411 events, 0 key events, 25 new users, and 0 realtime users. Deeper last-7-day cards were not reliable from the visible Home snapshot, so unknown values are preserved as `null` rather than copied forward.
+
 ## 2026-07-07 (OpenClaw Morning Daily Cycle)
 
 ### Added

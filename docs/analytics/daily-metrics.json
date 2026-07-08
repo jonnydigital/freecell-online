@@ -1,7 +1,7 @@
 {
-  "date": "2026-07-06",
+  "date": "2026-07-08",
   "lastPulledBy": "openclaw heartbeat browser manual GA4 pull",
-  "notes": "Updated 2026-07-06 with GA4 Reports snapshot for FreeCell Online. Pulled Last 28 days headline plus Last 7 days country/page/channel/event cards.",
+  "notes": "Updated 2026-07-08 with GA4 Home snapshot for FreeCell Online. Full 8:00 cycle still needs a deeper reports pull if browser navigation cooperates; current saved data is the reliable visible Home-card baseline from the 07:16 heartbeat.",
   "network_state": {
     "live_domains": 4,
     "live_since": {
@@ -607,49 +607,50 @@
     }
   },
   "daily": {
-    "date": "2026-07-07",
+    "date": "2026-07-08",
     "measurementId": "G-8N85JJPLED",
     "ga4Property": "p525799022",
+    "source": "GA4 Home visible cards via OpenClaw browser at 2026-07-08 07:16 ET",
     "headline28Days": {
       "activeUsers": 27,
-      "activeUsersChangePercent": -78.4,
-      "eventCount": 410,
-      "eventCountChangePercent": -46.7,
+      "activeUsersChangePercent": -75.9,
+      "activeUsersDeltaVsPriorDailySnapshot": 0,
+      "eventCount": 411,
+      "eventCountChangePercent": -42.9,
+      "eventCountDeltaVsPriorDailySnapshot": 1,
       "keyEvents": 0,
       "newUsers": 25,
-      "newUsersChangePercent": -79.2,
+      "newUsersChangePercent": -76.9,
+      "newUsersDeltaVsPriorDailySnapshot": 0,
       "averageEngagementTimePerActiveUser": null,
       "totalRevenue": "$0.00"
     },
     "last7Days": {
-      "activeUsers": 6,
-      "oneDayActiveUsers": 0,
-      "thirtyDayActiveUsers": 28,
-      "newUsers": 3,
+      "activeUsers": null,
+      "oneDayActiveUsers": null,
+      "thirtyDayActiveUsers": null,
+      "newUsers": null,
       "averageEngagementTimePerActiveUser": null,
       "totalRevenue": "$0.00",
-      "pageViews": 24,
-      "sessions": 13,
-      "gameStarts": 11,
-      "userEngagementEvents": 6,
-      "firstVisits": 3,
-      "hintsUsed": 0,
+      "pageViews": null,
+      "sessions": null,
+      "gameStarts": null,
+      "userEngagementEvents": null,
+      "firstVisits": null,
+      "hintsUsed": null,
       "realtimeUsers": 0
     },
     "countries": {
       "United States": 5,
+      "Bulgaria": 1,
       "China": 1
     },
-    "sessionsByChannel": {
-      "Direct": 8,
-      "Organic Search": 4,
-      "Referral": 1
-    },
+    "sessionsByChannel": {},
     "topPages": [
       {
         "title": "Solitaire Stack | Play FreeCell, Spider Solitaire, and More",
-        "views": 8,
-        "changePercent": -11.1
+        "views": 10,
+        "changePercent": null
       },
       {
         "title": "Play FreeCell Online for Free | No Download Required",
@@ -658,38 +659,21 @@
       },
       {
         "title": "Free Solitaire Games Online | Play 28+ Card Games for Free",
-        "views": 2,
-        "changePercent": 0
-      },
-      {
-        "title": "How to Play Forty Thieves Solitaire | Rules, Setup & Strategy",
-        "views": 2,
-        "changePercent": 100
-      },
-      {
-        "title": "Pyramid Solitaire | Play Online Free — No Download",
-        "views": 2,
-        "changePercent": null
-      },
-      {
-        "title": "Clock Solitaire | Play Clock Patience Online Free — Card Game",
         "views": 1,
-        "changePercent": 0
+        "changePercent": -66.7
+      },
+      {
+        "title": "Bristol Solitaire | Play Online Free — Full title truncated in GA4 card",
+        "views": null,
+        "changePercent": null
       }
     ],
-    "events": {
-      "page_view": 24,
-      "session_start": 13,
-      "game_start": 11,
-      "user_engagement": 6,
-      "first_visit": 3,
-      "hint_used": 0
-    },
+    "events": {},
     "feedbackCount": 0,
-    "feedbackNote": "No local data/feedback.json found in repo/runtime paths during heartbeat check; feedback route writes to process.cwd()/data/feedback.json.",
+    "feedbackNote": "No local data/feedback.json found in repo/runtime paths during 2026-07-08 heartbeat prep; feedback route writes to process.cwd()/data/feedback.json.",
     "sentryNote": "No Sentry DSN/status checked during this heartbeat; backlog still lists Sentry DSN as blocked on env var.",
-    "taskPicked": "Prepare solitaireblog.com review submission packet internally. External submission/contact remains approval-gated for Jonathan.",
-    "automationNote": "Claude Code delegation attempted with Node 22 PATH but failed with 401 invalid authentication credentials, so OpenClaw completed the docs-only packet directly."
+    "taskPicked": "Morning analytics baseline saved. Next implementation candidate remains analytics-led i18n review once localized route data is available; external solitaireblog.com submission remains approval-gated for Jonathan.",
+    "automationNote": "Claude Code delegation was re-tested during the 2026-07-08 07:46 heartbeat under Node 22 and still failed with API 401 invalid authentication credentials despite an apparently logged-in Claude Code session."
   },
-  "lastUpdated": "2026-07-07T12:20:00.000Z"
+  "lastUpdated": "2026-07-08T11:46:00.000Z"
 }

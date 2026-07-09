@@ -5,6 +5,11 @@
 - **Localized first-paint `<html lang>` bootstrap** — localized FreeCell routes now set the document language before first paint for Spanish, French, German, Italian, and Portuguese pages, complementing the per-page `HtmlLang` React helper and improving screen-reader language selection/rendered-DOM language signals.
 - Verification: default `npm run build` still fails under Node 18 because Next.js requires >=20.9; `npm run build` passed with Node 22 (existing multi-lockfile workspace-root warning and edge-runtime static-generation warning remain).
 
+### Daily Cycle
+- Saved the 2026-07-09 GA4 Home-card baseline to `docs/analytics/daily-metrics.json`: 28 active users over 28 days (`-73.8%`), 417 events (`-40.1%`), 0 key events, 26 new users (`-74.8%`), and 0 realtime users.
+- Last-7-day visible cards: 8 active users, 16 sessions (Direct 7, Organic Search 4, Referral 3, Unassigned 2), 12 `game_start` events, 3 `pwa_install_cta_view` events, and 1 one-day active user.
+- Decision: hold further language expansion until localized routes surface in GA4/GSC; the next growth lever remains the prepared SolitaireBlog submission packet, gated on Jonathan approval.
+
 ## 2026-07-08 (OpenClaw Evening Build)
 
 ### Shipped

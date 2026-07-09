@@ -131,14 +131,20 @@ const organizationJsonLd = {
   }),
 };
 
+const initialHtmlLangScript = `(function(){try{var p=location.pathname;var lang=p.indexOf('/freecell-en-espanol')===0?'es':p.indexOf('/freecell-en-francais')===0?'fr':p.indexOf('/freecell-auf-deutsch')===0?'de':p.indexOf('/freecell-in-italiano')===0?'it':p.indexOf('/freecell-em-portugues')===0?'pt':'en';document.documentElement.lang=lang;}catch(e){}})()`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
+        <script
+          id="initial-html-lang"
+          dangerouslySetInnerHTML={{ __html: initialHtmlLangScript }}
+        />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="apple-mobile-web-app-title" content={siteConfig.appleWebAppTitle} />

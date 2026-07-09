@@ -1,4 +1,10 @@
 
+## 2026-07-09 (OpenClaw Overnight Build)
+
+### Shipped
+- **Localized first-paint `<html lang>` bootstrap** — localized FreeCell routes now set the document language before first paint for Spanish, French, German, Italian, and Portuguese pages, complementing the per-page `HtmlLang` React helper and improving screen-reader language selection/rendered-DOM language signals.
+- Verification: default `npm run build` still fails under Node 18 because Next.js requires >=20.9; `npm run build` passed with Node 22 (existing multi-lockfile workspace-root warning and edge-runtime static-generation warning remain).
+
 ## 2026-07-08 (OpenClaw Evening Build)
 
 ### Shipped

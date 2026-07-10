@@ -85,6 +85,8 @@ const exploreLinks = [
   { href: "/history", label: "FreeCell History", desc: "From 1978 PLATO to Windows" },
   { href: "/microsoft-freecell", label: "Microsoft FreeCell", desc: "The iconic Windows game" },
   { href: "/download", label: "FreeCell Download Guide", desc: "Browser play vs native installs" },
+  { href: "/embed", label: "Embed FreeCell", desc: "Free ad-free FreeCell widget for websites" },
+  { href: "/embed-generator", label: "FreeCell Embed Generator", desc: "Customize and copy a FreeCell iframe" },
   { href: "/freecell-no-ads", label: "FreeCell Without a Download", desc: "Ad-light and no-install options" },
   { href: "/best-freecell-apps", label: "Best FreeCell Apps", desc: "FreeCell app and site roundup" },
   { href: "/best-klondike-apps", label: "Best Klondike Apps", desc: "Klondike app and site roundup" },

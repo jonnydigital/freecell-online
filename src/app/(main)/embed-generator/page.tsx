@@ -19,6 +19,29 @@ export const metadata: Metadata = {
   },
 };
 
+const faqs = [
+  {
+    question: 'What does the FreeCell embed generator create?',
+    answer:
+      'It creates a copy-and-paste iframe snippet for a fully playable FreeCell game that runs inside your page without requiring JavaScript includes, API keys, or account setup.',
+  },
+  {
+    question: 'Can I use the generated FreeCell widget on a commercial website?',
+    answer:
+      'Yes. The widget is free for personal and commercial websites as long as the built-in attribution remains visible.',
+  },
+  {
+    question: 'Does the generated iframe load lazily?',
+    answer:
+      'Yes. The generated code includes loading="lazy" so the game can wait to load until it is near the visitor viewport.',
+  },
+  {
+    question: 'Which sizes work best for the FreeCell iframe?',
+    answer:
+      'The default 800 by 600 frame works well for desktop pages. For responsive layouts, keep the width within your content column and use at least 500 to 600 pixels of height.',
+  },
+];
+
 export default function EmbedGeneratorPage() {
   if (!isOwnedBy('/embed-generator', siteConfig.key)) {
     notFound();
@@ -31,10 +54,39 @@ export default function EmbedGeneratorPage() {
       { '@type': 'ListItem', position: 2, name: 'Embed Generator', item: absoluteUrl('/embed-generator') },
     ],
   };
+  const webAppJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    name: 'FreeCell Embed Generator',
+    applicationCategory: 'GameApplication',
+    operatingSystem: 'Any',
+    url: absoluteUrl('/embed-generator'),
+    description:
+      'Generate a free, ad-free FreeCell solitaire iframe widget for websites, blogs, and forums.',
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD',
+    },
+  };
+  const faqJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.answer,
+      },
+    })),
+  };
 
   return (
     <ContentLayout>
       <JsonLd data={breadcrumbJsonLd} />
+      <JsonLd data={webAppJsonLd} />
+      <JsonLd data={faqJsonLd} />
 
       <div className="max-w-4xl mx-auto px-4 py-12">
         {/* Header */}
@@ -86,38 +138,12 @@ export default function EmbedGeneratorPage() {
             Frequently Asked Questions
           </h2>
           <div className="space-y-4 text-white/80">
-            <div>
-              <h3 className="font-semibold text-white">Is it free?</h3>
-              <p className="text-sm mt-1">
-                Yes — the embed is completely free for personal and commercial
-                use. We only ask that you keep the small attribution link.
-              </p>
-            </div>
-            <div>
-              <h3 className="font-semibold text-white">Does it show ads?</h3>
-              <p className="text-sm mt-1">
-                No. The embedded game is ad-free, so it won&apos;t interfere with
-                your site&apos;s layout or monetization.
-              </p>
-            </div>
-            <div>
-              <h3 className="font-semibold text-white">
-                Will it work on mobile?
-              </h3>
-              <p className="text-sm mt-1">
-                Yes. The game supports touch drag-and-drop and scales to fit the
-                iframe dimensions.
-              </p>
-            </div>
-            <div>
-              <h3 className="font-semibold text-white">
-                Can I customize the appearance?
-              </h3>
-              <p className="text-sm mt-1">
-                Currently you can set the width, height, and border radius.
-                Additional theming options are on the roadmap.
-              </p>
-            </div>
+            {faqs.map((faq) => (
+              <div key={faq.question}>
+                <h3 className="font-semibold text-white">{faq.question}</h3>
+                <p className="text-sm mt-1">{faq.answer}</p>
+              </div>
+            ))}
           </div>
         </section>
 

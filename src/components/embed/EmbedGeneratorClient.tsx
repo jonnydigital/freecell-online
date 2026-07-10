@@ -13,7 +13,7 @@ export default function EmbedGeneratorClient() {
 
   const embedCode = useMemo(
     () =>
-      `<iframe src="${embedUrl}"\n        width="${width}" height="${height}"\n        frameborder="0"\n        style="border:0;border-radius:8px;"\n        allowfullscreen>\n</iframe>`,
+      `<iframe src="${embedUrl}"\n        width="${width}" height="${height}"\n        frameborder="0"\n        loading="lazy"\n        style="border:0;border-radius:8px;"\n        allowfullscreen>\n</iframe>`,
     [embedUrl, width, height],
   );
 

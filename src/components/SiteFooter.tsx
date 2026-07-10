@@ -309,6 +309,7 @@ export default function SiteFooter() {
           { href: '/microsoft-freecell', label: 'Microsoft FreeCell' },
           { href: '/download', label: 'Download FreeCell' },
           { href: '/embed', label: 'Embed FreeCell' },
+          { href: '/embed-generator', label: 'Embed Generator' },
           { href: '/hard-freecell-games', label: 'Hard FreeCell Games' },
           { href: '/easy-freecell-games', label: 'Easy FreeCell Games' },
           { href: '/famous-freecell-deals', label: 'Famous Deals' },

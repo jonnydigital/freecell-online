@@ -64,6 +64,7 @@
 29. ~~**PWA install CTA / download prominence**~~ ✅ SHIPPED 2026-07-07 — Browser-aware install card in the FreeCell desktop sidebar and mobile menu overlay, with iOS Add to Home Screen guidance, localized EN/ES/FR/DE/IT/PT copy, and install-funnel analytics. *(Competitor gap from repeated online-solitaire.com research: native/PWA download prominence)*
 30. ~~**Card-back customization actually repaints DOM hidden cards**~~ ✅ SHIPPED 2026-07-08 — Existing card-back picker now drives CSS variables for face-down DOM cards across Klondike, Spider, and hidden-card generic variants, with first-paint bootstrap support so saved backs render before React hydrates. *(Competitor gap from repeated online-solitaire.com research: deck/background theming)*
 31. ~~**FreeCell Phaser input listener cleanup**~~ ✅ SHIPPED 2026-07-08 — Raw canvas touch/mouse drag handlers now use the scene's tracked listener cleanup so restarts, route changes, and remounts do not accumulate stale handlers. *(Fluidity research follow-up: prevent duplicate input work over long sessions)*
+32. ~~**FreeCell embed generator SEO/discovery polish**~~ ✅ SHIPPED 2026-07-10 — `/embed-generator` now has direct footer + HTML sitemap discovery, WebApplication + FAQPage JSON-LD, schema-aligned FAQ copy, and generated iframe snippets include `loading="lazy"`. *(Competitor/link-building gap from QA: embed widget marketing)*
 
 ## ⏳ Blocked (Needs Jonathan)
 - ~~**Custom domain** — playfreecellonline.com → Vercel DNS~~ ✅ LIVE as of 2026-03-13!

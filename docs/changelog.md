@@ -1,4 +1,11 @@
 
+## 2026-07-10 (OpenClaw Overnight Build)
+
+### Shipped
+- **FreeCell embed generator SEO/discovery polish** — added direct footer and HTML sitemap discovery for `/embed-generator`, added WebApplication + FAQPage JSON-LD to the generator page, and centralized its FAQ copy so visible content and schema stay aligned.
+- Fixed the generated iframe snippet to include `loading="lazy"`, matching the embed overview's performance promise for webmaster installs.
+- Verification: default `npm run build` still fails under Node 18 because Next.js requires >=20.9; `npm run build` passed with Node 22 (existing multi-lockfile workspace-root warning and edge-runtime static-generation warning remain).
+
 ## 2026-07-09 (OpenClaw Overnight Build)
 
 ### Shipped

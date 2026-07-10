@@ -1,7 +1,7 @@
 {
-  "date": "2026-07-09",
+  "date": "2026-07-10",
   "lastPulledBy": "openclaw heartbeat browser manual GA4 pull",
-  "notes": "Updated 2026-07-09 with GA4 Home snapshot for FreeCell Online. Browser target-id mismatch required read-only Chrome DevTools Protocol text scrape of the already-open GA4 tab. Localized routes do not yet surface in visible top pages; next useful action remains per-language analytics review once GSC/GA4 has enough data, plus Jonathan-approved solitaireblog outreach.",
+  "notes": "Updated 2026-07-10 with GA4 Home snapshot for FreeCell Online. Used the OpenClaw browser on property p525799022 / G-8N85JJPLED and read the loaded page text via Chrome DevTools Protocol. Localized routes do not yet surface in visible top pages; next useful action remains per-language analytics review once GSC/GA4 has enough data, plus Jonathan-approved solitaireblog outreach.",
   "network_state": {
     "live_domains": 4,
     "live_since": {
@@ -675,34 +675,38 @@
     "taskPicked": "Morning analytics baseline saved. Next implementation candidate remains analytics-led i18n review once localized route data is available; external solitaireblog.com submission remains approval-gated for Jonathan.",
     "automationNote": "Claude Code delegation was re-tested during the 2026-07-08 07:46 heartbeat under Node 22 and still failed with API 401 invalid authentication credentials despite an apparently logged-in Claude Code session."
   },
-  "lastUpdated": "2026-07-09T07:46:00-04:00",
+  "lastUpdated": "2026-07-10T08:18:15-04:00",
   "ga4_home": {
     "property": "FreeCell Online",
     "propertyId": "p525799022",
     "measurementId": "G-8N85JJPLED",
-    "pulledAt": "2026-07-09T07:46:00-04:00",
+    "pulledAt": "2026-07-10T08:18:15-04:00",
     "headlinePeriod": "Last 28 days",
-    "activeUsers": 28,
-    "activeUsersChangePercent": -73.8,
-    "eventCount": 417,
-    "eventCountChangePercent": -40.1,
+    "activeUsers": 31,
+    "activeUsersChangePercent": -66.7,
+    "eventCount": 455,
+    "eventCountChangePercent": -28.9,
     "keyEvents": 0,
-    "newUsers": 26,
-    "newUsersChangePercent": -74.8,
+    "newUsers": 29,
+    "newUsersChangePercent": -67.4,
     "realtimeActiveUsers": 0,
     "last7Days": {
       "countries": {
         "United States": {
           "activeUsers": 6,
-          "changePercent": 0
+          "changePercent": 20
         },
         "Bulgaria": {
           "activeUsers": 1,
           "changePercent": null
         },
-        "China": {
+        "United Kingdom": {
           "activeUsers": 1,
           "changePercent": null
+        },
+        "China": {
+          "activeUsers": 1,
+          "changePercent": 0
         },
         "Vietnam": {
           "activeUsers": 0,
@@ -712,13 +716,13 @@
       "topPages": [
         {
           "title": "Solitaire Stack | Play FreeCell, Spider Solitaire, and More",
-          "views": 10,
-          "changePercent": 9.1
+          "views": 11,
+          "changePercent": 8.3
         },
         {
           "title": "Play FreeCell Online for Free | No Download Required",
-          "views": 4,
-          "changePercent": 300
+          "views": 0,
+          "changePercent": -100
         },
         {
           "title": "Free Solitaire Games Online | Play 28+ Card Games for Free",
@@ -741,59 +745,59 @@
           "changePercent": 0
         },
         {
-          "title": "Pyramid Solitaire | Play Online Free — No Download",
+          "title": "Clock Solitaire | Play Clock Patience Online Free — Card Game",
           "views": 1,
           "changePercent": 0
         }
       ],
       "sessionsByChannel": {
-        "Direct": 7,
-        "Organic Search": 4,
-        "Referral": 3,
-        "Unassigned": 2
+        "Direct": 6,
+        "Organic Search": 5,
+        "Referral": 4,
+        "Unassigned": 1
       },
       "sessionChannelChangesPercent": {
-        "Direct": 0,
-        "Organic Search": 33.3,
-        "Referral": 200,
+        "Direct": -25,
+        "Organic Search": 0,
+        "Referral": 100,
         "Unassigned": null
       },
       "eventCounts": {
-        "page_view": 24,
-        "session_start": 14,
-        "game_start": 12,
+        "page_view": 19,
+        "session_start": 15,
+        "game_start": 9,
         "user_engagement": 7,
-        "first_visit": 5,
-        "pwa_install_cta_view": 3,
-        "click": 1
+        "first_visit": 7,
+        "undo_used": 9,
+        "hint_used": 4
       },
       "activityOverTime": {
-        "activeUsers30Days": 29,
-        "activeUsers30DaysChangePercent": -21.6,
-        "activeUsers7Days": 8,
-        "activeUsers7DaysChangePercent": -14.3,
-        "activeUsers1Day": 1,
+        "activeUsers30Days": 31,
+        "activeUsers30DaysChangePercent": 11.4,
+        "activeUsers7Days": 9,
+        "activeUsers7DaysChangePercent": 28.6,
+        "activeUsers1Day": 3,
         "activeUsers1DayChangePercent": 0
       }
     },
     "localizedRouteSignal": "No EN/ES/FR/DE/IT/PT localized FreeCell route appears in the visible GA4 Home top-pages card yet."
   },
   "daily_cycle": {
-    "date": "2026-07-09",
-    "visitors": 28,
+    "date": "2026-07-10",
+    "visitors": 31,
     "sessions": 16,
     "avgSessionDuration": null,
     "bounceRate": null,
     "dailyChallengeStarts": null,
     "dailyChallengeCompletes": null,
-    "gamesStarted": 12,
+    "gamesStarted": 9,
     "gamesWon": null,
     "feedbackCount": 0,
     "errorsLogged": null,
     "featuresShipped": [
-      "Overnight: localized first-paint html lang bootstrap for EN/ES/FR/DE/IT/PT routes was already shipped at 459ed4a."
+      "Overnight: FreeCell embed generator discovery polish shipped at 657d5dd, adding footer and HTML sitemap discovery, WebApplication + FAQPage JSON-LD, schema-aligned FAQ copy, and lazy iframe snippets."
     ],
     "backlogRemaining": null,
-    "selectedTask": "Hold further i18n expansion until localized-route analytics or GSC query data appears; next external growth lever remains solitaireblog.com submission packet, gated on Jonathan approval."
+    "selectedTask": "Do not start another i18n expansion yet. Localized routes still do not appear in visible GA4 top pages; next unblocked action is to wait for localized GA4/GSC signal or Jonathan approval for solitaireblog.com outreach."
   }
 }

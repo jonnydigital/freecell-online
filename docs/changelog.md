@@ -6,6 +6,11 @@
 - Fixed the generated iframe snippet to include `loading="lazy"`, matching the embed overview's performance promise for webmaster installs.
 - Verification: default `npm run build` still fails under Node 18 because Next.js requires >=20.9; `npm run build` passed with Node 22 (existing multi-lockfile workspace-root warning and edge-runtime static-generation warning remain).
 
+### Daily Cycle
+- Saved the 2026-07-10 GA4 Home-card baseline to `docs/analytics/daily-metrics.json`: 31 active users over 28 days (`-66.7%`), 455 events (`-28.9%`), 0 key events, 29 new users (`-67.4%`), and 0 realtime users.
+- Last-7-day visible cards: 9 active users, 16 sessions (Direct 6, Organic Search 5, Referral 4, Unassigned 1), 9 `game_start` events, 9 `undo_used` events, 4 `hint_used` events, and 3 one-day active users.
+- Decision: hold further language expansion until localized routes surface in GA4/GSC; the next growth lever remains the prepared SolitaireBlog submission packet, gated on Jonathan approval.
+
 ## 2026-07-09 (OpenClaw Overnight Build)
 
 ### Shipped

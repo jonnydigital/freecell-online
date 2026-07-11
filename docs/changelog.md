@@ -6,6 +6,11 @@
 - Updated `/games` metadata, Open Graph copy, Article JSON-LD, FAQ content, and FAQPage schema so the catalog page directly answers the competitor "320 games" framing with PlayFreeCellOnline's numbered-deal depth.
 - Verification: default `npm run build` still fails under Node 18 because Next.js requires >=20.9; `npm run build` passed with Node 22 (existing multi-lockfile workspace-root warning and edge-runtime static-generation warning remain).
 
+### Daily Cycle
+- Saved the 2026-07-11 GA4 Home-card baseline to `docs/analytics/daily-metrics.json`: `23` active users over 7 days (`+21.1%`), `283` events (`+40.1%`), `0` key events, `18` new users (`+20.0%`), and `0` realtime users.
+- Last-7-day visible cards: `46` sessions (Organic Search `21`, Direct `9`, Referral `8`, AI Assistant `6`, Unassigned `2`), `128` `page_view` events, `43` `game_start` events, `30` `user_engagement` events, and `3` one-day active users.
+- First localized-route signal appeared in the visible top-pages card: French guide `5` views (`+400%`) and Portuguese play route `3` views. Decision: hold new language expansion and make the next unblocked task a per-language analytics review before changing routing/content.
+
 ## 2026-07-10 (OpenClaw Overnight Build)
 
 ### Shipped

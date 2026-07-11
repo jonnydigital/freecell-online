@@ -78,6 +78,20 @@
   }
 }
 
+/* FreeCell mobile portrait: with 8 columns the card width is pinned by the
+   viewport width (~39px at 375px), so the board only fills ~31% of a tall phone
+   screen — measured 69% unused vertical space at 375/390/414 on 2026-07-11.
+   Spend a little of that free height on a deeper cascade overlap: at 375px each
+   buried card shows a ~16.5px strip instead of ~12.6px, which is what carries
+   the rank + suit glyph (rank alone is 8px). Portrait-only, because landscape
+   mobile is already vertically tight; scoped to freecell so Klondike, Spider
+   and the generic boards keep their own tuned values. */
+@media (max-width: 767px) and (orientation: portrait) {
+  .dom-board-surface[data-game="freecell"] {
+    --cascade-overlap: clamp(13px, calc(var(--card-width) * 0.42), 24px);
+  }
+}
+
 /* ── Spider Solitaire overrides (10 columns instead of 8) ── */
 
 .dom-board-surface[data-game="spider"] {

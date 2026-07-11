@@ -273,6 +273,7 @@ export default function DomBoard({ hint }: DomBoardProps) {
   return (
     <div
       className="dom-board-surface"
+      data-game="freecell"
       ref={boardRef as React.RefObject<HTMLDivElement>}
       onClick={handleBoardClick}
       style={{

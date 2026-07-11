@@ -1,4 +1,11 @@
 
+## 2026-07-11 (OpenClaw Overnight Build)
+
+### Shipped
+- **Games catalog numbered-deal positioning** — `/games` now pairs the 28-game catalog with the stronger FreeCell deal-library story: 32,000 numbered deals, curated winning games, famous game numbers, and Daily FreeCell discovery cards.
+- Updated `/games` metadata, Open Graph copy, Article JSON-LD, FAQ content, and FAQPage schema so the catalog page directly answers the competitor "320 games" framing with PlayFreeCellOnline's numbered-deal depth.
+- Verification: default `npm run build` still fails under Node 18 because Next.js requires >=20.9; `npm run build` passed with Node 22 (existing multi-lockfile workspace-root warning and edge-runtime static-generation warning remain).
+
 ## 2026-07-10 (OpenClaw Overnight Build)
 
 ### Shipped

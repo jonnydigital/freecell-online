@@ -1,5 +1,5 @@
 # FreeCell Online — Feature Backlog
-*Ranked by impact × effort. Updated 2026-07-09.*
+*Ranked by impact × effort. Updated 2026-07-11.*
 
 ## 🚨 P0: Critical Bug
 1. ~~**🔴 Mobile card rendering broken**~~ ✅ FIXED 03-02 — Root cause: `recreateAllCardSprites()` used PNG asset keys that were never loaded. On resize (common on mobile), cards became empty containers. Fixed with procedural rendering matching `createCardSprite()`.
@@ -65,6 +65,7 @@
 30. ~~**Card-back customization actually repaints DOM hidden cards**~~ ✅ SHIPPED 2026-07-08 — Existing card-back picker now drives CSS variables for face-down DOM cards across Klondike, Spider, and hidden-card generic variants, with first-paint bootstrap support so saved backs render before React hydrates. *(Competitor gap from repeated online-solitaire.com research: deck/background theming)*
 31. ~~**FreeCell Phaser input listener cleanup**~~ ✅ SHIPPED 2026-07-08 — Raw canvas touch/mouse drag handlers now use the scene's tracked listener cleanup so restarts, route changes, and remounts do not accumulate stale handlers. *(Fluidity research follow-up: prevent duplicate input work over long sessions)*
 32. ~~**FreeCell embed generator SEO/discovery polish**~~ ✅ SHIPPED 2026-07-10 — `/embed-generator` now has direct footer + HTML sitemap discovery, WebApplication + FAQPage JSON-LD, schema-aligned FAQ copy, and generated iframe snippets include `loading="lazy"`. *(Competitor/link-building gap from QA: embed widget marketing)*
+33. ~~**Games catalog numbered-deal positioning**~~ ✅ SHIPPED 2026-07-11 — `/games` now surfaces the 32,000 numbered FreeCell deal library alongside the 28-game catalog, with direct discovery cards for `/deals`, `/winning-deals`, famous game numbers, and Daily FreeCell plus matching metadata/FAQ schema. *(Competitor gap from repeated online-solitaire.com research: their "320 games" catalog framing)*
 
 ## ⏳ Blocked (Needs Jonathan)
 - ~~**Custom domain** — playfreecellonline.com → Vercel DNS~~ ✅ LIVE as of 2026-03-13!
@@ -130,6 +131,7 @@
 - [x] Klondike and Spider teaching hints — Klondike no longer auto-plays hints; Spider now has a hint button/shortcut and both games highlight the recommended source and destination (shipped 2026-07-06)
 - [x] PWA install CTA — browser-aware install card in the FreeCell desktop sidebar and mobile menu overlay, with iOS guidance and GA4 install-funnel events (shipped 2026-07-07)
 - [x] DOM card-back theming — saved card-back choices now repaint face-down CSS cards and load before first paint (shipped 2026-07-08)
+- [x] Games catalog numbered-deal positioning — `/games` now highlights 32,000 numbered FreeCell deals and links directly into deal discovery surfaces (shipped 2026-07-11)
 
 ---
 

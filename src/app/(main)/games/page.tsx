@@ -10,7 +10,7 @@ import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionH
 export const metadata: Metadata = {
   title: "Free Solitaire Games Online | Play 28+ Card Games for Free",
   description:
-    "Play the best free solitaire games online — FreeCell, Spider, Klondike, Pyramid, Baker's Game, Eight Off, and more. No download, no sign-up.",
+    "Play 28+ free solitaire games online plus 32,000 numbered FreeCell deals, daily challenges, and curated winning games. No download, no sign-up.",
   keywords: [
     "solitaire games online free",
     "free card games online",
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Free Solitaire Games Online | 28+ Card Games to Play Now",
     description:
-      "FreeCell, Spider, Klondike, Pyramid, and more — all free, no download required. Pick a game and start playing.",
+      "FreeCell, Spider, Klondike, Pyramid, and more — plus 32,000 numbered FreeCell deals to replay, share, and master.",
     url: absoluteUrl("/games"),
     siteName: siteConfig.siteName,
     type: "website",
@@ -467,6 +467,42 @@ const faqs = [
     answer:
       "No account is needed. You can play every game immediately without signing up. Your statistics and progress are saved locally in your browser, so they persist between sessions on the same device without requiring any login.",
   },
+  {
+    question: "Can I play specific FreeCell game numbers?",
+    answer:
+      "Yes. Standard FreeCell supports Microsoft-style numbered deals from #1 through #32,000. You can open a known deal directly, browse curated winning deals, try famous games, or use the daily challenge if you want everyone playing the same puzzle.",
+  },
+];
+
+const dealShortcuts = [
+  {
+    href: "/deals",
+    title: "Browse Numbered Deals",
+    label: "32,000 deals",
+    description:
+      "Jump to a specific FreeCell game number, search famous ranges, or pick a random deal when you want a fresh puzzle.",
+  },
+  {
+    href: "/winning-deals",
+    title: "Curated Winning Deals",
+    label: "Training set",
+    description:
+      "Practice solvable FreeCell games grouped by difficulty so you can build confidence before tackling tougher numbers.",
+  },
+  {
+    href: "/famous-freecell-game-numbers",
+    title: "Famous Game Numbers",
+    label: "Known puzzles",
+    description:
+      "Replay historically notable FreeCell deals, including the classic Windows-era puzzles players still talk about.",
+  },
+  {
+    href: "/daily-freecell",
+    title: "Daily FreeCell",
+    label: "Shared challenge",
+    description:
+      "Play today's same deal as everyone else, then compare your time and move count on the leaderboard.",
+  },
 ];
 
 export default function GamesPage() {
@@ -488,11 +524,11 @@ export default function GamesPage() {
         "@context": "https://schema.org",
         "@type": "Article",
         headline: "Free Solitaire Games Online",
-        description: "Play 13+ free solitaire card games online — FreeCell, Spider, Klondike, Pyramid, TriPeaks, Golf, and more.",
+        description: "Play 28+ free solitaire card games online plus 32,000 numbered FreeCell deals, daily challenges, and curated winning games.",
         author: { "@type": "Organization", name: siteConfig.siteName, url: absoluteUrl("/") },
         publisher: { "@type": "Organization", name: siteConfig.siteName },
         datePublished: "2026-03-19",
-        dateModified: "2026-03-19",
+        dateModified: "2026-07-11",
       }} />
       <JsonLd data={{
         "@context": "https://schema.org",
@@ -507,7 +543,7 @@ export default function GamesPage() {
       <ContentHero
         title="Free Solitaire Games Online"
         kicker={<>All Games</>}
-        subtitle="28 playable solitaire games plus competitive modes — all free, no download required. From beginner-friendly Easy FreeCell to the brutal 4-suit Spider challenge."
+        subtitle="28 playable solitaire games, 32,000 numbered FreeCell deals, and competitive daily modes — all free, no download required."
         breadcrumbs={[{ label: "Home", href: "/" }]}
       />
 
@@ -520,6 +556,45 @@ export default function GamesPage() {
           game, learn the rules, and start playing — no account required.
         </p>
       </div>
+
+      {/* Numbered Deals */}
+      <section className="max-w-5xl mx-auto mb-12 px-2">
+        <div className="mb-5 max-w-3xl">
+          <p className="text-xs font-bold uppercase tracking-[0.18em] text-[var(--gold)] mb-2">
+            FreeCell Deal Library
+          </p>
+          <h2
+            className="text-2xl sm:text-3xl font-bold mb-3"
+            style={{ fontFamily: "var(--font-playfair)" }}
+          >
+            32,000 Numbered FreeCell Deals
+          </h2>
+          <p className="text-white/70 leading-relaxed">
+            The game catalog is more than a list of variants. Standard FreeCell includes
+            the classic Microsoft numbered-deal set, so you can replay a known game,
+            share a specific puzzle, or train on curated winning deals.
+          </p>
+        </div>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {dealShortcuts.map((shortcut) => (
+            <Link
+              key={shortcut.href}
+              href={shortcut.href}
+              className="group bg-white/[0.04] border border-white/10 rounded-xl p-5 hover:bg-white/[0.07] hover:border-white/20 transition-all"
+            >
+              <span className="text-xs font-semibold uppercase tracking-wider text-white/40">
+                {shortcut.label}
+              </span>
+              <h3 className="mt-2 text-lg font-bold text-white group-hover:text-[var(--gold)] transition-colors">
+                {shortcut.title}
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-white/60">
+                {shortcut.description}
+              </p>
+            </Link>
+          ))}
+        </div>
+      </section>
 
       {/* Game Cards Grid */}
       <section className="max-w-5xl mx-auto mb-12 px-2">

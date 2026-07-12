@@ -7,6 +7,11 @@
 - Saved the first live audit artifact to `docs/analytics/mobile-viewport-audits/2026-07-12-live.json`. Results across `/game/1`, `/klondike`, `/spider`, and `/forty-thieves`: `0` horizontal overflow, `0` clipped cards, and visible top/bottom controls at all tested widths.
 - Verification: `npm run qa:mobile -- --base=https://playfreecellonline.com --out=docs/analytics/mobile-viewport-audits/2026-07-12-live.json` passed with Node 22. `npm run build` also passed with Node 22; the existing Next.js multiple-lockfile and edge-runtime static generation warnings remain unchanged.
 
+### Daily Cycle
+- Saved the 2026-07-12 GA4 Home-card baseline to `docs/analytics/daily-metrics.json`: `23` active users over 7 days (`+21.1%`), `294` events (`+31.8%`), `0` key events, `16` new users (`+6.7%`), and `0` realtime users.
+- Last-7-day visible cards: `45` sessions (Organic Search `21`, Referral `8`, Direct `8`, AI Assistant `5`, Unassigned `3`), `133` `page_view` events, `52` `game_start` events, `27` `user_engagement` events, and `5` one-day active users.
+- Localized-route signal remains thin: French guide `3` views and Portuguese play route `3` views are visible, while Spanish/German/Italian still do not appear in the visible GA4 Home top-pages card. Decision: hold further language expansion and continue per-language analytics review before changing routing/content.
+
 ## 2026-07-11 (OpenClaw Overnight Build)
 
 ### Shipped

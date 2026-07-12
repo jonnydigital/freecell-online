@@ -1,7 +1,7 @@
 {
-  "date": "2026-07-11",
+  "date": "2026-07-12",
   "lastPulledBy": "openclaw heartbeat browser manual GA4 pull",
-  "notes": "Updated 2026-07-11 with GA4 Home snapshot for PlayFreeCellOnline.com. Used the OpenClaw browser on property p531359003 / G-8N85JJPLED and read the loaded page text via Chrome DevTools Protocol. Localized routes now show first visible signal: French guide and Portuguese play route appeared in the top-pages card; next useful action is a per-language analytics review before any new language expansion.",
+  "notes": "Updated 2026-07-12 with GA4 Home snapshot for PlayFreeCellOnline.com. Used the OpenClaw browser on property p531359003 / G-8N85JJPLED and read the loaded page text via Chrome DevTools Protocol. Traffic is steady at 23 active users; event count and game starts rose, but localized-route signal remains too thin for another i18n build.",
   "network_state": {
     "live_domains": 4,
     "live_since": {
@@ -538,7 +538,7 @@
       "Refresh FreeCell GA4 report snapshot for sessions/pageviews/channels/top pages when GA4 report navigation is stable."
     ]
   },
-  "last_pull_iso": "2026-07-11T08:16:00-04:00",
+  "last_pull_iso": "2026-07-12T08:24:00-04:00",
   "sitemap_url_counts_live": {
     "playfreecellonline": 105,
     "solitairestack": 121,
@@ -607,10 +607,10 @@
     }
   },
   "daily": {
-    "date": "2026-07-11",
+    "date": "2026-07-12",
     "measurementId": "G-8N85JJPLED",
     "ga4Property": "p531359003",
-    "source": "GA4 Home visible cards via OpenClaw browser at 2026-07-11 08:16 ET",
+    "source": "GA4 Home visible cards via OpenClaw browser at 2026-07-12 08:24 ET",
     "headlinePeriod": "Last 7 days",
     "headline28Days": {
       "activeUsers": null,
@@ -625,56 +625,56 @@
       "newUsersDeltaVsPriorDailySnapshot": null,
       "averageEngagementTimePerActiveUser": null,
       "totalRevenue": "$0.00",
-      "note": "GA4 Home card was set to Last 7 days on 2026-07-11, not Last 28 days."
+      "note": "GA4 Home card was set to Last 7 days on 2026-07-12, not Last 28 days."
     },
     "last7Days": {
       "activeUsers": 23,
       "activeUsersChangePercent": 21.1,
-      "oneDayActiveUsers": 3,
+      "oneDayActiveUsers": 5,
       "thirtyDayActiveUsers": 84,
-      "newUsers": 18,
-      "newUsersChangePercent": 20,
+      "newUsers": 16,
+      "newUsersChangePercent": 6.7,
       "averageEngagementTimePerActiveUser": null,
       "totalRevenue": "$0.00",
-      "pageViews": 128,
-      "sessions": 46,
-      "gameStarts": 43,
-      "userEngagementEvents": 30,
-      "firstVisits": 18,
+      "pageViews": 133,
+      "sessions": 45,
+      "gameStarts": 52,
+      "userEngagementEvents": 27,
+      "firstVisits": 16,
       "hintsUsed": null,
       "realtimeUsers": 0
     },
     "countries": {
-      "United States": 7,
-      "China": 3,
+      "United States": 9,
+      "Brazil": 2,
+      "China": 2,
       "United Kingdom": 2,
       "Argentina": 1,
       "Australia": 1,
-      "Belgium": 1,
-      "Brazil": 1
+      "Belgium": 1
     },
     "sessionsByChannel": {
       "Organic Search": 21,
       "Referral": 8,
-      "Direct": 9,
-      "AI Assistant": 6,
-      "Unassigned": 2
+      "Direct": 8,
+      "AI Assistant": 5,
+      "Unassigned": 3
     },
     "topPages": [
       {
         "title": "Play FreeCell Online for Free | No Download Required",
-        "views": 50,
-        "changePercent": 8.7
+        "views": 51,
+        "changePercent": 1.9
+      },
+      {
+        "title": "FreeCell Game #1 — First MS deal (Easy Deal) | Play Free",
+        "views": 28,
+        "changePercent": 75
       },
       {
         "title": "FreeCell Solver | Solve Any Deal Instantly",
         "views": 24,
-        "changePercent": 50
-      },
-      {
-        "title": "FreeCell Game #1 — First MS deal (Easy Deal) | Play Free",
-        "views": 20,
-        "changePercent": 33.3
+        "changePercent": 41.2
       },
       {
         "title": "FreeCell Game #998,535 — Play This Deal Free Online",
@@ -683,13 +683,13 @@
       },
       {
         "title": "FreeCell en Francais | Jouer Gratuitement et Apprendre les Regles",
-        "views": 5,
-        "changePercent": 400
+        "views": 3,
+        "changePercent": 0
       },
       {
         "title": "FreeCell Strategy Guide — Win More Games with Expert Tactics",
-        "views": 4,
-        "changePercent": null
+        "views": 3,
+        "changePercent": 200
       },
       {
         "title": "Jogar FreeCell em Portugues | Gratis Online",
@@ -698,45 +698,49 @@
       }
     ],
     "events": {
-      "page_view": 128,
-      "game_start": 43,
-      "session_start": 44,
-      "user_engagement": 30,
-      "first_visit": 18,
-      "click": 2,
+      "page_view": 133,
+      "game_start": 52,
+      "session_start": 42,
+      "user_engagement": 27,
+      "first_visit": 16,
+      "interaction_type": 6,
       "scroll": 4
     },
-    "localizedRouteSignal": "French guide and Portuguese play routes now appear in the visible GA4 Home top-pages card: French guide 5 views (+400%) and Portuguese play 3 views. Spanish/German/Italian routes still do not appear in the visible card.",
+    "localizedRouteSignal": "Localized-route signal remains thin: French guide appears with 3 views (flat) and Portuguese play route appears with 3 views; Spanish/German/Italian still do not appear in the visible GA4 Home top-pages card.",
     "feedbackCount": 0,
-    "feedbackNote": "No local data/feedback.json found in repo/runtime paths during 2026-07-11 heartbeat; feedback route writes to process.cwd()/data/feedback.json.",
-    "sentryNote": "No Sentry DSN/status checked during this heartbeat; backlog still lists Sentry DSN as blocked on env var.",
-    "taskPicked": "Do not start another language expansion yet. First visible localized-route signal appeared (French guide 5 views, Portuguese play 3 views), so the next unblocked task is a per-language analytics review before deciding whether to strengthen language routing or expand content. SolitaireBlog submission remains Jonathan-approval gated.",
-    "automationNote": "No Claude Code implementation agent launched during the 2026-07-11 daily cycle because the current highest-impact task is analytics review/decisioning, not an unblocked code change; prior Claude Code CLI auth issue remains noted in heartbeat-state."
+    "feedbackNote": "No local data/feedback.json found in repo/runtime paths during 2026-07-12 heartbeat; feedback route writes to process.cwd()/data/feedback.json.",
+    "sentryNote": "No Sentry/GA/ANALYTICS env vars exposed in heartbeat shell during 2026-07-12 prep; backlog still lists Sentry DSN as blocked on env var.",
+    "taskPicked": "Do not start another language expansion or UI build yet. Traffic is steady and game starts rose, but localized-route data remains too thin. Next action is per-language analytics review once more GA4/GSC signal accumulates; SolitaireBlog submission remains Jonathan-approval gated.",
+    "automationNote": "No Claude Code implementation agent launched during the 2026-07-12 daily cycle because the highest-impact task is analytics review/decisioning, not an unblocked code change; prior Claude Code CLI auth issue remains noted in heartbeat-state."
   },
-  "lastUpdated": "2026-07-11T08:16:00-04:00",
+  "lastUpdated": "2026-07-12T08:24:00-04:00",
   "ga4_home": {
     "property": "PlayFreeCellOnline.com",
     "propertyId": "p531359003",
     "measurementId": "G-8N85JJPLED",
-    "pulledAt": "2026-07-11T08:16:00-04:00",
+    "pulledAt": "2026-07-12T08:24:00-04:00",
     "headlinePeriod": "Last 7 days",
     "activeUsers": 23,
     "activeUsersChangePercent": 21.1,
-    "eventCount": 283,
-    "eventCountChangePercent": 40.1,
+    "eventCount": 294,
+    "eventCountChangePercent": 31.8,
     "keyEvents": 0,
-    "newUsers": 18,
-    "newUsersChangePercent": 20,
+    "newUsers": 16,
+    "newUsersChangePercent": 6.7,
     "realtimeActiveUsers": 0,
     "last7Days": {
       "countries": {
         "United States": {
-          "activeUsers": 7,
-          "changePercent": 0
+          "activeUsers": 9,
+          "changePercent": 28.6
+        },
+        "Brazil": {
+          "activeUsers": 2,
+          "changePercent": 100
         },
         "China": {
-          "activeUsers": 3,
-          "changePercent": 50
+          "activeUsers": 2,
+          "changePercent": -33.3
         },
         "United Kingdom": {
           "activeUsers": 2,
@@ -753,27 +757,23 @@
         "Belgium": {
           "activeUsers": 1,
           "changePercent": null
-        },
-        "Brazil": {
-          "activeUsers": 1,
-          "changePercent": 0
         }
       },
       "topPages": [
         {
           "title": "Play FreeCell Online for Free | No Download Required",
-          "views": 50,
-          "changePercent": 8.7
+          "views": 51,
+          "changePercent": 1.9
+        },
+        {
+          "title": "FreeCell Game #1 — First MS deal (Easy Deal) | Play Free",
+          "views": 28,
+          "changePercent": 75
         },
         {
           "title": "FreeCell Solver | Solve Any Deal Instantly",
           "views": 24,
-          "changePercent": 50
-        },
-        {
-          "title": "FreeCell Game #1 — First MS deal (Easy Deal) | Play Free",
-          "views": 20,
-          "changePercent": 33.3
+          "changePercent": 41.2
         },
         {
           "title": "FreeCell Game #998,535 — Play This Deal Free Online",
@@ -782,13 +782,13 @@
         },
         {
           "title": "FreeCell en Francais | Jouer Gratuitement et Apprendre les Regles",
-          "views": 5,
-          "changePercent": 400
+          "views": 3,
+          "changePercent": 0
         },
         {
           "title": "FreeCell Strategy Guide — Win More Games with Expert Tactics",
-          "views": 4,
-          "changePercent": null
+          "views": 3,
+          "changePercent": 200
         },
         {
           "title": "Jogar FreeCell em Portugues | Gratis Online",
@@ -799,24 +799,24 @@
       "sessionsByChannel": {
         "Organic Search": 21,
         "Referral": 8,
-        "Direct": 9,
-        "AI Assistant": 6,
-        "Unassigned": 2
+        "Direct": 8,
+        "AI Assistant": 5,
+        "Unassigned": 3
       },
       "sessionChannelChangesPercent": {
         "Organic Search": 90.9,
-        "Referral": 27.3,
-        "Direct": 12.5,
-        "AI Assistant": 200,
+        "Referral": -33.3,
+        "Direct": -20,
+        "AI Assistant": -66.7,
         "Unassigned": null
       },
       "eventCounts": {
-        "page_view": 128,
-        "game_start": 43,
-        "session_start": 44,
-        "user_engagement": 30,
-        "first_visit": 18,
-        "click": 2,
+        "page_view": 133,
+        "game_start": 52,
+        "session_start": 42,
+        "user_engagement": 27,
+        "first_visit": 16,
+        "interaction_type": 6,
         "scroll": 4
       },
       "activityOverTime": {
@@ -824,28 +824,28 @@
         "activeUsers30DaysChangePercent": 10.5,
         "activeUsers7Days": 23,
         "activeUsers7DaysChangePercent": 21.1,
-        "activeUsers1Day": 3,
+        "activeUsers1Day": 5,
         "activeUsers1DayChangePercent": 0
       }
     },
-    "localizedRouteSignal": "French guide and Portuguese play routes now appear in the visible GA4 Home top-pages card: French guide 5 views (+400%) and Portuguese play 3 views. Spanish/German/Italian routes still do not appear in the visible card."
+    "localizedRouteSignal": "Localized-route signal remains thin: French guide appears with 3 views (flat) and Portuguese play route appears with 3 views; Spanish/German/Italian still do not appear in the visible GA4 Home top-pages card."
   },
   "daily_cycle": {
-    "date": "2026-07-11",
+    "date": "2026-07-12",
     "visitors": 23,
-    "sessions": 46,
+    "sessions": 45,
     "avgSessionDuration": null,
     "bounceRate": null,
     "dailyChallengeStarts": null,
     "dailyChallengeCompletes": null,
-    "gamesStarted": 43,
+    "gamesStarted": 52,
     "gamesWon": null,
     "feedbackCount": 0,
     "errorsLogged": null,
     "featuresShipped": [
-      "Overnight: games catalog numbered-deal positioning shipped at e28cbb8, surfacing the 32,000 numbered FreeCell deal library alongside the 28-game catalog plus /deals, /winning-deals, famous game numbers, and Daily FreeCell discovery."
+      "Overnight: mobile viewport QA harness shipped/refreshed at c0d9a42, with live audit artifact showing no hard failures across FreeCell, Klondike, Spider, and Forty Thieves/generic board mobile widths."
     ],
     "backlogRemaining": null,
-    "selectedTask": "Per-language analytics review is now unblocked by the first visible localized-route signal; hold new implementation until the review shows whether to strengthen language routing or keep waiting for more data."
+    "selectedTask": "Continue per-language analytics review before further i18n expansion. Current GA4 signal is not strong enough to justify more language content or routing work; watch French/Portuguese, and wait for Spanish/German/Italian to appear before building."
   }
 }

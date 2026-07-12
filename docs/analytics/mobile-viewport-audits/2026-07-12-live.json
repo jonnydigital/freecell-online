@@ -1,6 +1,6 @@
 {
   "base": "https://playfreecellonline.com",
-  "pulledAt": "2026-07-12T04:24:43.695Z",
+  "pulledAt": "2026-07-12T05:01:46.368Z",
   "widths": [
     375,
     390,
@@ -428,10 +428,10 @@
         "width": 343,
         "height": 157.23
       },
-      "cardCount": 63,
+      "cardCount": 62,
       "faceCardCount": 10,
-      "backCardCount": 53,
-      "visibleCardCount": 63,
+      "backCardCount": 52,
+      "visibleCardCount": 62,
       "minCardWidth": 30.89,
       "maxCardWidth": 30.89,
       "clippedCardCount": 0,
@@ -446,7 +446,7 @@
         7,
         6,
         6,
-        6,
+        5,
         5,
         5,
         5,

@@ -1,4 +1,12 @@
 
+## 2026-07-12 (OpenClaw Overnight Build)
+
+### Shipped
+- **Mobile viewport QA harness** — added `npm run qa:mobile`, a dependency-free Chrome DevTools Protocol script that runs under Node 22 and emulates true 375/390/414/768px mobile/tablet widths without relying on OS-window resizing.
+- The harness measures FreeCell, Klondike, Spider, and a generic wide-board route for rendered card count, face/back card count, card width range, horizontal overflow, clipped cards, top/bottom control visibility, cascade counts, and unused vertical space.
+- Saved the first live audit artifact to `docs/analytics/mobile-viewport-audits/2026-07-12-live.json`. Results across `/game/1`, `/klondike`, `/spider`, and `/forty-thieves`: `0` horizontal overflow, `0` clipped cards, and visible top/bottom controls at all tested widths.
+- Verification: `npm run qa:mobile -- --base=https://playfreecellonline.com --out=docs/analytics/mobile-viewport-audits/2026-07-12-live.json` passed with Node 22. `npm run build` also passed with Node 22; the existing Next.js multiple-lockfile and edge-runtime static generation warnings remain unchanged.
+
 ## 2026-07-11 (OpenClaw Overnight Build)
 
 ### Shipped

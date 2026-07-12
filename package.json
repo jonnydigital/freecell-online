@@ -12,6 +12,7 @@
     "indexnow:submit": "node scripts/indexnow-submit-sitemap.mjs",
     "adsense:audit": "node scripts/adsense-recovery-audit.mjs",
     "adsense:prod-check": "node scripts/adsense-production-check.mjs",
+    "qa:mobile": "node scripts/mobile-viewport-audit.mjs",
     "scorecard": "node scripts/property-scorecard.mjs"
   },
   "dependencies": {

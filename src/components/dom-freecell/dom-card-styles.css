@@ -81,14 +81,29 @@
 /* FreeCell mobile portrait: with 8 columns the card width is pinned by the
    viewport width (~39px at 375px), so the board only fills ~31% of a tall phone
    screen — measured 69% unused vertical space at 375/390/414 on 2026-07-11.
-   Spend a little of that free height on a deeper cascade overlap: at 375px each
-   buried card shows a ~16.5px strip instead of ~12.6px, which is what carries
-   the rank + suit glyph (rank alone is 8px). Portrait-only, because landscape
-   mobile is already vertically tight; scoped to freecell so Klondike, Spider
-   and the generic boards keep their own tuned values. */
+   Spend some of that free height on a deeper cascade overlap.
+
+   The strip has to clear the whole .dom-card__corner--tl block (rank + suit
+   pip), not just the rank. Measured on live prod 2026-07-12: that block ends
+   20.1px / 20.2px / 20.4px below the card top at 375 / 390 / 414, while the
+   0.42 multiplier only revealed 16.3 / 16.3 / 18.3px — so the suit pip of every
+   buried card was clipped by 2–4px. Suit is exactly what a FreeCell player has
+   to read to plan alternating-colour moves, so this is a legibility bug, not a
+   nicety. 0.56 reveals 21.7 / 22.7 / 24.0px, clearing the block at every phone
+   width with a little breathing room; the 19px floor keeps small phones (≤320px,
+   where the glyph font-sizes bottom out at their 8px clamp floors) legible too.
+   Upper bound stays 24px — same fan step online-solitaire.com uses on mobile.
+
+   Worst case column height at 375px is card-height + 18 × 21.7 ≈ 445px for a
+   19-card pile, inside the ~565px the portrait board has between the free-cell
+   row and the fixed bottom bar, so deep piles still do not overflow.
+
+   Portrait-only, because landscape mobile is already vertically tight; scoped to
+   freecell so Klondike, Spider and the generic boards keep their own tuned
+   values. */
 @media (max-width: 767px) and (orientation: portrait) {
   .dom-board-surface[data-game="freecell"] {
-    --cascade-overlap: clamp(13px, calc(var(--card-width) * 0.42), 24px);
+    --cascade-overlap: clamp(19px, calc(var(--card-width) * 0.56), 24px);
   }
 }
 

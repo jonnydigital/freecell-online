@@ -5,7 +5,7 @@ import { useDomSpiderStore, domSpiderStore } from '@/lib/dom-spider/useDomSpider
 import DomSpiderBoard, { type SpiderHintHighlight } from './DomSpiderBoard';
 import { SpiderDifficulty } from '@/engine/SpiderEngine';
 import Link from '@/components/NetworkLink';
-import { Lightbulb, Undo2 } from 'lucide-react';
+import { Home, Lightbulb, RotateCcw, Undo2 } from 'lucide-react';
 import GameSwitcher from '../GameSwitcher';
 import AdUnit from '../AdUnit';
 import { loadStats, saveStats } from '@/lib/storage';
@@ -181,10 +181,77 @@ export default function DomSpiderShell({ initialDifficulty = '1-suit' }: DomSpid
         background: 'var(--theme-dark, #0a3310)',
       }}
     >
+      {/* Mobile top strip */}
+      <div
+        className="flex sm:hidden"
+        style={{
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          gap: '10px',
+          padding: '8px 10px',
+          background: 'rgba(0,0,0,0.34)',
+          borderBottom: '1px solid rgba(255,255,255,0.06)',
+          position: 'relative',
+          zIndex: 50,
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0 }}>
+          <GameSwitcher currentGame="Spider Solitaire" currentIcon="♣" />
+          <div style={{ display: 'flex', gap: '4px' }}>
+            {(['1-suit', '2-suit', '4-suit'] as SpiderDifficulty[]).map((d) => (
+              <button
+                key={d}
+                onClick={() => setDifficulty(d)}
+                aria-label={d === '1-suit' ? 'One suit' : d === '2-suit' ? 'Two suits' : 'Four suits'}
+                style={{
+                  width: '30px',
+                  height: '30px',
+                  borderRadius: '7px',
+                  border: `1px solid ${difficulty === d ? 'rgba(212,175,55,0.55)' : 'rgba(255,255,255,0.1)'}`,
+                  background: difficulty === d ? 'rgba(212,175,55,0.16)' : 'rgba(255,255,255,0.04)',
+                  color: difficulty === d ? '#D4AF37' : 'rgba(255,255,255,0.55)',
+                  fontSize: '11px',
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                }}
+              >
+                {suitLabels[d]}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '10px',
+            padding: '5px 9px',
+            background: 'rgba(0,0,0,0.24)',
+            border: '1px solid rgba(255,255,255,0.05)',
+            borderRadius: '9999px',
+            flexShrink: 0,
+          }}
+        >
+          <div style={{ textAlign: 'center' }}>
+            <div style={{ fontSize: '9px', fontWeight: 700, color: 'rgba(255,255,255,0.36)', textTransform: 'uppercase' }}>Time</div>
+            <div style={{ fontSize: '14px', fontWeight: 700, color: 'rgba(255,255,255,0.82)', fontFamily: 'monospace' }}>{formatTime(timerSeconds)}</div>
+          </div>
+          <div style={{ textAlign: 'center' }}>
+            <div style={{ fontSize: '9px', fontWeight: 700, color: 'rgba(255,255,255,0.36)', textTransform: 'uppercase' }}>Moves</div>
+            <div style={{ fontSize: '14px', fontWeight: 700, color: 'rgba(255,255,255,0.82)', fontFamily: 'monospace' }}>{moveCount}</div>
+          </div>
+          <div style={{ textAlign: 'center' }}>
+            <div style={{ fontSize: '9px', fontWeight: 700, color: 'rgba(255,255,255,0.36)', textTransform: 'uppercase' }}>Suits</div>
+            <div style={{ fontSize: '12px', fontWeight: 700, color: 'rgba(255,255,255,0.55)', fontFamily: 'monospace' }}>{foundations.length}/8</div>
+          </div>
+        </div>
+      </div>
+
       {/* Toolbar */}
       <div
+        className="hidden sm:flex"
         style={{
-          display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
           padding: '8px 16px',
@@ -300,7 +367,7 @@ export default function DomSpiderShell({ initialDifficulty = '1-suit' }: DomSpid
 
       {/* Main content */}
       <div style={{ display: 'flex', flex: 1 }}>
-        <div style={{ flex: 1, padding: '16px', overflow: 'hidden' }}>
+        <div className="p-3 pb-24 sm:p-4 sm:pb-4" style={{ flex: 1, overflow: 'hidden' }}>
           <DomSpiderBoard hint={hintHighlight} />
         </div>
 
@@ -316,6 +383,113 @@ export default function DomSpiderShell({ initialDifficulty = '1-suit' }: DomSpid
         >
           <AdUnit slot="5697552640" format="rectangle" />
         </div>
+      </div>
+
+      {/* Mobile bottom actions */}
+      <div
+        className="fixed inset-x-0 bottom-0 z-50 flex sm:hidden"
+        style={{
+          justifyContent: 'space-around',
+          gap: '8px',
+          padding: '8px 10px calc(8px + env(safe-area-inset-bottom))',
+          background: 'rgba(7, 27, 12, 0.96)',
+          borderTop: '1px solid rgba(255,255,255,0.08)',
+          boxShadow: '0 -10px 24px rgba(0,0,0,0.22)',
+        }}
+      >
+        <Link
+          href="/"
+          aria-label="Home"
+          style={{
+            minWidth: 0,
+            flex: 1,
+            height: '44px',
+            borderRadius: '8px',
+            background: 'rgba(255,255,255,0.04)',
+            border: '1px solid rgba(255,255,255,0.08)',
+            color: 'rgba(255,255,255,0.72)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '5px',
+            fontSize: '11px',
+            fontWeight: 700,
+            textDecoration: 'none',
+          }}
+        >
+          <Home size={17} />
+          Home
+        </Link>
+        <button
+          onClick={handleNewGame}
+          title="New Game"
+          style={{
+            minWidth: 0,
+            flex: 1,
+            height: '44px',
+            borderRadius: '8px',
+            background: 'rgba(212,175,55,0.16)',
+            border: '1px solid rgba(212,175,55,0.32)',
+            color: '#D4AF37',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '5px',
+            fontSize: '11px',
+            fontWeight: 700,
+            cursor: 'pointer',
+          }}
+        >
+          <RotateCcw size={17} />
+          New
+        </button>
+        <button
+          onClick={handleUndo}
+          disabled={moveHistory.length === 0}
+          title="Undo"
+          style={{
+            minWidth: 0,
+            flex: 1,
+            height: '44px',
+            borderRadius: '8px',
+            background: moveHistory.length === 0 ? 'rgba(255,255,255,0.025)' : 'rgba(255,255,255,0.04)',
+            border: `1px solid ${moveHistory.length === 0 ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.08)'}`,
+            color: moveHistory.length === 0 ? 'rgba(255,255,255,0.26)' : 'rgba(255,255,255,0.72)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '5px',
+            fontSize: '11px',
+            fontWeight: 700,
+            cursor: moveHistory.length === 0 ? 'default' : 'pointer',
+          }}
+        >
+          <Undo2 size={17} />
+          Undo
+        </button>
+        <button
+          onClick={handleHint}
+          title="Hint"
+          style={{
+            minWidth: 0,
+            flex: 1,
+            height: '44px',
+            borderRadius: '8px',
+            background: 'rgba(255,255,255,0.04)',
+            border: '1px solid rgba(255,255,255,0.08)',
+            color: 'rgba(255,255,255,0.72)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '5px',
+            fontSize: '11px',
+            fontWeight: 700,
+            cursor: 'pointer',
+          }}
+        >
+          <Lightbulb size={17} />
+          Hint
+        </button>
       </div>
 
       {/* Win Modal */}

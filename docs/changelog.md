@@ -2,6 +2,9 @@
 ## 2026-07-13 (OpenClaw Overnight Build)
 
 ### Shipped
+- **Klondike + Spider mobile shell polish** — replaced the phone-width wrapping desktop toolbars with compact mobile top strips and bottom action bars for Klondike and Spider, matching the FreeCell play-shell pattern more closely.
+- Klondike now keeps Draw 1/3 plus time, moves, and deal number in a single phone header, with fixed Home/New/Undo/Hint actions at the bottom; Spider gets the same treatment with suit difficulty, time, moves, and completed-suit count.
+- Verification: `npm run build` passed with Node 22, and `npm run qa:mobile -- --base=http://127.0.0.1:3020 --route=/klondike:klondike --route=/spider:spider --widths=375,390,414 --delay=800` reported no hard failures. The existing Next.js multiple-lockfile and edge-runtime static-generation warnings remain unchanged.
 - **Localized route analytics audit** — added `npm run analytics:locales`, which summarizes localized FreeCell guide/play route visibility from the latest analytics artifacts and writes JSON + Markdown reports to `docs/analytics/localized-route-audits/`.
 - Expanded `npm run metrics:google` so authenticated GA4 pulls now request the exact PlayFreeCellOnline localized route paths instead of depending only on the shallow top-pages card.
 - First audit saved at `docs/analytics/localized-route-audits/2026-07-13.md`: only `6` non-English localized views were visible across French and Portuguese, with Spanish/German/Italian still absent, so the recommendation is to hold further i18n expansion and keep measuring.

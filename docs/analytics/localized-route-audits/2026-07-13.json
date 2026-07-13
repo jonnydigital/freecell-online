@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-13T05:03:05.018Z",
+  "generatedAt": "2026-07-13T12:24:41.642Z",
   "window": "last 30 days through yesterday",
   "inputs": {
     "dailyMetricsDate": "2026-07-13",
@@ -54,12 +54,13 @@
     ]
   },
   "summary": {
-    "nonEnglishViews": 6,
-    "visibleNonEnglishLocales": 2,
+    "nonEnglishViews": 3,
+    "visibleNonEnglishLocales": 1,
     "missingLocales": [
       "es",
       "de",
-      "it"
+      "it",
+      "pt"
     ],
     "recommendation": "hold_i18n_expansion",
     "rationale": "Localized visibility is still too thin to justify adding another language route."
@@ -138,19 +139,10 @@
       "label": "Portuguese",
       "guidePath": "/freecell-em-portugues",
       "playPath": "/freecell-em-portugues/jogar",
-      "views": 3,
+      "views": 0,
       "users": 0,
       "sessions": 0,
-      "sources": [
-        {
-          "source": "daily-metrics.ga4_home.topPages",
-          "path": null,
-          "title": "Jogar FreeCell em Portugues | Gratis Online",
-          "views": 3,
-          "users": 0,
-          "sessions": 0
-        }
-      ]
+      "sources": []
     }
   ]
 }

@@ -7,6 +7,12 @@
 - First audit saved at `docs/analytics/localized-route-audits/2026-07-13.md`: only `6` non-English localized views were visible across French and Portuguese, with Spanish/German/Italian still absent, so the recommendation is to hold further i18n expansion and keep measuring.
 - Verification: `npm run analytics:locales`, `node --check scripts/pull-google-metrics.mjs`, `node --check scripts/localized-route-audit.mjs`, and `npm run build` passed with Node 22. The existing Next.js multiple-lockfile and edge-runtime static-generation warnings remain unchanged.
 
+### Daily Cycle
+- Saved the 2026-07-13 GA4 Home-card baseline to `docs/analytics/daily-metrics.json`: `25` active users over 7 days (`+47.1%`), `343` events (`+56.6%`), `0` key events, `18` new users (`+38.5%`), and `0` realtime users.
+- Last-7-day visible cards: `48` sessions (Organic Search `22`, Direct `9`, Referral `8`, AI Assistant `5`, Unassigned `4`), `160` `page_view` events, `62` `game_start` events, `44` `session_start` events, `30` `user_engagement` events, and `4` one-day active users.
+- Localized-route signal remains too thin: only the French guide is visible in the fresh Home top-pages card (`3` views), Portuguese no longer appears there, and Spanish/German/Italian remain absent. Decision: hold further i18n expansion and rerun locale analytics after richer GA4/GSC data accumulates.
+- Note: `npm run metrics:google` could not run in the heartbeat shell because `gcloud` was not on PATH, so this daily baseline came from an OpenClaw browser GA4 Home scrape instead.
+
 ## 2026-07-12 (OpenClaw Overnight Build)
 
 ### Shipped

@@ -39,6 +39,21 @@ const GA4_GAME_EVENTS = [
   'interaction_type',
 ];
 
+const PLAYFREECELL_LOCALIZED_PATHS = [
+  '/',
+  '/freecell/how-to-play',
+  '/freecell-en-espanol',
+  '/freecell-en-espanol/jugar',
+  '/freecell-en-francais',
+  '/freecell-en-francais/jouer',
+  '/freecell-auf-deutsch',
+  '/freecell-auf-deutsch/spielen',
+  '/freecell-in-italiano',
+  '/freecell-in-italiano/gioca',
+  '/freecell-em-portugues',
+  '/freecell-em-portugues/jogar',
+];
+
 const ADSENSE_METRICS = [
   'ESTIMATED_EARNINGS',
   'PAGE_VIEWS',
@@ -112,7 +127,7 @@ async function pullGa4(token) {
       dateRanges: [{ startDate: '30daysAgo', endDate: 'yesterday' }],
     };
 
-    const [summary, channels, pages, countries, devices, events] = await Promise.all([
+    const reportRequests = [
       ga4RunReport(token, propertyId, {
         ...base,
         metrics: [
@@ -165,7 +180,28 @@ async function pullGa4(token) {
         orderBys: [{ metric: { metricName: 'eventCount' }, desc: true }],
         limit: 20,
       }),
-    ]);
+    ];
+
+    if (site === 'playfreecellonline') {
+      reportRequests.push(
+        ga4RunReport(token, propertyId, {
+          ...base,
+          dimensions: [{ name: 'pagePath' }, { name: 'pageTitle' }],
+          metrics: [{ name: 'screenPageViews' }, { name: 'activeUsers' }, { name: 'sessions' }],
+          dimensionFilter: {
+            filter: {
+              fieldName: 'pagePath',
+              inListFilter: { values: PLAYFREECELL_LOCALIZED_PATHS },
+            },
+          },
+          orderBys: [{ metric: { metricName: 'screenPageViews' }, desc: true }],
+          limit: PLAYFREECELL_LOCALIZED_PATHS.length,
+        }),
+      );
+    }
+
+    const [summary, channels, pages, countries, devices, events, localizedRoutes] =
+      await Promise.all(reportRequests);
 
     out[site] = {
       property_id: propertyId,
@@ -175,6 +211,7 @@ async function pullGa4(token) {
       countries: rowsAsObjects(countries),
       devices: rowsAsObjects(devices),
       game_events: rowsAsObjects(events),
+      localized_routes: localizedRoutes ? rowsAsObjects(localizedRoutes) : [],
     };
   }
 

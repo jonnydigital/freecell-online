@@ -1,6 +1,6 @@
 {
-  "date": "2026-07-12",
-  "lastPulledBy": "openclaw heartbeat browser manual GA4 pull",
+  "date": "2026-07-13",
+  "lastPulledBy": "scripts/pull-public-metrics.mjs",
   "notes": "Updated 2026-07-12 with GA4 Home snapshot for PlayFreeCellOnline.com. Used the OpenClaw browser on property p531359003 / G-8N85JJPLED and read the loaded page text via Chrome DevTools Protocol. Traffic is steady at 23 active users; event count and game starts rose, but localized-route signal remains too thin for another i18n build.",
   "network_state": {
     "live_domains": 4,
@@ -538,13 +538,13 @@
       "Refresh FreeCell GA4 report snapshot for sessions/pageviews/channels/top pages when GA4 report navigation is stable."
     ]
   },
-  "last_pull_iso": "2026-07-12T08:24:00-04:00",
+  "last_pull_iso": "2026-07-13T02:04:33.239Z",
   "sitemap_url_counts_live": {
-    "playfreecellonline": 105,
-    "solitairestack": 121,
-    "playklondikeonline": 28,
-    "playspidersolitaireonline": 23,
-    "network_total": 277
+    "playfreecellonline": 132,
+    "solitairestack": 90,
+    "playklondikeonline": 38,
+    "playspidersolitaireonline": 34,
+    "network_total": 294
   },
   "google_indexation_live": {
     "playfreecellonline": null,

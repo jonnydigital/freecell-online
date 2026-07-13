@@ -1,4 +1,12 @@
 
+## 2026-07-13 (OpenClaw Overnight Build)
+
+### Shipped
+- **Localized route analytics audit** — added `npm run analytics:locales`, which summarizes localized FreeCell guide/play route visibility from the latest analytics artifacts and writes JSON + Markdown reports to `docs/analytics/localized-route-audits/`.
+- Expanded `npm run metrics:google` so authenticated GA4 pulls now request the exact PlayFreeCellOnline localized route paths instead of depending only on the shallow top-pages card.
+- First audit saved at `docs/analytics/localized-route-audits/2026-07-13.md`: only `6` non-English localized views were visible across French and Portuguese, with Spanish/German/Italian still absent, so the recommendation is to hold further i18n expansion and keep measuring.
+- Verification: `npm run analytics:locales`, `node --check scripts/pull-google-metrics.mjs`, `node --check scripts/localized-route-audit.mjs`, and `npm run build` passed with Node 22. The existing Next.js multiple-lockfile and edge-runtime static-generation warnings remain unchanged.
+
 ## 2026-07-12 (OpenClaw Overnight Build)
 
 ### Shipped

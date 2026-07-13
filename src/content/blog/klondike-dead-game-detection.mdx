@@ -1,0 +1,95 @@
+---
+title: "How to Tell When a Klondike Game Is Dead"
+slug: "klondike-dead-game-detection"
+date: "2026-07-13"
+description: "Most lost Klondike games keep going long after they are over. This guide shows you the four patterns that signal a dead position and a scan you can run before giving up."
+metaDescription: "A practical framework for detecting when a Klondike game is truly unwinnable vs. just temporarily stuck, with a checklist and key patterns to scan for."
+author: "J. Foye"
+tags: ["klondike", "strategy", "dead game", "stock", "tableau"]
+sites: ["playklondikeonline"]
+---
+
+Most lost Klondike games keep going long after they are over. You cycle the stock, push a card here and there, and wait for something to open up. But the game was dead ten minutes ago. Knowing how to spot a dead position saves time, and it is a skill that separates faster players from slower ones.
+
+## Key Takeaways
+
+- "Stuck" and "dead" are different. Stuck means no legal moves right now. Dead means no path to a win exists, even if moves are still available.
+- A game is usually dead when all columns with buried face-down cards are frozen, the stock has cycled with nothing new landing, and no tableau builds remain.
+- Color lock and Ace blockage are the two patterns that most often cause unwinnable positions.
+- In [Draw 3 mode](/klondike/draw-1-vs-draw-3), games die more often and earlier than in Draw 1.
+- When you are not sure, spend two minutes tracing your dependency chain. You may find a move you missed.
+
+## Stuck Is Not the Same as Dead
+
+A stuck position has no legal moves right now. A dead position has no path to a win, even if moves are still available.
+
+Many dead Klondike games still allow legal moves. You can cycle the stock. You can shift face-up cards between columns. The game just does not go anywhere. You are making moves without making progress.
+
+This distinction matters because recognizing a dead game early is a skill. If you can identify the loss while moves are still available, you do not need to wait until the board locks up completely.
+
+## The Four Signs Your Klondike Game Is Dead
+
+### 1. All Face-Down Cards Are Frozen In Place
+
+Go column by column and check every stack that still has buried cards. For each one, ask: can the face-up card on top of this column move anywhere? If not, is there any realistic sequence of moves that would free it?
+
+When every column with buried cards is frozen and you cannot see a path to uncovering them, those hidden cards are gone for the game. Any win requires access to most of the deck. If large portions are permanently locked away, the game is dead.
+
+### 2. The Stock Has Cycled Multiple Times With Nothing New Landing
+
+The stock is a fixed set of cards dealt in a fixed order. When you cycle through it repeatedly and nothing plays to the tableau, the same cards that did not land last pass will not land next pass unless something changes on the board.
+
+If you have gone through the stock twice in Draw 3, or once in Draw 1, with zero successful plays to the tableau or foundation, look hard at the board. The stock is telling you the tableau is frozen.
+
+### 3. No Legal Tableau Builds Exist Anywhere
+
+This is the obvious check, but it is easy to miss subtle opportunities. Before concluding no builds are available, scan every face-up card in every column and ask whether it can go on any other face-up card of opposite color and the next rank up.
+
+Pay special attention to moves that would flip a face-down card. Those are the only moves that change the game's information state. A move that just rearranges face-up cards without uncovering anything new almost never helps.
+
+### 4. Color Lock or Ace Blockage
+
+**Color lock** happens when every open landing spot in the tableau requires a card of one color, but every available card at that rank is also that same color. The alternating-color rule means the board freezes. Reds need a black landing spot that does not exist.
+
+**Ace blockage** happens when an Ace is buried under a column you cannot excavate. If you need that Ace to continue sending cards to the foundation, and nothing can clear the column above it, the game may be unwinnable no matter how the rest of the cards fall. This is more common in Draw 3 games where the stock gives you limited access.
+
+## How to Check Whether You Are Missing a Move
+
+Before you concede, run this scan:
+
+1. Go through every column left to right and check for any card that can build onto another tableau pile.
+2. Check every top card in every column against the current foundation state. Can any card go to the foundation without blocking one you still need?
+3. Cycle the stock once and note every card that plays somewhere. If zero cards land, stop cycling.
+4. Ask: if every face-down card flipped right now, would the game be winnable? If yes, look for the fastest path to those flips. If no, it does not matter how long you play.
+
+Our [Klondike cheat sheet](/klondike-cheat-sheet) includes a priority order for evaluating board positions under pressure, which helps keep this scan organized.
+
+## When Undo Cannot Save You
+
+In games that allow unlimited undo, a common instinct is to back up and try a different line. Undo is useful for correcting a specific mistake. It is less useful when the position is dead because of cards you never had access to or blocked sequences with no alternate path.
+
+If you backed up several moves and the same board pattern keeps returning, the game probably has a structural blockage that undo cannot fix. Our [Klondike endgame guide](/klondike-endgame-strategy) covers situations where the position is still winnable and what to do there. Reading it also helps you understand the difference: a recoverable late game versus a structurally dead one.
+
+## How Often Does This Happen?
+
+Klondike solvability research shows that somewhere between 79% and 91% of Draw 1 deals are winnable under optimal play. Draw 3 drops that to around 60% to 75%. A real portion of the games you lose are not your fault at all.
+
+The [Klondike probability page](/klondike-probability) has the full breakdown of solver results. The short version: if you are losing more than one in three Draw 3 games while playing well, some of those losses are the deal's fault, not yours.
+
+## Frequently Asked Questions
+
+### How do I know if my Klondike game is truly unwinnable?
+
+The most reliable check is to look at your remaining face-down cards and ask whether any realistic sequence of plays gets them all flipped. If the columns on top of them are structurally frozen with no tableau builds or stock plays that could open them, the game is most likely dead.
+
+### Can a game be dead even if moves are still available?
+
+Yes. The most frustrating dead positions are the ones that still let you cycle the stock and push cards around the tableau. Those legal moves do not lead anywhere. If nothing on the board has changed after several stock cycles, look hard at whether real progress is still possible.
+
+### Does Draw 1 give more chances to catch a dead game early?
+
+Draw 1 gives you full visibility into the stock each pass, so you know sooner when the stock has nothing to offer. In [Draw 3](/klondike/draw-1-vs-draw-3), limited stock visibility means you might cycle several times before confirming the stock is dry. This is part of why Draw 3 requires more aggressive tableau play: you cannot rely on the stock to save you.
+
+### What should I do when I think the game is dead?
+
+Spend two minutes running the scan above. If you still cannot find a productive move, accept the loss and start a new deal. Klondike is designed so that not every game is winnable, and recognizing a dead position quickly is part of playing at a higher level. [Play Klondike free](/klondike) with undo enabled to practice identifying these positions and exiting before they run long.

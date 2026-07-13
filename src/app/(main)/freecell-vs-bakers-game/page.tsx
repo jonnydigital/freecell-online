@@ -157,15 +157,6 @@ export default function FreecellVsBakersGamePage() {
   const jsonLd = [
     {
       "@context": "https://schema.org",
-      "@type": "WebApplication",
-      name: "FreeCell — Play Online Free",
-      url: absoluteUrl("/"),
-      applicationCategory: "GameApplication",
-      operatingSystem: "Any",
-      offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-    },
-    {
-      "@context": "https://schema.org",
       "@type": "Article",
       headline:
         "FreeCell vs Baker\u2019s Game: Same Layout, Different Strategy",

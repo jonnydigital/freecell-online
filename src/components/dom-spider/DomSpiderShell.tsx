@@ -181,13 +181,18 @@ export default function DomSpiderShell({ initialDifficulty = '1-suit' }: DomSpid
         background: 'var(--theme-dark, #0a3310)',
       }}
     >
-      {/* Mobile top strip */}
+      {/* Mobile top strip.
+          Two rows: the switcher + stats pill share row 1, the suit selector owns row 2.
+          Keeping them on a single row overflows at <=375px (iPhone SE/8/X), where the
+          stats pill lands on top of the 4-suit chip and swallows its taps. */}
       <div
         className="flex sm:hidden"
         style={{
+          flexWrap: 'wrap',
           justifyContent: 'space-between',
           alignItems: 'center',
-          gap: '10px',
+          columnGap: '10px',
+          rowGap: '8px',
           padding: '8px 10px',
           background: 'rgba(0,0,0,0.34)',
           borderBottom: '1px solid rgba(255,255,255,0.06)',
@@ -195,31 +200,7 @@ export default function DomSpiderShell({ initialDifficulty = '1-suit' }: DomSpid
           zIndex: 50,
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0 }}>
-          <GameSwitcher currentGame="Spider Solitaire" currentIcon="♣" />
-          <div style={{ display: 'flex', gap: '4px' }}>
-            {(['1-suit', '2-suit', '4-suit'] as SpiderDifficulty[]).map((d) => (
-              <button
-                key={d}
-                onClick={() => setDifficulty(d)}
-                aria-label={d === '1-suit' ? 'One suit' : d === '2-suit' ? 'Two suits' : 'Four suits'}
-                style={{
-                  width: '30px',
-                  height: '30px',
-                  borderRadius: '7px',
-                  border: `1px solid ${difficulty === d ? 'rgba(212,175,55,0.55)' : 'rgba(255,255,255,0.1)'}`,
-                  background: difficulty === d ? 'rgba(212,175,55,0.16)' : 'rgba(255,255,255,0.04)',
-                  color: difficulty === d ? '#D4AF37' : 'rgba(255,255,255,0.55)',
-                  fontSize: '11px',
-                  fontWeight: 700,
-                  cursor: 'pointer',
-                }}
-              >
-                {suitLabels[d]}
-              </button>
-            ))}
-          </div>
-        </div>
+        <GameSwitcher currentGame="Spider Solitaire" currentIcon="♣" />
 
         <div
           style={{
@@ -245,6 +226,31 @@ export default function DomSpiderShell({ initialDifficulty = '1-suit' }: DomSpid
             <div style={{ fontSize: '9px', fontWeight: 700, color: 'rgba(255,255,255,0.36)', textTransform: 'uppercase' }}>Suits</div>
             <div style={{ fontSize: '12px', fontWeight: 700, color: 'rgba(255,255,255,0.55)', fontFamily: 'monospace' }}>{foundations.length}/8</div>
           </div>
+        </div>
+
+        {/* Row 2 — full width forces the wrap, so the chips can never sit under the pill */}
+        <div style={{ display: 'flex', gap: '6px', width: '100%' }}>
+          {(['1-suit', '2-suit', '4-suit'] as SpiderDifficulty[]).map((d) => (
+            <button
+              key={d}
+              onClick={() => setDifficulty(d)}
+              aria-label={d === '1-suit' ? 'One suit' : d === '2-suit' ? 'Two suits' : 'Four suits'}
+              aria-pressed={difficulty === d}
+              style={{
+                flex: 1,
+                minHeight: '36px',
+                borderRadius: '7px',
+                border: `1px solid ${difficulty === d ? 'rgba(212,175,55,0.55)' : 'rgba(255,255,255,0.1)'}`,
+                background: difficulty === d ? 'rgba(212,175,55,0.16)' : 'rgba(255,255,255,0.04)',
+                color: difficulty === d ? '#D4AF37' : 'rgba(255,255,255,0.55)',
+                fontSize: '11px',
+                fontWeight: 700,
+                cursor: 'pointer',
+              }}
+            >
+              {suitLabels[d]}
+            </button>
+          ))}
         </div>
       </div>
 

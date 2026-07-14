@@ -184,13 +184,18 @@ export default function DomKlondikeShell({ initialDrawMode = 1 }: DomKlondikeShe
         background: 'var(--theme-dark, #0a3310)',
       }}
     >
-      {/* Mobile top strip */}
+      {/* Mobile top strip.
+          Two rows: the switcher + stats pill share row 1, the draw selector owns row 2.
+          Keeping them on a single row overflows at <=375px (iPhone SE/8/X), where the
+          stats pill lands on top of the D3 chip and swallows its taps. */}
       <div
         className="flex sm:hidden"
         style={{
+          flexWrap: 'wrap',
           justifyContent: 'space-between',
           alignItems: 'center',
-          gap: '10px',
+          columnGap: '10px',
+          rowGap: '8px',
           padding: '8px 10px',
           background: 'rgba(0,0,0,0.34)',
           borderBottom: '1px solid rgba(255,255,255,0.06)',
@@ -198,31 +203,7 @@ export default function DomKlondikeShell({ initialDrawMode = 1 }: DomKlondikeShe
           zIndex: 50,
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0 }}>
-          <GameSwitcher currentGame="Klondike" currentIcon="♦" />
-          <div style={{ display: 'flex', gap: '4px' }}>
-            {([1, 3] as KlondikeDrawMode[]).map((mode) => (
-              <button
-                key={mode}
-                onClick={() => setDrawMode(mode)}
-                aria-label={`Draw ${mode}`}
-                style={{
-                  width: '34px',
-                  height: '30px',
-                  borderRadius: '7px',
-                  border: `1px solid ${drawMode === mode ? 'rgba(212,175,55,0.55)' : 'rgba(255,255,255,0.1)'}`,
-                  background: drawMode === mode ? 'rgba(212,175,55,0.16)' : 'rgba(255,255,255,0.04)',
-                  color: drawMode === mode ? '#D4AF37' : 'rgba(255,255,255,0.55)',
-                  fontSize: '11px',
-                  fontWeight: 700,
-                  cursor: 'pointer',
-                }}
-              >
-                D{mode}
-              </button>
-            ))}
-          </div>
-        </div>
+        <GameSwitcher currentGame="Klondike" currentIcon="♦" />
 
         <div
           style={{
@@ -248,6 +229,31 @@ export default function DomKlondikeShell({ initialDrawMode = 1 }: DomKlondikeShe
             <div style={{ fontSize: '9px', fontWeight: 700, color: 'rgba(255,255,255,0.36)', textTransform: 'uppercase' }}>Game</div>
             <div style={{ fontSize: '12px', fontWeight: 700, color: 'rgba(255,255,255,0.55)', fontFamily: 'monospace' }}>#{gameNumber}</div>
           </div>
+        </div>
+
+        {/* Row 2 — full width forces the wrap, so the chips can never sit under the pill */}
+        <div style={{ display: 'flex', gap: '6px', width: '100%' }}>
+          {([1, 3] as KlondikeDrawMode[]).map((mode) => (
+            <button
+              key={mode}
+              onClick={() => setDrawMode(mode)}
+              aria-label={`Draw ${mode}`}
+              aria-pressed={drawMode === mode}
+              style={{
+                flex: 1,
+                minHeight: '36px',
+                borderRadius: '7px',
+                border: `1px solid ${drawMode === mode ? 'rgba(212,175,55,0.55)' : 'rgba(255,255,255,0.1)'}`,
+                background: drawMode === mode ? 'rgba(212,175,55,0.16)' : 'rgba(255,255,255,0.04)',
+                color: drawMode === mode ? '#D4AF37' : 'rgba(255,255,255,0.55)',
+                fontSize: '11px',
+                fontWeight: 700,
+                cursor: 'pointer',
+              }}
+            >
+              D{mode}
+            </button>
+          ))}
         </div>
       </div>
 

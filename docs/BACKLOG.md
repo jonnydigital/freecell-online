@@ -1,5 +1,5 @@
 # FreeCell Online — Feature Backlog
-*Ranked by impact × effort. Updated 2026-07-13.*
+*Ranked by impact × effort. Updated 2026-07-14.*
 
 ## 🚨 P0: Critical Bug
 1. ~~**🔴 Mobile card rendering broken**~~ ✅ FIXED 03-02 — Root cause: `recreateAllCardSprites()` used PNG asset keys that were never loaded. On resize (common on mobile), cards became empty containers. Fixed with procedural rendering matching `createCardSprite()`.
@@ -70,6 +70,7 @@
 35. ~~**Per-language analytics review before further i18n expansion**~~ ✅ SHIPPED 2026-07-13 — `npm run analytics:locales` now generates JSON/Markdown locale reports, and authenticated `npm run metrics:google` pulls exact localized route paths for PlayFreeCellOnline. First audit found 6 non-English localized views across French and Portuguese; Spanish/German/Italian remain absent from visible top-page signal. Decision: hold new language expansion until non-English localized demand is broader.
 36. **Localized-route signal threshold for next i18n move** — re-run `npm run analytics:locales` after fresh GA4/GSC pulls. Consider deepening a top existing locale or adding another language only after non-English localized views reach roughly 50 in the reporting window and at least 3 non-English locales show measurable traffic.
 37. ~~**Klondike + Spider compact mobile shell parity**~~ ✅ SHIPPED 2026-07-13 — Phone-width Klondike and Spider now use compact top status strips plus fixed bottom action bars instead of wrapping the desktop toolbar, addressing the U6 mobile/tablet QA observation while leaving FreeCell's measured portrait layout untouched.
+38. ~~**Mobile viewport QA regression gate**~~ ✅ SHIPPED 2026-07-14 — `npm run qa:mobile` now enforces default route board-shape expectations for FreeCell, Klondike, Spider, and Forty Thieves, failing on missing/partial card renders, missing face/back cards, or wrong cascade counts instead of only reporting generic page-load health. Local audit artifact saved at `docs/analytics/mobile-viewport-audits/2026-07-14-local.json`. *(Follow-up to the 2026-07-11/12 mobile QA push and 2026-07-13 compact shell fix: make the harness catch regressions automatically.)*
 
 ## ⏳ Blocked (Needs Jonathan)
 - ~~**Custom domain** — playfreecellonline.com → Vercel DNS~~ ✅ LIVE as of 2026-03-13!

@@ -1,4 +1,11 @@
 
+## 2026-07-14 (OpenClaw Overnight Build)
+
+### Shipped
+- **Mobile viewport QA regression gate** — tightened `npm run qa:mobile` so the default FreeCell, Klondike, Spider, and Forty Thieves routes now fail when their expected board shape regresses, not just when the page has no cards at all.
+- Added route-specific assertions for minimum rendered cards, face/back card counts, and cascade counts: FreeCell 52/8, Klondike 29/7, Spider 63/10, and Forty Thieves 41/10.
+- Verification: plain `npm run build` still stops under the shell's Node 18 because Next.js requires >=20.9. With Node 22 on PATH, `npm run build` passed. `npm run qa:mobile -- --base=http://127.0.0.1:3021 --out=docs/analytics/mobile-viewport-audits/2026-07-14-local.json` also passed with no hard audit failures. Existing multiple-lockfile/root and edge-runtime warnings remain unchanged.
+
 ## 2026-07-13 (OpenClaw Overnight Build)
 
 ### Shipped

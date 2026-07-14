@@ -32,6 +32,12 @@ const DEFAULT_ROUTES = [
   { label: 'spider', path: '/spider' },
   { label: 'forty-thieves', path: '/forty-thieves' },
 ];
+const DEFAULT_EXPECTATIONS = new Map([
+  ['freecell', { minCards: 52, cascades: 8, minFaceCards: 52 }],
+  ['klondike', { minCards: 29, cascades: 7, minFaceCards: 7, minBackCards: 22 }],
+  ['spider', { minCards: 63, cascades: 10, minFaceCards: 10, minBackCards: 53 }],
+  ['forty-thieves', { minCards: 41, cascades: 10, minFaceCards: 40, minBackCards: 1 }],
+]);
 
 const sleep = (ms) => new Promise((resolveSleep) => setTimeout(resolveSleep, ms));
 
@@ -356,6 +362,21 @@ function addFailureReasons(row) {
   const reasons = [];
   if (!row.boardFound) reasons.push('board not found');
   if (row.cardCount === 0) reasons.push('no rendered cards found');
+  const expected = DEFAULT_EXPECTATIONS.get(row.label);
+  if (expected) {
+    if (row.cardCount < expected.minCards) {
+      reasons.push(`expected at least ${expected.minCards} cards, found ${row.cardCount}`);
+    }
+    if (row.faceCardCount < expected.minFaceCards) {
+      reasons.push(`expected at least ${expected.minFaceCards} face cards, found ${row.faceCardCount}`);
+    }
+    if (expected.minBackCards && row.backCardCount < expected.minBackCards) {
+      reasons.push(`expected at least ${expected.minBackCards} card backs, found ${row.backCardCount}`);
+    }
+    if (row.cascadeCount !== expected.cascades) {
+      reasons.push(`expected ${expected.cascades} cascades, found ${row.cascadeCount}`);
+    }
+  }
   if (row.horizontalOverflowPx > 1) reasons.push(`${row.horizontalOverflowPx}px horizontal overflow`);
   if (row.clippedCardCount > 0) reasons.push(`${row.clippedCardCount} horizontally clipped cards`);
   if (!row.topControlsVisible) reasons.push('top controls not visibly detected');

@@ -6,6 +6,12 @@
 - Added route-specific assertions for minimum rendered cards, face/back card counts, and cascade counts: FreeCell 52/8, Klondike 29/7, Spider 63/10, and Forty Thieves 41/10.
 - Verification: plain `npm run build` still stops under the shell's Node 18 because Next.js requires >=20.9. With Node 22 on PATH, `npm run build` passed. `npm run qa:mobile -- --base=http://127.0.0.1:3021 --out=docs/analytics/mobile-viewport-audits/2026-07-14-local.json` also passed with no hard audit failures. Existing multiple-lockfile/root and edge-runtime warnings remain unchanged.
 
+### Daily Cycle
+- Saved the 2026-07-14 authenticated GA4 browser snapshot to `docs/analytics/daily-metrics.json`: `24` active users over 7 days (`+41.2%`), `356` events (`+52.1%`), `0` key events, `18` new users (`+50.0%`), and `0` realtime users.
+- Engagement report activity-over-time card showed `80` active users over 30 days, `24` over 7 days, and `5` over 1 day. Acquisition/engagement report detail remained stuck on the Last 28 days view in the browser UI, so detailed channel/page rows were not treated as fresh 7-day data.
+- Feedback check: no local `data/feedback.json` exists; `/api/feedback` writes to `process.cwd()/data/feedback.json`, so local feedback count remains `0` unless production storage is surfaced separately.
+- Re-ran `npm run analytics:locales`; the 2026-07-14 localized-route audit again recommends `hold_i18n_expansion` with only `3` non-English localized views and one visible non-English locale. Decision: keep backlog item #36 active and do not launch another i18n implementation until the threshold is met.
+
 ## 2026-07-13 (OpenClaw Overnight Build)
 
 ### Shipped

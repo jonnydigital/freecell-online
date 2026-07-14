@@ -1,7 +1,7 @@
 {
-  "date": "2026-07-13",
-  "lastPulledBy": "scripts/pull-public-metrics.mjs",
-  "notes": "Updated 2026-07-13 with GA4 Home snapshot for PlayFreeCellOnline.com. Used the OpenClaw browser on property p531359003 / G-8N85JJPLED after the local gcloud-backed metrics script was unavailable in the heartbeat shell. Traffic improved to 25 active users and 343 events over the visible 7-day cards; localized-route signal remains too thin for another i18n build.",
+  "date": "2026-07-14",
+  "lastPulledBy": "OpenClaw browser heartbeat",
+  "notes": "Updated 2026-07-14 from authenticated OpenClaw browser on GA4 property PlayFreeCellOnline.com p531359003 / G-8N85JJPLED. Reliable GA4 Home 7-day headline: 24 active users (+41.2%), 356 events (+52.1%), 0 key events, 18 new users (+50.0%), realtime 0. Engagement report confirmed activity-over-time card: 80 active users in 30 days, 24 in 7 days, 5 in 1 day. GA report date picker resisted applying Last 7 days to the detailed report cards, so detailed sessions by channel/top page rows remain from the prior captured Home card until the next successful exact API/browser pull.",
   "network_state": {
     "live_domains": 4,
     "live_since": {
@@ -538,7 +538,7 @@
       "Refresh FreeCell GA4 report snapshot for sessions/pageviews/channels/top pages when GA4 report navigation is stable."
     ]
   },
-  "last_pull_iso": "2026-07-13T02:04:33.239Z",
+  "last_pull_iso": "2026-07-14T08:28:00-04:00",
   "sitemap_url_counts_live": {
     "playfreecellonline": 132,
     "solitairestack": 90,
@@ -713,20 +713,20 @@
     "taskPicked": "Do not start another language expansion or UI build yet. Traffic is steady and game starts rose, but localized-route data remains too thin. Next action is per-language analytics review once more GA4/GSC signal accumulates; SolitaireBlog submission remains Jonathan-approval gated.",
     "automationNote": "No Claude Code implementation agent launched during the 2026-07-12 daily cycle because the highest-impact task is analytics review/decisioning, not an unblocked code change; prior Claude Code CLI auth issue remains noted in heartbeat-state."
   },
-  "lastUpdated": "2026-07-13T08:16:00-04:00",
+  "lastUpdated": "2026-07-14T08:28:00-04:00",
   "ga4_home": {
     "property": "PlayFreeCellOnline.com",
     "propertyId": "p531359003",
     "measurementId": "G-8N85JJPLED",
-    "pulledAt": "2026-07-13T08:16:00-04:00",
+    "pulledAt": "2026-07-14T08:28:00-04:00",
     "headlinePeriod": "Last 7 days",
-    "activeUsers": 25,
-    "activeUsersChangePercent": 47.1,
-    "eventCount": 343,
-    "eventCountChangePercent": 56.6,
+    "activeUsers": 24,
+    "activeUsersChangePercent": 41.2,
+    "eventCount": 356,
+    "eventCountChangePercent": 52.1,
     "keyEvents": 0,
     "newUsers": 18,
-    "newUsersChangePercent": 38.5,
+    "newUsersChangePercent": 50.0,
     "realtimeActiveUsers": 0,
     "last7Days": {
       "countries": {
@@ -820,32 +820,56 @@
         "time_to_first_move": 8
       },
       "activityOverTime": {
-        "activeUsers30Days": 85,
-        "activeUsers30DaysChangePercent": 11.8,
-        "activeUsers7Days": 25,
-        "activeUsers7DaysChangePercent": 47.1,
-        "activeUsers1Day": 4,
-        "activeUsers1DayChangePercent": 100
+        "activeUsers30Days": 80,
+        "activeUsers30DaysChangePercent": null,
+        "activeUsers7Days": 24,
+        "activeUsers7DaysChangePercent": 41.2,
+        "activeUsers1Day": 5,
+        "activeUsers1DayChangePercent": null
       }
     },
-    "localizedRouteSignal": "Localized-route signal remains thin: French guide appears with 3 views (flat). Portuguese no longer appears in the fresh visible GA4 Home top-pages card, and Spanish/German/Italian remain absent."
+    "localizedRouteSignal": "Hold i18n expansion: the latest localized-route detail still comes from the 2026-07-13 audit, which found only French with 3 non-English localized views and no measurable Spanish/German/Italian/Portuguese signal in the captured top-page rows.",
+    "detailCaveat": "Detailed sessions-by-channel, top page, and event rows were not refreshed for 2026-07-14 because GA4 report date picker stayed on Last 28 days in the browser UI; keep prior rows as last captured detail, not fresh 7-day detail.",
+    "last28DayReportCards": {
+      "pulledAt": "2026-07-14T08:22:00-04:00",
+      "window": "Last 28 days / Jun 16-Jul 13, 2026",
+      "acquisition": {
+        "newUsers": 68,
+        "firstUserPrimaryChannelGroup": {
+          "Organic Search": 45,
+          "Direct": 13,
+          "AI Assistant": 5,
+          "Referral": 4,
+          "Unassigned": 1
+        }
+      },
+      "engagement": {
+        "activeUsers": 75,
+        "newUsers": 68,
+        "activityOverTime": {
+          "30 days": 80,
+          "7 days": 24,
+          "1 day": 5
+        }
+      }
+    }
   },
   "daily_cycle": {
-    "date": "2026-07-13",
-    "visitors": 25,
-    "sessions": 48,
+    "date": "2026-07-14",
+    "visitors": 24,
+    "sessions": null,
     "avgSessionDuration": null,
     "bounceRate": null,
     "dailyChallengeStarts": null,
     "dailyChallengeCompletes": null,
-    "gamesStarted": 62,
+    "gamesStarted": null,
     "gamesWon": null,
     "feedbackCount": 0,
     "errorsLogged": null,
     "featuresShipped": [
-      "Overnight: localized route analytics audit automation shipped, including exact localized GA4 route pulls in the authenticated metrics script and JSON/Markdown audit reports under docs/analytics/localized-route-audits/."
+      "No code/UI shipped in the morning cycle; captured GA4 Home metrics and verified local feedback store is empty."
     ],
     "backlogRemaining": null,
-    "selectedTask": "Hold further i18n expansion and rerun localized-route analytics after richer GA4/GSC data accumulates. Current visible signal is French-only and too thin for another language build; no Claude Code implementation agent launched because the highest-impact task is analytics review/decisioning, not an unblocked code/UI change."
+    "selectedTask": "Do not launch another i18n implementation yet. Keep backlog item #36 active: rerun localized-route analytics after a successful exact GA4/GSC pull and only deepen/add locales after roughly 50 non-English localized views and at least 3 non-English locales show measurable traffic."
   }
 }

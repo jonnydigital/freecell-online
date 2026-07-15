@@ -1,4 +1,13 @@
 
+## 2026-07-15 (OpenClaw Screenshot Audit Polish)
+
+### Shipped
+- **Mobile viewport screenshot artifacts** — `npm run qa:mobile` now accepts `--screenshots` or `--screenshots=DIR`, captures a PNG for each audited route/width through Chrome DevTools, and attaches the screenshot paths to both JSON and Markdown audit output.
+- When paired with `--out=...json`, the default screenshot directory is derived beside the JSON artifact, making failure review easier without hand-running a separate screenshot harness.
+- The audit now waits until each route has no hard failure reasons before taking its screenshot, avoiding early captures while heavier games are still finishing their card render.
+- Added small SVG author avatars for the Solitaire Stack editorial desks and switched the author registry from missing `/authors/*.png` paths to the shipped `/authors/*.svg` assets, eliminating the 404s surfaced during the local QA run.
+- Verification: `node --check scripts/mobile-viewport-audit.mjs`, `npm run qa:mobile -- --base=http://127.0.0.1:3032 --out=docs/analytics/mobile-viewport-audits/2026-07-15-screenshot-local.json --screenshots`, and `npm run build` passed with Node 22. Existing Next.js multiple-lockfile/root and edge-runtime static-generation warnings remain unchanged.
+
 ## 2026-07-15 (OpenClaw Overnight Build)
 
 ### Shipped

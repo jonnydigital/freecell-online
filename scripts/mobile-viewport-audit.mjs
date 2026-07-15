@@ -7,6 +7,7 @@
  * Usage:
  *   npm run qa:mobile -- --base=http://localhost:3000
  *   npm run qa:mobile -- --base=https://playfreecellonline.com --out=docs/analytics/mobile-viewport-audits/latest.json
+ *   npm run qa:mobile -- --base=http://localhost:3000 --screenshots
  *
  * Requires Node 22+ or another runtime with global WebSocket. The project build
  * already requires a modern Node runtime; this script intentionally avoids
@@ -49,6 +50,7 @@ function parseArgs(argv) {
     delayMs: 1200,
     jsonOnly: false,
     out: null,
+    screenshotsDir: null,
   };
 
   for (const arg of argv) {
@@ -66,6 +68,10 @@ function parseArgs(argv) {
       args.delayMs = Number.parseInt(arg.slice('--delay='.length), 10);
     } else if (arg.startsWith('--out=')) {
       args.out = arg.slice('--out='.length);
+    } else if (arg === '--screenshots') {
+      args.screenshotsDir = true;
+    } else if (arg.startsWith('--screenshots=')) {
+      args.screenshotsDir = arg.slice('--screenshots='.length);
     } else if (arg.startsWith('--route=')) {
       if (args.routes === DEFAULT_ROUTES) args.routes = [];
       const raw = arg.slice('--route='.length);
@@ -76,6 +82,11 @@ function parseArgs(argv) {
 
   if (args.widths.length === 0) throw new Error('No widths supplied.');
   if (args.routes.length === 0) throw new Error('No routes supplied.');
+  if (args.screenshotsDir === true) {
+    args.screenshotsDir = args.out
+      ? args.out.replace(/\.json$/i, '-screenshots')
+      : 'docs/analytics/mobile-viewport-audits/screenshots';
+  }
   return args;
 }
 
@@ -371,6 +382,29 @@ function auditExpression(label, path) {
   })()`;
 }
 
+function slugify(value) {
+  return String(value)
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '') || 'route';
+}
+
+async function captureViewportScreenshot(client, args, route, width) {
+  if (!args.screenshotsDir) return null;
+
+  const screenshotDir = resolve(process.cwd(), args.screenshotsDir);
+  await mkdir(screenshotDir, { recursive: true });
+  const filename = `${slugify(route.label)}-${width}.png`;
+  const absolutePath = resolve(screenshotDir, filename);
+  const capture = await client.send('Page.captureScreenshot', {
+    format: 'png',
+    captureBeyondViewport: false,
+    fromSurface: true,
+  });
+  await writeFile(absolutePath, Buffer.from(capture.data, 'base64'));
+  return `${args.screenshotsDir.replace(/\/+$/, '')}/${filename}`;
+}
+
 function formatBool(value) {
   return value ? 'yes' : 'no';
 }
@@ -382,10 +416,11 @@ function formatMarkdown(results, args) {
   lines.push(`Base: \`${args.base}\``);
   lines.push(`Pulled: \`${new Date().toISOString()}\``);
   lines.push('');
-  lines.push('| Route | Width | Cards | Face | Card W | H overflow | Clipped | Blocked controls | Top controls | Bottom controls | Unused vertical |');
-  lines.push('|---|---:|---:|---:|---:|---:|---:|---:|---|---|---:|');
+  const includeScreenshots = results.some((row) => row.screenshotPath);
+  lines.push(`| Route | Width | Cards | Face | Card W | H overflow | Clipped | Blocked controls | Top controls | Bottom controls | Unused vertical${includeScreenshots ? ' | Screenshot' : ''} |`);
+  lines.push(`|---|---:|---:|---:|---:|---:|---:|---:|---|---|---:${includeScreenshots ? '|---' : ''}|`);
   for (const row of results) {
-    lines.push(`| ${row.label} | ${row.viewport.width} | ${row.cardCount} | ${row.faceCardCount} | ${row.minCardWidth}-${row.maxCardWidth} | ${row.horizontalOverflowPx} | ${row.clippedCardCount} | ${row.blockedInteractiveCount ?? 0} | ${formatBool(row.topControlsVisible)} | ${formatBool(row.bottomControlsVisible)} | ${row.unusedVerticalPct ?? 'n/a'}% |`);
+    lines.push(`| ${row.label} | ${row.viewport.width} | ${row.cardCount} | ${row.faceCardCount} | ${row.minCardWidth}-${row.maxCardWidth} | ${row.horizontalOverflowPx} | ${row.clippedCardCount} | ${row.blockedInteractiveCount ?? 0} | ${formatBool(row.topControlsVisible)} | ${formatBool(row.bottomControlsVisible)} | ${row.unusedVerticalPct ?? 'n/a'}%${includeScreenshots ? ` | ${row.screenshotPath ? `\`${row.screenshotPath}\`` : ''}` : ''} |`);
   }
   lines.push('');
   const failures = results.filter((row) => row.failureReasons.length > 0);
@@ -454,11 +489,13 @@ async function auditRoute(client, args, route, width) {
 
   let row = null;
   for (let attempt = 0; attempt < 10; attempt += 1) {
-    row = await evaluate(client, auditExpression(route.label, route.path));
-    if (row.boardFound && row.cardCount > 0) break;
+    row = addFailureReasons(await evaluate(client, auditExpression(route.label, route.path)));
+    if (row.boardFound && row.cardCount > 0 && row.failureReasons.length === 0) break;
     await sleep(300);
   }
-  return addFailureReasons(row);
+  const screenshotPath = await captureViewportScreenshot(client, args, route, width);
+  if (screenshotPath) row.screenshotPath = screenshotPath;
+  return row;
 }
 
 async function main() {
@@ -494,6 +531,7 @@ async function main() {
       pulledAt: new Date().toISOString(),
       widths: args.widths,
       routes: args.routes,
+      screenshotsDir: args.screenshotsDir,
       results,
     };
 

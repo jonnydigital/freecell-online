@@ -1,5 +1,7 @@
 {
-  "generatedAt": "2026-07-14T12:22:48.329Z",
+  "generatedAt": "2026-07-15T00:49:04.488Z",
+  "reportDate": "2026-07-14",
+  "reportTimeZone": "America/New_York",
   "window": "last 30 days through yesterday",
   "inputs": {
     "dailyMetricsDate": "2026-07-14",
@@ -62,8 +64,25 @@
       "it",
       "pt"
     ],
+    "thresholds": {
+      "deepenOrExpandViews": 50,
+      "deepenOrExpandLocales": 3,
+      "collectButPrioritizeViews": 15
+    },
+    "shortfall": {
+      "viewsUntilExpansion": 47,
+      "localesUntilExpansion": 2
+    },
+    "topNonEnglishLocale": {
+      "code": "fr",
+      "label": "French",
+      "views": 3,
+      "users": 0,
+      "sessions": 0
+    },
     "recommendation": "hold_i18n_expansion",
-    "rationale": "Localized visibility is still too thin to justify adding another language route."
+    "nextAction": "Do not build another locale yet. Re-run this audit after the next fresh GA4/GSC pull.",
+    "rationale": "Localized visibility is still too thin to justify adding another language route: needs 50+ non-English localized views and 3+ visible non-English locales."
   },
   "locales": [
     {

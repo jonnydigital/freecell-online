@@ -17,6 +17,23 @@ const __dirname = dirname(__filename);
 const ROOT = resolve(__dirname, '..');
 const ANALYTICS_DIR = resolve(ROOT, 'docs/analytics');
 const OUT_DIR = resolve(ANALYTICS_DIR, 'localized-route-audits');
+const REPORT_TIME_ZONE = 'America/New_York';
+const DECISION_THRESHOLDS = {
+  deepenOrExpandViews: 50,
+  deepenOrExpandLocales: 3,
+  collectButPrioritizeViews: 15,
+};
+
+function localDateStamp(date = new Date()) {
+  const parts = new Intl.DateTimeFormat('en-US', {
+    timeZone: REPORT_TIME_ZONE,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).formatToParts(date);
+  const values = Object.fromEntries(parts.map((part) => [part.type, part.value]));
+  return `${values.year}-${values.month}-${values.day}`;
+}
 
 const LOCALES = [
   {
@@ -156,16 +173,29 @@ function buildAudit({ dailyMetrics, googleMetrics }) {
   const nonEnglishViews = nonEnglish.reduce((sum, locale) => sum + locale.views, 0);
   const visibleNonEnglishLocales = nonEnglish.filter((locale) => locale.views > 0).length;
   const missingLocales = nonEnglish.filter((locale) => locale.views === 0).map((locale) => locale.code);
+  const topNonEnglishLocale = [...nonEnglish].sort((a, b) => b.views - a.views)[0] || null;
+  const viewsUntilExpansion = Math.max(0, DECISION_THRESHOLDS.deepenOrExpandViews - nonEnglishViews);
+  const localesUntilExpansion = Math.max(
+    0,
+    DECISION_THRESHOLDS.deepenOrExpandLocales - visibleNonEnglishLocales,
+  );
 
   let recommendation = 'hold_i18n_expansion';
+  let nextAction = 'Do not build another locale yet. Re-run this audit after the next fresh GA4/GSC pull.';
   if (nonEnglishViews >= 50 && visibleNonEnglishLocales >= 3) {
     recommendation = 'review_next_language_or_deepen_top_locale';
+    nextAction =
+      'Review whether to deepen the strongest existing locale or add the next language, using query/page evidence before building.';
   } else if (nonEnglishViews >= 15) {
     recommendation = 'keep_collecting_prioritize_top_existing_locale';
+    nextAction =
+      'Keep collecting data, but consider a small content/internal-linking lift for the strongest visible locale.';
   }
 
   return {
     generatedAt: new Date().toISOString(),
+    reportDate: localDateStamp(),
+    reportTimeZone: REPORT_TIME_ZONE,
     window: googleMetrics?.window || dailyMetrics?.ga4_home?.headlinePeriod || 'latest available',
     inputs: {
       dailyMetricsDate: dailyMetrics?.date || null,
@@ -176,10 +206,26 @@ function buildAudit({ dailyMetrics, googleMetrics }) {
       nonEnglishViews,
       visibleNonEnglishLocales,
       missingLocales,
+      thresholds: DECISION_THRESHOLDS,
+      shortfall: {
+        viewsUntilExpansion,
+        localesUntilExpansion,
+      },
+      topNonEnglishLocale:
+        topNonEnglishLocale && topNonEnglishLocale.views > 0
+          ? {
+              code: topNonEnglishLocale.code,
+              label: topNonEnglishLocale.label,
+              views: topNonEnglishLocale.views,
+              users: topNonEnglishLocale.users,
+              sessions: topNonEnglishLocale.sessions,
+            }
+          : null,
       recommendation,
+      nextAction,
       rationale:
         recommendation === 'hold_i18n_expansion'
-          ? 'Localized visibility is still too thin to justify adding another language route.'
+          ? `Localized visibility is still too thin to justify adding another language route: needs ${DECISION_THRESHOLDS.deepenOrExpandViews}+ non-English localized views and ${DECISION_THRESHOLDS.deepenOrExpandLocales}+ visible non-English locales.`
           : 'Localized visibility is broad enough to inspect a deeper content or routing move.',
     },
     locales,
@@ -188,7 +234,9 @@ function buildAudit({ dailyMetrics, googleMetrics }) {
 
 function renderMarkdown(audit) {
   const lines = [
-    `# Localized Route Analytics Audit — ${audit.generatedAt.slice(0, 10)}`,
+    `# Localized Route Analytics Audit — ${audit.reportDate}`,
+    '',
+    `Generated: ${audit.generatedAt} (${audit.reportTimeZone} report date)`,
     '',
     `Window: ${audit.window}`,
     '',
@@ -197,8 +245,16 @@ function renderMarkdown(audit) {
     `- Recommendation: \`${audit.summary.recommendation}\``,
     `- Non-English localized views found: ${audit.summary.nonEnglishViews}`,
     `- Visible non-English locales: ${audit.summary.visibleNonEnglishLocales}`,
+    `- Expansion gate: ${audit.summary.thresholds.deepenOrExpandViews}+ non-English views and ${audit.summary.thresholds.deepenOrExpandLocales}+ visible non-English locales`,
+    `- Gate shortfall: ${audit.summary.shortfall.viewsUntilExpansion} views, ${audit.summary.shortfall.localesUntilExpansion} locales`,
+    `- Top non-English locale: ${
+      audit.summary.topNonEnglishLocale
+        ? `${audit.summary.topNonEnglishLocale.label} (${audit.summary.topNonEnglishLocale.code}) — ${audit.summary.topNonEnglishLocale.views} views`
+        : 'none yet'
+    }`,
     `- Missing non-English locales: ${audit.summary.missingLocales.join(', ') || 'none'}`,
     `- Rationale: ${audit.summary.rationale}`,
+    `- Next action: ${audit.summary.nextAction}`,
     '',
     '## Locale Signals',
     '',
@@ -233,7 +289,7 @@ async function main() {
   const googlePath = args.metrics || await latestGoogleMetricsPath();
   const googleMetrics = await readJsonIfExists(googlePath);
   const audit = buildAudit({ dailyMetrics, googleMetrics });
-  const stamp = audit.generatedAt.slice(0, 10);
+  const stamp = audit.reportDate;
   const jsonPath = resolve(args.outDir, `${stamp}.json`);
   const mdPath = resolve(args.outDir, `${stamp}.md`);
 

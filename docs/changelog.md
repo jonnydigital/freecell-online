@@ -6,6 +6,7 @@
 - When paired with `--out=...json`, the default screenshot directory is derived beside the JSON artifact, making failure review easier without hand-running a separate screenshot harness.
 - The audit now waits until each route has no hard failure reasons before taking its screenshot, avoiding early captures while heavier games are still finishing their card render.
 - Added small SVG author avatars for the Solitaire Stack editorial desks and switched the author registry from missing `/authors/*.png` paths to the shipped `/authors/*.svg` assets, eliminating the 404s surfaced during the local QA run.
+- Added `docs/mobile-viewport-qa.md`, a compact runbook for when to run the mobile harness, how to save local/live/screenshot artifacts, and how to triage blocked controls, board-shape failures, overflow, and clipped-card diagnostics.
 - Verification: `node --check scripts/mobile-viewport-audit.mjs`, `npm run qa:mobile -- --base=http://127.0.0.1:3032 --out=docs/analytics/mobile-viewport-audits/2026-07-15-screenshot-local.json --screenshots`, and `npm run build` passed with Node 22. Existing Next.js multiple-lockfile/root and edge-runtime static-generation warnings remain unchanged.
 
 ### Daily Cycle

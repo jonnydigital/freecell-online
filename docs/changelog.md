@@ -8,6 +8,12 @@
 - Added small SVG author avatars for the Solitaire Stack editorial desks and switched the author registry from missing `/authors/*.png` paths to the shipped `/authors/*.svg` assets, eliminating the 404s surfaced during the local QA run.
 - Verification: `node --check scripts/mobile-viewport-audit.mjs`, `npm run qa:mobile -- --base=http://127.0.0.1:3032 --out=docs/analytics/mobile-viewport-audits/2026-07-15-screenshot-local.json --screenshots`, and `npm run build` passed with Node 22. Existing Next.js multiple-lockfile/root and edge-runtime static-generation warnings remain unchanged.
 
+### Daily Cycle
+- Saved the 2026-07-15 authenticated GA4 browser headline to `docs/analytics/daily-metrics.json`: `22` active users over 7 days (`+15.8%`), `444` events (`+68.8%`), `0` key events, `17` new users (`+21.4%`), and `0` realtime users.
+- `npm run metrics:google` remains blocked in the heartbeat shell because `gcloud` is not on PATH, so detailed sessions-by-channel, top-page, and event rows were preserved as prior captured detail instead of being treated as a fresh exact pull.
+- Feedback check: no local `data/feedback.json` exists; `/api/feedback` writes to `process.cwd()/data/feedback.json`, so local feedback count remains `0` unless production storage is surfaced separately.
+- Reused the 2026-07-15 localized-route audit generated earlier this morning: keep holding i18n expansion with only `3` non-English localized views, one visible non-English locale, French as the top locale, and a shortfall of `47` views plus `2` locales against the expansion gate.
+
 ## 2026-07-15 (OpenClaw Overnight Build)
 
 ### Shipped

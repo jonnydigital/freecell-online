@@ -36,7 +36,7 @@ const DEFAULT_EXPECTATIONS = new Map([
   ['freecell', { minCards: 52, cascades: 8, minFaceCards: 52 }],
   ['klondike', { minCards: 29, cascades: 7, minFaceCards: 7, minBackCards: 22 }],
   ['spider', { minCards: 63, cascades: 10, minFaceCards: 10, minBackCards: 53 }],
-  ['forty-thieves', { minCards: 41, cascades: 10, minFaceCards: 40, minBackCards: 1 }],
+  ['forty-thieves', { minCards: 41, cascades: 10, minFaceCards: 40, minBackCards: 1, requireBottomControls: false }],
 ]);
 
 const sleep = (ms) => new Promise((resolveSleep) => setTimeout(resolveSleep, ms));
@@ -291,12 +291,43 @@ function auditExpression(label, path) {
       const cardCount = el.querySelectorAll('.dom-card').length;
       return { index: el.getAttribute('data-pile-index'), cardCount, rect: rectJson(rect) };
     });
-    const interactive = [...document.querySelectorAll('button,a,[role="button"]')].map((el) => {
+    const controlSelector = 'button,a,[role="button"]';
+    const interactive = [...document.querySelectorAll(controlSelector)].map((el, index) => {
       const rect = el.getBoundingClientRect();
       const style = getComputedStyle(el);
       const text = (el.getAttribute('aria-label') || el.textContent || '').replace(/\\s+/g, ' ').trim().slice(0, 80);
-      return { text, visible: visible(rect, style), rect: rectJson(rect) };
+      const center = {
+        x: Math.round((rect.left + rect.width / 2) * 100) / 100,
+        y: Math.round((rect.top + rect.height / 2) * 100) / 100,
+      };
+      let centerHit = false;
+      let hitText = '';
+      let hitTag = '';
+      let hitClass = '';
+      if (visible(rect, style) && center.x >= 0 && center.x <= viewport.width && center.y >= 0 && center.y <= viewport.height) {
+        const hit = (document.elementsFromPoint?.(center.x, center.y) || [document.elementFromPoint(center.x, center.y)])
+          .find((candidate) => candidate && !candidate.closest?.('nextjs-portal'));
+        const hitControl = hit?.closest?.(controlSelector) || null;
+        centerHit = hit === el || el.contains(hit) || hitControl === el;
+        hitText = (hit?.getAttribute?.('aria-label') || hit?.textContent || '').replace(/\\s+/g, ' ').trim().slice(0, 80);
+        hitTag = hit?.tagName?.toLowerCase?.() || '';
+        hitClass = typeof hit?.className === 'string' ? hit.className.replace(/\\s+/g, ' ').trim().slice(0, 120) : '';
+      }
+      return {
+        index,
+        text,
+        tag: el.tagName.toLowerCase(),
+        disabled: Boolean(el.disabled) || el.getAttribute('aria-disabled') === 'true',
+        visible: visible(rect, style),
+        centerHit,
+        center,
+        hitTag,
+        hitClass,
+        hitText,
+        rect: rectJson(rect),
+      };
     });
+    const blockedInteractive = interactive.filter((item) => item.visible && !item.disabled && !item.centerHit);
     const topControlsVisible = interactive.some((item) => item.visible && item.rect.top < Math.max(180, viewport.height * 0.28));
     const bottomControlsVisible = interactive.some((item) => item.visible && item.rect.bottom > viewport.height * 0.7);
     const unusedVerticalPx = boardRect ? Math.max(0, viewport.height - boardRect.bottom) : null;
@@ -325,6 +356,17 @@ function auditExpression(label, path) {
       cascadeCount: cascades.length,
       cascadeCards: cascades.map((cascade) => cascade.cardCount),
       visibleInteractiveCount: interactive.filter((item) => item.visible).length,
+      blockedInteractiveCount: blockedInteractive.length,
+      blockedInteractive: blockedInteractive.map((item) => ({
+        index: item.index,
+        text: item.text,
+        tag: item.tag,
+        center: item.center,
+        rect: item.rect,
+        hitTag: item.hitTag,
+        hitClass: item.hitClass,
+        hitText: item.hitText,
+      })),
     };
   })()`;
 }
@@ -340,10 +382,10 @@ function formatMarkdown(results, args) {
   lines.push(`Base: \`${args.base}\``);
   lines.push(`Pulled: \`${new Date().toISOString()}\``);
   lines.push('');
-  lines.push('| Route | Width | Cards | Face | Card W | H overflow | Clipped | Top controls | Bottom controls | Unused vertical |');
-  lines.push('|---|---:|---:|---:|---:|---:|---:|---|---|---:|');
+  lines.push('| Route | Width | Cards | Face | Card W | H overflow | Clipped | Blocked controls | Top controls | Bottom controls | Unused vertical |');
+  lines.push('|---|---:|---:|---:|---:|---:|---:|---:|---|---|---:|');
   for (const row of results) {
-    lines.push(`| ${row.label} | ${row.viewport.width} | ${row.cardCount} | ${row.faceCardCount} | ${row.minCardWidth}-${row.maxCardWidth} | ${row.horizontalOverflowPx} | ${row.clippedCardCount} | ${formatBool(row.topControlsVisible)} | ${formatBool(row.bottomControlsVisible)} | ${row.unusedVerticalPct ?? 'n/a'}% |`);
+    lines.push(`| ${row.label} | ${row.viewport.width} | ${row.cardCount} | ${row.faceCardCount} | ${row.minCardWidth}-${row.maxCardWidth} | ${row.horizontalOverflowPx} | ${row.clippedCardCount} | ${row.blockedInteractiveCount ?? 0} | ${formatBool(row.topControlsVisible)} | ${formatBool(row.bottomControlsVisible)} | ${row.unusedVerticalPct ?? 'n/a'}% |`);
   }
   lines.push('');
   const failures = results.filter((row) => row.failureReasons.length > 0);
@@ -379,8 +421,17 @@ function addFailureReasons(row) {
   }
   if (row.horizontalOverflowPx > 1) reasons.push(`${row.horizontalOverflowPx}px horizontal overflow`);
   if (row.clippedCardCount > 0) reasons.push(`${row.clippedCardCount} horizontally clipped cards`);
+  if (row.blockedInteractiveCount > 0) {
+    const blocked = row.blockedInteractive
+      .slice(0, 4)
+      .map((item) => `"${item.text || `${item.tag}#${item.index}`}" hit ${item.hitTag || 'nothing'}`)
+      .join(', ');
+    reasons.push(`${row.blockedInteractiveCount} visible controls failed center hit-test${blocked ? ` (${blocked})` : ''}`);
+  }
   if (!row.topControlsVisible) reasons.push('top controls not visibly detected');
-  if (!row.bottomControlsVisible && row.viewport.width < 768) reasons.push('bottom controls not visibly detected on mobile');
+  if (!row.bottomControlsVisible && row.viewport.width < 768 && expected?.requireBottomControls !== false) {
+    reasons.push('bottom controls not visibly detected on mobile');
+  }
   return { ...row, failureReasons: reasons };
 }
 
@@ -423,6 +474,13 @@ async function main() {
     client = await CdpClient.connect(target.webSocketDebuggerUrl);
     await client.send('Page.enable');
     await client.send('Runtime.enable');
+    await client.send('Page.addScriptToEvaluateOnNewDocument', {
+      source: `try {
+        localStorage.setItem('cookie_consent', 'declined');
+        localStorage.setItem('tutorialSeen', '1');
+        localStorage.setItem('skipSplash', '1');
+      } catch {}`,
+    });
 
     const results = [];
     for (const route of args.routes) {

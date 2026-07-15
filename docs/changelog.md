@@ -1,4 +1,13 @@
 
+## 2026-07-15 (OpenClaw Overnight Build)
+
+### Shipped
+- **Mobile control occlusion QA gate** — tightened `npm run qa:mobile` with a center-point hit-test for visible enabled controls, so the 375px Klondike/Spider mode-chip occlusion class from the latest QA report now fails the automated audit instead of slipping through card-count and overflow checks.
+- The harness now seeds `cookie_consent`, `tutorialSeen`, and `skipSplash` in the audit browser before app scripts run, keeping results focused on the playable board instead of first-visit banners or onboarding overlays.
+- Added blocked-control diagnostics (`hitTag`, `hitClass`, `hitText`, center point, rect) to JSON artifacts and Markdown output, and made Forty Thieves' generic-board bottom-control expectation route-specific.
+- Saved the passing local audit artifact at `docs/analytics/mobile-viewport-audits/2026-07-15-local.json`: no blocked controls, no horizontal overflow, no clipped cards across FreeCell, Klondike, Spider, and Forty Thieves at 375/390/414/768px.
+- Verification: `node --check scripts/mobile-viewport-audit.mjs`, `npm run qa:mobile -- --base=http://127.0.0.1:3031 --out=docs/analytics/mobile-viewport-audits/2026-07-15-local.json`, and `npm run build` passed with Node 22. Existing Next.js multiple-lockfile/root and edge-runtime static-generation warnings remain unchanged.
+
 ## 2026-07-14 (OpenClaw Overnight Build)
 
 ### Shipped

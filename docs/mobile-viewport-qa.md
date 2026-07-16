@@ -57,6 +57,7 @@ PATH="$HOME/.nvm/versions/node/v22.19.0/bin:$PATH" npm run qa:mobile -- --base=h
 - Visible enabled buttons and links are not covered by another element at their center tap point.
 - Visible enabled buttons and links report tap-target dimensions. The Markdown table shows `Tap targets` as `cramped/small`: `small` means one edge is below the 44px comfort target, while `cramped` means a phone-width target is below the hard floor and fails the audit.
 - Post-load layout stability: the harness waits 350ms after the board looks ready, then fails if the board shifts more than 1.5px or any matched card shifts more than 2px.
+- Portrait dead-space candidates: phone-width rows with 45%+ unused vertical space below the first board sample are labeled `review` or `high` in JSON and Markdown. This is a planning signal for below-board next actions or contextual content, not a hard failure.
 - Optional screenshots for each audited route and width.
 
 The audit seeds consent, tutorial, and splash state before the app scripts run so first-visit UI does not hide the actual board.
@@ -70,5 +71,6 @@ The audit seeds consent, tutorial, and splash state before the app scripts run s
 - `clippedCards`: one or more card rectangles extend outside the viewport.
 - Stability failures: the board or a matched card moved after the ready sample. Check recent responsive CSS, delayed font/image sizing, late-running overlays, or card layout effects.
 - Missing control flags: a toolbar or bottom action bar is no longer visible at that route/width.
+- Dead-space candidates: compare the `Unused vertical` and `Dead space` columns with screenshots before changing layout. Prefer useful below-board content or next-action placement over shrinking cards unless the card metrics show room to grow.
 
 Screenshot runs write PNGs to a sibling directory next to the JSON artifact unless `--screenshots=DIR` is provided. Keep the JSON, Markdown report, and screenshot directory together when reviewing or archiving an audit.

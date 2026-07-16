@@ -38,6 +38,9 @@ const BOARD_STABILITY_THRESHOLD_PX = 1.5;
 const CARD_STABILITY_THRESHOLD_PX = 2;
 const COMFORTABLE_TAP_TARGET_PX = 44;
 const MIN_TAP_TARGET_EDGE_PX = 32;
+const DEAD_SPACE_REVIEW_WIDTH_PX = 768;
+const DEAD_SPACE_REVIEW_THRESHOLD_PCT = 45;
+const DEAD_SPACE_HIGH_THRESHOLD_PCT = 55;
 const DEFAULT_EXPECTATIONS = new Map([
   ['freecell', { minCards: 52, cascades: 8, minFaceCards: 52 }],
   ['klondike', { minCards: 29, cascades: 7, minFaceCards: 7, minBackCards: 22 }],
@@ -493,6 +496,15 @@ function measureLayoutStability(before, after, sampleDelayMs) {
   };
 }
 
+function classifyDeadSpace(row) {
+  if (row.unusedVerticalPct === null || row.viewport.width >= DEAD_SPACE_REVIEW_WIDTH_PX) {
+    return 'n/a';
+  }
+  if (row.unusedVerticalPct >= DEAD_SPACE_HIGH_THRESHOLD_PCT) return 'high';
+  if (row.unusedVerticalPct >= DEAD_SPACE_REVIEW_THRESHOLD_PCT) return 'review';
+  return 'ok';
+}
+
 function stripStabilityCards(row) {
   const { stabilityCards, ...publicRow } = row;
   return publicRow;
@@ -506,15 +518,25 @@ function formatMarkdown(results, args) {
   lines.push(`Pulled: \`${new Date().toISOString()}\``);
   lines.push('');
   const includeScreenshots = results.some((row) => row.screenshotPath);
-  lines.push(`| Route | Width | Cards | Face | Card W | H overflow | Clipped | Blocked controls | Tap targets | Stability | Top controls | Bottom controls | Unused vertical${includeScreenshots ? ' | Screenshot' : ''} |`);
-  lines.push(`|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|---|---:${includeScreenshots ? '|---' : ''}|`);
+  lines.push(`| Route | Width | Cards | Face | Card W | H overflow | Clipped | Blocked controls | Tap targets | Stability | Top controls | Bottom controls | Unused vertical | Dead space${includeScreenshots ? ' | Screenshot' : ''} |`);
+  lines.push(`|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|---|---:|---${includeScreenshots ? '|---' : ''}|`);
   for (const row of results) {
     const stability = row.stability
       ? `${row.stability.boardShiftPx}/${row.stability.maxCardShiftPx}px`
       : 'n/a';
-    lines.push(`| ${row.label} | ${row.viewport.width} | ${row.cardCount} | ${row.faceCardCount} | ${row.minCardWidth}-${row.maxCardWidth} | ${row.horizontalOverflowPx} | ${row.clippedCardCount} | ${row.blockedInteractiveCount ?? 0} | ${row.crampedTapTargetCount ?? 0}/${row.smallTapTargetCount ?? 0} | ${stability} | ${formatBool(row.topControlsVisible)} | ${formatBool(row.bottomControlsVisible)} | ${row.unusedVerticalPct ?? 'n/a'}%${includeScreenshots ? ` | ${row.screenshotPath ? `\`${row.screenshotPath}\`` : ''}` : ''} |`);
+    lines.push(`| ${row.label} | ${row.viewport.width} | ${row.cardCount} | ${row.faceCardCount} | ${row.minCardWidth}-${row.maxCardWidth} | ${row.horizontalOverflowPx} | ${row.clippedCardCount} | ${row.blockedInteractiveCount ?? 0} | ${row.crampedTapTargetCount ?? 0}/${row.smallTapTargetCount ?? 0} | ${stability} | ${formatBool(row.topControlsVisible)} | ${formatBool(row.bottomControlsVisible)} | ${row.unusedVerticalPct ?? 'n/a'}% | ${row.deadSpaceLevel ?? 'n/a'}${includeScreenshots ? ` | ${row.screenshotPath ? `\`${row.screenshotPath}\`` : ''}` : ''} |`);
   }
   lines.push('');
+  const deadSpaceCandidates = results.filter((row) => row.deadSpaceLevel === 'review' || row.deadSpaceLevel === 'high');
+  if (deadSpaceCandidates.length) {
+    lines.push('## Portrait Dead-Space Candidates');
+    lines.push('');
+    lines.push(`Phone-width rows with ${DEAD_SPACE_REVIEW_THRESHOLD_PCT}%+ unused vertical space below the first board sample are candidates for below-board next actions, contextual hints, or compact secondary content. This is a planning signal, not a hard failure.`);
+    for (const row of deadSpaceCandidates) {
+      lines.push(`- ${row.label} ${row.viewport.width}px: ${row.unusedVerticalPct}% unused vertical space (${row.deadSpaceLevel})`);
+    }
+    lines.push('');
+  }
   const failures = results.filter((row) => row.failureReasons.length > 0);
   if (failures.length) {
     lines.push('## Needs Review');
@@ -528,6 +550,7 @@ function formatMarkdown(results, args) {
 }
 
 function addFailureReasons(row) {
+  row = { ...row, deadSpaceLevel: classifyDeadSpace(row) };
   const reasons = [];
   if (!row.boardFound) reasons.push('board not found');
   if (row.cardCount === 0) reasons.push('no rendered cards found');

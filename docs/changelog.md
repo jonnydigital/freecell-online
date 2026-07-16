@@ -2,6 +2,14 @@
 ## 2026-07-16 (OpenClaw Overnight Build)
 
 ### Shipped
+- **Portrait dead-space planning signal** — `npm run qa:mobile` now labels phone-width rows with high unused vertical space as `ok`, `review`, or `high` and adds a Portrait Dead-Space Candidates section to Markdown audit reports.
+- Saved the live audit artifact at `docs/analytics/mobile-viewport-audits/2026-07-16-dead-space-live.json` and `.md`: no hard QA failures, with high dead-space candidates across phone-width FreeCell, Klondike, Spider, and Forty Thieves routes for the next below-board UX pass.
+- Updated `docs/mobile-viewport-qa.md` and `docs/BACKLOG.md` so the signal is documented as planning guidance rather than a layout failure.
+- Verification: `node --check scripts/mobile-viewport-audit.mjs`, `npm run qa:mobile -- --base=https://playfreecellonline.com --out=docs/analytics/mobile-viewport-audits/2026-07-16-dead-space-live.json`, and `npm run build` passed with Node 22. Existing Next.js multiple-lockfile/root and edge-runtime static-generation warnings remain unchanged.
+
+## 2026-07-16 (OpenClaw Overnight Build)
+
+### Shipped
 - **Mobile tap-target QA gate** — `npm run qa:mobile` now measures visible enabled buttons/links for tap-target dimensions, reports `cramped/small` counts in JSON and Markdown artifacts, and hard-fails phone-width controls that are too small to tap reliably.
 - Fixed the tiny DOM FreeCell mobile game-number button that the new gate surfaced, giving it a real 44px-wide hit area without changing the compact top-bar readout.
 - Raised the generic DOM game toolbar controls (Undo, Hint, New Deal, Keyboard Shortcuts) to explicit 44px touch boxes, covering wide-board routes like Forty Thieves.

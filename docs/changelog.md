@@ -8,6 +8,13 @@
 - Saved the passing local audit artifact at `docs/analytics/mobile-viewport-audits/2026-07-16-tap-target-local.json`: no hard failures across FreeCell, Klondike, Spider, and Forty Thieves at 375/390/414/768px.
 - Verification: `node --check scripts/mobile-viewport-audit.mjs`, `npm run qa:mobile -- --base=http://127.0.0.1:3034 --out=docs/analytics/mobile-viewport-audits/2026-07-16-tap-target-local.json`, and `npm run build` passed with Node 22. Existing Next.js multiple-lockfile/root and edge-runtime static-generation warnings remain unchanged.
 
+### Daily Cycle
+- Saved the 2026-07-16 authenticated GA4 browser Home-card baseline to `docs/analytics/daily-metrics.json`: `23` active users over 7 days (`+27.8%`), `439` events (`+64.4%`), `0` key events, `17` new users (`+21.4%`), and `0` realtime users.
+- Last-7-day visible cards: `45` sessions (Organic Search `15`, Direct `12`, Referral `8`, AI Assistant `6`, Unassigned `4`), `193` `page_view` events, `76` `game_start` events, `41` `session_start` events, `40` `user_engagement` events, and `5` one-day active users.
+- Feedback check: no local `data/feedback.json` exists; `/api/feedback` writes to `process.cwd()/data/feedback.json`, so local feedback count remains `0` unless production storage is surfaced separately.
+- `npm run metrics:google` remains blocked in the heartbeat shell because `gcloud` is not on PATH. Today's daily metrics therefore use the authenticated GA4 browser Home cards, which did expose reliable 7-day countries, pages, channels, events, and activity-over-time detail.
+- Reused the 2026-07-16 localized-route audit generated during prep: keep holding i18n expansion with only `3` non-English localized views, one visible non-English locale, French as the top locale, and a shortfall of `47` views plus `2` locales against the expansion gate.
+
 ## 2026-07-15 (OpenClaw Overnight Build)
 
 ### Shipped

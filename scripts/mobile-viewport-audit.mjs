@@ -409,6 +409,10 @@ function formatBool(value) {
   return value ? 'yes' : 'no';
 }
 
+function markdownReportPathFor(outPath) {
+  return /\.json$/i.test(outPath) ? outPath.replace(/\.json$/i, '.md') : `${outPath}.md`;
+}
+
 function formatMarkdown(results, args) {
   const lines = [];
   lines.push('# Mobile Viewport Audit');
@@ -532,20 +536,26 @@ async function main() {
       widths: args.widths,
       routes: args.routes,
       screenshotsDir: args.screenshotsDir,
+      markdownReportPath: args.out ? markdownReportPathFor(args.out) : null,
       results,
     };
 
     if (args.out) {
       const outPath = resolve(process.cwd(), args.out);
+      const markdownPath = resolve(process.cwd(), payload.markdownReportPath);
       await mkdir(dirname(outPath), { recursive: true });
       await writeFile(outPath, `${JSON.stringify(payload, null, 2)}\n`);
+      await writeFile(markdownPath, `${formatMarkdown(results, args)}\n`);
     }
 
     if (args.jsonOnly) {
       console.log(JSON.stringify(payload, null, 2));
     } else {
       console.log(formatMarkdown(results, args));
-      if (args.out) console.log(`\nJSON written to ${args.out}`);
+      if (args.out) {
+        console.log(`\nJSON written to ${args.out}`);
+        console.log(`Markdown written to ${payload.markdownReportPath}`);
+      }
     }
 
     const failures = results.filter((row) => row.failureReasons.length > 0);

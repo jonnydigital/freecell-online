@@ -31,6 +31,11 @@ npm run qa:mobile -- --base=http://127.0.0.1:3000 \
   --screenshots
 ```
 
+When `--out=...json` is provided, the audit also writes a sibling Markdown report
+with the same basename. For screenshot runs, that Markdown table links each
+route/width row to its PNG path so the artifact can be reviewed without rerunning
+the harness.
+
 Run against production after deploy:
 
 ```bash
@@ -62,4 +67,4 @@ The audit seeds consent, tutorial, and splash state before the app scripts run s
 - `clippedCards`: one or more card rectangles extend outside the viewport.
 - Missing control flags: a toolbar or bottom action bar is no longer visible at that route/width.
 
-Screenshot runs write PNGs to a sibling directory next to the JSON artifact unless `--screenshots=DIR` is provided. Keep the JSON and screenshot directory together when reviewing or archiving an audit.
+Screenshot runs write PNGs to a sibling directory next to the JSON artifact unless `--screenshots=DIR` is provided. Keep the JSON, Markdown report, and screenshot directory together when reviewing or archiving an audit.

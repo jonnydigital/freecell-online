@@ -1,4 +1,13 @@
 
+## 2026-07-15 (OpenClaw Overnight Build)
+
+### Shipped
+- **Mobile viewport Markdown audit reports** — `npm run qa:mobile -- --out=...json` now writes a sibling `.md` summary beside the JSON artifact, preserving the route/width table, hard-failure summary, and screenshot links for review without rerunning the harness.
+- Screenshot QA runs now keep a three-part artifact set together: JSON metrics, Markdown review report, and PNG screenshot directory.
+- Updated `docs/mobile-viewport-qa.md` with the Markdown artifact behavior and review guidance.
+- Saved the passing local screenshot audit artifact set at `docs/analytics/mobile-viewport-audits/2026-07-15-markdown-local.json`, `.md`, and `2026-07-15-markdown-local-screenshots/`: no hard failures across FreeCell, Klondike, Spider, and Forty Thieves at 375/390/414/768px.
+- Verification: `node --check scripts/mobile-viewport-audit.mjs`, `npm run qa:mobile -- --base=http://127.0.0.1:3033 --out=docs/analytics/mobile-viewport-audits/2026-07-15-markdown-local.json --screenshots`, and `npm run build` passed with Node 22. Existing Next.js multiple-lockfile/root and edge-runtime static-generation warnings remain unchanged.
+
 ## 2026-07-15 (OpenClaw Screenshot Audit Polish)
 
 ### Shipped

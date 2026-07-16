@@ -1690,7 +1690,11 @@ export default function DomGameShell({ initialGameNumber, variant, locale = 'en'
               fontVariantNumeric: 'tabular-nums',
               background: 'none',
               border: 'none',
-              padding: 0,
+              minWidth: '44px',
+              minHeight: '32px',
+              padding: '6px 10px',
+              margin: '-6px -10px',
+              borderRadius: '10px',
             }}
             className="active:text-white transition-colors"
             title={copy.enterGameNumberTitle}

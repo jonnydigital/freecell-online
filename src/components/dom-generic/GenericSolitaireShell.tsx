@@ -189,14 +189,14 @@ export default function GenericSolitaireShell({
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
           {onUndo && (
-            <button onClick={onUndo} title="Undo" style={{ padding: '8px', borderRadius: '8px', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.6)', cursor: 'pointer' }}>↩</button>
+            <button onClick={onUndo} title="Undo" style={{ minWidth: '44px', minHeight: '44px', padding: '8px', borderRadius: '8px', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.6)', cursor: 'pointer' }}>↩</button>
           )}
           {onHint && (
-            <button onClick={onHint} title="Hint" style={{ padding: '8px', borderRadius: '8px', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.6)', cursor: 'pointer' }}>💡</button>
+            <button onClick={onHint} title="Hint" style={{ minWidth: '44px', minHeight: '44px', padding: '8px', borderRadius: '8px', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.6)', cursor: 'pointer' }}>💡</button>
           )}
-          <button onClick={handleNewGame} title="New Game" style={{ padding: '6px 14px', borderRadius: '8px', background: 'rgba(212,175,55,0.15)', border: '1px solid rgba(212,175,55,0.3)', color: '#D4AF37', fontSize: '12px', fontWeight: 600, cursor: 'pointer' }}>New Deal</button>
+          <button onClick={handleNewGame} title="New Game" style={{ minHeight: '44px', padding: '8px 14px', borderRadius: '8px', background: 'rgba(212,175,55,0.15)', border: '1px solid rgba(212,175,55,0.3)', color: '#D4AF37', fontSize: '12px', fontWeight: 600, cursor: 'pointer' }}>New Deal</button>
           <div style={{ position: 'relative' }}>
-            <button onClick={toggleShortcuts} title="Keyboard Shortcuts (?)" style={{ padding: '8px', borderRadius: '8px', background: showShortcuts ? 'rgba(212,175,55,0.15)' : 'rgba(255,255,255,0.04)', border: `1px solid ${showShortcuts ? 'rgba(212,175,55,0.3)' : 'rgba(255,255,255,0.08)'}`, color: showShortcuts ? '#D4AF37' : 'rgba(255,255,255,0.6)', cursor: 'pointer', fontSize: '14px', lineHeight: 1 }}>⌨</button>
+            <button onClick={toggleShortcuts} title="Keyboard Shortcuts (?)" style={{ minWidth: '44px', minHeight: '44px', padding: '8px', borderRadius: '8px', background: showShortcuts ? 'rgba(212,175,55,0.15)' : 'rgba(255,255,255,0.04)', border: `1px solid ${showShortcuts ? 'rgba(212,175,55,0.3)' : 'rgba(255,255,255,0.08)'}`, color: showShortcuts ? '#D4AF37' : 'rgba(255,255,255,0.6)', cursor: 'pointer', fontSize: '14px', lineHeight: 1 }}>⌨</button>
             {showShortcuts && <KeyboardShortcutsPopover hasUndo={!!onUndo} hasHint={!!onHint} onClose={() => setShowShortcuts(false)} />}
           </div>
         </div>

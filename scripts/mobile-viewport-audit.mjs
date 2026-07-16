@@ -36,6 +36,8 @@ const DEFAULT_ROUTES = [
 const DEFAULT_STABILITY_DELAY_MS = 350;
 const BOARD_STABILITY_THRESHOLD_PX = 1.5;
 const CARD_STABILITY_THRESHOLD_PX = 2;
+const COMFORTABLE_TAP_TARGET_PX = 44;
+const MIN_TAP_TARGET_EDGE_PX = 32;
 const DEFAULT_EXPECTATIONS = new Map([
   ['freecell', { minCards: 52, cascades: 8, minFaceCards: 52 }],
   ['klondike', { minCards: 29, cascades: 7, minFaceCards: 7, minBackCards: 22 }],
@@ -344,10 +346,20 @@ function auditExpression(label, path) {
         hitTag,
         hitClass,
         hitText,
+        tapTargetWidth: rectJson(rect).width,
+        tapTargetHeight: rectJson(rect).height,
         rect: rectJson(rect),
       };
     });
     const blockedInteractive = interactive.filter((item) => item.visible && !item.disabled && !item.centerHit);
+    const smallTapTargets = interactive.filter((item) => item.visible && !item.disabled && (
+      item.tapTargetWidth < ${COMFORTABLE_TAP_TARGET_PX} || item.tapTargetHeight < ${COMFORTABLE_TAP_TARGET_PX}
+    ));
+    const crampedTapTargets = smallTapTargets.filter((item) => (
+      item.tapTargetWidth < ${MIN_TAP_TARGET_EDGE_PX} ||
+      item.tapTargetHeight < ${MIN_TAP_TARGET_EDGE_PX} ||
+      (item.tapTargetWidth < ${COMFORTABLE_TAP_TARGET_PX} && item.tapTargetHeight < ${COMFORTABLE_TAP_TARGET_PX})
+    ));
     const topControlsVisible = interactive.some((item) => item.visible && item.rect.top < Math.max(180, viewport.height * 0.28));
     const bottomControlsVisible = interactive.some((item) => item.visible && item.rect.bottom > viewport.height * 0.7);
     const unusedVerticalPx = boardRect ? Math.max(0, viewport.height - boardRect.bottom) : null;
@@ -389,6 +401,20 @@ function auditExpression(label, path) {
         hitTag: item.hitTag,
         hitClass: item.hitClass,
         hitText: item.hitText,
+      })),
+      smallTapTargetCount: smallTapTargets.length,
+      crampedTapTargetCount: crampedTapTargets.length,
+      smallTapTargets: smallTapTargets.map((item) => ({
+        index: item.index,
+        text: item.text,
+        tag: item.tag,
+        rect: item.rect,
+      })),
+      crampedTapTargets: crampedTapTargets.map((item) => ({
+        index: item.index,
+        text: item.text,
+        tag: item.tag,
+        rect: item.rect,
       })),
     };
   })()`;
@@ -480,13 +506,13 @@ function formatMarkdown(results, args) {
   lines.push(`Pulled: \`${new Date().toISOString()}\``);
   lines.push('');
   const includeScreenshots = results.some((row) => row.screenshotPath);
-  lines.push(`| Route | Width | Cards | Face | Card W | H overflow | Clipped | Blocked controls | Stability | Top controls | Bottom controls | Unused vertical${includeScreenshots ? ' | Screenshot' : ''} |`);
-  lines.push(`|---|---:|---:|---:|---:|---:|---:|---:|---:|---|---|---:${includeScreenshots ? '|---' : ''}|`);
+  lines.push(`| Route | Width | Cards | Face | Card W | H overflow | Clipped | Blocked controls | Tap targets | Stability | Top controls | Bottom controls | Unused vertical${includeScreenshots ? ' | Screenshot' : ''} |`);
+  lines.push(`|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|---|---:${includeScreenshots ? '|---' : ''}|`);
   for (const row of results) {
     const stability = row.stability
       ? `${row.stability.boardShiftPx}/${row.stability.maxCardShiftPx}px`
       : 'n/a';
-    lines.push(`| ${row.label} | ${row.viewport.width} | ${row.cardCount} | ${row.faceCardCount} | ${row.minCardWidth}-${row.maxCardWidth} | ${row.horizontalOverflowPx} | ${row.clippedCardCount} | ${row.blockedInteractiveCount ?? 0} | ${stability} | ${formatBool(row.topControlsVisible)} | ${formatBool(row.bottomControlsVisible)} | ${row.unusedVerticalPct ?? 'n/a'}%${includeScreenshots ? ` | ${row.screenshotPath ? `\`${row.screenshotPath}\`` : ''}` : ''} |`);
+    lines.push(`| ${row.label} | ${row.viewport.width} | ${row.cardCount} | ${row.faceCardCount} | ${row.minCardWidth}-${row.maxCardWidth} | ${row.horizontalOverflowPx} | ${row.clippedCardCount} | ${row.blockedInteractiveCount ?? 0} | ${row.crampedTapTargetCount ?? 0}/${row.smallTapTargetCount ?? 0} | ${stability} | ${formatBool(row.topControlsVisible)} | ${formatBool(row.bottomControlsVisible)} | ${row.unusedVerticalPct ?? 'n/a'}%${includeScreenshots ? ` | ${row.screenshotPath ? `\`${row.screenshotPath}\`` : ''}` : ''} |`);
   }
   lines.push('');
   const failures = results.filter((row) => row.failureReasons.length > 0);
@@ -528,6 +554,13 @@ function addFailureReasons(row) {
       .map((item) => `"${item.text || `${item.tag}#${item.index}`}" hit ${item.hitTag || 'nothing'}`)
       .join(', ');
     reasons.push(`${row.blockedInteractiveCount} visible controls failed center hit-test${blocked ? ` (${blocked})` : ''}`);
+  }
+  if (row.viewport.width < 768 && row.crampedTapTargetCount > 0) {
+    const cramped = row.crampedTapTargets
+      .slice(0, 4)
+      .map((item) => `"${item.text || `${item.tag}#${item.index}`}" ${item.rect.width}x${item.rect.height}`)
+      .join(', ');
+    reasons.push(`${row.crampedTapTargetCount} visible controls below tap-target floor${cramped ? ` (${cramped})` : ''}`);
   }
   if (row.stability) {
     if (row.stability.cardCountChanged) {

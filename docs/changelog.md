@@ -1,4 +1,13 @@
 
+## 2026-07-16 (OpenClaw Overnight Build)
+
+### Shipped
+- **Mobile tap-target QA gate** — `npm run qa:mobile` now measures visible enabled buttons/links for tap-target dimensions, reports `cramped/small` counts in JSON and Markdown artifacts, and hard-fails phone-width controls that are too small to tap reliably.
+- Fixed the tiny DOM FreeCell mobile game-number button that the new gate surfaced, giving it a real 44px-wide hit area without changing the compact top-bar readout.
+- Raised the generic DOM game toolbar controls (Undo, Hint, New Deal, Keyboard Shortcuts) to explicit 44px touch boxes, covering wide-board routes like Forty Thieves.
+- Saved the passing local audit artifact at `docs/analytics/mobile-viewport-audits/2026-07-16-tap-target-local.json`: no hard failures across FreeCell, Klondike, Spider, and Forty Thieves at 375/390/414/768px.
+- Verification: `node --check scripts/mobile-viewport-audit.mjs`, `npm run qa:mobile -- --base=http://127.0.0.1:3034 --out=docs/analytics/mobile-viewport-audits/2026-07-16-tap-target-local.json`, and `npm run build` passed with Node 22. Existing Next.js multiple-lockfile/root and edge-runtime static-generation warnings remain unchanged.
+
 ## 2026-07-15 (OpenClaw Overnight Build)
 
 ### Shipped

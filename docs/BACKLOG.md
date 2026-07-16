@@ -76,6 +76,10 @@
 41. ~~**Mobile viewport QA runbook**~~ ✅ SHIPPED 2026-07-15 — `docs/mobile-viewport-qa.md` now documents when to run the harness, local/live/screenshot commands, what the audit checks, and how to triage blocked controls, board-shape failures, overflow, clipped cards, and screenshot artifacts.
 42. ~~**Mobile viewport Markdown audit reports**~~ ✅ SHIPPED 2026-07-15 — `npm run qa:mobile -- --out=...json` now persists a sibling `.md` report beside each JSON artifact, including screenshot links when enabled, so mobile QA evidence is reviewable from saved files instead of console scrollback.
 43. ~~**Mobile viewport layout-stability gate**~~ ✅ SHIPPED 2026-07-15 — `npm run qa:mobile` now takes a post-load stability sample after the board looks ready and fails on delayed board/card movement, catching late responsive shifts that card counts, overflow checks, screenshots, and tap-target hit-tests can miss.
+44. ~~**Mobile tap-target QA gate**~~ ✅ SHIPPED 2026-07-16 — `npm run qa:mobile` now reports comfortable/small/cramped tap-target counts and fails phone-width controls that are too small to tap reliably. Fixed the tiny FreeCell mobile game-number button plus the generic DOM toolbar buttons surfaced by the gate. Local artifact saved at `docs/analytics/mobile-viewport-audits/2026-07-16-tap-target-local.json`. *(Follow-up from 2026-07-14 QA: after occlusion, verify actual tap area.)*
+
+## 🔎 Next Measured UX Candidates
+1. **Portrait dead-space plan** — FreeCell, Klondike, Spider, and Forty Thieves still leave roughly 59-67% of phone viewport height below the first board sample. Competitors have similar card-size constraints, so define a measured plan for useful below-board content or next-action placement before changing layout.
 
 ## ⏳ Blocked (Needs Jonathan)
 - ~~**Custom domain** — playfreecellonline.com → Vercel DNS~~ ✅ LIVE as of 2026-03-13!

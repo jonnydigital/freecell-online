@@ -55,6 +55,7 @@ PATH="$HOME/.nvm/versions/node/v22.19.0/bin:$PATH" npm run qa:mobile -- --base=h
 - Horizontal overflow and clipped card rectangles at 375, 390, 414, and 768px widths.
 - Top and bottom game controls remain visible where each route expects them.
 - Visible enabled buttons and links are not covered by another element at their center tap point.
+- Visible enabled buttons and links report tap-target dimensions. The Markdown table shows `Tap targets` as `cramped/small`: `small` means one edge is below the 44px comfort target, while `cramped` means a phone-width target is below the hard floor and fails the audit.
 - Post-load layout stability: the harness waits 350ms after the board looks ready, then fails if the board shifts more than 1.5px or any matched card shifts more than 2px.
 - Optional screenshots for each audited route and width.
 
@@ -63,6 +64,7 @@ The audit seeds consent, tutorial, and splash state before the app scripts run s
 ## Reading Failures
 
 - `blockedInteractive` or blocked-control diagnostics: a visible enabled control is covered by another element. Check `hitTag`, `hitClass`, `hitText`, and the screenshot for the covering layer.
+- `crampedTapTargets`: a visible enabled phone-width control has too little usable tap area. `smallTapTargets` are recorded for review, especially at 768px where desktop/tablet chrome can be compact without failing the phone gate.
 - Card or cascade count failures: the route did not finish rendering the expected board shape, or a selector/layout change made the harness blind to cards.
 - `horizontalOverflow`: the page or board is wider than the emulated viewport.
 - `clippedCards`: one or more card rectangles extend outside the viewport.

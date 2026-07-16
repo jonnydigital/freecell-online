@@ -33,6 +33,9 @@ const DEFAULT_ROUTES = [
   { label: 'spider', path: '/spider' },
   { label: 'forty-thieves', path: '/forty-thieves' },
 ];
+const DEFAULT_STABILITY_DELAY_MS = 350;
+const BOARD_STABILITY_THRESHOLD_PX = 1.5;
+const CARD_STABILITY_THRESHOLD_PX = 2;
 const DEFAULT_EXPECTATIONS = new Map([
   ['freecell', { minCards: 52, cascades: 8, minFaceCards: 52 }],
   ['klondike', { minCards: 29, cascades: 7, minFaceCards: 7, minBackCards: 22 }],
@@ -48,6 +51,7 @@ function parseArgs(argv) {
     widths: DEFAULT_WIDTHS,
     routes: DEFAULT_ROUTES,
     delayMs: 1200,
+    stabilityDelayMs: DEFAULT_STABILITY_DELAY_MS,
     jsonOnly: false,
     out: null,
     screenshotsDir: null,
@@ -66,6 +70,8 @@ function parseArgs(argv) {
         .filter(Number.isFinite);
     } else if (arg.startsWith('--delay=')) {
       args.delayMs = Number.parseInt(arg.slice('--delay='.length), 10);
+    } else if (arg.startsWith('--stability-delay=')) {
+      args.stabilityDelayMs = Number.parseInt(arg.slice('--stability-delay='.length), 10);
     } else if (arg.startsWith('--out=')) {
       args.out = arg.slice('--out='.length);
     } else if (arg === '--screenshots') {
@@ -82,6 +88,9 @@ function parseArgs(argv) {
 
   if (args.widths.length === 0) throw new Error('No widths supplied.');
   if (args.routes.length === 0) throw new Error('No routes supplied.');
+  if (!Number.isFinite(args.stabilityDelayMs) || args.stabilityDelayMs < 0) {
+    throw new Error('Stability delay must be a non-negative number.');
+  }
   if (args.screenshotsDir === true) {
     args.screenshotsDir = args.out
       ? args.out.replace(/\.json$/i, '-screenshots')
@@ -366,6 +375,9 @@ function auditExpression(label, path) {
       unusedVerticalPct,
       cascadeCount: cascades.length,
       cascadeCards: cascades.map((cascade) => cascade.cardCount),
+      stabilityCards: visibleCards
+        .filter((card) => card.id)
+        .map((card) => ({ id: card.id, rect: card.rect })),
       visibleInteractiveCount: interactive.filter((item) => item.visible).length,
       blockedInteractiveCount: blockedInteractive.length,
       blockedInteractive: blockedInteractive.map((item) => ({
@@ -413,6 +425,53 @@ function markdownReportPathFor(outPath) {
   return /\.json$/i.test(outPath) ? outPath.replace(/\.json$/i, '.md') : `${outPath}.md`;
 }
 
+function rectCenter(rect) {
+  return {
+    x: rect.left + rect.width / 2,
+    y: rect.top + rect.height / 2,
+  };
+}
+
+function distanceBetweenRects(before, after) {
+  if (!before || !after) return 0;
+  const beforeCenter = rectCenter(before);
+  const afterCenter = rectCenter(after);
+  return Math.round(Math.hypot(afterCenter.x - beforeCenter.x, afterCenter.y - beforeCenter.y) * 100) / 100;
+}
+
+function measureLayoutStability(before, after, sampleDelayMs) {
+  const beforeCards = new Map((before.stabilityCards || []).map((card) => [card.id, card]));
+  const afterCards = new Map((after.stabilityCards || []).map((card) => [card.id, card]));
+  let maxCardShiftPx = 0;
+  let movedCardCount = 0;
+  let matchedCardCount = 0;
+
+  for (const [id, beforeCard] of beforeCards.entries()) {
+    const afterCard = afterCards.get(id);
+    if (!afterCard) continue;
+    matchedCardCount += 1;
+    const shiftPx = distanceBetweenRects(beforeCard.rect, afterCard.rect);
+    maxCardShiftPx = Math.max(maxCardShiftPx, shiftPx);
+    if (shiftPx > CARD_STABILITY_THRESHOLD_PX) movedCardCount += 1;
+  }
+
+  return {
+    sampleDelayMs,
+    boardShiftPx: distanceBetweenRects(before.boardRect, after.boardRect),
+    maxCardShiftPx,
+    movedCardCount,
+    matchedCardCount,
+    beforeCardCount: before.cardCount,
+    afterCardCount: after.cardCount,
+    cardCountChanged: before.cardCount !== after.cardCount,
+  };
+}
+
+function stripStabilityCards(row) {
+  const { stabilityCards, ...publicRow } = row;
+  return publicRow;
+}
+
 function formatMarkdown(results, args) {
   const lines = [];
   lines.push('# Mobile Viewport Audit');
@@ -421,10 +480,13 @@ function formatMarkdown(results, args) {
   lines.push(`Pulled: \`${new Date().toISOString()}\``);
   lines.push('');
   const includeScreenshots = results.some((row) => row.screenshotPath);
-  lines.push(`| Route | Width | Cards | Face | Card W | H overflow | Clipped | Blocked controls | Top controls | Bottom controls | Unused vertical${includeScreenshots ? ' | Screenshot' : ''} |`);
-  lines.push(`|---|---:|---:|---:|---:|---:|---:|---:|---|---|---:${includeScreenshots ? '|---' : ''}|`);
+  lines.push(`| Route | Width | Cards | Face | Card W | H overflow | Clipped | Blocked controls | Stability | Top controls | Bottom controls | Unused vertical${includeScreenshots ? ' | Screenshot' : ''} |`);
+  lines.push(`|---|---:|---:|---:|---:|---:|---:|---:|---:|---|---|---:${includeScreenshots ? '|---' : ''}|`);
   for (const row of results) {
-    lines.push(`| ${row.label} | ${row.viewport.width} | ${row.cardCount} | ${row.faceCardCount} | ${row.minCardWidth}-${row.maxCardWidth} | ${row.horizontalOverflowPx} | ${row.clippedCardCount} | ${row.blockedInteractiveCount ?? 0} | ${formatBool(row.topControlsVisible)} | ${formatBool(row.bottomControlsVisible)} | ${row.unusedVerticalPct ?? 'n/a'}%${includeScreenshots ? ` | ${row.screenshotPath ? `\`${row.screenshotPath}\`` : ''}` : ''} |`);
+    const stability = row.stability
+      ? `${row.stability.boardShiftPx}/${row.stability.maxCardShiftPx}px`
+      : 'n/a';
+    lines.push(`| ${row.label} | ${row.viewport.width} | ${row.cardCount} | ${row.faceCardCount} | ${row.minCardWidth}-${row.maxCardWidth} | ${row.horizontalOverflowPx} | ${row.clippedCardCount} | ${row.blockedInteractiveCount ?? 0} | ${stability} | ${formatBool(row.topControlsVisible)} | ${formatBool(row.bottomControlsVisible)} | ${row.unusedVerticalPct ?? 'n/a'}%${includeScreenshots ? ` | ${row.screenshotPath ? `\`${row.screenshotPath}\`` : ''}` : ''} |`);
   }
   lines.push('');
   const failures = results.filter((row) => row.failureReasons.length > 0);
@@ -467,6 +529,17 @@ function addFailureReasons(row) {
       .join(', ');
     reasons.push(`${row.blockedInteractiveCount} visible controls failed center hit-test${blocked ? ` (${blocked})` : ''}`);
   }
+  if (row.stability) {
+    if (row.stability.cardCountChanged) {
+      reasons.push(`card count changed after stability sample (${row.stability.beforeCardCount} -> ${row.stability.afterCardCount})`);
+    }
+    if (row.stability.boardShiftPx > BOARD_STABILITY_THRESHOLD_PX) {
+      reasons.push(`board shifted ${row.stability.boardShiftPx}px after ${row.stability.sampleDelayMs}ms`);
+    }
+    if (row.stability.maxCardShiftPx > CARD_STABILITY_THRESHOLD_PX) {
+      reasons.push(`max card shifted ${row.stability.maxCardShiftPx}px after ${row.stability.sampleDelayMs}ms`);
+    }
+  }
   if (!row.topControlsVisible) reasons.push('top controls not visibly detected');
   if (!row.bottomControlsVisible && row.viewport.width < 768 && expected?.requireBottomControls !== false) {
     reasons.push('bottom controls not visibly detected on mobile');
@@ -497,6 +570,15 @@ async function auditRoute(client, args, route, width) {
     if (row.boardFound && row.cardCount > 0 && row.failureReasons.length === 0) break;
     await sleep(300);
   }
+  if (args.stabilityDelayMs > 0 && row?.boardFound && row.cardCount > 0) {
+    await sleep(args.stabilityDelayMs);
+    const after = await evaluate(client, auditExpression(route.label, route.path));
+    row = addFailureReasons({
+      ...row,
+      stability: measureLayoutStability(row, after, args.stabilityDelayMs),
+    });
+  }
+  row = stripStabilityCards(row);
   const screenshotPath = await captureViewportScreenshot(client, args, route, width);
   if (screenshotPath) row.screenshotPath = screenshotPath;
   return row;

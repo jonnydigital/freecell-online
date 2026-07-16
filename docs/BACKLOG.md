@@ -75,6 +75,7 @@
 40. ~~**Mobile viewport screenshot audit artifacts**~~ ✅ SHIPPED 2026-07-15 — `npm run qa:mobile -- --screenshots` now captures a PNG for each audited route/width via Chrome DevTools and records the screenshot paths in JSON and Markdown output, so future mobile QA failures have reviewable visual evidence beside the metrics. *(Follow-up to the July mobile QA hardening: turn numeric failures into faster visual diagnosis.)*
 41. ~~**Mobile viewport QA runbook**~~ ✅ SHIPPED 2026-07-15 — `docs/mobile-viewport-qa.md` now documents when to run the harness, local/live/screenshot commands, what the audit checks, and how to triage blocked controls, board-shape failures, overflow, clipped cards, and screenshot artifacts.
 42. ~~**Mobile viewport Markdown audit reports**~~ ✅ SHIPPED 2026-07-15 — `npm run qa:mobile -- --out=...json` now persists a sibling `.md` report beside each JSON artifact, including screenshot links when enabled, so mobile QA evidence is reviewable from saved files instead of console scrollback.
+43. ~~**Mobile viewport layout-stability gate**~~ ✅ SHIPPED 2026-07-15 — `npm run qa:mobile` now takes a post-load stability sample after the board looks ready and fails on delayed board/card movement, catching late responsive shifts that card counts, overflow checks, screenshots, and tap-target hit-tests can miss.
 
 ## ⏳ Blocked (Needs Jonathan)
 - ~~**Custom domain** — playfreecellonline.com → Vercel DNS~~ ✅ LIVE as of 2026-03-13!

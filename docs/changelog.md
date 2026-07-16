@@ -2,6 +2,15 @@
 ## 2026-07-15 (OpenClaw Overnight Build)
 
 ### Shipped
+- **Mobile viewport layout-stability gate** — `npm run qa:mobile` now takes a second post-load sample after each board looks ready and fails if the board shifts more than 1.5px or any matched visible card shifts more than 2px.
+- JSON and Markdown audit artifacts now include board/card stability measurements so delayed responsive layout movement is visible beside the existing card-count, overflow, clipped-card, blocked-control, and screenshot evidence.
+- Updated `docs/mobile-viewport-qa.md` and `docs/BACKLOG.md` with the new stability check and failure guidance.
+- Saved the passing production audit artifact set at `docs/analytics/mobile-viewport-audits/2026-07-15-stability-live.json` and `.md`: no hard failures and `0/0px` board/card stability shifts across FreeCell, Klondike, Spider, and Forty Thieves at 375/390/414/768px.
+- Verification: `node --check scripts/mobile-viewport-audit.mjs`, `npm run build`, and `npm run qa:mobile -- --base=https://playfreecellonline.com --out=docs/analytics/mobile-viewport-audits/2026-07-15-stability-live.json` passed with Node 22. Existing Next.js multiple-lockfile/root and edge-runtime static-generation warnings remain unchanged.
+
+## 2026-07-15 (OpenClaw Overnight Build)
+
+### Shipped
 - **Mobile viewport Markdown audit reports** — `npm run qa:mobile -- --out=...json` now writes a sibling `.md` summary beside the JSON artifact, preserving the route/width table, hard-failure summary, and screenshot links for review without rerunning the harness.
 - Screenshot QA runs now keep a three-part artifact set together: JSON metrics, Markdown review report, and PNG screenshot directory.
 - Updated `docs/mobile-viewport-qa.md` with the Markdown artifact behavior and review guidance.

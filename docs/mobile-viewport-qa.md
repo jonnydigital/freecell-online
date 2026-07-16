@@ -55,6 +55,7 @@ PATH="$HOME/.nvm/versions/node/v22.19.0/bin:$PATH" npm run qa:mobile -- --base=h
 - Horizontal overflow and clipped card rectangles at 375, 390, 414, and 768px widths.
 - Top and bottom game controls remain visible where each route expects them.
 - Visible enabled buttons and links are not covered by another element at their center tap point.
+- Post-load layout stability: the harness waits 350ms after the board looks ready, then fails if the board shifts more than 1.5px or any matched card shifts more than 2px.
 - Optional screenshots for each audited route and width.
 
 The audit seeds consent, tutorial, and splash state before the app scripts run so first-visit UI does not hide the actual board.
@@ -65,6 +66,7 @@ The audit seeds consent, tutorial, and splash state before the app scripts run s
 - Card or cascade count failures: the route did not finish rendering the expected board shape, or a selector/layout change made the harness blind to cards.
 - `horizontalOverflow`: the page or board is wider than the emulated viewport.
 - `clippedCards`: one or more card rectangles extend outside the viewport.
+- Stability failures: the board or a matched card moved after the ready sample. Check recent responsive CSS, delayed font/image sizing, late-running overlays, or card layout effects.
 - Missing control flags: a toolbar or bottom action bar is no longer visible at that route/width.
 
 Screenshot runs write PNGs to a sibling directory next to the JSON artifact unless `--screenshots=DIR` is provided. Keep the JSON, Markdown report, and screenshot directory together when reviewing or archiving an audit.

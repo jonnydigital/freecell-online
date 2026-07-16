@@ -1,0 +1,167 @@
+{
+  "generatedAt": "2026-07-16T10:17:50.187Z",
+  "reportDate": "2026-07-16",
+  "reportTimeZone": "America/New_York",
+  "window": "last 30 days through yesterday",
+  "inputs": {
+    "dailyMetricsDate": "2026-07-15",
+    "googleMetricsPulledAt": "2026-05-03T17:36:30.907Z",
+    "googleMetricsErrors": [
+      {
+        "source": "ga4",
+        "message": "Request had insufficient authentication scopes.",
+        "status": 403,
+        "body": {
+          "error": {
+            "code": 403,
+            "message": "Request had insufficient authentication scopes.",
+            "status": "PERMISSION_DENIED",
+            "details": [
+              {
+                "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+                "reason": "ACCESS_TOKEN_SCOPE_INSUFFICIENT",
+                "domain": "googleapis.com",
+                "metadata": {
+                  "method": "google.analytics.data.v1beta.BetaAnalyticsData.RunReport",
+                  "service": "analyticsdata.googleapis.com"
+                }
+              }
+            ]
+          }
+        }
+      },
+      {
+        "source": "adsense",
+        "message": "Request had insufficient authentication scopes.",
+        "status": 403,
+        "body": {
+          "error": {
+            "code": 403,
+            "message": "Request had insufficient authentication scopes.",
+            "status": "PERMISSION_DENIED",
+            "details": [
+              {
+                "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+                "reason": "ACCESS_TOKEN_SCOPE_INSUFFICIENT",
+                "domain": "googleapis.com",
+                "metadata": {
+                  "method": "google.ads.adsense.management.v2.Accounts.ListAccounts",
+                  "service": "adsense.googleapis.com"
+                }
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "summary": {
+    "nonEnglishViews": 3,
+    "visibleNonEnglishLocales": 1,
+    "missingLocales": [
+      "es",
+      "de",
+      "it",
+      "pt"
+    ],
+    "thresholds": {
+      "deepenOrExpandViews": 50,
+      "deepenOrExpandLocales": 3,
+      "collectButPrioritizeViews": 15
+    },
+    "shortfall": {
+      "viewsUntilExpansion": 47,
+      "localesUntilExpansion": 2
+    },
+    "topNonEnglishLocale": {
+      "code": "fr",
+      "label": "French",
+      "views": 3,
+      "users": 0,
+      "sessions": 0
+    },
+    "recommendation": "hold_i18n_expansion",
+    "nextAction": "Do not build another locale yet. Re-run this audit after the next fresh GA4/GSC pull.",
+    "rationale": "Localized visibility is still too thin to justify adding another language route: needs 50+ non-English localized views and 3+ visible non-English locales."
+  },
+  "locales": [
+    {
+      "code": "en",
+      "label": "English",
+      "guidePath": "/freecell/how-to-play",
+      "playPath": "/",
+      "views": 51,
+      "users": 0,
+      "sessions": 0,
+      "sources": [
+        {
+          "source": "daily-metrics.ga4_home.topPages",
+          "path": null,
+          "title": "Play FreeCell Online for Free | No Download Required",
+          "views": 51,
+          "users": 0,
+          "sessions": 0
+        }
+      ]
+    },
+    {
+      "code": "es",
+      "label": "Spanish",
+      "guidePath": "/freecell-en-espanol",
+      "playPath": "/freecell-en-espanol/jugar",
+      "views": 0,
+      "users": 0,
+      "sessions": 0,
+      "sources": []
+    },
+    {
+      "code": "fr",
+      "label": "French",
+      "guidePath": "/freecell-en-francais",
+      "playPath": "/freecell-en-francais/jouer",
+      "views": 3,
+      "users": 0,
+      "sessions": 0,
+      "sources": [
+        {
+          "source": "daily-metrics.ga4_home.topPages",
+          "path": null,
+          "title": "FreeCell en Francais | Jouer Gratuitement et Apprendre les Regles",
+          "views": 3,
+          "users": 0,
+          "sessions": 0
+        }
+      ]
+    },
+    {
+      "code": "de",
+      "label": "German",
+      "guidePath": "/freecell-auf-deutsch",
+      "playPath": "/freecell-auf-deutsch/spielen",
+      "views": 0,
+      "users": 0,
+      "sessions": 0,
+      "sources": []
+    },
+    {
+      "code": "it",
+      "label": "Italian",
+      "guidePath": "/freecell-in-italiano",
+      "playPath": "/freecell-in-italiano/gioca",
+      "views": 0,
+      "users": 0,
+      "sessions": 0,
+      "sources": []
+    },
+    {
+      "code": "pt",
+      "label": "Portuguese",
+      "guidePath": "/freecell-em-portugues",
+      "playPath": "/freecell-em-portugues/jogar",
+      "views": 0,
+      "users": 0,
+      "sessions": 0,
+      "sources": []
+    }
+  ]
+}

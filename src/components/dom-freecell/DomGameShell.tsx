@@ -35,6 +35,7 @@ import SidebarStats from '../sidebar/SidebarStats';
 import Leaderboard from '../Leaderboard';
 import GameSwitcher from '../GameSwitcher';
 import PwaInstallPrompt from '../PwaInstallPrompt';
+import MobileNextActionPanel from '../MobileNextActionPanel';
 import {
   trackAbandoned,
   trackDeadlock,
@@ -1819,6 +1820,23 @@ export default function DomGameShell({ initialGameNumber, variant, locale = 'en'
               >
                 <X size={14} />
               </button>
+            </div>
+          </div>
+        )}
+
+        {!isLandscapeMobile && !hint && !isWon && !replayMode && !isAutoCompletable && !noMovesAvailable && (
+          <div className="absolute inset-x-3 bottom-3 z-10 md:hidden pointer-events-none">
+            <div className="pointer-events-auto">
+              <MobileNextActionPanel
+                title={moveCount === 0 ? 'Start with a safe move' : 'Use the open space'}
+                body={moveCount === 0 ? 'Try a hint if the first move is not obvious.' : 'Undo a dead end or ask for a hint before changing deals.'}
+                onHint={handleHint}
+                onUndo={handleUndo}
+                canUndo={canUndo}
+                learnHref={copy.strategyHref}
+                learnLabel={copy.strategy}
+                compact
+              />
             </div>
           </div>
         )}

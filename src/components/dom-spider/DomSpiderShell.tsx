@@ -8,6 +8,7 @@ import Link from '@/components/NetworkLink';
 import { Home, Lightbulb, RotateCcw, Undo2 } from 'lucide-react';
 import GameSwitcher from '../GameSwitcher';
 import AdUnit from '../AdUnit';
+import MobileNextActionPanel from '../MobileNextActionPanel';
 import { loadStats, saveStats } from '@/lib/storage';
 import { recordWin, recordLoss, getWinPercent, type GameStats } from '@/lib/stats';
 import {
@@ -373,8 +374,17 @@ export default function DomSpiderShell({ initialDifficulty = '1-suit' }: DomSpid
 
       {/* Main content */}
       <div style={{ display: 'flex', flex: 1 }}>
-        <div className="p-3 pb-24 sm:p-4 sm:pb-4" style={{ flex: 1, overflow: 'hidden' }}>
+        <div className="p-3 pb-24 sm:p-4 sm:pb-4" style={{ flex: 1, overflow: 'auto' }}>
           <DomSpiderBoard hint={hintHighlight} />
+          <MobileNextActionPanel
+            title="Build a clean run"
+            body="Ask for a hint before dealing from stock, or undo moves that bury a suited sequence."
+            onHint={handleHint}
+            onUndo={handleUndo}
+            canUndo={moveHistory.length > 0}
+            learnHref="/spider/tips"
+            learnLabel="Tips"
+          />
         </div>
 
         {/* Sidebar */}

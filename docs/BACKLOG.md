@@ -1,5 +1,5 @@
 # FreeCell Online — Feature Backlog
-*Ranked by impact × effort. Updated 2026-07-15.*
+*Ranked by impact × effort. Updated 2026-07-17.*
 
 ## 🚨 P0: Critical Bug
 1. ~~**🔴 Mobile card rendering broken**~~ ✅ FIXED 03-02 — Root cause: `recreateAllCardSprites()` used PNG asset keys that were never loaded. On resize (common on mobile), cards became empty containers. Fixed with procedural rendering matching `createCardSprite()`.
@@ -78,9 +78,10 @@
 43. ~~**Mobile viewport layout-stability gate**~~ ✅ SHIPPED 2026-07-15 — `npm run qa:mobile` now takes a post-load stability sample after the board looks ready and fails on delayed board/card movement, catching late responsive shifts that card counts, overflow checks, screenshots, and tap-target hit-tests can miss.
 44. ~~**Mobile tap-target QA gate**~~ ✅ SHIPPED 2026-07-16 — `npm run qa:mobile` now reports comfortable/small/cramped tap-target counts and fails phone-width controls that are too small to tap reliably. Fixed the tiny FreeCell mobile game-number button plus the generic DOM toolbar buttons surfaced by the gate. Local artifact saved at `docs/analytics/mobile-viewport-audits/2026-07-16-tap-target-local.json`. *(Follow-up from 2026-07-14 QA: after occlusion, verify actual tap area.)*
 45. ~~**Portrait dead-space planning signal**~~ ✅ SHIPPED 2026-07-16 — `npm run qa:mobile` now classifies phone-width unused board space as `ok`, `review`, or `high` and adds a Portrait Dead-Space Candidates section to Markdown audit artifacts. Live artifact saved at `docs/analytics/mobile-viewport-audits/2026-07-16-dead-space-live.json`; all phone-width audited routes are high candidates, but no hard QA failures were found. *(Follow-up to the mobile QA harness: make below-board opportunity measurable before changing layout.)*
+46. ~~**Below-board next-action module**~~ ✅ SHIPPED 2026-07-17 — Added a phone-only next-action strip to FreeCell, Klondike, Spider, and generic wide-board routes such as Forty Thieves, turning measured portrait dead space into quick Hint, Undo, and strategy/rules actions without shrinking cards or crowding fixed bottom controls. Local artifact saved at `docs/analytics/mobile-viewport-audits/2026-07-17-next-action-local.json`; no hard QA failures found. *(Follow-up to the 2026-07-16 dead-space planning signal.)*
 
 ## 🔎 Next Measured UX Candidates
-1. **Below-board next-action module** — FreeCell, Klondike, Spider, and Forty Thieves now consistently show high phone portrait dead-space candidates. Design and test a compact below-board module for the most useful next action or contextual help without shrinking cards or crowding bottom controls.
+1. **Next-action engagement instrumentation** — Track taps on the new phone next-action strip so GA4 can show whether players use Hint, Undo, or rules/strategy links from below-board dead space.
 
 ## ⏳ Blocked (Needs Jonathan)
 - ~~**Custom domain** — playfreecellonline.com → Vercel DNS~~ ✅ LIVE as of 2026-03-13!

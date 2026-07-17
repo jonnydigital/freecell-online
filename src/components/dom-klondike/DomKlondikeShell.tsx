@@ -9,6 +9,7 @@ import { isHubSite } from '@/lib/siteConfig';
 import { Undo2, RotateCcw, Lightbulb, Home } from 'lucide-react';
 import GameSwitcher from '../GameSwitcher';
 import AdUnit from '../AdUnit';
+import MobileNextActionPanel from '../MobileNextActionPanel';
 import { loadStats, saveStats } from '@/lib/storage';
 import { recordWin, recordLoss, getWinPercent, type GameStats } from '@/lib/stats';
 import {
@@ -344,6 +345,15 @@ export default function DomKlondikeShell({ initialDrawMode = 1 }: DomKlondikeShe
         {/* Game board */}
         <div className="p-3 pb-24 sm:p-4 sm:pb-4" style={{ flex: 1, overflow: 'auto' }}>
           <DomKlondikeBoard hint={hintHighlight} />
+          <MobileNextActionPanel
+            title="Next best play"
+            body="Use a hint to highlight the strongest move, or undo before the stock cycle traps you."
+            onHint={handleHint}
+            onUndo={handleUndo}
+            canUndo={moveCount > 0}
+            learnHref="/klondike/strategy"
+            learnLabel="Strategy"
+          />
         </div>
 
         {/* Right sidebar (desktop) */}

@@ -1,0 +1,2351 @@
+{
+  "base": "http://127.0.0.1:3035",
+  "pulledAt": "2026-07-17T05:08:52.650Z",
+  "widths": [
+    375,
+    390,
+    414,
+    768
+  ],
+  "routes": [
+    {
+      "label": "freecell",
+      "path": "/game/1"
+    },
+    {
+      "label": "klondike",
+      "path": "/klondike"
+    },
+    {
+      "label": "spider",
+      "path": "/spider"
+    },
+    {
+      "label": "forty-thieves",
+      "path": "/forty-thieves"
+    }
+  ],
+  "screenshotsDir": null,
+  "markdownReportPath": "docs/analytics/mobile-viewport-audits/2026-07-17-next-action-local.md",
+  "results": [
+    {
+      "label": "freecell",
+      "path": "/game/1",
+      "url": "http://127.0.0.1:3035/game/1",
+      "title": "FreeCell Game #1 — First MS deal (Easy Deal) | Play Free",
+      "h1": "FreeCell Game #1 — First MS deal",
+      "viewport": {
+        "width": 375,
+        "height": 812,
+        "scrollWidth": 375,
+        "scrollHeight": 4425,
+        "devicePixelRatio": 2
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 45,
+        "left": 8,
+        "right": 367,
+        "bottom": 316.02,
+        "width": 359,
+        "height": 271.02
+      },
+      "cardCount": 52,
+      "faceCardCount": 52,
+      "backCardCount": 0,
+      "visibleCardCount": 52,
+      "minCardWidth": 39.25,
+      "maxCardWidth": 39.25,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": true,
+      "unusedVerticalPx": 495.984375,
+      "unusedVerticalPct": 61.1,
+      "cascadeCount": 8,
+      "cascadeCards": [
+        7,
+        7,
+        7,
+        7,
+        6,
+        6,
+        6,
+        6
+      ],
+      "visibleInteractiveCount": 9,
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 6,
+      "crampedTapTargetCount": 0,
+      "smallTapTargets": [
+        {
+          "index": 12,
+          "text": "#1",
+          "tag": "button",
+          "rect": {
+            "top": 2,
+            "left": 6,
+            "right": 50,
+            "bottom": 34,
+            "width": 44,
+            "height": 32
+          }
+        },
+        {
+          "index": 13,
+          "text": "Hint",
+          "tag": "button",
+          "rect": {
+            "top": 661,
+            "left": 23,
+            "right": 127.33,
+            "bottom": 703,
+            "width": 104.33,
+            "height": 42
+          }
+        },
+        {
+          "index": 15,
+          "text": "Strategy",
+          "tag": "a",
+          "rect": {
+            "top": 661,
+            "left": 247.66,
+            "right": 352,
+            "bottom": 703,
+            "width": 104.34,
+            "height": 42
+          }
+        },
+        {
+          "index": 16,
+          "text": "Menu",
+          "tag": "button",
+          "rect": {
+            "top": 735,
+            "left": 24.02,
+            "right": 67.06,
+            "bottom": 788,
+            "width": 43.05,
+            "height": 53
+          }
+        },
+        {
+          "index": 17,
+          "text": "New",
+          "tag": "button",
+          "rect": {
+            "top": 735,
+            "left": 99.13,
+            "right": 136.69,
+            "bottom": 788,
+            "width": 37.56,
+            "height": 53
+          }
+        },
+        {
+          "index": 20,
+          "text": "Hint",
+          "tag": "button",
+          "rect": {
+            "top": 735,
+            "left": 314.95,
+            "right": 350.95,
+            "bottom": 788,
+            "width": 36,
+            "height": 53
+          }
+        }
+      ],
+      "crampedTapTargets": [],
+      "deadSpaceLevel": "high",
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 52,
+        "beforeCardCount": 52,
+        "afterCardCount": 52,
+        "cardCountChanged": false
+      }
+    },
+    {
+      "label": "freecell",
+      "path": "/game/1",
+      "url": "http://127.0.0.1:3035/game/1",
+      "title": "FreeCell Game #1 — First MS deal (Easy Deal) | Play Free",
+      "h1": "FreeCell Game #1 — First MS deal",
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "scrollWidth": 390,
+        "scrollHeight": 4409,
+        "devicePixelRatio": 2
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 45,
+        "left": 8,
+        "right": 382,
+        "bottom": 328.72,
+        "width": 374,
+        "height": 283.72
+      },
+      "cardCount": 52,
+      "faceCardCount": 52,
+      "backCardCount": 0,
+      "visibleCardCount": 52,
+      "minCardWidth": 41.13,
+      "maxCardWidth": 41.13,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": true,
+      "unusedVerticalPx": 515.28125,
+      "unusedVerticalPct": 61.1,
+      "cascadeCount": 8,
+      "cascadeCards": [
+        7,
+        7,
+        7,
+        7,
+        6,
+        6,
+        6,
+        6
+      ],
+      "visibleInteractiveCount": 9,
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 6,
+      "crampedTapTargetCount": 0,
+      "smallTapTargets": [
+        {
+          "index": 12,
+          "text": "#1",
+          "tag": "button",
+          "rect": {
+            "top": 2,
+            "left": 6,
+            "right": 50,
+            "bottom": 34,
+            "width": 44,
+            "height": 32
+          }
+        },
+        {
+          "index": 13,
+          "text": "Hint",
+          "tag": "button",
+          "rect": {
+            "top": 693,
+            "left": 23,
+            "right": 132.33,
+            "bottom": 735,
+            "width": 109.33,
+            "height": 42
+          }
+        },
+        {
+          "index": 15,
+          "text": "Strategy",
+          "tag": "a",
+          "rect": {
+            "top": 693,
+            "left": 257.66,
+            "right": 367,
+            "bottom": 735,
+            "width": 109.34,
+            "height": 42
+          }
+        },
+        {
+          "index": 16,
+          "text": "Menu",
+          "tag": "button",
+          "rect": {
+            "top": 767,
+            "left": 25.52,
+            "right": 68.56,
+            "bottom": 820,
+            "width": 43.05,
+            "height": 53
+          }
+        },
+        {
+          "index": 17,
+          "text": "New",
+          "tag": "button",
+          "rect": {
+            "top": 767,
+            "left": 103.63,
+            "right": 141.19,
+            "bottom": 820,
+            "width": 37.56,
+            "height": 53
+          }
+        },
+        {
+          "index": 20,
+          "text": "Hint",
+          "tag": "button",
+          "rect": {
+            "top": 767,
+            "left": 328.45,
+            "right": 364.45,
+            "bottom": 820,
+            "width": 36,
+            "height": 53
+          }
+        }
+      ],
+      "crampedTapTargets": [],
+      "deadSpaceLevel": "high",
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 52,
+        "beforeCardCount": 52,
+        "afterCardCount": 52,
+        "cardCountChanged": false
+      }
+    },
+    {
+      "label": "freecell",
+      "path": "/game/1",
+      "url": "http://127.0.0.1:3035/game/1",
+      "title": "FreeCell Game #1 — First MS deal (Easy Deal) | Play Free",
+      "h1": "FreeCell Game #1 — First MS deal",
+      "viewport": {
+        "width": 414,
+        "height": 896,
+        "scrollWidth": 414,
+        "scrollHeight": 4429,
+        "devicePixelRatio": 2
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 45,
+        "left": 8,
+        "right": 406,
+        "bottom": 344.78,
+        "width": 398,
+        "height": 299.78
+      },
+      "cardCount": 52,
+      "faceCardCount": 52,
+      "backCardCount": 0,
+      "visibleCardCount": 52,
+      "minCardWidth": 44.13,
+      "maxCardWidth": 44.13,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": true,
+      "unusedVerticalPx": 551.21875,
+      "unusedVerticalPct": 61.5,
+      "cascadeCount": 8,
+      "cascadeCards": [
+        7,
+        7,
+        7,
+        7,
+        6,
+        6,
+        6,
+        6
+      ],
+      "visibleInteractiveCount": 9,
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 6,
+      "crampedTapTargetCount": 0,
+      "smallTapTargets": [
+        {
+          "index": 12,
+          "text": "#1",
+          "tag": "button",
+          "rect": {
+            "top": 2,
+            "left": 6,
+            "right": 50,
+            "bottom": 34,
+            "width": 44,
+            "height": 32
+          }
+        },
+        {
+          "index": 13,
+          "text": "Hint",
+          "tag": "button",
+          "rect": {
+            "top": 745,
+            "left": 23,
+            "right": 140.33,
+            "bottom": 787,
+            "width": 117.33,
+            "height": 42
+          }
+        },
+        {
+          "index": 15,
+          "text": "Strategy",
+          "tag": "a",
+          "rect": {
+            "top": 745,
+            "left": 273.66,
+            "right": 391,
+            "bottom": 787,
+            "width": 117.34,
+            "height": 42
+          }
+        },
+        {
+          "index": 16,
+          "text": "Menu",
+          "tag": "button",
+          "rect": {
+            "top": 819,
+            "left": 27.92,
+            "right": 70.97,
+            "bottom": 872,
+            "width": 43.05,
+            "height": 53
+          }
+        },
+        {
+          "index": 17,
+          "text": "New",
+          "tag": "button",
+          "rect": {
+            "top": 819,
+            "left": 110.83,
+            "right": 148.39,
+            "bottom": 872,
+            "width": 37.56,
+            "height": 53
+          }
+        },
+        {
+          "index": 20,
+          "text": "Hint",
+          "tag": "button",
+          "rect": {
+            "top": 819,
+            "left": 350.06,
+            "right": 386.06,
+            "bottom": 872,
+            "width": 36,
+            "height": 53
+          }
+        }
+      ],
+      "crampedTapTargets": [],
+      "deadSpaceLevel": "high",
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 52,
+        "beforeCardCount": 52,
+        "afterCardCount": 52,
+        "cardCountChanged": false
+      }
+    },
+    {
+      "label": "freecell",
+      "path": "/game/1",
+      "url": "http://127.0.0.1:3035/game/1",
+      "title": "FreeCell Game #1 — First MS deal (Easy Deal) | Play Free",
+      "h1": "FreeCell Game #1 — First MS deal",
+      "viewport": {
+        "width": 768,
+        "height": 1024,
+        "scrollWidth": 768,
+        "scrollHeight": 3301,
+        "devicePixelRatio": 1
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 134,
+        "left": 16,
+        "right": 752,
+        "bottom": 532.8,
+        "width": 736,
+        "height": 398.8
+      },
+      "cardCount": 52,
+      "faceCardCount": 52,
+      "backCardCount": 0,
+      "visibleCardCount": 52,
+      "minCardWidth": 74.41,
+      "maxCardWidth": 74.41,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": false,
+      "unusedVerticalPx": 491.203125,
+      "unusedVerticalPct": 48,
+      "cascadeCount": 8,
+      "cascadeCards": [
+        7,
+        7,
+        7,
+        7,
+        6,
+        6,
+        6,
+        6
+      ],
+      "visibleInteractiveCount": 11,
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 9,
+      "crampedTapTargetCount": 7,
+      "smallTapTargets": [
+        {
+          "index": 1,
+          "text": "♠FreeCell",
+          "tag": "button",
+          "rect": {
+            "top": 14.75,
+            "left": 24,
+            "right": 154.89,
+            "bottom": 55.25,
+            "width": 130.89,
+            "height": 40.5
+          }
+        },
+        {
+          "index": 2,
+          "text": "#1",
+          "tag": "button",
+          "rect": {
+            "top": 24.5,
+            "left": 558.11,
+            "right": 575.55,
+            "bottom": 45.5,
+            "width": 17.44,
+            "height": 21
+          }
+        },
+        {
+          "index": 3,
+          "text": "New Deal",
+          "tag": "button",
+          "rect": {
+            "top": 13.5,
+            "left": 622.63,
+            "right": 748.55,
+            "bottom": 56.5,
+            "width": 125.92,
+            "height": 43
+          }
+        },
+        {
+          "index": 6,
+          "text": "",
+          "tag": "button",
+          "rect": {
+            "top": 78,
+            "left": 302.5,
+            "right": 334.5,
+            "bottom": 110,
+            "width": 32,
+            "height": 32
+          }
+        },
+        {
+          "index": 7,
+          "text": "",
+          "tag": "button",
+          "rect": {
+            "top": 78,
+            "left": 338.5,
+            "right": 370.5,
+            "bottom": 110,
+            "width": 32,
+            "height": 32
+          }
+        },
+        {
+          "index": 8,
+          "text": "",
+          "tag": "button",
+          "rect": {
+            "top": 78,
+            "left": 395.5,
+            "right": 427.5,
+            "bottom": 110,
+            "width": 32,
+            "height": 32
+          }
+        },
+        {
+          "index": 9,
+          "text": "",
+          "tag": "button",
+          "rect": {
+            "top": 78,
+            "left": 431.5,
+            "right": 463.5,
+            "bottom": 110,
+            "width": 32,
+            "height": 32
+          }
+        },
+        {
+          "index": 10,
+          "text": "",
+          "tag": "button",
+          "rect": {
+            "top": 78,
+            "left": 488.5,
+            "right": 520.5,
+            "bottom": 110,
+            "width": 32,
+            "height": 32
+          }
+        },
+        {
+          "index": 11,
+          "text": "",
+          "tag": "button",
+          "rect": {
+            "top": 78,
+            "left": 524.5,
+            "right": 556.5,
+            "bottom": 110,
+            "width": 32,
+            "height": 32
+          }
+        }
+      ],
+      "crampedTapTargets": [
+        {
+          "index": 2,
+          "text": "#1",
+          "tag": "button",
+          "rect": {
+            "top": 24.5,
+            "left": 558.11,
+            "right": 575.55,
+            "bottom": 45.5,
+            "width": 17.44,
+            "height": 21
+          }
+        },
+        {
+          "index": 6,
+          "text": "",
+          "tag": "button",
+          "rect": {
+            "top": 78,
+            "left": 302.5,
+            "right": 334.5,
+            "bottom": 110,
+            "width": 32,
+            "height": 32
+          }
+        },
+        {
+          "index": 7,
+          "text": "",
+          "tag": "button",
+          "rect": {
+            "top": 78,
+            "left": 338.5,
+            "right": 370.5,
+            "bottom": 110,
+            "width": 32,
+            "height": 32
+          }
+        },
+        {
+          "index": 8,
+          "text": "",
+          "tag": "button",
+          "rect": {
+            "top": 78,
+            "left": 395.5,
+            "right": 427.5,
+            "bottom": 110,
+            "width": 32,
+            "height": 32
+          }
+        },
+        {
+          "index": 9,
+          "text": "",
+          "tag": "button",
+          "rect": {
+            "top": 78,
+            "left": 431.5,
+            "right": 463.5,
+            "bottom": 110,
+            "width": 32,
+            "height": 32
+          }
+        },
+        {
+          "index": 10,
+          "text": "",
+          "tag": "button",
+          "rect": {
+            "top": 78,
+            "left": 488.5,
+            "right": 520.5,
+            "bottom": 110,
+            "width": 32,
+            "height": 32
+          }
+        },
+        {
+          "index": 11,
+          "text": "",
+          "tag": "button",
+          "rect": {
+            "top": 78,
+            "left": 524.5,
+            "right": 556.5,
+            "bottom": 110,
+            "width": 32,
+            "height": 32
+          }
+        }
+      ],
+      "deadSpaceLevel": "n/a",
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 52,
+        "beforeCardCount": 52,
+        "afterCardCount": 52,
+        "cardCountChanged": false
+      }
+    },
+    {
+      "label": "klondike",
+      "path": "/klondike",
+      "url": "http://127.0.0.1:3035/klondike",
+      "title": "Klondike Solitaire | Play Online Free — Draw 1 & Draw 3",
+      "h1": "Play Klondike Solitaire Online — Free, Draw 1 & Draw 3",
+      "viewport": {
+        "width": 375,
+        "height": 812,
+        "scrollWidth": 375,
+        "scrollHeight": 13129,
+        "devicePixelRatio": 2
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 119.5,
+        "left": 12,
+        "right": 363,
+        "bottom": 330.23,
+        "width": 351,
+        "height": 210.73
+      },
+      "cardCount": 29,
+      "faceCardCount": 7,
+      "backCardCount": 22,
+      "visibleCardCount": 29,
+      "minCardWidth": 39.25,
+      "maxCardWidth": 39.25,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": true,
+      "unusedVerticalPx": 481.765625,
+      "unusedVerticalPct": 59.3,
+      "cascadeCount": 7,
+      "cascadeCards": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "visibleInteractiveCount": 10,
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 5,
+      "crampedTapTargetCount": 0,
+      "smallTapTargets": [
+        {
+          "index": 1,
+          "text": "♦Klondike",
+          "tag": "button",
+          "rect": {
+            "top": 11,
+            "left": 10,
+            "right": 143.94,
+            "bottom": 51.5,
+            "width": 133.94,
+            "height": 40.5
+          }
+        },
+        {
+          "index": 2,
+          "text": "Draw 1",
+          "tag": "button",
+          "rect": {
+            "top": 62.5,
+            "left": 10,
+            "right": 184.5,
+            "bottom": 98.5,
+            "width": 174.5,
+            "height": 36
+          }
+        },
+        {
+          "index": 3,
+          "text": "Draw 3",
+          "tag": "button",
+          "rect": {
+            "top": 62.5,
+            "left": 190.5,
+            "right": 365,
+            "bottom": 98.5,
+            "width": 174.5,
+            "height": 36
+          }
+        },
+        {
+          "index": 10,
+          "text": "Hint",
+          "tag": "button",
+          "rect": {
+            "top": 412.92,
+            "left": 25,
+            "right": 128,
+            "bottom": 454.92,
+            "width": 103,
+            "height": 42
+          }
+        },
+        {
+          "index": 12,
+          "text": "Strategy",
+          "tag": "a",
+          "rect": {
+            "top": 412.92,
+            "left": 247,
+            "right": 350,
+            "bottom": 454.92,
+            "width": 103,
+            "height": 42
+          }
+        }
+      ],
+      "crampedTapTargets": [],
+      "deadSpaceLevel": "high",
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 7,
+        "beforeCardCount": 29,
+        "afterCardCount": 29,
+        "cardCountChanged": false
+      }
+    },
+    {
+      "label": "klondike",
+      "path": "/klondike",
+      "url": "http://127.0.0.1:3035/klondike",
+      "title": "Klondike Solitaire | Play Online Free — Draw 1 & Draw 3",
+      "h1": "Play Klondike Solitaire Online — Free, Draw 1 & Draw 3",
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "scrollWidth": 390,
+        "scrollHeight": 12682,
+        "devicePixelRatio": 2
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 119.5,
+        "left": 12,
+        "right": 378,
+        "bottom": 340.09,
+        "width": 366,
+        "height": 220.59
+      },
+      "cardCount": 29,
+      "faceCardCount": 7,
+      "backCardCount": 22,
+      "visibleCardCount": 29,
+      "minCardWidth": 41.13,
+      "maxCardWidth": 41.13,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": true,
+      "unusedVerticalPx": 503.90625,
+      "unusedVerticalPct": 59.7,
+      "cascadeCount": 7,
+      "cascadeCards": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "visibleInteractiveCount": 10,
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 5,
+      "crampedTapTargetCount": 0,
+      "smallTapTargets": [
+        {
+          "index": 1,
+          "text": "♦Klondike",
+          "tag": "button",
+          "rect": {
+            "top": 11,
+            "left": 10,
+            "right": 143.94,
+            "bottom": 51.5,
+            "width": 133.94,
+            "height": 40.5
+          }
+        },
+        {
+          "index": 2,
+          "text": "Draw 1",
+          "tag": "button",
+          "rect": {
+            "top": 62.5,
+            "left": 10,
+            "right": 192,
+            "bottom": 98.5,
+            "width": 182,
+            "height": 36
+          }
+        },
+        {
+          "index": 3,
+          "text": "Draw 3",
+          "tag": "button",
+          "rect": {
+            "top": 62.5,
+            "left": 198,
+            "right": 380,
+            "bottom": 98.5,
+            "width": 182,
+            "height": 36
+          }
+        },
+        {
+          "index": 10,
+          "text": "Hint",
+          "tag": "button",
+          "rect": {
+            "top": 422.78,
+            "left": 25,
+            "right": 133,
+            "bottom": 464.78,
+            "width": 108,
+            "height": 42
+          }
+        },
+        {
+          "index": 12,
+          "text": "Strategy",
+          "tag": "a",
+          "rect": {
+            "top": 422.78,
+            "left": 257,
+            "right": 365,
+            "bottom": 464.78,
+            "width": 108,
+            "height": 42
+          }
+        }
+      ],
+      "crampedTapTargets": [],
+      "deadSpaceLevel": "high",
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 7,
+        "beforeCardCount": 29,
+        "afterCardCount": 29,
+        "cardCountChanged": false
+      }
+    },
+    {
+      "label": "klondike",
+      "path": "/klondike",
+      "url": "http://127.0.0.1:3035/klondike",
+      "title": "Klondike Solitaire | Play Online Free — Draw 1 & Draw 3",
+      "h1": "Play Klondike Solitaire Online — Free, Draw 1 & Draw 3",
+      "viewport": {
+        "width": 414,
+        "height": 896,
+        "scrollWidth": 414,
+        "scrollHeight": 12306,
+        "devicePixelRatio": 2
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 119.5,
+        "left": 12,
+        "right": 402,
+        "bottom": 355.86,
+        "width": 390,
+        "height": 236.36
+      },
+      "cardCount": 29,
+      "faceCardCount": 7,
+      "backCardCount": 22,
+      "visibleCardCount": 29,
+      "minCardWidth": 44.13,
+      "maxCardWidth": 44.13,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": true,
+      "unusedVerticalPx": 540.140625,
+      "unusedVerticalPct": 60.3,
+      "cascadeCount": 7,
+      "cascadeCards": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "visibleInteractiveCount": 10,
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 5,
+      "crampedTapTargetCount": 0,
+      "smallTapTargets": [
+        {
+          "index": 1,
+          "text": "♦Klondike",
+          "tag": "button",
+          "rect": {
+            "top": 11,
+            "left": 10,
+            "right": 143.94,
+            "bottom": 51.5,
+            "width": 133.94,
+            "height": 40.5
+          }
+        },
+        {
+          "index": 2,
+          "text": "Draw 1",
+          "tag": "button",
+          "rect": {
+            "top": 62.5,
+            "left": 10,
+            "right": 204,
+            "bottom": 98.5,
+            "width": 194,
+            "height": 36
+          }
+        },
+        {
+          "index": 3,
+          "text": "Draw 3",
+          "tag": "button",
+          "rect": {
+            "top": 62.5,
+            "left": 210,
+            "right": 404,
+            "bottom": 98.5,
+            "width": 194,
+            "height": 36
+          }
+        },
+        {
+          "index": 10,
+          "text": "Hint",
+          "tag": "button",
+          "rect": {
+            "top": 438.55,
+            "left": 25,
+            "right": 141,
+            "bottom": 480.55,
+            "width": 116,
+            "height": 42
+          }
+        },
+        {
+          "index": 12,
+          "text": "Strategy",
+          "tag": "a",
+          "rect": {
+            "top": 438.55,
+            "left": 273,
+            "right": 389,
+            "bottom": 480.55,
+            "width": 116,
+            "height": 42
+          }
+        }
+      ],
+      "crampedTapTargets": [],
+      "deadSpaceLevel": "high",
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 7,
+        "beforeCardCount": 29,
+        "afterCardCount": 29,
+        "cardCountChanged": false
+      }
+    },
+    {
+      "label": "klondike",
+      "path": "/klondike",
+      "url": "http://127.0.0.1:3035/klondike",
+      "title": "Klondike Solitaire | Play Online Free — Draw 1 & Draw 3",
+      "h1": "Play Klondike Solitaire Online — Free, Draw 1 & Draw 3",
+      "viewport": {
+        "width": 768,
+        "height": 1024,
+        "scrollWidth": 768,
+        "scrollHeight": 8309,
+        "devicePixelRatio": 1
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 90,
+        "left": 16,
+        "right": 752,
+        "bottom": 482.8,
+        "width": 736,
+        "height": 392.8
+      },
+      "cardCount": 29,
+      "faceCardCount": 7,
+      "backCardCount": 22,
+      "visibleCardCount": 29,
+      "minCardWidth": 74.41,
+      "maxCardWidth": 74.41,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": false,
+      "unusedVerticalPx": 541.203125,
+      "unusedVerticalPct": 52.9,
+      "cascadeCount": 7,
+      "cascadeCards": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "visibleInteractiveCount": 6,
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 6,
+      "crampedTapTargetCount": 4,
+      "smallTapTargets": [
+        {
+          "index": 4,
+          "text": "♦Klondike",
+          "tag": "button",
+          "rect": {
+            "top": 16.25,
+            "left": 16,
+            "right": 149.94,
+            "bottom": 56.75,
+            "width": 133.94,
+            "height": 40.5
+          }
+        },
+        {
+          "index": 5,
+          "text": "Draw 1",
+          "tag": "button",
+          "rect": {
+            "top": 23.25,
+            "left": 161.94,
+            "right": 219.13,
+            "bottom": 49.75,
+            "width": 57.19,
+            "height": 26.5
+          }
+        },
+        {
+          "index": 6,
+          "text": "Draw 3",
+          "tag": "button",
+          "rect": {
+            "top": 23.25,
+            "left": 223.13,
+            "right": 282.66,
+            "bottom": 49.75,
+            "width": 59.53,
+            "height": 26.5
+          }
+        },
+        {
+          "index": 7,
+          "text": "",
+          "tag": "button",
+          "rect": {
+            "top": 19.5,
+            "left": 586.97,
+            "right": 620.97,
+            "bottom": 53.5,
+            "width": 34,
+            "height": 34
+          }
+        },
+        {
+          "index": 8,
+          "text": "",
+          "tag": "button",
+          "rect": {
+            "top": 19.5,
+            "left": 626.97,
+            "right": 660.97,
+            "bottom": 53.5,
+            "width": 34,
+            "height": 34
+          }
+        },
+        {
+          "index": 9,
+          "text": "New Deal",
+          "tag": "button",
+          "rect": {
+            "top": 20.5,
+            "left": 666.97,
+            "right": 752,
+            "bottom": 52.5,
+            "width": 85.03,
+            "height": 32
+          }
+        }
+      ],
+      "crampedTapTargets": [
+        {
+          "index": 5,
+          "text": "Draw 1",
+          "tag": "button",
+          "rect": {
+            "top": 23.25,
+            "left": 161.94,
+            "right": 219.13,
+            "bottom": 49.75,
+            "width": 57.19,
+            "height": 26.5
+          }
+        },
+        {
+          "index": 6,
+          "text": "Draw 3",
+          "tag": "button",
+          "rect": {
+            "top": 23.25,
+            "left": 223.13,
+            "right": 282.66,
+            "bottom": 49.75,
+            "width": 59.53,
+            "height": 26.5
+          }
+        },
+        {
+          "index": 7,
+          "text": "",
+          "tag": "button",
+          "rect": {
+            "top": 19.5,
+            "left": 586.97,
+            "right": 620.97,
+            "bottom": 53.5,
+            "width": 34,
+            "height": 34
+          }
+        },
+        {
+          "index": 8,
+          "text": "",
+          "tag": "button",
+          "rect": {
+            "top": 19.5,
+            "left": 626.97,
+            "right": 660.97,
+            "bottom": 53.5,
+            "width": 34,
+            "height": 34
+          }
+        }
+      ],
+      "deadSpaceLevel": "n/a",
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 7,
+        "beforeCardCount": 29,
+        "afterCardCount": 29,
+        "cardCountChanged": false
+      }
+    },
+    {
+      "label": "spider",
+      "path": "/spider",
+      "url": "http://127.0.0.1:3035/spider",
+      "title": "Spider Solitaire | Play Online Free — 1, 2 & 4 Suit",
+      "h1": "Play Spider Solitaire Online — Free, 1, 2 & 4 Suit",
+      "viewport": {
+        "width": 375,
+        "height": 812,
+        "scrollWidth": 375,
+        "scrollHeight": 13969,
+        "devicePixelRatio": 2
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 119.5,
+        "left": 12,
+        "right": 363,
+        "bottom": 276.73,
+        "width": 351,
+        "height": 157.23
+      },
+      "cardCount": 63,
+      "faceCardCount": 10,
+      "backCardCount": 53,
+      "visibleCardCount": 63,
+      "minCardWidth": 30.89,
+      "maxCardWidth": 30.89,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": true,
+      "unusedVerticalPx": 535.265625,
+      "unusedVerticalPct": 65.9,
+      "cascadeCount": 10,
+      "cascadeCards": [
+        7,
+        7,
+        6,
+        6,
+        6,
+        5,
+        5,
+        5,
+        5,
+        6
+      ],
+      "visibleInteractiveCount": 11,
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 6,
+      "crampedTapTargetCount": 0,
+      "smallTapTargets": [
+        {
+          "index": 1,
+          "text": "♣Spider Solitaire",
+          "tag": "button",
+          "rect": {
+            "top": 11,
+            "left": 10,
+            "right": 189.41,
+            "bottom": 51.5,
+            "width": 179.41,
+            "height": 40.5
+          }
+        },
+        {
+          "index": 2,
+          "text": "One suit",
+          "tag": "button",
+          "rect": {
+            "top": 62.5,
+            "left": 10,
+            "right": 124.33,
+            "bottom": 98.5,
+            "width": 114.33,
+            "height": 36
+          }
+        },
+        {
+          "index": 3,
+          "text": "Two suits",
+          "tag": "button",
+          "rect": {
+            "top": 62.5,
+            "left": 130.33,
+            "right": 244.67,
+            "bottom": 98.5,
+            "width": 114.34,
+            "height": 36
+          }
+        },
+        {
+          "index": 4,
+          "text": "Four suits",
+          "tag": "button",
+          "rect": {
+            "top": 62.5,
+            "left": 250.67,
+            "right": 365,
+            "bottom": 98.5,
+            "width": 114.33,
+            "height": 36
+          }
+        },
+        {
+          "index": 12,
+          "text": "Hint",
+          "tag": "button",
+          "rect": {
+            "top": 359.42,
+            "left": 25,
+            "right": 128,
+            "bottom": 401.42,
+            "width": 103,
+            "height": 42
+          }
+        },
+        {
+          "index": 14,
+          "text": "Tips",
+          "tag": "a",
+          "rect": {
+            "top": 359.42,
+            "left": 247,
+            "right": 350,
+            "bottom": 401.42,
+            "width": 103,
+            "height": 42
+          }
+        }
+      ],
+      "crampedTapTargets": [],
+      "deadSpaceLevel": "high",
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 10,
+        "beforeCardCount": 63,
+        "afterCardCount": 63,
+        "cardCountChanged": false
+      }
+    },
+    {
+      "label": "spider",
+      "path": "/spider",
+      "url": "http://127.0.0.1:3035/spider",
+      "title": "Spider Solitaire | Play Online Free — 1, 2 & 4 Suit",
+      "h1": "Play Spider Solitaire Online — Free, 1, 2 & 4 Suit",
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "scrollWidth": 390,
+        "scrollHeight": 13622,
+        "devicePixelRatio": 2
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 119.5,
+        "left": 12,
+        "right": 378,
+        "bottom": 284.16,
+        "width": 366,
+        "height": 164.66
+      },
+      "cardCount": 63,
+      "faceCardCount": 10,
+      "backCardCount": 53,
+      "visibleCardCount": 63,
+      "minCardWidth": 32.39,
+      "maxCardWidth": 32.39,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": true,
+      "unusedVerticalPx": 559.84375,
+      "unusedVerticalPct": 66.3,
+      "cascadeCount": 10,
+      "cascadeCards": [
+        7,
+        7,
+        6,
+        6,
+        6,
+        5,
+        5,
+        5,
+        5,
+        6
+      ],
+      "visibleInteractiveCount": 11,
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 6,
+      "crampedTapTargetCount": 0,
+      "smallTapTargets": [
+        {
+          "index": 1,
+          "text": "♣Spider Solitaire",
+          "tag": "button",
+          "rect": {
+            "top": 11,
+            "left": 10,
+            "right": 189.41,
+            "bottom": 51.5,
+            "width": 179.41,
+            "height": 40.5
+          }
+        },
+        {
+          "index": 2,
+          "text": "One suit",
+          "tag": "button",
+          "rect": {
+            "top": 62.5,
+            "left": 10,
+            "right": 129.33,
+            "bottom": 98.5,
+            "width": 119.33,
+            "height": 36
+          }
+        },
+        {
+          "index": 3,
+          "text": "Two suits",
+          "tag": "button",
+          "rect": {
+            "top": 62.5,
+            "left": 135.33,
+            "right": 254.67,
+            "bottom": 98.5,
+            "width": 119.34,
+            "height": 36
+          }
+        },
+        {
+          "index": 4,
+          "text": "Four suits",
+          "tag": "button",
+          "rect": {
+            "top": 62.5,
+            "left": 260.67,
+            "right": 380,
+            "bottom": 98.5,
+            "width": 119.33,
+            "height": 36
+          }
+        },
+        {
+          "index": 12,
+          "text": "Hint",
+          "tag": "button",
+          "rect": {
+            "top": 366.84,
+            "left": 25,
+            "right": 133,
+            "bottom": 408.84,
+            "width": 108,
+            "height": 42
+          }
+        },
+        {
+          "index": 14,
+          "text": "Tips",
+          "tag": "a",
+          "rect": {
+            "top": 366.84,
+            "left": 257,
+            "right": 365,
+            "bottom": 408.84,
+            "width": 108,
+            "height": 42
+          }
+        }
+      ],
+      "crampedTapTargets": [],
+      "deadSpaceLevel": "high",
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 9,
+        "beforeCardCount": 63,
+        "afterCardCount": 63,
+        "cardCountChanged": false
+      }
+    },
+    {
+      "label": "spider",
+      "path": "/spider",
+      "url": "http://127.0.0.1:3035/spider",
+      "title": "Spider Solitaire | Play Online Free — 1, 2 & 4 Suit",
+      "h1": "Play Spider Solitaire Online — Free, 1, 2 & 4 Suit",
+      "viewport": {
+        "width": 414,
+        "height": 896,
+        "scrollWidth": 414,
+        "scrollHeight": 13072,
+        "devicePixelRatio": 2
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 119.5,
+        "left": 12,
+        "right": 402,
+        "bottom": 296,
+        "width": 390,
+        "height": 176.5
+      },
+      "cardCount": 63,
+      "faceCardCount": 10,
+      "backCardCount": 53,
+      "visibleCardCount": 63,
+      "minCardWidth": 34.8,
+      "maxCardWidth": 34.8,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": true,
+      "unusedVerticalPx": 600,
+      "unusedVerticalPct": 67,
+      "cascadeCount": 10,
+      "cascadeCards": [
+        7,
+        7,
+        6,
+        6,
+        6,
+        5,
+        5,
+        5,
+        5,
+        6
+      ],
+      "visibleInteractiveCount": 11,
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 6,
+      "crampedTapTargetCount": 0,
+      "smallTapTargets": [
+        {
+          "index": 1,
+          "text": "♣Spider Solitaire",
+          "tag": "button",
+          "rect": {
+            "top": 11,
+            "left": 10,
+            "right": 189.41,
+            "bottom": 51.5,
+            "width": 179.41,
+            "height": 40.5
+          }
+        },
+        {
+          "index": 2,
+          "text": "One suit",
+          "tag": "button",
+          "rect": {
+            "top": 62.5,
+            "left": 10,
+            "right": 137.33,
+            "bottom": 98.5,
+            "width": 127.33,
+            "height": 36
+          }
+        },
+        {
+          "index": 3,
+          "text": "Two suits",
+          "tag": "button",
+          "rect": {
+            "top": 62.5,
+            "left": 143.33,
+            "right": 270.67,
+            "bottom": 98.5,
+            "width": 127.34,
+            "height": 36
+          }
+        },
+        {
+          "index": 4,
+          "text": "Four suits",
+          "tag": "button",
+          "rect": {
+            "top": 62.5,
+            "left": 276.67,
+            "right": 404,
+            "bottom": 98.5,
+            "width": 127.33,
+            "height": 36
+          }
+        },
+        {
+          "index": 12,
+          "text": "Hint",
+          "tag": "button",
+          "rect": {
+            "top": 378.69,
+            "left": 25,
+            "right": 141,
+            "bottom": 420.69,
+            "width": 116,
+            "height": 42
+          }
+        },
+        {
+          "index": 14,
+          "text": "Tips",
+          "tag": "a",
+          "rect": {
+            "top": 378.69,
+            "left": 273,
+            "right": 389,
+            "bottom": 420.69,
+            "width": 116,
+            "height": 42
+          }
+        }
+      ],
+      "crampedTapTargets": [],
+      "deadSpaceLevel": "high",
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 10,
+        "beforeCardCount": 63,
+        "afterCardCount": 63,
+        "cardCountChanged": false
+      }
+    },
+    {
+      "label": "spider",
+      "path": "/spider",
+      "url": "http://127.0.0.1:3035/spider",
+      "title": "Spider Solitaire | Play Online Free — 1, 2 & 4 Suit",
+      "h1": "Play Spider Solitaire Online — Free, 1, 2 & 4 Suit",
+      "viewport": {
+        "width": 768,
+        "height": 1024,
+        "scrollWidth": 768,
+        "scrollHeight": 8775,
+        "devicePixelRatio": 1
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 130,
+        "left": 16,
+        "right": 752,
+        "bottom": 461.59,
+        "width": 736,
+        "height": 331.59
+      },
+      "cardCount": 63,
+      "faceCardCount": 10,
+      "backCardCount": 53,
+      "visibleCardCount": 63,
+      "minCardWidth": 61.28,
+      "maxCardWidth": 61.28,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": false,
+      "unusedVerticalPx": 562.40625,
+      "unusedVerticalPct": 54.9,
+      "cascadeCount": 10,
+      "cascadeCards": [
+        7,
+        7,
+        6,
+        6,
+        6,
+        5,
+        5,
+        5,
+        5,
+        6
+      ],
+      "visibleInteractiveCount": 7,
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 6,
+      "crampedTapTargetCount": 3,
+      "smallTapTargets": [
+        {
+          "index": 5,
+          "text": "♣Spider Solitaire",
+          "tag": "button",
+          "rect": {
+            "top": 16.25,
+            "left": 16,
+            "right": 195.41,
+            "bottom": 56.75,
+            "width": 179.41,
+            "height": 40.5
+          }
+        },
+        {
+          "index": 6,
+          "text": "1 Suit",
+          "tag": "button",
+          "rect": {
+            "top": 23.25,
+            "left": 207.41,
+            "right": 257.48,
+            "bottom": 49.75,
+            "width": 50.08,
+            "height": 26.5
+          }
+        },
+        {
+          "index": 7,
+          "text": "2 Suits",
+          "tag": "button",
+          "rect": {
+            "top": 23.25,
+            "left": 261.48,
+            "right": 319.72,
+            "bottom": 49.75,
+            "width": 58.23,
+            "height": 26.5
+          }
+        },
+        {
+          "index": 8,
+          "text": "4 Suits",
+          "tag": "button",
+          "rect": {
+            "top": 23.25,
+            "left": 323.72,
+            "right": 382.42,
+            "bottom": 49.75,
+            "width": 58.7,
+            "height": 26.5
+          }
+        },
+        {
+          "index": 10,
+          "text": "Hint",
+          "tag": "button",
+          "rect": {
+            "top": 73,
+            "left": 100.98,
+            "right": 172.66,
+            "bottom": 105,
+            "width": 71.67,
+            "height": 32
+          }
+        },
+        {
+          "index": 11,
+          "text": "New Deal",
+          "tag": "button",
+          "rect": {
+            "top": 73,
+            "left": 178.66,
+            "right": 263.69,
+            "bottom": 105,
+            "width": 85.03,
+            "height": 32
+          }
+        }
+      ],
+      "crampedTapTargets": [
+        {
+          "index": 6,
+          "text": "1 Suit",
+          "tag": "button",
+          "rect": {
+            "top": 23.25,
+            "left": 207.41,
+            "right": 257.48,
+            "bottom": 49.75,
+            "width": 50.08,
+            "height": 26.5
+          }
+        },
+        {
+          "index": 7,
+          "text": "2 Suits",
+          "tag": "button",
+          "rect": {
+            "top": 23.25,
+            "left": 261.48,
+            "right": 319.72,
+            "bottom": 49.75,
+            "width": 58.23,
+            "height": 26.5
+          }
+        },
+        {
+          "index": 8,
+          "text": "4 Suits",
+          "tag": "button",
+          "rect": {
+            "top": 23.25,
+            "left": 323.72,
+            "right": 382.42,
+            "bottom": 49.75,
+            "width": 58.7,
+            "height": 26.5
+          }
+        }
+      ],
+      "deadSpaceLevel": "n/a",
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 8,
+        "beforeCardCount": 63,
+        "afterCardCount": 63,
+        "cardCountChanged": false
+      }
+    },
+    {
+      "label": "forty-thieves",
+      "path": "/forty-thieves",
+      "url": "http://127.0.0.1:3035/forty-thieves",
+      "title": "Forty Thieves Solitaire | Play Online Free — 2-Deck Challenge",
+      "h1": "Forty Thieves Solitaire",
+      "viewport": {
+        "width": 375,
+        "height": 812,
+        "scrollWidth": 375,
+        "scrollHeight": 10584,
+        "devicePixelRatio": 2
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 190.5,
+        "left": 16,
+        "right": 359,
+        "bottom": 332.89,
+        "width": 343,
+        "height": 142.39
+      },
+      "cardCount": 41,
+      "faceCardCount": 40,
+      "backCardCount": 1,
+      "visibleCardCount": 41,
+      "minCardWidth": 31.89,
+      "maxCardWidth": 31.89,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": false,
+      "unusedVerticalPx": 479.109375,
+      "unusedVerticalPct": 59,
+      "cascadeCount": 10,
+      "cascadeCards": [
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "visibleInteractiveCount": 8,
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 3,
+      "crampedTapTargetCount": 0,
+      "smallTapTargets": [
+        {
+          "index": 1,
+          "text": "🏴‍☠️Forty Thieves",
+          "tag": "button",
+          "rect": {
+            "top": 8,
+            "left": 16,
+            "right": 193.52,
+            "bottom": 48.5,
+            "width": 177.52,
+            "height": 40.5
+          }
+        },
+        {
+          "index": 6,
+          "text": "Hint",
+          "tag": "button",
+          "rect": {
+            "top": 415.58,
+            "left": 29,
+            "right": 129.33,
+            "bottom": 457.58,
+            "width": 100.33,
+            "height": 42
+          }
+        },
+        {
+          "index": 8,
+          "text": "Rules",
+          "tag": "a",
+          "rect": {
+            "top": 415.58,
+            "left": 245.66,
+            "right": 346,
+            "bottom": 457.58,
+            "width": 100.34,
+            "height": 42
+          }
+        }
+      ],
+      "crampedTapTargets": [],
+      "deadSpaceLevel": "high",
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 40,
+        "beforeCardCount": 41,
+        "afterCardCount": 41,
+        "cardCountChanged": false
+      }
+    },
+    {
+      "label": "forty-thieves",
+      "path": "/forty-thieves",
+      "url": "http://127.0.0.1:3035/forty-thieves",
+      "title": "Forty Thieves Solitaire | Play Online Free — 2-Deck Challenge",
+      "h1": "Forty Thieves Solitaire",
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "scrollWidth": 390,
+        "scrollHeight": 10361,
+        "devicePixelRatio": 2
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 142,
+        "left": 16,
+        "right": 374,
+        "bottom": 290.91,
+        "width": 358,
+        "height": 148.91
+      },
+      "cardCount": 41,
+      "faceCardCount": 40,
+      "backCardCount": 1,
+      "visibleCardCount": 41,
+      "minCardWidth": 33.39,
+      "maxCardWidth": 33.39,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": false,
+      "unusedVerticalPx": 553.09375,
+      "unusedVerticalPct": 65.5,
+      "cascadeCount": 10,
+      "cascadeCards": [
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "visibleInteractiveCount": 8,
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 3,
+      "crampedTapTargetCount": 0,
+      "smallTapTargets": [
+        {
+          "index": 1,
+          "text": "🏴‍☠️Forty Thieves",
+          "tag": "button",
+          "rect": {
+            "top": 16.25,
+            "left": 16,
+            "right": 193.52,
+            "bottom": 56.75,
+            "width": 177.52,
+            "height": 40.5
+          }
+        },
+        {
+          "index": 6,
+          "text": "Hint",
+          "tag": "button",
+          "rect": {
+            "top": 373.59,
+            "left": 29,
+            "right": 134.33,
+            "bottom": 415.59,
+            "width": 105.33,
+            "height": 42
+          }
+        },
+        {
+          "index": 8,
+          "text": "Rules",
+          "tag": "a",
+          "rect": {
+            "top": 373.59,
+            "left": 255.66,
+            "right": 361,
+            "bottom": 415.59,
+            "width": 105.34,
+            "height": 42
+          }
+        }
+      ],
+      "crampedTapTargets": [],
+      "deadSpaceLevel": "high",
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 40,
+        "beforeCardCount": 41,
+        "afterCardCount": 41,
+        "cardCountChanged": false
+      }
+    },
+    {
+      "label": "forty-thieves",
+      "path": "/forty-thieves",
+      "url": "http://127.0.0.1:3035/forty-thieves",
+      "title": "Forty Thieves Solitaire | Play Online Free — 2-Deck Challenge",
+      "h1": "Forty Thieves Solitaire",
+      "viewport": {
+        "width": 414,
+        "height": 896,
+        "scrollWidth": 414,
+        "scrollHeight": 10056,
+        "devicePixelRatio": 2
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 142,
+        "left": 16,
+        "right": 398,
+        "bottom": 301.31,
+        "width": 382,
+        "height": 159.31
+      },
+      "cardCount": 41,
+      "faceCardCount": 40,
+      "backCardCount": 1,
+      "visibleCardCount": 41,
+      "minCardWidth": 35.8,
+      "maxCardWidth": 35.8,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": false,
+      "unusedVerticalPx": 594.6875,
+      "unusedVerticalPct": 66.4,
+      "cascadeCount": 10,
+      "cascadeCards": [
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "visibleInteractiveCount": 8,
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 3,
+      "crampedTapTargetCount": 0,
+      "smallTapTargets": [
+        {
+          "index": 1,
+          "text": "🏴‍☠️Forty Thieves",
+          "tag": "button",
+          "rect": {
+            "top": 16.25,
+            "left": 16,
+            "right": 193.52,
+            "bottom": 56.75,
+            "width": 177.52,
+            "height": 40.5
+          }
+        },
+        {
+          "index": 6,
+          "text": "Hint",
+          "tag": "button",
+          "rect": {
+            "top": 384,
+            "left": 29,
+            "right": 142.33,
+            "bottom": 426,
+            "width": 113.33,
+            "height": 42
+          }
+        },
+        {
+          "index": 8,
+          "text": "Rules",
+          "tag": "a",
+          "rect": {
+            "top": 384,
+            "left": 271.66,
+            "right": 385,
+            "bottom": 426,
+            "width": 113.34,
+            "height": 42
+          }
+        }
+      ],
+      "crampedTapTargets": [],
+      "deadSpaceLevel": "high",
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 40,
+        "beforeCardCount": 41,
+        "afterCardCount": 41,
+        "cardCountChanged": false
+      }
+    },
+    {
+      "label": "forty-thieves",
+      "path": "/forty-thieves",
+      "url": "http://127.0.0.1:3035/forty-thieves",
+      "title": "Forty Thieves Solitaire | Play Online Free — 2-Deck Challenge",
+      "h1": "Forty Thieves Solitaire",
+      "viewport": {
+        "width": 768,
+        "height": 1024,
+        "scrollWidth": 768,
+        "scrollHeight": 6717,
+        "devicePixelRatio": 1
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 90,
+        "left": 16,
+        "right": 752,
+        "bottom": 375.78,
+        "width": 736,
+        "height": 285.78
+      },
+      "cardCount": 41,
+      "faceCardCount": 40,
+      "backCardCount": 1,
+      "visibleCardCount": 41,
+      "minCardWidth": 62.06,
+      "maxCardWidth": 62.06,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": false,
+      "unusedVerticalPx": 648.21875,
+      "unusedVerticalPct": 63.3,
+      "cascadeCount": 10,
+      "cascadeCards": [
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "visibleInteractiveCount": 5,
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 1,
+      "crampedTapTargetCount": 0,
+      "smallTapTargets": [
+        {
+          "index": 1,
+          "text": "🏴‍☠️Forty Thieves",
+          "tag": "button",
+          "rect": {
+            "top": 16.25,
+            "left": 16,
+            "right": 193.52,
+            "bottom": 56.75,
+            "width": 177.52,
+            "height": 40.5
+          }
+        }
+      ],
+      "crampedTapTargets": [],
+      "deadSpaceLevel": "n/a",
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 40,
+        "beforeCardCount": 41,
+        "afterCardCount": 41,
+        "cardCountChanged": false
+      }
+    }
+  ]
+}

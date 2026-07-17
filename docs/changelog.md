@@ -1,4 +1,12 @@
 
+## 2026-07-17 (OpenClaw Overnight Build)
+
+### Shipped
+- **Below-board next-action module** — added a compact phone-only action strip for FreeCell, Klondike, Spider, and generic wide-board games such as Forty Thieves, using the portrait dead-space signal from the previous audit.
+- The strip offers context-specific Hint, Undo, and strategy/rules actions without changing card sizing or competing with the fixed mobile bottom controls.
+- Saved the passing local audit artifact at `docs/analytics/mobile-viewport-audits/2026-07-17-next-action-local.json` and `.md`: no horizontal overflow, clipped cards, blocked controls, tap-target failures, or stability shifts across FreeCell, Klondike, Spider, and Forty Thieves at 375/390/414/768px.
+- Verification: `npm run build` and `npm run qa:mobile -- --base=http://127.0.0.1:3035 --out=docs/analytics/mobile-viewport-audits/2026-07-17-next-action-local.json` passed with Node 22. Existing Next.js multiple-lockfile/root and edge-runtime static-generation warnings remain unchanged.
+
 ## 2026-07-16 (OpenClaw Overnight Build)
 
 ### Shipped

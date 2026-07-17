@@ -21,6 +21,7 @@ export type GameEvent =
   | { name: 'time_to_first_move'; params: EventParams }
   | { name: 'interaction_type'; params: EventParams }
   | { name: 'game_deadlock'; params: EventParams }
+  | { name: 'next_action_tap'; params: EventParams }
   | { name: 'daily_room_view'; params: EventParams }
   | { name: 'daily_room_play_click'; params: EventParams }
   | { name: 'daily_room_rankings_click'; params: EventParams }
@@ -244,6 +245,19 @@ export function trackDeadlock(): void {
   trackEvent({
     name: 'game_deadlock',
     params: { ...gameSession.baseParams, move_count: gameSession.moveCount },
+  });
+}
+
+export function trackNextActionTap(action: string, surface = 'mobile_next_action_panel', target?: string): void {
+  trackEvent({
+    name: 'next_action_tap',
+    params: {
+      ...gameSession.baseParams,
+      action,
+      surface,
+      target,
+      move_count: gameSession.moveCount,
+    },
   });
 }
 

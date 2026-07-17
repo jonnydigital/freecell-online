@@ -1,7 +1,7 @@
 {
-  "date": "2026-07-16",
+  "date": "2026-07-17",
   "lastPulledBy": "OpenClaw browser heartbeat",
-  "notes": "Updated 2026-07-16 from authenticated OpenClaw browser on GA4 property PlayFreeCellOnline.com p531359003 / G-8N85JJPLED. Reliable GA4 Home 7-day headline and detail cards: 23 active users (+27.8%), 439 events (+64.4%), 0 key events, 17 new users (+21.4%), realtime 0. Local npm run metrics:google remains blocked because gcloud is not on PATH, so browser Home-card data is the source of truth for this daily cycle.",
+  "notes": "Updated 2026-07-17 from authenticated OpenClaw browser on GA4 property PlayFreeCellOnline.com p531359003 / G-8N85JJPLED. Reliable GA4 Home 7-day cards: 20 active users (-9.1%), 439 events (+55.1%), 0 key events, 16 new users (-5.9%), realtime 0. Morning cycle selected next-action engagement instrumentation, but Claude Code kickoff failed before implementation under Node.js v18.17.1 with TypeError: Object not disposable.",
   "network_state": {
     "live_domains": 4,
     "live_since": {
@@ -713,30 +713,30 @@
     "taskPicked": "Do not start another language expansion or UI build yet. Traffic is steady and game starts rose, but localized-route data remains too thin. Next action is per-language analytics review once more GA4/GSC signal accumulates; SolitaireBlog submission remains Jonathan-approval gated.",
     "automationNote": "No Claude Code implementation agent launched during the 2026-07-12 daily cycle because the highest-impact task is analytics review/decisioning, not an unblocked code change; prior Claude Code CLI auth issue remains noted in heartbeat-state."
   },
-  "lastUpdated": "2026-07-16T07:56:00-04:00",
+  "lastUpdated": "2026-07-17T08:48:00-04:00",
   "ga4_home": {
     "property": "PlayFreeCellOnline.com",
     "propertyId": "p531359003",
     "measurementId": "G-8N85JJPLED",
-    "pulledAt": "2026-07-16T07:56:00-04:00",
-    "headlinePeriod": "Last 7 days",
-    "activeUsers": 23,
-    "activeUsersChangePercent": 27.8,
+    "pulledAt": "2026-07-17T08:48:00-04:00",
+    "headlinePeriod": "Last 7 days / Jul 10-Jul 16, 2026",
+    "activeUsers": 20,
+    "activeUsersChangePercent": -9.1,
     "eventCount": 439,
-    "eventCountChangePercent": 64.4,
+    "eventCountChangePercent": 55.1,
     "keyEvents": 0,
-    "newUsers": 17,
-    "newUsersChangePercent": 21.4,
+    "newUsers": 16,
+    "newUsersChangePercent": -5.9,
     "realtimeActiveUsers": 0,
     "last7Days": {
       "countries": {
         "United States": {
           "activeUsers": 11,
-          "changePercent": 120
+          "changePercent": -83.3
         },
         "China": {
-          "activeUsers": 4,
-          "changePercent": 100
+          "activeUsers": 2,
+          "changePercent": 33.3
         },
         "Argentina": {
           "activeUsers": 1,
@@ -748,116 +748,115 @@
         },
         "Brazil": {
           "activeUsers": 1,
-          "changePercent": 50
-        },
-        "Canada": {
-          "activeUsers": 1,
-          "changePercent": null
+          "changePercent": -50
         },
         "United Kingdom": {
           "activeUsers": 1,
-          "changePercent": 50
+          "changePercent": -50
+        },
+        "Hungary": {
+          "activeUsers": 1,
+          "changePercent": null
         }
       },
       "topPages": [
         {
           "title": "Play FreeCell Online for Free | No Download Required",
-          "views": 41,
-          "changePercent": 26.8
+          "views": 45,
+          "changePercent": 15.1
         },
         {
-          "title": "FreeCell Game #1 — First MS deal (Easy Deal) | Play Free",
+          "title": "FreeCell Game #1 — First MS deal",
           "views": 28,
           "changePercent": 40
         },
         {
-          "title": "FreeCell Solver | Solve Any Deal Instantly",
-          "views": 26,
-          "changePercent": 44.4
+          "title": "FreeCell Solver",
+          "views": 22,
+          "changePercent": -4.3
         },
         {
-          "title": "Eight Off Solitaire — Play the Classic 8 Free Cell Card Game Online Free",
+          "title": "Eight Off",
           "views": 11,
           "changePercent": null
         },
         {
-          "title": "Easy FreeCell — Play Beginner-Friendly FreeCell Online Free",
+          "title": "Easy FreeCell",
           "views": 10,
           "changePercent": null
         },
         {
-          "title": "FreeCell Deal Explorer | Browse & Play Specific Game Numbers",
+          "title": "Deal Explorer",
           "views": 7,
           "changePercent": null
         },
         {
-          "title": "Baker's Game — Play the Original FreeCell Ancestor Online Free",
+          "title": "Baker's Game",
           "views": 6,
           "changePercent": null
         }
       ],
       "sessionsByChannel": {
-        "Organic Search": 15,
+        "Organic Search": 13,
         "Direct": 12,
-        "Referral": 8,
+        "Referral": 9,
         "AI Assistant": 6,
-        "Unassigned": 4
-      },
-      "sessionChannelChangesPercent": {
-        "Organic Search": 6.3,
-        "Direct": 50,
-        "Referral": 20,
-        "AI Assistant": 50,
-        "Unassigned": null
+        "Unassigned": 3
       },
       "eventCounts": {
-        "page_view": 193,
+        "page_view": 191,
         "game_start": 76,
         "session_start": 41,
-        "user_engagement": 40,
-        "first_visit": 17,
+        "user_engagement": 43,
+        "first_visit": 16,
         "undo_used": 19,
         "interaction_type": 13
       },
       "activityOverTime": {
-        "activeUsers30Days": 81,
-        "activeUsers30DaysChangePercent": 0,
-        "activeUsers7Days": 23,
-        "activeUsers7DaysChangePercent": 27.8,
+        "activeUsers30Days": 80,
+        "activeUsers30DaysChangePercent": -4.8,
+        "activeUsers7Days": 20,
+        "activeUsers7DaysChangePercent": -9.1,
         "activeUsers1Day": 5,
-        "activeUsers1DayChangePercent": 25
+        "activeUsers1DayChangePercent": -37.5
+      },
+      "firstUserSourceMedium": {
+        "bing / organic": {
+          "users": 5,
+          "changePercent": -16.7
+        },
+        "(direct) / (none)": {
+          "users": 4,
+          "changePercent": 0
+        },
+        "yahoo / organic": {
+          "users": 3,
+          "changePercent": 50
+        },
+        "chatgpt.com / ai-assistant": {
+          "users": 3,
+          "changePercent": 200
+        },
+        "duckduckgo / organic": {
+          "users": 3,
+          "changePercent": 200
+        },
+        "google / organic": {
+          "users": 0,
+          "changePercent": -100
+        },
+        "ecosia.org / organic": {
+          "users": 0,
+          "changePercent": -100
+        }
       }
     },
-    "localizedRouteSignal": "Hold i18n expansion: the 2026-07-16 localized-route audit found 3 non-English localized views, 1 visible non-English locale, French as the top non-English locale, and a shortfall of 47 views plus 2 locales against the expansion gate.",
-    "detailCaveat": "npm run metrics:google still fails in the heartbeat shell because gcloud is not on PATH. The authenticated GA4 Home browser card exposed enough reliable 7-day detail today for countries, top pages, sessions by channel, event counts, and activity over time.",
-    "last28DayReportCards": {
-      "pulledAt": "2026-07-14T08:22:00-04:00",
-      "window": "Last 28 days / Jun 16-Jul 13, 2026",
-      "acquisition": {
-        "newUsers": 68,
-        "firstUserPrimaryChannelGroup": {
-          "Organic Search": 45,
-          "Direct": 13,
-          "AI Assistant": 5,
-          "Referral": 4,
-          "Unassigned": 1
-        }
-      },
-      "engagement": {
-        "activeUsers": 75,
-        "newUsers": 68,
-        "activityOverTime": {
-          "30 days": 80,
-          "7 days": 24,
-          "1 day": 5
-        }
-      }
-    }
+    "detailCaveat": "Authenticated OpenClaw browser GA4 Home cards were the source of truth. Local API metrics remain unavailable in the heartbeat shell because gcloud is not on PATH."
   },
   "daily_cycle": {
-    "date": "2026-07-16",
-    "visitors": 23,
-    "sessions": 45,
+    "date": "2026-07-17",
+    "visitors": 20,
+    "sessions": 43,
     "avgSessionDuration": null,
     "bounceRate": null,
     "dailyChallengeStarts": null,
@@ -867,15 +866,16 @@
     "feedbackCount": 0,
     "errorsLogged": null,
     "featuresShipped": [
-      "No new code/UI shipped in the morning daily cycle; overnight shipped mobile tap-target QA and early prep recorded the 2026-07-16 locale audit."
+      "Overnight shipped the below-board next-action module. Morning daily cycle did not ship new code; it selected next-action engagement instrumentation as the next measured UX task and attempted a Claude Code kickoff."
     ],
     "backlogRemaining": null,
-    "selectedTask": "Hold further i18n expansion and keep monitoring localized-route signal. Next build task should be chosen from measured UX candidates, especially the portrait dead-space plan, unless fresh user feedback or error data surfaces a higher-impact issue.",
+    "selectedTask": "Next-action engagement instrumentation — track taps on the new phone next-action strip so GA4 can distinguish Hint, Undo, and rules/strategy link usage from below-board dead space.",
     "sourceCaveats": [
       "GA4 values came from authenticated OpenClaw browser Home cards, not the local API script.",
-      "npm run metrics:google failed because gcloud is not on PATH.",
-      "No local data/feedback.json exists; production feedback storage is not surfaced locally.",
-      "Sentry remains blocked by missing DSN/config."
+      "No local data/feedback.json exists; only docs/design-council-feedback.md matched feedback search, so feedback count remains 0.",
+      "Sentry remains blocked by missing DSN/config.",
+      "Claude Code kickoff failed immediately under Node.js v18.17.1 with TypeError: Object not disposable; no implementation agent ran.",
+      "Gemini review was not run because no UI/code changes shipped during the morning daily cycle."
     ]
   }
 }

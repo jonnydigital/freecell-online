@@ -4,8 +4,16 @@
 ### Shipped
 - **Below-board next-action module** — added a compact phone-only action strip for FreeCell, Klondike, Spider, and generic wide-board games such as Forty Thieves, using the portrait dead-space signal from the previous audit.
 - The strip offers context-specific Hint, Undo, and strategy/rules actions without changing card sizing or competing with the fixed mobile bottom controls.
+- **Next-action engagement instrumentation** — the shared phone strip now emits GA4 `next_action_tap` events for Hint, Undo, new-game, and rules/strategy link taps, including game context, move count, surface, and target href so the panel can be evaluated by behavior instead of just layout audits.
 - Saved the passing local audit artifact at `docs/analytics/mobile-viewport-audits/2026-07-17-next-action-local.json` and `.md`: no horizontal overflow, clipped cards, blocked controls, tap-target failures, or stability shifts across FreeCell, Klondike, Spider, and Forty Thieves at 375/390/414/768px.
 - Verification: `npm run build` and `npm run qa:mobile -- --base=http://127.0.0.1:3035 --out=docs/analytics/mobile-viewport-audits/2026-07-17-next-action-local.json` passed with Node 22. Existing Next.js multiple-lockfile/root and edge-runtime static-generation warnings remain unchanged.
+
+### Daily Cycle
+- Saved the 2026-07-17 authenticated GA4 browser Home-card baseline to `docs/analytics/daily-metrics.json`: `20` active users over 7 days (`-9.1%`), `439` events (`+55.1%`), `0` key events, `16` new users (`-5.9%`), and `0` realtime users.
+- Last-7-day visible cards: `43` sessions (Organic Search `13`, Direct `12`, Referral `9`, AI Assistant `6`, Unassigned `3`), `191` `page_view` events, `76` `game_start` events, `41` `session_start` events, `43` `user_engagement` events, and `5` one-day active users.
+- Feedback check: no local `data/feedback.json` exists; only `docs/design-council-feedback.md` matched the feedback search, so local feedback count remains `0` unless production storage is surfaced separately.
+- Selected next measured UX task: instrument the new phone next-action strip so GA4 distinguishes Hint, Undo, and rules/strategy link taps from below-board dead-space usage.
+- Claude Code kickoff was attempted but failed before implementation under Node.js `v18.17.1` with `TypeError: Object not disposable`; no UI/code changes shipped in the morning cycle, so Gemini review was not run.
 
 ## 2026-07-16 (OpenClaw Overnight Build)
 

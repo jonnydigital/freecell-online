@@ -3,6 +3,7 @@
 import React from 'react';
 import { HelpCircle, Lightbulb, RotateCcw, Shuffle } from 'lucide-react';
 import Link from '@/components/NetworkLink';
+import { trackNextActionTap } from '@/lib/analytics';
 
 interface MobileNextActionPanelProps {
   title: string;
@@ -30,6 +31,9 @@ export default function MobileNextActionPanel({
   compact = false,
 }: MobileNextActionPanelProps) {
   const actionCount = [onHint, onUndo, learnHref || onNewGame].filter(Boolean).length;
+  const trackPanelTap = (action: string, target?: string) => {
+    trackNextActionTap(action, 'mobile_next_action_panel', target);
+  };
   const buttonBase: React.CSSProperties = {
     minWidth: 0,
     minHeight: '42px',
@@ -80,7 +84,10 @@ export default function MobileNextActionPanel({
         {onHint && (
           <button
             type="button"
-            onClick={onHint}
+            onClick={() => {
+              trackPanelTap('hint');
+              onHint();
+            }}
             style={{
               ...buttonBase,
               background: 'rgba(212,175,55,0.16)',
@@ -95,7 +102,10 @@ export default function MobileNextActionPanel({
         {onUndo && (
           <button
             type="button"
-            onClick={onUndo}
+            onClick={() => {
+              trackPanelTap('undo');
+              onUndo();
+            }}
             disabled={!canUndo}
             style={{
               ...buttonBase,
@@ -112,6 +122,10 @@ export default function MobileNextActionPanel({
         {learnHref ? (
           <Link
             href={learnHref}
+            onClick={() => {
+              const action = learnLabel.toLowerCase().includes('strategy') ? 'strategy' : 'rules';
+              trackPanelTap(action, learnHref);
+            }}
             style={{
               ...buttonBase,
               background: 'rgba(255,255,255,0.05)',
@@ -126,7 +140,10 @@ export default function MobileNextActionPanel({
           onNewGame && (
             <button
               type="button"
-              onClick={onNewGame}
+              onClick={() => {
+                trackPanelTap('new_game');
+                onNewGame();
+              }}
               style={{
                 ...buttonBase,
                 background: 'rgba(255,255,255,0.05)',

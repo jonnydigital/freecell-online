@@ -36,7 +36,9 @@ export default function MobileNextActionPanel({
   };
   const buttonBase: React.CSSProperties = {
     minWidth: 0,
-    minHeight: '42px',
+    // 44px is the comfortable tap-target floor asserted by
+    // scripts/mobile-viewport-audit.mjs (COMFORTABLE_TAP_TARGET_PX).
+    minHeight: '44px',
     borderRadius: '8px',
     display: 'flex',
     alignItems: 'center',

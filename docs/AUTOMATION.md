@@ -16,6 +16,17 @@ rules. If you add a producer, register it here.
 4. **One push per run.** Batch commits locally, push once — every push fires
    four Vercel production builds (Pro credit is finite).
 
+## Unattended run notes
+
+- **Mobile viewport QA needs Node 22+.** The CDP harness uses the global
+  `WebSocket` API, so run it with the repo's nvm Node on PATH:
+  `export PATH="$HOME/.nvm/versions/node/v22.19.0/bin:$PATH"` before
+  `npm run qa:mobile` or direct `scripts/mobile-viewport-audit.mjs` calls.
+- **Use the Mac keychain git path for unattended pushes.** If a sandboxed shell
+  cannot remove a stale `.git/index.lock` or cannot access push credentials,
+  route the git command through the documented Mac/osascript path so it can use
+  local filesystem permissions and stored GitHub credentials.
+
 ## Producers
 
 ### Cowork daily review (user-managed, Claude Cowork)

@@ -1,4 +1,12 @@
 
+## 2026-07-18 (OpenClaw Overnight Build)
+
+### Shipped
+- **Next-action analytics audit** — added `npm run analytics:next-actions`, which reads the latest Google metrics artifact and writes dated JSON/Markdown reports under `docs/analytics/next-action-audits/`.
+- Expanded the authenticated GA4 metrics pull to include `next_action_tap` in the game-event summary and, when GA4 custom dimensions are available, detailed breakdowns by action, surface, game, and locale.
+- Saved the first audit artifact at `docs/analytics/next-action-audits/2026-07-18.md`; current saved metrics have no visible next-action taps yet, so the report recommends waiting for a fresh GA4 refresh before reprioritizing the phone panel.
+- Verification: `node --check scripts/pull-google-metrics.mjs`, `node --check scripts/next-action-audit.mjs`, `npm run analytics:next-actions`, and `npm run build` passed with Node 22. `npm run metrics:google` remains blocked in this cron shell because `gcloud` is not on PATH.
+
 ## 2026-07-17 (OpenClaw Overnight Build)
 
 ### Shipped

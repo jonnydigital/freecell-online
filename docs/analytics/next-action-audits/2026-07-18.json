@@ -1,0 +1,71 @@
+{
+  "generatedAt": "2026-07-18T05:03:23.607Z",
+  "reportDate": "2026-07-18",
+  "reportTimeZone": "America/New_York",
+  "window": "last 30 days through yesterday",
+  "inputs": {
+    "googleMetricsPulledAt": "2026-05-03T17:36:30.907Z",
+    "googleMetricsErrors": [
+      {
+        "source": "ga4",
+        "message": "Request had insufficient authentication scopes.",
+        "status": 403,
+        "body": {
+          "error": {
+            "code": 403,
+            "message": "Request had insufficient authentication scopes.",
+            "status": "PERMISSION_DENIED",
+            "details": [
+              {
+                "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+                "reason": "ACCESS_TOKEN_SCOPE_INSUFFICIENT",
+                "domain": "googleapis.com",
+                "metadata": {
+                  "method": "google.analytics.data.v1beta.BetaAnalyticsData.RunReport",
+                  "service": "analyticsdata.googleapis.com"
+                }
+              }
+            ]
+          }
+        }
+      },
+      {
+        "source": "adsense",
+        "message": "Request had insufficient authentication scopes.",
+        "status": 403,
+        "body": {
+          "error": {
+            "code": 403,
+            "message": "Request had insufficient authentication scopes.",
+            "status": "PERMISSION_DENIED",
+            "details": [
+              {
+                "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+                "reason": "ACCESS_TOKEN_SCOPE_INSUFFICIENT",
+                "domain": "googleapis.com",
+                "metadata": {
+                  "method": "google.ads.adsense.management.v2.Accounts.ListAccounts",
+                  "service": "adsense.googleapis.com"
+                }
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "nextActionError": null
+  },
+  "summary": {
+    "totalTaps": 0,
+    "detailedRows": 0,
+    "topAction": null,
+    "recommendation": "wait_for_data",
+    "nextAction": "Re-run after the next GA4 refresh; no next-action taps are visible yet."
+  },
+  "breakdowns": {
+    "actions": [],
+    "surfaces": [],
+    "games": [],
+    "locales": []
+  }
+}

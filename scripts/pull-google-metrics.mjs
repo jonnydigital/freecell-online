@@ -35,6 +35,7 @@ const GA4_GAME_EVENTS = [
   'game_deadlock',
   'hint_used',
   'undo_used',
+  'next_action_tap',
   'time_to_first_move',
   'interaction_type',
 ];
@@ -182,6 +183,9 @@ async function pullGa4(token) {
       }),
     ];
 
+    let nextActionEvents = [];
+    let nextActionError = null;
+
     if (site === 'playfreecellonline') {
       reportRequests.push(
         ga4RunReport(token, propertyId, {
@@ -198,10 +202,39 @@ async function pullGa4(token) {
           limit: PLAYFREECELL_LOCALIZED_PATHS.length,
         }),
       );
+
+      nextActionEvents = ga4RunReport(token, propertyId, {
+        ...base,
+        dimensions: [
+          { name: 'eventName' },
+          { name: 'customEvent:action' },
+          { name: 'customEvent:surface' },
+          { name: 'customEvent:game_name' },
+          { name: 'customEvent:game_locale' },
+        ],
+        metrics: [{ name: 'eventCount' }, { name: 'activeUsers' }],
+        dimensionFilter: {
+          filter: {
+            fieldName: 'eventName',
+            stringFilter: { matchType: 'EXACT', value: 'next_action_tap' },
+          },
+        },
+        orderBys: [{ metric: { metricName: 'eventCount' }, desc: true }],
+        limit: 50,
+      })
+        .then(rowsAsObjects)
+        .catch((err) => {
+          nextActionError = { message: err.message, status: err.status, body: err.body };
+          return [];
+        });
     }
 
     const [summary, channels, pages, countries, devices, events, localizedRoutes] =
       await Promise.all(reportRequests);
+
+    const resolvedNextActionEvents = Array.isArray(nextActionEvents)
+      ? nextActionEvents
+      : await nextActionEvents;
 
     out[site] = {
       property_id: propertyId,
@@ -212,6 +245,8 @@ async function pullGa4(token) {
       devices: rowsAsObjects(devices),
       game_events: rowsAsObjects(events),
       localized_routes: localizedRoutes ? rowsAsObjects(localizedRoutes) : [],
+      next_action_events: resolvedNextActionEvents,
+      next_action_error: nextActionError,
     };
   }
 

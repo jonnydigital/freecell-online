@@ -10,6 +10,7 @@
     "metrics:pull": "node scripts/pull-public-metrics.mjs",
     "metrics:google": "node scripts/pull-google-metrics.mjs",
     "analytics:locales": "node scripts/localized-route-audit.mjs",
+    "analytics:next-actions": "node scripts/next-action-audit.mjs",
     "indexnow:submit": "node scripts/indexnow-submit-sitemap.mjs",
     "adsense:audit": "node scripts/adsense-recovery-audit.mjs",
     "adsense:prod-check": "node scripts/adsense-production-check.mjs",

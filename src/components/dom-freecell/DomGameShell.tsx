@@ -1741,11 +1741,11 @@ export default function DomGameShell({ initialGameNumber, variant, locale = 'en'
             footer={
               !isLandscapeMobile && !hint && !isWon && !replayMode && !isAutoCompletable && !noMovesAvailable ? (
                 <MobileNextActionPanel
+                  /* Coaching + Strategy deep-link only. Hint/Undo intentionally omitted:
+                     the persistent mobile bottom bar already carries both, so passing
+                     them produced duplicate on-screen controls (logged 2026-07-18). */
                   title={moveCount === 0 ? 'Start with a safe move' : 'Use the open space'}
                   body={moveCount === 0 ? 'Try a hint if the first move is not obvious.' : 'Undo a dead end or ask for a hint before changing deals.'}
-                  onHint={handleHint}
-                  onUndo={handleUndo}
-                  canUndo={canUndo}
                   learnHref={copy.strategyHref}
                   learnLabel={copy.strategy}
                   compact

@@ -153,9 +153,10 @@ function particleStyle(index: number): React.CSSProperties {
 
 interface DomBoardProps {
   hint?: HintHighlight | null;
+  footer?: React.ReactNode;
 }
 
-export default function DomBoard({ hint }: DomBoardProps) {
+export default function DomBoard({ hint, footer }: DomBoardProps) {
   useSoundEffects();
   const boardRef = useRef<HTMLDivElement>(null) as React.RefObject<HTMLElement>;
 
@@ -463,6 +464,11 @@ export default function DomBoard({ hint }: DomBoardProps) {
           );
         })}
       </div>
+      {footer && (
+        <div style={{ marginTop: 'clamp(10px, 2.8vw, 18px)' }}>
+          {footer}
+        </div>
+      )}
     </div>
   );
 }

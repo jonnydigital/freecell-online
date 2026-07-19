@@ -1,0 +1,137 @@
+{
+  "base": "http://127.0.0.1:3042",
+  "pulledAt": "2026-07-19T05:04:30.653Z",
+  "widths": [
+    414
+  ],
+  "routes": [
+    {
+      "path": "/spider",
+      "label": "spider"
+    }
+  ],
+  "screenshotsDir": null,
+  "markdownReportPath": "docs/analytics/mobile-viewport-audits/2026-07-19-spider-414-recheck-local.md",
+  "results": [
+    {
+      "label": "spider",
+      "path": "/spider",
+      "url": "http://127.0.0.1:3042/spider",
+      "title": "Spider Solitaire | Play Online Free — 1, 2 & 4 Suit",
+      "h1": "Play Spider Solitaire Online — Free, 1, 2 & 4 Suit",
+      "viewport": {
+        "width": 414,
+        "height": 896,
+        "scrollWidth": 414,
+        "scrollHeight": 13072,
+        "devicePixelRatio": 2
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 119.5,
+        "left": 12,
+        "right": 402,
+        "bottom": 296,
+        "width": 390,
+        "height": 176.5
+      },
+      "cardCount": 63,
+      "faceCardCount": 10,
+      "backCardCount": 53,
+      "visibleCardCount": 63,
+      "minCardWidth": 34.8,
+      "maxCardWidth": 34.8,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": true,
+      "unusedVerticalPx": 600,
+      "unusedVerticalPct": 67,
+      "cascadeCount": 10,
+      "cascadeCards": [
+        7,
+        7,
+        6,
+        6,
+        6,
+        5,
+        5,
+        5,
+        5,
+        6
+      ],
+      "visibleInteractiveCount": 11,
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 4,
+      "crampedTapTargetCount": 0,
+      "smallTapTargets": [
+        {
+          "index": 1,
+          "text": "♣Spider Solitaire",
+          "tag": "button",
+          "rect": {
+            "top": 11,
+            "left": 10,
+            "right": 189.41,
+            "bottom": 51.5,
+            "width": 179.41,
+            "height": 40.5
+          }
+        },
+        {
+          "index": 2,
+          "text": "One suit",
+          "tag": "button",
+          "rect": {
+            "top": 62.5,
+            "left": 10,
+            "right": 137.33,
+            "bottom": 98.5,
+            "width": 127.33,
+            "height": 36
+          }
+        },
+        {
+          "index": 3,
+          "text": "Two suits",
+          "tag": "button",
+          "rect": {
+            "top": 62.5,
+            "left": 143.33,
+            "right": 270.67,
+            "bottom": 98.5,
+            "width": 127.34,
+            "height": 36
+          }
+        },
+        {
+          "index": 4,
+          "text": "Four suits",
+          "tag": "button",
+          "rect": {
+            "top": 62.5,
+            "left": 276.67,
+            "right": 404,
+            "bottom": 98.5,
+            "width": 127.33,
+            "height": 36
+          }
+        }
+      ],
+      "crampedTapTargets": [],
+      "deadSpaceLevel": "high",
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 9,
+        "beforeCardCount": 63,
+        "afterCardCount": 63,
+        "cardCountChanged": false
+      }
+    }
+  ]
+}

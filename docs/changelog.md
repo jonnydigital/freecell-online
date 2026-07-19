@@ -1,4 +1,12 @@
 
+## 2026-07-19 (OpenClaw Overnight Build)
+
+### Shipped
+- **FreeCell next-action panel board-flow placement** — moved the phone next-action strip into the FreeCell `.dom-board-surface` immediately below the cascades instead of floating it above the bottom bar, so the contextual Hint/Undo/Strategy prompt uses the actual measured board gap.
+- Added an optional `footer` slot to `DomBoard`, keeping the panel inside the board measurement without changing card sizing or the shared `MobileNextActionPanel` behavior.
+- Saved the local mobile audit artifact at `docs/analytics/mobile-viewport-audits/2026-07-19-next-action-flow-local.json`: FreeCell phone unused vertical space improved from the 2026-07-18 live baseline of ~61% to 46.4%, 46.9%, and 48.1% at 375/390/414px, with no overflow, clipped cards, blocked controls, or new tap-target failures. A focused Spider 414px recheck passed after the full matrix hit one timing miss.
+- Verification: `npm run build` passed with Node 22. `npm run qa:mobile -- --base=http://127.0.0.1:3042 --out=docs/analytics/mobile-viewport-audits/2026-07-19-next-action-flow-local.json` completed with the FreeCell improvement and one Spider timing miss; `npm run qa:mobile -- --base=http://127.0.0.1:3042 --route=/spider:spider --widths=414 --delay=1800 --out=docs/analytics/mobile-viewport-audits/2026-07-19-spider-414-recheck-local.json` passed.
+
 ## 2026-07-18 (OpenClaw Overnight Build)
 
 ### Shipped

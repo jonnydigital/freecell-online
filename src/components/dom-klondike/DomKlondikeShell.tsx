@@ -346,11 +346,13 @@ export default function DomKlondikeShell({ initialDrawMode = 1 }: DomKlondikeShe
         <div className="p-3 pb-24 sm:p-4 sm:pb-4" style={{ flex: 1, overflow: 'auto' }}>
           <DomKlondikeBoard hint={hintHighlight} />
           <MobileNextActionPanel
+            /* Coaching + Strategy deep-link only. Hint/Undo intentionally omitted:
+               the persistent mobile bottom bar (Home/New/Undo/Hint) already
+               carries both, so passing them rendered duplicate on-screen
+               controls on portrait phones. Mirrors the FreeCell fix (ff5480b,
+               logged 2026-07-18/19); Klondike confirmed live on 2026-07-20. */
             title="Next best play"
             body="Use a hint to highlight the strongest move, or undo before the stock cycle traps you."
-            onHint={handleHint}
-            onUndo={handleUndo}
-            canUndo={moveCount > 0}
             learnHref="/klondike/strategy"
             learnLabel="Strategy"
           />

@@ -2109,10 +2109,9 @@ export default function DomGameShell({ initialGameNumber, variant, locale = 'en'
               fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace',
               fontVariantNumeric: 'tabular-nums',
             }}
-            aria-hidden="true"
           >
             <span style={{ color: 'rgba(255,255,255,0.5)' }}>#{gameNumber}</span>
-            <span style={{ color: 'rgba(255,255,255,0.7)' }}>{timerDisplay}</span>
+            <span style={{ color: 'rgba(255,255,255,0.7)' }} aria-label={`${copy.time}: ${timerDisplay}`}>{timerDisplay}</span>
             <span style={{ color: 'rgba(250,204,21,0.7)' }}>{moveCount} {copy.movesShort}</span>
           </div>
         )}

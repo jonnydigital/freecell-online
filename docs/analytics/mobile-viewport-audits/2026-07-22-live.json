@@ -1,0 +1,653 @@
+{
+  "base": "https://playfreecellonline.com",
+  "pulledAt": "2026-07-22T13:10:36.873Z",
+  "widths": [
+    375,
+    390,
+    414,
+    768
+  ],
+  "routes": [
+    {
+      "path": "/game/1",
+      "label": "freecell"
+    }
+  ],
+  "screenshotsDir": "docs/analytics/mobile-viewport-audits/2026-07-22-live-screenshots",
+  "markdownReportPath": "docs/analytics/mobile-viewport-audits/2026-07-22-live.md",
+  "results": [
+    {
+      "label": "freecell",
+      "path": "/game/1",
+      "url": "https://playfreecellonline.com/game/1",
+      "title": "FreeCell Game #1 — First MS deal (Easy Deal) | Play Free",
+      "h1": "FreeCell Game #1 — First MS deal",
+      "viewport": {
+        "width": 375,
+        "height": 812,
+        "scrollWidth": 375,
+        "scrollHeight": 4425,
+        "devicePixelRatio": 2
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 45,
+        "left": 8,
+        "right": 367,
+        "bottom": 435.36,
+        "width": 359,
+        "height": 390.36
+      },
+      "cardCount": 52,
+      "faceCardCount": 52,
+      "backCardCount": 0,
+      "visibleCardCount": 52,
+      "minCardWidth": 39.25,
+      "maxCardWidth": 39.25,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": true,
+      "unusedVerticalPx": 376.640625,
+      "unusedVerticalPct": 46.4,
+      "cascadeCount": 8,
+      "cascadeCards": [
+        7,
+        7,
+        7,
+        7,
+        6,
+        6,
+        6,
+        6
+      ],
+      "visibleInteractiveCount": 7,
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 4,
+      "crampedTapTargetCount": 0,
+      "smallTapTargets": [
+        {
+          "index": 12,
+          "text": "#1",
+          "tag": "button",
+          "rect": {
+            "top": 2,
+            "left": 6,
+            "right": 50,
+            "bottom": 34,
+            "width": 44,
+            "height": 32
+          }
+        },
+        {
+          "index": 14,
+          "text": "Menu",
+          "tag": "button",
+          "rect": {
+            "top": 735,
+            "left": 24.02,
+            "right": 67.06,
+            "bottom": 788,
+            "width": 43.05,
+            "height": 53
+          }
+        },
+        {
+          "index": 15,
+          "text": "New",
+          "tag": "button",
+          "rect": {
+            "top": 735,
+            "left": 99.13,
+            "right": 136.69,
+            "bottom": 788,
+            "width": 37.56,
+            "height": 53
+          }
+        },
+        {
+          "index": 18,
+          "text": "Hint",
+          "tag": "button",
+          "rect": {
+            "top": 735,
+            "left": 314.95,
+            "right": 350.95,
+            "bottom": 788,
+            "width": 36,
+            "height": 53
+          }
+        }
+      ],
+      "crampedTapTargets": [],
+      "deadSpaceLevel": "review",
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 52,
+        "beforeCardCount": 52,
+        "afterCardCount": 52,
+        "cardCountChanged": false
+      },
+      "screenshotPath": "docs/analytics/mobile-viewport-audits/2026-07-22-live-screenshots/freecell-375.png"
+    },
+    {
+      "label": "freecell",
+      "path": "/game/1",
+      "url": "https://playfreecellonline.com/game/1",
+      "title": "FreeCell Game #1 — First MS deal (Easy Deal) | Play Free",
+      "h1": "FreeCell Game #1 — First MS deal",
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "scrollWidth": 390,
+        "scrollHeight": 4409,
+        "devicePixelRatio": 2
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 45,
+        "left": 8,
+        "right": 382,
+        "bottom": 448.47,
+        "width": 374,
+        "height": 403.47
+      },
+      "cardCount": 52,
+      "faceCardCount": 52,
+      "backCardCount": 0,
+      "visibleCardCount": 52,
+      "minCardWidth": 41.13,
+      "maxCardWidth": 41.13,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": true,
+      "unusedVerticalPx": 395.53125,
+      "unusedVerticalPct": 46.9,
+      "cascadeCount": 8,
+      "cascadeCards": [
+        7,
+        7,
+        7,
+        7,
+        6,
+        6,
+        6,
+        6
+      ],
+      "visibleInteractiveCount": 7,
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 4,
+      "crampedTapTargetCount": 0,
+      "smallTapTargets": [
+        {
+          "index": 12,
+          "text": "#1",
+          "tag": "button",
+          "rect": {
+            "top": 2,
+            "left": 6,
+            "right": 50,
+            "bottom": 34,
+            "width": 44,
+            "height": 32
+          }
+        },
+        {
+          "index": 14,
+          "text": "Menu",
+          "tag": "button",
+          "rect": {
+            "top": 767,
+            "left": 25.52,
+            "right": 68.56,
+            "bottom": 820,
+            "width": 43.05,
+            "height": 53
+          }
+        },
+        {
+          "index": 15,
+          "text": "New",
+          "tag": "button",
+          "rect": {
+            "top": 767,
+            "left": 103.63,
+            "right": 141.19,
+            "bottom": 820,
+            "width": 37.56,
+            "height": 53
+          }
+        },
+        {
+          "index": 18,
+          "text": "Hint",
+          "tag": "button",
+          "rect": {
+            "top": 767,
+            "left": 328.45,
+            "right": 364.45,
+            "bottom": 820,
+            "width": 36,
+            "height": 53
+          }
+        }
+      ],
+      "crampedTapTargets": [],
+      "deadSpaceLevel": "review",
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 52,
+        "beforeCardCount": 52,
+        "afterCardCount": 52,
+        "cardCountChanged": false
+      },
+      "screenshotPath": "docs/analytics/mobile-viewport-audits/2026-07-22-live-screenshots/freecell-390.png"
+    },
+    {
+      "label": "freecell",
+      "path": "/game/1",
+      "url": "https://playfreecellonline.com/game/1",
+      "title": "FreeCell Game #1 — First MS deal (Easy Deal) | Play Free",
+      "h1": "FreeCell Game #1 — First MS deal",
+      "viewport": {
+        "width": 414,
+        "height": 896,
+        "scrollWidth": 414,
+        "scrollHeight": 4429,
+        "devicePixelRatio": 2
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 45,
+        "left": 8,
+        "right": 406,
+        "bottom": 465.2,
+        "width": 398,
+        "height": 420.2
+      },
+      "cardCount": 52,
+      "faceCardCount": 52,
+      "backCardCount": 0,
+      "visibleCardCount": 52,
+      "minCardWidth": 44.13,
+      "maxCardWidth": 44.13,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": true,
+      "unusedVerticalPx": 430.796875,
+      "unusedVerticalPct": 48.1,
+      "cascadeCount": 8,
+      "cascadeCards": [
+        7,
+        7,
+        7,
+        7,
+        6,
+        6,
+        6,
+        6
+      ],
+      "visibleInteractiveCount": 7,
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 4,
+      "crampedTapTargetCount": 0,
+      "smallTapTargets": [
+        {
+          "index": 12,
+          "text": "#1",
+          "tag": "button",
+          "rect": {
+            "top": 2,
+            "left": 6,
+            "right": 50,
+            "bottom": 34,
+            "width": 44,
+            "height": 32
+          }
+        },
+        {
+          "index": 14,
+          "text": "Menu",
+          "tag": "button",
+          "rect": {
+            "top": 819,
+            "left": 27.92,
+            "right": 70.97,
+            "bottom": 872,
+            "width": 43.05,
+            "height": 53
+          }
+        },
+        {
+          "index": 15,
+          "text": "New",
+          "tag": "button",
+          "rect": {
+            "top": 819,
+            "left": 110.83,
+            "right": 148.39,
+            "bottom": 872,
+            "width": 37.56,
+            "height": 53
+          }
+        },
+        {
+          "index": 18,
+          "text": "Hint",
+          "tag": "button",
+          "rect": {
+            "top": 819,
+            "left": 350.06,
+            "right": 386.06,
+            "bottom": 872,
+            "width": 36,
+            "height": 53
+          }
+        }
+      ],
+      "crampedTapTargets": [],
+      "deadSpaceLevel": "review",
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 52,
+        "beforeCardCount": 52,
+        "afterCardCount": 52,
+        "cardCountChanged": false
+      },
+      "screenshotPath": "docs/analytics/mobile-viewport-audits/2026-07-22-live-screenshots/freecell-414.png"
+    },
+    {
+      "label": "freecell",
+      "path": "/game/1",
+      "url": "https://playfreecellonline.com/game/1",
+      "title": "FreeCell Game #1 — First MS deal (Easy Deal) | Play Free",
+      "h1": "FreeCell Game #1 — First MS deal",
+      "viewport": {
+        "width": 768,
+        "height": 1024,
+        "scrollWidth": 768,
+        "scrollHeight": 3301,
+        "devicePixelRatio": 1
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 134,
+        "left": 16,
+        "right": 752,
+        "bottom": 550.8,
+        "width": 736,
+        "height": 416.8
+      },
+      "cardCount": 52,
+      "faceCardCount": 52,
+      "backCardCount": 0,
+      "visibleCardCount": 52,
+      "minCardWidth": 74.41,
+      "maxCardWidth": 74.41,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": false,
+      "unusedVerticalPx": 473.203125,
+      "unusedVerticalPct": 46.2,
+      "cascadeCount": 8,
+      "cascadeCards": [
+        7,
+        7,
+        7,
+        7,
+        6,
+        6,
+        6,
+        6
+      ],
+      "visibleInteractiveCount": 11,
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 9,
+      "crampedTapTargetCount": 7,
+      "smallTapTargets": [
+        {
+          "index": 1,
+          "text": "♠FreeCell",
+          "tag": "button",
+          "rect": {
+            "top": 14.75,
+            "left": 24,
+            "right": 154.89,
+            "bottom": 55.25,
+            "width": 130.89,
+            "height": 40.5
+          }
+        },
+        {
+          "index": 2,
+          "text": "#1",
+          "tag": "button",
+          "rect": {
+            "top": 24.5,
+            "left": 558.11,
+            "right": 575.55,
+            "bottom": 45.5,
+            "width": 17.44,
+            "height": 21
+          }
+        },
+        {
+          "index": 3,
+          "text": "New Deal",
+          "tag": "button",
+          "rect": {
+            "top": 13.5,
+            "left": 622.63,
+            "right": 748.55,
+            "bottom": 56.5,
+            "width": 125.92,
+            "height": 43
+          }
+        },
+        {
+          "index": 6,
+          "text": "",
+          "tag": "button",
+          "rect": {
+            "top": 78,
+            "left": 302.5,
+            "right": 334.5,
+            "bottom": 110,
+            "width": 32,
+            "height": 32
+          }
+        },
+        {
+          "index": 7,
+          "text": "",
+          "tag": "button",
+          "rect": {
+            "top": 78,
+            "left": 338.5,
+            "right": 370.5,
+            "bottom": 110,
+            "width": 32,
+            "height": 32
+          }
+        },
+        {
+          "index": 8,
+          "text": "",
+          "tag": "button",
+          "rect": {
+            "top": 78,
+            "left": 395.5,
+            "right": 427.5,
+            "bottom": 110,
+            "width": 32,
+            "height": 32
+          }
+        },
+        {
+          "index": 9,
+          "text": "",
+          "tag": "button",
+          "rect": {
+            "top": 78,
+            "left": 431.5,
+            "right": 463.5,
+            "bottom": 110,
+            "width": 32,
+            "height": 32
+          }
+        },
+        {
+          "index": 10,
+          "text": "",
+          "tag": "button",
+          "rect": {
+            "top": 78,
+            "left": 488.5,
+            "right": 520.5,
+            "bottom": 110,
+            "width": 32,
+            "height": 32
+          }
+        },
+        {
+          "index": 11,
+          "text": "",
+          "tag": "button",
+          "rect": {
+            "top": 78,
+            "left": 524.5,
+            "right": 556.5,
+            "bottom": 110,
+            "width": 32,
+            "height": 32
+          }
+        }
+      ],
+      "crampedTapTargets": [
+        {
+          "index": 2,
+          "text": "#1",
+          "tag": "button",
+          "rect": {
+            "top": 24.5,
+            "left": 558.11,
+            "right": 575.55,
+            "bottom": 45.5,
+            "width": 17.44,
+            "height": 21
+          }
+        },
+        {
+          "index": 6,
+          "text": "",
+          "tag": "button",
+          "rect": {
+            "top": 78,
+            "left": 302.5,
+            "right": 334.5,
+            "bottom": 110,
+            "width": 32,
+            "height": 32
+          }
+        },
+        {
+          "index": 7,
+          "text": "",
+          "tag": "button",
+          "rect": {
+            "top": 78,
+            "left": 338.5,
+            "right": 370.5,
+            "bottom": 110,
+            "width": 32,
+            "height": 32
+          }
+        },
+        {
+          "index": 8,
+          "text": "",
+          "tag": "button",
+          "rect": {
+            "top": 78,
+            "left": 395.5,
+            "right": 427.5,
+            "bottom": 110,
+            "width": 32,
+            "height": 32
+          }
+        },
+        {
+          "index": 9,
+          "text": "",
+          "tag": "button",
+          "rect": {
+            "top": 78,
+            "left": 431.5,
+            "right": 463.5,
+            "bottom": 110,
+            "width": 32,
+            "height": 32
+          }
+        },
+        {
+          "index": 10,
+          "text": "",
+          "tag": "button",
+          "rect": {
+            "top": 78,
+            "left": 488.5,
+            "right": 520.5,
+            "bottom": 110,
+            "width": 32,
+            "height": 32
+          }
+        },
+        {
+          "index": 11,
+          "text": "",
+          "tag": "button",
+          "rect": {
+            "top": 78,
+            "left": 524.5,
+            "right": 556.5,
+            "bottom": 110,
+            "width": 32,
+            "height": 32
+          }
+        }
+      ],
+      "deadSpaceLevel": "n/a",
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 52,
+        "beforeCardCount": 52,
+        "afterCardCount": 52,
+        "cardCountChanged": false
+      },
+      "screenshotPath": "docs/analytics/mobile-viewport-audits/2026-07-22-live-screenshots/freecell-768.png"
+    }
+  ]
+}

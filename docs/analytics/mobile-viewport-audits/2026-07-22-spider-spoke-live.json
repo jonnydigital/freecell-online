@@ -1,0 +1,570 @@
+{
+  "base": "https://playspidersolitaireonline.com",
+  "pulledAt": "2026-07-22T13:10:59.531Z",
+  "widths": [
+    375,
+    390,
+    414,
+    768
+  ],
+  "routes": [
+    {
+      "path": "/",
+      "label": "spider"
+    }
+  ],
+  "screenshotsDir": "docs/analytics/mobile-viewport-audits/2026-07-22-spider-spoke-live-screenshots",
+  "markdownReportPath": "docs/analytics/mobile-viewport-audits/2026-07-22-spider-spoke-live.md",
+  "results": [
+    {
+      "label": "spider",
+      "path": "/",
+      "url": "https://playspidersolitaireonline.com/",
+      "title": "Play Spider Solitaire Online Free — 1, 2 & 4 Suit",
+      "h1": "Play Spider Solitaire Online — Free, No Download",
+      "viewport": {
+        "width": 375,
+        "height": 812,
+        "scrollWidth": 375,
+        "scrollHeight": 7090,
+        "devicePixelRatio": 2
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 119.5,
+        "left": 12,
+        "right": 363,
+        "bottom": 276.73,
+        "width": 351,
+        "height": 157.23
+      },
+      "cardCount": 63,
+      "faceCardCount": 10,
+      "backCardCount": 53,
+      "visibleCardCount": 63,
+      "minCardWidth": 30.89,
+      "maxCardWidth": 30.89,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": true,
+      "unusedVerticalPx": 535.265625,
+      "unusedVerticalPct": 65.9,
+      "cascadeCount": 10,
+      "cascadeCards": [
+        7,
+        7,
+        6,
+        6,
+        6,
+        5,
+        5,
+        5,
+        5,
+        6
+      ],
+      "visibleInteractiveCount": 9,
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 4,
+      "crampedTapTargetCount": 0,
+      "smallTapTargets": [
+        {
+          "index": 1,
+          "text": "♣Spider Solitaire",
+          "tag": "button",
+          "rect": {
+            "top": 11,
+            "left": 10,
+            "right": 189.41,
+            "bottom": 51.5,
+            "width": 179.41,
+            "height": 40.5
+          }
+        },
+        {
+          "index": 2,
+          "text": "One suit",
+          "tag": "button",
+          "rect": {
+            "top": 62.5,
+            "left": 10,
+            "right": 124.33,
+            "bottom": 98.5,
+            "width": 114.33,
+            "height": 36
+          }
+        },
+        {
+          "index": 3,
+          "text": "Two suits",
+          "tag": "button",
+          "rect": {
+            "top": 62.5,
+            "left": 130.33,
+            "right": 244.67,
+            "bottom": 98.5,
+            "width": 114.34,
+            "height": 36
+          }
+        },
+        {
+          "index": 4,
+          "text": "Four suits",
+          "tag": "button",
+          "rect": {
+            "top": 62.5,
+            "left": 250.67,
+            "right": 365,
+            "bottom": 98.5,
+            "width": 114.33,
+            "height": 36
+          }
+        }
+      ],
+      "crampedTapTargets": [],
+      "deadSpaceLevel": "high",
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 10,
+        "beforeCardCount": 63,
+        "afterCardCount": 63,
+        "cardCountChanged": false
+      },
+      "screenshotPath": "docs/analytics/mobile-viewport-audits/2026-07-22-spider-spoke-live-screenshots/spider-375.png"
+    },
+    {
+      "label": "spider",
+      "path": "/",
+      "url": "https://playspidersolitaireonline.com/",
+      "title": "Play Spider Solitaire Online Free — 1, 2 & 4 Suit",
+      "h1": "Play Spider Solitaire Online — Free, No Download",
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "scrollWidth": 390,
+        "scrollHeight": 6954,
+        "devicePixelRatio": 2
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 119.5,
+        "left": 12,
+        "right": 378,
+        "bottom": 284.16,
+        "width": 366,
+        "height": 164.66
+      },
+      "cardCount": 63,
+      "faceCardCount": 10,
+      "backCardCount": 53,
+      "visibleCardCount": 63,
+      "minCardWidth": 32.39,
+      "maxCardWidth": 32.39,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": true,
+      "unusedVerticalPx": 559.84375,
+      "unusedVerticalPct": 66.3,
+      "cascadeCount": 10,
+      "cascadeCards": [
+        7,
+        7,
+        6,
+        6,
+        6,
+        5,
+        5,
+        5,
+        5,
+        6
+      ],
+      "visibleInteractiveCount": 9,
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 4,
+      "crampedTapTargetCount": 0,
+      "smallTapTargets": [
+        {
+          "index": 1,
+          "text": "♣Spider Solitaire",
+          "tag": "button",
+          "rect": {
+            "top": 11,
+            "left": 10,
+            "right": 189.41,
+            "bottom": 51.5,
+            "width": 179.41,
+            "height": 40.5
+          }
+        },
+        {
+          "index": 2,
+          "text": "One suit",
+          "tag": "button",
+          "rect": {
+            "top": 62.5,
+            "left": 10,
+            "right": 129.33,
+            "bottom": 98.5,
+            "width": 119.33,
+            "height": 36
+          }
+        },
+        {
+          "index": 3,
+          "text": "Two suits",
+          "tag": "button",
+          "rect": {
+            "top": 62.5,
+            "left": 135.33,
+            "right": 254.67,
+            "bottom": 98.5,
+            "width": 119.34,
+            "height": 36
+          }
+        },
+        {
+          "index": 4,
+          "text": "Four suits",
+          "tag": "button",
+          "rect": {
+            "top": 62.5,
+            "left": 260.67,
+            "right": 380,
+            "bottom": 98.5,
+            "width": 119.33,
+            "height": 36
+          }
+        }
+      ],
+      "crampedTapTargets": [],
+      "deadSpaceLevel": "high",
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 8,
+        "beforeCardCount": 63,
+        "afterCardCount": 63,
+        "cardCountChanged": false
+      },
+      "screenshotPath": "docs/analytics/mobile-viewport-audits/2026-07-22-spider-spoke-live-screenshots/spider-390.png"
+    },
+    {
+      "label": "spider",
+      "path": "/",
+      "url": "https://playspidersolitaireonline.com/",
+      "title": "Play Spider Solitaire Online Free — 1, 2 & 4 Suit",
+      "h1": "Play Spider Solitaire Online — Free, No Download",
+      "viewport": {
+        "width": 414,
+        "height": 896,
+        "scrollWidth": 414,
+        "scrollHeight": 6826,
+        "devicePixelRatio": 2
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 119.5,
+        "left": 12,
+        "right": 402,
+        "bottom": 296,
+        "width": 390,
+        "height": 176.5
+      },
+      "cardCount": 63,
+      "faceCardCount": 10,
+      "backCardCount": 53,
+      "visibleCardCount": 63,
+      "minCardWidth": 34.8,
+      "maxCardWidth": 34.8,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": true,
+      "unusedVerticalPx": 600,
+      "unusedVerticalPct": 67,
+      "cascadeCount": 10,
+      "cascadeCards": [
+        7,
+        7,
+        6,
+        6,
+        6,
+        5,
+        5,
+        5,
+        5,
+        6
+      ],
+      "visibleInteractiveCount": 9,
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 4,
+      "crampedTapTargetCount": 0,
+      "smallTapTargets": [
+        {
+          "index": 1,
+          "text": "♣Spider Solitaire",
+          "tag": "button",
+          "rect": {
+            "top": 11,
+            "left": 10,
+            "right": 189.41,
+            "bottom": 51.5,
+            "width": 179.41,
+            "height": 40.5
+          }
+        },
+        {
+          "index": 2,
+          "text": "One suit",
+          "tag": "button",
+          "rect": {
+            "top": 62.5,
+            "left": 10,
+            "right": 137.33,
+            "bottom": 98.5,
+            "width": 127.33,
+            "height": 36
+          }
+        },
+        {
+          "index": 3,
+          "text": "Two suits",
+          "tag": "button",
+          "rect": {
+            "top": 62.5,
+            "left": 143.33,
+            "right": 270.67,
+            "bottom": 98.5,
+            "width": 127.34,
+            "height": 36
+          }
+        },
+        {
+          "index": 4,
+          "text": "Four suits",
+          "tag": "button",
+          "rect": {
+            "top": 62.5,
+            "left": 276.67,
+            "right": 404,
+            "bottom": 98.5,
+            "width": 127.33,
+            "height": 36
+          }
+        }
+      ],
+      "crampedTapTargets": [],
+      "deadSpaceLevel": "high",
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 8,
+        "beforeCardCount": 63,
+        "afterCardCount": 63,
+        "cardCountChanged": false
+      },
+      "screenshotPath": "docs/analytics/mobile-viewport-audits/2026-07-22-spider-spoke-live-screenshots/spider-414.png"
+    },
+    {
+      "label": "spider",
+      "path": "/",
+      "url": "https://playspidersolitaireonline.com/",
+      "title": "Play Spider Solitaire Online Free — 1, 2 & 4 Suit",
+      "h1": "Play Spider Solitaire Online — Free, No Download",
+      "viewport": {
+        "width": 768,
+        "height": 1024,
+        "scrollWidth": 768,
+        "scrollHeight": 5116,
+        "devicePixelRatio": 1
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 130,
+        "left": 16,
+        "right": 752,
+        "bottom": 461.59,
+        "width": 736,
+        "height": 331.59
+      },
+      "cardCount": 63,
+      "faceCardCount": 10,
+      "backCardCount": 53,
+      "visibleCardCount": 63,
+      "minCardWidth": 61.28,
+      "maxCardWidth": 61.28,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": false,
+      "unusedVerticalPx": 562.40625,
+      "unusedVerticalPct": 54.9,
+      "cascadeCount": 10,
+      "cascadeCards": [
+        7,
+        7,
+        6,
+        6,
+        6,
+        5,
+        5,
+        5,
+        5,
+        6
+      ],
+      "visibleInteractiveCount": 7,
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 6,
+      "crampedTapTargetCount": 3,
+      "smallTapTargets": [
+        {
+          "index": 5,
+          "text": "♣Spider Solitaire",
+          "tag": "button",
+          "rect": {
+            "top": 16.25,
+            "left": 16,
+            "right": 195.41,
+            "bottom": 56.75,
+            "width": 179.41,
+            "height": 40.5
+          }
+        },
+        {
+          "index": 6,
+          "text": "1 Suit",
+          "tag": "button",
+          "rect": {
+            "top": 23.25,
+            "left": 207.41,
+            "right": 257.48,
+            "bottom": 49.75,
+            "width": 50.08,
+            "height": 26.5
+          }
+        },
+        {
+          "index": 7,
+          "text": "2 Suits",
+          "tag": "button",
+          "rect": {
+            "top": 23.25,
+            "left": 261.48,
+            "right": 319.72,
+            "bottom": 49.75,
+            "width": 58.23,
+            "height": 26.5
+          }
+        },
+        {
+          "index": 8,
+          "text": "4 Suits",
+          "tag": "button",
+          "rect": {
+            "top": 23.25,
+            "left": 323.72,
+            "right": 382.42,
+            "bottom": 49.75,
+            "width": 58.7,
+            "height": 26.5
+          }
+        },
+        {
+          "index": 10,
+          "text": "Hint",
+          "tag": "button",
+          "rect": {
+            "top": 73,
+            "left": 100.98,
+            "right": 172.66,
+            "bottom": 105,
+            "width": 71.67,
+            "height": 32
+          }
+        },
+        {
+          "index": 11,
+          "text": "New Deal",
+          "tag": "button",
+          "rect": {
+            "top": 73,
+            "left": 178.66,
+            "right": 263.69,
+            "bottom": 105,
+            "width": 85.03,
+            "height": 32
+          }
+        }
+      ],
+      "crampedTapTargets": [
+        {
+          "index": 6,
+          "text": "1 Suit",
+          "tag": "button",
+          "rect": {
+            "top": 23.25,
+            "left": 207.41,
+            "right": 257.48,
+            "bottom": 49.75,
+            "width": 50.08,
+            "height": 26.5
+          }
+        },
+        {
+          "index": 7,
+          "text": "2 Suits",
+          "tag": "button",
+          "rect": {
+            "top": 23.25,
+            "left": 261.48,
+            "right": 319.72,
+            "bottom": 49.75,
+            "width": 58.23,
+            "height": 26.5
+          }
+        },
+        {
+          "index": 8,
+          "text": "4 Suits",
+          "tag": "button",
+          "rect": {
+            "top": 23.25,
+            "left": 323.72,
+            "right": 382.42,
+            "bottom": 49.75,
+            "width": 58.7,
+            "height": 26.5
+          }
+        }
+      ],
+      "deadSpaceLevel": "n/a",
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 9,
+        "beforeCardCount": 63,
+        "afterCardCount": 63,
+        "cardCountChanged": false
+      },
+      "screenshotPath": "docs/analytics/mobile-viewport-audits/2026-07-22-spider-spoke-live-screenshots/spider-768.png"
+    }
+  ]
+}

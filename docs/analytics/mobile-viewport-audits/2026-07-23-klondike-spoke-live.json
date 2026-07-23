@@ -1,0 +1,532 @@
+{
+  "base": "https://playklondikeonline.com",
+  "pulledAt": "2026-07-23T13:11:07.883Z",
+  "widths": [
+    375,
+    390,
+    414,
+    768
+  ],
+  "routes": [
+    {
+      "path": "/",
+      "label": "klondike"
+    }
+  ],
+  "screenshotsDir": "docs/analytics/mobile-viewport-audits/2026-07-23-klondike-spoke-live-screenshots",
+  "markdownReportPath": "docs/analytics/mobile-viewport-audits/2026-07-23-klondike-spoke-live.md",
+  "results": [
+    {
+      "label": "klondike",
+      "path": "/",
+      "url": "https://playklondikeonline.com/",
+      "title": "Play Klondike Solitaire Online Free — Draw 1 & Draw 3",
+      "h1": "Play Klondike Solitaire Online — Free, No Download",
+      "viewport": {
+        "width": 375,
+        "height": 812,
+        "scrollWidth": 375,
+        "scrollHeight": 7252,
+        "devicePixelRatio": 2
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 119.5,
+        "left": 12,
+        "right": 363,
+        "bottom": 330.23,
+        "width": 351,
+        "height": 210.73
+      },
+      "cardCount": 29,
+      "faceCardCount": 7,
+      "backCardCount": 22,
+      "visibleCardCount": 29,
+      "minCardWidth": 39.25,
+      "maxCardWidth": 39.25,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": true,
+      "unusedVerticalPx": 481.765625,
+      "unusedVerticalPct": 59.3,
+      "cascadeCount": 7,
+      "cascadeCards": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "visibleInteractiveCount": 8,
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 3,
+      "crampedTapTargetCount": 0,
+      "smallTapTargets": [
+        {
+          "index": 1,
+          "text": "♦Klondike",
+          "tag": "button",
+          "rect": {
+            "top": 11,
+            "left": 10,
+            "right": 143.94,
+            "bottom": 51.5,
+            "width": 133.94,
+            "height": 40.5
+          }
+        },
+        {
+          "index": 2,
+          "text": "Draw 1",
+          "tag": "button",
+          "rect": {
+            "top": 62.5,
+            "left": 10,
+            "right": 184.5,
+            "bottom": 98.5,
+            "width": 174.5,
+            "height": 36
+          }
+        },
+        {
+          "index": 3,
+          "text": "Draw 3",
+          "tag": "button",
+          "rect": {
+            "top": 62.5,
+            "left": 190.5,
+            "right": 365,
+            "bottom": 98.5,
+            "width": 174.5,
+            "height": 36
+          }
+        }
+      ],
+      "crampedTapTargets": [],
+      "deadSpaceLevel": "high",
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 7,
+        "beforeCardCount": 29,
+        "afterCardCount": 29,
+        "cardCountChanged": false
+      },
+      "screenshotPath": "docs/analytics/mobile-viewport-audits/2026-07-23-klondike-spoke-live-screenshots/klondike-375.png"
+    },
+    {
+      "label": "klondike",
+      "path": "/",
+      "url": "https://playklondikeonline.com/",
+      "title": "Play Klondike Solitaire Online Free — Draw 1 & Draw 3",
+      "h1": "Play Klondike Solitaire Online — Free, No Download",
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "scrollWidth": 390,
+        "scrollHeight": 7164,
+        "devicePixelRatio": 2
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 119.5,
+        "left": 12,
+        "right": 378,
+        "bottom": 340.09,
+        "width": 366,
+        "height": 220.59
+      },
+      "cardCount": 29,
+      "faceCardCount": 7,
+      "backCardCount": 22,
+      "visibleCardCount": 29,
+      "minCardWidth": 41.13,
+      "maxCardWidth": 41.13,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": true,
+      "unusedVerticalPx": 503.90625,
+      "unusedVerticalPct": 59.7,
+      "cascadeCount": 7,
+      "cascadeCards": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "visibleInteractiveCount": 8,
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 3,
+      "crampedTapTargetCount": 0,
+      "smallTapTargets": [
+        {
+          "index": 1,
+          "text": "♦Klondike",
+          "tag": "button",
+          "rect": {
+            "top": 11,
+            "left": 10,
+            "right": 143.94,
+            "bottom": 51.5,
+            "width": 133.94,
+            "height": 40.5
+          }
+        },
+        {
+          "index": 2,
+          "text": "Draw 1",
+          "tag": "button",
+          "rect": {
+            "top": 62.5,
+            "left": 10,
+            "right": 192,
+            "bottom": 98.5,
+            "width": 182,
+            "height": 36
+          }
+        },
+        {
+          "index": 3,
+          "text": "Draw 3",
+          "tag": "button",
+          "rect": {
+            "top": 62.5,
+            "left": 198,
+            "right": 380,
+            "bottom": 98.5,
+            "width": 182,
+            "height": 36
+          }
+        }
+      ],
+      "crampedTapTargets": [],
+      "deadSpaceLevel": "high",
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 7,
+        "beforeCardCount": 29,
+        "afterCardCount": 29,
+        "cardCountChanged": false
+      },
+      "screenshotPath": "docs/analytics/mobile-viewport-audits/2026-07-23-klondike-spoke-live-screenshots/klondike-390.png"
+    },
+    {
+      "label": "klondike",
+      "path": "/",
+      "url": "https://playklondikeonline.com/",
+      "title": "Play Klondike Solitaire Online Free — Draw 1 & Draw 3",
+      "h1": "Play Klondike Solitaire Online — Free, No Download",
+      "viewport": {
+        "width": 414,
+        "height": 896,
+        "scrollWidth": 414,
+        "scrollHeight": 7036,
+        "devicePixelRatio": 2
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 119.5,
+        "left": 12,
+        "right": 402,
+        "bottom": 355.86,
+        "width": 390,
+        "height": 236.36
+      },
+      "cardCount": 29,
+      "faceCardCount": 7,
+      "backCardCount": 22,
+      "visibleCardCount": 29,
+      "minCardWidth": 44.13,
+      "maxCardWidth": 44.13,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": true,
+      "unusedVerticalPx": 540.140625,
+      "unusedVerticalPct": 60.3,
+      "cascadeCount": 7,
+      "cascadeCards": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "visibleInteractiveCount": 8,
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 3,
+      "crampedTapTargetCount": 0,
+      "smallTapTargets": [
+        {
+          "index": 1,
+          "text": "♦Klondike",
+          "tag": "button",
+          "rect": {
+            "top": 11,
+            "left": 10,
+            "right": 143.94,
+            "bottom": 51.5,
+            "width": 133.94,
+            "height": 40.5
+          }
+        },
+        {
+          "index": 2,
+          "text": "Draw 1",
+          "tag": "button",
+          "rect": {
+            "top": 62.5,
+            "left": 10,
+            "right": 204,
+            "bottom": 98.5,
+            "width": 194,
+            "height": 36
+          }
+        },
+        {
+          "index": 3,
+          "text": "Draw 3",
+          "tag": "button",
+          "rect": {
+            "top": 62.5,
+            "left": 210,
+            "right": 404,
+            "bottom": 98.5,
+            "width": 194,
+            "height": 36
+          }
+        }
+      ],
+      "crampedTapTargets": [],
+      "deadSpaceLevel": "high",
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 7,
+        "beforeCardCount": 29,
+        "afterCardCount": 29,
+        "cardCountChanged": false
+      },
+      "screenshotPath": "docs/analytics/mobile-viewport-audits/2026-07-23-klondike-spoke-live-screenshots/klondike-414.png"
+    },
+    {
+      "label": "klondike",
+      "path": "/",
+      "url": "https://playklondikeonline.com/",
+      "title": "Play Klondike Solitaire Online Free — Draw 1 & Draw 3",
+      "h1": "Play Klondike Solitaire Online — Free, No Download",
+      "viewport": {
+        "width": 768,
+        "height": 1024,
+        "scrollWidth": 768,
+        "scrollHeight": 5212,
+        "devicePixelRatio": 1
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 90,
+        "left": 16,
+        "right": 752,
+        "bottom": 482.8,
+        "width": 736,
+        "height": 392.8
+      },
+      "cardCount": 29,
+      "faceCardCount": 7,
+      "backCardCount": 22,
+      "visibleCardCount": 29,
+      "minCardWidth": 74.41,
+      "maxCardWidth": 74.41,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": false,
+      "unusedVerticalPx": 541.203125,
+      "unusedVerticalPct": 52.9,
+      "cascadeCount": 7,
+      "cascadeCards": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "visibleInteractiveCount": 6,
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 6,
+      "crampedTapTargetCount": 4,
+      "smallTapTargets": [
+        {
+          "index": 4,
+          "text": "♦Klondike",
+          "tag": "button",
+          "rect": {
+            "top": 16.25,
+            "left": 16,
+            "right": 149.94,
+            "bottom": 56.75,
+            "width": 133.94,
+            "height": 40.5
+          }
+        },
+        {
+          "index": 5,
+          "text": "Draw 1",
+          "tag": "button",
+          "rect": {
+            "top": 23.25,
+            "left": 161.94,
+            "right": 219.13,
+            "bottom": 49.75,
+            "width": 57.19,
+            "height": 26.5
+          }
+        },
+        {
+          "index": 6,
+          "text": "Draw 3",
+          "tag": "button",
+          "rect": {
+            "top": 23.25,
+            "left": 223.13,
+            "right": 282.66,
+            "bottom": 49.75,
+            "width": 59.53,
+            "height": 26.5
+          }
+        },
+        {
+          "index": 7,
+          "text": "",
+          "tag": "button",
+          "rect": {
+            "top": 19.5,
+            "left": 586.97,
+            "right": 620.97,
+            "bottom": 53.5,
+            "width": 34,
+            "height": 34
+          }
+        },
+        {
+          "index": 8,
+          "text": "",
+          "tag": "button",
+          "rect": {
+            "top": 19.5,
+            "left": 626.97,
+            "right": 660.97,
+            "bottom": 53.5,
+            "width": 34,
+            "height": 34
+          }
+        },
+        {
+          "index": 9,
+          "text": "New Deal",
+          "tag": "button",
+          "rect": {
+            "top": 20.5,
+            "left": 666.97,
+            "right": 752,
+            "bottom": 52.5,
+            "width": 85.03,
+            "height": 32
+          }
+        }
+      ],
+      "crampedTapTargets": [
+        {
+          "index": 5,
+          "text": "Draw 1",
+          "tag": "button",
+          "rect": {
+            "top": 23.25,
+            "left": 161.94,
+            "right": 219.13,
+            "bottom": 49.75,
+            "width": 57.19,
+            "height": 26.5
+          }
+        },
+        {
+          "index": 6,
+          "text": "Draw 3",
+          "tag": "button",
+          "rect": {
+            "top": 23.25,
+            "left": 223.13,
+            "right": 282.66,
+            "bottom": 49.75,
+            "width": 59.53,
+            "height": 26.5
+          }
+        },
+        {
+          "index": 7,
+          "text": "",
+          "tag": "button",
+          "rect": {
+            "top": 19.5,
+            "left": 586.97,
+            "right": 620.97,
+            "bottom": 53.5,
+            "width": 34,
+            "height": 34
+          }
+        },
+        {
+          "index": 8,
+          "text": "",
+          "tag": "button",
+          "rect": {
+            "top": 19.5,
+            "left": 626.97,
+            "right": 660.97,
+            "bottom": 53.5,
+            "width": 34,
+            "height": 34
+          }
+        }
+      ],
+      "deadSpaceLevel": "n/a",
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 7,
+        "beforeCardCount": 29,
+        "afterCardCount": 29,
+        "cardCountChanged": false
+      },
+      "screenshotPath": "docs/analytics/mobile-viewport-audits/2026-07-23-klondike-spoke-live-screenshots/klondike-768.png"
+    }
+  ]
+}

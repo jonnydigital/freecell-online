@@ -16,9 +16,10 @@ export interface SpiderHintHighlight {
 
 interface DomSpiderBoardProps {
   hint?: SpiderHintHighlight | null;
+  footer?: React.ReactNode;
 }
 
-export default function DomSpiderBoard({ hint }: DomSpiderBoardProps) {
+export default function DomSpiderBoard({ hint, footer }: DomSpiderBoardProps) {
   const boardRef = useRef<HTMLDivElement>(null);
 
   const cascades = useDomSpiderStore((s) => s.cascades);
@@ -278,6 +279,11 @@ export default function DomSpiderBoard({ hint }: DomSpiderBoardProps) {
           );
         })}
       </div>
+      {footer && (
+        <div style={{ marginTop: 'clamp(10px, 2.8vw, 18px)' }}>
+          {footer}
+        </div>
+      )}
     </div>
   );
 }

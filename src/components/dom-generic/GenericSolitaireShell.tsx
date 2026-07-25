@@ -7,7 +7,6 @@ import { loadStats, saveStats, type GameVariant } from '@/lib/storage';
 import { recordWin, recordLoss, getWinPercent, type GameStats } from '@/lib/stats';
 import GameSwitcher from '../GameSwitcher';
 import AdUnit from '../AdUnit';
-import MobileNextActionPanel from '../MobileNextActionPanel';
 
 /* ------------------------------------------------------------------ */
 /*  Keyboard Shortcuts Popover                                        */
@@ -207,15 +206,6 @@ export default function GenericSolitaireShell({
       <div style={{ display: 'flex', flex: 1 }}>
         <div className="p-4 pb-24 sm:pb-4" style={{ flex: 1, overflow: 'auto' }}>
           {children}
-          <MobileNextActionPanel
-            title={`${gameName} next move`}
-            body="Use the open space below the board for a hint, undo, or a quick rules check."
-            onHint={onHint}
-            onUndo={onUndo}
-            canUndo={moveCount > 0}
-            learnHref={`${gameHref}/how-to-play`}
-            learnLabel="Rules"
-          />
         </div>
         <div className="hidden xl:flex" style={{ width: '240px', flexDirection: 'column', gap: '16px', padding: '16px 16px 16px 0' }}>
           <AdUnit slot="5697552640" format="rectangle" />

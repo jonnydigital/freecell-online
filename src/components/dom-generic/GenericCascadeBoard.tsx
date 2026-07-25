@@ -24,6 +24,7 @@ export interface BoardConfig {
   onBoardClick: (e: React.MouseEvent) => void;
   topRowLabel?: string;
   showWasteCount?: number; // How many waste cards to show (default 1)
+  footer?: React.ReactNode;
 }
 
 export default function GenericCascadeBoard({
@@ -41,6 +42,7 @@ export default function GenericCascadeBoard({
   onStockClick,
   onBoardClick,
   showWasteCount = 1,
+  footer,
 }: BoardConfig) {
   const boardRef = useRef<HTMLDivElement>(null);
 
@@ -215,6 +217,11 @@ export default function GenericCascadeBoard({
           );
         })}
       </div>
+      {footer && (
+        <div style={{ marginTop: 'clamp(10px, 2.8vw, 18px)' }}>
+          {footer}
+        </div>
+      )}
     </div>
   );
 }

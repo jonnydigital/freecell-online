@@ -3,6 +3,7 @@
 import React, { useEffect, useState, useCallback, useMemo, useRef } from 'react';
 import GenericSolitaireShell from './GenericSolitaireShell';
 import GenericCascadeBoard from './GenericCascadeBoard';
+import MobileNextActionPanel from '../MobileNextActionPanel';
 import { Card, Suit } from '@/engine/Card';
 import type { GameVariant } from '@/lib/storage';
 
@@ -185,6 +186,18 @@ export default function GenericGamePage({ gameName, gameIcon, gameHref, adapter 
         onEmptyPileClick={handleEmptyPileClick}
         onStockClick={state.stock && state.stock.length > 0 ? handleStockClick : undefined}
         onBoardClick={handleBoardClick}
+        footer={
+          <MobileNextActionPanel
+            title={`${gameName} next move`}
+            body="Use the open space below the board for a hint, undo, or a quick rules check."
+            onHint={adapter.getHint ? handleHint : undefined}
+            onUndo={adapter.undo ? handleUndo : undefined}
+            canUndo={state.moveCount > 0}
+            learnHref={`${gameHref}/how-to-play`}
+            learnLabel="Rules"
+            compact
+          />
+        }
       />
     </GenericSolitaireShell>
   );

@@ -25,9 +25,10 @@ export interface KlondikeHintHighlight {
 
 interface DomKlondikeBoardProps {
   hint?: KlondikeHintHighlight | null;
+  footer?: React.ReactNode;
 }
 
-export default function DomKlondikeBoard({ hint }: DomKlondikeBoardProps) {
+export default function DomKlondikeBoard({ hint, footer }: DomKlondikeBoardProps) {
   const boardRef = useRef<HTMLDivElement>(null);
 
   const cascades = useDomKlondikeStore((s) => s.cascades);
@@ -356,6 +357,11 @@ export default function DomKlondikeBoard({ hint }: DomKlondikeBoardProps) {
           );
         })}
       </div>
+      {footer && (
+        <div style={{ marginTop: 'clamp(10px, 2.8vw, 18px)' }}>
+          {footer}
+        </div>
+      )}
     </div>
   );
 }

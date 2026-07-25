@@ -1,5 +1,5 @@
 # FreeCell Online — Feature Backlog
-*Ranked by impact × effort. Updated 2026-07-19.*
+*Ranked by impact × effort. Updated 2026-07-25.*
 
 ## 🚨 P0: Critical Bug
 1. ~~**🔴 Mobile card rendering broken**~~ ✅ FIXED 03-02 — Root cause: `recreateAllCardSprites()` used PNG asset keys that were never loaded. On resize (common on mobile), cards became empty containers. Fixed with procedural rendering matching `createCardSprite()`.
@@ -82,9 +82,9 @@
 47. ~~**Next-action engagement instrumentation**~~ ✅ SHIPPED 2026-07-17 — The shared phone next-action strip now sends GA4 `next_action_tap` events for Hint, Undo, new-game, and rules/strategy link taps, with game/session context, tap surface, target href, and move count. *(Follow-up to the 2026-07-17 below-board next-action module.)*
 48. ~~**Next-action analytics audit**~~ ✅ SHIPPED 2026-07-18 — `npm run analytics:next-actions` now turns the latest Google metrics artifact into dated JSON/Markdown reports under `docs/analytics/next-action-audits/`, and `npm run metrics:google` now requests `next_action_tap` counts plus action/surface/game/locale breakdowns when GA4 custom dimensions are available. First artifact saved at `docs/analytics/next-action-audits/2026-07-18.md`. *(Follow-up to #47: close the loop from instrumentation to panel-priority decisions.)*
 49. ~~**FreeCell next-action panel board-flow placement**~~ ✅ SHIPPED 2026-07-19 — The phone next-action strip now renders inside the FreeCell board surface immediately below the cascades instead of floating above the bottom bar, reducing measured FreeCell portrait unused space from ~61% to 46-48% without overflow, clipping, blocked controls, or new tap-target failures. Local artifact saved at `docs/analytics/mobile-viewport-audits/2026-07-19-next-action-flow-local.json`; Spider 414px timing recheck passed at `docs/analytics/mobile-viewport-audits/2026-07-19-spider-414-recheck-local.json`. *(Follow-up from 2026-07-18 QA: the panel existed but did not close the measured FreeCell dead-space gap.)*
+50. ~~**Klondike/Spider/generic board-flow next-action placement**~~ ✅ SHIPPED 2026-07-25 — Klondike, Spider, and generic cascade boards now accept footer slots so the phone next-action panels render inside the measured board surfaces, matching the FreeCell pattern. Local audit artifact saved at `docs/analytics/mobile-viewport-audits/2026-07-25-board-flow-local.json`: Klondike dropped from 59-60% high dead space to 42.8-45.2%, Spider from 65.9-67% high to 49.4-51.9%, and Forty Thieves from 59-66.4% high to 42.5-51.3%, with no hard QA failures. *(Follow-up from the 2026-07-24 live audit and competitor single-surface mobile controls gap.)*
 
 ## 🔎 Next Measured UX Candidates
-- Apply the same board-flow placement idea to Klondike, Spider, and generic boards if screenshots confirm it improves the actual player view; the 2026-07-19 audit still shows those routes at high phone dead-space levels.
 - Re-run `npm run metrics:google` once `gcloud` is available in the cron environment, then run `npm run analytics:next-actions` to decide whether Hint, Undo, New Game, or learning links deserve more prominence in the phone next-action strip.
 - If the next-action audit reports `register_custom_dimensions`, register GA4 custom dimensions for `action`, `surface`, `game_name`, and `game_locale` so future reports can rank panel taps by behavior instead of only total event count.
 

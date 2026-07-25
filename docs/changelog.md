@@ -1,4 +1,12 @@
 
+## 2026-07-25 (OpenClaw Overnight Build)
+
+### Shipped
+- **Klondike/Spider/generic next-action board-flow placement** — moved the phone next-action panels for Klondike, Spider, and generic cascade games such as Forty Thieves into each board's measured `.dom-board-surface`, matching the FreeCell footer-slot pattern.
+- Added optional `footer` slots to `DomKlondikeBoard`, `DomSpiderBoard`, and `GenericCascadeBoard`; removed the generic shell's after-board panel so each game owns the panel placement from its board render.
+- Saved the local mobile audit artifact at `docs/analytics/mobile-viewport-audits/2026-07-25-board-flow-local.json`: compared with the 2026-07-24 live baseline, Klondike improved from 59-60% high dead space to 42.8-45.2%, Spider from 65.9-67% high to 49.4-51.9%, and Forty Thieves from 59-66.4% high to 42.5-51.3%, with no overflow, clipped cards, blocked controls, tap-target failures, or stability shifts.
+- Verification: default `npm run build` still fails under cron's Node 18 because Next.js requires >=20.9. With Node 22, `npm run build` passed. `npm run qa:mobile -- --base=http://127.0.0.1:3043 --out=docs/analytics/mobile-viewport-audits/2026-07-25-board-flow-local.json` passed with no hard audit failures.
+
 ## 2026-07-19 (OpenClaw Overnight Build)
 
 ### Shipped

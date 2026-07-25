@@ -328,6 +328,7 @@ export default function DomSpiderShell({ initialDifficulty = '1-suit' }: DomSpid
           <button
             onClick={handleUndo}
             disabled={moveHistory.length === 0}
+            aria-label="Undo"
             title="Undo (Ctrl+Z)"
             style={{
               padding: '6px 14px',
@@ -348,6 +349,7 @@ export default function DomSpiderShell({ initialDifficulty = '1-suit' }: DomSpid
           </button>
           <button
             onClick={handleHint}
+            aria-label="Hint"
             title="Hint (H)"
             style={{
               padding: '6px 14px',

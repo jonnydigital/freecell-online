@@ -2386,6 +2386,7 @@ function SubBarBtn({ onClick, title, children, disabled }: { onClick: () => void
     <button
       onClick={onClick}
       title={title}
+      aria-label={title}
       disabled={disabled}
       className="transition-all active:scale-90"
       style={{

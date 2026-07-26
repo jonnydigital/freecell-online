@@ -6,13 +6,15 @@
  *   - https://www.googleapis.com/auth/analytics.readonly
  *   - https://www.googleapis.com/auth/adsense.readonly
  *
- * The current workspace uses `gcloud auth application-default print-access-token`.
- * If this exits with ACCESS_TOKEN_SCOPE_INSUFFICIENT, re-authorize ADC with the
- * scopes above or run the equivalent OAuth flow outside this script.
+ * Token sources, in order:
+ *   - GOOGLE_OAUTH_ACCESS_TOKEN
+ *   - `gcloud auth application-default print-access-token`
+ *   - GOOGLE_APPLICATION_CREDENTIALS pointing at authorized_user or service_account JSON
  */
 
 import { execFileSync } from 'node:child_process';
-import { mkdir, writeFile } from 'node:fs/promises';
+import { createSign } from 'node:crypto';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -67,11 +69,94 @@ const ADSENSE_METRICS = [
   'PAGE_VIEWS_CTR',
 ];
 
-function accessToken() {
-  return execFileSync('gcloud', ['auth', 'application-default', 'print-access-token'], {
-    encoding: 'utf8',
-    stdio: ['ignore', 'pipe', 'pipe'],
-  }).trim();
+const GOOGLE_SCOPES = [
+  'https://www.googleapis.com/auth/analytics.readonly',
+  'https://www.googleapis.com/auth/adsense.readonly',
+];
+
+function base64Url(value) {
+  return Buffer.from(value)
+    .toString('base64')
+    .replaceAll('+', '-')
+    .replaceAll('/', '_')
+    .replaceAll('=', '');
+}
+
+function signJwt(payload, privateKey) {
+  const header = base64Url(JSON.stringify({ alg: 'RS256', typ: 'JWT' }));
+  const body = base64Url(JSON.stringify(payload));
+  const input = `${header}.${body}`;
+  const signature = createSign('RSA-SHA256').update(input).sign(privateKey, 'base64');
+  return `${input}.${signature.replaceAll('+', '-').replaceAll('/', '_').replaceAll('=', '')}`;
+}
+
+async function oauthTokenRequest(params) {
+  const res = await fetch('https://oauth2.googleapis.com/token', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams(params),
+  });
+
+  const text = await res.text();
+  const json = text ? JSON.parse(text) : {};
+  if (!res.ok) {
+    throw new Error(json?.error_description || json?.error || `${res.status} ${res.statusText}`);
+  }
+  if (!json.access_token) throw new Error('Google OAuth response did not include an access token.');
+  return json.access_token;
+}
+
+async function tokenFromCredentialsFile(path) {
+  const credentials = JSON.parse(await readFile(path, 'utf8'));
+
+  if (credentials.type === 'authorized_user') {
+    return oauthTokenRequest({
+      grant_type: 'refresh_token',
+      client_id: credentials.client_id,
+      client_secret: credentials.client_secret,
+      refresh_token: credentials.refresh_token,
+    });
+  }
+
+  if (credentials.type === 'service_account') {
+    const nowSeconds = Math.floor(Date.now() / 1000);
+    const assertion = signJwt(
+      {
+        iss: credentials.client_email,
+        scope: GOOGLE_SCOPES.join(' '),
+        aud: 'https://oauth2.googleapis.com/token',
+        iat: nowSeconds,
+        exp: nowSeconds + 3600,
+      },
+      credentials.private_key,
+    );
+
+    return oauthTokenRequest({
+      grant_type: 'urn:ietf:params:oauth:grant-type:jwt-bearer',
+      assertion,
+    });
+  }
+
+  throw new Error(`Unsupported Google credential type: ${credentials.type || 'unknown'}`);
+}
+
+async function accessToken() {
+  if (process.env.GOOGLE_OAUTH_ACCESS_TOKEN) return process.env.GOOGLE_OAUTH_ACCESS_TOKEN;
+
+  try {
+    return execFileSync('gcloud', ['auth', 'application-default', 'print-access-token'], {
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'pipe'],
+    }).trim();
+  } catch {
+    if (!process.env.GOOGLE_APPLICATION_CREDENTIALS) {
+      throw new Error(
+        'No Google token available. Install gcloud, set GOOGLE_OAUTH_ACCESS_TOKEN, or set GOOGLE_APPLICATION_CREDENTIALS to an ADC JSON file.',
+      );
+    }
+  }
+
+  return tokenFromCredentialsFile(process.env.GOOGLE_APPLICATION_CREDENTIALS);
 }
 
 async function requestJson(url, token, options = {}) {
@@ -292,7 +377,7 @@ async function pullAdsense(token) {
 }
 
 async function main() {
-  const token = accessToken();
+  const token = await accessToken();
   const now = new Date();
   const outPath = resolve(
     ROOT,

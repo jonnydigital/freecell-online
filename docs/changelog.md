@@ -1,4 +1,11 @@
 
+## 2026-07-26 (OpenClaw Overnight Build)
+
+### Shipped
+- **Google metrics credential fallback** — `npm run metrics:google` no longer depends only on `gcloud`; the pull script now accepts `GOOGLE_OAUTH_ACCESS_TOKEN`, existing `gcloud` ADC, or `GOOGLE_APPLICATION_CREDENTIALS` JSON for `authorized_user` and `service_account` credentials.
+- Added service-account JWT bearer token exchange using Node's built-in crypto APIs, plus authorized-user refresh token support, so overnight automation can run GA4/AdSense pulls in cron shells that do not have the Cloud SDK installed.
+- Verification: `node --check scripts/pull-google-metrics.mjs` and `node --check scripts/next-action-audit.mjs` passed with Node 22. `npm run metrics:google` now fails with a specific missing-token message in this cron shell because no Google credential env var is present.
+
 ## 2026-07-25 (OpenClaw Overnight Build)
 
 ### Shipped

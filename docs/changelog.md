@@ -2,9 +2,17 @@
 ## 2026-07-26 (OpenClaw Overnight Build)
 
 ### Shipped
+- **Site-level schema cleanup** — changed the shared main-layout structured data from a site-wide `WebApplication` to `WebSite`, so playable variant pages keep exactly one game-specific `WebApplication` entity while retaining global `Organization` + site discovery markup.
 - **Google metrics credential fallback** — `npm run metrics:google` no longer depends only on `gcloud`; the pull script now accepts `GOOGLE_OAUTH_ACCESS_TOKEN`, existing `gcloud` ADC, or `GOOGLE_APPLICATION_CREDENTIALS` JSON for `authorized_user` and `service_account` credentials.
 - Added service-account JWT bearer token exchange using Node's built-in crypto APIs, plus authorized-user refresh token support, so overnight automation can run GA4/AdSense pulls in cron shells that do not have the Cloud SDK installed.
 - Verification: `node --check scripts/pull-google-metrics.mjs` and `node --check scripts/next-action-audit.mjs` passed with Node 22. `npm run metrics:google` now fails with a specific missing-token message in this cron shell because no Google credential env var is present.
+
+### Daily Cycle Precheck
+- Refreshed public metrics with `npm run metrics:pull`: live sitemap counts remain playfreecellonline `132`, solitairestack `90`, playklondikeonline `40`, playspidersolitaireonline `36`, network total `298`; Google `site:` index counts were unavailable.
+- Confirmed authenticated GA4 browser access for the FreeCell Online property. The visible Home card was on `Last 28 days`, not the requested 7-day window: `24` active users (`-33.3%`), `561` events (`-3.4%`), `0` key events, `21` new users (`-36.4%`), and `1` realtime user from Germany.
+- `npm run metrics:google` failed cleanly with the new credential fallback message because this heartbeat shell still has no `GOOGLE_OAUTH_ACCESS_TOKEN`, `GOOGLE_APPLICATION_CREDENTIALS`, or `gcloud` ADC token available.
+- Selected task remains analytics configuration rather than a new UI build: register/expose `next_action_tap` custom dimensions (`action`, `surface`, `game_name`, `game_locale`) and rerun `metrics:google` plus `analytics:next-actions` before changing the phone next-action strip again.
+- No implementation agent or Gemini UI review launched during this precheck because no new UI/code change shipped.
 
 ## 2026-07-25 (OpenClaw Overnight Build)
 
@@ -13,6 +21,14 @@
 - Added optional `footer` slots to `DomKlondikeBoard`, `DomSpiderBoard`, and `GenericCascadeBoard`; removed the generic shell's after-board panel so each game owns the panel placement from its board render.
 - Saved the local mobile audit artifact at `docs/analytics/mobile-viewport-audits/2026-07-25-board-flow-local.json`: compared with the 2026-07-24 live baseline, Klondike improved from 59-60% high dead space to 42.8-45.2%, Spider from 65.9-67% high to 49.4-51.9%, and Forty Thieves from 59-66.4% high to 42.5-51.3%, with no overflow, clipped cards, blocked controls, tap-target failures, or stability shifts.
 - Verification: default `npm run build` still fails under cron's Node 18 because Next.js requires >=20.9. With Node 22, `npm run build` passed. `npm run qa:mobile -- --base=http://127.0.0.1:3043 --out=docs/analytics/mobile-viewport-audits/2026-07-25-board-flow-local.json` passed with no hard audit failures.
+
+### Daily Cycle
+- Saved the 2026-07-25 authenticated GA4 browser baseline to `docs/analytics/daily-metrics.json`: `16` active users over 7 days (`-33.3%`), `157` events (`-65.3%`), `0` key events, `14` new users (`-30.0%`), and `0` realtime users.
+- Last-7-day visible cards/reports: `29` sessions, `75` `page_view` events, `16` `game_start` events, `29` `session_start` events, `12` `user_engagement` events, average engagement time `1m 43s` per active user, and new users by channel of Organic Search `12` and Direct `2`.
+- Public metrics refreshed with `npm run metrics:pull`: live sitemap counts are playfreecellonline `132`, solitairestack `90`, playklondikeonline `40`, playspidersolitaireonline `36`, network total `298`; Google `site:` index counts were unavailable.
+- Feedback check: no local `data/feedback.json` exists; `/api/feedback` writes to `process.cwd()/data/feedback.json`, so local feedback count remains `0` unless production storage is surfaced separately.
+- Selected task: register GA4 custom dimensions for `next_action_tap` (`action`, `surface`, `game_name`, `game_locale`) and then re-run `metrics:google` / `analytics:next-actions` once `gcloud` or ADC is available. No implementation agent launched because the overnight UI improvement already shipped, CI is green, and the next useful work is analytics configuration rather than speculative UI.
+- `npm run metrics:google` remains blocked in this heartbeat shell because `gcloud` is not installed/on PATH.
 
 ## 2026-07-19 (OpenClaw Overnight Build)
 
@@ -29,6 +45,13 @@
 - Expanded the authenticated GA4 metrics pull to include `next_action_tap` in the game-event summary and, when GA4 custom dimensions are available, detailed breakdowns by action, surface, game, and locale.
 - Saved the first audit artifact at `docs/analytics/next-action-audits/2026-07-18.md`; current saved metrics have no visible next-action taps yet, so the report recommends waiting for a fresh GA4 refresh before reprioritizing the phone panel.
 - Verification: `node --check scripts/pull-google-metrics.mjs`, `node --check scripts/next-action-audit.mjs`, `npm run analytics:next-actions`, and `npm run build` passed with Node 22. `npm run metrics:google` remains blocked in this cron shell because `gcloud` is not on PATH.
+
+### Daily Cycle
+- Saved the 2026-07-18 authenticated GA4 browser Home-card baseline to `docs/analytics/daily-metrics.json`: `23` active users over 7 days (`0.0%`), `446` events (`+56.5%`), `0` key events, `18` new users (`0.0%`), and `0` realtime users.
+- Last-7-day visible cards: `46` sessions (Organic Search `17`, Direct `12`, Referral `8`, AI Assistant `6`, Unassigned `3`), `189` `page_view` events, `75` `game_start` events, `43` `session_start` events, `44` `user_engagement` events, and `6` one-day active users.
+- Feedback check: no local `data/feedback.json` exists; `/api/feedback` writes to `process.cwd()/data/feedback.json`, so local feedback count remains `0` unless production storage is surfaced separately.
+- Selected task: wait for next-action tap data before changing the phone next-action strip. `docs/analytics/next-action-audits/2026-07-18.md` still reports `0` visible next-action taps and recommends waiting for a fresh GA4 refresh.
+- No implementation agent launched: local `npm run metrics:google` is still blocked by missing `gcloud`, Claude Code auth remains blocked, and the best morning action was metrics/decisioning rather than a new UI change. Gemini review was not run because no UI/code changes shipped during this daily cycle.
 
 ## 2026-07-17 (OpenClaw Overnight Build)
 

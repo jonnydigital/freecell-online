@@ -27,29 +27,24 @@ export default function MainLayout({
       <MediavineGrowScript />
       <AdsterraScript />
       <script
-        id="ld-webapplication-site"
+        id="ld-website-site"
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             "@context": "https://schema.org",
-            "@type": "WebApplication",
-            "name": siteConfig.brandName,
-            "url": siteConfig.url,
-            "description": siteConfig.defaultDescription,
-            "applicationCategory": "GameApplication",
-            "operatingSystem": "Any",
-            "browserRequirements": "Requires JavaScript",
-            "offers": {
-              "@type": "Offer",
-              "price": "0",
-              "priceCurrency": "USD"
-            },
-            "author": {
+            "@type": "WebSite",
+            name: siteConfig.siteName,
+            url: siteConfig.url,
+            description: siteConfig.defaultDescription,
+            publisher: {
               "@type": "Organization",
-              "name": siteConfig.siteName
+              name: siteConfig.siteName
             },
-            "genre": "Card Game",
-            "gamePlatform": ["Web Browser", "Mobile Browser"]
+            potentialAction: {
+              "@type": "SearchAction",
+              target: `${siteConfig.url}/game/{game_number}`,
+              "query-input": "required name=game_number"
+            }
           }),
         }}
       />

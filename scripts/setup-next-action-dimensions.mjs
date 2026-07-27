@@ -14,9 +14,16 @@
 
 import { execFileSync } from 'node:child_process';
 import { createSign } from 'node:crypto';
-import { readFile } from 'node:fs/promises';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const DEFAULT_PROPERTY_ID = '531359003';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const ROOT = resolve(__dirname, '..');
+const REPORT_TIME_ZONE = 'America/New_York';
+const DEFAULT_OUT_DIR = resolve(ROOT, 'docs/analytics/next-action-dimension-setup');
 const GOOGLE_SCOPES = ['https://www.googleapis.com/auth/analytics.edit'];
 const DIMENSIONS = [
   {
@@ -42,12 +49,24 @@ const DIMENSIONS = [
 ];
 
 function parseArgs(argv) {
-  const args = { propertyId: DEFAULT_PROPERTY_ID, dryRun: false };
+  const args = { propertyId: DEFAULT_PROPERTY_ID, dryRun: false, outDir: DEFAULT_OUT_DIR };
   for (const arg of argv) {
     if (arg.startsWith('--property=')) args.propertyId = arg.slice('--property='.length);
     else if (arg === '--dry-run') args.dryRun = true;
+    else if (arg.startsWith('--out-dir=')) args.outDir = resolve(ROOT, arg.slice('--out-dir='.length));
   }
   return args;
+}
+
+function localDateStamp(date = new Date()) {
+  const parts = new Intl.DateTimeFormat('en-US', {
+    timeZone: REPORT_TIME_ZONE,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).formatToParts(date);
+  const values = Object.fromEntries(parts.map((part) => [part.type, part.value]));
+  return `${values.year}-${values.month}-${values.day}`;
 }
 
 function base64Url(value) {
@@ -187,6 +206,61 @@ async function createCustomDimension(token, propertyId, dimension) {
   );
 }
 
+function renderMarkdown(report) {
+  const lines = [
+    `# Next-Action Dimension Setup — ${report.reportDate}`,
+    '',
+    `Generated: ${report.generatedAt} (${report.reportTimeZone} report date)`,
+    '',
+    `Property: ${report.propertyId}`,
+    `Dry run: ${report.dryRun ? 'yes' : 'no'}`,
+    `Status: \`${report.status}\``,
+    '',
+    '## Dimensions',
+    '',
+    '| Parameter | State | API Name |',
+    '| --- | --- | --- |',
+    ...report.dimensions.map(
+      (dimension) =>
+        `| ${dimension.parameterName} | ${dimension.state} | ${dimension.apiName || ''} |`,
+    ),
+  ];
+
+  if (report.message) {
+    lines.push('', '## Message', '', report.message);
+  }
+
+  return lines.join('\n');
+}
+
+async function writeReport(outDir, report) {
+  const jsonPath = resolve(outDir, `${report.reportDate}.json`);
+  const mdPath = resolve(outDir, `${report.reportDate}.md`);
+  await mkdir(dirname(jsonPath), { recursive: true });
+  await writeFile(jsonPath, JSON.stringify(report, null, 2) + '\n');
+  await writeFile(mdPath, renderMarkdown(report) + '\n');
+  console.log(`Wrote: ${jsonPath}`);
+  console.log(`Wrote: ${mdPath}`);
+}
+
+function baseReport(args, status, message = '') {
+  return {
+    generatedAt: new Date().toISOString(),
+    reportDate: localDateStamp(),
+    reportTimeZone: REPORT_TIME_ZONE,
+    propertyId: args.propertyId,
+    dryRun: args.dryRun,
+    status,
+    message,
+    dimensions: DIMENSIONS.map((dimension) => ({
+      parameterName: dimension.parameterName,
+      displayName: dimension.displayName,
+      state: 'pending',
+      apiName: null,
+    })),
+  };
+}
+
 async function main() {
   const args = parseArgs(process.argv.slice(2));
   let token = null;
@@ -194,35 +268,59 @@ async function main() {
     token = await accessToken();
   } catch (err) {
     if (!args.dryRun) throw err;
+    const report = baseReport(args, 'credentials_unavailable_dry_run', err.message);
+    report.dimensions = report.dimensions.map((dimension) => ({ ...dimension, state: 'would_ensure' }));
     console.log(`Would ensure ${DIMENSIONS.length} GA4 custom dimensions for property ${args.propertyId}:`);
     for (const dimension of DIMENSIONS) console.log(`- ${dimension.parameterName}`);
     console.log(`Skipped GA4 lookup in dry-run because credentials are unavailable: ${err.message}`);
+    await writeReport(args.outDir, report);
     return;
   }
 
   const existing = await listCustomDimensions(token, args.propertyId);
-  const existingEventParams = new Set(
+  const existingByParam = new Map(
     existing
       .filter((dimension) => dimension.scope === 'EVENT')
-      .map((dimension) => dimension.parameterName),
+      .map((dimension) => [dimension.parameterName, dimension]),
+  );
+  const existingEventParams = new Set(
+    [...existingByParam.keys()],
   );
   const missing = DIMENSIONS.filter((dimension) => !existingEventParams.has(dimension.parameterName));
+  const report = baseReport(args, missing.length === 0 ? 'already_configured' : 'pending_setup');
+  report.dimensions = report.dimensions.map((dimension) => {
+    const existingDimension = existingByParam.get(dimension.parameterName);
+    return existingDimension
+      ? { ...dimension, state: 'already_exists', apiName: existingDimension.name || null }
+      : { ...dimension, state: args.dryRun ? 'would_create' : 'missing', apiName: null };
+  });
 
   if (missing.length === 0) {
     console.log(`GA4 next-action dimensions already exist for property ${args.propertyId}.`);
+    await writeReport(args.outDir, report);
     return;
   }
 
   if (args.dryRun) {
+    report.status = 'would_create';
     console.log(`Would create ${missing.length} GA4 custom dimensions for property ${args.propertyId}:`);
     for (const dimension of missing) console.log(`- ${dimension.parameterName}`);
+    await writeReport(args.outDir, report);
     return;
   }
 
   for (const dimension of missing) {
     const created = await createCustomDimension(token, args.propertyId, dimension);
     console.log(`Created ${created.parameterName || dimension.parameterName}: ${created.name || 'ok'}`);
+    const reportDimension = report.dimensions.find((item) => item.parameterName === dimension.parameterName);
+    if (reportDimension) {
+      reportDimension.state = 'created';
+      reportDimension.apiName = created.name || null;
+    }
   }
+
+  report.status = 'created_missing_dimensions';
+  await writeReport(args.outDir, report);
 }
 
 main().catch((err) => {

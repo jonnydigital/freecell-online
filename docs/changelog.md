@@ -5,6 +5,7 @@
 - **GA4 next-action custom dimension setup command** — added `npm run analytics:setup-next-actions`, which uses the GA4 Admin API to idempotently create the event-scoped custom dimensions needed for next-action panel breakdowns: `action`, `surface`, `game_name`, and `game_locale`.
 - The setup command shares the same cron-friendly credential pattern as the Google metrics pull (`GOOGLE_OAUTH_ACCESS_TOKEN`, `gcloud` ADC, or `GOOGLE_APPLICATION_CREDENTIALS`) and has a credential-free `--dry-run` path so overnight automation can validate the command shape even before credentials are installed.
 - **Setup audit artifacts** — the setup command now writes dated JSON/Markdown reports under `docs/analytics/next-action-dimension-setup/`, recording whether dimensions already exist, would be created, were created, or were blocked by missing credentials.
+- **FreeCell article schema parity** — added typed `mainEntityOfPage` WebPage links to the Article JSON-LD for `/statistics` and `/unsolvable-freecell-deals`, and added a matching Article node to `/freecell-for-beginners` so its article OpenGraph classification has crawler-visible editorial schema beside the existing HowTo markup.
 - Verification: `node --check scripts/setup-next-action-dimensions.mjs`, `npm run analytics:setup-next-actions -- --dry-run`, and `npm run build` passed with Node 22. The actual GA4 Admin mutation was not run because this cron shell still has no Google credential env var or `gcloud` ADC token.
 
 ## 2026-07-26 (OpenClaw Overnight Build)

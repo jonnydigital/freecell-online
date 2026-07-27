@@ -91,6 +91,10 @@ const articleJsonLd = {
   publisher: { "@type": "Organization", name: siteConfig.siteName },
   datePublished: "2026-03-06",
   dateModified: "2026-03-06",
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": absoluteUrl("/statistics"),
+  },
 };
 
 const faqJsonLd = {

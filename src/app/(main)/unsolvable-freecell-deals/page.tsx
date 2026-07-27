@@ -69,6 +69,10 @@ export default function UnsolvableFreecellDealsPage() {
         name: siteConfig.siteName,
         url: siteConfig.url,
       },
+      mainEntityOfPage: {
+        "@type": "WebPage",
+        "@id": absoluteUrl("/unsolvable-freecell-deals"),
+      },
     },
     {
       "@context": "https://schema.org",

@@ -49,6 +49,27 @@ const tocItems = [
    ================================================================ */
 
 export default function FreecellForBeginnersPage() {
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: "FreeCell for Beginners",
+    description:
+      "A beginner-friendly guide to FreeCell Solitaire with simple rules, layout explanations, first-game steps, and common mistakes to avoid.",
+    author: {
+      "@type": "Organization",
+      name: siteConfig.siteName,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: siteConfig.siteName,
+      url: siteConfig.url,
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": absoluteUrl("/freecell-for-beginners"),
+    },
+  };
+
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -112,6 +133,7 @@ export default function FreecellForBeginnersPage() {
 
   return (
     <ContentLayout variant="dark">
+      <JsonLd data={articleJsonLd} />
       <JsonLd data={breadcrumbJsonLd} />
       <JsonLd data={howToJsonLd} />
 

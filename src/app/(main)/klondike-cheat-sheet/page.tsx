@@ -39,34 +39,59 @@ export const metadata: Metadata = {
 };
 
 export default function KlondikeCheatSheetPage() {
-  const breadcrumbJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Home",
-        item: absoluteUrl("/"),
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      headline: "Klondike Solitaire Cheat Sheet — Quick Rules Reference",
+      description:
+        "A printable Klondike Solitaire cheat sheet: setup, card-movement rules, Draw 1 vs Draw 3, scoring, keyboard shortcuts, and a decision flowchart.",
+      author: {
+        "@type": "Organization",
+        name: "The Rules Desk",
+        url: absoluteUrl("/authors/the-rules-desk"),
       },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: "Klondike Solitaire",
-        item: absoluteUrl("/klondike"),
+      publisher: {
+        "@type": "Organization",
+        name: siteConfig.siteName,
+        url: siteConfig.url,
       },
-      {
-        "@type": "ListItem",
-        position: 3,
-        name: "Cheat Sheet",
-        item: absoluteUrl("/klondike-cheat-sheet"),
+      datePublished: "2026-04-12",
+      dateModified: "2026-04-12",
+      mainEntityOfPage: {
+        "@type": "WebPage",
+        "@id": absoluteUrl("/klondike-cheat-sheet"),
       },
-    ],
-  };
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: absoluteUrl("/"),
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Klondike Solitaire",
+          item: absoluteUrl("/klondike"),
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Cheat Sheet",
+          item: absoluteUrl("/klondike-cheat-sheet"),
+        },
+      ],
+    },
+  ];
 
   return (
     <ContentLayout variant="dark">
-      <JsonLd data={breadcrumbJsonLd} />
+      <JsonLd data={jsonLd} />
 
       <ContentHero
         title="Klondike Solitaire Cheat Sheet"

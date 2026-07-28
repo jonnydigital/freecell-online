@@ -87,6 +87,7 @@ export default function SettingsPanel({ isOpen, onClose, settings, onUpdateSetti
                             </div>
                             <button
                                 onClick={onClose}
+                                aria-label="Close settings"
                                 className="p-2 text-white/20 hover:text-white transition-colors"
                             >
                                 <X size={20} />

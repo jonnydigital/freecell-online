@@ -120,6 +120,7 @@ export default function Leaderboard({ isOpen, onClose }: LeaderboardProps) {
 
               <button
                 onClick={onClose}
+                aria-label="Close leaderboard"
                 className="absolute top-4 right-4 p-2 text-white/20 hover:text-white transition-colors"
               >
                 <X size={18} />

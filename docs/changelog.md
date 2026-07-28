@@ -7,6 +7,12 @@
 - Missing Google credentials no longer leave the overnight run without a decision artifact: the cycle falls back to the setup dry-run, audits the latest saved metrics, and reports `credential_blocked_with_artifacts` until `GOOGLE_APPLICATION_CREDENTIALS` or `GOOGLE_OAUTH_ACCESS_TOKEN` is configured.
 - Verification: `node --check scripts/next-action-cycle.mjs`, `npm run analytics:next-action-cycle`, `npm run lint` (0 errors, existing warnings), `npx tsc --noEmit`, and `npm run build` passed with Node 22. The default cron shell still has Node 18, so Node 22 was put on `PATH` for verification.
 
+## 2026-07-28 (OpenClaw Evening Build)
+
+### Shipped
+- **Shared modal close-button accessibility labels** — added explicit `aria-label` text to the Achievements, legacy Settings, Leaderboard, and Statistics panel close buttons so icon-only/glyph close controls have stable names for assistive technology.
+- Verification: `npx tsc --noEmit` and `npm run build` passed with Node 22.
+
 ## 2026-07-27 (OpenClaw Overnight Build)
 
 ### Shipped

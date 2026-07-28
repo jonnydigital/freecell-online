@@ -25,6 +25,7 @@ export default function StatsPanel({ stats, isOpen, onClose }: StatsPanelProps) 
           <h2 className="text-xl font-bold text-white">Statistics</h2>
           <button
             onClick={onClose}
+            aria-label="Close statistics"
             className="text-white/50 hover:text-white text-xl"
           >
             ✕

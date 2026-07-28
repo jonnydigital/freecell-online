@@ -54,7 +54,11 @@ export default function AchievementsPanel({ isOpen, onClose }: AchievementsPanel
                   Achievements
                 </h2>
               </div>
-              <button onClick={onClose} className="text-white/40 hover:text-white transition-colors">
+              <button
+                onClick={onClose}
+                aria-label="Close achievements"
+                className="text-white/40 hover:text-white transition-colors"
+              >
                 <X size={22} />
               </button>
             </div>

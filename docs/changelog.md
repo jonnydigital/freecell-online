@@ -1,4 +1,12 @@
 
+## 2026-07-28 (OpenClaw Overnight Build)
+
+### Shipped
+- **Next-action analytics cycle command** — added `npm run analytics:next-action-cycle`, a cron-friendly orchestration command that ensures GA4 next-action dimensions, pulls fresh Google metrics, and writes the next-action audit in one repeatable loop.
+- The cycle records a dated JSON/Markdown summary under `docs/analytics/next-action-cycles/`, including the status of dimension setup, metrics pull, audit generation, and the resulting recommendation.
+- Missing Google credentials no longer leave the overnight run without a decision artifact: the cycle falls back to the setup dry-run, audits the latest saved metrics, and reports `credential_blocked_with_artifacts` until `GOOGLE_APPLICATION_CREDENTIALS` or `GOOGLE_OAUTH_ACCESS_TOKEN` is configured.
+- Verification: `node --check scripts/next-action-cycle.mjs`, `npm run analytics:next-action-cycle`, `npm run lint` (0 errors, existing warnings), `npx tsc --noEmit`, and `npm run build` passed with Node 22. The default cron shell still has Node 18, so Node 22 was put on `PATH` for verification.
+
 ## 2026-07-27 (OpenClaw Overnight Build)
 
 ### Shipped
@@ -7,6 +15,14 @@
 - **Setup audit artifacts** — the setup command now writes dated JSON/Markdown reports under `docs/analytics/next-action-dimension-setup/`, recording whether dimensions already exist, would be created, were created, or were blocked by missing credentials.
 - **FreeCell article schema parity** — added typed `mainEntityOfPage` WebPage links to the Article JSON-LD for `/statistics` and `/unsolvable-freecell-deals`, and added a matching Article node to `/freecell-for-beginners` so its article OpenGraph classification has crawler-visible editorial schema beside the existing HowTo markup.
 - Verification: `node --check scripts/setup-next-action-dimensions.mjs`, `npm run analytics:setup-next-actions -- --dry-run`, and `npm run build` passed with Node 22. The actual GA4 Admin mutation was not run because this cron shell still has no Google credential env var or `gcloud` ADC token.
+
+### Daily Cycle
+- Refreshed public metrics with `npm run metrics:pull`: live sitemap counts remain playfreecellonline `132`, solitairestack `90`, playklondikeonline `40`, playspidersolitaireonline `36`, network total `298`; Google `site:` index counts were unavailable.
+- Confirmed authenticated GA4 browser access for PlayFreeCellOnline.com. The headline Home card was on `Last 30 days`: `76` active users (`+7.3%`), `1.2K` events (`+20.4%`), `0` key events, `69` new users (`+9.2%`), and `0` realtime users.
+- Last-7-day visible cards: top pages were the home page with `47` views and FreeCell Solver with `17`; sessions by channel were Organic Search `14`, Referral `8`, Direct `5`, AI Assistant `5`, Unassigned `3`; event counts were `82` page views, `32` session starts, `22` game starts, `15` user engagement events, and `3` interaction_type events.
+- Feedback check: no local `data/feedback.json` exists, so local feedback count remains `0` unless production storage is surfaced separately.
+- `npm run metrics:google` still fails cleanly because this heartbeat shell has no `GOOGLE_OAUTH_ACCESS_TOKEN`, `GOOGLE_APPLICATION_CREDENTIALS`, `gcloud` ADC token, or `gcloud` binary available.
+- Selected task remains analytics configuration rather than another UI change: install/configure Google credentials, run `analytics:setup-next-actions` for real, then rerun `metrics:google` and `analytics:next-actions` before reprioritizing the phone next-action strip. No implementation agent or Gemini UI review launched because no UI/code change shipped.
 
 ## 2026-07-26 (OpenClaw Overnight Build)
 

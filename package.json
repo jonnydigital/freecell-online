@@ -10,6 +10,7 @@
     "metrics:pull": "node scripts/pull-public-metrics.mjs",
     "metrics:google": "node scripts/pull-google-metrics.mjs",
     "analytics:setup-next-actions": "node scripts/setup-next-action-dimensions.mjs",
+    "analytics:next-action-cycle": "node scripts/next-action-cycle.mjs",
     "analytics:locales": "node scripts/localized-route-audit.mjs",
     "analytics:next-actions": "node scripts/next-action-audit.mjs",
     "indexnow:submit": "node scripts/indexnow-submit-sitemap.mjs",

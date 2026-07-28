@@ -1,0 +1,35 @@
+{
+  "generatedAt": "2026-07-28T05:02:24.047Z",
+  "reportDate": "2026-07-28",
+  "reportTimeZone": "America/New_York",
+  "propertyId": "531359003",
+  "dryRun": true,
+  "status": "credentials_unavailable_dry_run",
+  "message": "No Google token available. Install gcloud, set GOOGLE_OAUTH_ACCESS_TOKEN, or set GOOGLE_APPLICATION_CREDENTIALS to an ADC JSON file.",
+  "dimensions": [
+    {
+      "parameterName": "action",
+      "displayName": "Next action tap action",
+      "state": "would_ensure",
+      "apiName": null
+    },
+    {
+      "parameterName": "surface",
+      "displayName": "Next action tap surface",
+      "state": "would_ensure",
+      "apiName": null
+    },
+    {
+      "parameterName": "game_name",
+      "displayName": "Next action tap game",
+      "state": "would_ensure",
+      "apiName": null
+    },
+    {
+      "parameterName": "game_locale",
+      "displayName": "Next action tap locale",
+      "state": "would_ensure",
+      "apiName": null
+    }
+  ]
+}

@@ -22,6 +22,12 @@ rules. If you add a producer, register it here.
   `WebSocket` API, so run it with the repo's nvm Node on PATH:
   `export PATH="$HOME/.nvm/versions/node/v22.19.0/bin:$PATH"` before
   `npm run qa:mobile` or direct `scripts/mobile-viewport-audit.mjs` calls.
+- **Next-action analytics cycle:** run `npm run analytics:next-action-cycle`
+  after configuring `GOOGLE_APPLICATION_CREDENTIALS` or
+  `GOOGLE_OAUTH_ACCESS_TOKEN`. If credentials are absent, the cycle still
+  writes a dated dry-run/decision artifact under
+  `docs/analytics/next-action-cycles/` and leaves the UX recommendation blocked
+  on fresh GA4 data.
 - **Use the Mac keychain git path for unattended pushes.** If a sandboxed shell
   cannot remove a stale `.git/index.lock` or cannot access push credentials,
   route the git command through the documented Mac/osascript path so it can use

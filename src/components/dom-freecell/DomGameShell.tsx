@@ -2658,7 +2658,7 @@ function DomSettingsPanel({
             <Settings className="text-[#D4AF37]" size={24} />
             <h2 className="text-xl font-bold text-white">{copy.settings}</h2>
           </div>
-          <button onClick={onClose} className="p-2 text-white/30 hover:text-white transition-colors">
+          <button onClick={onClose} aria-label={copy.close} className="p-2 text-white/30 hover:text-white transition-colors">
             <X size={20} />
           </button>
         </div>

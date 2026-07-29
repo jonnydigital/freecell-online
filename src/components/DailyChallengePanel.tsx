@@ -114,7 +114,7 @@ export default function DailyChallengePanel({ isOpen, onClose, onPlayDaily }: Pr
       >
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-bold">Daily Challenge</h2>
-          <button onClick={onClose} className="text-white/50 hover:text-white text-xl leading-none">&times;</button>
+          <button onClick={onClose} className="text-white/50 hover:text-white text-xl leading-none" aria-label="Close daily challenge panel">&times;</button>
         </div>
 
         {/* Today's challenge */}
@@ -172,9 +172,9 @@ export default function DailyChallengePanel({ isOpen, onClose, onPlayDaily }: Pr
         {/* Calendar */}
         <div>
           <div className="flex items-center justify-between mb-2">
-            <button onClick={prevMonth} className="text-white/50 hover:text-white px-2">&lt;</button>
+            <button onClick={prevMonth} className="text-white/50 hover:text-white px-2" aria-label="Show previous month">&lt;</button>
             <span className="text-sm font-medium">{MONTH_NAMES[viewMonth]} {viewYear}</span>
-            <button onClick={nextMonth} className="text-white/50 hover:text-white px-2">&gt;</button>
+            <button onClick={nextMonth} className="text-white/50 hover:text-white px-2" aria-label="Show next month">&gt;</button>
           </div>
 
           <div className="grid grid-cols-7 gap-1 text-center text-xs">

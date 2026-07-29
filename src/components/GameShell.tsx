@@ -615,6 +615,7 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
                     onClick={() => setShowGameInput(true)}
                     className="hover:text-white transition-colors cursor-pointer text-white/60 border-r border-white/10 pr-5 text-[17px]"
                     title="Click to enter a game number"
+                    aria-label={`Change game number, currently ${gameNumber}`}
                   >
                     #{gameNumber}
                   </button>
@@ -623,6 +624,7 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
                   onClick={handleShareGame}
                   className="p-1 -mr-2 text-white/50 hover:text-[#D4AF37] transition-colors"
                   title={shareStatus === 'copied' ? 'Copied!' : 'Share this game'}
+                  aria-label={shareStatus === 'copied' ? 'Game link copied' : 'Share this game'}
                 >
                   <Share2 size={18} />
                 </button>
@@ -637,27 +639,28 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
                   New Deal
                 </button>
                 <div className="w-px h-7 bg-white/10 mx-2.5" />
-                <button ref={undoDesktopRef} onClick={handleUndo} className={iconBtnClass} title="Undo (Ctrl+Z)">
+                <button ref={undoDesktopRef} onClick={handleUndo} className={iconBtnClass} title="Undo (Ctrl+Z)" aria-label="Undo move">
                   <RotateCcw size={20} />
                 </button>
-                <button onClick={handleRedo} className={iconBtnClass} title="Redo (Ctrl+Y)">
+                <button onClick={handleRedo} className={iconBtnClass} title="Redo (Ctrl+Y)" aria-label="Redo move">
                   <RotateCw size={20} />
                 </button>
-                <button onClick={handleHint} className={iconBtnClass} title="Hint (H)">
+                <button onClick={handleHint} className={iconBtnClass} title="Hint (H)" aria-label="Show hint">
                   <Lightbulb size={20} />
                 </button>
                 <button
                   onClick={handleGhostMode}
                   className={`${iconBtnClass} ${ghostSolving ? 'animate-pulse' : ''}`}
                   title="Ghost Mode — Watch the solver play"
+                  aria-label="Start ghost mode solver replay"
                   disabled={!gameNumber || isWon || ghostMode || ghostSolving}
                 >
                   <Ghost size={20} />
                 </button>
-                <button onClick={handleToggleMute} className={iconBtnClass} title={isMuted ? "Unmute" : "Mute"}>
+                <button onClick={handleToggleMute} className={iconBtnClass} title={isMuted ? "Unmute" : "Mute"} aria-label={isMuted ? "Unmute sound" : "Mute sound"}>
                   {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
                 </button>
-                <button onClick={() => setShowHome(true)} className={iconBtnClass} title="Menu">
+                <button onClick={() => setShowHome(true)} className={iconBtnClass} title="Menu" aria-label="Open game menu">
                   <Home size={20} />
                 </button>
               </div>
@@ -844,10 +847,10 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
             {/* Floating landscape overlay: undo/redo when toolbars are hidden */}
             {isLandscapeMobile && (
               <div className="absolute bottom-2 right-2 z-20 flex gap-1.5 md:hidden">
-                <button onClick={handleUndo} className="p-2 bg-black/40 active:bg-black/60 rounded-lg text-white/70" title="Undo">
+                <button onClick={handleUndo} className="p-2 bg-black/40 active:bg-black/60 rounded-lg text-white/70" title="Undo" aria-label="Undo move">
                   <RotateCcw size={18} />
                 </button>
-                <button onClick={handleRedo} className="p-2 bg-black/40 active:bg-black/60 rounded-lg text-white/70" title="Redo">
+                <button onClick={handleRedo} className="p-2 bg-black/40 active:bg-black/60 rounded-lg text-white/70" title="Redo" aria-label="Redo move">
                   <RotateCw size={18} />
                 </button>
               </div>

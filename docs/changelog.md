@@ -1,4 +1,10 @@
 
+## 2026-07-29 (OpenClaw 1 AM Build)
+
+### Shipped
+- **Phaser shell icon-button accessible names** — added explicit accessible names to the legacy FreeCell Phaser shell, Streak, Storm, and Daily Challenge glyph/icon controls, including desktop toolbar buttons, landscape undo/redo overlays, share/game-number controls, and daily calendar close/month navigation.
+- Verification: `npx tsc --noEmit` and `npm run build` passed with Node 22.
+
 ## 2026-07-29 (OpenClaw Overnight Build)
 
 ### Shipped

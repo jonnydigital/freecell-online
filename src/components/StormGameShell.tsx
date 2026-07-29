@@ -362,6 +362,7 @@ export default function StormGameShell() {
                     onClick={handleUndo}
                     className="p-2 hover:bg-white/10 text-white/80 rounded-full transition-all active:scale-95"
                     title="Undo"
+                    aria-label="Undo move"
                   >
                     <RotateCcw size={18} />
                   </button>
@@ -369,6 +370,7 @@ export default function StormGameShell() {
                     onClick={handleRedo}
                     className="p-2 hover:bg-white/10 text-white/80 rounded-full transition-all active:scale-95"
                     title="Redo"
+                    aria-label="Redo move"
                   >
                     <RotateCw size={18} />
                   </button>
@@ -376,6 +378,7 @@ export default function StormGameShell() {
                     onClick={handleHint}
                     className="p-2 hover:bg-white/10 text-white/80 rounded-full transition-all active:scale-95"
                     title="Hint"
+                    aria-label="Show hint"
                   >
                     <Lightbulb size={18} />
                   </button>
@@ -383,6 +386,7 @@ export default function StormGameShell() {
                     onClick={handleNewDeal}
                     className="p-2 hover:bg-white/10 text-white/80 rounded-full transition-all active:scale-95"
                     title="Skip Deal"
+                    aria-label="Skip deal"
                   >
                     <Shuffle size={18} />
                   </button>
@@ -667,10 +671,10 @@ export default function StormGameShell() {
             {/* Floating landscape undo/redo */}
             {isLandscapeMobile && (
               <div className="absolute bottom-2 right-2 z-20 flex gap-1.5 md:hidden">
-                <button onClick={handleUndo} className="p-2 bg-black/40 active:bg-black/60 rounded-lg text-white/70" title="Undo">
+                <button onClick={handleUndo} className="p-2 bg-black/40 active:bg-black/60 rounded-lg text-white/70" title="Undo" aria-label="Undo move">
                   <RotateCcw size={18} />
                 </button>
-                <button onClick={handleRedo} className="p-2 bg-black/40 active:bg-black/60 rounded-lg text-white/70" title="Redo">
+                <button onClick={handleRedo} className="p-2 bg-black/40 active:bg-black/60 rounded-lg text-white/70" title="Redo" aria-label="Redo move">
                   <RotateCw size={18} />
                 </button>
               </div>

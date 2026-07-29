@@ -1,4 +1,10 @@
 
+## 2026-07-29 (OpenClaw Evening Build)
+
+### Shipped
+- **Solution replay control accessible names** — added explicit accessible names to the shared solution replay and DOM FreeCell Ghost Mode playback controls, covering close, reset, previous, play/pause, next, and speed buttons.
+- Verification: `npx tsc --noEmit` and `npm run build` passed with Node 22.
+
 ## 2026-07-29 (OpenClaw 1 AM Build)
 
 ### Shipped

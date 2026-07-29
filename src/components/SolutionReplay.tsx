@@ -171,7 +171,12 @@ export default function SolutionReplay({ gameNumber, moves, totalMoveCount, play
           <div className="flex items-center gap-3 text-sm">
             {!isGhostMode && <span className="text-white/50">You: <span className="text-white font-bold">{playerMoves}</span></span>}
             <span className="text-white/50">{isGhostMode ? 'Moves' : 'Best'}: <span className="text-emerald-400 font-bold">{totalMoveCount}</span></span>
-            <button onClick={handleClose} className="text-white/50 hover:text-white transition-colors ml-1 p-1">
+            <button
+              onClick={handleClose}
+              className="text-white/50 hover:text-white transition-colors ml-1 p-1"
+              title={isGhostMode ? 'Close Ghost Mode' : 'Close solution replay'}
+              aria-label={isGhostMode ? 'Close Ghost Mode' : 'Close solution replay'}
+            >
               <X size={18} />
             </button>
           </div>
@@ -222,6 +227,7 @@ export default function SolutionReplay({ gameNumber, moves, totalMoveCount, play
             disabled={waitingForAnimation}
             className="p-2.5 text-white/50 hover:text-white disabled:text-white/20 transition-colors active:scale-90"
             title="Reset"
+            aria-label={isGhostMode ? 'Reset Ghost Mode replay' : 'Reset solution replay'}
           >
             <RotateCcw size={18} />
           </button>
@@ -230,6 +236,7 @@ export default function SolutionReplay({ gameNumber, moves, totalMoveCount, play
             disabled={currentStep === 0 || waitingForAnimation}
             className="p-2.5 text-white/50 hover:text-white disabled:text-white/20 transition-colors active:scale-90"
             title="Previous (Left Arrow)"
+            aria-label={isGhostMode ? 'Previous Ghost Mode move' : 'Previous solution move'}
           >
             <ChevronLeft size={22} />
           </button>
@@ -238,6 +245,7 @@ export default function SolutionReplay({ gameNumber, moves, totalMoveCount, play
             disabled={waitingForAnimation && isPlaying}
             className="p-3.5 bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 text-white rounded-full transition-colors active:scale-90 min-w-[48px] min-h-[48px] flex items-center justify-center"
             title={isPlaying ? 'Pause (Space)' : 'Play (Space)'}
+            aria-label={isPlaying ? 'Pause solution replay' : 'Play solution replay'}
           >
             {isPlaying ? <Pause size={22} /> : <Play size={22} />}
           </button>
@@ -246,6 +254,7 @@ export default function SolutionReplay({ gameNumber, moves, totalMoveCount, play
             disabled={currentStep >= totalSteps || waitingForAnimation}
             className="p-2.5 text-white/50 hover:text-white disabled:text-white/20 transition-colors active:scale-90"
             title="Next (Right Arrow)"
+            aria-label={isGhostMode ? 'Next Ghost Mode move' : 'Next solution move'}
           >
             <ChevronRight size={22} />
           </button>
@@ -253,6 +262,7 @@ export default function SolutionReplay({ gameNumber, moves, totalMoveCount, play
             onClick={handleCycleSpeed}
             className="ml-1 px-2 py-1 text-xs font-bold tabular-nums rounded bg-white/10 hover:bg-white/20 text-white/60 hover:text-white transition-colors active:scale-90 min-w-[3ch]"
             title="Playback speed"
+            aria-label={`Change playback speed, currently ${speed}x`}
           >
             {speed}x
           </button>

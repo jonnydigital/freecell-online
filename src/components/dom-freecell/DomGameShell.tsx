@@ -1884,7 +1884,12 @@ export default function DomGameShell({ initialGameNumber, variant, locale = 'en'
                 </h3>
                 <div className="flex items-center gap-3 text-sm">
                   <span className="text-white/50">{copy.moves}: <span className="text-emerald-400 font-bold">{solver.totalMoveCount}</span></span>
-                  <button onClick={handleGhostStop} className="text-white/50 hover:text-white transition-colors ml-1 p-1">
+                  <button
+                    onClick={handleGhostStop}
+                    className="text-white/50 hover:text-white transition-colors ml-1 p-1"
+                    title="Close Ghost Mode"
+                    aria-label="Close Ghost Mode"
+                  >
                     <X size={18} />
                   </button>
                 </div>
@@ -1943,6 +1948,7 @@ export default function DomGameShell({ initialGameNumber, variant, locale = 'en'
                   onClick={() => { setGhostPlaying(false); stopReplay(); startReplay(replayMoves); }}
                   className="p-2.5 text-white/50 hover:text-white transition-colors active:scale-90"
                   title="Reset"
+                  aria-label="Reset Ghost Mode replay"
                 >
                   <RotateCcw size={18} />
                 </button>
@@ -1951,6 +1957,7 @@ export default function DomGameShell({ initialGameNumber, variant, locale = 'en'
                   disabled={replayIndex === 0}
                   className="p-2.5 text-white/50 hover:text-white disabled:text-white/20 transition-colors active:scale-90"
                   title="Previous (Left Arrow)"
+                  aria-label="Previous Ghost Mode move"
                 >
                   <ChevronLeft size={22} />
                 </button>
@@ -1958,6 +1965,7 @@ export default function DomGameShell({ initialGameNumber, variant, locale = 'en'
                   onClick={handleGhostPlayPause}
                   className="p-3.5 bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 text-white rounded-full transition-colors active:scale-90 min-w-[48px] min-h-[48px] flex items-center justify-center"
                   title={ghostPlaying ? 'Pause (Space)' : 'Play (Space)'}
+                  aria-label={ghostPlaying ? 'Pause Ghost Mode replay' : 'Play Ghost Mode replay'}
                 >
                   {ghostPlaying ? <Pause size={22} /> : <Play size={22} />}
                 </button>
@@ -1966,6 +1974,7 @@ export default function DomGameShell({ initialGameNumber, variant, locale = 'en'
                   disabled={replayIndex >= replayMoves.length}
                   className="p-2.5 text-white/50 hover:text-white disabled:text-white/20 transition-colors active:scale-90"
                   title="Next (Right Arrow)"
+                  aria-label="Next Ghost Mode move"
                 >
                   <ChevronRight size={22} />
                 </button>
@@ -1973,6 +1982,7 @@ export default function DomGameShell({ initialGameNumber, variant, locale = 'en'
                   onClick={handleGhostCycleSpeed}
                   className="ml-1 px-2 py-1 text-xs font-bold tabular-nums rounded bg-white/10 hover:bg-white/20 text-white/60 hover:text-white transition-colors active:scale-90 min-w-[3ch]"
                   title="Playback speed"
+                  aria-label={`Change Ghost Mode playback speed, currently ${ghostSpeed}x`}
                 >
                   {ghostSpeed}x
                 </button>

@@ -368,7 +368,7 @@ export default function DomSpiderShell({ initialDifficulty = '1-suit' }: DomSpid
             <Lightbulb size={14} />
             {!isMobile && 'Hint'}
           </button>
-          <button onClick={handleNewGame} title="New Game" style={{ padding: '6px 14px', borderRadius: '8px', background: 'rgba(212,175,55,0.15)', border: '1px solid rgba(212,175,55,0.3)', color: '#D4AF37', fontSize: '12px', fontWeight: 600, cursor: 'pointer' }}>
+          <button onClick={handleNewGame} aria-label="New game" title="New Game" style={{ padding: '6px 14px', borderRadius: '8px', background: 'rgba(212,175,55,0.15)', border: '1px solid rgba(212,175,55,0.3)', color: '#D4AF37', fontSize: '12px', fontWeight: 600, cursor: 'pointer' }}>
             New Deal
           </button>
         </div>
@@ -446,6 +446,7 @@ export default function DomSpiderShell({ initialDifficulty = '1-suit' }: DomSpid
         </Link>
         <button
           onClick={handleNewGame}
+          aria-label="New game"
           title="New Game"
           style={{
             minWidth: 0,
@@ -470,6 +471,7 @@ export default function DomSpiderShell({ initialDifficulty = '1-suit' }: DomSpid
         <button
           onClick={handleUndo}
           disabled={moveHistory.length === 0}
+          aria-label="Undo"
           title="Undo"
           style={{
             minWidth: 0,
@@ -493,6 +495,7 @@ export default function DomSpiderShell({ initialDifficulty = '1-suit' }: DomSpid
         </button>
         <button
           onClick={handleHint}
+          aria-label="Hint"
           title="Hint"
           style={{
             minWidth: 0,

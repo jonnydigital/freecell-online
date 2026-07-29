@@ -334,7 +334,7 @@ export default function DomKlondikeShell({ initialDrawMode = 1 }: DomKlondikeShe
           <button onClick={handleHint} aria-label="Hint" title="Hint" style={{ padding: '8px', borderRadius: '8px', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.6)', cursor: 'pointer' }}>
             <Lightbulb size={16} />
           </button>
-          <button onClick={handleNewGame} title="New Game" style={{ padding: '6px 14px', borderRadius: '8px', background: 'rgba(212,175,55,0.15)', border: '1px solid rgba(212,175,55,0.3)', color: '#D4AF37', fontSize: '12px', fontWeight: 600, cursor: 'pointer' }}>
+          <button onClick={handleNewGame} aria-label="New game" title="New Game" style={{ padding: '6px 14px', borderRadius: '8px', background: 'rgba(212,175,55,0.15)', border: '1px solid rgba(212,175,55,0.3)', color: '#D4AF37', fontSize: '12px', fontWeight: 600, cursor: 'pointer' }}>
             New Deal
           </button>
         </div>
@@ -413,6 +413,7 @@ export default function DomKlondikeShell({ initialDrawMode = 1 }: DomKlondikeShe
         </Link>
         <button
           onClick={handleNewGame}
+          aria-label="New game"
           title="New Game"
           style={{
             minWidth: 0,
@@ -436,6 +437,7 @@ export default function DomKlondikeShell({ initialDrawMode = 1 }: DomKlondikeShe
         </button>
         <button
           onClick={handleUndo}
+          aria-label="Undo"
           title="Undo"
           style={{
             minWidth: 0,
@@ -459,6 +461,7 @@ export default function DomKlondikeShell({ initialDrawMode = 1 }: DomKlondikeShe
         </button>
         <button
           onClick={handleHint}
+          aria-label="Hint"
           title="Hint"
           style={{
             minWidth: 0,

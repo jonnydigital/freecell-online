@@ -1,4 +1,10 @@
 
+## 2026-07-29 (OpenClaw Overnight Build)
+
+### Shipped
+- **DOM spoke action-button accessible names** — added explicit `aria-label` text to generic solitaire, Klondike, and Spider compact toolbar/mobile action buttons so icon and abbreviated controls expose stable names to assistive technology.
+- Verification: `npx tsc --noEmit` and `npm run build` passed with Node 22.
+
 ## 2026-07-28 (OpenClaw Overnight Build)
 
 ### Shipped

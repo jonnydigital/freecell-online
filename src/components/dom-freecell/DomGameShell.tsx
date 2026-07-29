@@ -2119,10 +2119,10 @@ export default function DomGameShell({ initialGameNumber, variant, locale = 'en'
         {/* ── Landscape floating undo/redo ── */}
         {isLandscapeMobile && (
           <div className="absolute bottom-2 right-2 z-20 flex gap-1.5 md:hidden">
-            <button onClick={handleUndo} className={`p-2 bg-black/40 active:bg-black/60 rounded-lg ${canUndo ? 'text-white/70' : 'text-white/20'}`} title={copy.undo} disabled={!canUndo}>
+            <button onClick={handleUndo} className={`p-2 bg-black/40 active:bg-black/60 rounded-lg ${canUndo ? 'text-white/70' : 'text-white/20'}`} title={copy.undo} aria-label={copy.undo} disabled={!canUndo}>
               <RotateCcw size={18} />
             </button>
-            <button onClick={handleRedo} className={`p-2 bg-black/40 active:bg-black/60 rounded-lg ${canRedo ? 'text-white/70' : 'text-white/20'}`} title={copy.redo} disabled={!canRedo}>
+            <button onClick={handleRedo} className={`p-2 bg-black/40 active:bg-black/60 rounded-lg ${canRedo ? 'text-white/70' : 'text-white/20'}`} title={copy.redo} aria-label={copy.redo} disabled={!canRedo}>
               <RotateCw size={18} />
             </button>
           </div>

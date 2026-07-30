@@ -95,7 +95,11 @@ export default function LeaderboardFullView() {
                     autoFocus
                     className="bg-black/30 border border-yellow-500/30 rounded-lg px-3 py-1 text-sm text-yellow-200 w-40 outline-none focus:border-yellow-500/60"
                   />
-                  <button onClick={handleSaveNickname} className="p-1.5 text-yellow-400 hover:text-yellow-300">
+                  <button
+                    onClick={handleSaveNickname}
+                    className="p-1.5 text-yellow-400 hover:text-yellow-300"
+                    aria-label="Save nickname"
+                  >
                     <Check size={16} />
                   </button>
                 </div>
@@ -105,6 +109,7 @@ export default function LeaderboardFullView() {
                   <button
                     onClick={() => { setNameInput(nickname === 'Anonymous' ? '' : nickname); setEditingName(true); }}
                     className="p-1 text-yellow-500/30 hover:text-yellow-400 transition-colors"
+                    aria-label="Edit nickname"
                   >
                     <Pencil size={12} />
                   </button>
@@ -233,6 +238,7 @@ export default function LeaderboardFullView() {
             onClick={() => setPage((p) => Math.max(0, p - 1))}
             disabled={page === 0}
             className="p-2 text-white/30 hover:text-white disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
+            aria-label="Previous leaderboard page"
           >
             <ChevronLeft size={18} />
           </button>
@@ -243,6 +249,7 @@ export default function LeaderboardFullView() {
             onClick={() => setPage((p) => Math.min(totalPages - 1, p + 1))}
             disabled={page >= totalPages - 1}
             className="p-2 text-white/30 hover:text-white disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
+            aria-label="Next leaderboard page"
           >
             <ChevronRight size={18} />
           </button>

@@ -1,4 +1,10 @@
 
+## 2026-07-30 (OpenClaw Overnight Build)
+
+### Shipped
+- **Leaderboard icon-button accessible names** — added explicit accessible names to the full leaderboard nickname edit/save controls and pagination chevrons.
+- Verification: `npx tsc --noEmit` and `npm run build` passed with Node 22.
+
 ## 2026-07-29 (OpenClaw Evening Build)
 
 ### Shipped

@@ -1,5 +1,5 @@
 # FreeCell Online — Feature Backlog
-*Ranked by impact × effort. Updated 2026-07-25.*
+*Ranked by impact × effort. Updated 2026-07-30.*
 
 ## 🚨 P0: Critical Bug
 1. ~~**🔴 Mobile card rendering broken**~~ ✅ FIXED 03-02 — Root cause: `recreateAllCardSprites()` used PNG asset keys that were never loaded. On resize (common on mobile), cards became empty containers. Fixed with procedural rendering matching `createCardSprite()`.
@@ -94,6 +94,7 @@
 59. ~~**Phaser shell icon-button accessible names**~~ ✅ SHIPPED 2026-07-29 — Added explicit accessible names to the legacy FreeCell Phaser shell, Streak, Storm, and Daily Challenge glyph/icon controls. *(Follow-up from the 2026-07-28/29 accessibility sweeps: close the same button-name gap in older Phaser-based shells and daily challenge navigation.)*
 60. ~~**Solution replay control accessible names**~~ ✅ SHIPPED 2026-07-29 — Added explicit accessible names to solution replay and DOM FreeCell Ghost Mode close/reset/previous/play/next/speed controls. *(Follow-up from the 2026-07-29 accessibility sweep: cover icon-only solver playback controls after the toolbar and shell passes.)*
 61. ~~**Leaderboard icon-button accessible names**~~ ✅ SHIPPED 2026-07-30 — Added explicit accessible names to the full leaderboard nickname edit/save controls and pagination chevrons. *(Follow-up from the 2026-07-29 accessibility sweep: keep closing icon-only button gaps in DOM panels.)*
+62. ~~**Embed and feedback icon-button accessible names**~~ ✅ SHIPPED 2026-07-30 — Added explicit accessible names to the embeddable FreeCell widget's Undo, Redo, Hint, Restart, and New Game icon controls plus the feedback modal close glyph. *(Follow-up from the July accessibility sweep: cover smaller shared surfaces after the game shell, replay, and leaderboard passes.)*
 
 ## 🔎 Next Measured UX Candidates
 - Configure cron with `GOOGLE_APPLICATION_CREDENTIALS` or `GOOGLE_OAUTH_ACCESS_TOKEN`, run `npm run analytics:next-action-cycle`, review the latest `docs/analytics/next-action-cycles/` and `docs/analytics/next-action-audits/` reports, then decide whether Hint, Undo, New Game, or learning links deserve more prominence in the phone next-action strip.

@@ -72,6 +72,7 @@ export default function FeedbackModal({ isOpen, onClose, gameNumber, moveCount }
           <button
             onClick={onClose}
             className="text-white/50 hover:text-white/80 text-xl leading-none"
+            aria-label="Close feedback"
           >
             &times;
           </button>

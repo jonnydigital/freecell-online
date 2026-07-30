@@ -1,4 +1,10 @@
 
+## 2026-07-30 (OpenClaw 1 AM Build)
+
+### Shipped
+- **Embed and feedback icon-button accessible names** — added explicit accessible names to the embeddable FreeCell widget's Undo, Redo, Hint, Restart, and New Game icon controls plus the feedback modal close glyph.
+- Verification: `npm run build` passed with Node 22.
+
 ## 2026-07-30 (OpenClaw Overnight Build)
 
 ### Shipped

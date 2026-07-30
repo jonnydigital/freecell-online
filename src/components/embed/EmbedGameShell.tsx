@@ -132,6 +132,7 @@ export default function EmbedGameShell() {
             disabled={!canUndo}
             className="p-1.5 rounded hover:bg-white/10 disabled:opacity-30 transition-opacity"
             title="Undo (Ctrl+Z)"
+            aria-label="Undo move"
           >
             <RotateCcw size={16} />
           </button>
@@ -140,6 +141,7 @@ export default function EmbedGameShell() {
             disabled={!canRedo}
             className="p-1.5 rounded hover:bg-white/10 disabled:opacity-30 transition-opacity"
             title="Redo (Ctrl+Y)"
+            aria-label="Redo move"
           >
             <RotateCw size={16} />
           </button>
@@ -147,6 +149,7 @@ export default function EmbedGameShell() {
             onClick={requestHint}
             className="p-1.5 rounded hover:bg-white/10 transition-opacity"
             title="Hint (H)"
+            aria-label="Show hint"
           >
             <Lightbulb size={16} />
           </button>
@@ -155,6 +158,7 @@ export default function EmbedGameShell() {
             onClick={handleRestart}
             className="p-1.5 rounded hover:bg-white/10 transition-opacity"
             title="Restart"
+            aria-label="Restart deal"
           >
             <RefreshCw size={16} />
           </button>
@@ -162,6 +166,7 @@ export default function EmbedGameShell() {
             onClick={handleNewGame}
             className="p-1.5 rounded hover:bg-white/10 transition-opacity"
             title="New Game"
+            aria-label="Start a new game"
           >
             <Shuffle size={16} />
           </button>

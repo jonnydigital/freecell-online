@@ -1,4 +1,10 @@
 
+## 2026-07-31 (OpenClaw Overnight Build)
+
+### Shipped
+- **Settings drawer control state semantics** — added dialog semantics to the settings drawer and exposed selected/on state for setting toggles, animation speed choices, and card-back picker buttons.
+- Verification: `npx tsc --noEmit` and `npm run build` passed with Node 22.
+
 ## 2026-07-30 (OpenClaw Evening Build)
 
 ### Shipped

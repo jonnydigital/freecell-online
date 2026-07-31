@@ -75,13 +75,16 @@ export default function SettingsPanel({ isOpen, onClose, settings, onUpdateSetti
                         initial={{ scale: 0.9, opacity: 0, x: '50%' }}
                         animate={{ scale: 1, opacity: 1, x: 0 }}
                         exit={{ scale: 0.9, opacity: 0, x: '50%' }}
+                        role="dialog"
+                        aria-modal="true"
+                        aria-labelledby="settings-title"
                         className="fixed right-0 top-0 bottom-0 w-full max-w-md bg-[#0a351a] border-l border-white/10 shadow-2xl z-[101] flex flex-col"
                     >
                         {/* Header */}
                         <div className="p-6 border-b border-white/5 bg-gradient-to-b from-white/5 to-transparent flex items-center justify-between">
                             <div className="flex items-center gap-3">
                                 <Settings className="text-[#D4AF37]" size={24} />
-                                <h2 className="text-xl font-bold text-white" style={{ fontFamily: 'var(--font-playfair)' }}>
+                                <h2 id="settings-title" className="text-xl font-bold text-white" style={{ fontFamily: 'var(--font-playfair)' }}>
                                     Game Settings
                                 </h2>
                             </div>
@@ -140,6 +143,8 @@ export default function SettingsPanel({ isOpen, onClose, settings, onUpdateSetti
                                             <button
                                                 key={speed}
                                                 onClick={() => setAnimationSpeed(speed)}
+                                                aria-pressed={settings.animationSpeed === speed}
+                                                aria-label={`Set animation speed to ${speed}`}
                                                 className={`py-2 text-[10px] font-bold uppercase tracking-wider rounded-md transition-all ${settings.animationSpeed === speed
                                                     ? 'bg-[#1a5c1a] text-white shadow-lg'
                                                     : 'text-white/30 hover:text-white/60'
@@ -174,6 +179,8 @@ export default function SettingsPanel({ isOpen, onClose, settings, onUpdateSetti
                                             <button
                                                 key={design.id}
                                                 onClick={() => handleCardBackSelect(design.id)}
+                                                aria-pressed={isActive}
+                                                aria-label={`Use ${design.name} card back`}
                                                 className={`relative rounded-lg overflow-hidden transition-all ${isActive ? 'ring-2 ring-[#D4AF37] scale-105' : 'ring-1 ring-white/10 hover:ring-white/25'}`}
                                                 title={design.name}
                                             >
@@ -364,6 +371,7 @@ function SettingToggle({ label, description, enabled, onToggle, icon }: {
     return (
         <button
             onClick={onToggle}
+            aria-pressed={enabled}
             className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-white/5 transition-colors text-left"
         >
             <div className="flex items-center gap-2">

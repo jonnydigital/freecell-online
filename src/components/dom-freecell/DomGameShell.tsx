@@ -1709,11 +1709,15 @@ export default function DomGameShell({ initialGameNumber, variant, locale = 'en'
             fontSize: '12px',
             color: 'rgba(255,255,255,0.5)',
           }}>
-            <span style={{
+            <span
+              aria-label={`${copy.time}: ${timerDisplay}`}
+              style={{
               fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace',
               fontVariantNumeric: 'tabular-nums',
             }}>{timerDisplay}</span>
-            <span style={{
+            <span
+              aria-label={`${moveCount} ${copy.moves}`}
+              style={{
               fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace',
               fontVariantNumeric: 'tabular-nums',
               color: 'rgba(250,204,21,0.7)',

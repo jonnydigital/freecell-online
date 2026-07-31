@@ -676,6 +676,7 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
                     onClick={() => setShowGameInput(true)}
                     className="font-medium hover:text-white transition-colors"
                     title="Enter game number"
+                    aria-label={`Change game number, currently ${gameNumber}`}
                   >
                     {isDailyGame && <span className="text-yellow-400 mr-1">&#9819;</span>}
                     Game #{gameNumber}
@@ -695,7 +696,8 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
                 <button
                   onClick={handleShareGame}
                   className="p-1 text-white/60 active:text-[#D4AF37] transition-colors"
-                  title="Share"
+                  title={shareStatus === 'copied' ? 'Copied!' : 'Share this game'}
+                  aria-label={shareStatus === 'copied' ? 'Game link copied' : 'Share this game'}
                 >
                   <Share2 size={14} />
                 </button>

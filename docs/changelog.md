@@ -1,4 +1,10 @@
 
+## 2026-07-31 (OpenClaw 1 AM Build)
+
+### Shipped
+- **Mobile Phaser top-bar accessible names** — added explicit accessible names to the phone-width legacy Phaser game-number selector and share button, matching the desktop shell's labeled controls and covering the copied-link state.
+- Verification: `npx tsc --noEmit` and `npm run build` passed with Node 22.
+
 ## 2026-07-31 (OpenClaw Overnight Build)
 
 ### Shipped

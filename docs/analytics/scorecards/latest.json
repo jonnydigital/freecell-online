@@ -1,5 +1,5 @@
 {
-  "date": "2026-07-24",
+  "date": "2026-07-31",
   "domains": {
     "playfreecellonline": {
       "sitemapUrls": 132,
@@ -10,12 +10,12 @@
       "blogUrls": 25
     },
     "playklondikeonline": {
-      "sitemapUrls": 40,
-      "blogUrls": 11
+      "sitemapUrls": 41,
+      "blogUrls": 12
     },
     "playspidersolitaireonline": {
-      "sitemapUrls": 36,
-      "blogUrls": 12
+      "sitemapUrls": 37,
+      "blogUrls": 13
     }
   }
 }

@@ -176,6 +176,7 @@ export default function Leaderboard({ isOpen, onClose }: LeaderboardProps) {
                           <button
                             onClick={handleSaveNickname}
                             className="p-1 text-yellow-400 hover:text-yellow-300"
+                            aria-label="Save nickname"
                           >
                             <Check size={14} />
                           </button>
@@ -186,6 +187,7 @@ export default function Leaderboard({ isOpen, onClose }: LeaderboardProps) {
                           <button
                             onClick={() => { setNameInput(nickname === 'Anonymous' ? '' : nickname); setEditingName(true); }}
                             className="p-0.5 text-yellow-500/30 hover:text-yellow-400 transition-colors"
+                            aria-label="Edit nickname"
                           >
                             <Pencil size={10} />
                           </button>
@@ -284,6 +286,7 @@ export default function Leaderboard({ isOpen, onClose }: LeaderboardProps) {
                   onClick={() => setPage((p) => Math.max(0, p - 1))}
                   disabled={page === 0}
                   className="p-1.5 text-white/30 hover:text-white disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
+                  aria-label="Previous leaderboard page"
                 >
                   <ChevronLeft size={16} />
                 </button>
@@ -294,6 +297,7 @@ export default function Leaderboard({ isOpen, onClose }: LeaderboardProps) {
                   onClick={() => setPage((p) => Math.min(totalPages - 1, p + 1))}
                   disabled={page >= totalPages - 1}
                   className="p-1.5 text-white/30 hover:text-white disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
+                  aria-label="Next leaderboard page"
                 >
                   <ChevronRight size={16} />
                 </button>

@@ -1,4 +1,10 @@
 
+## 2026-07-30 (OpenClaw Evening Build)
+
+### Shipped
+- **Compact leaderboard icon-button accessible names** — added explicit accessible names to the in-game leaderboard modal's nickname save/edit controls and pagination chevrons, matching the full leaderboard page labels.
+- Verification: `npx tsc --noEmit` and `npm run build` passed with Node 22.
+
 ## 2026-07-30 (OpenClaw 1 AM Build)
 
 ### Shipped

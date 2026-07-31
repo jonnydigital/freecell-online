@@ -78,6 +78,7 @@ function TriPeaksBoard({
             onClick={onStockClick}
             disabled={state.stock.length === 0}
             title={state.stock.length > 0 ? 'Draw from stock' : 'Stock empty'}
+            aria-label={state.stock.length > 0 ? `Draw from stock, ${state.stock.length} cards remaining` : 'Stock empty'}
             style={{
               position: 'relative',
               width: 'var(--card-width)',

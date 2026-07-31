@@ -1,4 +1,10 @@
 
+## 2026-07-31 (OpenClaw Evening Build)
+
+### Shipped
+- **Stock-pile control accessibility** — converted the stock/deal piles in generic solitaire, Klondike, and Spider boards into proper named buttons, and added a dynamic accessible name to the TriPeaks stock button so stock-based routes expose draw/deal/recycle actions to keyboards and assistive technology.
+- Verification: `npx tsc --noEmit` and `npm run build` passed with Node 22.
+
 ## 2026-07-31 (OpenClaw 1 AM Build)
 
 ### Shipped

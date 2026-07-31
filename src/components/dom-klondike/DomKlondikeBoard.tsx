@@ -189,8 +189,19 @@ export default function DomKlondikeBoard({ hint, footer }: DomKlondikeBoardProps
         {/* Stock + Waste */}
         <div style={{ display: 'flex', gap: 'var(--pile-gap)' }}>
           {/* Stock pile */}
-          <div
-            style={{ position: 'relative', width: 'var(--card-width)', height: 'var(--card-height)', cursor: 'pointer' }}
+          <button
+            type="button"
+            aria-label={stock.length > 0 ? `Draw from stock, ${stock.length} cards remaining` : 'Recycle waste pile'}
+            title={stock.length > 0 ? 'Draw from stock' : 'Recycle waste pile'}
+            style={{
+              position: 'relative',
+              width: 'var(--card-width)',
+              height: 'var(--card-height)',
+              padding: 0,
+              border: 0,
+              background: 'transparent',
+              cursor: 'pointer',
+            }}
             onClick={handleStockClick}
           >
             <DomPile type="freecell" label="⟲">
@@ -208,7 +219,7 @@ export default function DomKlondikeBoard({ hint, footer }: DomKlondikeBoardProps
                 />
               )}
             </DomPile>
-          </div>
+          </button>
 
           {/* Waste pile — unlabeled: an empty outlined slot beside the stock
               reads as the discard space; the old "W" letter looked unfinished */}

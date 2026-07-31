@@ -148,11 +148,18 @@ export default function DomSpiderBoard({ hint, footer }: DomSpiderBoardProps) {
         </div>
 
         {/* Stock pile — stacked with slight offset so count is visible */}
-        <div
+        <button
+          type="button"
+          disabled={stock.length === 0}
+          aria-label={stock.length > 0 ? `Deal next row from stock, ${stockDeals} deals remaining` : 'Stock empty'}
+          title={stock.length > 0 ? 'Deal next row from stock' : 'Stock empty'}
           style={{
             position: 'relative',
             width: 'var(--card-width)',
             height: 'var(--card-height)',
+            padding: 0,
+            border: 0,
+            background: 'transparent',
             cursor: stock.length > 0 ? 'pointer' : 'default',
             flexShrink: 0,
           }}
@@ -187,7 +194,7 @@ export default function DomSpiderBoard({ hint, footer }: DomSpiderBoardProps) {
               Empty
             </div>
           )}
-        </div>
+        </button>
       </div>
 
       {/* 10 Tableau columns */}

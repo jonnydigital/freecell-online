@@ -103,13 +103,28 @@ export default function GenericCascadeBoard({
 
           {/* Stock pile */}
           {stock !== undefined && (
-            <div style={{ position: 'relative', width: 'var(--card-width)', height: 'var(--card-height)', cursor: stock.length > 0 ? 'pointer' : 'default' }} onClick={onStockClick}>
+            <button
+              type="button"
+              disabled={!onStockClick || stock.length === 0}
+              aria-label={stock.length > 0 ? `Draw from stock, ${stock.length} cards remaining` : 'Stock empty'}
+              title={stock.length > 0 ? 'Draw from stock' : 'Stock empty'}
+              style={{
+                position: 'relative',
+                width: 'var(--card-width)',
+                height: 'var(--card-height)',
+                padding: 0,
+                border: 0,
+                background: 'transparent',
+                cursor: onStockClick && stock.length > 0 ? 'pointer' : 'default',
+              }}
+              onClick={onStockClick}
+            >
               <DomPile type="freecell" label="⟲">
                 {stock.length > 0 && (
                   <div className="dom-card dom-card-back" style={{ position: 'absolute', top: 0, left: 0, width: 'var(--card-width)', height: 'var(--card-height)', cursor: 'pointer' }} />
                 )}
               </DomPile>
-            </div>
+            </button>
           )}
 
           {/* Waste pile — unlabeled: an empty outlined slot beside the stock

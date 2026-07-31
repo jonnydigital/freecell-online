@@ -12,6 +12,12 @@ import '../dom-freecell/dom-card-styles.css';
 // Foundation suits order
 // ---------------------------------------------------------------------------
 const FOUNDATION_SUITS: Suit[] = [Suit.Spades, Suit.Hearts, Suit.Diamonds, Suit.Clubs];
+const SUIT_NAMES: Record<Suit, string> = {
+  [Suit.Spades]: 'spades',
+  [Suit.Hearts]: 'hearts',
+  [Suit.Diamonds]: 'diamonds',
+  [Suit.Clubs]: 'clubs',
+};
 
 export interface KlondikeHintHighlight {
   sourceCardIds: string[];
@@ -257,6 +263,7 @@ export default function DomKlondikeBoard({ hint, footer }: DomKlondikeBoardProps
                 <DomPile
                   type="foundation"
                   label={SUIT_SYMBOLS[suit]}
+                  ariaLabel={`Move selected card to ${SUIT_NAMES[suit]} foundation`}
                   isHintTarget={isHintLocation({ type: 'foundation', suit }, 'target')}
                   onClick={selection ? () => handleEmptyPileClick({ type: 'foundation', suit }) : undefined}
                 >
@@ -304,6 +311,7 @@ export default function DomKlondikeBoard({ hint, footer }: DomKlondikeBoardProps
             >
               <DomPile
                 type="cascade"
+                ariaLabel={`Move selected card to empty column ${colIdx + 1}`}
                 isHintTarget={isHintLocation({ type: 'cascade', index: colIdx }, 'target')}
                 onClick={cascade.length === 0 && selection ? () => handleEmptyPileClick({ type: 'cascade', index: colIdx }) : undefined}
               >

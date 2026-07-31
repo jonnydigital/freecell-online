@@ -227,6 +227,7 @@ export default function DomSpiderBoard({ hint, footer }: DomSpiderBoardProps) {
             >
               <DomPile
                 type="cascade"
+                ariaLabel={`Move selected run to empty column ${colIdx + 1}`}
                 isHintTarget={isHintLocation({ type: 'cascade', index: colIdx }, 'target')}
                 onClick={cascade.length === 0 && selection ? () => handleEmptyPileClick({ type: 'cascade', index: colIdx }) : undefined}
               >

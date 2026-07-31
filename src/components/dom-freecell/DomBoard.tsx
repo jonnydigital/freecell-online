@@ -18,6 +18,12 @@ import { triggerHaptic } from '@/lib/haptics';
 // ---------------------------------------------------------------------------
 
 const FOUNDATION_SUITS: Suit[] = [Suit.Spades, Suit.Hearts, Suit.Diamonds, Suit.Clubs];
+const SUIT_NAMES: Record<Suit, string> = {
+  [Suit.Spades]: 'spades',
+  [Suit.Hearts]: 'hearts',
+  [Suit.Diamonds]: 'diamonds',
+  [Suit.Clubs]: 'clubs',
+};
 
 // ---------------------------------------------------------------------------
 // Draggable card wrapper — calls useDrag per card/run
@@ -307,6 +313,7 @@ export default function DomBoard({ hint, footer }: DomBoardProps) {
               <DomPile
                 type="freecell"
                 label="FC"
+                ariaLabel={`Move selected card to free cell ${i + 1}`}
                 isHintTarget={isHintTarget('freecell', i)}
                 onClick={!card && selection ? () => handleEmptyPileClick({ type: 'freecell', index: i }) : undefined}
               >
@@ -343,6 +350,7 @@ export default function DomBoard({ hint, footer }: DomBoardProps) {
                 <DomPile
                   type="foundation"
                   label={SUIT_SYMBOLS[suit]}
+                  ariaLabel={`Move selected card to ${SUIT_NAMES[suit]} foundation`}
                   isHintTarget={isHintTarget('foundation', undefined, suit)}
                   onClick={selection ? () => handleEmptyPileClick({ type: 'foundation', suit }) : undefined}
                 >
@@ -409,6 +417,7 @@ export default function DomBoard({ hint, footer }: DomBoardProps) {
             >
               <DomPile
                 type="cascade"
+                ariaLabel={`Move selected card to empty column ${colIdx + 1}`}
                 isHintTarget={isHintTarget('cascade', colIdx)}
                 onClick={cascade.length === 0 && selection ? () => handleEmptyPileClick({ type: 'cascade', index: colIdx }) : undefined}
               >

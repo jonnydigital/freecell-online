@@ -7,6 +7,12 @@ import DomPile from '../dom-freecell/DomPile';
 import '../dom-freecell/dom-card-styles.css';
 
 const FOUNDATION_SUITS: Suit[] = [Suit.Spades, Suit.Hearts, Suit.Diamonds, Suit.Clubs];
+const SUIT_NAMES: Record<Suit, string> = {
+  [Suit.Spades]: 'spades',
+  [Suit.Hearts]: 'hearts',
+  [Suit.Diamonds]: 'diamonds',
+  [Suit.Clubs]: 'clubs',
+};
 
 export interface BoardConfig {
   cascades: Card[][];
@@ -86,7 +92,12 @@ export default function GenericCascadeBoard({
           {/* Free cells if present */}
           {freeCells && freeCells.map((card, i) => (
             <div key={`fc-${i}`} style={{ position: 'relative', width: 'var(--card-width)', height: 'var(--card-height)' }}>
-              <DomPile type="freecell" label="FC" onClick={!card ? () => onEmptyPileClick({ type: 'freecell', index: i }) : undefined}>
+              <DomPile
+                type="freecell"
+                label="FC"
+                ariaLabel={`Move selected card to free cell ${i + 1}`}
+                onClick={!card ? () => onEmptyPileClick({ type: 'freecell', index: i }) : undefined}
+              >
                 {card && (
                   <DomCard
                     card={card as any}
@@ -172,7 +183,12 @@ export default function GenericCascadeBoard({
             const topCard = pile.length > 0 ? pile[pile.length - 1] : null;
             return (
               <div key={`fn-${suit}`} style={{ position: 'relative', width: 'var(--card-width)', height: 'var(--card-height)' }}>
-                <DomPile type="foundation" label={SUIT_SYMBOLS[suit]} onClick={() => onEmptyPileClick({ type: 'foundation', suit })}>
+                <DomPile
+                  type="foundation"
+                  label={SUIT_SYMBOLS[suit]}
+                  ariaLabel={`Move selected card to ${SUIT_NAMES[suit]} foundation`}
+                  onClick={() => onEmptyPileClick({ type: 'foundation', suit })}
+                >
                   {topCard && <DomCard card={topCard as any} style={{ top: 0, left: 0 }} zIndex={1} />}
                 </DomPile>
               </div>
@@ -192,7 +208,11 @@ export default function GenericCascadeBoard({
 
           return (
             <div key={`cas-${colIdx}`} data-pile-type="cascade" data-pile-index={colIdx} style={{ position: 'relative', width: 'var(--card-width)', minHeight: 'var(--card-height)', height: cascadeHeight }}>
-              <DomPile type="cascade" onClick={cascade.length === 0 ? () => onEmptyPileClick({ type: 'cascade', index: colIdx }) : undefined}>
+              <DomPile
+                type="cascade"
+                ariaLabel={`Move selected card to empty column ${colIdx + 1}`}
+                onClick={cascade.length === 0 ? () => onEmptyPileClick({ type: 'cascade', index: colIdx }) : undefined}
+              >
                 {cascade.map((card, rowIdx) => {
                   const isFaceUp = card.isFaceUp;
                   const isInRun = rowIdx >= runStartIndex && run.length > 0 && isFaceUp;

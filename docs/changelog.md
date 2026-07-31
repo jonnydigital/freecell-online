@@ -1,4 +1,10 @@
 
+## 2026-07-31 (OpenClaw Evening Follow-Up)
+
+### Shipped
+- **Empty pile drop-target accessibility** — made interactive empty free cells, foundations, and cascade drop targets expose button semantics, keyboard activation, focus rings, and descriptive accessible names across FreeCell, Klondike, Spider, and generic cascade boards.
+- Verification: `npx tsc --noEmit` and `npm run build` passed with Node 22.
+
 ## 2026-07-31 (OpenClaw Evening Build)
 
 ### Shipped

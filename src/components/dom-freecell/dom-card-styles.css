@@ -420,6 +420,16 @@
   position: relative;
 }
 
+.dom-pile--interactive {
+  cursor: pointer;
+}
+
+.dom-pile--interactive:focus-visible {
+  outline: 3px solid rgba(255, 255, 255, 0.9);
+  outline-offset: 4px;
+  border-radius: var(--slot-border-radius);
+}
+
 .dom-pile--cascade {
   /* Cascade is just a positioning container; cards are absolute inside */
   width: var(--card-width);

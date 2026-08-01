@@ -1,4 +1,10 @@
 
+## 2026-08-01 (OpenClaw Overnight Build)
+
+### Shipped
+- **DOM FreeCell settings semantics parity** — added dialog semantics and pressed-state exposure to the inline DOM FreeCell settings drawer's toggles, animation speed choices, and card-back picker, plus explicit labels for the desktop/mobile game-number buttons.
+- Verification: `npx tsc --noEmit` and `npm run build` passed with Node 22.
+
 ## 2026-07-31 (OpenClaw Evening Follow-Up)
 
 ### Shipped

@@ -1,5 +1,5 @@
 # FreeCell Online — Feature Backlog
-*Ranked by impact × effort. Updated 2026-07-31.*
+*Ranked by impact × effort. Updated 2026-08-01.*
 
 ## 🚨 P0: Critical Bug
 1. ~~**🔴 Mobile card rendering broken**~~ ✅ FIXED 03-02 — Root cause: `recreateAllCardSprites()` used PNG asset keys that were never loaded. On resize (common on mobile), cards became empty containers. Fixed with procedural rendering matching `createCardSprite()`.
@@ -100,6 +100,7 @@
 65. ~~**Mobile Phaser top-bar accessible names**~~ ✅ SHIPPED 2026-07-31 — Added explicit accessible names to the phone-width legacy Phaser game-number selector and share button, including the copied-link state. *(Follow-up from the July accessibility sweep: close title-only mobile controls in the older Phaser shell.)*
 66. ~~**Stock-pile control accessibility**~~ ✅ SHIPPED 2026-07-31 — Converted generic solitaire, Klondike, and Spider stock/deal piles from clickable visual containers into named buttons, and added a dynamic accessible name to TriPeaks' stock button. *(Follow-up from the July accessibility sweep: stock-based routes now expose draw/deal/recycle actions to keyboard and assistive tech users.)*
 67. ~~**Empty pile drop-target accessibility**~~ ✅ SHIPPED 2026-07-31 — Interactive empty free cells, foundations, and cascade drop targets now expose button semantics, keyboard activation, focus rings, and specific accessible names across FreeCell, Klondike, Spider, and generic cascade boards. *(Follow-up from the July accessibility sweep: click-to-move destinations are now reachable beyond mouse/touch users.)*
+68. ~~**DOM FreeCell settings semantics parity**~~ ✅ SHIPPED 2026-08-01 — Added dialog semantics and exposed pressed state for the inline DOM FreeCell settings drawer's toggles, animation speed choices, and card-back picker, plus explicit game-number button labels. *(Follow-up from the July accessibility sweep: close the DOM shell parity gaps left outside the shared settings panel.)*
 
 ## 🔎 Next Measured UX Candidates
 - Configure cron with `GOOGLE_APPLICATION_CREDENTIALS` or `GOOGLE_OAUTH_ACCESS_TOKEN`, run `npm run analytics:next-action-cycle`, review the latest `docs/analytics/next-action-cycles/` and `docs/analytics/next-action-audits/` reports, then decide whether Hint, Undo, New Game, or learning links deserve more prominence in the phone next-action strip.

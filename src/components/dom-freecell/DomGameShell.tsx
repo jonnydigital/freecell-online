@@ -1589,6 +1589,7 @@ export default function DomGameShell({ initialGameNumber, variant, locale = 'en'
             }}
             className="hover:text-white/70 transition-colors"
             title={copy.gameNumberTitle}
+            aria-label={`${copy.enterGameNumberTitle}: ${gameNumber}`}
           >
             #{gameNumber}
           </button>
@@ -1699,6 +1700,7 @@ export default function DomGameShell({ initialGameNumber, variant, locale = 'en'
             }}
             className="active:text-white transition-colors"
             title={copy.enterGameNumberTitle}
+            aria-label={`${copy.enterGameNumberTitle}: ${gameNumber}`}
           >
             #{gameNumber}
           </button>
@@ -2665,12 +2667,15 @@ function DomSettingsPanel({
       <div
         className="fixed right-0 top-0 bottom-0 w-full max-w-md border-l border-white/[0.07] shadow-2xl z-[101] flex flex-col"
         style={{ background: 'var(--theme-panel)', backgroundImage: 'radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.06), transparent 60%)' }}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="dom-settings-title"
       >
         {/* Header */}
         <div className="p-8 border-b border-white/[0.07] flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Settings className="text-[#D4AF37]" size={24} />
-            <h2 className="text-xl font-bold text-white">{copy.settings}</h2>
+            <h2 id="dom-settings-title" className="text-xl font-bold text-white">{copy.settings}</h2>
           </div>
           <button onClick={onClose} aria-label={copy.close} className="p-2 text-white/30 hover:text-white transition-colors">
             <X size={20} />
@@ -2694,6 +2699,8 @@ function DomSettingsPanel({
                     onClick={() => handleCardBackSelect(design.id)}
                     className={`relative rounded-lg overflow-hidden transition-all ${isActive ? 'ring-2 ring-[#D4AF37] scale-105' : 'ring-1 ring-white/10 hover:ring-white/25'}`}
                     title={design.name}
+                    aria-label={`${copy.cardBack}: ${design.name}`}
+                    aria-pressed={isActive}
                   >
                     <DomCardBackThumbnail design={design} canvasRefs={cardBackCanvasRefs} />
                     <div className={`text-[8px] text-center py-0.5 truncate px-0.5 ${isActive ? 'text-[#D4AF37] font-bold' : 'text-white/40'}`}>
@@ -2730,6 +2737,7 @@ function DomSettingsPanel({
                 <button
                   key={speed}
                   onClick={() => onUpdateSettings({ ...settings, animationSpeed: speed })}
+                  aria-pressed={settings.animationSpeed === speed}
                   className={`py-2 text-[10px] font-bold uppercase tracking-wider rounded-xl transition-all ${
                     settings.animationSpeed === speed
                       ? 'bg-[#D4AF37] text-[var(--theme-dark)] shadow-lg'
@@ -2803,6 +2811,7 @@ function ToggleRow({ label, description, enabled, onToggle }: {
   return (
     <button
       onClick={onToggle}
+      aria-pressed={enabled}
       className="w-full flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/[0.07] hover:bg-white/[0.08] transition-colors text-left"
     >
       <div>

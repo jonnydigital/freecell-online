@@ -180,20 +180,23 @@ route, and never advertise a locale in hreflang that returns a 404.
 - Locale pages are audited on a rotating basis: H1 count, reciprocal hreflang,
   localized UI, and that each advertised alternate returns 200.
 
-### Current locale set (audited 2026-07-04, all pass)
+### Current locale set (audited 2026-08-01, all pass)
 
-The FreeCell property runs four locales, each with a landing page plus a
+The FreeCell property runs six locales, each with a landing page plus a
 localized play route, all sharing one reciprocal hreflang cluster
-(`de`, `en`, `es`, `fr`, `x-default`):
+(`de`, `en`, `es`, `fr`, `it`, `pt`, `x-default`):
 
-- English (default): `/freecell/how-to-play` and the main board
+- English (default): `/freecell/how-to-play` and the main board (`/`)
 - Spanish: `/freecell-en-espanol` and `/freecell-en-espanol/jugar`
 - French: `/freecell-en-francais` and `/freecell-en-francais/jouer`
 - German: `/freecell-auf-deutsch` and `/freecell-auf-deutsch/spielen`
+- Italian: `/freecell-in-italiano` and `/freecell-in-italiano/gioca`
+- Portuguese: `/freecell-em-portugues` and `/freecell-em-portugues/jogar`
 
-All eight pages return 200 with exactly one H1, a self-referential canonical,
-localized UI, and the complete reciprocal hreflang set. This is the bar any
-future locale must clear before launch.
+All twelve pages return 200 with exactly one H1, a self-referential canonical,
+localized UI, and the complete reciprocal hreflang set — the landing pages
+resolve `en`/`x-default` to `/freecell/how-to-play`, the play routes resolve
+them to `/`. This is the bar any future locale must clear before launch.
 
 ## Priority Backlog
 

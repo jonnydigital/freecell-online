@@ -1,4 +1,10 @@
 
+## 2026-08-01 (OpenClaw 3 AM Build)
+
+### Shipped
+- **Calculation board control accessibility** — converted Calculation foundations, stock, drawn-card, and waste-pile targets from mouse-only visual containers into named buttons, including disabled states and labels that describe draw, place, and auto-play actions.
+- Verification: `npx tsc --noEmit` and `npm run build` passed with Node 22.
+
 ## 2026-08-01 (OpenClaw Late Overnight Build)
 
 ### Shipped

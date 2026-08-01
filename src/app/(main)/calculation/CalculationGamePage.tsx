@@ -6,7 +6,7 @@ import DomCard from '@/components/dom-freecell/DomCard';
 import '@/components/dom-freecell/dom-card-styles.css';
 import { CalculationEngine, FOUNDATION_SEQUENCES } from '@/engine/CalculationEngine';
 import { dealCalculationGame } from '@/engine/Deck';
-import { Card, RANK_NAMES, Rank } from '@/engine/Card';
+import { Card, RANK_NAMES, Rank, SUIT_SYMBOLS } from '@/engine/Card';
 import { soundManager } from '@/lib/sounds';
 
 export default function CalculationGamePage() {
@@ -227,6 +227,12 @@ export default function CalculationGamePage() {
     cursor: 'pointer',
   };
 
+  const controlSlotStyle: React.CSSProperties = {
+    appearance: 'none',
+    padding: 0,
+    font: 'inherit',
+  };
+
   const slotStyle: React.CSSProperties = {
     width: cardWidth,
     aspectRatio: '5/7',
@@ -239,6 +245,10 @@ export default function CalculationGamePage() {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+  };
+
+  const cardName = (card: Card): string => {
+    return `${RANK_NAMES[card.rank]}${SUIT_SYMBOLS[card.suit]}`;
   };
 
   const stockInfo = (
@@ -295,12 +305,19 @@ export default function CalculationGamePage() {
             const intervalLabel = [`+1`, `+2`, `+3`, `+4`][fi];
 
             return (
-              <div
+              <button
                 key={`f-${fi}`}
+                type="button"
                 onClick={() => handlePlaceOnFoundation(fi)}
                 onMouseEnter={() => setShowSequence(fi)}
                 onMouseLeave={() => setShowSequence(null)}
-                style={{ position: 'relative' }}
+                aria-label={[
+                  `Foundation ${fi + 1}, builds by ${fi + 1}s`,
+                  topCard ? `top card ${cardName(topCard)}` : `base ${baseLabel}`,
+                  pile.length === 13 ? 'complete' : `next card ${nextRank ? RANK_NAMES[nextRank] : 'none'}`,
+                  'select to move an eligible drawn or waste card here',
+                ].join(', ')}
+                style={{ ...controlSlotStyle, position: 'relative', background: 'transparent', border: 0 }}
               >
                 <div style={{
                   ...slotStyle,
@@ -378,7 +395,7 @@ export default function CalculationGamePage() {
                     </div>
                   </div>
                 )}
-              </div>
+              </button>
             );
           })}
         </div>
@@ -386,9 +403,19 @@ export default function CalculationGamePage() {
         {/* Stock + Drawn card row */}
         <div style={{ display: 'flex', gap: '12px', alignItems: 'center', justifyContent: 'center' }}>
           {/* Stock pile */}
-          <div
+          <button
+            type="button"
             onClick={handleDrawFromStock}
+            disabled={stockCount === 0 || !!drawnCard}
+            aria-label={
+              stockCount === 0
+                ? 'Stock empty'
+                : drawnCard
+                  ? `Stock blocked until drawn card ${cardName(drawnCard)} is played`
+                  : `Draw from stock, ${stockCount} cards remaining`
+            }
             style={{
+              ...controlSlotStyle,
               ...slotStyle,
               cursor: stockCount > 0 && !drawnCard ? 'pointer' : 'default',
               border: stockCount > 0 && !drawnCard
@@ -423,12 +450,20 @@ export default function CalculationGamePage() {
                 Empty
               </span>
             )}
-          </div>
+          </button>
 
           {/* Drawn card */}
-          <div
+          <button
+            type="button"
             onClick={handleDrawnCardClick}
+            disabled={!drawnCard}
+            aria-label={
+              drawnCard
+                ? `Drawn card ${cardName(drawnCard)}, select to auto-play to foundation if available`
+                : 'No drawn card'
+            }
             style={{
+              ...controlSlotStyle,
               ...slotStyle,
               border: drawnCard
                 ? '2px solid rgba(212,175,55,0.5)'
@@ -444,7 +479,7 @@ export default function CalculationGamePage() {
                 Draw
               </span>
             )}
-          </div>
+          </button>
         </div>
 
         {/* Waste piles row */}
@@ -454,12 +489,22 @@ export default function CalculationGamePage() {
 
             return (
               <div key={`w-${wi}`} style={{ position: 'relative' }}>
-                <div
+                <button
+                  type="button"
                   onClick={() => drawnCard ? handlePlaceOnWaste(wi) : handleWasteToFoundation(wi)}
                   onDoubleClick={() => handleWasteToFoundation(wi)}
+                  disabled={!drawnCard && !topCard}
+                  aria-label={
+                    drawnCard
+                      ? `Place drawn card ${cardName(drawnCard)} on waste pile ${wi + 1}, ${pile.length} card${pile.length !== 1 ? 's' : ''}`
+                      : topCard
+                        ? `Waste pile ${wi + 1}, top card ${cardName(topCard)}, ${pile.length} card${pile.length !== 1 ? 's' : ''}, select to auto-play to foundation if available`
+                        : `Empty waste pile ${wi + 1}`
+                  }
                   style={{
+                    ...controlSlotStyle,
                     ...slotStyle,
-                    cursor: 'pointer',
+                    cursor: drawnCard || topCard ? 'pointer' : 'default',
                     border: drawnCard
                       ? '1px solid rgba(212,175,55,0.2)'
                       : topCard
@@ -476,7 +521,7 @@ export default function CalculationGamePage() {
                       Waste {wi + 1}
                     </span>
                   )}
-                </div>
+                </button>
                 {/* Pile count */}
                 <div style={{
                   textAlign: 'center',

@@ -6,7 +6,7 @@ import DomCard from '@/components/dom-freecell/DomCard';
 import '@/components/dom-freecell/dom-card-styles.css';
 import { MonteCarloEngine, MonteCarloPosition } from '@/engine/MonteCarloEngine';
 import { dealMonteCarloGame } from '@/engine/Deck';
-import { Card } from '@/engine/Card';
+import { Card, RANK_NAMES, SUIT_SYMBOLS } from '@/engine/Card';
 import { soundManager } from '@/lib/sounds';
 
 export default function MonteCarloGamePage() {
@@ -134,6 +134,10 @@ export default function MonteCarloGamePage() {
     aspectRatio: '5/7',
     fontSize: 'clamp(10px, 2.5vw, 16px)',
     cursor: 'pointer',
+  };
+
+  const getCardLabel = (card: Card): string => {
+    return `${RANK_NAMES[card.rank]}${SUIT_SYMBOLS[card.suit]}`;
   };
 
   const pairsInfo = (
@@ -274,11 +278,26 @@ export default function MonteCarloGamePage() {
                 }
               }
 
+              const positionLabel = `row ${r + 1}, column ${c + 1}`;
+              const accessibleLabel = card
+                ? [
+                    `${getCardLabel(card)} at ${positionLabel}`,
+                    isSelected ? 'selected' : null,
+                    isValidTarget ? 'matching adjacent pair available' : null,
+                  ].filter(Boolean).join(', ')
+                : `Empty Monte Carlo cell at ${positionLabel}`;
+
               return (
-                <div
+                <button
                   key={key}
+                  type="button"
                   onClick={() => card && handleCellClick(r, c)}
+                  disabled={!card}
+                  aria-label={accessibleLabel}
+                  aria-pressed={card ? isSelected : undefined}
                   style={{
+                    appearance: 'none',
+                    padding: 0,
                     aspectRatio: '5/7',
                     borderRadius: 'clamp(3px, 0.8vw, 8px)',
                     border: isSelected
@@ -299,6 +318,7 @@ export default function MonteCarloGamePage() {
                     alignItems: 'center',
                     justifyContent: 'center',
                     cursor: card ? 'pointer' : 'default',
+                    font: 'inherit',
                     boxShadow: isSelected
                       ? '0 0 12px rgba(212,175,55,0.4)'
                       : isValidTarget
@@ -317,7 +337,7 @@ export default function MonteCarloGamePage() {
                       />
                     </div>
                   )}
-                </div>
+                </button>
               );
             })
           )}

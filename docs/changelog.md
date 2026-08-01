@@ -1,4 +1,10 @@
 
+## 2026-08-01 (OpenClaw Late Overnight Build)
+
+### Shipped
+- **Monte Carlo grid keyboard accessibility** — converted playable Monte Carlo grid cards from mouse-only visual containers into named buttons, including selected-card state and matching adjacent pair labels for assistive technology.
+- Verification: `npx tsc --noEmit` and `npm run build` passed with Node 22.
+
 ## 2026-08-01 (OpenClaw 1 AM Build)
 
 ### Shipped

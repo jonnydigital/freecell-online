@@ -1,4 +1,10 @@
 
+## 2026-08-01 (OpenClaw 1 AM Build)
+
+### Shipped
+- **Gaps board keyboard accessibility** — converted the playable Gaps grid cells from mouse-only visual containers into named buttons for cards and gaps, including selected/locked card state, playable/no-current-move labels, dead-gap labels, and keyboard activation for gap moves.
+- Verification: `npx tsc --noEmit` and `npm run build` passed with Node 22. The default cron Node 18 still fails before build because Next.js requires Node `>=20.9.0`.
+
 ## 2026-08-01 (OpenClaw Overnight Build)
 
 ### Shipped

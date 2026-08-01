@@ -101,6 +101,7 @@
 66. ~~**Stock-pile control accessibility**~~ ✅ SHIPPED 2026-07-31 — Converted generic solitaire, Klondike, and Spider stock/deal piles from clickable visual containers into named buttons, and added a dynamic accessible name to TriPeaks' stock button. *(Follow-up from the July accessibility sweep: stock-based routes now expose draw/deal/recycle actions to keyboard and assistive tech users.)*
 67. ~~**Empty pile drop-target accessibility**~~ ✅ SHIPPED 2026-07-31 — Interactive empty free cells, foundations, and cascade drop targets now expose button semantics, keyboard activation, focus rings, and specific accessible names across FreeCell, Klondike, Spider, and generic cascade boards. *(Follow-up from the July accessibility sweep: click-to-move destinations are now reachable beyond mouse/touch users.)*
 68. ~~**DOM FreeCell settings semantics parity**~~ ✅ SHIPPED 2026-08-01 — Added dialog semantics and exposed pressed state for the inline DOM FreeCell settings drawer's toggles, animation speed choices, and card-back picker, plus explicit game-number button labels. *(Follow-up from the July accessibility sweep: close the DOM shell parity gaps left outside the shared settings panel.)*
+69. ~~**Gaps board keyboard accessibility**~~ ✅ SHIPPED 2026-08-01 — Converted Gaps cards and gap cells from mouse-only visual containers into named buttons with selected, locked, playable, no-current-move, and dead-gap state labels. *(Follow-up from the July accessibility sweep: route-specific board variants should expose real game moves to keyboard and assistive tech users.)*
 
 ## 🔎 Next Measured UX Candidates
 - Configure cron with `GOOGLE_APPLICATION_CREDENTIALS` or `GOOGLE_OAUTH_ACCESS_TOKEN`, run `npm run analytics:next-action-cycle`, review the latest `docs/analytics/next-action-cycles/` and `docs/analytics/next-action-audits/` reports, then decide whether Hint, Undo, New Game, or learning links deserve more prominence in the phone next-action strip.
@@ -171,6 +172,7 @@
 - [x] PWA install CTA — browser-aware install card in the FreeCell desktop sidebar and mobile menu overlay, with iOS guidance and GA4 install-funnel events (shipped 2026-07-07)
 - [x] DOM card-back theming — saved card-back choices now repaint face-down CSS cards and load before first paint (shipped 2026-07-08)
 - [x] Games catalog numbered-deal positioning — `/games` now highlights 32,000 numbered FreeCell deals and links directly into deal discovery surfaces (shipped 2026-07-11)
+- [x] Gaps board keyboard accessibility — Gaps grid cards and gap cells now expose named button semantics and keyboard activation (shipped 2026-08-01)
 
 ---
 

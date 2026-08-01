@@ -6,8 +6,19 @@ import DomCard from '@/components/dom-freecell/DomCard';
 import '@/components/dom-freecell/dom-card-styles.css';
 import { GapsEngine, GapsLocation, GapsMove } from '@/engine/GapsEngine';
 import { dealGapsGame } from '@/engine/Deck';
-import { Card } from '@/engine/Card';
+import { Card, RANK_NAMES } from '@/engine/Card';
 import { soundManager } from '@/lib/sounds';
+
+const SUIT_NAMES: Record<Card['suit'], string> = {
+  S: 'spades',
+  H: 'hearts',
+  D: 'diamonds',
+  C: 'clubs',
+};
+
+function cardName(card: Card): string {
+  return `${RANK_NAMES[card.rank]} of ${SUIT_NAMES[card.suit]}`;
+}
 
 export default function GapsGamePage() {
   const engineRef = useRef<GapsEngine | null>(null);
@@ -266,12 +277,26 @@ export default function GapsGamePage() {
               const isValidTarget = validTargets.has(`${r}-${c}`);
               const isGap = card === null;
               const isDead = isGap && engineRef.current ? engineRef.current.isDeadGap(r, c) : false;
+              const gapMoveCount = isGap && engineRef.current
+                ? engineRef.current.getValidMoves().filter(m => m.to.row === r && m.to.col === c).length
+                : 0;
 
               if (isGap) {
                 return (
-                  <div
+                  <button
+                    type="button"
                     key={`gap-${r}-${c}`}
                     onClick={() => handleGapClick(r, c)}
+                    disabled={isDead && !isValidTarget && gapMoveCount === 0}
+                    aria-label={
+                      isValidTarget
+                        ? `Move selected card to gap at row ${r + 1}, column ${c + 1}`
+                        : gapMoveCount === 1
+                          ? `Move the only playable card to gap at row ${r + 1}, column ${c + 1}`
+                          : isDead
+                            ? `Dead gap at row ${r + 1}, column ${c + 1}`
+                            : `Gap at row ${r + 1}, column ${c + 1}`
+                    }
                     style={{
                       width: 'clamp(22px, calc((100vw - 60px) / 13), 72px)',
                       aspectRatio: '5/7',
@@ -286,24 +311,39 @@ export default function GapsGamePage() {
                         : isDead
                           ? 'rgba(0,0,0,0.15)'
                           : 'rgba(255,255,255,0.03)',
-                      cursor: isValidTarget ? 'pointer' : isDead ? 'default' : 'pointer',
+                      cursor: isValidTarget || gapMoveCount > 0 ? 'pointer' : isDead ? 'default' : 'pointer',
                       boxSizing: 'border-box',
                       flexShrink: 0,
                       transition: 'border-color 0.15s, background 0.15s',
+                      appearance: 'none',
+                      padding: 0,
                     }}
                   />
                 );
               }
 
+              const hasMove = engineRef.current
+                ? engineRef.current.getValidMoves().some(m => m.from.row === r && m.from.col === c)
+                : false;
+
               return (
-                <div
+                <button
+                  type="button"
                   key={card.id}
                   onClick={() => handleCardClick(r, c)}
                   onDoubleClick={() => handleDoubleClick(r, c)}
+                  disabled={isLocked}
+                  aria-label={`${isSelected ? 'Selected ' : ''}${cardName(card)} at row ${r + 1}, column ${c + 1}${isLocked ? ', locked in sequence' : hasMove ? ', playable' : ', no current move'}`}
+                  aria-pressed={isSelected}
                   style={{
                     width: 'clamp(22px, calc((100vw - 60px) / 13), 72px)',
                     position: 'relative',
                     flexShrink: 0,
+                    appearance: 'none',
+                    padding: 0,
+                    border: 0,
+                    background: 'transparent',
+                    cursor: isLocked ? 'default' : 'pointer',
                   }}
                 >
                   <DomCard
@@ -329,7 +369,7 @@ export default function GapsGamePage() {
                       }}
                     />
                   )}
-                </div>
+                </button>
               );
             })}
           </div>

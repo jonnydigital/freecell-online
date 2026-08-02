@@ -6,7 +6,7 @@ import DomCard from '@/components/dom-freecell/DomCard';
 import DomPile from '@/components/dom-freecell/DomPile';
 import { TriPeaksEngine, TriPeaksLocation, ROW_COLS } from '@/engine/TriPeaksEngine';
 import { dealTriPeaksGame } from '@/engine/Deck';
-import { Card } from '@/engine/Card';
+import { Card, RANK_NAMES, SUIT_SYMBOLS } from '@/engine/Card';
 import '@/components/dom-freecell/dom-card-styles.css';
 
 function createEngine(gameNumber: number) {
@@ -33,6 +33,10 @@ type TriPeaksSnapshot = ReturnType<typeof snapshot>;
 
 function sameTableauLocation(a: TriPeaksLocation | null, b: TriPeaksLocation) {
   return a?.type === 'tableau' && b.type === 'tableau' && a.row === b.row && a.col === b.col;
+}
+
+function cardName(card: Card) {
+  return `${RANK_NAMES[card.rank]}${SUIT_SYMBOLS[card.suit]}`;
 }
 
 function TriPeaksBoard({
@@ -175,26 +179,46 @@ function TriPeaksBoard({
             }
 
             return (
-              <DomCard
+              <button
                 key={card.id}
-                card={card as any}
+                type="button"
+                onClick={available ? (event) => {
+                  event.stopPropagation();
+                  onCardClick(location);
+                } : undefined}
+                disabled={!available}
+                aria-label={[
+                  `TriPeaks card ${cardName(card)} at row ${rowIndex + 1}, column ${colIndex + 1}`,
+                  playable ? 'playable on the waste pile' : available ? 'available but not playable' : 'blocked',
+                  sameTableauLocation(selected, location) ? 'selected' : null,
+                ].filter(Boolean).join(', ')}
+                aria-pressed={available ? sameTableauLocation(selected, location) : undefined}
                 style={{
+                  position: 'absolute',
                   left,
                   top,
+                  width: 'var(--card-width)',
+                  height: 'var(--card-height)',
+                  padding: 0,
+                  border: 0,
+                  background: 'transparent',
+                  font: 'inherit',
                   cursor: playable ? 'pointer' : available ? 'default' : 'not-allowed',
                   opacity: available ? 1 : 0.84,
+                  zIndex: rowIndex + 1,
                 }}
-                zIndex={rowIndex + 1}
-                isSelected={sameTableauLocation(selected, location)}
-                onPointerDown={available ? (event) => {
-                  event.stopPropagation();
-                  onCardClick(location);
-                } : undefined}
-                onDoubleClick={available ? (event) => {
-                  event.stopPropagation();
-                  onCardClick(location);
-                } : undefined}
-              />
+              >
+                <DomCard
+                  card={card as any}
+                  style={{
+                    left: 0,
+                    top: 0,
+                    cursor: playable ? 'pointer' : available ? 'default' : 'not-allowed',
+                  }}
+                  zIndex={rowIndex + 1}
+                  isSelected={sameTableauLocation(selected, location)}
+                />
+              </button>
             );
           })
         ))}

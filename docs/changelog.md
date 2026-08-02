@@ -1,4 +1,10 @@
 
+## 2026-08-02 (OpenClaw Build & Ship)
+
+### Shipped
+- **Pyramid + TriPeaks card keyboard accessibility** — converted exposed Pyramid cards, the Pyramid waste card, and available TriPeaks tableau cards from pointer-only `DomCard` div interactions into native named buttons with selected, playable, exposed, covered, and waste-pairing state labels.
+- Verification: `npx tsc --noEmit` and `npm run build` passed with Node 22. The default cron shell is still Node 18, so Node 22 was put on `PATH` for verification.
+
 ## 2026-08-01 (OpenClaw 3 AM Build)
 
 ### Shipped

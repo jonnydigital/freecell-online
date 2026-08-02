@@ -6,7 +6,7 @@ import DomCard from '@/components/dom-freecell/DomCard';
 import DomPile from '@/components/dom-freecell/DomPile';
 import { PyramidEngine, PyramidLocation } from '@/engine/PyramidEngine';
 import { dealPyramidGame } from '@/engine/Deck';
-import { Card } from '@/engine/Card';
+import { Card, RANK_NAMES, SUIT_SYMBOLS } from '@/engine/Card';
 import '@/components/dom-freecell/dom-card-styles.css';
 
 type PyramidSelection = {
@@ -41,6 +41,10 @@ function sameLocation(a: PyramidLocation, b: PyramidLocation) {
     return a.row === b.row && a.col === b.col;
   }
   return true;
+}
+
+function cardName(card: Card) {
+  return `${RANK_NAMES[card.rank]}${SUIT_SYMBOLS[card.suit]}`;
 }
 
 function PyramidBoard({
@@ -110,20 +114,37 @@ function PyramidBoard({
           <div style={{ position: 'relative', width: 'var(--card-width)', height: 'var(--card-height)' }}>
             <DomPile type="freecell">
               {wasteTopCard && (
-                <DomCard
-                  card={wasteTopCard as any}
-                  style={{ top: 0, left: 0, cursor: 'pointer' }}
-                  zIndex={1}
-                  isSelected={isSelected({ type: 'waste' })}
-                  onPointerDown={(event) => {
+                <button
+                  type="button"
+                  onClick={(event) => {
                     event.stopPropagation();
                     onSelect({ card: wasteTopCard, location: { type: 'waste' } });
                   }}
-                  onDoubleClick={(event) => {
-                    event.stopPropagation();
-                    onSelect({ card: wasteTopCard, location: { type: 'waste' } });
+                  aria-label={[
+                    `Waste card ${cardName(wasteTopCard)}`,
+                    isSelected({ type: 'waste' }) ? 'selected' : 'select to pair with an exposed pyramid card',
+                  ].join(', ')}
+                  aria-pressed={isSelected({ type: 'waste' })}
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: 'var(--card-width)',
+                    height: 'var(--card-height)',
+                    padding: 0,
+                    border: 0,
+                    background: 'transparent',
+                    cursor: 'pointer',
+                    font: 'inherit',
                   }}
-                />
+                >
+                  <DomCard
+                    card={wasteTopCard as any}
+                    style={{ top: 0, left: 0, cursor: 'pointer' }}
+                    zIndex={1}
+                    isSelected={isSelected({ type: 'waste' })}
+                  />
+                </button>
               )}
             </DomPile>
           </div>
@@ -175,26 +196,41 @@ function PyramidBoard({
             }
 
             return (
-              <DomCard
+              <button
                 key={card.id}
-                card={card as any}
+                type="button"
+                onClick={exposed ? (event) => {
+                  event.stopPropagation();
+                  onSelect({ card, location });
+                } : undefined}
+                disabled={!exposed}
+                aria-label={[
+                  `Pyramid card ${cardName(card)} at row ${rowIndex + 1}, column ${colIndex + 1}`,
+                  exposed ? (isSelected(location) ? 'selected' : engine.isKing(card) ? 'exposed king, select to remove' : 'exposed, select to pair') : 'covered',
+                ].join(', ')}
+                aria-pressed={exposed ? isSelected(location) : undefined}
                 style={{
+                  position: 'absolute',
                   left,
                   top,
+                  width: 'var(--card-width)',
+                  height: 'var(--card-height)',
+                  padding: 0,
+                  border: 0,
+                  background: 'transparent',
+                  font: 'inherit',
                   cursor: exposed ? 'pointer' : 'default',
                   opacity: exposed ? 1 : 0.84,
+                  zIndex: rowIndex + 1,
                 }}
-                zIndex={rowIndex + 1}
-                isSelected={isSelected(location)}
-                onPointerDown={exposed ? (event) => {
-                  event.stopPropagation();
-                  onSelect({ card, location });
-                } : undefined}
-                onDoubleClick={exposed ? (event) => {
-                  event.stopPropagation();
-                  onSelect({ card, location });
-                } : undefined}
-              />
+              >
+                <DomCard
+                  card={card as any}
+                  style={{ left: 0, top: 0, cursor: exposed ? 'pointer' : 'default' }}
+                  zIndex={rowIndex + 1}
+                  isSelected={isSelected(location)}
+                />
+              </button>
             );
           })
         ))}

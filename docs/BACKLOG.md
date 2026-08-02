@@ -1,5 +1,5 @@
 # FreeCell Online — Feature Backlog
-*Ranked by impact × effort. Updated 2026-08-01.*
+*Ranked by impact × effort. Updated 2026-08-02.*
 
 ## 🚨 P0: Critical Bug
 1. ~~**🔴 Mobile card rendering broken**~~ ✅ FIXED 03-02 — Root cause: `recreateAllCardSprites()` used PNG asset keys that were never loaded. On resize (common on mobile), cards became empty containers. Fixed with procedural rendering matching `createCardSprite()`.
@@ -104,6 +104,7 @@
 69. ~~**Gaps board keyboard accessibility**~~ ✅ SHIPPED 2026-08-01 — Converted Gaps cards and gap cells from mouse-only visual containers into named buttons with selected, locked, playable, no-current-move, and dead-gap state labels. *(Follow-up from the July accessibility sweep: route-specific board variants should expose real game moves to keyboard and assistive tech users.)*
 70. ~~**Monte Carlo grid keyboard accessibility**~~ ✅ SHIPPED 2026-08-01 — Converted Monte Carlo grid cards from mouse-only visual containers into named buttons with selected and matching-pair state labels. *(Follow-up from the July/August accessibility sweep: route-specific board variants should expose pair-removal gameplay to keyboard and assistive tech users.)*
 71. ~~**Calculation board control accessibility**~~ ✅ SHIPPED 2026-08-01 — Converted Calculation foundations, stock, drawn card, and waste piles from mouse-only visual containers into named buttons with disabled states and action-specific labels. *(Follow-up from the July/August accessibility sweep: route-specific board variants should expose draw/place/autoplay controls to keyboard and assistive tech users.)*
+72. ~~**Pyramid + TriPeaks card keyboard accessibility**~~ ✅ SHIPPED 2026-08-02 — Converted exposed Pyramid cards, Pyramid waste, and available TriPeaks tableau cards from pointer-only card divs into named buttons with selected/playable/covered state labels. *(Follow-up from the July/August accessibility sweep: the custom geometric board variants should expose playable cards to keyboard and assistive tech users.)*
 
 ## 🔎 Next Measured UX Candidates
 - Configure cron with `GOOGLE_APPLICATION_CREDENTIALS` or `GOOGLE_OAUTH_ACCESS_TOKEN`, run `npm run analytics:next-action-cycle`, review the latest `docs/analytics/next-action-cycles/` and `docs/analytics/next-action-audits/` reports, then decide whether Hint, Undo, New Game, or learning links deserve more prominence in the phone next-action strip.
@@ -177,6 +178,7 @@
 - [x] Gaps board keyboard accessibility — Gaps grid cards and gap cells now expose named button semantics and keyboard activation (shipped 2026-08-01)
 - [x] Monte Carlo grid keyboard accessibility — Monte Carlo grid cards now expose named button semantics, selected state, and adjacent matching-pair labels (shipped 2026-08-01)
 - [x] Calculation board control accessibility — Calculation foundations, stock, drawn card, and waste piles now expose named button semantics and disabled states (shipped 2026-08-01)
+- [x] Pyramid + TriPeaks card keyboard accessibility — exposed Pyramid cards, Pyramid waste, and available TriPeaks tableau cards now expose named button semantics and state labels (shipped 2026-08-02)
 
 ---
 

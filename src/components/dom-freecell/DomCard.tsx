@@ -4,6 +4,13 @@ import React from 'react';
 import { type Suit, type Rank, type Color, RANK_NAMES, SUIT_SYMBOLS } from '@/engine/Card';
 import './dom-card-styles.css';
 
+const SUIT_NAMES: Record<Suit, string> = {
+  S: 'spades',
+  H: 'hearts',
+  D: 'diamonds',
+  C: 'clubs',
+};
+
 export interface DomCardData {
   id: string;
   suit: Suit;
@@ -39,6 +46,8 @@ const DomCard: React.FC<DomCardProps> = ({
   const rankLabel = RANK_NAMES[card.rank];
   const suitSymbol = SUIT_SYMBOLS[card.suit];
   const colorClass = card.color === 'red' ? 'dom-card--red' : 'dom-card--black';
+  const isInteractive = Boolean(onPointerDown || onDoubleClick);
+  const cardLabel = `${rankLabel} of ${SUIT_NAMES[card.suit]}`;
 
   const className = [
     'dom-card',
@@ -58,12 +67,29 @@ const DomCard: React.FC<DomCardProps> = ({
     ...(isDealing ? { '--deal-index': dealIndex } as React.CSSProperties : {}),
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (!isInteractive) return;
+    if (event.key !== 'Enter' && event.key !== ' ') return;
+
+    event.preventDefault();
+    if (onPointerDown) {
+      onPointerDown(event as unknown as React.PointerEvent);
+      return;
+    }
+
+    onDoubleClick?.(event as unknown as React.MouseEvent);
+  };
+
   return (
     <div
       className={className}
       style={mergedStyle}
       onPointerDown={onPointerDown}
       onDoubleClick={onDoubleClick}
+      onKeyDown={handleKeyDown}
+      role={isInteractive ? 'button' : undefined}
+      tabIndex={isInteractive ? 0 : undefined}
+      aria-label={isInteractive ? cardLabel : undefined}
       data-card-id={card.id}
     >
       <div className="dom-card__inner">

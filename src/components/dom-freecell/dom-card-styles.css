@@ -414,6 +414,11 @@
   color: var(--suit-black);
 }
 
+.dom-card[role="button"]:focus-visible {
+  outline: 3px solid rgba(255, 255, 255, 0.9);
+  outline-offset: 4px;
+}
+
 /* ---- Pile / Zone ---- */
 
 .dom-pile {

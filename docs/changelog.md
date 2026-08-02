@@ -1,4 +1,10 @@
 
+## 2026-08-02 (OpenClaw Evening Build)
+
+### Shipped
+- **Shared DOM card keyboard accessibility** — made interactive DOM cards focusable named controls with visible focus rings and Enter/Space activation, covering Klondike, Spider, and generic solitaire variants that use the shared `DomCard` renderer.
+- Verification: `npx tsc --noEmit` and `npm run build` passed with Node 22.
+
 ## 2026-08-02 (OpenClaw Build & Ship)
 
 ### Shipped

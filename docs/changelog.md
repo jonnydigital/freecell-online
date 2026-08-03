@@ -1,4 +1,10 @@
 
+## 2026-08-03 (OpenClaw Evening Build)
+
+### Shipped
+- **Statistics control state semantics** — the Statistics page game-type selector, section tabs, and time filters now expose their selected state with `aria-pressed` or `aria-selected`, and the tab bar has explicit tablist semantics plus stable mobile accessible names.
+- Verification: `npx tsc --noEmit` and `npm run build` passed with Node 22.
+
 ## 2026-08-03 (OpenClaw Build & Ship)
 
 ### Shipped

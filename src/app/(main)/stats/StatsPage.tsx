@@ -853,11 +853,14 @@ export default function StatsPage() {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.05, duration: 0.3 }}
           className="flex gap-2 mb-4"
+          role="group"
+          aria-label="Game type"
         >
           {([['freecell', 'FreeCell'], ['klondike', 'Klondike']] as const).map(([key, label]) => (
             <button
               key={key}
               onClick={() => setGameType(key)}
+              aria-pressed={gameType === key}
               className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
                 gameType === key
                   ? 'bg-white/15 text-white border border-white/20'
@@ -875,11 +878,16 @@ export default function StatsPage() {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.1, duration: 0.3 }}
           className="flex gap-1 mb-5 bg-white/5 rounded-xl p-1 overflow-x-auto"
+          role="tablist"
+          aria-label="Statistics sections"
         >
           {tabs.map((t) => (
             <button
               key={t.key}
               onClick={() => setTab(t.key)}
+              role="tab"
+              aria-selected={tab === t.key}
+              aria-label={`${t.label} statistics`}
               className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all whitespace-nowrap flex-1 justify-center ${
                 tab === t.key
                   ? 'bg-[#D4AF37] text-black'
@@ -901,11 +909,18 @@ export default function StatsPage() {
             variants={staggerContainer}
           >
             {/* Time Filter */}
-            <motion.div variants={fadeUp} custom={0} className="flex gap-2 mb-6">
+            <motion.div
+              variants={fadeUp}
+              custom={0}
+              className="flex gap-2 mb-6"
+              role="group"
+              aria-label="Statistics time range"
+            >
               {filters.map((f) => (
                 <button
                   key={f.key}
                   onClick={() => setFilter(f.key)}
+                  aria-pressed={filter === f.key}
                   className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
                     filter === f.key
                       ? 'bg-[#D4AF37] text-black'

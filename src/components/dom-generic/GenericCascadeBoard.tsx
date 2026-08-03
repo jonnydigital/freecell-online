@@ -54,6 +54,7 @@ export default function GenericCascadeBoard({
 
   const wasteTopCard = waste && waste.length > 0 ? waste[waste.length - 1] : null;
   const reserveTopCard = reserve && reserve.length > 0 ? reserve[reserve.length - 1] : null;
+  const hasSelection = selectedCardIds.size > 0;
 
   // Wide layouts (>8 cascades, e.g. Forty Thieves 10, Bristol 11). The default card-width
   // formula in dom-card-styles.css is tuned for 8 columns; for more columns we expose the
@@ -96,7 +97,7 @@ export default function GenericCascadeBoard({
                 type="freecell"
                 label="FC"
                 ariaLabel={`Move selected card to free cell ${i + 1}`}
-                onClick={!card ? () => onEmptyPileClick({ type: 'freecell', index: i }) : undefined}
+                onClick={!card && hasSelection ? () => onEmptyPileClick({ type: 'freecell', index: i }) : undefined}
               >
                 {card && (
                   <DomCard
@@ -187,7 +188,7 @@ export default function GenericCascadeBoard({
                   type="foundation"
                   label={SUIT_SYMBOLS[suit]}
                   ariaLabel={`Move selected card to ${SUIT_NAMES[suit]} foundation`}
-                  onClick={() => onEmptyPileClick({ type: 'foundation', suit })}
+                  onClick={hasSelection ? () => onEmptyPileClick({ type: 'foundation', suit }) : undefined}
                 >
                   {topCard && <DomCard card={topCard as any} style={{ top: 0, left: 0 }} zIndex={1} />}
                 </DomPile>
@@ -211,7 +212,7 @@ export default function GenericCascadeBoard({
               <DomPile
                 type="cascade"
                 ariaLabel={`Move selected card to empty column ${colIdx + 1}`}
-                onClick={cascade.length === 0 ? () => onEmptyPileClick({ type: 'cascade', index: colIdx }) : undefined}
+                onClick={cascade.length === 0 && hasSelection ? () => onEmptyPileClick({ type: 'cascade', index: colIdx }) : undefined}
               >
                 {cascade.map((card, rowIdx) => {
                   const isFaceUp = card.isFaceUp;

@@ -1,4 +1,10 @@
 
+## 2026-08-03 (OpenClaw Build & Ship)
+
+### Shipped
+- **Generic solitaire drop-target state semantics** — empty free cells, foundations, and cascade slots in the shared generic solitaire board now expose button/keyboard semantics only after a card is selected, removing misleading inactive "move selected card" targets from Aces Up, Golf, Canfield, Forty Thieves-style variants.
+- Verification: `npx tsc --noEmit` and `npm run build` passed with Node 22.
+
 ## 2026-08-03 (OpenClaw Overnight Build)
 
 ### Shipped

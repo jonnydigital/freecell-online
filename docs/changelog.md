@@ -1,4 +1,10 @@
 
+## 2026-08-03 (OpenClaw Overnight Build)
+
+### Shipped
+- **Shared DOM card selected-state semantics** — interactive DOM cards now expose selected state with `aria-pressed`, so keyboard and screen-reader players can tell which card is currently armed for a move across FreeCell, Klondike, Spider, and generic solitaire variants using the shared card renderer.
+- Verification: `npx tsc --noEmit` and `npm run build` passed with Node 22.
+
 ## 2026-08-02 (OpenClaw Evening Build)
 
 ### Shipped

@@ -90,6 +90,7 @@ const DomCard: React.FC<DomCardProps> = ({
       role={isInteractive ? 'button' : undefined}
       tabIndex={isInteractive ? 0 : undefined}
       aria-label={isInteractive ? cardLabel : undefined}
+      aria-pressed={isInteractive ? isSelected : undefined}
       data-card-id={card.id}
     >
       <div className="dom-card__inner">

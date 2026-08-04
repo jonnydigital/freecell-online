@@ -57,6 +57,7 @@ export default function DailyBanner({ onPlayDaily }: DailyBannerProps) {
       <div className="flex items-center gap-1 flex-shrink-0 ml-2">
         <button
           onClick={handlePlay}
+          aria-label="Play today's Daily FreeCell challenge"
           className="px-3 py-1 text-xs font-bold bg-[#D4AF37] text-[#0a3d0a] rounded hover:bg-[#c9a84c] transition-colors"
         >
           Play

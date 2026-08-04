@@ -44,6 +44,7 @@ interface GameSwitcherProps {
 export default function GameSwitcher({ currentGame, currentIcon }: GameSwitcherProps) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const menuId = 'game-switcher-menu';
 
   // Close on outside click — capture phase so card drag stopPropagation doesn't block it
   useEffect(() => {
@@ -60,7 +61,12 @@ export default function GameSwitcher({ currentGame, currentIcon }: GameSwitcherP
   return (
     <div ref={ref} className="relative">
       <button
+        type="button"
         onClick={() => setOpen((p) => !p)}
+        aria-haspopup="menu"
+        aria-expanded={open}
+        aria-controls={menuId}
+        aria-label={`Switch solitaire game, currently ${currentGame}`}
         className="group transition-all active:scale-95"
         style={{
           display: 'flex',
@@ -92,6 +98,9 @@ export default function GameSwitcher({ currentGame, currentIcon }: GameSwitcherP
 
       {open && (
         <div
+          id={menuId}
+          role="menu"
+          aria-label="Choose solitaire game"
           className="absolute top-full left-0 mt-2 z-[80] rounded-xl shadow-2xl border border-white/10 py-2 min-w-[220px]"
           style={{ background: 'linear-gradient(180deg, #0f3a0f 0%, #0a2d0a 100%)' }}
         >
@@ -107,6 +116,8 @@ export default function GameSwitcher({ currentGame, currentIcon }: GameSwitcherP
                 key={g.label}
                 href={g.href}
                 onClick={() => setOpen(false)}
+                role="menuitem"
+                aria-current={isCurrent ? 'page' : undefined}
                 className={`flex items-center gap-3 px-4 py-2 text-sm transition-colors ${
                   isCurrent
                     ? 'text-[#D4AF37] font-semibold hover:bg-white/5'
@@ -132,6 +143,8 @@ export default function GameSwitcher({ currentGame, currentIcon }: GameSwitcherP
                 key={g.label}
                 href={g.href}
                 onClick={() => setOpen(false)}
+                role="menuitem"
+                aria-current={isCurrent ? 'page' : undefined}
                 className={`flex items-center gap-3 px-4 py-2 text-sm transition-colors ${
                   isCurrent
                     ? 'text-[#D4AF37] font-semibold hover:bg-white/5'

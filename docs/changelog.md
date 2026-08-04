@@ -1,4 +1,10 @@
 
+## 2026-08-03 (OpenClaw Late Overnight Build)
+
+### Shipped
+- **Navigation and next-action control semantics** — the shared game switcher now exposes menu expanded/current-game state, the mobile next-action panel has a named region and explicit action labels, and the daily challenge banner play button now has a specific accessible name.
+- Verification: `npx tsc --noEmit` and `npm run build` passed with Node 22.
+
 ## 2026-08-03 (OpenClaw Evening Build)
 
 ### Shipped

@@ -54,6 +54,8 @@ export default function MobileNextActionPanel({
   return (
     <div
       data-mobile-next-action
+      role="region"
+      aria-label="Suggested next actions"
       className={`flex sm:hidden ${className}`}
       style={{
         flexDirection: 'column',
@@ -86,6 +88,7 @@ export default function MobileNextActionPanel({
         {onHint && (
           <button
             type="button"
+            aria-label="Show a hint for this game"
             onClick={() => {
               trackPanelTap('hint');
               onHint();
@@ -104,6 +107,7 @@ export default function MobileNextActionPanel({
         {onUndo && (
           <button
             type="button"
+            aria-label={canUndo ? 'Undo last move' : 'Undo unavailable'}
             onClick={() => {
               trackPanelTap('undo');
               onUndo();
@@ -124,6 +128,7 @@ export default function MobileNextActionPanel({
         {learnHref ? (
           <Link
             href={learnHref}
+            aria-label={`Open ${learnLabel}`}
             onClick={() => {
               const action = learnLabel.toLowerCase().includes('strategy') ? 'strategy' : 'rules';
               trackPanelTap(action, learnHref);
@@ -142,6 +147,7 @@ export default function MobileNextActionPanel({
           onNewGame && (
             <button
               type="button"
+              aria-label="Start a new game"
               onClick={() => {
                 trackPanelTap('new_game');
                 onNewGame();

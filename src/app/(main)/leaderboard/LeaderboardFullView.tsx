@@ -136,9 +136,13 @@ export default function LeaderboardFullView() {
       </div>
 
       {/* Tabs */}
-      <div className="flex border-b border-white/10 mb-4">
+      <div className="flex border-b border-white/10 mb-4" role="tablist" aria-label="Leaderboard view">
         <button
+          type="button"
           onClick={() => handleTabChange('today')}
+          role="tab"
+          aria-selected={tab === 'today'}
+          aria-label="Today leaderboard"
           className={`flex-1 py-3 text-sm font-bold uppercase tracking-widest transition-colors ${
             tab === 'today'
               ? 'text-yellow-400 border-b-2 border-yellow-400 bg-yellow-500/5'
@@ -148,7 +152,11 @@ export default function LeaderboardFullView() {
           Today
         </button>
         <button
+          type="button"
           onClick={() => handleTabChange('alltime')}
+          role="tab"
+          aria-selected={tab === 'alltime'}
+          aria-label="All-time best leaderboard"
           className={`flex-1 py-3 text-sm font-bold uppercase tracking-widest transition-colors ${
             tab === 'alltime'
               ? 'text-yellow-400 border-b-2 border-yellow-400 bg-yellow-500/5'

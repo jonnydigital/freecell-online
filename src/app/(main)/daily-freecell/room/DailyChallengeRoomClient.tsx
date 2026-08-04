@@ -85,6 +85,7 @@ export default function DailyChallengeRoomClient() {
           <button
             type="button"
             onClick={copyInvite}
+            aria-label={copied ? `Invite copied for daily FreeCell game ${seed}` : `Copy invite for daily FreeCell game ${seed}`}
             className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-white/10 bg-white/[0.06] px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-white/[0.1]"
           >
             <Copy size={17} aria-hidden="true" />

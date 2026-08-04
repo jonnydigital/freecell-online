@@ -1,4 +1,10 @@
 
+## 2026-08-04 (OpenClaw Evening Build)
+
+### Shipped
+- **Leaderboard and daily-room control semantics** — full-page and compact leaderboard tabs now expose tablist/tab selected state, and the Daily FreeCell room invite button announces the copied state plus deal number for assistive technology.
+- Verification: `npx tsc --noEmit` and `npm run build` passed with Node 22.
+
 ## 2026-08-04 (OpenClaw Overnight Build)
 
 ### Shipped

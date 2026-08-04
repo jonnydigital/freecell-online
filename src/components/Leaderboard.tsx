@@ -128,9 +128,13 @@ export default function Leaderboard({ isOpen, onClose }: LeaderboardProps) {
             </div>
 
             {/* Tabs */}
-            <div className="flex border-b border-white/5 shrink-0">
+            <div className="flex border-b border-white/5 shrink-0" role="tablist" aria-label="Leaderboard view">
               <button
+                type="button"
                 onClick={() => setTab('today')}
+                role="tab"
+                aria-selected={tab === 'today'}
+                aria-label="Today leaderboard"
                 className={`flex-1 py-2.5 text-xs font-bold uppercase tracking-widest transition-colors ${
                   tab === 'today'
                     ? 'text-yellow-400 border-b-2 border-yellow-400 bg-yellow-500/5'
@@ -140,7 +144,11 @@ export default function Leaderboard({ isOpen, onClose }: LeaderboardProps) {
                 Today
               </button>
               <button
+                type="button"
                 onClick={() => setTab('alltime')}
+                role="tab"
+                aria-selected={tab === 'alltime'}
+                aria-label="All-time leaderboard"
                 className={`flex-1 py-2.5 text-xs font-bold uppercase tracking-widest transition-colors ${
                   tab === 'alltime'
                     ? 'text-yellow-400 border-b-2 border-yellow-400 bg-yellow-500/5'

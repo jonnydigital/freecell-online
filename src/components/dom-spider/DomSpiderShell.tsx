@@ -280,6 +280,8 @@ export default function DomSpiderShell({ initialDifficulty = '1-suit' }: DomSpid
               <button
                 key={d}
                 onClick={() => setDifficulty(d)}
+                aria-label={d === '1-suit' ? 'One suit' : d === '2-suit' ? 'Two suits' : 'Four suits'}
+                aria-pressed={difficulty === d}
                 style={{
                   padding: '4px 10px',
                   borderRadius: '6px',
@@ -534,6 +536,9 @@ export default function DomSpiderShell({ initialDifficulty = '1-suit' }: DomSpid
           onClick={() => setShowWinModal(false)}
         >
           <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="spider-win-title"
             onClick={(e) => e.stopPropagation()}
             style={{
               background: 'linear-gradient(135deg, #0f3a0f, #1a5c1a)',
@@ -546,7 +551,7 @@ export default function DomSpiderShell({ initialDifficulty = '1-suit' }: DomSpid
             }}
           >
             <div style={{ fontSize: '48px', marginBottom: '16px' }}>🕷️</div>
-            <h2 style={{ color: '#D4AF37', fontSize: '24px', fontWeight: 700, marginBottom: '8px' }}>You Won!</h2>
+            <h2 id="spider-win-title" style={{ color: '#D4AF37', fontSize: '24px', fontWeight: 700, marginBottom: '8px' }}>You Won!</h2>
             <p style={{ color: 'rgba(255,255,255,0.7)', marginBottom: '8px' }}>
               Spider Solitaire completed in {moveCount} moves
             </p>

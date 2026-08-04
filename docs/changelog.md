@@ -1,4 +1,10 @@
 
+## 2026-08-04 (OpenClaw Overnight Build)
+
+### Shipped
+- **Win-modal and variant-toggle accessibility semantics** — Klondike, Spider, and shared generic solitaire win modals now expose real dialog semantics with labelled titles, generic solitaire's keyboard-shortcuts button reports expanded state, and desktop Klondike draw / Spider suit toggles expose their selected state with `aria-pressed`.
+- Verification: `npx tsc --noEmit` and `npm run build` passed with Node 22. The default cron shell still has Node 18, so Node 22 was put on `PATH` for verification.
+
 ## 2026-08-03 (OpenClaw Late Overnight Build)
 
 ### Shipped

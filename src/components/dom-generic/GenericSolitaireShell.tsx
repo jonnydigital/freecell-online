@@ -196,7 +196,7 @@ export default function GenericSolitaireShell({
           )}
           <button onClick={handleNewGame} aria-label="New game" title="New Game" style={{ minHeight: '44px', padding: '8px 14px', borderRadius: '8px', background: 'rgba(212,175,55,0.15)', border: '1px solid rgba(212,175,55,0.3)', color: '#D4AF37', fontSize: '12px', fontWeight: 600, cursor: 'pointer' }}>New Deal</button>
           <div style={{ position: 'relative' }}>
-            <button onClick={toggleShortcuts} aria-label="Keyboard shortcuts" title="Keyboard Shortcuts (?)" style={{ minWidth: '44px', minHeight: '44px', padding: '8px', borderRadius: '8px', background: showShortcuts ? 'rgba(212,175,55,0.15)' : 'rgba(255,255,255,0.04)', border: `1px solid ${showShortcuts ? 'rgba(212,175,55,0.3)' : 'rgba(255,255,255,0.08)'}`, color: showShortcuts ? '#D4AF37' : 'rgba(255,255,255,0.6)', cursor: 'pointer', fontSize: '14px', lineHeight: 1 }}>⌨</button>
+            <button onClick={toggleShortcuts} aria-label="Keyboard shortcuts" aria-expanded={showShortcuts} title="Keyboard Shortcuts (?)" style={{ minWidth: '44px', minHeight: '44px', padding: '8px', borderRadius: '8px', background: showShortcuts ? 'rgba(212,175,55,0.15)' : 'rgba(255,255,255,0.04)', border: `1px solid ${showShortcuts ? 'rgba(212,175,55,0.3)' : 'rgba(255,255,255,0.08)'}`, color: showShortcuts ? '#D4AF37' : 'rgba(255,255,255,0.6)', cursor: 'pointer', fontSize: '14px', lineHeight: 1 }}>⌨</button>
             {showShortcuts && <KeyboardShortcutsPopover hasUndo={!!onUndo} hasHint={!!onHint} onClose={() => setShowShortcuts(false)} />}
           </div>
         </div>
@@ -215,9 +215,9 @@ export default function GenericSolitaireShell({
       {/* Win Modal */}
       {showWinModal && (
         <div style={{ position: 'fixed', inset: 0, zIndex: 100, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.7)' }} onClick={() => setShowWinModal(false)}>
-          <div onClick={(e) => e.stopPropagation()} style={{ background: 'linear-gradient(135deg, #0f3a0f, #1a5c1a)', borderRadius: '20px', padding: '40px', textAlign: 'center', border: '2px solid rgba(212,175,55,0.3)', maxWidth: '400px', width: '90%' }}>
+          <div role="dialog" aria-modal="true" aria-labelledby="generic-solitaire-win-title" onClick={(e) => e.stopPropagation()} style={{ background: 'linear-gradient(135deg, #0f3a0f, #1a5c1a)', borderRadius: '20px', padding: '40px', textAlign: 'center', border: '2px solid rgba(212,175,55,0.3)', maxWidth: '400px', width: '90%' }}>
             <div style={{ fontSize: '48px', marginBottom: '16px' }}>🎉</div>
-            <h2 style={{ color: '#D4AF37', fontSize: '24px', fontWeight: 700, marginBottom: '8px' }}>You Won!</h2>
+            <h2 id="generic-solitaire-win-title" style={{ color: '#D4AF37', fontSize: '24px', fontWeight: 700, marginBottom: '8px' }}>You Won!</h2>
             <p style={{ color: 'rgba(255,255,255,0.7)', marginBottom: '8px' }}>
               {gameName} completed in {moveCount} moves
               {winRecord?.newBestMoves && <span style={{ color: '#D4AF37' }}> — new best!</span>}

@@ -34,6 +34,7 @@ const DEFAULT_ROUTES = [
   { label: 'forty-thieves', path: '/forty-thieves' },
 ];
 const DEFAULT_STABILITY_DELAY_MS = 350;
+const DEFAULT_READY_TIMEOUT_MS = 10000;
 const BOARD_STABILITY_THRESHOLD_PX = 1.5;
 const CARD_STABILITY_THRESHOLD_PX = 2;
 const COMFORTABLE_TAP_TARGET_PX = 44;
@@ -57,6 +58,7 @@ function parseArgs(argv) {
     routes: DEFAULT_ROUTES,
     delayMs: 1200,
     stabilityDelayMs: DEFAULT_STABILITY_DELAY_MS,
+    readyTimeoutMs: DEFAULT_READY_TIMEOUT_MS,
     jsonOnly: false,
     out: null,
     screenshotsDir: null,
@@ -77,6 +79,8 @@ function parseArgs(argv) {
       args.delayMs = Number.parseInt(arg.slice('--delay='.length), 10);
     } else if (arg.startsWith('--stability-delay=')) {
       args.stabilityDelayMs = Number.parseInt(arg.slice('--stability-delay='.length), 10);
+    } else if (arg.startsWith('--ready-timeout=')) {
+      args.readyTimeoutMs = Number.parseInt(arg.slice('--ready-timeout='.length), 10);
     } else if (arg.startsWith('--out=')) {
       args.out = arg.slice('--out='.length);
     } else if (arg === '--screenshots') {
@@ -95,6 +99,9 @@ function parseArgs(argv) {
   if (args.routes.length === 0) throw new Error('No routes supplied.');
   if (!Number.isFinite(args.stabilityDelayMs) || args.stabilityDelayMs < 0) {
     throw new Error('Stability delay must be a non-negative number.');
+  }
+  if (!Number.isFinite(args.readyTimeoutMs) || args.readyTimeoutMs < 0) {
+    throw new Error('Ready timeout must be a non-negative number.');
   }
   if (args.screenshotsDir === true) {
     args.screenshotsDir = args.out
@@ -510,6 +517,17 @@ function stripStabilityCards(row) {
   return publicRow;
 }
 
+function rowMeetsReadiness(row) {
+  const expected = DEFAULT_EXPECTATIONS.get(row.label);
+  if (!row.boardFound) return false;
+  if (!expected) return row.cardCount > 0;
+  if (row.cardCount < expected.minCards) return false;
+  if (row.faceCardCount < expected.minFaceCards) return false;
+  if (expected.minBackCards && row.backCardCount < expected.minBackCards) return false;
+  if (row.cascadeCount !== expected.cascades) return false;
+  return true;
+}
+
 function formatMarkdown(results, args) {
   const lines = [];
   lines.push('# Mobile Viewport Audit');
@@ -618,14 +636,15 @@ async function auditRoute(client, args, route, width) {
   const load = client.waitEvent('Page.loadEventFired', 15000).catch(() => null);
   await client.send('Page.navigate', { url });
   await load;
-  await sleep(args.delayMs);
+  if (args.delayMs > 0) await sleep(args.delayMs);
 
   let row = null;
-  for (let attempt = 0; attempt < 10; attempt += 1) {
+  const readyDeadline = Date.now() + args.readyTimeoutMs;
+  do {
     row = addFailureReasons(await evaluate(client, auditExpression(route.label, route.path)));
-    if (row.boardFound && row.cardCount > 0 && row.failureReasons.length === 0) break;
+    if (rowMeetsReadiness(row)) break;
     await sleep(300);
-  }
+  } while (Date.now() < readyDeadline);
   if (args.stabilityDelayMs > 0 && row?.boardFound && row.cardCount > 0) {
     await sleep(args.stabilityDelayMs);
     const after = await evaluate(client, auditExpression(route.label, route.path));

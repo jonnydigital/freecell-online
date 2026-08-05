@@ -1,4 +1,11 @@
 
+## 2026-08-05 (OpenClaw Overnight Build)
+
+### Shipped
+- **Mobile viewport QA dynamic-route readiness wait** — `npm run qa:mobile` now waits up to 10 seconds for expected board/card readiness before recording route failures, with `--ready-timeout=` for slower live runs. This fixes false `board not found` / `0 cards` reports on client-hydrated `/game/1` production audits.
+- Saved focused proof artifacts at `docs/analytics/mobile-viewport-audits/2026-08-05-ready-wait-local.md` and `docs/analytics/mobile-viewport-audits/2026-08-05-ready-wait-live.md`; both detected all 52 FreeCell cards at 375/390/414px with no hard audit failures.
+- Verification: `node --check scripts/mobile-viewport-audit.mjs`, focused local/live `npm run qa:mobile`, and `npm run build` passed with Node 22. The default cron shell still has Node 18, so Node 22 was put on `PATH` for verification.
+
 ## 2026-08-04 (OpenClaw Evening Build)
 
 ### Shipped

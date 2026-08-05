@@ -180,7 +180,7 @@ route, and never advertise a locale in hreflang that returns a 404.
 - Locale pages are audited on a rotating basis: H1 count, reciprocal hreflang,
   localized UI, and that each advertised alternate returns 200.
 
-### Current locale set (audited 2026-08-01, all pass)
+### Current locale set (audited 2026-08-01; re-verified 2026-08-05, all pass)
 
 The FreeCell property runs six locales, each with a landing page plus a
 localized play route, all sharing one reciprocal hreflang cluster
@@ -197,6 +197,19 @@ All twelve pages return 200 with exactly one H1, a self-referential canonical,
 localized UI, and the complete reciprocal hreflang set — the landing pages
 resolve `en`/`x-default` to `/freecell/how-to-play`, the play routes resolve
 them to `/`. This is the bar any future locale must clear before launch.
+
+Re-verification note (2026-08-05, daily review): all twelve pages fetched
+live 200; each carries exactly one H1 and the full seven-entry hreflang set
+(`de`, `en`, `es`, `fr`, `it`, `pt`, `x-default`); reciprocity confirmed
+bidirectionally (e.g. the German play route `/freecell-auf-deutsch/spielen`
+points `fr` at `/freecell-en-francais/jouer`, and the French landing +
+play route both resolve the full cluster). Rendered per-locale
+`document.documentElement.lang` is correct (fr on the French pages, de on the
+German pages). One standing observation for the U6 backlog: the raw SSR
+`<html lang>` serves the default `en` and is corrected to the locale on
+hydration — search engines that render JS see the right value, but emitting
+the localized `lang` in the server HTML would be a small future hardening.
+Not fixed here: it is a root-layout change, out of a same-run-safe slice.
 
 ## Priority Backlog
 

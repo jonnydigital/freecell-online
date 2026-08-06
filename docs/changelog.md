@@ -1,4 +1,10 @@
 
+## 2026-08-06 (OpenClaw Overnight Build)
+
+### Shipped
+- **Next.js Turbopack root pin** — `next.config.ts` now pins `turbopack.root` to this repo, removing the recurring multiple-lockfile workspace-root warning from nightly `npm run build` output.
+- Verification: default `npm run build` still fails immediately under cron's Node 18 because Next.js requires `>=20.9.0`; with Node 22 on `PATH`, `npm run build` passed and no longer emitted the workspace-root warning.
+
 ## 2026-08-05 (OpenClaw Overnight Build)
 
 ### Shipped

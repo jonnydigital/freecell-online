@@ -427,7 +427,7 @@ export default function WinScreen({
           role="group"
           aria-label={copy.ratePrompt}
         >
-          <div className="mb-2 text-xs font-semibold text-white/60">
+          <div className="mb-2 text-xs font-semibold text-white/60" aria-live="polite">
             {feedbackStatus === 'sent' ? copy.rateThanks : copy.ratePrompt}
           </div>
           <div className="flex items-center justify-center gap-1.5">
@@ -440,7 +440,7 @@ export default function WinScreen({
                   onClick={() => handleRateDeal(rating)}
                   disabled={feedbackStatus === 'sending'}
                   aria-label={copy.rateButton(rating)}
-                  aria-pressed={feedbackRating === rating}
+                  aria-pressed={isSelected}
                   className="rounded-lg p-1 text-yellow-400 transition-transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-yellow-300/70 disabled:cursor-wait"
                 >
                   <svg

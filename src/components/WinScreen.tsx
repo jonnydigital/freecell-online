@@ -44,6 +44,9 @@ const WIN_COPY = {
     shareResults: 'Share Results',
     dailyChallenge: 'Daily Challenge',
     viewOptimalSolution: 'View Optimal Solution',
+    ratePrompt: 'How did this deal feel?',
+    rateButton: (value: number) => `Rate this win ${value} out of 5`,
+    rateThanks: 'Thanks',
     shareSolved: (gameName: string, gameNumber: number, moves: number, time: string, stars: string, score: number, gameUrl: string) =>
       `I solved ${gameName} Game #${gameNumber} in ${moves} moves (${time})! ${stars}\nScore: ${score.toLocaleString()} pts\nCan you beat it? ${gameUrl}`,
   },
@@ -71,6 +74,9 @@ const WIN_COPY = {
     shareResults: 'Compartir resultado',
     dailyChallenge: 'Reto diario',
     viewOptimalSolution: 'Ver solucion optima',
+    ratePrompt: 'Que tal se sintio esta partida?',
+    rateButton: (value: number) => `Calificar esta victoria ${value} de 5`,
+    rateThanks: 'Gracias',
     shareSolved: (gameName: string, gameNumber: number, moves: number, time: string, stars: string, score: number, gameUrl: string) =>
       `Resolvi ${gameName} partida #${gameNumber} en ${moves} movimientos (${time})! ${stars}\nPuntuacion: ${score.toLocaleString()} pts\nPuedes superarla? ${gameUrl}`,
   },
@@ -98,6 +104,9 @@ const WIN_COPY = {
     shareResults: 'Partager',
     dailyChallenge: 'Defi quotidien',
     viewOptimalSolution: 'Voir la solution optimale',
+    ratePrompt: 'Comment cette partie vous a-t-elle semble?',
+    rateButton: (value: number) => `Noter cette victoire ${value} sur 5`,
+    rateThanks: 'Merci',
     shareSolved: (gameName: string, gameNumber: number, moves: number, time: string, stars: string, score: number, gameUrl: string) =>
       `J ai resolu ${gameName} partie #${gameNumber} en ${moves} coups (${time})! ${stars}\nScore: ${score.toLocaleString()} pts\nPouvez-vous faire mieux? ${gameUrl}`,
   },
@@ -125,6 +134,9 @@ const WIN_COPY = {
     shareResults: 'Ergebnis teilen',
     dailyChallenge: 'Tages-Challenge',
     viewOptimalSolution: 'Optimale Loesung ansehen',
+    ratePrompt: 'Wie fuehlte sich diese Partie an?',
+    rateButton: (value: number) => `Diesen Sieg mit ${value} von 5 bewerten`,
+    rateThanks: 'Danke',
     shareSolved: (gameName: string, gameNumber: number, moves: number, time: string, stars: string, score: number, gameUrl: string) =>
       `Ich habe ${gameName} Partie #${gameNumber} in ${moves} Zuegen geloest (${time})! ${stars}\nPunkte: ${score.toLocaleString()} Pkt.\nSchaffen Sie es besser? ${gameUrl}`,
   },
@@ -152,6 +164,9 @@ const WIN_COPY = {
     shareResults: 'Condividi risultato',
     dailyChallenge: 'Sfida giornaliera',
     viewOptimalSolution: 'Vedi soluzione ottimale',
+    ratePrompt: 'Com e sembrata questa partita?',
+    rateButton: (value: number) => `Valuta questa vittoria ${value} su 5`,
+    rateThanks: 'Grazie',
     shareSolved: (gameName: string, gameNumber: number, moves: number, time: string, stars: string, score: number, gameUrl: string) =>
       `Ho risolto ${gameName} partita #${gameNumber} in ${moves} mosse (${time})! ${stars}\nPunteggio: ${score.toLocaleString()} pt\nRiesci a batterla? ${gameUrl}`,
   },
@@ -179,6 +194,9 @@ const WIN_COPY = {
     shareResults: 'Compartilhar resultado',
     dailyChallenge: 'Desafio diario',
     viewOptimalSolution: 'Ver solucao ideal',
+    ratePrompt: 'Como foi esta partida?',
+    rateButton: (value: number) => `Avaliar esta vitoria ${value} de 5`,
+    rateThanks: 'Obrigado',
     shareSolved: (gameName: string, gameNumber: number, moves: number, time: string, stars: string, score: number, gameUrl: string) =>
       `Resolvi ${gameName} partida #${gameNumber} em ${moves} jogadas (${time})! ${stars}\nPontuacao: ${score.toLocaleString()} pts\nConsegue vencer? ${gameUrl}`,
   },
@@ -274,6 +292,8 @@ export default function WinScreen({
   const copy = WIN_COPY[locale];
   const [visible, setVisible] = useState(false);
   const [shareStatus, setShareStatus] = useState<'idle' | 'copying' | 'copied'>('idle');
+  const [feedbackRating, setFeedbackRating] = useState<number | null>(null);
+  const [feedbackStatus, setFeedbackStatus] = useState<'idle' | 'sending' | 'sent'>('idle');
 
   const starCount = getStarCount(moves);
   const score = useMemo(() => calculateScore(moves, time, hintsUsed), [moves, time, hintsUsed]);
@@ -325,6 +345,40 @@ export default function WinScreen({
     }
   };
 
+  const handleRateDeal = async (rating: number) => {
+    setFeedbackRating(rating);
+    setFeedbackStatus('sending');
+
+    try {
+      await fetch('/api/feedback', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: `Post-win rating: ${rating}/5`,
+          context: {
+            type: 'post_win_rating',
+            rating,
+            gameNumber,
+            variant: variant || 'freecell',
+            moves,
+            time,
+            hintsUsed,
+            score: score.total,
+            isDailyGame: Boolean(isDailyGame),
+            screenWidth: window.innerWidth,
+            screenHeight: window.innerHeight,
+            userAgent: navigator.userAgent,
+            url: window.location.href,
+          },
+        }),
+      });
+    } catch {
+      // Keep the player's selected rating visible even if the network flakes.
+    } finally {
+      setFeedbackStatus('sent');
+    }
+  };
+
   if (!visible) return null;
 
   return (
@@ -364,6 +418,47 @@ export default function WinScreen({
           </motion.div>
         )}
         {!isNewBest && <div className="mb-3" />}
+
+        <motion.div
+          initial={{ opacity: 0, y: 6 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.1 }}
+          className="mb-5 rounded-xl border border-white/[0.08] bg-white/[0.04] px-3 py-3"
+          role="group"
+          aria-label={copy.ratePrompt}
+        >
+          <div className="mb-2 text-xs font-semibold text-white/60">
+            {feedbackStatus === 'sent' ? copy.rateThanks : copy.ratePrompt}
+          </div>
+          <div className="flex items-center justify-center gap-1.5">
+            {[1, 2, 3, 4, 5].map((rating) => {
+              const isSelected = feedbackRating !== null && rating <= feedbackRating;
+              return (
+                <button
+                  key={rating}
+                  type="button"
+                  onClick={() => handleRateDeal(rating)}
+                  disabled={feedbackStatus === 'sending'}
+                  aria-label={copy.rateButton(rating)}
+                  aria-pressed={feedbackRating === rating}
+                  className="rounded-lg p-1 text-yellow-400 transition-transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-yellow-300/70 disabled:cursor-wait"
+                >
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill={isSelected ? '#facc15' : 'transparent'}
+                    stroke={isSelected ? '#facc15' : '#8a7b38'}
+                    strokeWidth="1.8"
+                    aria-hidden="true"
+                  >
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg>
+                </button>
+              );
+            })}
+          </div>
+        </motion.div>
 
         {/* Score Breakdown */}
         <motion.div

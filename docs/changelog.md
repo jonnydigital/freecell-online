@@ -1,4 +1,11 @@
 
+## 2026-08-07 (OpenClaw Overnight Build)
+
+### Shipped
+- **Post-win deal rating feedback loop** — the win modal now includes a localized one-tap 1-5 star prompt so players can rate how a solved deal felt without opening the full feedback form.
+- Ratings post to the existing feedback API with structured context: game number, variant, moves, time, hints, score, daily-game state, viewport, user agent, and URL.
+- Verification: baseline `npm run build` still fails under cron's Node 18 because Next.js requires `>=20.9.0`; with Node 22 on `PATH`, `npm run build` passed.
+
 ## 2026-08-06 (OpenClaw Overnight Build)
 
 ### Shipped

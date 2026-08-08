@@ -1,5 +1,5 @@
 # FreeCell Online — Feature Backlog
-*Ranked by impact × effort. Updated 2026-08-07.*
+*Ranked by impact × effort. Updated 2026-08-08.*
 
 ## 🚨 P0: Critical Bug
 1. ~~**🔴 Mobile card rendering broken**~~ ✅ FIXED 03-02 — Root cause: `recreateAllCardSprites()` used PNG asset keys that were never loaded. On resize (common on mobile), cards became empty containers. Fixed with procedural rendering matching `createCardSprite()`.
@@ -115,6 +115,7 @@
 80. ~~**Mobile viewport QA dynamic-route readiness wait**~~ ✅ SHIPPED 2026-08-05 — `npm run qa:mobile` now waits for expected board/card readiness before recording route failures, with a configurable `--ready-timeout=`. The focused live `/game/1` audit on SolitaireStack now detects all 52 cards at 375/390/414px instead of false `board not found` / `0 cards` rows. *(Follow-up from the 2026-08-04 live mobile audit: client-hydrated numbered FreeCell routes were being sampled before the DOM board finished hydrating.)*
 81. ~~**Next.js Turbopack root pin**~~ ✅ SHIPPED 2026-08-06 — `next.config.ts` now pins `turbopack.root` to the FreeCell repo, removing the recurring multiple-lockfile workspace-root warning from nightly `npm run build` output. *(Follow-up from the 2026-08-06 cron build precheck: cleaner build signal while the measured UX backlog remains credential-gated.)*
 82. ~~**Post-win deal rating feedback loop**~~ ✅ SHIPPED 2026-08-07 — The win modal now asks players how the solved deal felt with a one-tap 1-5 star row, records the rating through the existing feedback endpoint, and includes game number, variant, moves, time, hints, score, daily-game state, viewport, user agent, and URL for triage. *(Competitor gap from repeated online-solitaire.com research: mobile star-rating feedback loop.)*
+83. ~~**Spider + wide-board mobile tap-target floor**~~ ✅ SHIPPED 2026-08-08 — Phone-width Spider and wide generic boards now keep visible card controls above the mobile QA cramped-target floor at 375px, while stock buttons and interactive empty drop targets expose at least 44px touch areas without adding horizontal overflow. *(Follow-up from the 2026-08-07 QA handoff: Spider/Forty Thieves narrow-edge controls.)*
 
 ## 🔎 Next Measured UX Candidates
 - Configure cron with `GOOGLE_APPLICATION_CREDENTIALS` or `GOOGLE_OAUTH_ACCESS_TOKEN`, run `npm run analytics:next-action-cycle`, review the latest `docs/analytics/next-action-cycles/` and `docs/analytics/next-action-audits/` reports, then decide whether Hint, Undo, New Game, or learning links deserve more prominence in the phone next-action strip.

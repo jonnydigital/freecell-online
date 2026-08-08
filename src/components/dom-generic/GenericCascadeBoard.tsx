@@ -124,6 +124,8 @@ export default function GenericCascadeBoard({
                 position: 'relative',
                 width: 'var(--card-width)',
                 height: 'var(--card-height)',
+                minWidth: '44px',
+                minHeight: '44px',
                 padding: 0,
                 border: 0,
                 background: 'transparent',

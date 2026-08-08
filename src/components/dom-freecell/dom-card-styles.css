@@ -132,8 +132,9 @@
 /* Spider mobile: ≤767px */
 @media (max-width: 767px) {
   .dom-board-surface[data-game="spider"] {
-    /* 10 cards + 9 gaps (~2px each = 18px) + board padding (~8px×2) + outer padding (16px×2) ≈ 66px */
-    --card-width: clamp(24px, calc((100vw - 66px) / 10), 44px);
+    /* Keep 10 columns fitting on 375px phones while staying above the cramped
+       tap-target floor used by the mobile QA harness. */
+    --card-width: clamp(24px, calc((100vw - 54px) / 10), 44px);
     --cascade-overlap: clamp(8px, calc(var(--card-width) * 0.3), 14px);
     --pile-gap: clamp(1px, 0.5vw, 4px);
   }
@@ -212,7 +213,7 @@
 /* Wide boards, mobile ≤767px — scale down so all columns fit, no horizontal overflow */
 @media (max-width: 767px) {
   .dom-board-surface[data-wide="true"] {
-    --card-width: clamp(22px, calc((100vw - 56px) / var(--cascade-count)), 50px);
+    --card-width: clamp(22px, calc((100vw - 54px) / var(--cascade-count)), 50px);
     --cascade-overlap: clamp(8px, calc(var(--card-width) * 0.3), 14px);
     --pile-gap: clamp(1px, 0.5vw, 4px);
   }
@@ -427,6 +428,8 @@
 
 .dom-pile--interactive {
   cursor: pointer;
+  min-width: 44px;
+  min-height: 44px;
 }
 
 .dom-pile--interactive:focus-visible {

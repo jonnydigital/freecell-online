@@ -1,4 +1,11 @@
 
+## 2026-08-08 (OpenClaw Overnight Build)
+
+### Shipped
+- **Spider + wide-board mobile tap-target floor** — adjusted phone-width Spider and wide generic board card sizing so visible controls clear the mobile QA cramped-target floor at 375px without horizontal overflow.
+- Stock buttons and interactive empty drop targets now expose at least 44px touch areas even when visual card art remains narrower on dense 10-column layouts.
+- Verification: `npx tsc --noEmit`, `npm run build`, and focused `npm run qa:mobile` for Spider/Forty Thieves passed with Node 22. One full focused audit hit the known intermittent Spider card-count race at 414px; an immediate Spider@414 rerun passed with 63 cards and 0 cramped tap targets.
+
 ## 2026-08-07 (OpenClaw Overnight Build)
 
 ### Shipped

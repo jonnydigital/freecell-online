@@ -22,6 +22,19 @@ rules. If you add a producer, register it here.
   `WebSocket` API, so run it with the repo's nvm Node on PATH:
   `export PATH="$HOME/.nvm/versions/node/v22.19.0/bin:$PATH"` before
   `npm run qa:mobile` or direct `scripts/mobile-viewport-audit.mjs` calls.
+- **Mobile viewport QA needs a native-arch Chrome the harness can spawn.**
+  `scripts/mobile-viewport-audit.mjs` launches its own Chrome via `CHROME_PATH`
+  (or `/usr/bin/google-chrome*` / `/usr/bin/chromium*`). On an arm64 sandbox
+  with none installed, do NOT reach for `@puppeteer/browsers install
+  chrome-headless-shell` — it only serves an x86-64 Linux build that dies with a
+  shell "Syntax error" on aarch64. Playwright ships native arm64 chromium
+  (`PLAYWRIGHT_BROWSERS_PATH=/tmp/pw npx playwright install chromium`, then point
+  `CHROME_PATH` at it), but the ~170 MB download can exceed a single sandbox
+  tool-call time cap — pre-provision it or run the audit from the Mac host.
+  If no native Chrome is reachable, treat the true-viewport mobile pass as a
+  reported blocker for the run (desktop QA + a static "no board/card/layout code
+  touched since the last passing audit" check are the fallback), not a push
+  blocker.
 - **Next-action analytics cycle:** run `npm run analytics:next-action-cycle`
   after configuring `GOOGLE_APPLICATION_CREDENTIALS` or
   `GOOGLE_OAUTH_ACCESS_TOKEN`. If credentials are absent, the cycle still

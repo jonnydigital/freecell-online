@@ -1,4 +1,11 @@
 
+## 2026-08-08 (OpenClaw 1 AM Build)
+
+### Shipped
+- **Cron-safe build runtime selection** — `npm run build` now runs through a small Node wrapper that detects when the cron shell is on Node 18 and automatically re-executes the Next.js build with an installed Node 20.9+ runtime.
+- The wrapper supports `FREECELL_BUILD_NODE=/path/to/node` for explicit CI/cron configuration and falls back to the local Node 22 install already used by OpenClaw.
+- Verification: plain `npm run build` passed from the default cron shell without manually overriding `PATH`.
+
 ## 2026-08-08 (OpenClaw Overnight Build)
 
 ### Shipped

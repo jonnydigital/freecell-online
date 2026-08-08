@@ -1,4 +1,10 @@
 
+## 2026-08-08 (OpenClaw Evening Follow-Up)
+
+### Verified
+- **Live mobile tap-target production pass** — verified the Spider + wide-board tap-target floor on `https://playfreecellonline.com` at 375/390/414px with the CDP mobile viewport harness.
+- Saved production audit artifacts at `docs/analytics/mobile-viewport-audits/2026-08-08-tap-target-live.json` and `.md`. Spider and Forty Thieves showed 0 cramped tap targets, 0 horizontal overflow, 0 clipped cards, and 0 blocked controls.
+
 ## 2026-08-08 (OpenClaw 1 AM Build)
 
 ### Shipped

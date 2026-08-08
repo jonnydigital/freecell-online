@@ -7,6 +7,7 @@
  * Usage:
  *   npm run qa:mobile -- --base=http://localhost:3000
  *   npm run qa:mobile -- --base=https://playfreecellonline.com --out=docs/analytics/mobile-viewport-audits/latest.json
+ *   npm run qa:mobile -- --routes=spider,forty-thieves --widths=375,390,414
  *   npm run qa:mobile -- --base=http://localhost:3000 --screenshots
  *
  * Requires Node 22+ or another runtime with global WebSocket. The project build
@@ -33,6 +34,7 @@ const DEFAULT_ROUTES = [
   { label: 'spider', path: '/spider' },
   { label: 'forty-thieves', path: '/forty-thieves' },
 ];
+const DEFAULT_ROUTE_BY_LABEL = new Map(DEFAULT_ROUTES.map((route) => [route.label, route]));
 const DEFAULT_STABILITY_DELAY_MS = 350;
 const DEFAULT_READY_TIMEOUT_MS = 10000;
 const BOARD_STABILITY_THRESHOLD_PX = 1.5;
@@ -51,6 +53,41 @@ const DEFAULT_EXPECTATIONS = new Map([
 
 const sleep = (ms) => new Promise((resolveSleep) => setTimeout(resolveSleep, ms));
 
+function usage() {
+  return `Usage:
+  npm run qa:mobile -- [options]
+
+Options:
+  --base=<url>              Base URL to audit. Default: http://localhost:3000
+  --widths=<list>           Comma-separated viewport widths. Default: ${DEFAULT_WIDTHS.join(',')}
+  --routes=<list>           Comma-separated default labels or route specs.
+                            Labels: ${DEFAULT_ROUTES.map((route) => route.label).join(', ')}
+  --route=<spec>            Add one route. Repeatable. Spec can be a default label,
+                            /path, or /path:label.
+  --out=<path>              Write JSON plus a sibling Markdown report.
+  --screenshots[=<dir>]     Capture one screenshot per route/width.
+  --delay=<ms>              Delay after load before auditing. Default: 1200
+  --stability-delay=<ms>    Post-ready stability sample delay. Default: ${DEFAULT_STABILITY_DELAY_MS}
+  --ready-timeout=<ms>      Wait for expected board/card readiness. Default: ${DEFAULT_READY_TIMEOUT_MS}
+  --json                    Print JSON instead of Markdown.
+  --help                    Show this help.
+`;
+}
+
+function parseRouteSpec(rawSpec) {
+  const raw = rawSpec.trim();
+  if (!raw) return null;
+  const defaultRoute = DEFAULT_ROUTE_BY_LABEL.get(raw);
+  if (defaultRoute) return { ...defaultRoute };
+
+  const [rawPath, rawLabel] = raw.split(':');
+  const path = rawPath.startsWith('/') ? rawPath : `/${rawPath}`;
+  return {
+    path,
+    label: rawLabel || DEFAULT_ROUTE_BY_LABEL.get(rawPath)?.label || path.replace(/^\/+/, '') || path,
+  };
+}
+
 function parseArgs(argv) {
   const args = {
     base: 'http://localhost:3000',
@@ -60,12 +97,15 @@ function parseArgs(argv) {
     stabilityDelayMs: DEFAULT_STABILITY_DELAY_MS,
     readyTimeoutMs: DEFAULT_READY_TIMEOUT_MS,
     jsonOnly: false,
+    help: false,
     out: null,
     screenshotsDir: null,
   };
 
   for (const arg of argv) {
-    if (arg === '--json') {
+    if (arg === '--help' || arg === '-h') {
+      args.help = true;
+    } else if (arg === '--json') {
       args.jsonOnly = true;
     } else if (arg.startsWith('--base=')) {
       args.base = arg.slice('--base='.length).replace(/\/+$/, '');
@@ -75,6 +115,12 @@ function parseArgs(argv) {
         .split(',')
         .map((value) => Number.parseInt(value.trim(), 10))
         .filter(Number.isFinite);
+    } else if (arg.startsWith('--routes=')) {
+      args.routes = arg
+        .slice('--routes='.length)
+        .split(',')
+        .map(parseRouteSpec)
+        .filter(Boolean);
     } else if (arg.startsWith('--delay=')) {
       args.delayMs = Number.parseInt(arg.slice('--delay='.length), 10);
     } else if (arg.startsWith('--stability-delay=')) {
@@ -89,12 +135,12 @@ function parseArgs(argv) {
       args.screenshotsDir = arg.slice('--screenshots='.length);
     } else if (arg.startsWith('--route=')) {
       if (args.routes === DEFAULT_ROUTES) args.routes = [];
-      const raw = arg.slice('--route='.length);
-      const [path, label] = raw.split(':');
-      args.routes.push({ path, label: label || path });
+      const route = parseRouteSpec(arg.slice('--route='.length));
+      if (route) args.routes.push(route);
     }
   }
 
+  if (args.help) return args;
   if (args.widths.length === 0) throw new Error('No widths supplied.');
   if (args.routes.length === 0) throw new Error('No routes supplied.');
   if (!Number.isFinite(args.stabilityDelayMs) || args.stabilityDelayMs < 0) {
@@ -661,6 +707,10 @@ async function auditRoute(client, args, route, width) {
 
 async function main() {
   const args = parseArgs(process.argv.slice(2));
+  if (args.help) {
+    console.log(usage());
+    return;
+  }
   let chrome = null;
   let userDataDir = null;
   let client = null;

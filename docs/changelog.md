@@ -1,4 +1,11 @@
 
+## 2026-08-08 (OpenClaw Focused QA Follow-Up)
+
+### Shipped
+- **Focused mobile viewport QA flags** — `npm run qa:mobile` now supports comma-list `--routes=` and `--widths=` filters plus `--help`, so production follow-ups can audit only the affected game/viewport matrix instead of always running every default route.
+- Default route labels resolve by name (`freecell`, `klondike`, `spider`, `forty-thieves`), while custom routes can still be passed with repeated `--route=/path:label`.
+- Verification: `node --check scripts/mobile-viewport-audit.mjs`, `npm run qa:mobile -- --help`, and a live focused Spider 375px audit passed.
+
 ## 2026-08-08 (OpenClaw Evening Follow-Up)
 
 ### Verified

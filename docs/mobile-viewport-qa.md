@@ -43,6 +43,19 @@ npm run qa:mobile -- --base=https://playfreecellonline.com \
   --out=docs/analytics/mobile-viewport-audits/YYYY-MM-DD-live.json
 ```
 
+Run a focused audit when a change only touches specific routes or phone widths:
+
+```bash
+npm run qa:mobile -- --base=https://playfreecellonline.com \
+  --routes=spider,forty-thieves \
+  --widths=375,390,414 \
+  --out=docs/analytics/mobile-viewport-audits/YYYY-MM-DD-focused-live.json
+```
+
+`--routes=` accepts the default route labels `freecell`, `klondike`, `spider`,
+and `forty-thieves`. For custom routes, use repeated `--route=/path:label`
+arguments.
+
 Use Node 22 or newer. The shell's default Node may be too old for the app build, so prepend the local Node 22 path when needed:
 
 ```bash

@@ -67,7 +67,18 @@ npm run qa:mobile -- --base=http://127.0.0.1:3000 \
 ```
 
 `--viewports=` accepts comma-separated `widthxheight` pairs and overrides
-`--widths=`. Screenshot filenames and Markdown rows include both dimensions, so
+`--preset=` and `--widths=`. For repeatable device-shape checks, use a named
+preset:
+
+```bash
+npm run qa:mobile -- --base=https://playfreecellonline.com \
+  --routes=freecell \
+  --preset=phone-landscape \
+  --out=docs/analytics/mobile-viewport-audits/YYYY-MM-DD-landscape-live.json
+```
+
+Available presets are `portrait`, `phone-portrait`, `phone-landscape`, and
+`phone-all`. Screenshot filenames and Markdown rows include both dimensions, so
 portrait and landscape captures do not overwrite each other.
 
 Use Node 22 or newer. The shell's default Node may be too old for the app build, so prepend the local Node 22 path when needed:

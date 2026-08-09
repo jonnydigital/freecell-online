@@ -33,6 +33,23 @@ const DEFAULT_VIEWPORTS = DEFAULT_WIDTHS.map((width) => ({
   width,
   height: DEFAULT_HEIGHT_BY_WIDTH.get(width) || Math.round(width * 2.16),
 }));
+const VIEWPORT_PRESETS = new Map([
+  ['portrait', DEFAULT_VIEWPORTS],
+  ['phone-portrait', DEFAULT_VIEWPORTS.filter((viewport) => viewport.width < 768)],
+  ['phone-landscape', [
+    { width: 812, height: 375 },
+    { width: 844, height: 390 },
+    { width: 896, height: 414 },
+  ]],
+  ['phone-all', [
+    { width: 375, height: 812 },
+    { width: 390, height: 844 },
+    { width: 414, height: 896 },
+    { width: 812, height: 375 },
+    { width: 844, height: 390 },
+    { width: 896, height: 414 },
+  ]],
+]);
 const DEFAULT_ROUTES = [
   { label: 'freecell', path: '/game/1' },
   { label: 'klondike', path: '/klondike' },
@@ -66,8 +83,9 @@ Options:
   --base=<url>              Base URL to audit. Default: http://localhost:3000
   --widths=<list>           Comma-separated viewport widths. Default: ${DEFAULT_WIDTHS.join(',')}
                             Each width uses the default portrait height.
+  --preset=<name>           Named viewport set. Presets: ${[...VIEWPORT_PRESETS.keys()].join(', ')}
   --viewports=<list>        Comma-separated widthxheight pairs, e.g. 375x812,812x375.
-                            Overrides --widths when provided.
+                            Overrides --preset and --widths when provided.
   --routes=<list>           Comma-separated default labels or route specs.
                             Labels: ${DEFAULT_ROUTES.map((route) => route.label).join(', ')}
   --route=<spec>            Add one route. Repeatable. Spec can be a default label,
@@ -106,6 +124,10 @@ function viewportsFromWidths(widths) {
   }));
 }
 
+function cloneViewports(viewports) {
+  return viewports.map((viewport) => ({ ...viewport }));
+}
+
 function isMobileViewport(viewport) {
   return Math.min(viewport.width, viewport.height) < 768;
 }
@@ -128,6 +150,7 @@ function parseArgs(argv) {
   const args = {
     base: 'http://localhost:3000',
     widths: DEFAULT_WIDTHS,
+    preset: null,
     viewports: null,
     routes: DEFAULT_ROUTES,
     delayMs: 1200,
@@ -152,6 +175,13 @@ function parseArgs(argv) {
         .split(',')
         .map((value) => Number.parseInt(value.trim(), 10))
         .filter(Number.isFinite);
+      args.preset = null;
+    } else if (arg.startsWith('--preset=')) {
+      const preset = arg.slice('--preset='.length).trim();
+      if (!VIEWPORT_PRESETS.has(preset)) {
+        throw new Error(`Unknown viewport preset "${preset}". Use one of: ${[...VIEWPORT_PRESETS.keys()].join(', ')}.`);
+      }
+      args.preset = preset;
     } else if (arg.startsWith('--viewports=')) {
       args.viewports = arg
         .slice('--viewports='.length)
@@ -186,7 +216,11 @@ function parseArgs(argv) {
   if (args.help) return args;
   if (args.widths.length === 0) throw new Error('No widths supplied.');
   if (args.viewports?.length === 0) throw new Error('No viewports supplied.');
-  if (!args.viewports) args.viewports = viewportsFromWidths(args.widths);
+  if (!args.viewports) {
+    args.viewports = args.preset
+      ? cloneViewports(VIEWPORT_PRESETS.get(args.preset))
+      : viewportsFromWidths(args.widths);
+  }
   if (args.routes.length === 0) throw new Error('No routes supplied.');
   if (!Number.isFinite(args.stabilityDelayMs) || args.stabilityDelayMs < 0) {
     throw new Error('Stability delay must be a non-negative number.');

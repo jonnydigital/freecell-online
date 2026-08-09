@@ -1,4 +1,10 @@
 
+## 2026-08-08 (OpenClaw QA Preset Follow-Up)
+
+### Shipped
+- **Mobile viewport QA presets** — `npm run qa:mobile` now supports `--preset=portrait`, `phone-portrait`, `phone-landscape`, and `phone-all`, so short-landscape phone checks can be repeated without hand-entering each viewport pair.
+- Verification: `node --check scripts/mobile-viewport-audit.mjs`, focused production `npm run qa:mobile -- --base=https://playfreecellonline.com --routes=freecell --preset=phone-landscape`, `npx tsc --noEmit`, and `npm run build` passed.
+
 ## 2026-08-08 (OpenClaw Landscape Mobile Follow-Up)
 
 ### Shipped

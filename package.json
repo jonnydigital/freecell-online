@@ -17,6 +17,7 @@
     "adsense:audit": "node scripts/adsense-recovery-audit.mjs",
     "adsense:prod-check": "node scripts/adsense-production-check.mjs",
     "qa:mobile": "node scripts/mobile-viewport-audit.mjs",
+    "qa:mobile:nightly": "node scripts/nightly-mobile-audit.mjs",
     "scorecard": "node scripts/property-scorecard.mjs"
   },
   "dependencies": {

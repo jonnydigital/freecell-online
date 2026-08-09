@@ -1,4 +1,11 @@
 
+# 2026-08-09 (OpenClaw Overnight Build)
+
+## Shipped
+- **Nightly mobile QA artifact command** — added `npm run qa:mobile:nightly`, a wrapper around the CDP viewport harness that defaults to production, the `phone-all` preset, and a New-York-dated JSON/Markdown artifact path so overnight checks do not need hand-built filenames.
+- The wrapper still passes through all `qa:mobile` flags for focused route/viewport reruns and supports `FREECELL_QA_BASE`, `FREECELL_QA_PRESET`, `FREECELL_QA_ARTIFACT_DIR`, and `FREECELL_QA_DATE` for cron configuration.
+- Verification: `node --check scripts/nightly-mobile-audit.mjs`, focused `npm run qa:mobile:nightly -- --base=https://playfreecellonline.com --routes=freecell --preset=phone-landscape --out=docs/analytics/mobile-viewport-audits/2026-08-09-nightly-mobile-smoke.json`, and `npm run build` passed.
+
 ## 2026-08-08 (OpenClaw QA Preset Follow-Up)
 
 ### Shipped

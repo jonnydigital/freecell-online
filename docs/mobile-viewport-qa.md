@@ -43,6 +43,27 @@ npm run qa:mobile -- --base=https://playfreecellonline.com \
   --out=docs/analytics/mobile-viewport-audits/YYYY-MM-DD-live.json
 ```
 
+Save the standard overnight production proof artifact without hand-typing a
+dated output path:
+
+```bash
+npm run qa:mobile:nightly
+```
+
+The nightly wrapper defaults to `https://playfreecellonline.com`, the
+`phone-all` preset, and
+`docs/analytics/mobile-viewport-audits/YYYY-MM-DD-nightly-mobile.json` plus a
+sibling Markdown report. It accepts the same flags as `qa:mobile`, so focused
+follow-ups can still pass route or viewport filters:
+
+```bash
+npm run qa:mobile:nightly -- --routes=freecell --preset=phone-landscape
+```
+
+Set `FREECELL_QA_BASE`, `FREECELL_QA_PRESET`, `FREECELL_QA_ARTIFACT_DIR`, or
+`FREECELL_QA_DATE` when automation needs a different target, preset, artifact
+directory, or report date.
+
 Run a focused audit when a change only touches specific routes or phone widths:
 
 ```bash

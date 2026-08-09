@@ -1,0 +1,229 @@
+{
+  "base": "https://playfreecellonline.com",
+  "pulledAt": "2026-08-09T05:03:22.816Z",
+  "widths": [
+    375,
+    390,
+    414,
+    768
+  ],
+  "viewports": [
+    {
+      "width": 812,
+      "height": 375
+    },
+    {
+      "width": 844,
+      "height": 390
+    },
+    {
+      "width": 896,
+      "height": 414
+    }
+  ],
+  "routes": [
+    {
+      "label": "freecell",
+      "path": "/game/1"
+    }
+  ],
+  "screenshotsDir": null,
+  "markdownReportPath": "docs/analytics/mobile-viewport-audits/2026-08-09-nightly-mobile-smoke.md",
+  "results": [
+    {
+      "label": "freecell",
+      "path": "/game/1",
+      "url": "https://playfreecellonline.com/game/1",
+      "title": "FreeCell Game #1 — First MS deal (Easy Deal) | Play Free",
+      "h1": "FreeCell Game #1 — First MS deal",
+      "viewport": {
+        "width": 812,
+        "height": 375,
+        "scrollWidth": 812,
+        "scrollHeight": 2652,
+        "devicePixelRatio": 2
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 16,
+        "left": 16,
+        "right": 796,
+        "bottom": 429.45,
+        "width": 780,
+        "height": 413.45
+      },
+      "cardCount": 52,
+      "faceCardCount": 52,
+      "backCardCount": 0,
+      "visibleCardCount": 52,
+      "minCardWidth": 79.53,
+      "maxCardWidth": 79.53,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": true,
+      "unusedVerticalPx": 0,
+      "unusedVerticalPct": 0,
+      "cascadeCount": 8,
+      "cascadeCards": [
+        7,
+        7,
+        7,
+        7,
+        6,
+        6,
+        6,
+        6
+      ],
+      "visibleInteractiveCount": 5,
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 0,
+      "crampedTapTargetCount": 0,
+      "smallTapTargets": [],
+      "crampedTapTargets": [],
+      "deadSpaceLevel": "n/a",
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 52,
+        "beforeCardCount": 52,
+        "afterCardCount": 52,
+        "cardCountChanged": false
+      }
+    },
+    {
+      "label": "freecell",
+      "path": "/game/1",
+      "url": "https://playfreecellonline.com/game/1",
+      "title": "FreeCell Game #1 — First MS deal (Easy Deal) | Play Free",
+      "h1": "FreeCell Game #1 — First MS deal",
+      "viewport": {
+        "width": 844,
+        "height": 390,
+        "scrollWidth": 844,
+        "scrollHeight": 2667,
+        "devicePixelRatio": 2
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 16,
+        "left": 16,
+        "right": 828,
+        "bottom": 445.94,
+        "width": 812,
+        "height": 429.94
+      },
+      "cardCount": 52,
+      "faceCardCount": 52,
+      "backCardCount": 0,
+      "visibleCardCount": 52,
+      "minCardWidth": 83.25,
+      "maxCardWidth": 83.25,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": true,
+      "unusedVerticalPx": 0,
+      "unusedVerticalPct": 0,
+      "cascadeCount": 8,
+      "cascadeCards": [
+        7,
+        7,
+        7,
+        7,
+        6,
+        6,
+        6,
+        6
+      ],
+      "visibleInteractiveCount": 5,
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 0,
+      "crampedTapTargetCount": 0,
+      "smallTapTargets": [],
+      "crampedTapTargets": [],
+      "deadSpaceLevel": "n/a",
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 52,
+        "beforeCardCount": 52,
+        "afterCardCount": 52,
+        "cardCountChanged": false
+      }
+    },
+    {
+      "label": "freecell",
+      "path": "/game/1",
+      "url": "https://playfreecellonline.com/game/1",
+      "title": "FreeCell Game #1 — First MS deal (Easy Deal) | Play Free",
+      "h1": "FreeCell Game #1 — First MS deal",
+      "viewport": {
+        "width": 896,
+        "height": 414,
+        "scrollWidth": 896,
+        "scrollHeight": 2691,
+        "devicePixelRatio": 2
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 16,
+        "left": 16,
+        "right": 880,
+        "bottom": 475.89,
+        "width": 864,
+        "height": 459.89
+      },
+      "cardCount": 52,
+      "faceCardCount": 52,
+      "backCardCount": 0,
+      "visibleCardCount": 52,
+      "minCardWidth": 89.3,
+      "maxCardWidth": 89.3,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": true,
+      "unusedVerticalPx": 0,
+      "unusedVerticalPct": 0,
+      "cascadeCount": 8,
+      "cascadeCards": [
+        7,
+        7,
+        7,
+        7,
+        6,
+        6,
+        6,
+        6
+      ],
+      "visibleInteractiveCount": 5,
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 0,
+      "crampedTapTargetCount": 0,
+      "smallTapTargets": [],
+      "crampedTapTargets": [],
+      "deadSpaceLevel": "n/a",
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 52,
+        "beforeCardCount": 52,
+        "afterCardCount": 52,
+        "cardCountChanged": false
+      }
+    }
+  ]
+}

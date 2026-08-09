@@ -35,6 +35,31 @@ rules. If you add a producer, register it here.
   reported blocker for the run (desktop QA + a static "no board/card/layout code
   touched since the last passing audit" check are the fallback), not a push
   blocker.
+- **Verified Mac-host mobile-audit recipe (preferred when the sandbox lacks
+  native Chrome).** The Cowork daily review can drive git via `osascript`; the
+  same path runs the true-viewport audit host-side, where Chrome and nvm Node
+  already exist. Confirmed working 2026-08-09 (Node v22.19.0, Chrome at the
+  standard app path). Because a backgrounded child holds the shell's stdout fd,
+  fully detach it (`nohup ... </dev/null &`) so `do shell script` returns, then
+  poll the log across calls:
+
+  ```bash
+  cd /Users/jonathanfoye/Desktop/freecell-online
+  export PATH="$HOME/.nvm/versions/node/v22.19.0/bin:$PATH"
+  export CHROME_PATH='/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
+  ( nohup npm run qa:mobile -- \
+      --base=https://playfreecellonline.com --screenshots \
+      --out=docs/analytics/mobile-viewport-audits/<date>-live.json \
+      >/tmp/qa-mobile.log 2>&1 </dev/null & ) && echo launched
+  ```
+
+  The default 4-route × 4-viewport pass finishes in ~1–2 min. To confirm the
+  recurring spider@414 `62`-card read is the same intermittent DOM-mount read
+  race (not a regression), re-run the single cell a few times — it flips 63/62
+  with `clipped=0`/`overflowPx=0` every time:
+  `node scripts/mobile-viewport-audit.mjs --base=https://playfreecellonline.com --routes=spider --widths=414 --json`
+  (call the script directly, not via `npm run`, so npm's prelude lines don't
+  break JSON parsing; card counts live at `results[0].cardCount`).
 - **Next-action analytics cycle:** run `npm run analytics:next-action-cycle`
   after configuring `GOOGLE_APPLICATION_CREDENTIALS` or
   `GOOGLE_OAUTH_ACCESS_TOKEN`. If credentials are absent, the cycle still

@@ -283,7 +283,8 @@ export default function DomSpiderShell({ initialDifficulty = '1-suit' }: DomSpid
                 aria-label={d === '1-suit' ? 'One suit' : d === '2-suit' ? 'Two suits' : 'Four suits'}
                 aria-pressed={difficulty === d}
                 style={{
-                  padding: '4px 10px',
+                  minHeight: '44px',
+                  padding: '8px 12px',
                   borderRadius: '6px',
                   border: `1px solid ${difficulty === d ? 'rgba(212,175,55,0.5)' : 'rgba(255,255,255,0.1)'}`,
                   background: difficulty === d ? 'rgba(212,175,55,0.15)' : 'rgba(255,255,255,0.03)',
@@ -333,7 +334,8 @@ export default function DomSpiderShell({ initialDifficulty = '1-suit' }: DomSpid
             aria-label="Undo"
             title="Undo (Ctrl+Z)"
             style={{
-              padding: '6px 14px',
+              minHeight: '44px',
+              padding: '10px 16px',
               borderRadius: '8px',
               background: moveHistory.length === 0 ? 'rgba(255,255,255,0.03)' : 'rgba(212,175,55,0.15)',
               border: `1px solid ${moveHistory.length === 0 ? 'rgba(255,255,255,0.06)' : 'rgba(212,175,55,0.3)'}`,
@@ -354,7 +356,8 @@ export default function DomSpiderShell({ initialDifficulty = '1-suit' }: DomSpid
             aria-label="Hint"
             title="Hint (H)"
             style={{
-              padding: '6px 14px',
+              minHeight: '44px',
+              padding: '10px 16px',
               borderRadius: '8px',
               background: 'rgba(255,255,255,0.04)',
               border: '1px solid rgba(255,255,255,0.08)',
@@ -370,7 +373,7 @@ export default function DomSpiderShell({ initialDifficulty = '1-suit' }: DomSpid
             <Lightbulb size={14} />
             {!isMobile && 'Hint'}
           </button>
-          <button onClick={handleNewGame} aria-label="New game" title="New Game" style={{ padding: '6px 14px', borderRadius: '8px', background: 'rgba(212,175,55,0.15)', border: '1px solid rgba(212,175,55,0.3)', color: '#D4AF37', fontSize: '12px', fontWeight: 600, cursor: 'pointer' }}>
+          <button onClick={handleNewGame} aria-label="New game" title="New Game" style={{ minHeight: '44px', padding: '10px 16px', borderRadius: '8px', background: 'rgba(212,175,55,0.15)', border: '1px solid rgba(212,175,55,0.3)', color: '#D4AF37', fontSize: '12px', fontWeight: 600, cursor: 'pointer' }}>
             New Deal
           </button>
         </div>

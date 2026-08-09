@@ -1,0 +1,296 @@
+{
+  "base": "http://127.0.0.1:3021",
+  "pulledAt": "2026-08-09T21:20:43.165Z",
+  "widths": [
+    375,
+    390,
+    414,
+    768
+  ],
+  "viewports": [
+    {
+      "width": 768,
+      "height": 1024
+    }
+  ],
+  "routes": [
+    {
+      "label": "freecell",
+      "path": "/game/1"
+    },
+    {
+      "label": "klondike",
+      "path": "/klondike"
+    },
+    {
+      "label": "spider",
+      "path": "/spider"
+    }
+  ],
+  "screenshotsDir": null,
+  "markdownReportPath": "docs/analytics/mobile-viewport-audits/2026-08-09-tablet-toolbar-local.md",
+  "summary": {
+    "totalRows": 3,
+    "routeCount": 3,
+    "viewportCount": 1,
+    "failedRows": 0,
+    "passedRows": 3,
+    "deadSpaceCandidates": 0,
+    "maxHorizontalOverflowPx": 0,
+    "maxCrampedTapTargetCount": 0,
+    "maxBlockedInteractiveCount": 0
+  },
+  "results": [
+    {
+      "label": "freecell",
+      "path": "/game/1",
+      "url": "http://127.0.0.1:3021/game/1",
+      "title": "FreeCell Game #1 — First MS deal (Easy Deal) | Play Free",
+      "h1": "FreeCell Game #1 — First MS deal",
+      "viewport": {
+        "width": 768,
+        "height": 1024,
+        "scrollWidth": 768,
+        "scrollHeight": 3301,
+        "devicePixelRatio": 1
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 146,
+        "left": 16,
+        "right": 752,
+        "bottom": 562.8,
+        "width": 736,
+        "height": 416.8
+      },
+      "cardCount": 52,
+      "faceCardCount": 52,
+      "backCardCount": 0,
+      "visibleCardCount": 52,
+      "minCardWidth": 74.41,
+      "maxCardWidth": 74.41,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": false,
+      "unusedVerticalPx": 461.203125,
+      "unusedVerticalPct": 45,
+      "cascadeCount": 8,
+      "cascadeCards": [
+        7,
+        7,
+        7,
+        7,
+        6,
+        6,
+        6,
+        6
+      ],
+      "visibleInteractiveCount": 11,
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 2,
+      "crampedTapTargetCount": 0,
+      "smallTapTargets": [
+        {
+          "index": 1,
+          "text": "Switch solitaire game, currently FreeCell",
+          "tag": "button",
+          "rect": {
+            "top": 14.75,
+            "left": 24,
+            "right": 154.89,
+            "bottom": 55.25,
+            "width": 130.89,
+            "height": 40.5
+          }
+        },
+        {
+          "index": 3,
+          "text": "New Deal",
+          "tag": "button",
+          "rect": {
+            "top": 13.5,
+            "left": 625.19,
+            "right": 751.11,
+            "bottom": 56.5,
+            "width": 125.92,
+            "height": 43
+          }
+        }
+      ],
+      "crampedTapTargets": [],
+      "deadSpaceLevel": "n/a",
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 52,
+        "beforeCardCount": 52,
+        "afterCardCount": 52,
+        "cardCountChanged": false
+      }
+    },
+    {
+      "label": "klondike",
+      "path": "/klondike",
+      "url": "http://127.0.0.1:3021/klondike",
+      "title": "Klondike Solitaire | Play Online Free — Draw 1 & Draw 3",
+      "h1": "Play Klondike Solitaire Online — Free, Draw 1 & Draw 3",
+      "viewport": {
+        "width": 768,
+        "height": 1024,
+        "scrollWidth": 768,
+        "scrollHeight": 8309,
+        "devicePixelRatio": 1
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 90,
+        "left": 16,
+        "right": 752,
+        "bottom": 500.8,
+        "width": 736,
+        "height": 410.8
+      },
+      "cardCount": 29,
+      "faceCardCount": 7,
+      "backCardCount": 22,
+      "visibleCardCount": 29,
+      "minCardWidth": 74.41,
+      "maxCardWidth": 74.41,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": false,
+      "unusedVerticalPx": 523.203125,
+      "unusedVerticalPct": 51.1,
+      "cascadeCount": 7,
+      "cascadeCards": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "visibleInteractiveCount": 14,
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 1,
+      "crampedTapTargetCount": 0,
+      "smallTapTargets": [
+        {
+          "index": 4,
+          "text": "Switch solitaire game, currently Klondike",
+          "tag": "button",
+          "rect": {
+            "top": 16.25,
+            "left": 16,
+            "right": 149.94,
+            "bottom": 56.75,
+            "width": 133.94,
+            "height": 40.5
+          }
+        }
+      ],
+      "crampedTapTargets": [],
+      "deadSpaceLevel": "n/a",
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 7,
+        "beforeCardCount": 29,
+        "afterCardCount": 29,
+        "cardCountChanged": false
+      }
+    },
+    {
+      "label": "spider",
+      "path": "/spider",
+      "url": "http://127.0.0.1:3021/spider",
+      "title": "Spider Solitaire | Play Online Free — 1, 2 & 4 Suit",
+      "h1": "Play Spider Solitaire Online — Free, 1, 2 & 4 Suit",
+      "viewport": {
+        "width": 768,
+        "height": 1024,
+        "scrollWidth": 768,
+        "scrollHeight": 8775,
+        "devicePixelRatio": 1
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 142,
+        "left": 16,
+        "right": 752,
+        "bottom": 491.59,
+        "width": 736,
+        "height": 349.59
+      },
+      "cardCount": 63,
+      "faceCardCount": 10,
+      "backCardCount": 53,
+      "visibleCardCount": 63,
+      "minCardWidth": 61.28,
+      "maxCardWidth": 61.28,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": false,
+      "unusedVerticalPx": 532.40625,
+      "unusedVerticalPct": 52,
+      "cascadeCount": 10,
+      "cascadeCards": [
+        7,
+        7,
+        6,
+        6,
+        6,
+        5,
+        5,
+        5,
+        5,
+        6
+      ],
+      "visibleInteractiveCount": 18,
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 1,
+      "crampedTapTargetCount": 0,
+      "smallTapTargets": [
+        {
+          "index": 5,
+          "text": "Switch solitaire game, currently Spider Solitaire",
+          "tag": "button",
+          "rect": {
+            "top": 16.25,
+            "left": 16,
+            "right": 195.41,
+            "bottom": 56.75,
+            "width": 179.41,
+            "height": 40.5
+          }
+        }
+      ],
+      "crampedTapTargets": [],
+      "deadSpaceLevel": "n/a",
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 8,
+        "beforeCardCount": 63,
+        "afterCardCount": 63,
+        "cardCountChanged": false
+      }
+    }
+  ]
+}

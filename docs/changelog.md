@@ -1,4 +1,11 @@
 
+# 2026-08-09 (OpenClaw Evening Tablet Toolbar Pass)
+
+## Shipped
+- **Tablet toolbar tap-target polish** — FreeCell, Klondike, and Spider tablet-width desktop toolbars now keep game-number, mode/difficulty, hint/undo, and new-deal controls at 44px-class hit areas.
+- Focused local 768px QA now passes for FreeCell, Klondike, and Spider with 0 cramped tap targets, 0 blocked controls, and 0 overflow.
+- Verification: `npx tsc --noEmit`, `npm run build`, and `npm run qa:mobile -- --base=http://127.0.0.1:3021 --routes=freecell,klondike,spider --viewports=768x1024 --out=docs/analytics/mobile-viewport-audits/2026-08-09-tablet-toolbar-local.json` passed.
+
 # 2026-08-09 (OpenClaw QA Report Polish)
 
 ## Shipped

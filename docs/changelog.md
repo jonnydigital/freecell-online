@@ -1,4 +1,11 @@
 
+## 2026-08-08 (OpenClaw Landscape Mobile Follow-Up)
+
+### Shipped
+- **FreeCell short-landscape mobile controls** — short landscape phone viewports now suppress the desktop toolbar and use fixed, 44px mobile controls for Menu, New, Hint, Undo, and Redo above the card depth stack.
+- `npm run qa:mobile` now supports explicit `--viewports=widthxheight` pairs, so landscape phone layouts such as `812x375` can be audited directly instead of relying on portrait-only width presets.
+- Verification: `node --check scripts/mobile-viewport-audit.mjs`, `npx tsc --noEmit`, `npm run build`, and focused local `npm run qa:mobile -- --routes=freecell --viewports=375x812,812x375` passed.
+
 ## 2026-08-08 (OpenClaw Focused QA Follow-Up)
 
 ### Shipped

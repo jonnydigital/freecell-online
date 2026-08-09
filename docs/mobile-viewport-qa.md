@@ -56,6 +56,20 @@ npm run qa:mobile -- --base=https://playfreecellonline.com \
 and `forty-thieves`. For custom routes, use repeated `--route=/path:label`
 arguments.
 
+Run explicit viewport pairs when checking short landscape phones or other
+non-default device shapes:
+
+```bash
+npm run qa:mobile -- --base=http://127.0.0.1:3000 \
+  --routes=freecell \
+  --viewports=375x812,812x375 \
+  --out=docs/analytics/mobile-viewport-audits/YYYY-MM-DD-landscape-local.json
+```
+
+`--viewports=` accepts comma-separated `widthxheight` pairs and overrides
+`--widths=`. Screenshot filenames and Markdown rows include both dimensions, so
+portrait and landscape captures do not overwrite each other.
+
 Use Node 22 or newer. The shell's default Node may be too old for the app build, so prepend the local Node 22 path when needed:
 
 ```bash
@@ -65,7 +79,7 @@ PATH="$HOME/.nvm/versions/node/v22.19.0/bin:$PATH" npm run qa:mobile -- --base=h
 ## What It Checks
 
 - Expected board shape by route: rendered card counts, face-up/face-down counts, and cascade counts.
-- Horizontal overflow and clipped card rectangles at 375, 390, 414, and 768px widths.
+- Horizontal overflow and clipped card rectangles at 375, 390, 414, 768px widths, or explicit `--viewports=` pairs.
 - Top and bottom game controls remain visible where each route expects them.
 - Visible enabled buttons and links are not covered by another element at their center tap point.
 - Visible enabled buttons and links report tap-target dimensions. The Markdown table shows `Tap targets` as `cramped/small`: `small` means one edge is below the 44px comfort target, while `cramped` means a phone-width target is below the hard floor and fails the audit.

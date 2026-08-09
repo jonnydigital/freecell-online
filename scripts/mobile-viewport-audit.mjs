@@ -8,6 +8,7 @@
  *   npm run qa:mobile -- --base=http://localhost:3000
  *   npm run qa:mobile -- --base=https://playfreecellonline.com --out=docs/analytics/mobile-viewport-audits/latest.json
  *   npm run qa:mobile -- --routes=spider,forty-thieves --widths=375,390,414
+ *   npm run qa:mobile -- --viewports=375x812,812x375
  *   npm run qa:mobile -- --base=http://localhost:3000 --screenshots
  *
  * Requires Node 22+ or another runtime with global WebSocket. The project build
@@ -28,6 +29,10 @@ const DEFAULT_HEIGHT_BY_WIDTH = new Map([
   [414, 896],
   [768, 1024],
 ]);
+const DEFAULT_VIEWPORTS = DEFAULT_WIDTHS.map((width) => ({
+  width,
+  height: DEFAULT_HEIGHT_BY_WIDTH.get(width) || Math.round(width * 2.16),
+}));
 const DEFAULT_ROUTES = [
   { label: 'freecell', path: '/game/1' },
   { label: 'klondike', path: '/klondike' },
@@ -60,6 +65,9 @@ function usage() {
 Options:
   --base=<url>              Base URL to audit. Default: http://localhost:3000
   --widths=<list>           Comma-separated viewport widths. Default: ${DEFAULT_WIDTHS.join(',')}
+                            Each width uses the default portrait height.
+  --viewports=<list>        Comma-separated widthxheight pairs, e.g. 375x812,812x375.
+                            Overrides --widths when provided.
   --routes=<list>           Comma-separated default labels or route specs.
                             Labels: ${DEFAULT_ROUTES.map((route) => route.label).join(', ')}
   --route=<spec>            Add one route. Repeatable. Spec can be a default label,
@@ -72,6 +80,34 @@ Options:
   --json                    Print JSON instead of Markdown.
   --help                    Show this help.
 `;
+}
+
+function viewportLabel(viewport) {
+  return `${viewport.width}x${viewport.height}`;
+}
+
+function parseViewportSpec(rawSpec) {
+  const raw = rawSpec.trim().toLowerCase();
+  if (!raw) return null;
+  const match = raw.match(/^(\d+)x(\d+)$/);
+  if (!match) {
+    throw new Error(`Invalid viewport "${rawSpec}". Use widthxheight, for example 375x812.`);
+  }
+  return {
+    width: Number.parseInt(match[1], 10),
+    height: Number.parseInt(match[2], 10),
+  };
+}
+
+function viewportsFromWidths(widths) {
+  return widths.map((width) => ({
+    width,
+    height: DEFAULT_HEIGHT_BY_WIDTH.get(width) || Math.round(width * 2.16),
+  }));
+}
+
+function isMobileViewport(viewport) {
+  return Math.min(viewport.width, viewport.height) < 768;
 }
 
 function parseRouteSpec(rawSpec) {
@@ -92,6 +128,7 @@ function parseArgs(argv) {
   const args = {
     base: 'http://localhost:3000',
     widths: DEFAULT_WIDTHS,
+    viewports: null,
     routes: DEFAULT_ROUTES,
     delayMs: 1200,
     stabilityDelayMs: DEFAULT_STABILITY_DELAY_MS,
@@ -115,6 +152,12 @@ function parseArgs(argv) {
         .split(',')
         .map((value) => Number.parseInt(value.trim(), 10))
         .filter(Number.isFinite);
+    } else if (arg.startsWith('--viewports=')) {
+      args.viewports = arg
+        .slice('--viewports='.length)
+        .split(',')
+        .map(parseViewportSpec)
+        .filter(Boolean);
     } else if (arg.startsWith('--routes=')) {
       args.routes = arg
         .slice('--routes='.length)
@@ -142,6 +185,8 @@ function parseArgs(argv) {
 
   if (args.help) return args;
   if (args.widths.length === 0) throw new Error('No widths supplied.');
+  if (args.viewports?.length === 0) throw new Error('No viewports supplied.');
+  if (!args.viewports) args.viewports = viewportsFromWidths(args.widths);
   if (args.routes.length === 0) throw new Error('No routes supplied.');
   if (!Number.isFinite(args.stabilityDelayMs) || args.stabilityDelayMs < 0) {
     throw new Error('Stability delay must be a non-negative number.');
@@ -416,7 +461,13 @@ function auditExpression(label, path) {
       item.tapTargetHeight < ${MIN_TAP_TARGET_EDGE_PX} ||
       (item.tapTargetWidth < ${COMFORTABLE_TAP_TARGET_PX} && item.tapTargetHeight < ${COMFORTABLE_TAP_TARGET_PX})
     ));
-    const topControlsVisible = interactive.some((item) => item.visible && item.rect.top < Math.max(180, viewport.height * 0.28));
+    const mobileLandscapeStatus = document.querySelector('[data-mobile-landscape-status="true"]');
+    const mobileLandscapeStatusVisible = mobileLandscapeStatus
+      ? visible(mobileLandscapeStatus.getBoundingClientRect(), getComputedStyle(mobileLandscapeStatus))
+      : false;
+    const topControlsVisible =
+      mobileLandscapeStatusVisible ||
+      interactive.some((item) => item.visible && item.rect.top < Math.max(180, viewport.height * 0.28));
     const bottomControlsVisible = interactive.some((item) => item.visible && item.rect.bottom > viewport.height * 0.7);
     const unusedVerticalPx = boardRect ? Math.max(0, viewport.height - boardRect.bottom) : null;
     const unusedVerticalPct = unusedVerticalPx === null ? null : Math.round((unusedVerticalPx / viewport.height) * 1000) / 10;
@@ -483,12 +534,12 @@ function slugify(value) {
     .replace(/^-+|-+$/g, '') || 'route';
 }
 
-async function captureViewportScreenshot(client, args, route, width) {
+async function captureViewportScreenshot(client, args, route, viewport) {
   if (!args.screenshotsDir) return null;
 
   const screenshotDir = resolve(process.cwd(), args.screenshotsDir);
   await mkdir(screenshotDir, { recursive: true });
-  const filename = `${slugify(route.label)}-${width}.png`;
+  const filename = `${slugify(route.label)}-${viewportLabel(viewport)}.png`;
   const absolutePath = resolve(screenshotDir, filename);
   const capture = await client.send('Page.captureScreenshot', {
     format: 'png',
@@ -582,13 +633,13 @@ function formatMarkdown(results, args) {
   lines.push(`Pulled: \`${new Date().toISOString()}\``);
   lines.push('');
   const includeScreenshots = results.some((row) => row.screenshotPath);
-  lines.push(`| Route | Width | Cards | Face | Card W | H overflow | Clipped | Blocked controls | Tap targets | Stability | Top controls | Bottom controls | Unused vertical | Dead space${includeScreenshots ? ' | Screenshot' : ''} |`);
+  lines.push(`| Route | Viewport | Cards | Face | Card W | H overflow | Clipped | Blocked controls | Tap targets | Stability | Top controls | Bottom controls | Unused vertical | Dead space${includeScreenshots ? ' | Screenshot' : ''} |`);
   lines.push(`|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|---|---:|---${includeScreenshots ? '|---' : ''}|`);
   for (const row of results) {
     const stability = row.stability
       ? `${row.stability.boardShiftPx}/${row.stability.maxCardShiftPx}px`
       : 'n/a';
-    lines.push(`| ${row.label} | ${row.viewport.width} | ${row.cardCount} | ${row.faceCardCount} | ${row.minCardWidth}-${row.maxCardWidth} | ${row.horizontalOverflowPx} | ${row.clippedCardCount} | ${row.blockedInteractiveCount ?? 0} | ${row.crampedTapTargetCount ?? 0}/${row.smallTapTargetCount ?? 0} | ${stability} | ${formatBool(row.topControlsVisible)} | ${formatBool(row.bottomControlsVisible)} | ${row.unusedVerticalPct ?? 'n/a'}% | ${row.deadSpaceLevel ?? 'n/a'}${includeScreenshots ? ` | ${row.screenshotPath ? `\`${row.screenshotPath}\`` : ''}` : ''} |`);
+    lines.push(`| ${row.label} | ${row.viewport.width}x${row.viewport.height} | ${row.cardCount} | ${row.faceCardCount} | ${row.minCardWidth}-${row.maxCardWidth} | ${row.horizontalOverflowPx} | ${row.clippedCardCount} | ${row.blockedInteractiveCount ?? 0} | ${row.crampedTapTargetCount ?? 0}/${row.smallTapTargetCount ?? 0} | ${stability} | ${formatBool(row.topControlsVisible)} | ${formatBool(row.bottomControlsVisible)} | ${row.unusedVerticalPct ?? 'n/a'}% | ${row.deadSpaceLevel ?? 'n/a'}${includeScreenshots ? ` | ${row.screenshotPath ? `\`${row.screenshotPath}\`` : ''}` : ''} |`);
   }
   lines.push('');
   const deadSpaceCandidates = results.filter((row) => row.deadSpaceLevel === 'review' || row.deadSpaceLevel === 'high');
@@ -597,7 +648,7 @@ function formatMarkdown(results, args) {
     lines.push('');
     lines.push(`Phone-width rows with ${DEAD_SPACE_REVIEW_THRESHOLD_PCT}%+ unused vertical space below the first board sample are candidates for below-board next actions, contextual hints, or compact secondary content. This is a planning signal, not a hard failure.`);
     for (const row of deadSpaceCandidates) {
-      lines.push(`- ${row.label} ${row.viewport.width}px: ${row.unusedVerticalPct}% unused vertical space (${row.deadSpaceLevel})`);
+      lines.push(`- ${row.label} ${row.viewport.width}x${row.viewport.height}: ${row.unusedVerticalPct}% unused vertical space (${row.deadSpaceLevel})`);
     }
     lines.push('');
   }
@@ -605,7 +656,7 @@ function formatMarkdown(results, args) {
   if (failures.length) {
     lines.push('## Needs Review');
     for (const row of failures) {
-      lines.push(`- ${row.label} ${row.viewport.width}px: ${row.failureReasons.join('; ')}`);
+      lines.push(`- ${row.label} ${row.viewport.width}x${row.viewport.height}: ${row.failureReasons.join('; ')}`);
     }
   } else {
     lines.push('No hard audit failures detected.');
@@ -642,7 +693,8 @@ function addFailureReasons(row) {
       .join(', ');
     reasons.push(`${row.blockedInteractiveCount} visible controls failed center hit-test${blocked ? ` (${blocked})` : ''}`);
   }
-  if (row.viewport.width < 768 && row.crampedTapTargetCount > 0) {
+  const mobileViewport = isMobileViewport(row.viewport);
+  if (mobileViewport && row.crampedTapTargetCount > 0) {
     const cramped = row.crampedTapTargets
       .slice(0, 4)
       .map((item) => `"${item.text || `${item.tag}#${item.index}`}" ${item.rect.width}x${item.rect.height}`)
@@ -661,24 +713,25 @@ function addFailureReasons(row) {
     }
   }
   if (!row.topControlsVisible) reasons.push('top controls not visibly detected');
-  if (!row.bottomControlsVisible && row.viewport.width < 768 && expected?.requireBottomControls !== false) {
+  if (!row.bottomControlsVisible && mobileViewport && expected?.requireBottomControls !== false) {
     reasons.push('bottom controls not visibly detected on mobile');
   }
   return { ...row, failureReasons: reasons };
 }
 
-async function auditRoute(client, args, route, width) {
-  const height = DEFAULT_HEIGHT_BY_WIDTH.get(width) || Math.round(width * 2.16);
+async function auditRoute(client, args, route, viewport) {
+  const { width, height } = viewport;
+  const mobileViewport = isMobileViewport(viewport);
   const url = new URL(route.path, `${args.base}/`).toString();
   await client.send('Emulation.setDeviceMetricsOverride', {
     width,
     height,
-    deviceScaleFactor: width >= 768 ? 1 : 2,
-    mobile: width < 768,
+    deviceScaleFactor: mobileViewport ? 2 : 1,
+    mobile: mobileViewport,
     screenWidth: width,
     screenHeight: height,
   });
-  await client.send('Emulation.setTouchEmulationEnabled', { enabled: width < 768 });
+  await client.send('Emulation.setTouchEmulationEnabled', { enabled: mobileViewport });
   const load = client.waitEvent('Page.loadEventFired', 15000).catch(() => null);
   await client.send('Page.navigate', { url });
   await load;
@@ -700,7 +753,7 @@ async function auditRoute(client, args, route, width) {
     });
   }
   row = stripStabilityCards(row);
-  const screenshotPath = await captureViewportScreenshot(client, args, route, width);
+  const screenshotPath = await captureViewportScreenshot(client, args, route, viewport);
   if (screenshotPath) row.screenshotPath = screenshotPath;
   return row;
 }
@@ -732,8 +785,8 @@ async function main() {
 
     const results = [];
     for (const route of args.routes) {
-      for (const width of args.widths) {
-        results.push(await auditRoute(client, args, route, width));
+      for (const viewport of args.viewports) {
+        results.push(await auditRoute(client, args, route, viewport));
       }
     }
 
@@ -741,6 +794,7 @@ async function main() {
       base: args.base,
       pulledAt: new Date().toISOString(),
       widths: args.widths,
+      viewports: args.viewports,
       routes: args.routes,
       screenshotsDir: args.screenshotsDir,
       markdownReportPath: args.out ? markdownReportPathFor(args.out) : null,

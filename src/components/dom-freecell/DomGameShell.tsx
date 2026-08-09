@@ -1510,6 +1510,7 @@ export default function DomGameShell({ initialGameNumber, variant, locale = 'en'
       <div
         className="hidden md:flex items-center justify-between z-50"
         style={{
+          display: isLandscapeMobile ? 'none' : undefined,
           padding: '12px 24px',
           background: 'var(--theme-dark, #0a3310)',
           borderBottom: '1px solid rgba(255,255,255,0.08)',
@@ -1622,6 +1623,7 @@ export default function DomGameShell({ initialGameNumber, variant, locale = 'en'
       <div
         className="hidden md:flex items-center justify-center z-20"
         style={{
+          display: isLandscapeMobile ? 'none' : undefined,
           padding: '7px 24px',
           background: 'rgba(7, 27, 9, 0.38)',
           borderBottom: '1px solid rgba(255,255,255,0.04)',
@@ -2119,7 +2121,8 @@ export default function DomGameShell({ initialGameNumber, variant, locale = 'en'
         {/* ── Landscape floating status (time / moves) ── */}
         {isLandscapeMobile && (
           <div
-            className="absolute top-1 left-1/2 -translate-x-1/2 z-20 flex items-center gap-3 rounded-lg bg-black/40 px-3 py-1 md:hidden pointer-events-none"
+            data-mobile-landscape-status="true"
+            className="fixed top-1 left-1/2 -translate-x-1/2 z-[1000] flex items-center gap-3 rounded-lg bg-black/40 px-3 py-1 pointer-events-none"
             style={{
               fontSize: '11px',
               fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace',
@@ -2132,15 +2135,28 @@ export default function DomGameShell({ initialGameNumber, variant, locale = 'en'
           </div>
         )}
 
-        {/* ── Landscape floating undo/redo ── */}
+        {/* ── Landscape floating controls ── */}
         {isLandscapeMobile && (
-          <div className="absolute bottom-2 right-2 z-20 flex gap-1.5 md:hidden">
-            <button onClick={handleUndo} className={`p-2 bg-black/40 active:bg-black/60 rounded-lg ${canUndo ? 'text-white/70' : 'text-white/20'}`} title={copy.undo} aria-label={copy.undo} disabled={!canUndo}>
-              <RotateCcw size={18} />
-            </button>
-            <button onClick={handleRedo} className={`p-2 bg-black/40 active:bg-black/60 rounded-lg ${canRedo ? 'text-white/70' : 'text-white/20'}`} title={copy.redo} aria-label={copy.redo} disabled={!canRedo}>
-              <RotateCw size={18} />
-            </button>
+          <div className="fixed bottom-2 left-2 right-2 z-[1000] flex items-end justify-between gap-2">
+            <div className="flex gap-1.5">
+              <button onClick={() => setShowHome(true)} className="flex min-h-11 min-w-11 items-center justify-center rounded-lg bg-black/40 text-[#D4AF37] active:bg-black/60" style={{ pointerEvents: 'auto', position: 'relative', zIndex: 1 }} title={copy.menu} aria-label={copy.menu}>
+                <Home size={18} />
+              </button>
+              <button onClick={handleNewGame} className="flex min-h-11 min-w-11 items-center justify-center rounded-lg bg-black/40 text-white/70 active:bg-black/60" style={{ pointerEvents: 'auto', position: 'relative', zIndex: 1 }} title={copy.new} aria-label={copy.new}>
+                <Shuffle size={18} />
+              </button>
+              <button onClick={handleHint} className="flex min-h-11 min-w-11 items-center justify-center rounded-lg bg-black/40 text-white/70 active:bg-black/60" style={{ pointerEvents: 'auto', position: 'relative', zIndex: 1 }} title={copy.hint} aria-label={copy.hint}>
+                <Lightbulb size={18} />
+              </button>
+            </div>
+            <div className="flex gap-1.5">
+              <button onClick={handleUndo} className={`flex min-h-11 min-w-11 items-center justify-center rounded-lg bg-black/40 active:bg-black/60 ${canUndo ? 'text-white/70' : 'text-white/20'}`} style={{ pointerEvents: 'auto', position: 'relative', zIndex: 1 }} title={copy.undo} aria-label={copy.undo} disabled={!canUndo}>
+                <RotateCcw size={18} />
+              </button>
+              <button onClick={handleRedo} className={`flex min-h-11 min-w-11 items-center justify-center rounded-lg bg-black/40 active:bg-black/60 ${canRedo ? 'text-white/70' : 'text-white/20'}`} style={{ pointerEvents: 'auto', position: 'relative', zIndex: 1 }} title={copy.redo} aria-label={copy.redo} disabled={!canRedo}>
+                <RotateCw size={18} />
+              </button>
+            </div>
           </div>
         )}
       </div>

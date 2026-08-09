@@ -17,10 +17,67 @@
  */
 
 import { access, mkdir, mkdtemp, rm, writeFile } from 'node:fs/promises';
-import { constants } from 'node:fs';
-import { tmpdir } from 'node:os';
-import { dirname, resolve } from 'node:path';
-import { spawn } from 'node:child_process';
+import { constants, existsSync } from 'node:fs';
+import { homedir, tmpdir } from 'node:os';
+import { dirname, join, resolve } from 'node:path';
+import { spawn, spawnSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
+
+const SCRIPT_PATH = fileURLToPath(import.meta.url);
+const SCRIPT_DIR = dirname(SCRIPT_PATH);
+const PROJECT_ROOT = resolve(SCRIPT_DIR, '..');
+
+function expandHome(path) {
+  return path?.replace(/^~(?=$|\/)/, homedir());
+}
+
+function getCandidateNodes() {
+  return [
+    process.env.FREECELL_QA_NODE,
+    process.env.FREECELL_BUILD_NODE,
+    process.env.NVM_BIN ? join(process.env.NVM_BIN, 'node') : null,
+    '~/.nvm/versions/node/v22.19.0/bin/node',
+    '~/.nvm/versions/node/v22.18.0/bin/node',
+    '/opt/homebrew/bin/node',
+    '/usr/local/bin/node',
+  ]
+    .filter(Boolean)
+    .map(expandHome)
+    .filter((candidate, index, candidates) => candidates.indexOf(candidate) === index);
+}
+
+function supportsAuditRuntime(nodePath) {
+  const result = spawnSync(nodePath, ['-p', "typeof WebSocket === 'function'"], {
+    encoding: 'utf8',
+  });
+  return result.status === 0 && result.stdout.trim() === 'true';
+}
+
+function reexecWithSupportedNode() {
+  if (typeof WebSocket === 'function' || process.env.FREECELL_QA_NODE_REEXEC === '1') {
+    return;
+  }
+
+  for (const candidate of getCandidateNodes()) {
+    if (!existsSync(candidate) || candidate === process.execPath) {
+      continue;
+    }
+
+    if (supportsAuditRuntime(candidate)) {
+      const version = spawnSync(candidate, ['-p', 'process.versions.node'], { encoding: 'utf8' }).stdout.trim();
+      console.log(`Using Node ${version} for mobile viewport audit (${candidate})`);
+      const result = spawnSync(candidate, [SCRIPT_PATH, ...process.argv.slice(2)], {
+        cwd: PROJECT_ROOT,
+        env: {
+          ...process.env,
+          FREECELL_QA_NODE_REEXEC: '1',
+        },
+        stdio: 'inherit',
+      });
+      process.exit(result.status ?? 1);
+    }
+  }
+}
 
 const DEFAULT_WIDTHS = [375, 390, 414, 768];
 const DEFAULT_HEIGHT_BY_WIDTH = new Map([
@@ -666,6 +723,18 @@ function formatMarkdown(results, args) {
   lines.push(`Base: \`${args.base}\``);
   lines.push(`Pulled: \`${new Date().toISOString()}\``);
   lines.push('');
+  const summary = summarizeResults(results);
+  lines.push('## Summary');
+  lines.push('');
+  lines.push(`- Rows: ${summary.totalRows} (${summary.passedRows} passed, ${summary.failedRows} need review)`);
+  lines.push(`- Scope: ${summary.routeCount} routes x ${summary.viewportCount} viewports`);
+  lines.push(`- Max horizontal overflow: ${summary.maxHorizontalOverflowPx}px`);
+  lines.push(`- Max cramped tap targets: ${summary.maxCrampedTapTargetCount}`);
+  lines.push(`- Max blocked controls: ${summary.maxBlockedInteractiveCount}`);
+  lines.push(`- Dead-space candidates: ${summary.deadSpaceCandidates}`);
+  lines.push('');
+  lines.push('## Details');
+  lines.push('');
   const includeScreenshots = results.some((row) => row.screenshotPath);
   lines.push(`| Route | Viewport | Cards | Face | Card W | H overflow | Clipped | Blocked controls | Tap targets | Stability | Top controls | Bottom controls | Unused vertical | Dead space${includeScreenshots ? ' | Screenshot' : ''} |`);
   lines.push(`|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|---|---:|---${includeScreenshots ? '|---' : ''}|`);
@@ -753,6 +822,28 @@ function addFailureReasons(row) {
   return { ...row, failureReasons: reasons };
 }
 
+function summarizeResults(results) {
+  const failedRows = results.filter((row) => row.failureReasons.length > 0);
+  const deadSpaceCandidates = results.filter((row) => row.deadSpaceLevel === 'review' || row.deadSpaceLevel === 'high');
+  const routeCount = new Set(results.map((row) => row.label)).size;
+  const viewportCount = new Set(results.map((row) => viewportLabel(row.viewport))).size;
+  const maxHorizontalOverflowPx = Math.max(0, ...results.map((row) => row.horizontalOverflowPx || 0));
+  const maxCrampedTapTargetCount = Math.max(0, ...results.map((row) => row.crampedTapTargetCount || 0));
+  const maxBlockedInteractiveCount = Math.max(0, ...results.map((row) => row.blockedInteractiveCount || 0));
+
+  return {
+    totalRows: results.length,
+    routeCount,
+    viewportCount,
+    failedRows: failedRows.length,
+    passedRows: results.length - failedRows.length,
+    deadSpaceCandidates: deadSpaceCandidates.length,
+    maxHorizontalOverflowPx,
+    maxCrampedTapTargetCount,
+    maxBlockedInteractiveCount,
+  };
+}
+
 async function auditRoute(client, args, route, viewport) {
   const { width, height } = viewport;
   const mobileViewport = isMobileViewport(viewport);
@@ -832,6 +923,7 @@ async function main() {
       routes: args.routes,
       screenshotsDir: args.screenshotsDir,
       markdownReportPath: args.out ? markdownReportPathFor(args.out) : null,
+      summary: summarizeResults(results),
       results,
     };
 
@@ -871,6 +963,8 @@ async function main() {
     }
   }
 }
+
+reexecWithSupportedNode();
 
 main()
   .catch((error) => {

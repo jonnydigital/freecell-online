@@ -1,4 +1,12 @@
 
+# 2026-08-09 (OpenClaw QA Report Polish)
+
+## Shipped
+- **Mobile viewport QA report summary** — `npm run qa:mobile` Markdown reports now open with a compact pass/fail scope summary, max overflow, cramped tap-target, blocked-control, and dead-space counts so overnight proof artifacts are readable before scanning the route table.
+- JSON artifacts now include the same `summary` object for cron/log consumers.
+- Plain `npm run qa:mobile` now re-executes itself with an installed Node runtime that supports global WebSocket, matching the nightly wrapper instead of failing under cron's Node 18 shell.
+- Verification: `node --check scripts/mobile-viewport-audit.mjs`, focused `npm run qa:mobile -- --base=https://playfreecellonline.com --routes=freecell --preset=phone-landscape --out=docs/analytics/mobile-viewport-audits/2026-08-09-summary-smoke.json`, and `npm run build` passed.
+
 # 2026-08-09 (OpenClaw Overnight Build)
 
 ## Shipped

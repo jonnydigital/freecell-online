@@ -378,6 +378,7 @@ class CdpClient {
     this.nextId = 1;
     this.pending = new Map();
     this.eventWaiters = new Map();
+    this.eventListeners = new Map();
     this.ws = new WebSocket(webSocketUrl);
   }
 
@@ -409,6 +410,12 @@ class CdpClient {
       this.eventWaiters.delete(message.method);
       for (const waiter of waiters) waiter.resolveEvent(message.params);
     }
+
+    if (message.method && this.eventListeners.has(message.method)) {
+      for (const listener of this.eventListeners.get(message.method)) {
+        listener(message.params);
+      }
+    }
   }
 
   send(method, params = {}) {
@@ -435,6 +442,18 @@ class CdpClient {
       });
       this.eventWaiters.set(method, waiters);
     });
+  }
+
+  on(method, listener) {
+    const listeners = this.eventListeners.get(method) || new Set();
+    listeners.add(listener);
+    this.eventListeners.set(method, listeners);
+    return () => {
+      const currentListeners = this.eventListeners.get(method);
+      if (!currentListeners) return;
+      currentListeners.delete(listener);
+      if (currentListeners.size === 0) this.eventListeners.delete(method);
+    };
   }
 
   close() {
@@ -705,6 +724,65 @@ function stripStabilityCards(row) {
   return publicRow;
 }
 
+function formatRemoteObjectValue(value) {
+  if ('value' in value) {
+    if (typeof value.value === 'string') return value.value;
+    if (value.value === null) return 'null';
+    return JSON.stringify(value.value);
+  }
+  return value.description || value.unserializableValue || value.type || '';
+}
+
+function createPageDiagnosticsCollector(client) {
+  const diagnostics = {
+    runtimeExceptions: [],
+    consoleErrors: [],
+    logErrors: [],
+  };
+
+  const offRuntimeException = client.on('Runtime.exceptionThrown', (params) => {
+    const details = params.exceptionDetails || {};
+    diagnostics.runtimeExceptions.push({
+      text: details.exception?.description || details.text || 'Runtime exception',
+      url: details.url || '',
+      lineNumber: details.lineNumber ?? null,
+      columnNumber: details.columnNumber ?? null,
+    });
+  });
+
+  const offConsole = client.on('Runtime.consoleAPICalled', (params) => {
+    if (!['error', 'assert'].includes(params.type)) return;
+    diagnostics.consoleErrors.push({
+      type: params.type,
+      text: (params.args || []).map(formatRemoteObjectValue).filter(Boolean).join(' ').slice(0, 500),
+      url: params.stackTrace?.callFrames?.[0]?.url || '',
+      lineNumber: params.stackTrace?.callFrames?.[0]?.lineNumber ?? null,
+      columnNumber: params.stackTrace?.callFrames?.[0]?.columnNumber ?? null,
+    });
+  });
+
+  const offLog = client.on('Log.entryAdded', (params) => {
+    const entry = params.entry || {};
+    if (entry.level !== 'error') return;
+    diagnostics.logErrors.push({
+      source: entry.source || '',
+      text: entry.text || 'Log error',
+      url: entry.url || '',
+      lineNumber: entry.lineNumber ?? null,
+    });
+  });
+
+  return {
+    diagnostics,
+    stop() {
+      offRuntimeException();
+      offConsole();
+      offLog();
+      return diagnostics;
+    },
+  };
+}
+
 function rowMeetsReadiness(row) {
   const expected = DEFAULT_EXPECTATIONS.get(row.label);
   if (!row.boardFound) return false;
@@ -731,18 +809,21 @@ function formatMarkdown(results, args) {
   lines.push(`- Max horizontal overflow: ${summary.maxHorizontalOverflowPx}px`);
   lines.push(`- Max cramped tap targets: ${summary.maxCrampedTapTargetCount}`);
   lines.push(`- Max blocked controls: ${summary.maxBlockedInteractiveCount}`);
+  lines.push(`- Runtime exceptions: ${summary.runtimeExceptionCount}`);
+  lines.push(`- Console/log errors: ${summary.consoleErrorCount + summary.logErrorCount}`);
   lines.push(`- Dead-space candidates: ${summary.deadSpaceCandidates}`);
   lines.push('');
   lines.push('## Details');
   lines.push('');
   const includeScreenshots = results.some((row) => row.screenshotPath);
-  lines.push(`| Route | Viewport | Cards | Face | Card W | H overflow | Clipped | Blocked controls | Tap targets | Stability | Top controls | Bottom controls | Unused vertical | Dead space${includeScreenshots ? ' | Screenshot' : ''} |`);
-  lines.push(`|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|---|---:|---${includeScreenshots ? '|---' : ''}|`);
+  lines.push(`| Route | Viewport | Cards | Face | Card W | H overflow | Clipped | Blocked controls | Tap targets | JS errors | Stability | Top controls | Bottom controls | Unused vertical | Dead space${includeScreenshots ? ' | Screenshot' : ''} |`);
+  lines.push(`|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|---|---:|---${includeScreenshots ? '|---' : ''}|`);
   for (const row of results) {
     const stability = row.stability
       ? `${row.stability.boardShiftPx}/${row.stability.maxCardShiftPx}px`
       : 'n/a';
-    lines.push(`| ${row.label} | ${row.viewport.width}x${row.viewport.height} | ${row.cardCount} | ${row.faceCardCount} | ${row.minCardWidth}-${row.maxCardWidth} | ${row.horizontalOverflowPx} | ${row.clippedCardCount} | ${row.blockedInteractiveCount ?? 0} | ${row.crampedTapTargetCount ?? 0}/${row.smallTapTargetCount ?? 0} | ${stability} | ${formatBool(row.topControlsVisible)} | ${formatBool(row.bottomControlsVisible)} | ${row.unusedVerticalPct ?? 'n/a'}% | ${row.deadSpaceLevel ?? 'n/a'}${includeScreenshots ? ` | ${row.screenshotPath ? `\`${row.screenshotPath}\`` : ''}` : ''} |`);
+    const jsErrors = `${row.runtimeExceptionCount ?? 0}/${(row.consoleErrorCount ?? 0) + (row.logErrorCount ?? 0)}`;
+    lines.push(`| ${row.label} | ${row.viewport.width}x${row.viewport.height} | ${row.cardCount} | ${row.faceCardCount} | ${row.minCardWidth}-${row.maxCardWidth} | ${row.horizontalOverflowPx} | ${row.clippedCardCount} | ${row.blockedInteractiveCount ?? 0} | ${row.crampedTapTargetCount ?? 0}/${row.smallTapTargetCount ?? 0} | ${jsErrors} | ${stability} | ${formatBool(row.topControlsVisible)} | ${formatBool(row.bottomControlsVisible)} | ${row.unusedVerticalPct ?? 'n/a'}% | ${row.deadSpaceLevel ?? 'n/a'}${includeScreenshots ? ` | ${row.screenshotPath ? `\`${row.screenshotPath}\`` : ''}` : ''} |`);
   }
   lines.push('');
   const deadSpaceCandidates = results.filter((row) => row.deadSpaceLevel === 'review' || row.deadSpaceLevel === 'high');
@@ -763,6 +844,19 @@ function formatMarkdown(results, args) {
     }
   } else {
     lines.push('No hard audit failures detected.');
+  }
+  const diagnosticRows = results.filter((row) => row.runtimeExceptionCount > 0 || row.consoleErrorCount > 0 || row.logErrorCount > 0);
+  if (diagnosticRows.length) {
+    lines.push('');
+    lines.push('## Browser Diagnostics');
+    lines.push('');
+    lines.push('`JS errors` is shown as `runtime exceptions / console+log errors`. Runtime exceptions fail the audit; console and browser log errors are recorded for triage.');
+    for (const row of diagnosticRows) {
+      const firstRuntime = row.runtimeExceptions?.[0]?.text;
+      const firstConsole = row.consoleErrors?.[0]?.text || row.logErrors?.[0]?.text;
+      const sample = firstRuntime || firstConsole;
+      lines.push(`- ${row.label} ${row.viewport.width}x${row.viewport.height}: ${row.runtimeExceptionCount} runtime, ${(row.consoleErrorCount ?? 0) + (row.logErrorCount ?? 0)} console/log${sample ? ` — ${sample}` : ''}`);
+    }
   }
   return lines.join('\n');
 }
@@ -815,6 +909,13 @@ function addFailureReasons(row) {
       reasons.push(`max card shifted ${row.stability.maxCardShiftPx}px after ${row.stability.sampleDelayMs}ms`);
     }
   }
+  if (row.runtimeExceptionCount > 0) {
+    const sample = row.runtimeExceptions
+      .slice(0, 2)
+      .map((item) => item.text)
+      .join(', ');
+    reasons.push(`${row.runtimeExceptionCount} browser runtime exception${row.runtimeExceptionCount === 1 ? '' : 's'}${sample ? ` (${sample})` : ''}`);
+  }
   if (!row.topControlsVisible) reasons.push('top controls not visibly detected');
   if (!row.bottomControlsVisible && mobileViewport && expected?.requireBottomControls !== false) {
     reasons.push('bottom controls not visibly detected on mobile');
@@ -830,6 +931,9 @@ function summarizeResults(results) {
   const maxHorizontalOverflowPx = Math.max(0, ...results.map((row) => row.horizontalOverflowPx || 0));
   const maxCrampedTapTargetCount = Math.max(0, ...results.map((row) => row.crampedTapTargetCount || 0));
   const maxBlockedInteractiveCount = Math.max(0, ...results.map((row) => row.blockedInteractiveCount || 0));
+  const runtimeExceptionCount = results.reduce((sum, row) => sum + (row.runtimeExceptionCount || 0), 0);
+  const consoleErrorCount = results.reduce((sum, row) => sum + (row.consoleErrorCount || 0), 0);
+  const logErrorCount = results.reduce((sum, row) => sum + (row.logErrorCount || 0), 0);
 
   return {
     totalRows: results.length,
@@ -841,6 +945,9 @@ function summarizeResults(results) {
     maxHorizontalOverflowPx,
     maxCrampedTapTargetCount,
     maxBlockedInteractiveCount,
+    runtimeExceptionCount,
+    consoleErrorCount,
+    logErrorCount,
   };
 }
 
@@ -848,6 +955,7 @@ async function auditRoute(client, args, route, viewport) {
   const { width, height } = viewport;
   const mobileViewport = isMobileViewport(viewport);
   const url = new URL(route.path, `${args.base}/`).toString();
+  const diagnosticsCollector = createPageDiagnosticsCollector(client);
   await client.send('Emulation.setDeviceMetricsOverride', {
     width,
     height,
@@ -877,6 +985,16 @@ async function auditRoute(client, args, route, viewport) {
       stability: measureLayoutStability(row, after, args.stabilityDelayMs),
     });
   }
+  const diagnostics = diagnosticsCollector.stop();
+  row = addFailureReasons({
+    ...row,
+    runtimeExceptionCount: diagnostics.runtimeExceptions.length,
+    consoleErrorCount: diagnostics.consoleErrors.length,
+    logErrorCount: diagnostics.logErrors.length,
+    runtimeExceptions: diagnostics.runtimeExceptions,
+    consoleErrors: diagnostics.consoleErrors,
+    logErrors: diagnostics.logErrors,
+  });
   row = stripStabilityCards(row);
   const screenshotPath = await captureViewportScreenshot(client, args, route, viewport);
   if (screenshotPath) row.screenshotPath = screenshotPath;
@@ -900,6 +1018,7 @@ async function main() {
     client = await CdpClient.connect(target.webSocketDebuggerUrl);
     await client.send('Page.enable');
     await client.send('Runtime.enable');
+    await client.send('Log.enable');
     await client.send('Page.addScriptToEvaluateOnNewDocument', {
       source: `try {
         localStorage.setItem('cookie_consent', 'declined');

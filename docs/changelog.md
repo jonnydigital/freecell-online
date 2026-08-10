@@ -1,4 +1,11 @@
 
+# 2026-08-09 (OpenClaw Browser Diagnostics QA)
+
+## Shipped
+- **Mobile viewport QA browser diagnostics** — `npm run qa:mobile` now captures browser runtime exceptions, console errors, and Chrome log errors while each route/viewport row loads.
+- Runtime exceptions now fail the audit; console/log errors are included in JSON and Markdown reports for triage without turning third-party script noise into a hard layout failure.
+- Verification: `node --check scripts/mobile-viewport-audit.mjs`, `npm run qa:mobile -- --help`, focused production `npm run qa:mobile -- --base=https://playfreecellonline.com --routes=freecell --widths=375 --out=docs/analytics/mobile-viewport-audits/2026-08-09-browser-diagnostics-smoke.json`, `npx tsc --noEmit`, and `npm run build` passed.
+
 # 2026-08-09 (OpenClaw Evening Tablet Toolbar Pass)
 
 ## Shipped

@@ -6,6 +6,12 @@
 - Focused production Spider 414x896 smoke now passes with 63 cards, 0 cramped tap targets, 0 blocked controls, 0 overflow, and no runtime exceptions.
 - Verification: `node --check scripts/mobile-viewport-audit.mjs`, focused production `npm run qa:mobile -- --base=https://playfreecellonline.com --routes=spider --viewports=414x896 --out=docs/analytics/mobile-viewport-audits/2026-08-10-stable-readiness-smoke.json`, and `npm run build` passed.
 
+# 2026-08-10 (OpenClaw Spider Landscape QA Fix)
+
+## Shipped
+- **Spider short-landscape mobile fit** — tightened the Spider board scale only for short landscape phone viewports so enabled face-up cards stay inside the first viewport and pass center hit-testing.
+- Verification: `npm run build`, focused built-app `npm run qa:mobile -- --base=http://127.0.0.1:3023 --routes=spider --viewports=812x375 --out=docs/analytics/mobile-viewport-audits/2026-08-10-spider-landscape-local.json`, and built-app `npm run qa:mobile -- --base=http://127.0.0.1:3023 --routes=spider --preset=phone-landscape --out=docs/analytics/mobile-viewport-audits/2026-08-10-spider-landscape-preset-local.json` passed.
+
 # 2026-08-09 (OpenClaw Browser Diagnostics QA)
 
 ## Shipped

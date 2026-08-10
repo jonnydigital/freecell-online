@@ -129,6 +129,20 @@
   }
 }
 
+/* Spider short landscape phones: these cross the tablet width breakpoint while
+   keeping only ~375-414px of height. Use a compact board scale so enabled
+   face-up cards remain tap-testable inside the first viewport instead of
+   visually continuing below the fold. */
+@media (min-width: 768px) and (max-height: 500px) and (orientation: landscape) {
+  .dom-board-surface[data-game="spider"] {
+    --card-width: clamp(46px, calc((100vw - 86px) / 13.8), 58px);
+    --cascade-overlap: clamp(7px, calc(var(--card-width) * 0.18), 10px);
+    --pile-gap: clamp(2px, 0.45vw, 4px);
+    --board-padding-x: clamp(6px, 1vw, 10px);
+    --board-padding-y: clamp(5px, 1vh, 8px);
+  }
+}
+
 /* Spider mobile: ≤767px */
 @media (max-width: 767px) {
   .dom-board-surface[data-game="spider"] {

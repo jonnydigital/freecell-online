@@ -14,16 +14,20 @@ export default function SidebarAchievements({ onShowFull, refreshKey }: SidebarA
   const [total] = useState(ACHIEVEMENT_DEFS.length);
 
   useEffect(() => {
-    const map = loadUnlockedMap();
-    const list = Object.entries(map)
-      .map(([id, at]) => {
-        const def = ACHIEVEMENT_DEFS.find(d => d.id === id);
-        return def ? { id, name: def.name, icon: def.icon, at: at as number } : null;
-      })
-      .filter(Boolean) as { id: string; name: string; icon: string; at: number }[];
+    const refreshId = window.setTimeout(() => {
+      const map = loadUnlockedMap();
+      const list = Object.entries(map)
+        .map(([id, at]) => {
+          const def = ACHIEVEMENT_DEFS.find(d => d.id === id);
+          return def ? { id, name: def.name, icon: def.icon, at: at as number } : null;
+        })
+        .filter(Boolean) as { id: string; name: string; icon: string; at: number }[];
 
-    list.sort((a, b) => b.at - a.at);
-    setUnlocked(list);
+      list.sort((a, b) => b.at - a.at);
+      setUnlocked(list);
+    }, 0);
+
+    return () => window.clearTimeout(refreshId);
   }, [refreshKey]);
 
   const count = unlocked.length;

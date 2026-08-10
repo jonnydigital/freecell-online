@@ -18,11 +18,15 @@ export default function SidebarStats() {
   const [streak, setStreak] = useState(0);
 
   useEffect(() => {
-    const stats = loadStats();
-    setWinPercent(getWinPercent(stats));
-    setBestTime(stats.bestTime !== null ? formatTime(stats.bestTime) : '--');
-    setBestMoves(stats.leastMoves !== null ? String(stats.leastMoves) : '--');
-    setStreak(getCurrentStreak());
+    const refreshId = window.setTimeout(() => {
+      const stats = loadStats();
+      setWinPercent(getWinPercent(stats));
+      setBestTime(stats.bestTime !== null ? formatTime(stats.bestTime) : '--');
+      setBestMoves(stats.leastMoves !== null ? String(stats.leastMoves) : '--');
+      setStreak(getCurrentStreak());
+    }, 0);
+
+    return () => window.clearTimeout(refreshId);
   }, []);
 
   return (

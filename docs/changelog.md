@@ -1,4 +1,10 @@
 
+# 2026-08-10 (OpenClaw Evening Sidebar Maintenance)
+
+## Shipped
+- **Sidebar storage refresh scheduling** — Stats, Daily Challenge, and Achievements sidebar cards now defer local-storage refreshes out of the synchronous effect body, preserving hydration-safe default markup while clearing three React 19 `set-state-in-effect` lint warnings.
+- Verification: `npm run lint` passes with the three touched warnings gone, and `npm run build` passed.
+
 # 2026-08-10 (OpenClaw Overnight Build)
 
 ## Shipped

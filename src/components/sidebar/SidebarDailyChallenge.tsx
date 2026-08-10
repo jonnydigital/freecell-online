@@ -26,10 +26,14 @@ export default function SidebarDailyChallenge({ onPlayDaily }: SidebarDailyChall
   const [todayCompleted, setTodayCompleted] = useState(false);
 
   useEffect(() => {
-    const data = loadDailyData();
-    setCompletedDays(data.completedDays);
-    setStreak(getCurrentStreak());
-    setTodayCompleted(!!data.completedDays[getTodayStr()]);
+    const refreshId = window.setTimeout(() => {
+      const data = loadDailyData();
+      setCompletedDays(data.completedDays);
+      setStreak(getCurrentStreak());
+      setTodayCompleted(!!data.completedDays[getTodayStr()]);
+    }, 0);
+
+    return () => window.clearTimeout(refreshId);
   }, []);
 
   const todayStr = getTodayStr();

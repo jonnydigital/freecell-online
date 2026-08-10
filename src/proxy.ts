@@ -25,6 +25,17 @@ function shouldSkipOwnershipCheck(pathname: string): boolean {
     pathname === '/robots.txt' ||
     pathname === '/sitemap.xml' ||
     pathname === '/favicon.ico' ||
+    // PWA assets must resolve same-origin on every host: the service worker
+    // script, its precache targets, and the linked web manifests. ownerOf()
+    // defaults these unlisted paths to hub-only, so without this skip the
+    // wrong-host redirect below 301s them cross-domain on every spoke. A
+    // redirected SW script is rejected by the browser ("The script resource is
+    // behind a redirect, which is disallowed"), silently breaking SW
+    // registration, PWA install, and the offline fallback off the hub.
+    pathname === '/sw.js' ||
+    pathname === '/manifest.json' ||
+    pathname === '/manifest.webmanifest' ||
+    pathname === '/offline' ||
     pathname.startsWith('/game/') ||
     pathname.startsWith('/api/') ||
     pathname.startsWith('/embed') ||

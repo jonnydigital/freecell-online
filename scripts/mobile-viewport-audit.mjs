@@ -794,6 +794,15 @@ function rowMeetsReadiness(row) {
   return true;
 }
 
+function rowMeetsStability(row) {
+  if (!row.stability) return true;
+  return (
+    !row.stability.cardCountChanged &&
+    row.stability.boardShiftPx <= BOARD_STABILITY_THRESHOLD_PX &&
+    row.stability.maxCardShiftPx <= CARD_STABILITY_THRESHOLD_PX
+  );
+}
+
 function formatMarkdown(results, args) {
   const lines = [];
   lines.push('# Mobile Viewport Audit');
@@ -974,17 +983,18 @@ async function auditRoute(client, args, route, viewport) {
   const readyDeadline = Date.now() + args.readyTimeoutMs;
   do {
     row = addFailureReasons(await evaluate(client, auditExpression(route.label, route.path)));
-    if (rowMeetsReadiness(row)) break;
+    if (rowMeetsReadiness(row)) {
+      if (args.stabilityDelayMs <= 0) break;
+      await sleep(args.stabilityDelayMs);
+      const after = await evaluate(client, auditExpression(route.label, route.path));
+      row = addFailureReasons({
+        ...row,
+        stability: measureLayoutStability(row, after, args.stabilityDelayMs),
+      });
+      if (rowMeetsReadiness(after) && rowMeetsStability(row)) break;
+    }
     await sleep(300);
   } while (Date.now() < readyDeadline);
-  if (args.stabilityDelayMs > 0 && row?.boardFound && row.cardCount > 0) {
-    await sleep(args.stabilityDelayMs);
-    const after = await evaluate(client, auditExpression(route.label, route.path));
-    row = addFailureReasons({
-      ...row,
-      stability: measureLayoutStability(row, after, args.stabilityDelayMs),
-    });
-  }
   const diagnostics = diagnosticsCollector.stop();
   row = addFailureReasons({
     ...row,

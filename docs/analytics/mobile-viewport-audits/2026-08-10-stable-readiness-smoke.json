@@ -1,0 +1,303 @@
+{
+  "base": "https://playfreecellonline.com",
+  "pulledAt": "2026-08-10T05:02:26.515Z",
+  "widths": [
+    375,
+    390,
+    414,
+    768
+  ],
+  "viewports": [
+    {
+      "width": 414,
+      "height": 896
+    }
+  ],
+  "routes": [
+    {
+      "label": "spider",
+      "path": "/spider"
+    }
+  ],
+  "screenshotsDir": null,
+  "markdownReportPath": "docs/analytics/mobile-viewport-audits/2026-08-10-stable-readiness-smoke.md",
+  "summary": {
+    "totalRows": 1,
+    "routeCount": 1,
+    "viewportCount": 1,
+    "failedRows": 0,
+    "passedRows": 1,
+    "deadSpaceCandidates": 1,
+    "maxHorizontalOverflowPx": 0,
+    "maxCrampedTapTargetCount": 0,
+    "maxBlockedInteractiveCount": 0,
+    "runtimeExceptionCount": 0,
+    "consoleErrorCount": 0,
+    "logErrorCount": 1
+  },
+  "results": [
+    {
+      "label": "spider",
+      "path": "/spider",
+      "url": "https://playspidersolitaireonline.com/spider",
+      "title": "Spider Solitaire | Play Online Free — 1, 2 & 4 Suit",
+      "h1": "Play Spider Solitaire Online — Free, 1, 2 & 4 Suit",
+      "viewport": {
+        "width": 414,
+        "height": 896,
+        "scrollWidth": 414,
+        "scrollHeight": 11950,
+        "devicePixelRatio": 2
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 119.5,
+        "left": 12,
+        "right": 402,
+        "bottom": 436.42,
+        "width": 390,
+        "height": 316.92
+      },
+      "cardCount": 63,
+      "faceCardCount": 10,
+      "backCardCount": 53,
+      "visibleCardCount": 63,
+      "minCardWidth": 36,
+      "maxCardWidth": 36,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": true,
+      "unusedVerticalPx": 459.578125,
+      "unusedVerticalPct": 51.3,
+      "cascadeCount": 10,
+      "cascadeCards": [
+        7,
+        7,
+        6,
+        6,
+        6,
+        5,
+        5,
+        5,
+        5,
+        6
+      ],
+      "visibleInteractiveCount": 20,
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 14,
+      "crampedTapTargetCount": 0,
+      "smallTapTargets": [
+        {
+          "index": 1,
+          "text": "Switch solitaire game, currently Spider Solitaire",
+          "tag": "button",
+          "rect": {
+            "top": 11,
+            "left": 10,
+            "right": 189.41,
+            "bottom": 51.5,
+            "width": 179.41,
+            "height": 40.5
+          }
+        },
+        {
+          "index": 2,
+          "text": "One suit",
+          "tag": "button",
+          "rect": {
+            "top": 62.5,
+            "left": 10,
+            "right": 137.33,
+            "bottom": 98.5,
+            "width": 127.33,
+            "height": 36
+          }
+        },
+        {
+          "index": 3,
+          "text": "Two suits",
+          "tag": "button",
+          "rect": {
+            "top": 62.5,
+            "left": 143.33,
+            "right": 270.67,
+            "bottom": 98.5,
+            "width": 127.34,
+            "height": 36
+          }
+        },
+        {
+          "index": 4,
+          "text": "Four suits",
+          "tag": "button",
+          "rect": {
+            "top": 62.5,
+            "left": 276.67,
+            "right": 404,
+            "bottom": 98.5,
+            "width": 127.33,
+            "height": 36
+          }
+        },
+        {
+          "index": 13,
+          "text": "6 of spades",
+          "tag": "div",
+          "rect": {
+            "top": 220.9,
+            "left": 17.72,
+            "right": 53.72,
+            "bottom": 271.29,
+            "width": 36,
+            "height": 50.39
+          }
+        },
+        {
+          "index": 14,
+          "text": "3 of spades",
+          "tag": "div",
+          "rect": {
+            "top": 220.9,
+            "left": 55.78,
+            "right": 91.78,
+            "bottom": 271.29,
+            "width": 36,
+            "height": 50.39
+          }
+        },
+        {
+          "index": 15,
+          "text": "3 of spades",
+          "tag": "div",
+          "rect": {
+            "top": 220.9,
+            "left": 93.84,
+            "right": 129.84,
+            "bottom": 271.29,
+            "width": 36,
+            "height": 50.39
+          }
+        },
+        {
+          "index": 16,
+          "text": "9 of spades",
+          "tag": "div",
+          "rect": {
+            "top": 220.9,
+            "left": 131.91,
+            "right": 167.91,
+            "bottom": 271.29,
+            "width": 36,
+            "height": 50.39
+          }
+        },
+        {
+          "index": 17,
+          "text": "7 of spades",
+          "tag": "div",
+          "rect": {
+            "top": 214.42,
+            "left": 169.97,
+            "right": 205.97,
+            "bottom": 264.81,
+            "width": 36,
+            "height": 50.39
+          }
+        },
+        {
+          "index": 18,
+          "text": "4 of spades",
+          "tag": "div",
+          "rect": {
+            "top": 214.42,
+            "left": 208.03,
+            "right": 244.03,
+            "bottom": 264.81,
+            "width": 36,
+            "height": 50.39
+          }
+        },
+        {
+          "index": 19,
+          "text": "K of spades",
+          "tag": "div",
+          "rect": {
+            "top": 214.42,
+            "left": 246.09,
+            "right": 282.09,
+            "bottom": 264.81,
+            "width": 36,
+            "height": 50.39
+          }
+        },
+        {
+          "index": 20,
+          "text": "2 of spades",
+          "tag": "div",
+          "rect": {
+            "top": 214.42,
+            "left": 284.16,
+            "right": 320.16,
+            "bottom": 264.81,
+            "width": 36,
+            "height": 50.39
+          }
+        },
+        {
+          "index": 21,
+          "text": "2 of spades",
+          "tag": "div",
+          "rect": {
+            "top": 214.42,
+            "left": 322.22,
+            "right": 358.22,
+            "bottom": 264.81,
+            "width": 36,
+            "height": 50.39
+          }
+        },
+        {
+          "index": 22,
+          "text": "2 of spades",
+          "tag": "div",
+          "rect": {
+            "top": 214.42,
+            "left": 360.28,
+            "right": 396.28,
+            "bottom": 264.81,
+            "width": 36,
+            "height": 50.39
+          }
+        }
+      ],
+      "crampedTapTargets": [],
+      "deadSpaceLevel": "review",
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 9,
+        "beforeCardCount": 63,
+        "afterCardCount": 63,
+        "cardCountChanged": false
+      },
+      "runtimeExceptionCount": 0,
+      "consoleErrorCount": 0,
+      "logErrorCount": 1,
+      "runtimeExceptions": [],
+      "consoleErrors": [],
+      "logErrors": [
+        {
+          "source": "network",
+          "text": "The script resource is behind a redirect, which is disallowed.",
+          "url": "",
+          "lineNumber": null
+        }
+      ]
+    }
+  ]
+}

@@ -1,4 +1,11 @@
 
+# 2026-08-10 (OpenClaw Overnight Build)
+
+## Shipped
+- **Mobile viewport QA stable readiness sampling** — `npm run qa:mobile` now requires expected board/card counts to stay valid through the post-ready stability sample before accepting a row, retrying transient samples until timeout instead of preserving a late Spider card-count drop as the final audit result.
+- Focused production Spider 414x896 smoke now passes with 63 cards, 0 cramped tap targets, 0 blocked controls, 0 overflow, and no runtime exceptions.
+- Verification: `node --check scripts/mobile-viewport-audit.mjs`, focused production `npm run qa:mobile -- --base=https://playfreecellonline.com --routes=spider --viewports=414x896 --out=docs/analytics/mobile-viewport-audits/2026-08-10-stable-readiness-smoke.json`, and `npm run build` passed.
+
 # 2026-08-09 (OpenClaw Browser Diagnostics QA)
 
 ## Shipped

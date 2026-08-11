@@ -1,4 +1,11 @@
 
+# 2026-08-11 (OpenClaw Overnight Build)
+
+## Shipped
+- **Next-action aggregate-only decision state** — `npm run analytics:next-actions` now reports `configure_detail_breakdown` when GA4 has enough aggregate `next_action_tap` volume for a decision but no action/surface/game detail rows, instead of treating that state as ordinary low-volume collection.
+- JSON/Markdown reports now include the 25-tap decision threshold, detail-readiness flags, and a direct next action to verify or register the GA4 next-action custom dimensions before reprioritizing the phone panel.
+- Verification: `node --check scripts/next-action-audit.mjs`, `npm run analytics:next-actions -- --out-dir=/tmp/freecell-next-action-audit-normal`, aggregate-only fixture `npm run analytics:next-actions -- --metrics=/tmp/freecell-next-action-fixture/metrics.json --out-dir=/tmp/freecell-next-action-audit-fixture`, and `npm run build` passed.
+
 # 2026-08-10 (OpenClaw Evening Sidebar Maintenance)
 
 ## Shipped

@@ -18,6 +18,7 @@ const ROOT = resolve(__dirname, '..');
 const ANALYTICS_DIR = resolve(ROOT, 'docs/analytics');
 const OUT_DIR = resolve(ANALYTICS_DIR, 'next-action-audits');
 const REPORT_TIME_ZONE = 'America/New_York';
+const TAP_DECISION_THRESHOLD = 25;
 
 function localDateStamp(date = new Date()) {
   const parts = new Intl.DateTimeFormat('en-US', {
@@ -93,6 +94,8 @@ function buildAudit(googleMetrics) {
   const games = rankBuckets(gameMap);
   const locales = rankBuckets(localeMap);
   const topAction = actions[0] || null;
+  const hasDetailedBreakdowns = nextActionRows.length > 0;
+  const hasAggregateTapsOnly = totalTaps > 0 && !hasDetailedBreakdowns;
 
   let recommendation = 'keep_collecting';
   let nextAction = 'Keep the phone next-action panel as-is until GA4 collects enough taps by action.';
@@ -100,7 +103,11 @@ function buildAudit(googleMetrics) {
     recommendation = 'register_custom_dimensions';
     nextAction =
       'GA4 has next_action_tap counts, but action/surface breakdowns need custom dimensions registered before this report can choose panel priorities.';
-  } else if (totalTaps >= 25 && topAction) {
+  } else if (totalTaps >= TAP_DECISION_THRESHOLD && hasAggregateTapsOnly) {
+    recommendation = 'configure_detail_breakdown';
+    nextAction =
+      `GA4 has ${totalTaps} next-action taps, but no action/surface/game rows. Verify the next-action custom dimensions before changing the phone panel.`;
+  } else if (totalTaps >= TAP_DECISION_THRESHOLD && topAction) {
     recommendation = 'promote_top_action';
     nextAction = `Review whether ${topAction.key} should be visually prioritized on phone after ${topAction.eventCount} taps.`;
   } else if (totalTaps === 0) {
@@ -121,6 +128,9 @@ function buildAudit(googleMetrics) {
     summary: {
       totalTaps,
       detailedRows: nextActionRows.length,
+      tapDecisionThreshold: TAP_DECISION_THRESHOLD,
+      hasDetailedBreakdowns,
+      hasAggregateTapsOnly,
       topAction,
       recommendation,
       nextAction,
@@ -154,8 +164,9 @@ function renderMarkdown(audit) {
     '## Decision',
     '',
     `- Recommendation: \`${audit.summary.recommendation}\``,
-    `- Total next-action taps: ${audit.summary.totalTaps}`,
+    `- Total next-action taps: ${audit.summary.totalTaps} (decision threshold: ${audit.summary.tapDecisionThreshold})`,
     `- Detailed GA4 rows: ${audit.summary.detailedRows}`,
+    `- Detail breakdowns ready: ${audit.summary.hasDetailedBreakdowns ? 'yes' : 'no'}`,
     `- Top action: ${
       audit.summary.topAction
         ? `${audit.summary.topAction.key} (${audit.summary.topAction.eventCount} taps)`

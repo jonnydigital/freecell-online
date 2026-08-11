@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { HelpCircle, Lightbulb, RotateCcw, Shuffle } from 'lucide-react';
+import { HelpCircle, Layers, Lightbulb, RotateCcw, Shuffle } from 'lucide-react';
 import Link from '@/components/NetworkLink';
 import { trackNextActionTap } from '@/lib/analytics';
 
@@ -11,7 +11,11 @@ interface MobileNextActionPanelProps {
   onHint?: () => void;
   onUndo?: () => void;
   onNewGame?: () => void;
+  onStockAction?: () => void;
   canUndo?: boolean;
+  stockLabel?: string;
+  stockAriaLabel?: string;
+  stockDisabled?: boolean;
   learnHref?: string;
   learnLabel?: string;
   className?: string;
@@ -24,13 +28,17 @@ export default function MobileNextActionPanel({
   onHint,
   onUndo,
   onNewGame,
+  onStockAction,
   canUndo = true,
+  stockLabel = 'Deal',
+  stockAriaLabel = 'Use stock pile',
+  stockDisabled = false,
   learnHref,
   learnLabel = 'Rules',
   className = '',
   compact = false,
 }: MobileNextActionPanelProps) {
-  const actionCount = [onHint, onUndo, learnHref || onNewGame].filter(Boolean).length;
+  const actionCount = [onHint, onUndo, onStockAction, learnHref || onNewGame].filter(Boolean).length;
   const trackPanelTap = (action: string, target?: string) => {
     trackNextActionTap(action, 'mobile_next_action_panel', target);
   };
@@ -123,6 +131,27 @@ export default function MobileNextActionPanel({
           >
             <RotateCcw size={16} />
             Undo
+          </button>
+        )}
+        {onStockAction && (
+          <button
+            type="button"
+            aria-label={stockAriaLabel}
+            onClick={() => {
+              trackPanelTap('stock');
+              onStockAction();
+            }}
+            disabled={stockDisabled}
+            style={{
+              ...buttonBase,
+              background: stockDisabled ? 'rgba(255,255,255,0.025)' : 'rgba(212,175,55,0.16)',
+              border: `1px solid ${stockDisabled ? 'rgba(255,255,255,0.05)' : 'rgba(212,175,55,0.32)'}`,
+              color: stockDisabled ? 'rgba(255,255,255,0.26)' : '#D4AF37',
+              cursor: stockDisabled ? 'default' : 'pointer',
+            }}
+          >
+            <Layers size={16} />
+            {stockLabel}
           </button>
         )}
         {learnHref ? (

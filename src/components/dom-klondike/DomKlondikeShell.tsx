@@ -51,6 +51,9 @@ export default function DomKlondikeShell({ initialDrawMode = 1 }: DomKlondikeShe
   const newGame = useDomKlondikeStore((s) => s.newGame);
   const undo = useDomKlondikeStore((s) => s.undo);
   const drawMode = useDomKlondikeStore((s) => s.drawMode);
+  const stock = useDomKlondikeStore((s) => s.stock);
+  const waste = useDomKlondikeStore((s) => s.waste);
+  const drawFromStock = useDomKlondikeStore((s) => s.drawFromStock);
   const setDrawMode = useDomKlondikeStore((s) => s.setDrawMode);
   const getEngine = useDomKlondikeStore((s) => s.getEngine);
 
@@ -131,6 +134,11 @@ export default function DomKlondikeShell({ initialDrawMode = 1 }: DomKlondikeShe
     undo();
     trackUndo();
   }, [undo, clearHint]);
+
+  const handleStockAction = useCallback(() => {
+    clearHint();
+    drawFromStock();
+  }, [clearHint, drawFromStock]);
 
   // Hint
   const handleHint = useCallback(() => {
@@ -356,7 +364,17 @@ export default function DomKlondikeShell({ initialDrawMode = 1 }: DomKlondikeShe
                    carries both, so passing them rendered duplicate on-screen
                    controls on portrait phones. */
                 title="Next best play"
-                body="Use a hint to highlight the strongest move, or undo before the stock cycle traps you."
+                body="Draw from stock when the tableau stalls, or check strategy before the cycle traps you."
+                onStockAction={handleStockAction}
+                stockLabel={stock.length > 0 ? 'Draw' : 'Recycle'}
+                stockAriaLabel={
+                  stock.length > 0
+                    ? `Draw from stock, ${stock.length} cards remaining`
+                    : waste.length > 0
+                      ? 'Recycle waste pile'
+                      : 'Stock and waste are empty'
+                }
+                stockDisabled={stock.length === 0 && waste.length === 0}
                 learnHref="/klondike/strategy"
                 learnLabel="Strategy"
                 compact

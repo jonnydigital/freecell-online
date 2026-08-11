@@ -40,8 +40,11 @@ export default function DomSpiderShell({ initialDifficulty = '1-suit' }: DomSpid
   const newGame = useDomSpiderStore((s) => s.newGame);
   const difficulty = useDomSpiderStore((s) => s.difficulty);
   const setDifficulty = useDomSpiderStore((s) => s.setDifficulty);
+  const cascades = useDomSpiderStore((s) => s.cascades);
+  const stock = useDomSpiderStore((s) => s.stock);
   const foundations = useDomSpiderStore((s) => s.foundations);
   const undo = useDomSpiderStore((s) => s.undo);
+  const dealFromStock = useDomSpiderStore((s) => s.dealFromStock);
   const moveHistory = useDomSpiderStore((s) => s.moveHistory);
 
   const [showWinModal, setShowWinModal] = useState(false);
@@ -139,6 +142,13 @@ export default function DomSpiderShell({ initialDifficulty = '1-suit' }: DomSpid
     });
     hintTimerRef.current = setTimeout(() => setHintHighlight(null), 3500);
   }, [clearHint]);
+
+  const hasEmptyCascade = cascades.some((cascade) => cascade.length === 0);
+  const stockDeals = Math.ceil(stock.length / 10);
+  const handleStockAction = useCallback(() => {
+    clearHint();
+    dealFromStock();
+  }, [clearHint, dealFromStock]);
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -391,7 +401,17 @@ export default function DomSpiderShell({ initialDifficulty = '1-suit' }: DomSpid
                    carries both, so passing them rendered duplicate on-screen
                    controls on portrait phones. */
                 title="Build a clean run"
-                body="Ask for a hint before dealing from stock, or undo moves that bury a suited sequence."
+                body="Deal another row only after every column is filled, or review tips before burying a run."
+                onStockAction={handleStockAction}
+                stockLabel="Deal"
+                stockAriaLabel={
+                  stock.length === 0
+                    ? 'Stock empty'
+                    : hasEmptyCascade
+                      ? 'Fill every tableau column before dealing stock'
+                      : `Deal next row from stock, ${stockDeals} deals remaining`
+                }
+                stockDisabled={stock.length === 0 || hasEmptyCascade}
                 learnHref="/spider/tips"
                 learnLabel="Tips"
                 compact

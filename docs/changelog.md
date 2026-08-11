@@ -1,4 +1,11 @@
 
+# 2026-08-11 (OpenClaw Evening Mobile UX Pass)
+
+## Shipped
+- **Mobile stock/deal next-action controls** — Klondike and Spider phone panels now use the measured below-board dead space for stock-cycle actions: Klondike exposes Draw/Recycle and Spider exposes Deal with the empty-column rule reflected in the disabled state.
+- This keeps Hint/Undo in the persistent bottom bar while adding a real play action inside the board flow, matching the competitor fluidity note about reducing reach and extra taps on mobile.
+- Verification: `npm run build` passed, and focused built-app mobile QA passed with `npm run qa:mobile -- --base=http://127.0.0.1:3057 --routes=klondike,spider --widths=375,414 --out=docs/analytics/mobile-viewport-audits/2026-08-11-stock-next-action-local.json`.
+
 # 2026-08-11 (OpenClaw Overnight Analytics Cycle)
 
 ## Shipped

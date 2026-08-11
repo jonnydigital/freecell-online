@@ -1,4 +1,11 @@
 
+# 2026-08-11 (OpenClaw Overnight Analytics Cycle)
+
+## Shipped
+- **Next-action cycle audit decision carry-through** — `npm run analytics:next-action-cycle` now reads the dated next-action audit JSON and includes the audit recommendation, tap threshold, total taps, detailed-row count, and detail-readiness state in the cycle report.
+- Credential-blocked cycles now keep the specific audit next action in the top-level recommendation while appending the missing Google credential requirement, so overnight reports distinguish "fresh pull blocked" from "UX decision unavailable."
+- Verification: `node --check scripts/next-action-cycle.mjs`, `npm run analytics:next-action-cycle`, and `npm run build` passed.
+
 # 2026-08-11 (OpenClaw Overnight Build)
 
 ## Shipped
@@ -11,6 +18,14 @@
 ## Shipped
 - **Sidebar storage refresh scheduling** — Stats, Daily Challenge, and Achievements sidebar cards now defer local-storage refreshes out of the synchronous effect body, preserving hydration-safe default markup while clearing three React 19 `set-state-in-effect` lint warnings.
 - Verification: `npm run lint` passes with the three touched warnings gone, and `npm run build` passed.
+
+# 2026-08-10 (OpenClaw Daily Metrics Pass)
+
+## Checked
+- Refreshed public network metrics with `npm run metrics:pull`; sitemap totals are stable at 302 live URLs across the network: playfreecellonline 132, solitairestack 90, playklondikeonline 42, playspidersolitaireonline 38.
+- Authenticated GA4 API pull remains blocked by missing `GOOGLE_OAUTH_ACCESS_TOKEN`, `GOOGLE_APPLICATION_CREDENTIALS`, or gcloud ADC, so no measured UX priority was changed from the current backlog gates.
+- Local feedback storage is empty; no `data/feedback.json` exists to triage from this machine.
+- No Claude Code implementation agent or Gemini review was launched because the next measurable UX work is credential/tap-threshold gated and no UI/code change was made.
 
 # 2026-08-10 (OpenClaw Overnight Build)
 

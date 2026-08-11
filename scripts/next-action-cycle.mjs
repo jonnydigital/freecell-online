@@ -11,7 +11,7 @@
  */
 
 import { spawnSync } from 'node:child_process';
-import { mkdir, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -19,6 +19,7 @@ const __filename = fileURLToPath(import.meta.url);
 const ROOT = resolve(dirname(__filename), '..');
 const REPORT_TIME_ZONE = 'America/New_York';
 const OUT_DIR = resolve(ROOT, 'docs/analytics/next-action-cycles');
+const NEXT_ACTION_AUDIT_DIR = resolve(ROOT, 'docs/analytics/next-action-audits');
 
 function localDateStamp(date = new Date()) {
   const parts = new Intl.DateTimeFormat('en-US', {
@@ -58,6 +59,28 @@ function credentialUnavailable(step) {
   );
 }
 
+async function readAuditDecision(reportDate) {
+  const auditPath = resolve(NEXT_ACTION_AUDIT_DIR, `${reportDate}.json`);
+
+  try {
+    const audit = JSON.parse(await readFile(auditPath, 'utf8'));
+    return {
+      path: auditPath,
+      recommendation: audit.summary?.recommendation || 'unknown',
+      nextAction: audit.summary?.nextAction || '',
+      totalTaps: audit.summary?.totalTaps ?? null,
+      detailedRows: audit.summary?.detailedRows ?? null,
+      tapDecisionThreshold: audit.summary?.tapDecisionThreshold ?? null,
+      hasDetailedBreakdowns: audit.summary?.hasDetailedBreakdowns ?? null,
+    };
+  } catch (err) {
+    return {
+      path: auditPath,
+      error: err.message,
+    };
+  }
+}
+
 function renderMarkdown(report) {
   const lines = [
     `# Next-Action Analytics Cycle — ${report.reportDate}`,
@@ -77,6 +100,27 @@ function renderMarkdown(report) {
     '',
     ...report.notes.map((note) => `- ${note}`),
   ];
+
+  if (report.auditDecision) {
+    lines.push(
+      '',
+      '## Audit Decision',
+      '',
+      `- Audit artifact: \`${report.auditDecision.path}\``,
+    );
+
+    if (report.auditDecision.error) {
+      lines.push(`- Error: ${report.auditDecision.error}`);
+    } else {
+      lines.push(
+        `- Audit recommendation: \`${report.auditDecision.recommendation}\``,
+        `- Total taps: ${report.auditDecision.totalTaps} (threshold: ${report.auditDecision.tapDecisionThreshold})`,
+        `- Detailed rows: ${report.auditDecision.detailedRows}`,
+        `- Detail breakdowns ready: ${report.auditDecision.hasDetailedBreakdowns ? 'yes' : 'no'}`,
+        `- Next action: ${report.auditDecision.nextAction}`,
+      );
+    }
+  }
 
   for (const step of report.steps) {
     lines.push('', `## ${step.name}`, '');
@@ -101,6 +145,7 @@ async function writeReport(report) {
 async function main() {
   const steps = [];
   const notes = [];
+  const reportDate = localDateStamp();
 
   const setup = runStep('ensure GA4 dimensions', 'scripts/setup-next-action-dimensions.mjs');
   steps.push(setup);
@@ -122,6 +167,7 @@ async function main() {
 
   const audit = runStep('audit next-action taps', 'scripts/next-action-audit.mjs');
   steps.push(audit);
+  const auditDecision = audit.status === 'passed' ? await readAuditDecision(reportDate) : null;
 
   const requiredFailed = steps.some(
     (step) =>
@@ -136,24 +182,30 @@ async function main() {
   let status = 'complete';
   let recommendation =
     'Review the latest next-action audit and wait for 25+ panel taps before changing panel priority.';
+  if (auditDecision?.nextAction && !auditDecision.error) {
+    recommendation = auditDecision.nextAction;
+    notes.push(`Latest next-action audit recommendation: ${auditDecision.recommendation}.`);
+  }
 
   if (requiredFailed) {
     status = 'failed';
     recommendation = 'Fix the failed local analytics step before using this cycle for UX decisions.';
   } else if (credentialBlocked) {
     status = 'credential_blocked_with_artifacts';
-    recommendation =
-      'Install GOOGLE_APPLICATION_CREDENTIALS or GOOGLE_OAUTH_ACCESS_TOKEN, then rerun this cycle for fresh GA4 setup and metrics.';
+    recommendation = auditDecision?.nextAction && !auditDecision.error
+      ? `${auditDecision.nextAction} Fresh GA4 setup/metrics still need GOOGLE_APPLICATION_CREDENTIALS or GOOGLE_OAUTH_ACCESS_TOKEN.`
+      : 'Install GOOGLE_APPLICATION_CREDENTIALS or GOOGLE_OAUTH_ACCESS_TOKEN, then rerun this cycle for fresh GA4 setup and metrics.';
   }
 
   if (notes.length === 0) notes.push('All analytics-cycle steps completed without credential fallback.');
 
   const report = {
     generatedAt: new Date().toISOString(),
-    reportDate: localDateStamp(),
+    reportDate,
     reportTimeZone: REPORT_TIME_ZONE,
     status,
     recommendation,
+    auditDecision,
     notes,
     steps,
   };

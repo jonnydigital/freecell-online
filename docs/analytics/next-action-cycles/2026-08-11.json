@@ -1,0 +1,69 @@
+{
+  "generatedAt": "2026-08-11T06:48:53.294Z",
+  "reportDate": "2026-08-11",
+  "reportTimeZone": "America/New_York",
+  "status": "credential_blocked_with_artifacts",
+  "recommendation": "Re-run after the next GA4 refresh; no next-action taps are visible yet. Fresh GA4 setup/metrics still need GOOGLE_APPLICATION_CREDENTIALS or GOOGLE_OAUTH_ACCESS_TOKEN.",
+  "auditDecision": {
+    "path": "/Users/jonathanfoye/clawd/projects/freecell-online/docs/analytics/next-action-audits/2026-08-11.json",
+    "recommendation": "wait_for_data",
+    "nextAction": "Re-run after the next GA4 refresh; no next-action taps are visible yet.",
+    "totalTaps": 0,
+    "detailedRows": 0,
+    "tapDecisionThreshold": 25,
+    "hasDetailedBreakdowns": false
+  },
+  "notes": [
+    "Google credentials were unavailable, so dimension setup was recorded as a dry-run.",
+    "Google metrics pull was skipped by missing credentials; audit used the latest saved metrics artifact.",
+    "Latest next-action audit recommendation: wait_for_data."
+  ],
+  "steps": [
+    {
+      "name": "ensure GA4 dimensions",
+      "script": "scripts/setup-next-action-dimensions.mjs",
+      "args": [],
+      "startedAt": "2026-08-11T06:48:53.039Z",
+      "finishedAt": "2026-08-11T06:48:53.099Z",
+      "status": "failed",
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "setup-next-action-dimensions failed: No Google token available. Install gcloud, set GOOGLE_OAUTH_ACCESS_TOKEN, or set GOOGLE_APPLICATION_CREDENTIALS to an ADC JSON file."
+    },
+    {
+      "name": "record dimension setup dry-run",
+      "script": "scripts/setup-next-action-dimensions.mjs",
+      "args": [
+        "--dry-run"
+      ],
+      "startedAt": "2026-08-11T06:48:53.099Z",
+      "finishedAt": "2026-08-11T06:48:53.167Z",
+      "status": "passed",
+      "exitCode": 0,
+      "stdout": "Would ensure 4 GA4 custom dimensions for property 531359003:\n- action\n- surface\n- game_name\n- game_locale\nSkipped GA4 lookup in dry-run because credentials are unavailable: No Google token available. Install gcloud, set GOOGLE_OAUTH_ACCESS_TOKEN, or set GOOGLE_APPLICATION_CREDENTIALS to an ADC JSON file.\nWrote: /Users/jonathanfoye/clawd/projects/freecell-online/docs/analytics/next-action-dimension-setup/2026-08-11.json\nWrote: /Users/jonathanfoye/clawd/projects/freecell-online/docs/analytics/next-action-dimension-setup/2026-08-11.md",
+      "stderr": ""
+    },
+    {
+      "name": "pull Google metrics",
+      "script": "scripts/pull-google-metrics.mjs",
+      "args": [],
+      "startedAt": "2026-08-11T06:48:53.167Z",
+      "finishedAt": "2026-08-11T06:48:53.227Z",
+      "status": "failed",
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "Error: No Google token available. Install gcloud, set GOOGLE_OAUTH_ACCESS_TOKEN, or set GOOGLE_APPLICATION_CREDENTIALS to an ADC JSON file.\n    at accessToken (file:///Users/jonathanfoye/clawd/projects/freecell-online/scripts/pull-google-metrics.mjs:153:13)\n    at main (file:///Users/jonathanfoye/clawd/projects/freecell-online/scripts/pull-google-metrics.mjs:380:23)\n    at file:///Users/jonathanfoye/clawd/projects/freecell-online/scripts/pull-google-metrics.mjs:423:1\n    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)"
+    },
+    {
+      "name": "audit next-action taps",
+      "script": "scripts/next-action-audit.mjs",
+      "args": [],
+      "startedAt": "2026-08-11T06:48:53.227Z",
+      "finishedAt": "2026-08-11T06:48:53.293Z",
+      "status": "passed",
+      "exitCode": 0,
+      "stdout": "Next-action audit: wait_for_data\nTotal taps: 0\nWrote: /Users/jonathanfoye/clawd/projects/freecell-online/docs/analytics/next-action-audits/2026-08-11.json\nWrote: /Users/jonathanfoye/clawd/projects/freecell-online/docs/analytics/next-action-audits/2026-08-11.md",
+      "stderr": ""
+    }
+  ]
+}

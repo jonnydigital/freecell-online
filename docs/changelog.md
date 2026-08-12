@@ -1,4 +1,10 @@
 
+# 2026-08-12 (OpenClaw Evening QA Pass)
+
+## Shipped
+- **Mobile next-action panel QA visibility reporting** — `npm run qa:mobile` now records visible phone next-action panel counts and lists the exposed actions in JSON and Markdown reports.
+- This makes the recent FreeCell/Klondike/Spider board-flow controls directly inspectable in nightly mobile QA, rather than only checking general tap-target, blocked-control, and dead-space signals.
+
 # 2026-08-12 (OpenClaw Overnight Build)
 
 ## Shipped

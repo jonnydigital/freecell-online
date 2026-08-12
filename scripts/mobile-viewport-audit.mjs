@@ -575,6 +575,29 @@ function auditExpression(label, path) {
     const mobileLandscapeStatusVisible = mobileLandscapeStatus
       ? visible(mobileLandscapeStatus.getBoundingClientRect(), getComputedStyle(mobileLandscapeStatus))
       : false;
+    const nextActionPanels = [...document.querySelectorAll('[data-mobile-next-action]')].map((el) => {
+      const rect = el.getBoundingClientRect();
+      const style = getComputedStyle(el);
+      const actions = [...el.querySelectorAll(controlSelector)].map((actionEl) => {
+        const actionRect = actionEl.getBoundingClientRect();
+        const actionStyle = getComputedStyle(actionEl);
+        return {
+          text: (actionEl.getAttribute('aria-label') || actionEl.textContent || '').replace(/\\s+/g, ' ').trim().slice(0, 80),
+          tag: actionEl.tagName.toLowerCase(),
+          disabled: Boolean(actionEl.disabled) || actionEl.getAttribute('aria-disabled') === 'true',
+          visible: visible(actionRect, actionStyle),
+          rect: rectJson(actionRect),
+        };
+      });
+      return {
+        visible: visible(rect, style),
+        rect: rectJson(rect),
+        actionCount: actions.length,
+        visibleActionCount: actions.filter((action) => action.visible).length,
+        actions,
+      };
+    });
+    const visibleNextActionPanels = nextActionPanels.filter((panel) => panel.visible);
     const topControlsVisible =
       mobileLandscapeStatusVisible ||
       interactive.some((item) => item.visible && item.rect.top < Math.max(180, viewport.height * 0.28));
@@ -608,6 +631,18 @@ function auditExpression(label, path) {
         .filter((card) => card.id)
         .map((card) => ({ id: card.id, rect: card.rect })),
       visibleInteractiveCount: interactive.filter((item) => item.visible).length,
+      nextActionPanelCount: nextActionPanels.length,
+      visibleNextActionPanelCount: visibleNextActionPanels.length,
+      nextActionActions: visibleNextActionPanels.flatMap((panel) =>
+        panel.actions
+          .filter((action) => action.visible)
+          .map((action) => ({
+            text: action.text,
+            tag: action.tag,
+            disabled: action.disabled,
+            rect: action.rect,
+          }))
+      ),
       blockedInteractiveCount: blockedInteractive.length,
       blockedInteractive: blockedInteractive.map((item) => ({
         index: item.index,
@@ -821,18 +856,24 @@ function formatMarkdown(results, args) {
   lines.push(`- Runtime exceptions: ${summary.runtimeExceptionCount}`);
   lines.push(`- Console/log errors: ${summary.consoleErrorCount + summary.logErrorCount}`);
   lines.push(`- Dead-space candidates: ${summary.deadSpaceCandidates}`);
+  lines.push(`- Rows with visible next-action panel: ${summary.rowsWithVisibleNextActionPanel}`);
   lines.push('');
   lines.push('## Details');
   lines.push('');
   const includeScreenshots = results.some((row) => row.screenshotPath);
-  lines.push(`| Route | Viewport | Cards | Face | Card W | H overflow | Clipped | Blocked controls | Tap targets | JS errors | Stability | Top controls | Bottom controls | Unused vertical | Dead space${includeScreenshots ? ' | Screenshot' : ''} |`);
-  lines.push(`|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|---|---:|---${includeScreenshots ? '|---' : ''}|`);
+  lines.push(`| Route | Viewport | Cards | Face | Card W | H overflow | Clipped | Blocked controls | Tap targets | JS errors | Stability | Top controls | Bottom controls | Next action | Unused vertical | Dead space${includeScreenshots ? ' | Screenshot' : ''} |`);
+  lines.push(`|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|---|---|---:|---${includeScreenshots ? '|---' : ''}|`);
   for (const row of results) {
     const stability = row.stability
       ? `${row.stability.boardShiftPx}/${row.stability.maxCardShiftPx}px`
       : 'n/a';
     const jsErrors = `${row.runtimeExceptionCount ?? 0}/${(row.consoleErrorCount ?? 0) + (row.logErrorCount ?? 0)}`;
-    lines.push(`| ${row.label} | ${row.viewport.width}x${row.viewport.height} | ${row.cardCount} | ${row.faceCardCount} | ${row.minCardWidth}-${row.maxCardWidth} | ${row.horizontalOverflowPx} | ${row.clippedCardCount} | ${row.blockedInteractiveCount ?? 0} | ${row.crampedTapTargetCount ?? 0}/${row.smallTapTargetCount ?? 0} | ${jsErrors} | ${stability} | ${formatBool(row.topControlsVisible)} | ${formatBool(row.bottomControlsVisible)} | ${row.unusedVerticalPct ?? 'n/a'}% | ${row.deadSpaceLevel ?? 'n/a'}${includeScreenshots ? ` | ${row.screenshotPath ? `\`${row.screenshotPath}\`` : ''}` : ''} |`);
+    const nextAction = row.visibleNextActionPanelCount > 0
+      ? row.nextActionActions
+        .map((action) => `${action.text || action.tag}${action.disabled ? ' (disabled)' : ''}`)
+        .join(', ')
+      : 'none';
+    lines.push(`| ${row.label} | ${row.viewport.width}x${row.viewport.height} | ${row.cardCount} | ${row.faceCardCount} | ${row.minCardWidth}-${row.maxCardWidth} | ${row.horizontalOverflowPx} | ${row.clippedCardCount} | ${row.blockedInteractiveCount ?? 0} | ${row.crampedTapTargetCount ?? 0}/${row.smallTapTargetCount ?? 0} | ${jsErrors} | ${stability} | ${formatBool(row.topControlsVisible)} | ${formatBool(row.bottomControlsVisible)} | ${nextAction} | ${row.unusedVerticalPct ?? 'n/a'}% | ${row.deadSpaceLevel ?? 'n/a'}${includeScreenshots ? ` | ${row.screenshotPath ? `\`${row.screenshotPath}\`` : ''}` : ''} |`);
   }
   lines.push('');
   const deadSpaceCandidates = results.filter((row) => row.deadSpaceLevel === 'review' || row.deadSpaceLevel === 'high');
@@ -943,6 +984,7 @@ function summarizeResults(results) {
   const runtimeExceptionCount = results.reduce((sum, row) => sum + (row.runtimeExceptionCount || 0), 0);
   const consoleErrorCount = results.reduce((sum, row) => sum + (row.consoleErrorCount || 0), 0);
   const logErrorCount = results.reduce((sum, row) => sum + (row.logErrorCount || 0), 0);
+  const rowsWithVisibleNextActionPanel = results.filter((row) => row.visibleNextActionPanelCount > 0).length;
 
   return {
     totalRows: results.length,
@@ -957,6 +999,7 @@ function summarizeResults(results) {
     runtimeExceptionCount,
     consoleErrorCount,
     logErrorCount,
+    rowsWithVisibleNextActionPanel,
   };
 }
 

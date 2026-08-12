@@ -1751,13 +1751,23 @@ export default function DomGameShell({ initialGameNumber, variant, locale = 'en'
           <DomBoard
             hint={hint}
             footer={
-              !isLandscapeMobile && !hint && !isWon && !replayMode && !isAutoCompletable && !noMovesAvailable ? (
+              !isLandscapeMobile && !hint && !isWon && !replayMode && !noMovesAvailable ? (
                 <MobileNextActionPanel
                   /* Coaching + Strategy deep-link only. Hint/Undo intentionally omitted:
                      the persistent mobile bottom bar already carries both, so passing
                      them produced duplicate on-screen controls (logged 2026-07-18). */
-                  title={moveCount === 0 ? 'Start with a safe move' : 'Use the open space'}
-                  body={moveCount === 0 ? 'Try a hint if the first move is not obvious.' : 'Undo a dead end or ask for a hint before changing deals.'}
+                  title={isAutoCompletable ? copy.autoFinish : moveCount === 0 ? 'Start with a safe move' : 'Use the open space'}
+                  body={
+                    isAutoCompletable
+                      ? copy.autoFinishDescription
+                      : moveCount === 0
+                        ? 'Try a hint if the first move is not obvious.'
+                        : 'Undo a dead end or ask for a hint before changing deals.'
+                  }
+                  onStockAction={isAutoCompletable ? handleAutoComplete : undefined}
+                  stockLabel={copy.autoFinish}
+                  stockAriaLabel={copy.autoFinish}
+                  stockActionName="auto_finish"
                   learnHref={copy.strategyHref}
                   learnLabel={copy.strategy}
                   compact
@@ -1854,7 +1864,7 @@ export default function DomGameShell({ initialGameNumber, variant, locale = 'en'
 
         {/* Auto-Complete Button */}
         {isAutoCompletable && !isWon && !replayMode && (
-          <div className="absolute top-3 left-1/2 -translate-x-1/2 z-10">
+          <div className="absolute top-3 left-1/2 -translate-x-1/2 z-10 hidden sm:block">
             <button
               onClick={handleAutoComplete}
               className="px-5 py-2.5 bg-yellow-500 hover:bg-yellow-400 text-black font-bold text-sm rounded-lg shadow-lg animate-bounce transition-colors"

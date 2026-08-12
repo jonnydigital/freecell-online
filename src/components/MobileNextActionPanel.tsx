@@ -15,6 +15,7 @@ interface MobileNextActionPanelProps {
   canUndo?: boolean;
   stockLabel?: string;
   stockAriaLabel?: string;
+  stockActionName?: string;
   stockDisabled?: boolean;
   learnHref?: string;
   learnLabel?: string;
@@ -32,6 +33,7 @@ export default function MobileNextActionPanel({
   canUndo = true,
   stockLabel = 'Deal',
   stockAriaLabel = 'Use stock pile',
+  stockActionName = 'stock',
   stockDisabled = false,
   learnHref,
   learnLabel = 'Rules',
@@ -138,7 +140,7 @@ export default function MobileNextActionPanel({
             type="button"
             aria-label={stockAriaLabel}
             onClick={() => {
-              trackPanelTap('stock');
+              trackPanelTap(stockActionName);
               onStockAction();
             }}
             disabled={stockDisabled}

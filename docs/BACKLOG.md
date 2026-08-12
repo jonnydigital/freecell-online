@@ -1,5 +1,5 @@
 # FreeCell Online — Feature Backlog
-*Ranked by impact × effort. Updated 2026-08-10.*
+*Ranked by impact × effort. Updated 2026-08-12.*
 
 ## 🚨 P0: Critical Bug
 1. ~~**🔴 Mobile card rendering broken**~~ ✅ FIXED 03-02 — Root cause: `recreateAllCardSprites()` used PNG asset keys that were never loaded. On resize (common on mobile), cards became empty containers. Fixed with procedural rendering matching `createCardSprite()`.
@@ -130,6 +130,7 @@
 95. ~~**Next-action aggregate-only decision state**~~ ✅ SHIPPED 2026-08-11 — `npm run analytics:next-actions` now distinguishes "25+ aggregate next-action taps but no action/surface/game detail rows" from true low-volume collection, emitting a `configure_detail_breakdown` recommendation with the tap threshold and detail-readiness fields in JSON/Markdown. *(Follow-up from the measured UX loop: avoid reprioritizing the phone next-action strip until GA4 custom dimensions expose which actions players actually tap.)*
 96. ~~**Next-action cycle carries audit decisions**~~ ✅ SHIPPED 2026-08-11 — `npm run analytics:next-action-cycle` now reads the dated next-action audit artifact, includes its recommendation/tap/detail-readiness summary in the cycle JSON/Markdown, and preserves that specific UX next action even when fresh GA4 setup/metrics are credential-blocked. *(Follow-up from the measured UX loop: nightly reports should surface the actual audit decision, not only the credential state.)*
 97. ~~**Klondike/Spider mobile stock next-action controls**~~ ✅ SHIPPED 2026-08-11 — Klondike and Spider now use the phone below-board next-action panel for stock-cycle actions, adding Draw/Recycle for Klondike and Deal for Spider with disabled empty-column/empty-stock states. *(Follow-up from the 2026-08-11 QA layout-density note and competitor fluidity reference: turn dead space into a direct play action without duplicating bottom-bar Hint/Undo controls.)*
+98. ~~**FreeCell mobile Auto-Finish next-action control**~~ ✅ SHIPPED 2026-08-12 — FreeCell's phone below-board next-action panel now stays visible when the deal is clearly won and exposes Auto-Finish as a board-flow action, while the older bouncing auto-complete overlay is suppressed on phone portrait to avoid duplicate controls. Next-action analytics records the tap as `auto_finish` instead of the generic stock action. *(Follow-up from the measured mobile control loop and competitor single-surface controls gap.)*
 
 ## 🔎 Next Measured UX Candidates
 - Configure cron with `GOOGLE_APPLICATION_CREDENTIALS` or `GOOGLE_OAUTH_ACCESS_TOKEN`, run `npm run analytics:next-action-cycle`, review the latest `docs/analytics/next-action-cycles/` and `docs/analytics/next-action-audits/` reports, then decide whether Hint, Undo, New Game, or learning links deserve more prominence in the phone next-action strip.

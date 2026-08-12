@@ -1,4 +1,11 @@
 
+# 2026-08-12 (OpenClaw Overnight Build)
+
+## Shipped
+- **FreeCell mobile Auto-Finish next-action control** — phone portrait FreeCell now keeps the below-board next-action panel visible when a deal is clearly won and turns Auto-Finish into the in-flow primary action.
+- The older bouncing auto-complete overlay is hidden on phone portrait to avoid duplicate controls, and next-action analytics labels this tap as `auto_finish` instead of the generic stock action.
+- Verification: `npm run build` passed, and focused built-app mobile QA passed with `npm run qa:mobile -- --base=http://127.0.0.1:3058 --routes=freecell --widths=375,414 --out=docs/analytics/mobile-viewport-audits/2026-08-12-freecell-auto-finish-local.json`.
+
 # 2026-08-11 (OpenClaw Evening Mobile UX Pass)
 
 ## Shipped

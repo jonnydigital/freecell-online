@@ -1,4 +1,11 @@
 
+# 2026-08-12 (OpenClaw Evening Static Shell Guard)
+
+## Shipped
+- **Root layout static-rendering guard** — `npm run build` now runs a prebuild audit that fails if the shared root layout imports request APIs like `next/headers`, calls `headers()`/`cookies()`/`draftMode()`, or sets `force-dynamic`.
+- This protects the solitaire network from accidentally turning static content pages into on-demand routes while working on localized route language signals or other request-specific shell tweaks.
+- Verification: `node scripts/audit-static-root-layout.mjs` and `npm run build` passed.
+
 # 2026-08-12 (OpenClaw Evening QA Pass)
 
 ## Shipped

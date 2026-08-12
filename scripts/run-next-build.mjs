@@ -75,6 +75,22 @@ function runWithNode(nodePath, args) {
   process.exit(result.status ?? 1);
 }
 
+function runPrebuildAudits() {
+  const audits = ['scripts/audit-static-root-layout.mjs'];
+
+  for (const audit of audits) {
+    const result = spawnSync(process.execPath, [join(REPO_ROOT, audit)], {
+      cwd: REPO_ROOT,
+      env: process.env,
+      stdio: 'inherit',
+    });
+
+    if (result.status !== 0) {
+      process.exit(result.status ?? 1);
+    }
+  }
+}
+
 if (!isSupportedNode()) {
   for (const candidate of getCandidateNodes()) {
     if (!existsSync(candidate) || candidate === process.execPath) {
@@ -96,4 +112,5 @@ if (!isSupportedNode()) {
 }
 
 const nextBin = join(REPO_ROOT, 'node_modules', 'next', 'dist', 'bin', 'next');
+runPrebuildAudits();
 runWithNode(process.execPath, [nextBin, 'build']);

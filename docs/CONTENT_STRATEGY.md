@@ -180,7 +180,7 @@ route, and never advertise a locale in hreflang that returns a 404.
 - Locale pages are audited on a rotating basis: H1 count, reciprocal hreflang,
   localized UI, and that each advertised alternate returns 200.
 
-### Current locale set (audited 2026-08-01; re-verified 2026-08-05 and 2026-08-11, all pass)
+### Current locale set (audited 2026-08-01; re-verified 2026-08-05, 2026-08-11, and 2026-08-12, all pass)
 
 The FreeCell property runs six locales, each with a landing page plus a
 localized play route, all sharing one reciprocal hreflang cluster
@@ -225,6 +225,21 @@ play route (`/freecell-en-espanol/jugar` ↔ `/freecell-en-francais/jouer`). The
 raw SSR `<html lang>` still serves the default `en` (hydration-corrected) — the
 same U6 root-layout backlog item, unchanged and again out of a same-run-safe
 slice. No locale regression six days on; the cluster is intact.
+
+Re-verification note (2026-08-12, daily review): the locale gate also covers
+"localized play UI," so this run audited the newly-landed mobile auto-finish
+next-action control (commit `045abdc`, which surfaces `copy.autoFinish` and
+`copy.autoFinishDescription` in the FreeCell `MobileNextActionPanel`) against
+the six-locale bar. Both keys are defined in every `UI_COPY` locale block in
+`src/components/dom-freecell/DomGameShell.tsx` — English "Auto-Finish", Spanish
+"Terminar auto", French "Fin auto", German "Auto-Ende", Italian "Fine auto",
+Portuguese "Final automatico", each with a localized description sentence — so
+the new phone-only auto-finish surface renders fully translated with no
+`undefined` label or title leaking to es/fr/de/it/pt mobile users. New play-UX
+that reaches the localized board must add its copy to all six blocks the way
+`045abdc` did; this feature clears the gate. Confirmed via source audit plus the
+same-day live true-viewport mobile pass (FreeCell 52 cards, 0 clipped/overflow
+at 375/390/414/768). Docs-only, layout-neutral, no new routes/locales/types.
 
 ## Priority Backlog
 

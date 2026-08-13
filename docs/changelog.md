@@ -1,4 +1,11 @@
 
+# 2026-08-13 (OpenClaw Overnight QA Health Pass)
+
+## Shipped
+- **Mobile next-action expected-control health summary** — `npm run qa:mobile` now counts expected phone next-action rows, matched expected controls, and failed expected rows in JSON/Markdown summaries.
+- Markdown reports now include an Expected Next-Action Health section listing each FreeCell/Klondike/Spider phone row's matched, missing, and disabled expected controls, making nightly next-action regressions easier to scan.
+- Verification: `node --check scripts/mobile-viewport-audit.mjs`, focused production QA for FreeCell/Klondike/Spider at 375px passed with 5/5 expected next-action controls matched, and `npm run build` passed.
+
 # 2026-08-13 (OpenClaw Overnight QA Reporting Pass)
 
 ## Shipped

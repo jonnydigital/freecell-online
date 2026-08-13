@@ -774,10 +774,10 @@ function classifyDeadSpace(row) {
 function expectedNextActionDiagnostics(row) {
   const expectations = NEXT_ACTION_EXPECTATIONS.get(row.label);
   if (!expectations || !isPhonePortraitViewport(row.viewport)) {
-    return { missing: [], disabled: [], matches: [] };
+    return { expected: [], missing: [], disabled: [], matches: [] };
   }
 
-  const diagnostics = { missing: [], disabled: [], matches: [] };
+  const diagnostics = { expected: expectations.map((expectation) => expectation.label), missing: [], disabled: [], matches: [] };
   for (const expectation of expectations) {
     const matchingAction = (row.nextActionActions || []).find((action) => {
       const actionName = action.action || '';
@@ -902,6 +902,8 @@ function formatMarkdown(results, args) {
   lines.push(`- Console/log errors: ${summary.consoleErrorCount + summary.logErrorCount}`);
   lines.push(`- Dead-space candidates: ${summary.deadSpaceCandidates}`);
   lines.push(`- Rows with visible next-action panel: ${summary.rowsWithVisibleNextActionPanel}`);
+  lines.push(`- Expected next-action rows: ${summary.expectedNextActionRows} (${summary.expectedNextActionPassedRows} passed, ${summary.expectedNextActionFailedRows} need review)`);
+  lines.push(`- Expected next-action matches: ${summary.expectedNextActionMatchedControls}/${summary.expectedNextActionExpectedControls}`);
   lines.push(`- Rows missing expected next-action controls: ${summary.rowsMissingExpectedNextAction}`);
   lines.push(`- Rows with disabled expected next-action controls: ${summary.rowsWithDisabledExpectedNextAction}`);
   lines.push('');
@@ -930,6 +932,24 @@ function formatMarkdown(results, args) {
     lines.push(`Phone-width rows with ${DEAD_SPACE_REVIEW_THRESHOLD_PCT}%+ unused vertical space below the first board sample are candidates for below-board next actions, contextual hints, or compact secondary content. This is a planning signal, not a hard failure.`);
     for (const row of deadSpaceCandidates) {
       lines.push(`- ${row.label} ${row.viewport.width}x${row.viewport.height}: ${row.unusedVerticalPct}% unused vertical space (${row.deadSpaceLevel})`);
+    }
+    lines.push('');
+  }
+  const nextActionRows = results.filter((row) => row.nextActionExpectedControls?.length > 0);
+  if (nextActionRows.length) {
+    lines.push('## Expected Next-Action Health');
+    lines.push('');
+    for (const row of nextActionRows) {
+      const matched = row.nextActionExpectedMatches
+        .map((match) => `${match.label}${match.action ? ` (${match.action})` : ''}`)
+        .join(', ') || 'none';
+      const missing = row.nextActionExpectationMisses?.length
+        ? row.nextActionExpectationMisses.join(', ')
+        : 'none';
+      const disabled = row.nextActionDisabledExpected?.length
+        ? row.nextActionDisabledExpected.join(', ')
+        : 'none';
+      lines.push(`- ${row.label} ${row.viewport.width}x${row.viewport.height}: matched ${matched}; missing ${missing}; disabled ${disabled}`);
     }
     lines.push('');
   }
@@ -1030,6 +1050,7 @@ function addFailureReasons(row) {
   }
   return {
     ...row,
+    nextActionExpectedControls: nextActionDiagnostics.expected,
     nextActionExpectationMisses: nextActionDiagnostics.missing,
     nextActionDisabledExpected: nextActionDiagnostics.disabled,
     nextActionExpectedMatches: nextActionDiagnostics.matches,
@@ -1049,8 +1070,20 @@ function summarizeResults(results) {
   const consoleErrorCount = results.reduce((sum, row) => sum + (row.consoleErrorCount || 0), 0);
   const logErrorCount = results.reduce((sum, row) => sum + (row.logErrorCount || 0), 0);
   const rowsWithVisibleNextActionPanel = results.filter((row) => row.visibleNextActionPanelCount > 0).length;
-  const rowsMissingExpectedNextAction = results.filter((row) => row.nextActionExpectationMisses?.length > 0).length;
-  const rowsWithDisabledExpectedNextAction = results.filter((row) => row.nextActionDisabledExpected?.length > 0).length;
+  const expectedNextActionRows = results.filter((row) => row.nextActionExpectedControls?.length > 0);
+  const rowsMissingExpectedNextAction = expectedNextActionRows.filter((row) => row.nextActionExpectationMisses?.length > 0).length;
+  const rowsWithDisabledExpectedNextAction = expectedNextActionRows.filter((row) => row.nextActionDisabledExpected?.length > 0).length;
+  const expectedNextActionFailedRows = expectedNextActionRows.filter(
+    (row) => row.nextActionExpectationMisses?.length > 0 || row.nextActionDisabledExpected?.length > 0
+  ).length;
+  const expectedNextActionExpectedControls = expectedNextActionRows.reduce(
+    (sum, row) => sum + (row.nextActionExpectedControls?.length || 0),
+    0
+  );
+  const expectedNextActionMatchedControls = expectedNextActionRows.reduce(
+    (sum, row) => sum + (row.nextActionExpectedMatches?.length || 0),
+    0
+  );
 
   return {
     totalRows: results.length,
@@ -1066,6 +1099,11 @@ function summarizeResults(results) {
     consoleErrorCount,
     logErrorCount,
     rowsWithVisibleNextActionPanel,
+    expectedNextActionRows: expectedNextActionRows.length,
+    expectedNextActionPassedRows: expectedNextActionRows.length - expectedNextActionFailedRows,
+    expectedNextActionFailedRows,
+    expectedNextActionExpectedControls,
+    expectedNextActionMatchedControls,
     rowsMissingExpectedNextAction,
     rowsWithDisabledExpectedNextAction,
   };

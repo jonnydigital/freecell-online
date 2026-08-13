@@ -241,6 +241,26 @@ that reaches the localized board must add its copy to all six blocks the way
 same-day live true-viewport mobile pass (FreeCell 52 cards, 0 clipped/overflow
 at 375/390/414/768). Docs-only, layout-neutral, no new routes/locales/types.
 
+Re-verification note (2026-08-13, daily review): a sibling producer landed
+`c7e8342` ("Guard root layout static rendering") this run, so this review
+checked whether it also closed the standing SSR `<html lang>` observation. It
+does not. A same-origin no-store fetch of `/freecell-en-francais` still returns
+`<html lang="en">` in the server HTML, hydration-corrected to `fr`
+(`document.documentElement.lang === 'fr'`) by the inline `initial-html-lang`
+bootstrap. Root cause confirmed by source: `src/app/layout.tsx` is a single
+shared App-Router root layout (all four domains switch on `siteConfig.key`) that
+hard-codes `<html lang="en">`; locale is encoded only in the pathname, which a
+static root layout cannot read at render time — hence the client-script
+workaround. Emitting the correct SSR `lang` would require making the root layout
+dynamic (`headers()` fed by middleware) **or** splitting locale routes into a
+route group with its own root layout. The former directly regresses the
+static-rendering guarantee `c7e8342` just added, and the latter is a new route
+family — so per the automation rules this is now a **plan-gated** item
+(needs a `docs/plans/` reference), no longer a "small future hardening" and
+explicitly not a same-run-safe slice. Rendered-DOM language signals remain
+correct for JS-rendering crawlers; the gap is only the pre-hydration HTML. No
+locale regression otherwise; the six-locale cluster is intact.
+
 ## Priority Backlog
 
 These are the best content additions to add now.

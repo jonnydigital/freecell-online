@@ -41,6 +41,11 @@ export default function MobileNextActionPanel({
   compact = false,
 }: MobileNextActionPanelProps) {
   const actionCount = [onHint, onUndo, onStockAction, learnHref || onNewGame].filter(Boolean).length;
+  const learnActionName = learnLabel.toLowerCase().includes('strategy')
+    ? 'strategy'
+    : learnLabel.toLowerCase().includes('tips')
+      ? 'tips'
+      : 'rules';
   const trackPanelTap = (action: string, target?: string) => {
     trackNextActionTap(action, 'mobile_next_action_panel', target);
   };
@@ -98,6 +103,7 @@ export default function MobileNextActionPanel({
         {onHint && (
           <button
             type="button"
+            data-mobile-next-action-control="hint"
             aria-label="Show a hint for this game"
             onClick={() => {
               trackPanelTap('hint');
@@ -117,6 +123,7 @@ export default function MobileNextActionPanel({
         {onUndo && (
           <button
             type="button"
+            data-mobile-next-action-control="undo"
             aria-label={canUndo ? 'Undo last move' : 'Undo unavailable'}
             onClick={() => {
               trackPanelTap('undo');
@@ -138,6 +145,7 @@ export default function MobileNextActionPanel({
         {onStockAction && (
           <button
             type="button"
+            data-mobile-next-action-control={stockActionName}
             aria-label={stockAriaLabel}
             onClick={() => {
               trackPanelTap(stockActionName);
@@ -159,10 +167,10 @@ export default function MobileNextActionPanel({
         {learnHref ? (
           <Link
             href={learnHref}
+            data-mobile-next-action-control={learnActionName}
             aria-label={`Open ${learnLabel}`}
             onClick={() => {
-              const action = learnLabel.toLowerCase().includes('strategy') ? 'strategy' : 'rules';
-              trackPanelTap(action, learnHref);
+              trackPanelTap(learnActionName, learnHref);
             }}
             style={{
               ...buttonBase,
@@ -178,6 +186,7 @@ export default function MobileNextActionPanel({
           onNewGame && (
             <button
               type="button"
+              data-mobile-next-action-control="new_game"
               aria-label="Start a new game"
               onClick={() => {
                 trackPanelTap('new_game');

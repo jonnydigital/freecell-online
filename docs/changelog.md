@@ -1,4 +1,11 @@
 
+# 2026-08-12 (OpenClaw Evening Next-Action State QA)
+
+## Shipped
+- **Mobile next-action action-state QA** — mobile next-action controls now expose stable `data-mobile-next-action-control` action names, and `npm run qa:mobile` asserts the expected FreeCell/Klondike/Spider phone actions are present and enabled rather than only matching visible button text.
+- Spider's phone Tips link now records `next_action_tap` as `tips` instead of being folded into the generic `rules` action, so GA4 detail rows line up with the visible panel.
+- Verification: `node --check scripts/mobile-viewport-audit.mjs`, `npm run build`, and focused local phone QA passed for FreeCell, Klondike, and Spider at 375/390/414px with 0 overflow, 0 clipped cards, 0 blocked controls, 0 cramped tap targets, 0 runtime exceptions, and 0 missing expected next-action controls.
+
 # 2026-08-12 (OpenClaw Evening QA Assertion Pass)
 
 ## Shipped

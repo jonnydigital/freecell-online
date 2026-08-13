@@ -130,9 +130,15 @@ const DEFAULT_EXPECTATIONS = new Map([
   ['forty-thieves', { minCards: 41, cascades: 10, minFaceCards: 40, minBackCards: 1, requireBottomControls: false }],
 ]);
 const NEXT_ACTION_EXPECTATIONS = new Map([
-  ['freecell', [/strategy/i]],
-  ['klondike', [/\b(draw|recycle)\b/i, /strategy/i]],
-  ['spider', [/\bdeal\b/i, /tips/i]],
+  ['freecell', [{ action: 'strategy', label: 'strategy', pattern: /strategy/i }]],
+  ['klondike', [
+    { action: 'stock', label: 'stock action', pattern: /\b(draw|recycle)\b/i },
+    { action: 'strategy', label: 'strategy', pattern: /strategy/i },
+  ]],
+  ['spider', [
+    { action: 'stock', label: 'stock action', pattern: /\bdeal\b/i },
+    { action: 'tips', label: 'tips', pattern: /tips/i },
+  ]],
 ]);
 
 const sleep = (ms) => new Promise((resolveSleep) => setTimeout(resolveSleep, ms));
@@ -592,6 +598,7 @@ function auditExpression(label, path) {
         const actionStyle = getComputedStyle(actionEl);
         return {
           text: (actionEl.getAttribute('aria-label') || actionEl.textContent || '').replace(/\\s+/g, ' ').trim().slice(0, 80),
+          action: actionEl.getAttribute('data-mobile-next-action-control') || '',
           tag: actionEl.tagName.toLowerCase(),
           disabled: Boolean(actionEl.disabled) || actionEl.getAttribute('aria-disabled') === 'true',
           visible: visible(actionRect, actionStyle),
@@ -647,6 +654,7 @@ function auditExpression(label, path) {
           .filter((action) => action.visible)
           .map((action) => ({
             text: action.text,
+            action: action.action,
             tag: action.tag,
             disabled: action.disabled,
             rect: action.rect,
@@ -766,12 +774,16 @@ function classifyDeadSpace(row) {
 function expectedNextActionMisses(row) {
   const expectations = NEXT_ACTION_EXPECTATIONS.get(row.label);
   if (!expectations || !isPhonePortraitViewport(row.viewport)) return [];
-  const actionText = (row.nextActionActions || [])
-    .map((action) => action.text || action.tag || '')
-    .join(' ');
-  return expectations
-    .filter((expectation) => !expectation.test(actionText))
-    .map((expectation) => expectation.source.replace(/\\b/g, '').replace(/^\(|\)$/g, ''));
+  return expectations.flatMap((expectation) => {
+    const matchingAction = (row.nextActionActions || []).find((action) => {
+      const actionName = action.action || '';
+      const actionText = action.text || action.tag || '';
+      return actionName === expectation.action || expectation.pattern.test(actionText);
+    });
+    if (!matchingAction) return [expectation.label];
+    if (matchingAction.disabled) return [`${expectation.label} enabled`];
+    return [];
+  });
 }
 
 function stripStabilityCards(row) {
@@ -891,7 +903,7 @@ function formatMarkdown(results, args) {
     const jsErrors = `${row.runtimeExceptionCount ?? 0}/${(row.consoleErrorCount ?? 0) + (row.logErrorCount ?? 0)}`;
     const nextAction = row.visibleNextActionPanelCount > 0
       ? row.nextActionActions
-        .map((action) => `${action.text || action.tag}${action.disabled ? ' (disabled)' : ''}`)
+        .map((action) => `${action.action ? `${action.action}: ` : ''}${action.text || action.tag}${action.disabled ? ' (disabled)' : ''}`)
         .join(', ')
       : 'none';
     lines.push(`| ${row.label} | ${row.viewport.width}x${row.viewport.height} | ${row.cardCount} | ${row.faceCardCount} | ${row.minCardWidth}-${row.maxCardWidth} | ${row.horizontalOverflowPx} | ${row.clippedCardCount} | ${row.blockedInteractiveCount ?? 0} | ${row.crampedTapTargetCount ?? 0}/${row.smallTapTargetCount ?? 0} | ${jsErrors} | ${stability} | ${formatBool(row.topControlsVisible)} | ${formatBool(row.bottomControlsVisible)} | ${nextAction} | ${row.unusedVerticalPct ?? 'n/a'}% | ${row.deadSpaceLevel ?? 'n/a'}${includeScreenshots ? ` | ${row.screenshotPath ? `\`${row.screenshotPath}\`` : ''}` : ''} |`);

@@ -1,5 +1,5 @@
 # FreeCell Online — Feature Backlog
-*Ranked by impact × effort. Updated 2026-08-12.*
+*Ranked by impact × effort. Updated 2026-08-13.*
 
 ## 🚨 P0: Critical Bug
 1. ~~**🔴 Mobile card rendering broken**~~ ✅ FIXED 03-02 — Root cause: `recreateAllCardSprites()` used PNG asset keys that were never loaded. On resize (common on mobile), cards became empty containers. Fixed with procedural rendering matching `createCardSprite()`.
@@ -135,6 +135,7 @@
 100. ~~**Root layout static-rendering guard**~~ ✅ SHIPPED 2026-08-12 — `npm run build` now fails before Next.js runs if the shared root layout imports request APIs (`next/headers`) or calls `headers()`, `cookies()`, `draftMode()`, or `force-dynamic`, preventing a localized-route shell tweak from turning the whole static content network into on-demand dynamic pages. *(Follow-up from the evening build audit: preserve static SEO/performance guarantees while localized language signals remain client-corrected.)*
 101. ~~**Mobile next-action panel QA assertions**~~ ✅ SHIPPED 2026-08-12 — `npm run qa:mobile` now hard-fails phone-portrait FreeCell/Klondike/Spider rows when the below-board next-action panel is missing or no longer exposes the expected action text: FreeCell Strategy, Klondike Draw/Recycle plus Strategy, and Spider Deal plus Tips. *(Follow-up from #99: make the new panel reporting protective instead of only descriptive.)*
 102. ~~**Mobile next-action action-state QA**~~ ✅ SHIPPED 2026-08-12 — Mobile next-action controls now expose stable action-name attributes, Spider Tips taps track as `tips`, and `npm run qa:mobile` asserts the expected FreeCell/Klondike/Spider phone controls are present and enabled by action identity rather than button text alone. *(Follow-up from #101: protect the new board-flow controls against disabled-state and analytics-label regressions.)*
+103. ~~**Mobile next-action disabled-state reporting**~~ ✅ SHIPPED 2026-08-13 — `npm run qa:mobile` now reports missing expected next-action controls separately from expected controls that are present but disabled, and the Markdown summary includes a disabled-expected row count. *(Follow-up from #102: make nightly failures point directly to disabled Draw/Recycle/Deal/Strategy/Tips regressions.)*
 
 ## 🔎 Next Measured UX Candidates
 - Configure cron with `GOOGLE_APPLICATION_CREDENTIALS` or `GOOGLE_OAUTH_ACCESS_TOKEN`, run `npm run analytics:next-action-cycle`, review the latest `docs/analytics/next-action-cycles/` and `docs/analytics/next-action-audits/` reports, then decide whether Hint, Undo, New Game, or learning links deserve more prominence in the phone next-action strip.

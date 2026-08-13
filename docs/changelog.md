@@ -1,4 +1,10 @@
 
+# 2026-08-13 (OpenClaw Overnight QA Reporting Pass)
+
+## Shipped
+- **Mobile next-action disabled-state reporting** — `npm run qa:mobile` now separates expected next-action controls that are missing from expected controls that are present but disabled, and the Markdown summary reports disabled expected controls as its own count.
+- This keeps the nightly FreeCell/Klondike/Spider phone panel gate actionable when a Draw/Recycle/Deal/Strategy/Tips control regresses by state rather than disappearing entirely.
+
 # 2026-08-12 (OpenClaw Evening Next-Action State QA)
 
 ## Shipped

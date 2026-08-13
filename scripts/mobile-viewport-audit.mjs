@@ -771,19 +771,32 @@ function classifyDeadSpace(row) {
   return 'ok';
 }
 
-function expectedNextActionMisses(row) {
+function expectedNextActionDiagnostics(row) {
   const expectations = NEXT_ACTION_EXPECTATIONS.get(row.label);
-  if (!expectations || !isPhonePortraitViewport(row.viewport)) return [];
-  return expectations.flatMap((expectation) => {
+  if (!expectations || !isPhonePortraitViewport(row.viewport)) {
+    return { missing: [], disabled: [], matches: [] };
+  }
+
+  const diagnostics = { missing: [], disabled: [], matches: [] };
+  for (const expectation of expectations) {
     const matchingAction = (row.nextActionActions || []).find((action) => {
       const actionName = action.action || '';
       const actionText = action.text || action.tag || '';
       return actionName === expectation.action || expectation.pattern.test(actionText);
     });
-    if (!matchingAction) return [expectation.label];
-    if (matchingAction.disabled) return [`${expectation.label} enabled`];
-    return [];
-  });
+    if (!matchingAction) {
+      diagnostics.missing.push(expectation.label);
+    } else if (matchingAction.disabled) {
+      diagnostics.disabled.push(expectation.label);
+    } else {
+      diagnostics.matches.push({
+        label: expectation.label,
+        action: matchingAction.action || '',
+        text: matchingAction.text || matchingAction.tag || '',
+      });
+    }
+  }
+  return diagnostics;
 }
 
 function stripStabilityCards(row) {
@@ -890,6 +903,7 @@ function formatMarkdown(results, args) {
   lines.push(`- Dead-space candidates: ${summary.deadSpaceCandidates}`);
   lines.push(`- Rows with visible next-action panel: ${summary.rowsWithVisibleNextActionPanel}`);
   lines.push(`- Rows missing expected next-action controls: ${summary.rowsMissingExpectedNextAction}`);
+  lines.push(`- Rows with disabled expected next-action controls: ${summary.rowsWithDisabledExpectedNextAction}`);
   lines.push('');
   lines.push('## Details');
   lines.push('');
@@ -1003,15 +1017,24 @@ function addFailureReasons(row) {
   if (!row.bottomControlsVisible && mobileViewport && expected?.requireBottomControls !== false) {
     reasons.push('bottom controls not visibly detected on mobile');
   }
-  const nextActionExpectationMisses = expectedNextActionMisses(row);
-  if (nextActionExpectationMisses.length > 0) {
+  const nextActionDiagnostics = expectedNextActionDiagnostics(row);
+  if (nextActionDiagnostics.missing.length > 0 || nextActionDiagnostics.disabled.length > 0) {
     if (row.visibleNextActionPanelCount === 0) {
       reasons.push('expected mobile next-action panel on phone portrait');
-    } else {
-      reasons.push(`expected mobile next-action action text matching ${nextActionExpectationMisses.join(', ')}`);
+    } else if (nextActionDiagnostics.missing.length > 0) {
+      reasons.push(`expected mobile next-action action matching ${nextActionDiagnostics.missing.join(', ')}`);
+    }
+    if (nextActionDiagnostics.disabled.length > 0) {
+      reasons.push(`expected mobile next-action action enabled: ${nextActionDiagnostics.disabled.join(', ')}`);
     }
   }
-  return { ...row, nextActionExpectationMisses, failureReasons: reasons };
+  return {
+    ...row,
+    nextActionExpectationMisses: nextActionDiagnostics.missing,
+    nextActionDisabledExpected: nextActionDiagnostics.disabled,
+    nextActionExpectedMatches: nextActionDiagnostics.matches,
+    failureReasons: reasons,
+  };
 }
 
 function summarizeResults(results) {
@@ -1027,6 +1050,7 @@ function summarizeResults(results) {
   const logErrorCount = results.reduce((sum, row) => sum + (row.logErrorCount || 0), 0);
   const rowsWithVisibleNextActionPanel = results.filter((row) => row.visibleNextActionPanelCount > 0).length;
   const rowsMissingExpectedNextAction = results.filter((row) => row.nextActionExpectationMisses?.length > 0).length;
+  const rowsWithDisabledExpectedNextAction = results.filter((row) => row.nextActionDisabledExpected?.length > 0).length;
 
   return {
     totalRows: results.length,
@@ -1043,6 +1067,7 @@ function summarizeResults(results) {
     logErrorCount,
     rowsWithVisibleNextActionPanel,
     rowsMissingExpectedNextAction,
+    rowsWithDisabledExpectedNextAction,
   };
 }
 

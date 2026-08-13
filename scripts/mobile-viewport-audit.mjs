@@ -129,6 +129,11 @@ const DEFAULT_EXPECTATIONS = new Map([
   ['spider', { minCards: 63, cascades: 10, minFaceCards: 10, minBackCards: 53 }],
   ['forty-thieves', { minCards: 41, cascades: 10, minFaceCards: 40, minBackCards: 1, requireBottomControls: false }],
 ]);
+const NEXT_ACTION_EXPECTATIONS = new Map([
+  ['freecell', [/strategy/i]],
+  ['klondike', [/\b(draw|recycle)\b/i, /strategy/i]],
+  ['spider', [/\bdeal\b/i, /tips/i]],
+]);
 
 const sleep = (ms) => new Promise((resolveSleep) => setTimeout(resolveSleep, ms));
 
@@ -187,6 +192,10 @@ function cloneViewports(viewports) {
 
 function isMobileViewport(viewport) {
   return Math.min(viewport.width, viewport.height) < 768;
+}
+
+function isPhonePortraitViewport(viewport) {
+  return viewport.width < 768 && viewport.height >= viewport.width;
 }
 
 function parseRouteSpec(rawSpec) {
@@ -754,6 +763,17 @@ function classifyDeadSpace(row) {
   return 'ok';
 }
 
+function expectedNextActionMisses(row) {
+  const expectations = NEXT_ACTION_EXPECTATIONS.get(row.label);
+  if (!expectations || !isPhonePortraitViewport(row.viewport)) return [];
+  const actionText = (row.nextActionActions || [])
+    .map((action) => action.text || action.tag || '')
+    .join(' ');
+  return expectations
+    .filter((expectation) => !expectation.test(actionText))
+    .map((expectation) => expectation.source.replace(/\\b/g, '').replace(/^\(|\)$/g, ''));
+}
+
 function stripStabilityCards(row) {
   const { stabilityCards, ...publicRow } = row;
   return publicRow;
@@ -857,6 +877,7 @@ function formatMarkdown(results, args) {
   lines.push(`- Console/log errors: ${summary.consoleErrorCount + summary.logErrorCount}`);
   lines.push(`- Dead-space candidates: ${summary.deadSpaceCandidates}`);
   lines.push(`- Rows with visible next-action panel: ${summary.rowsWithVisibleNextActionPanel}`);
+  lines.push(`- Rows missing expected next-action controls: ${summary.rowsMissingExpectedNextAction}`);
   lines.push('');
   lines.push('## Details');
   lines.push('');
@@ -970,7 +991,15 @@ function addFailureReasons(row) {
   if (!row.bottomControlsVisible && mobileViewport && expected?.requireBottomControls !== false) {
     reasons.push('bottom controls not visibly detected on mobile');
   }
-  return { ...row, failureReasons: reasons };
+  const nextActionExpectationMisses = expectedNextActionMisses(row);
+  if (nextActionExpectationMisses.length > 0) {
+    if (row.visibleNextActionPanelCount === 0) {
+      reasons.push('expected mobile next-action panel on phone portrait');
+    } else {
+      reasons.push(`expected mobile next-action action text matching ${nextActionExpectationMisses.join(', ')}`);
+    }
+  }
+  return { ...row, nextActionExpectationMisses, failureReasons: reasons };
 }
 
 function summarizeResults(results) {
@@ -985,6 +1014,7 @@ function summarizeResults(results) {
   const consoleErrorCount = results.reduce((sum, row) => sum + (row.consoleErrorCount || 0), 0);
   const logErrorCount = results.reduce((sum, row) => sum + (row.logErrorCount || 0), 0);
   const rowsWithVisibleNextActionPanel = results.filter((row) => row.visibleNextActionPanelCount > 0).length;
+  const rowsMissingExpectedNextAction = results.filter((row) => row.nextActionExpectationMisses?.length > 0).length;
 
   return {
     totalRows: results.length,
@@ -1000,6 +1030,7 @@ function summarizeResults(results) {
     consoleErrorCount,
     logErrorCount,
     rowsWithVisibleNextActionPanel,
+    rowsMissingExpectedNextAction,
   };
 }
 

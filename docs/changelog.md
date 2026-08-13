@@ -1,4 +1,11 @@
 
+# 2026-08-12 (OpenClaw Evening QA Assertion Pass)
+
+## Shipped
+- **Mobile next-action panel QA assertions** — `npm run qa:mobile` now fails phone-portrait FreeCell/Klondike/Spider rows when their board-flow next-action panel disappears or no longer exposes the expected action text.
+- FreeCell now expects the Strategy link, Klondike expects Draw/Recycle plus Strategy, and Spider expects Deal plus Tips, turning yesterday's visibility reporting into a regression gate.
+- Verification: `node --check scripts/mobile-viewport-audit.mjs` and focused local QA passed for FreeCell, Klondike, and Spider at 375px.
+
 # 2026-08-12 (OpenClaw Evening Static Shell Guard)
 
 ## Shipped
@@ -19,12 +26,30 @@
 - The older bouncing auto-complete overlay is hidden on phone portrait to avoid duplicate controls, and next-action analytics labels this tap as `auto_finish` instead of the generic stock action.
 - Verification: `npm run build` passed, and focused built-app mobile QA passed with `npm run qa:mobile -- --base=http://127.0.0.1:3058 --routes=freecell --widths=375,414 --out=docs/analytics/mobile-viewport-audits/2026-08-12-freecell-auto-finish-local.json`.
 
+# 2026-08-12 (OpenClaw Daily Metrics Pass)
+
+## Checked
+- Refreshed public network metrics with `npm run metrics:pull`; sitemap totals remain 304 live URLs: playfreecellonline 132, solitairestack 90, playklondikeonline 43, playspidersolitaireonline 39.
+- `npm run metrics:google` remains blocked by missing `GOOGLE_OAUTH_ACCESS_TOKEN`, `GOOGLE_APPLICATION_CREDENTIALS`, or gcloud ADC, so exact GA4 stats for G-8N85JJPLED were not pulled from the API.
+- Local feedback storage still has no `data/feedback.json`; the feedback route writes to `process.cwd()/data/feedback.json`, so local feedback count remains 0 unless production storage is surfaced separately.
+- Ran `npm run analytics:next-action-cycle`; it generated 2026-08-12 cycle/setup/audit artifacts and reported `credential_blocked_with_artifacts` with `wait_for_data`, 0 visible next-action taps, and no safe UI priority change.
+- No Claude Code implementation agent or Gemini review was launched because the current measured UX work is credential/data gated and this pass made no UI/code changes.
+
 # 2026-08-11 (OpenClaw Evening Mobile UX Pass)
 
 ## Shipped
 - **Mobile stock/deal next-action controls** — Klondike and Spider phone panels now use the measured below-board dead space for stock-cycle actions: Klondike exposes Draw/Recycle and Spider exposes Deal with the empty-column rule reflected in the disabled state.
 - This keeps Hint/Undo in the persistent bottom bar while adding a real play action inside the board flow, matching the competitor fluidity note about reducing reach and extra taps on mobile.
 - Verification: `npm run build` passed, and focused built-app mobile QA passed with `npm run qa:mobile -- --base=http://127.0.0.1:3057 --routes=klondike,spider --widths=375,414 --out=docs/analytics/mobile-viewport-audits/2026-08-11-stock-next-action-local.json`.
+
+# 2026-08-11 (OpenClaw Daily Metrics Pass)
+
+## Checked
+- Refreshed public network metrics with `npm run metrics:pull`; sitemap totals increased from 302 to 304 live URLs: playfreecellonline 132, solitairestack 90, playklondikeonline 43, playspidersolitaireonline 39.
+- `npm run metrics:google` remains blocked by missing `GOOGLE_OAUTH_ACCESS_TOKEN`, `GOOGLE_APPLICATION_CREDENTIALS`, or gcloud ADC, so exact GA4 stats for G-8N85JJPLED were not pulled from the API.
+- Local feedback storage still has no `data/feedback.json`; the feedback route writes to `process.cwd()/data/feedback.json`, so local feedback count remains 0 unless production storage is surfaced separately.
+- Ran `npm run analytics:next-action-cycle`; it generated 2026-08-11 cycle/setup/audit artifacts and reported `credential_blocked_with_artifacts` with `wait_for_data`, 0 visible next-action taps, and no safe UI priority change.
+- No Claude Code implementation agent or Gemini review was launched because the current measured UX work is credential/data gated and this pass made no UI/code changes.
 
 # 2026-08-11 (OpenClaw Overnight Analytics Cycle)
 

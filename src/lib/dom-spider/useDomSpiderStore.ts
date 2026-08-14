@@ -3,8 +3,8 @@
  */
 
 import { create } from 'zustand';
-import { SpiderEngine, SpiderGameState, SpiderLocation, SpiderMove, SpiderDifficulty } from '@/engine/SpiderEngine';
-import { Card, Suit } from '@/engine/Card';
+import { SpiderEngine, SpiderLocation, SpiderMove, SpiderDifficulty } from '@/engine/SpiderEngine';
+import { Card } from '@/engine/Card';
 
 // ---------------------------------------------------------------------------
 // Drag state

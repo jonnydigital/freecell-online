@@ -3,7 +3,7 @@
  */
 
 import { create } from 'zustand';
-import { KlondikeEngine, KlondikeGameState, KlondikeLocation, KlondikeMove, KlondikeDrawMode } from '@/engine/KlondikeEngine';
+import { KlondikeEngine, KlondikeLocation, KlondikeDrawMode } from '@/engine/KlondikeEngine';
 import { dealKlondikeGame } from '@/engine/Deck';
 import { Card, Suit } from '@/engine/Card';
 

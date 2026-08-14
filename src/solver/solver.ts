@@ -8,8 +8,7 @@
  * The heuristic approach scores each legal move and suggests the best one.
  */
 
-import { FreeCellEngine, Move, Location } from '../engine/FreeCellEngine';
-import { Card, Suit, Color } from '../engine/Card';
+import { FreeCellEngine, Move } from '../engine/FreeCellEngine';
 
 interface ScoredMove extends Move {
   score: number;

@@ -716,6 +716,12 @@ function formatBool(value) {
   return value ? 'yes' : 'no';
 }
 
+function formatPercent(value) {
+  if (!Number.isFinite(value)) return 'n/a';
+  if (Number.isInteger(value)) return `${value}%`;
+  return `${Math.round(value * 10) / 10}%`;
+}
+
 function markdownReportPathFor(outPath) {
   return /\.json$/i.test(outPath) ? outPath.replace(/\.json$/i, '.md') : `${outPath}.md`;
 }
@@ -903,7 +909,7 @@ function formatMarkdown(results, args) {
   lines.push(`- Dead-space candidates: ${summary.deadSpaceCandidates}`);
   lines.push(`- Rows with visible next-action panel: ${summary.rowsWithVisibleNextActionPanel}`);
   lines.push(`- Expected next-action rows: ${summary.expectedNextActionRows} (${summary.expectedNextActionPassedRows} passed, ${summary.expectedNextActionFailedRows} need review)`);
-  lines.push(`- Expected next-action matches: ${summary.expectedNextActionMatchedControls}/${summary.expectedNextActionExpectedControls}`);
+  lines.push(`- Expected next-action matches: ${summary.expectedNextActionMatchedControls}/${summary.expectedNextActionExpectedControls} (${formatPercent(summary.expectedNextActionCoveragePct)} coverage)`);
   lines.push(`- Rows missing expected next-action controls: ${summary.rowsMissingExpectedNextAction}`);
   lines.push(`- Rows with disabled expected next-action controls: ${summary.rowsWithDisabledExpectedNextAction}`);
   lines.push('');
@@ -1084,6 +1090,9 @@ function summarizeResults(results) {
     (sum, row) => sum + (row.nextActionExpectedMatches?.length || 0),
     0
   );
+  const expectedNextActionCoveragePct = expectedNextActionExpectedControls > 0
+    ? Math.round((expectedNextActionMatchedControls / expectedNextActionExpectedControls) * 1000) / 10
+    : null;
 
   return {
     totalRows: results.length,
@@ -1104,6 +1113,7 @@ function summarizeResults(results) {
     expectedNextActionFailedRows,
     expectedNextActionExpectedControls,
     expectedNextActionMatchedControls,
+    expectedNextActionCoveragePct,
     rowsMissingExpectedNextAction,
     rowsWithDisabledExpectedNextAction,
   };

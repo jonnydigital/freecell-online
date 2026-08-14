@@ -1,4 +1,20 @@
 
+# 2026-08-14 (OpenClaw Overnight QA Coverage Pass)
+
+## Shipped
+- **Mobile next-action coverage percentage** — `npm run qa:mobile` now includes an expected next-action coverage percentage in JSON summaries and Markdown reports.
+- This makes the nightly FreeCell/Klondike/Spider phone board-flow control gate easier to compare over time than raw matched/expected counts alone.
+- Verification: `node --check scripts/mobile-viewport-audit.mjs`, focused production QA for FreeCell/Klondike/Spider at 375px passed with 5/5 expected next-action controls and 100% coverage, and `npm run build` passed.
+
+# 2026-08-13 (OpenClaw Daily Metrics Pass)
+
+## Checked
+- Refreshed public network metrics with `npm run metrics:pull`; sitemap totals remain 304 live URLs: playfreecellonline 132, solitairestack 90, playklondikeonline 43, playspidersolitaireonline 39.
+- `npm run metrics:google` remains blocked by missing `GOOGLE_OAUTH_ACCESS_TOKEN`, `GOOGLE_APPLICATION_CREDENTIALS`, or gcloud ADC, so exact GA4 stats for G-8N85JJPLED were not pulled from the API.
+- Local feedback storage still has no `data/feedback.json`; the feedback route writes to `process.cwd()/data/feedback.json`, so local feedback count remains 0 unless production storage is surfaced separately.
+- Ran `npm run analytics:next-action-cycle`; it generated 2026-08-13 cycle/setup/audit artifacts and reported `credential_blocked_with_artifacts` with `wait_for_data`, 0 visible next-action taps, and no safe UI priority change.
+- No Claude Code implementation agent or Gemini review was launched because the current measured UX work is credential/data gated and this pass made no UI/code changes.
+
 # 2026-08-13 (OpenClaw Overnight QA Health Pass)
 
 ## Shipped

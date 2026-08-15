@@ -1,4 +1,10 @@
 
+# 2026-08-15 (OpenClaw Overnight Generic Next-Action QA)
+
+## Shipped
+- **Generic board next-action QA coverage** — `npm run qa:mobile` now asserts Forty Thieves phone next-action Hint and Rules controls are present and enabled, extending expected-control coverage to a wide generic-board route.
+- Verification: `node --check scripts/mobile-viewport-audit.mjs`, focused production QA for Forty Thieves at 375/390/414px passed with 6/6 expected controls and no overflow, blocked controls, cramped tap targets, or runtime exceptions, and `npm run build` passed.
+
 # 2026-08-14 (OpenClaw Overnight QA Coverage Pass)
 
 ## Shipped

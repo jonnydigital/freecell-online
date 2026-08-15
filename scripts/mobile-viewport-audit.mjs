@@ -139,6 +139,10 @@ const NEXT_ACTION_EXPECTATIONS = new Map([
     { action: 'stock', label: 'stock action', pattern: /\bdeal\b/i },
     { action: 'tips', label: 'tips', pattern: /tips/i },
   ]],
+  ['forty-thieves', [
+    { action: 'hint', label: 'hint', pattern: /hint/i },
+    { action: 'rules', label: 'rules', pattern: /rules/i },
+  ]],
 ]);
 
 const sleep = (ms) => new Promise((resolveSleep) => setTimeout(resolveSleep, ms));

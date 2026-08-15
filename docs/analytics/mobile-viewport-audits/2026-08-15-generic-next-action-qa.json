@@ -1,0 +1,899 @@
+{
+  "base": "https://playfreecellonline.com",
+  "pulledAt": "2026-08-15T05:01:48.159Z",
+  "widths": [
+    375,
+    390,
+    414
+  ],
+  "viewports": [
+    {
+      "width": 375,
+      "height": 812
+    },
+    {
+      "width": 390,
+      "height": 844
+    },
+    {
+      "width": 414,
+      "height": 896
+    }
+  ],
+  "routes": [
+    {
+      "label": "forty-thieves",
+      "path": "/forty-thieves"
+    }
+  ],
+  "screenshotsDir": null,
+  "markdownReportPath": "docs/analytics/mobile-viewport-audits/2026-08-15-generic-next-action-qa.md",
+  "summary": {
+    "totalRows": 3,
+    "routeCount": 1,
+    "viewportCount": 3,
+    "failedRows": 0,
+    "passedRows": 3,
+    "deadSpaceCandidates": 2,
+    "maxHorizontalOverflowPx": 0,
+    "maxCrampedTapTargetCount": 0,
+    "maxBlockedInteractiveCount": 0,
+    "runtimeExceptionCount": 0,
+    "consoleErrorCount": 0,
+    "logErrorCount": 0,
+    "rowsWithVisibleNextActionPanel": 3,
+    "expectedNextActionRows": 3,
+    "expectedNextActionPassedRows": 3,
+    "expectedNextActionFailedRows": 0,
+    "expectedNextActionExpectedControls": 6,
+    "expectedNextActionMatchedControls": 6,
+    "expectedNextActionCoveragePct": 100,
+    "rowsMissingExpectedNextAction": 0,
+    "rowsWithDisabledExpectedNextAction": 0
+  },
+  "results": [
+    {
+      "label": "forty-thieves",
+      "path": "/forty-thieves",
+      "url": "https://solitairestack.com/forty-thieves",
+      "title": "Forty Thieves Solitaire | Play Online Free — 2-Deck Challenge",
+      "h1": "Forty Thieves Solitaire",
+      "viewport": {
+        "width": 375,
+        "height": 812,
+        "scrollWidth": 375,
+        "scrollHeight": 10560,
+        "devicePixelRatio": 2
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 190.5,
+        "left": 16,
+        "right": 359,
+        "bottom": 467.83,
+        "width": 343,
+        "height": 277.33
+      },
+      "cardCount": 41,
+      "faceCardCount": 40,
+      "backCardCount": 1,
+      "visibleCardCount": 41,
+      "minCardWidth": 32.09,
+      "maxCardWidth": 32.09,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": false,
+      "unusedVerticalPx": 344.171875,
+      "unusedVerticalPct": 42.4,
+      "cascadeCount": 10,
+      "cascadeCards": [
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "visibleInteractiveCount": 19,
+      "nextActionPanelCount": 1,
+      "visibleNextActionPanelCount": 1,
+      "nextActionActions": [
+        {
+          "text": "Show a hint for this game",
+          "action": "hint",
+          "tag": "button",
+          "disabled": false,
+          "rect": {
+            "top": 405.33,
+            "left": 32.63,
+            "right": 130.53,
+            "bottom": 449.33,
+            "width": 97.91,
+            "height": 44
+          }
+        },
+        {
+          "text": "Undo unavailable",
+          "action": "undo",
+          "tag": "button",
+          "disabled": true,
+          "rect": {
+            "top": 405.33,
+            "left": 138.53,
+            "right": 236.45,
+            "bottom": 449.33,
+            "width": 97.92,
+            "height": 44
+          }
+        },
+        {
+          "text": "Open Rules",
+          "action": "rules",
+          "tag": "a",
+          "disabled": false,
+          "rect": {
+            "top": 405.33,
+            "left": 244.45,
+            "right": 342.36,
+            "bottom": 449.33,
+            "width": 97.91,
+            "height": 44
+          }
+        }
+      ],
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 11,
+      "crampedTapTargetCount": 0,
+      "smallTapTargets": [
+        {
+          "index": 1,
+          "text": "Switch solitaire game, currently Forty Thieves",
+          "tag": "button",
+          "rect": {
+            "top": 8,
+            "left": 16,
+            "right": 193.52,
+            "bottom": 48.5,
+            "width": 177.52,
+            "height": 40.5
+          }
+        },
+        {
+          "index": 7,
+          "text": "A of clubs",
+          "tag": "div",
+          "rect": {
+            "top": 281.2,
+            "left": 18.59,
+            "right": 50.69,
+            "bottom": 326.14,
+            "width": 32.09,
+            "height": 44.94
+          }
+        },
+        {
+          "index": 8,
+          "text": "K of diamonds",
+          "tag": "div",
+          "rect": {
+            "top": 281.2,
+            "left": 52.56,
+            "right": 84.66,
+            "bottom": 326.14,
+            "width": 32.09,
+            "height": 44.94
+          }
+        },
+        {
+          "index": 9,
+          "text": "9 of diamonds",
+          "tag": "div",
+          "rect": {
+            "top": 281.2,
+            "left": 86.53,
+            "right": 118.63,
+            "bottom": 326.14,
+            "width": 32.09,
+            "height": 44.94
+          }
+        },
+        {
+          "index": 10,
+          "text": "2 of clubs",
+          "tag": "div",
+          "rect": {
+            "top": 281.2,
+            "left": 120.5,
+            "right": 152.59,
+            "bottom": 326.14,
+            "width": 32.09,
+            "height": 44.94
+          }
+        },
+        {
+          "index": 11,
+          "text": "K of clubs",
+          "tag": "div",
+          "rect": {
+            "top": 281.2,
+            "left": 154.47,
+            "right": 186.56,
+            "bottom": 326.14,
+            "width": 32.09,
+            "height": 44.94
+          }
+        },
+        {
+          "index": 12,
+          "text": "2 of hearts",
+          "tag": "div",
+          "rect": {
+            "top": 281.2,
+            "left": 188.44,
+            "right": 220.53,
+            "bottom": 326.14,
+            "width": 32.09,
+            "height": 44.94
+          }
+        },
+        {
+          "index": 13,
+          "text": "6 of spades",
+          "tag": "div",
+          "rect": {
+            "top": 281.2,
+            "left": 222.41,
+            "right": 254.5,
+            "bottom": 326.14,
+            "width": 32.09,
+            "height": 44.94
+          }
+        },
+        {
+          "index": 14,
+          "text": "J of clubs",
+          "tag": "div",
+          "rect": {
+            "top": 281.2,
+            "left": 256.38,
+            "right": 288.47,
+            "bottom": 326.14,
+            "width": 32.09,
+            "height": 44.94
+          }
+        },
+        {
+          "index": 15,
+          "text": "9 of diamonds",
+          "tag": "div",
+          "rect": {
+            "top": 281.2,
+            "left": 290.34,
+            "right": 322.44,
+            "bottom": 326.14,
+            "width": 32.09,
+            "height": 44.94
+          }
+        },
+        {
+          "index": 16,
+          "text": "6 of diamonds",
+          "tag": "div",
+          "rect": {
+            "top": 281.2,
+            "left": 324.31,
+            "right": 356.41,
+            "bottom": 326.14,
+            "width": 32.09,
+            "height": 44.94
+          }
+        }
+      ],
+      "crampedTapTargets": [],
+      "deadSpaceLevel": "ok",
+      "nextActionExpectedControls": [
+        "hint",
+        "rules"
+      ],
+      "nextActionExpectationMisses": [],
+      "nextActionDisabledExpected": [],
+      "nextActionExpectedMatches": [
+        {
+          "label": "hint",
+          "action": "hint",
+          "text": "Show a hint for this game"
+        },
+        {
+          "label": "rules",
+          "action": "rules",
+          "text": "Open Rules"
+        }
+      ],
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 40,
+        "beforeCardCount": 41,
+        "afterCardCount": 41,
+        "cardCountChanged": false
+      },
+      "runtimeExceptionCount": 0,
+      "consoleErrorCount": 0,
+      "logErrorCount": 0,
+      "runtimeExceptions": [],
+      "consoleErrors": [],
+      "logErrors": []
+    },
+    {
+      "label": "forty-thieves",
+      "path": "/forty-thieves",
+      "url": "https://solitairestack.com/forty-thieves",
+      "title": "Forty Thieves Solitaire | Play Online Free — 2-Deck Challenge",
+      "h1": "Forty Thieves Solitaire",
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "scrollWidth": 390,
+        "scrollHeight": 10361,
+        "devicePixelRatio": 2
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 142,
+        "left": 16,
+        "right": 374,
+        "bottom": 426.23,
+        "width": 358,
+        "height": 284.23
+      },
+      "cardCount": 41,
+      "faceCardCount": 40,
+      "backCardCount": 1,
+      "visibleCardCount": 41,
+      "minCardWidth": 33.59,
+      "maxCardWidth": 33.59,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": false,
+      "unusedVerticalPx": 417.765625,
+      "unusedVerticalPct": 49.5,
+      "cascadeCount": 10,
+      "cascadeCards": [
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "visibleInteractiveCount": 19,
+      "nextActionPanelCount": 1,
+      "visibleNextActionPanelCount": 1,
+      "nextActionActions": [
+        {
+          "text": "Show a hint for this game",
+          "action": "hint",
+          "tag": "button",
+          "disabled": false,
+          "rect": {
+            "top": 363.44,
+            "left": 32.84,
+            "right": 135.61,
+            "bottom": 407.44,
+            "width": 102.77,
+            "height": 44
+          }
+        },
+        {
+          "text": "Undo unavailable",
+          "action": "undo",
+          "tag": "button",
+          "disabled": true,
+          "rect": {
+            "top": 363.44,
+            "left": 143.61,
+            "right": 246.38,
+            "bottom": 407.44,
+            "width": 102.77,
+            "height": 44
+          }
+        },
+        {
+          "text": "Open Rules",
+          "action": "rules",
+          "tag": "a",
+          "disabled": false,
+          "rect": {
+            "top": 363.44,
+            "left": 254.38,
+            "right": 357.16,
+            "bottom": 407.44,
+            "width": 102.78,
+            "height": 44
+          }
+        }
+      ],
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 11,
+      "crampedTapTargetCount": 0,
+      "smallTapTargets": [
+        {
+          "index": 1,
+          "text": "Switch solitaire game, currently Forty Thieves",
+          "tag": "button",
+          "rect": {
+            "top": 16.25,
+            "left": 16,
+            "right": 193.52,
+            "bottom": 56.75,
+            "width": 177.52,
+            "height": 40.5
+          }
+        },
+        {
+          "index": 7,
+          "text": "3 of hearts",
+          "tag": "div",
+          "rect": {
+            "top": 236.82,
+            "left": 18.31,
+            "right": 51.91,
+            "bottom": 283.85,
+            "width": 33.59,
+            "height": 47.03
+          }
+        },
+        {
+          "index": 8,
+          "text": "3 of diamonds",
+          "tag": "div",
+          "rect": {
+            "top": 236.82,
+            "left": 53.84,
+            "right": 87.44,
+            "bottom": 283.85,
+            "width": 33.59,
+            "height": 47.03
+          }
+        },
+        {
+          "index": 9,
+          "text": "10 of hearts",
+          "tag": "div",
+          "rect": {
+            "top": 236.82,
+            "left": 89.38,
+            "right": 122.97,
+            "bottom": 283.85,
+            "width": 33.59,
+            "height": 47.03
+          }
+        },
+        {
+          "index": 10,
+          "text": "7 of clubs",
+          "tag": "div",
+          "rect": {
+            "top": 236.82,
+            "left": 124.91,
+            "right": 158.5,
+            "bottom": 283.85,
+            "width": 33.59,
+            "height": 47.03
+          }
+        },
+        {
+          "index": 11,
+          "text": "6 of spades",
+          "tag": "div",
+          "rect": {
+            "top": 236.82,
+            "left": 160.44,
+            "right": 194.03,
+            "bottom": 283.85,
+            "width": 33.59,
+            "height": 47.03
+          }
+        },
+        {
+          "index": 12,
+          "text": "Q of diamonds",
+          "tag": "div",
+          "rect": {
+            "top": 236.82,
+            "left": 195.97,
+            "right": 229.56,
+            "bottom": 283.85,
+            "width": 33.59,
+            "height": 47.03
+          }
+        },
+        {
+          "index": 13,
+          "text": "Q of clubs",
+          "tag": "div",
+          "rect": {
+            "top": 236.82,
+            "left": 231.5,
+            "right": 265.09,
+            "bottom": 283.85,
+            "width": 33.59,
+            "height": 47.03
+          }
+        },
+        {
+          "index": 14,
+          "text": "3 of clubs",
+          "tag": "div",
+          "rect": {
+            "top": 236.82,
+            "left": 267.03,
+            "right": 300.63,
+            "bottom": 283.85,
+            "width": 33.59,
+            "height": 47.03
+          }
+        },
+        {
+          "index": 15,
+          "text": "3 of hearts",
+          "tag": "div",
+          "rect": {
+            "top": 236.82,
+            "left": 302.56,
+            "right": 336.16,
+            "bottom": 283.85,
+            "width": 33.59,
+            "height": 47.03
+          }
+        },
+        {
+          "index": 16,
+          "text": "4 of clubs",
+          "tag": "div",
+          "rect": {
+            "top": 236.82,
+            "left": 338.09,
+            "right": 371.69,
+            "bottom": 283.85,
+            "width": 33.59,
+            "height": 47.03
+          }
+        }
+      ],
+      "crampedTapTargets": [],
+      "deadSpaceLevel": "review",
+      "nextActionExpectedControls": [
+        "hint",
+        "rules"
+      ],
+      "nextActionExpectationMisses": [],
+      "nextActionDisabledExpected": [],
+      "nextActionExpectedMatches": [
+        {
+          "label": "hint",
+          "action": "hint",
+          "text": "Show a hint for this game"
+        },
+        {
+          "label": "rules",
+          "action": "rules",
+          "text": "Open Rules"
+        }
+      ],
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 40,
+        "beforeCardCount": 41,
+        "afterCardCount": 41,
+        "cardCountChanged": false
+      },
+      "runtimeExceptionCount": 0,
+      "consoleErrorCount": 0,
+      "logErrorCount": 0,
+      "runtimeExceptions": [],
+      "consoleErrors": [],
+      "logErrors": []
+    },
+    {
+      "label": "forty-thieves",
+      "path": "/forty-thieves",
+      "url": "https://solitairestack.com/forty-thieves",
+      "title": "Forty Thieves Solitaire | Play Online Free — 2-Deck Challenge",
+      "h1": "Forty Thieves Solitaire",
+      "viewport": {
+        "width": 414,
+        "height": 896,
+        "scrollWidth": 414,
+        "scrollHeight": 10032,
+        "devicePixelRatio": 2
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 142,
+        "left": 16,
+        "right": 398,
+        "bottom": 437.33,
+        "width": 382,
+        "height": 295.33
+      },
+      "cardCount": 41,
+      "faceCardCount": 40,
+      "backCardCount": 1,
+      "visibleCardCount": 41,
+      "minCardWidth": 36,
+      "maxCardWidth": 36,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": false,
+      "unusedVerticalPx": 458.671875,
+      "unusedVerticalPct": 51.2,
+      "cascadeCount": 10,
+      "cascadeCards": [
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "visibleInteractiveCount": 19,
+      "nextActionPanelCount": 1,
+      "visibleNextActionPanelCount": 1,
+      "nextActionActions": [
+        {
+          "text": "Show a hint for this game",
+          "action": "hint",
+          "tag": "button",
+          "disabled": false,
+          "rect": {
+            "top": 374.06,
+            "left": 33.2,
+            "right": 143.73,
+            "bottom": 418.06,
+            "width": 110.53,
+            "height": 44
+          }
+        },
+        {
+          "text": "Undo unavailable",
+          "action": "undo",
+          "tag": "button",
+          "disabled": true,
+          "rect": {
+            "top": 374.06,
+            "left": 151.73,
+            "right": 262.27,
+            "bottom": 418.06,
+            "width": 110.53,
+            "height": 44
+          }
+        },
+        {
+          "text": "Open Rules",
+          "action": "rules",
+          "tag": "a",
+          "disabled": false,
+          "rect": {
+            "top": 374.06,
+            "left": 270.27,
+            "right": 380.8,
+            "bottom": 418.06,
+            "width": 110.53,
+            "height": 44
+          }
+        }
+      ],
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 11,
+      "crampedTapTargetCount": 0,
+      "smallTapTargets": [
+        {
+          "index": 1,
+          "text": "Switch solitaire game, currently Forty Thieves",
+          "tag": "button",
+          "rect": {
+            "top": 16.25,
+            "left": 16,
+            "right": 193.52,
+            "bottom": 56.75,
+            "width": 177.52,
+            "height": 40.5
+          }
+        },
+        {
+          "index": 7,
+          "text": "10 of diamonds",
+          "tag": "div",
+          "rect": {
+            "top": 243.4,
+            "left": 17.72,
+            "right": 53.72,
+            "bottom": 293.79,
+            "width": 36,
+            "height": 50.39
+          }
+        },
+        {
+          "index": 8,
+          "text": "9 of spades",
+          "tag": "div",
+          "rect": {
+            "top": 243.4,
+            "left": 55.78,
+            "right": 91.78,
+            "bottom": 293.79,
+            "width": 36,
+            "height": 50.39
+          }
+        },
+        {
+          "index": 9,
+          "text": "8 of diamonds",
+          "tag": "div",
+          "rect": {
+            "top": 243.4,
+            "left": 93.84,
+            "right": 129.84,
+            "bottom": 293.79,
+            "width": 36,
+            "height": 50.39
+          }
+        },
+        {
+          "index": 10,
+          "text": "K of hearts",
+          "tag": "div",
+          "rect": {
+            "top": 243.4,
+            "left": 131.91,
+            "right": 167.91,
+            "bottom": 293.79,
+            "width": 36,
+            "height": 50.39
+          }
+        },
+        {
+          "index": 11,
+          "text": "9 of clubs",
+          "tag": "div",
+          "rect": {
+            "top": 243.4,
+            "left": 169.97,
+            "right": 205.97,
+            "bottom": 293.79,
+            "width": 36,
+            "height": 50.39
+          }
+        },
+        {
+          "index": 12,
+          "text": "J of hearts",
+          "tag": "div",
+          "rect": {
+            "top": 243.4,
+            "left": 208.03,
+            "right": 244.03,
+            "bottom": 293.79,
+            "width": 36,
+            "height": 50.39
+          }
+        },
+        {
+          "index": 13,
+          "text": "3 of diamonds",
+          "tag": "div",
+          "rect": {
+            "top": 243.4,
+            "left": 246.09,
+            "right": 282.09,
+            "bottom": 293.79,
+            "width": 36,
+            "height": 50.39
+          }
+        },
+        {
+          "index": 14,
+          "text": "9 of hearts",
+          "tag": "div",
+          "rect": {
+            "top": 243.4,
+            "left": 284.16,
+            "right": 320.16,
+            "bottom": 293.79,
+            "width": 36,
+            "height": 50.39
+          }
+        },
+        {
+          "index": 15,
+          "text": "3 of clubs",
+          "tag": "div",
+          "rect": {
+            "top": 243.4,
+            "left": 322.22,
+            "right": 358.22,
+            "bottom": 293.79,
+            "width": 36,
+            "height": 50.39
+          }
+        },
+        {
+          "index": 16,
+          "text": "Q of hearts",
+          "tag": "div",
+          "rect": {
+            "top": 243.4,
+            "left": 360.28,
+            "right": 396.28,
+            "bottom": 293.79,
+            "width": 36,
+            "height": 50.39
+          }
+        }
+      ],
+      "crampedTapTargets": [],
+      "deadSpaceLevel": "review",
+      "nextActionExpectedControls": [
+        "hint",
+        "rules"
+      ],
+      "nextActionExpectationMisses": [],
+      "nextActionDisabledExpected": [],
+      "nextActionExpectedMatches": [
+        {
+          "label": "hint",
+          "action": "hint",
+          "text": "Show a hint for this game"
+        },
+        {
+          "label": "rules",
+          "action": "rules",
+          "text": "Open Rules"
+        }
+      ],
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 40,
+        "beforeCardCount": 41,
+        "afterCardCount": 41,
+        "cardCountChanged": false
+      },
+      "runtimeExceptionCount": 0,
+      "consoleErrorCount": 0,
+      "logErrorCount": 0,
+      "runtimeExceptions": [],
+      "consoleErrors": [],
+      "logErrors": []
+    }
+  ]
+}

@@ -5,7 +5,7 @@
  * Designed to run in a Web Worker to avoid blocking the UI.
  */
 
-import { Card, Suit, Rank, Color } from '../engine/Card';
+import { Card, Suit, Color } from '../engine/Card';
 import { dealGame } from '../engine/Deck';
 
 // ── Compact State Representation ──────────────────────────────
@@ -18,14 +18,6 @@ const EMPTY = -1;
 function encodeCard(card: Card): CardId {
   const suitIdx = [Suit.Clubs, Suit.Diamonds, Suit.Hearts, Suit.Spades].indexOf(card.suit);
   return suitIdx * 13 + (card.rank - 1);
-}
-
-function decodeCard(id: CardId): { suit: Suit; rank: Rank; color: Color } {
-  const suitIdx = Math.floor(id / 13);
-  const rank = (id % 13) + 1 as Rank;
-  const suit = [Suit.Clubs, Suit.Diamonds, Suit.Hearts, Suit.Spades][suitIdx];
-  const color = (suit === Suit.Hearts || suit === Suit.Diamonds) ? Color.Red : Color.Black;
-  return { suit, rank, color };
 }
 
 function cardColor(id: CardId): Color {
@@ -504,7 +496,6 @@ export function solve(
 
 // ── Move Description Helpers ──────────────────────────────────
 
-const SUIT_NAMES: Record<number, string> = { 0: 'C', 1: 'D', 2: 'H', 3: 'S' };
 const RANK_DISPLAY: Record<number, string> = {
   1: 'A', 2: '2', 3: '3', 4: '4', 5: '5', 6: '6', 7: '7',
   8: '8', 9: '9', 10: '10', 11: 'J', 12: 'Q', 13: 'K',

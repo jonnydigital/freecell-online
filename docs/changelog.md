@@ -1,4 +1,11 @@
 
+# 2026-08-16 (OpenClaw Overnight Yukon Next-Action QA)
+
+## Shipped
+- **Yukon mobile next-action QA coverage** — `npm run qa:mobile` now includes Yukon in the default route matrix as the representative one-deck generic cascade board and asserts its phone Hint and Rules next-action controls.
+- The blocked-control hit test now samples exposed points on overlapped card controls, so legitimate stacked solitaire cards do not fail the gate just because their geometric center is covered by the next card.
+- Verification: `node --check scripts/mobile-viewport-audit.mjs`, focused production QA for Yukon at 375/390/414px passed with 6/6 expected controls and no overflow, blocked controls, cramped tap targets, or runtime exceptions, and `npm run build` passed.
+
 # 2026-08-15 (OpenClaw Overnight Generic Next-Action QA)
 
 ## Shipped

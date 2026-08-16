@@ -112,6 +112,7 @@ const DEFAULT_ROUTES = [
   { label: 'klondike', path: '/klondike' },
   { label: 'spider', path: '/spider' },
   { label: 'forty-thieves', path: '/forty-thieves' },
+  { label: 'yukon', path: '/yukon' },
 ];
 const DEFAULT_ROUTE_BY_LABEL = new Map(DEFAULT_ROUTES.map((route) => [route.label, route]));
 const DEFAULT_STABILITY_DELAY_MS = 350;
@@ -128,6 +129,7 @@ const DEFAULT_EXPECTATIONS = new Map([
   ['klondike', { minCards: 29, cascades: 7, minFaceCards: 7, minBackCards: 22 }],
   ['spider', { minCards: 63, cascades: 10, minFaceCards: 10, minBackCards: 53 }],
   ['forty-thieves', { minCards: 41, cascades: 10, minFaceCards: 40, minBackCards: 1, requireBottomControls: false }],
+  ['yukon', { minCards: 52, cascades: 7, minFaceCards: 31, minBackCards: 21, requireBottomControls: false }],
 ]);
 const NEXT_ACTION_EXPECTATIONS = new Map([
   ['freecell', [{ action: 'strategy', label: 'strategy', pattern: /strategy/i }]],
@@ -140,6 +142,10 @@ const NEXT_ACTION_EXPECTATIONS = new Map([
     { action: 'tips', label: 'tips', pattern: /tips/i },
   ]],
   ['forty-thieves', [
+    { action: 'hint', label: 'hint', pattern: /hint/i },
+    { action: 'rules', label: 'rules', pattern: /rules/i },
+  ]],
+  ['yukon', [
     { action: 'hint', label: 'hint', pattern: /hint/i },
     { action: 'rules', label: 'rules', pattern: /rules/i },
   ]],
@@ -544,10 +550,20 @@ function auditExpression(label, path) {
       return { index: el.getAttribute('data-pile-index'), cardCount, rect: rectJson(rect) };
     });
     const controlSelector = 'button,a,[role="button"]';
+    const hitControlAtPoint = (el, x, y) => {
+      const hit = (document.elementsFromPoint?.(x, y) || [document.elementFromPoint(x, y)])
+        .find((candidate) => candidate && !candidate.closest?.('nextjs-portal'));
+      const hitControl = hit?.closest?.(controlSelector) || null;
+      return {
+        hit,
+        matches: hit === el || el.contains(hit) || hitControl === el,
+      };
+    };
     const interactive = [...document.querySelectorAll(controlSelector)].map((el, index) => {
       const rect = el.getBoundingClientRect();
       const style = getComputedStyle(el);
       const text = (el.getAttribute('aria-label') || el.textContent || '').replace(/\\s+/g, ' ').trim().slice(0, 80);
+      const isCardControl = el.classList.contains('dom-card') && Boolean(el.getAttribute('data-card-id'));
       const center = {
         x: Math.round((rect.left + rect.width / 2) * 100) / 100,
         y: Math.round((rect.top + rect.height / 2) * 100) / 100,
@@ -557,10 +573,26 @@ function auditExpression(label, path) {
       let hitTag = '';
       let hitClass = '';
       if (visible(rect, style) && center.x >= 0 && center.x <= viewport.width && center.y >= 0 && center.y <= viewport.height) {
-        const hit = (document.elementsFromPoint?.(center.x, center.y) || [document.elementFromPoint(center.x, center.y)])
-          .find((candidate) => candidate && !candidate.closest?.('nextjs-portal'));
-        const hitControl = hit?.closest?.(controlSelector) || null;
-        centerHit = hit === el || el.contains(hit) || hitControl === el;
+        let hitResult = hitControlAtPoint(el, center.x, center.y);
+        if (!hitResult.matches && isCardControl) {
+          const candidatePoints = [
+            { x: rect.left + rect.width * 0.5, y: rect.top + Math.min(12, rect.height * 0.22) },
+            { x: rect.left + rect.width * 0.28, y: rect.top + Math.min(12, rect.height * 0.22) },
+            { x: rect.left + rect.width * 0.72, y: rect.top + Math.min(12, rect.height * 0.22) },
+            { x: rect.left + rect.width * 0.5, y: rect.top + Math.min(6, rect.height * 0.12) },
+          ];
+          const exposedHit = candidatePoints
+            .map((point) => ({
+              x: Math.round(point.x * 100) / 100,
+              y: Math.round(point.y * 100) / 100,
+            }))
+            .filter((point) => point.x >= 0 && point.x <= viewport.width && point.y >= 0 && point.y <= viewport.height)
+            .map((point) => hitControlAtPoint(el, point.x, point.y))
+            .find((candidate) => candidate.matches);
+          if (exposedHit) hitResult = exposedHit;
+        }
+        const { hit } = hitResult;
+        centerHit = hitResult.matches;
         hitText = (hit?.getAttribute?.('aria-label') || hit?.textContent || '').replace(/\\s+/g, ' ').trim().slice(0, 80);
         hitTag = hit?.tagName?.toLowerCase?.() || '';
         hitClass = typeof hit?.className === 'string' ? hit.className.replace(/\\s+/g, ' ').trim().slice(0, 120) : '';

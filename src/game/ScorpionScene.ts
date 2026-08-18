@@ -1,7 +1,7 @@
 import * as Phaser from 'phaser';
 import { ScorpionEngine, ScorpionLocation, ScorpionMove } from '../engine/ScorpionEngine';
 import { dealScorpionGame } from '../engine/Deck';
-import { Card, Suit, Rank, SUIT_SYMBOLS } from '../engine/Card';
+import { Card, Suit, SUIT_SYMBOLS } from '../engine/Card';
 import { gameBridge } from './GameBridge';
 import { getCardAssetKey, getCardBackAssetKey, getAllCardAssets } from './CardAssets';
 import { soundManager } from '../lib/sounds';

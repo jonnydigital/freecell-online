@@ -1,7 +1,7 @@
 import * as Phaser from 'phaser';
 import { SeahavenEngine, SeahavenLocation, SeahavenMove } from '../engine/SeahavenEngine';
 import { dealSeahavenGame } from '../engine/Deck';
-import { Card, Suit, Rank, SUIT_SYMBOLS } from '../engine/Card';
+import { Card, Suit } from '../engine/Card';
 import { gameBridge } from './GameBridge';
 import { getCardAssetKey, getCardBackAssetKey, getAllCardAssets } from './CardAssets';
 import { soundManager } from '../lib/sounds';

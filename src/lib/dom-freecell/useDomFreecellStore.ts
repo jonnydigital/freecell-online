@@ -7,7 +7,7 @@
  */
 
 import { create } from 'zustand';
-import { FreeCellEngine, GameState, GameVariant, Location, Move } from '@/engine/FreeCellEngine';
+import { FreeCellEngine, GameVariant, Location, Move } from '@/engine/FreeCellEngine';
 import { Card, Suit } from '@/engine/Card';
 import type { SolverMove } from '@/solver/FreeCellSolver';
 import { saveGameState, clearGameState } from '@/lib/storage';

@@ -51,7 +51,6 @@ export function registerTestBridge(scene: FreeCellScene): void {
           c ? { suit: c.suit, rank: c.rank } : null
         ),
         foundations: Object.fromEntries(
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           Array.from(state.foundations.entries() as any).map((entry: any) => [
             entry[0],
             entry[1].map((c: any) => ({ suit: c.suit, rank: c.rank }))

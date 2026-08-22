@@ -1,0 +1,4733 @@
+{
+  "base": "https://playfreecellonline.com",
+  "pulledAt": "2026-08-22T13:42:01.068Z",
+  "widths": [
+    375,
+    390,
+    414,
+    768
+  ],
+  "viewports": [
+    {
+      "width": 375,
+      "height": 812
+    },
+    {
+      "width": 390,
+      "height": 844
+    },
+    {
+      "width": 414,
+      "height": 896
+    },
+    {
+      "width": 768,
+      "height": 1024
+    }
+  ],
+  "routes": [
+    {
+      "label": "freecell",
+      "path": "/game/1"
+    },
+    {
+      "label": "klondike",
+      "path": "/klondike"
+    },
+    {
+      "label": "spider",
+      "path": "/spider"
+    },
+    {
+      "label": "forty-thieves",
+      "path": "/forty-thieves"
+    },
+    {
+      "label": "yukon",
+      "path": "/yukon"
+    }
+  ],
+  "screenshotsDir": "docs/analytics/mobile-viewport-audits/2026-08-22-live-screenshots",
+  "markdownReportPath": "docs/analytics/mobile-viewport-audits/2026-08-22-live.md",
+  "summary": {
+    "totalRows": 20,
+    "routeCount": 5,
+    "viewportCount": 4,
+    "failedRows": 0,
+    "passedRows": 20,
+    "deadSpaceCandidates": 9,
+    "maxHorizontalOverflowPx": 0,
+    "maxCrampedTapTargetCount": 0,
+    "maxBlockedInteractiveCount": 0,
+    "runtimeExceptionCount": 0,
+    "consoleErrorCount": 0,
+    "logErrorCount": 0,
+    "rowsWithVisibleNextActionPanel": 15,
+    "expectedNextActionRows": 15,
+    "expectedNextActionPassedRows": 15,
+    "expectedNextActionFailedRows": 0,
+    "expectedNextActionExpectedControls": 27,
+    "expectedNextActionMatchedControls": 27,
+    "expectedNextActionCoveragePct": 100,
+    "rowsMissingExpectedNextAction": 0,
+    "rowsWithDisabledExpectedNextAction": 0
+  },
+  "results": [
+    {
+      "label": "freecell",
+      "path": "/game/1",
+      "url": "https://playfreecellonline.com/game/1",
+      "title": "FreeCell Game #1 — First MS deal (Easy Deal) | Play Free",
+      "h1": "FreeCell Game #1 — First MS deal",
+      "viewport": {
+        "width": 375,
+        "height": 812,
+        "scrollWidth": 375,
+        "scrollHeight": 4425,
+        "devicePixelRatio": 2
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 45,
+        "left": 8,
+        "right": 367,
+        "bottom": 435.36,
+        "width": 359,
+        "height": 390.36
+      },
+      "cardCount": 52,
+      "faceCardCount": 52,
+      "backCardCount": 0,
+      "visibleCardCount": 52,
+      "minCardWidth": 39.25,
+      "maxCardWidth": 39.25,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": true,
+      "unusedVerticalPx": 376.640625,
+      "unusedVerticalPct": 46.4,
+      "cascadeCount": 8,
+      "cascadeCards": [
+        7,
+        7,
+        7,
+        7,
+        6,
+        6,
+        6,
+        6
+      ],
+      "visibleInteractiveCount": 7,
+      "nextActionPanelCount": 1,
+      "visibleNextActionPanelCount": 1,
+      "nextActionActions": [
+        {
+          "text": "Open Strategy",
+          "action": "strategy",
+          "tag": "a",
+          "disabled": false,
+          "rect": {
+            "top": 372.86,
+            "left": 24.63,
+            "right": 350.38,
+            "bottom": 416.86,
+            "width": 325.75,
+            "height": 44
+          }
+        }
+      ],
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 4,
+      "crampedTapTargetCount": 0,
+      "smallTapTargets": [
+        {
+          "index": 12,
+          "text": "Enter game number: 1",
+          "tag": "button",
+          "rect": {
+            "top": 2,
+            "left": 6,
+            "right": 50,
+            "bottom": 34,
+            "width": 44,
+            "height": 32
+          }
+        },
+        {
+          "index": 14,
+          "text": "Menu",
+          "tag": "button",
+          "rect": {
+            "top": 735,
+            "left": 24.02,
+            "right": 67.06,
+            "bottom": 788,
+            "width": 43.05,
+            "height": 53
+          }
+        },
+        {
+          "index": 15,
+          "text": "New",
+          "tag": "button",
+          "rect": {
+            "top": 735,
+            "left": 99.13,
+            "right": 136.69,
+            "bottom": 788,
+            "width": 37.56,
+            "height": 53
+          }
+        },
+        {
+          "index": 18,
+          "text": "Hint",
+          "tag": "button",
+          "rect": {
+            "top": 735,
+            "left": 314.95,
+            "right": 350.95,
+            "bottom": 788,
+            "width": 36,
+            "height": 53
+          }
+        }
+      ],
+      "crampedTapTargets": [],
+      "deadSpaceLevel": "review",
+      "nextActionExpectedControls": [
+        "strategy"
+      ],
+      "nextActionExpectationMisses": [],
+      "nextActionDisabledExpected": [],
+      "nextActionExpectedMatches": [
+        {
+          "label": "strategy",
+          "action": "strategy",
+          "text": "Open Strategy"
+        }
+      ],
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 52,
+        "beforeCardCount": 52,
+        "afterCardCount": 52,
+        "cardCountChanged": false
+      },
+      "runtimeExceptionCount": 0,
+      "consoleErrorCount": 0,
+      "logErrorCount": 0,
+      "runtimeExceptions": [],
+      "consoleErrors": [],
+      "logErrors": [],
+      "screenshotPath": "docs/analytics/mobile-viewport-audits/2026-08-22-live-screenshots/freecell-375x812.png"
+    },
+    {
+      "label": "freecell",
+      "path": "/game/1",
+      "url": "https://playfreecellonline.com/game/1",
+      "title": "FreeCell Game #1 — First MS deal (Easy Deal) | Play Free",
+      "h1": "FreeCell Game #1 — First MS deal",
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "scrollWidth": 390,
+        "scrollHeight": 4409,
+        "devicePixelRatio": 2
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 45,
+        "left": 8,
+        "right": 382,
+        "bottom": 448.47,
+        "width": 374,
+        "height": 403.47
+      },
+      "cardCount": 52,
+      "faceCardCount": 52,
+      "backCardCount": 0,
+      "visibleCardCount": 52,
+      "minCardWidth": 41.13,
+      "maxCardWidth": 41.13,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": true,
+      "unusedVerticalPx": 395.53125,
+      "unusedVerticalPct": 46.9,
+      "cascadeCount": 8,
+      "cascadeCards": [
+        7,
+        7,
+        7,
+        7,
+        6,
+        6,
+        6,
+        6
+      ],
+      "visibleInteractiveCount": 7,
+      "nextActionPanelCount": 1,
+      "visibleNextActionPanelCount": 1,
+      "nextActionActions": [
+        {
+          "text": "Open Strategy",
+          "action": "strategy",
+          "tag": "a",
+          "disabled": false,
+          "rect": {
+            "top": 385.67,
+            "left": 24.84,
+            "right": 365.16,
+            "bottom": 429.67,
+            "width": 340.31,
+            "height": 44
+          }
+        }
+      ],
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 4,
+      "crampedTapTargetCount": 0,
+      "smallTapTargets": [
+        {
+          "index": 12,
+          "text": "Enter game number: 1",
+          "tag": "button",
+          "rect": {
+            "top": 2,
+            "left": 6,
+            "right": 50,
+            "bottom": 34,
+            "width": 44,
+            "height": 32
+          }
+        },
+        {
+          "index": 14,
+          "text": "Menu",
+          "tag": "button",
+          "rect": {
+            "top": 767,
+            "left": 25.52,
+            "right": 68.56,
+            "bottom": 820,
+            "width": 43.05,
+            "height": 53
+          }
+        },
+        {
+          "index": 15,
+          "text": "New",
+          "tag": "button",
+          "rect": {
+            "top": 767,
+            "left": 103.63,
+            "right": 141.19,
+            "bottom": 820,
+            "width": 37.56,
+            "height": 53
+          }
+        },
+        {
+          "index": 18,
+          "text": "Hint",
+          "tag": "button",
+          "rect": {
+            "top": 767,
+            "left": 328.45,
+            "right": 364.45,
+            "bottom": 820,
+            "width": 36,
+            "height": 53
+          }
+        }
+      ],
+      "crampedTapTargets": [],
+      "deadSpaceLevel": "review",
+      "nextActionExpectedControls": [
+        "strategy"
+      ],
+      "nextActionExpectationMisses": [],
+      "nextActionDisabledExpected": [],
+      "nextActionExpectedMatches": [
+        {
+          "label": "strategy",
+          "action": "strategy",
+          "text": "Open Strategy"
+        }
+      ],
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 52,
+        "beforeCardCount": 52,
+        "afterCardCount": 52,
+        "cardCountChanged": false
+      },
+      "runtimeExceptionCount": 0,
+      "consoleErrorCount": 0,
+      "logErrorCount": 0,
+      "runtimeExceptions": [],
+      "consoleErrors": [],
+      "logErrors": [],
+      "screenshotPath": "docs/analytics/mobile-viewport-audits/2026-08-22-live-screenshots/freecell-390x844.png"
+    },
+    {
+      "label": "freecell",
+      "path": "/game/1",
+      "url": "https://playfreecellonline.com/game/1",
+      "title": "FreeCell Game #1 — First MS deal (Easy Deal) | Play Free",
+      "h1": "FreeCell Game #1 — First MS deal",
+      "viewport": {
+        "width": 414,
+        "height": 896,
+        "scrollWidth": 414,
+        "scrollHeight": 4429,
+        "devicePixelRatio": 2
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 45,
+        "left": 8,
+        "right": 406,
+        "bottom": 465.2,
+        "width": 398,
+        "height": 420.2
+      },
+      "cardCount": 52,
+      "faceCardCount": 52,
+      "backCardCount": 0,
+      "visibleCardCount": 52,
+      "minCardWidth": 44.13,
+      "maxCardWidth": 44.13,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": true,
+      "unusedVerticalPx": 430.796875,
+      "unusedVerticalPct": 48.1,
+      "cascadeCount": 8,
+      "cascadeCards": [
+        7,
+        7,
+        7,
+        7,
+        6,
+        6,
+        6,
+        6
+      ],
+      "visibleInteractiveCount": 7,
+      "nextActionPanelCount": 1,
+      "visibleNextActionPanelCount": 1,
+      "nextActionActions": [
+        {
+          "text": "Open Strategy",
+          "action": "strategy",
+          "tag": "a",
+          "disabled": false,
+          "rect": {
+            "top": 401.94,
+            "left": 25.2,
+            "right": 388.8,
+            "bottom": 445.94,
+            "width": 363.59,
+            "height": 44
+          }
+        }
+      ],
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 4,
+      "crampedTapTargetCount": 0,
+      "smallTapTargets": [
+        {
+          "index": 12,
+          "text": "Enter game number: 1",
+          "tag": "button",
+          "rect": {
+            "top": 2,
+            "left": 6,
+            "right": 50,
+            "bottom": 34,
+            "width": 44,
+            "height": 32
+          }
+        },
+        {
+          "index": 14,
+          "text": "Menu",
+          "tag": "button",
+          "rect": {
+            "top": 819,
+            "left": 27.92,
+            "right": 70.97,
+            "bottom": 872,
+            "width": 43.05,
+            "height": 53
+          }
+        },
+        {
+          "index": 15,
+          "text": "New",
+          "tag": "button",
+          "rect": {
+            "top": 819,
+            "left": 110.83,
+            "right": 148.39,
+            "bottom": 872,
+            "width": 37.56,
+            "height": 53
+          }
+        },
+        {
+          "index": 18,
+          "text": "Hint",
+          "tag": "button",
+          "rect": {
+            "top": 819,
+            "left": 350.06,
+            "right": 386.06,
+            "bottom": 872,
+            "width": 36,
+            "height": 53
+          }
+        }
+      ],
+      "crampedTapTargets": [],
+      "deadSpaceLevel": "review",
+      "nextActionExpectedControls": [
+        "strategy"
+      ],
+      "nextActionExpectationMisses": [],
+      "nextActionDisabledExpected": [],
+      "nextActionExpectedMatches": [
+        {
+          "label": "strategy",
+          "action": "strategy",
+          "text": "Open Strategy"
+        }
+      ],
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 52,
+        "beforeCardCount": 52,
+        "afterCardCount": 52,
+        "cardCountChanged": false
+      },
+      "runtimeExceptionCount": 0,
+      "consoleErrorCount": 0,
+      "logErrorCount": 0,
+      "runtimeExceptions": [],
+      "consoleErrors": [],
+      "logErrors": [],
+      "screenshotPath": "docs/analytics/mobile-viewport-audits/2026-08-22-live-screenshots/freecell-414x896.png"
+    },
+    {
+      "label": "freecell",
+      "path": "/game/1",
+      "url": "https://playfreecellonline.com/game/1",
+      "title": "FreeCell Game #1 — First MS deal (Easy Deal) | Play Free",
+      "h1": "FreeCell Game #1 — First MS deal",
+      "viewport": {
+        "width": 768,
+        "height": 1024,
+        "scrollWidth": 768,
+        "scrollHeight": 3301,
+        "devicePixelRatio": 1
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 146,
+        "left": 16,
+        "right": 752,
+        "bottom": 562.8,
+        "width": 736,
+        "height": 416.8
+      },
+      "cardCount": 52,
+      "faceCardCount": 52,
+      "backCardCount": 0,
+      "visibleCardCount": 52,
+      "minCardWidth": 74.41,
+      "maxCardWidth": 74.41,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": false,
+      "unusedVerticalPx": 461.203125,
+      "unusedVerticalPct": 45,
+      "cascadeCount": 8,
+      "cascadeCards": [
+        7,
+        7,
+        7,
+        7,
+        6,
+        6,
+        6,
+        6
+      ],
+      "visibleInteractiveCount": 11,
+      "nextActionPanelCount": 1,
+      "visibleNextActionPanelCount": 0,
+      "nextActionActions": [],
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 2,
+      "crampedTapTargetCount": 0,
+      "smallTapTargets": [
+        {
+          "index": 1,
+          "text": "Switch solitaire game, currently FreeCell",
+          "tag": "button",
+          "rect": {
+            "top": 14.75,
+            "left": 24,
+            "right": 154.89,
+            "bottom": 55.25,
+            "width": 130.89,
+            "height": 40.5
+          }
+        },
+        {
+          "index": 3,
+          "text": "New Deal",
+          "tag": "button",
+          "rect": {
+            "top": 13.5,
+            "left": 625.19,
+            "right": 751.11,
+            "bottom": 56.5,
+            "width": 125.92,
+            "height": 43
+          }
+        }
+      ],
+      "crampedTapTargets": [],
+      "deadSpaceLevel": "n/a",
+      "nextActionExpectedControls": [],
+      "nextActionExpectationMisses": [],
+      "nextActionDisabledExpected": [],
+      "nextActionExpectedMatches": [],
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 52,
+        "beforeCardCount": 52,
+        "afterCardCount": 52,
+        "cardCountChanged": false
+      },
+      "runtimeExceptionCount": 0,
+      "consoleErrorCount": 0,
+      "logErrorCount": 0,
+      "runtimeExceptions": [],
+      "consoleErrors": [],
+      "logErrors": [],
+      "screenshotPath": "docs/analytics/mobile-viewport-audits/2026-08-22-live-screenshots/freecell-768x1024.png"
+    },
+    {
+      "label": "klondike",
+      "path": "/klondike",
+      "url": "https://playklondikeonline.com/klondike",
+      "title": "Klondike Solitaire | Play Online Free — Draw 1 & Draw 3",
+      "h1": "Play Klondike Solitaire Online — Free, Draw 1 & Draw 3",
+      "viewport": {
+        "width": 375,
+        "height": 812,
+        "scrollWidth": 375,
+        "scrollHeight": 12211,
+        "devicePixelRatio": 2
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 119.5,
+        "left": 12,
+        "right": 363,
+        "bottom": 464.42,
+        "width": 351,
+        "height": 344.92
+      },
+      "cardCount": 29,
+      "faceCardCount": 7,
+      "backCardCount": 22,
+      "visibleCardCount": 29,
+      "minCardWidth": 39.25,
+      "maxCardWidth": 39.25,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": true,
+      "unusedVerticalPx": 347.578125,
+      "unusedVerticalPct": 42.8,
+      "cascadeCount": 7,
+      "cascadeCards": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "visibleInteractiveCount": 17,
+      "nextActionPanelCount": 1,
+      "visibleNextActionPanelCount": 1,
+      "nextActionActions": [
+        {
+          "text": "Draw from stock, 24 cards remaining",
+          "action": "stock",
+          "tag": "button",
+          "disabled": false,
+          "rect": {
+            "top": 401.92,
+            "left": 28.63,
+            "right": 183.5,
+            "bottom": 445.92,
+            "width": 154.88,
+            "height": 44
+          }
+        },
+        {
+          "text": "Open Strategy",
+          "action": "strategy",
+          "tag": "a",
+          "disabled": false,
+          "rect": {
+            "top": 401.92,
+            "left": 191.5,
+            "right": 346.38,
+            "bottom": 445.92,
+            "width": 154.88,
+            "height": 44
+          }
+        }
+      ],
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 11,
+      "crampedTapTargetCount": 0,
+      "smallTapTargets": [
+        {
+          "index": 1,
+          "text": "Switch solitaire game, currently Klondike",
+          "tag": "button",
+          "rect": {
+            "top": 11,
+            "left": 10,
+            "right": 143.94,
+            "bottom": 51.5,
+            "width": 133.94,
+            "height": 40.5
+          }
+        },
+        {
+          "index": 2,
+          "text": "Draw 1",
+          "tag": "button",
+          "rect": {
+            "top": 62.5,
+            "left": 10,
+            "right": 184.5,
+            "bottom": 98.5,
+            "width": 174.5,
+            "height": 36
+          }
+        },
+        {
+          "index": 3,
+          "text": "Draw 3",
+          "tag": "button",
+          "rect": {
+            "top": 62.5,
+            "left": 190.5,
+            "right": 365,
+            "bottom": 98.5,
+            "width": 174.5,
+            "height": 36
+          }
+        },
+        {
+          "index": 10,
+          "text": "Draw from stock, 24 cards remaining",
+          "tag": "button",
+          "rect": {
+            "top": 127,
+            "left": 17.63,
+            "right": 56.88,
+            "bottom": 181.94,
+            "width": 39.25,
+            "height": 54.94
+          }
+        },
+        {
+          "index": 11,
+          "text": "Q of diamonds",
+          "tag": "div",
+          "rect": {
+            "top": 192.44,
+            "left": 41.13,
+            "right": 80.38,
+            "bottom": 247.38,
+            "width": 39.25,
+            "height": 54.94
+          }
+        },
+        {
+          "index": 12,
+          "text": "J of diamonds",
+          "tag": "div",
+          "rect": {
+            "top": 199.97,
+            "left": 83.38,
+            "right": 122.63,
+            "bottom": 254.91,
+            "width": 39.25,
+            "height": 54.94
+          }
+        },
+        {
+          "index": 13,
+          "text": "J of spades",
+          "tag": "div",
+          "rect": {
+            "top": 207.51,
+            "left": 125.63,
+            "right": 164.88,
+            "bottom": 262.45,
+            "width": 39.25,
+            "height": 54.94
+          }
+        },
+        {
+          "index": 14,
+          "text": "J of clubs",
+          "tag": "div",
+          "rect": {
+            "top": 215.05,
+            "left": 167.88,
+            "right": 207.13,
+            "bottom": 269.98,
+            "width": 39.25,
+            "height": 54.94
+          }
+        },
+        {
+          "index": 15,
+          "text": "5 of diamonds",
+          "tag": "div",
+          "rect": {
+            "top": 222.58,
+            "left": 210.13,
+            "right": 249.38,
+            "bottom": 277.52,
+            "width": 39.25,
+            "height": 54.94
+          }
+        },
+        {
+          "index": 16,
+          "text": "10 of hearts",
+          "tag": "div",
+          "rect": {
+            "top": 230.12,
+            "left": 252.38,
+            "right": 291.63,
+            "bottom": 285.05,
+            "width": 39.25,
+            "height": 54.94
+          }
+        },
+        {
+          "index": 17,
+          "text": "A of diamonds",
+          "tag": "div",
+          "rect": {
+            "top": 237.65,
+            "left": 294.63,
+            "right": 333.88,
+            "bottom": 292.59,
+            "width": 39.25,
+            "height": 54.94
+          }
+        }
+      ],
+      "crampedTapTargets": [],
+      "deadSpaceLevel": "ok",
+      "nextActionExpectedControls": [
+        "stock action",
+        "strategy"
+      ],
+      "nextActionExpectationMisses": [],
+      "nextActionDisabledExpected": [],
+      "nextActionExpectedMatches": [
+        {
+          "label": "stock action",
+          "action": "stock",
+          "text": "Draw from stock, 24 cards remaining"
+        },
+        {
+          "label": "strategy",
+          "action": "strategy",
+          "text": "Open Strategy"
+        }
+      ],
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 7,
+        "beforeCardCount": 29,
+        "afterCardCount": 29,
+        "cardCountChanged": false
+      },
+      "runtimeExceptionCount": 0,
+      "consoleErrorCount": 0,
+      "logErrorCount": 0,
+      "runtimeExceptions": [],
+      "consoleErrors": [],
+      "logErrors": [],
+      "screenshotPath": "docs/analytics/mobile-viewport-audits/2026-08-22-live-screenshots/klondike-375x812.png"
+    },
+    {
+      "label": "klondike",
+      "path": "/klondike",
+      "url": "https://playklondikeonline.com/klondike",
+      "title": "Klondike Solitaire | Play Online Free — Draw 1 & Draw 3",
+      "h1": "Play Klondike Solitaire Online — Free, Draw 1 & Draw 3",
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "scrollWidth": 390,
+        "scrollHeight": 11788,
+        "devicePixelRatio": 2
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 119.5,
+        "left": 12,
+        "right": 378,
+        "bottom": 474.69,
+        "width": 366,
+        "height": 355.19
+      },
+      "cardCount": 29,
+      "faceCardCount": 7,
+      "backCardCount": 22,
+      "visibleCardCount": 29,
+      "minCardWidth": 41.13,
+      "maxCardWidth": 41.13,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": true,
+      "unusedVerticalPx": 369.3125,
+      "unusedVerticalPct": 43.8,
+      "cascadeCount": 7,
+      "cascadeCards": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "visibleInteractiveCount": 17,
+      "nextActionPanelCount": 1,
+      "visibleNextActionPanelCount": 1,
+      "nextActionActions": [
+        {
+          "text": "Draw from stock, 24 cards remaining",
+          "action": "stock",
+          "tag": "button",
+          "disabled": false,
+          "rect": {
+            "top": 411.89,
+            "left": 28.84,
+            "right": 191,
+            "bottom": 455.89,
+            "width": 162.16,
+            "height": 44
+          }
+        },
+        {
+          "text": "Open Strategy",
+          "action": "strategy",
+          "tag": "a",
+          "disabled": false,
+          "rect": {
+            "top": 411.89,
+            "left": 199,
+            "right": 361.16,
+            "bottom": 455.89,
+            "width": 162.16,
+            "height": 44
+          }
+        }
+      ],
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 11,
+      "crampedTapTargetCount": 0,
+      "smallTapTargets": [
+        {
+          "index": 1,
+          "text": "Switch solitaire game, currently Klondike",
+          "tag": "button",
+          "rect": {
+            "top": 11,
+            "left": 10,
+            "right": 143.94,
+            "bottom": 51.5,
+            "width": 133.94,
+            "height": 40.5
+          }
+        },
+        {
+          "index": 2,
+          "text": "Draw 1",
+          "tag": "button",
+          "rect": {
+            "top": 62.5,
+            "left": 10,
+            "right": 192,
+            "bottom": 98.5,
+            "width": 182,
+            "height": 36
+          }
+        },
+        {
+          "index": 3,
+          "text": "Draw 3",
+          "tag": "button",
+          "rect": {
+            "top": 62.5,
+            "left": 198,
+            "right": 380,
+            "bottom": 98.5,
+            "width": 182,
+            "height": 36
+          }
+        },
+        {
+          "index": 10,
+          "text": "Draw from stock, 24 cards remaining",
+          "tag": "button",
+          "rect": {
+            "top": 127.3,
+            "left": 17.84,
+            "right": 58.97,
+            "bottom": 184.86,
+            "width": 41.13,
+            "height": 57.56
+          }
+        },
+        {
+          "index": 11,
+          "text": "A of diamonds",
+          "tag": "div",
+          "rect": {
+            "top": 195.77,
+            "left": 41.73,
+            "right": 82.86,
+            "bottom": 253.33,
+            "width": 41.13,
+            "height": 57.56
+          }
+        },
+        {
+          "index": 12,
+          "text": "6 of diamonds",
+          "tag": "div",
+          "rect": {
+            "top": 203.66,
+            "left": 85.97,
+            "right": 127.09,
+            "bottom": 261.22,
+            "width": 41.13,
+            "height": 57.56
+          }
+        },
+        {
+          "index": 13,
+          "text": "Q of spades",
+          "tag": "div",
+          "rect": {
+            "top": 211.56,
+            "left": 130.2,
+            "right": 171.33,
+            "bottom": 269.12,
+            "width": 41.13,
+            "height": 57.56
+          }
+        },
+        {
+          "index": 14,
+          "text": "5 of clubs",
+          "tag": "div",
+          "rect": {
+            "top": 219.45,
+            "left": 174.44,
+            "right": 215.56,
+            "bottom": 277.02,
+            "width": 41.13,
+            "height": 57.56
+          }
+        },
+        {
+          "index": 15,
+          "text": "7 of diamonds",
+          "tag": "div",
+          "rect": {
+            "top": 227.35,
+            "left": 218.67,
+            "right": 259.8,
+            "bottom": 284.91,
+            "width": 41.13,
+            "height": 57.56
+          }
+        },
+        {
+          "index": 16,
+          "text": "6 of hearts",
+          "tag": "div",
+          "rect": {
+            "top": 235.25,
+            "left": 262.91,
+            "right": 304.03,
+            "bottom": 292.81,
+            "width": 41.13,
+            "height": 57.56
+          }
+        },
+        {
+          "index": 17,
+          "text": "3 of spades",
+          "tag": "div",
+          "rect": {
+            "top": 243.14,
+            "left": 307.14,
+            "right": 348.27,
+            "bottom": 300.7,
+            "width": 41.13,
+            "height": 57.56
+          }
+        }
+      ],
+      "crampedTapTargets": [],
+      "deadSpaceLevel": "ok",
+      "nextActionExpectedControls": [
+        "stock action",
+        "strategy"
+      ],
+      "nextActionExpectationMisses": [],
+      "nextActionDisabledExpected": [],
+      "nextActionExpectedMatches": [
+        {
+          "label": "stock action",
+          "action": "stock",
+          "text": "Draw from stock, 24 cards remaining"
+        },
+        {
+          "label": "strategy",
+          "action": "strategy",
+          "text": "Open Strategy"
+        }
+      ],
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 7,
+        "beforeCardCount": 29,
+        "afterCardCount": 29,
+        "cardCountChanged": false
+      },
+      "runtimeExceptionCount": 0,
+      "consoleErrorCount": 0,
+      "logErrorCount": 0,
+      "runtimeExceptions": [],
+      "consoleErrors": [],
+      "logErrors": [],
+      "screenshotPath": "docs/analytics/mobile-viewport-audits/2026-08-22-live-screenshots/klondike-390x844.png"
+    },
+    {
+      "label": "klondike",
+      "path": "/klondike",
+      "url": "https://playklondikeonline.com/klondike",
+      "title": "Klondike Solitaire | Play Online Free — Draw 1 & Draw 3",
+      "h1": "Play Klondike Solitaire Online — Free, Draw 1 & Draw 3",
+      "viewport": {
+        "width": 414,
+        "height": 896,
+        "scrollWidth": 414,
+        "scrollHeight": 11388,
+        "devicePixelRatio": 2
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 119.5,
+        "left": 12,
+        "right": 402,
+        "bottom": 491.13,
+        "width": 390,
+        "height": 371.63
+      },
+      "cardCount": 29,
+      "faceCardCount": 7,
+      "backCardCount": 22,
+      "visibleCardCount": 29,
+      "minCardWidth": 44.13,
+      "maxCardWidth": 44.13,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": true,
+      "unusedVerticalPx": 404.875,
+      "unusedVerticalPct": 45.2,
+      "cascadeCount": 7,
+      "cascadeCards": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "visibleInteractiveCount": 17,
+      "nextActionPanelCount": 1,
+      "visibleNextActionPanelCount": 1,
+      "nextActionActions": [
+        {
+          "text": "Draw from stock, 24 cards remaining",
+          "action": "stock",
+          "tag": "button",
+          "disabled": false,
+          "rect": {
+            "top": 427.86,
+            "left": 29.2,
+            "right": 203,
+            "bottom": 471.86,
+            "width": 173.8,
+            "height": 44
+          }
+        },
+        {
+          "text": "Open Strategy",
+          "action": "strategy",
+          "tag": "a",
+          "disabled": false,
+          "rect": {
+            "top": 427.86,
+            "left": 211,
+            "right": 384.8,
+            "bottom": 471.86,
+            "width": 173.8,
+            "height": 44
+          }
+        }
+      ],
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 3,
+      "crampedTapTargetCount": 0,
+      "smallTapTargets": [
+        {
+          "index": 1,
+          "text": "Switch solitaire game, currently Klondike",
+          "tag": "button",
+          "rect": {
+            "top": 11,
+            "left": 10,
+            "right": 143.94,
+            "bottom": 51.5,
+            "width": 133.94,
+            "height": 40.5
+          }
+        },
+        {
+          "index": 2,
+          "text": "Draw 1",
+          "tag": "button",
+          "rect": {
+            "top": 62.5,
+            "left": 10,
+            "right": 204,
+            "bottom": 98.5,
+            "width": 194,
+            "height": 36
+          }
+        },
+        {
+          "index": 3,
+          "text": "Draw 3",
+          "tag": "button",
+          "rect": {
+            "top": 62.5,
+            "left": 210,
+            "right": 404,
+            "bottom": 98.5,
+            "width": 194,
+            "height": 36
+          }
+        }
+      ],
+      "crampedTapTargets": [],
+      "deadSpaceLevel": "review",
+      "nextActionExpectedControls": [
+        "stock action",
+        "strategy"
+      ],
+      "nextActionExpectationMisses": [],
+      "nextActionDisabledExpected": [],
+      "nextActionExpectedMatches": [
+        {
+          "label": "stock action",
+          "action": "stock",
+          "text": "Draw from stock, 24 cards remaining"
+        },
+        {
+          "label": "strategy",
+          "action": "strategy",
+          "text": "Open Strategy"
+        }
+      ],
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 7,
+        "beforeCardCount": 29,
+        "afterCardCount": 29,
+        "cardCountChanged": false
+      },
+      "runtimeExceptionCount": 0,
+      "consoleErrorCount": 0,
+      "logErrorCount": 0,
+      "runtimeExceptions": [],
+      "consoleErrors": [],
+      "logErrors": [],
+      "screenshotPath": "docs/analytics/mobile-viewport-audits/2026-08-22-live-screenshots/klondike-414x896.png"
+    },
+    {
+      "label": "klondike",
+      "path": "/klondike",
+      "url": "https://playklondikeonline.com/klondike",
+      "title": "Klondike Solitaire | Play Online Free — Draw 1 & Draw 3",
+      "h1": "Play Klondike Solitaire Online — Free, Draw 1 & Draw 3",
+      "viewport": {
+        "width": 768,
+        "height": 1024,
+        "scrollWidth": 768,
+        "scrollHeight": 7885,
+        "devicePixelRatio": 1
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 90,
+        "left": 16,
+        "right": 752,
+        "bottom": 500.8,
+        "width": 736,
+        "height": 410.8
+      },
+      "cardCount": 29,
+      "faceCardCount": 7,
+      "backCardCount": 22,
+      "visibleCardCount": 29,
+      "minCardWidth": 74.41,
+      "maxCardWidth": 74.41,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": false,
+      "unusedVerticalPx": 523.203125,
+      "unusedVerticalPct": 51.1,
+      "cascadeCount": 7,
+      "cascadeCards": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "visibleInteractiveCount": 14,
+      "nextActionPanelCount": 1,
+      "visibleNextActionPanelCount": 0,
+      "nextActionActions": [],
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 1,
+      "crampedTapTargetCount": 0,
+      "smallTapTargets": [
+        {
+          "index": 4,
+          "text": "Switch solitaire game, currently Klondike",
+          "tag": "button",
+          "rect": {
+            "top": 16.25,
+            "left": 16,
+            "right": 149.94,
+            "bottom": 56.75,
+            "width": 133.94,
+            "height": 40.5
+          }
+        }
+      ],
+      "crampedTapTargets": [],
+      "deadSpaceLevel": "n/a",
+      "nextActionExpectedControls": [],
+      "nextActionExpectationMisses": [],
+      "nextActionDisabledExpected": [],
+      "nextActionExpectedMatches": [],
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 7,
+        "beforeCardCount": 29,
+        "afterCardCount": 29,
+        "cardCountChanged": false
+      },
+      "runtimeExceptionCount": 0,
+      "consoleErrorCount": 0,
+      "logErrorCount": 0,
+      "runtimeExceptions": [],
+      "consoleErrors": [],
+      "logErrors": [],
+      "screenshotPath": "docs/analytics/mobile-viewport-audits/2026-08-22-live-screenshots/klondike-768x1024.png"
+    },
+    {
+      "label": "spider",
+      "path": "/spider",
+      "url": "https://playspidersolitaireonline.com/spider",
+      "title": "Spider Solitaire | Play Online Free — 1, 2 & 4 Suit",
+      "h1": "Play Spider Solitaire Online — Free, 1, 2 & 4 Suit",
+      "viewport": {
+        "width": 375,
+        "height": 812,
+        "scrollWidth": 375,
+        "scrollHeight": 12847,
+        "devicePixelRatio": 2
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 119.5,
+        "left": 12,
+        "right": 363,
+        "bottom": 416.08,
+        "width": 351,
+        "height": 296.58
+      },
+      "cardCount": 63,
+      "faceCardCount": 10,
+      "backCardCount": 53,
+      "visibleCardCount": 63,
+      "minCardWidth": 32.09,
+      "maxCardWidth": 32.09,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": true,
+      "unusedVerticalPx": 395.921875,
+      "unusedVerticalPct": 48.8,
+      "cascadeCount": 10,
+      "cascadeCards": [
+        7,
+        7,
+        6,
+        6,
+        6,
+        5,
+        5,
+        5,
+        5,
+        6
+      ],
+      "visibleInteractiveCount": 21,
+      "nextActionPanelCount": 1,
+      "visibleNextActionPanelCount": 1,
+      "nextActionActions": [
+        {
+          "text": "Deal next row from stock, 5 deals remaining",
+          "action": "stock",
+          "tag": "button",
+          "disabled": false,
+          "rect": {
+            "top": 353.58,
+            "left": 28.63,
+            "right": 183.5,
+            "bottom": 397.58,
+            "width": 154.88,
+            "height": 44
+          }
+        },
+        {
+          "text": "Open Tips",
+          "action": "tips",
+          "tag": "a",
+          "disabled": false,
+          "rect": {
+            "top": 353.58,
+            "left": 191.5,
+            "right": 346.38,
+            "bottom": 397.58,
+            "width": 154.88,
+            "height": 44
+          }
+        }
+      ],
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 14,
+      "crampedTapTargetCount": 0,
+      "smallTapTargets": [
+        {
+          "index": 1,
+          "text": "Switch solitaire game, currently Spider Solitaire",
+          "tag": "button",
+          "rect": {
+            "top": 11,
+            "left": 10,
+            "right": 189.41,
+            "bottom": 51.5,
+            "width": 179.41,
+            "height": 40.5
+          }
+        },
+        {
+          "index": 2,
+          "text": "One suit",
+          "tag": "button",
+          "rect": {
+            "top": 62.5,
+            "left": 10,
+            "right": 124.33,
+            "bottom": 98.5,
+            "width": 114.33,
+            "height": 36
+          }
+        },
+        {
+          "index": 3,
+          "text": "Two suits",
+          "tag": "button",
+          "rect": {
+            "top": 62.5,
+            "left": 130.33,
+            "right": 244.67,
+            "bottom": 98.5,
+            "width": 114.34,
+            "height": 36
+          }
+        },
+        {
+          "index": 4,
+          "text": "Four suits",
+          "tag": "button",
+          "rect": {
+            "top": 62.5,
+            "left": 250.67,
+            "right": 365,
+            "bottom": 98.5,
+            "width": 114.33,
+            "height": 36
+          }
+        },
+        {
+          "index": 13,
+          "text": "K of spades",
+          "tag": "div",
+          "rect": {
+            "top": 210.2,
+            "left": 18.59,
+            "right": 50.69,
+            "bottom": 255.14,
+            "width": 32.09,
+            "height": 44.94
+          }
+        },
+        {
+          "index": 14,
+          "text": "6 of spades",
+          "tag": "div",
+          "rect": {
+            "top": 210.2,
+            "left": 52.56,
+            "right": 84.66,
+            "bottom": 255.14,
+            "width": 32.09,
+            "height": 44.94
+          }
+        },
+        {
+          "index": 15,
+          "text": "A of spades",
+          "tag": "div",
+          "rect": {
+            "top": 210.2,
+            "left": 86.53,
+            "right": 118.63,
+            "bottom": 255.14,
+            "width": 32.09,
+            "height": 44.94
+          }
+        },
+        {
+          "index": 16,
+          "text": "A of spades",
+          "tag": "div",
+          "rect": {
+            "top": 210.2,
+            "left": 120.5,
+            "right": 152.59,
+            "bottom": 255.14,
+            "width": 32.09,
+            "height": 44.94
+          }
+        },
+        {
+          "index": 17,
+          "text": "5 of spades",
+          "tag": "div",
+          "rect": {
+            "top": 204.42,
+            "left": 154.47,
+            "right": 186.56,
+            "bottom": 249.36,
+            "width": 32.09,
+            "height": 44.94
+          }
+        },
+        {
+          "index": 18,
+          "text": "J of spades",
+          "tag": "div",
+          "rect": {
+            "top": 204.42,
+            "left": 188.44,
+            "right": 220.53,
+            "bottom": 249.36,
+            "width": 32.09,
+            "height": 44.94
+          }
+        },
+        {
+          "index": 19,
+          "text": "A of spades",
+          "tag": "div",
+          "rect": {
+            "top": 204.42,
+            "left": 222.41,
+            "right": 254.5,
+            "bottom": 249.36,
+            "width": 32.09,
+            "height": 44.94
+          }
+        },
+        {
+          "index": 20,
+          "text": "3 of spades",
+          "tag": "div",
+          "rect": {
+            "top": 204.42,
+            "left": 256.38,
+            "right": 288.47,
+            "bottom": 249.36,
+            "width": 32.09,
+            "height": 44.94
+          }
+        },
+        {
+          "index": 21,
+          "text": "8 of spades",
+          "tag": "div",
+          "rect": {
+            "top": 204.42,
+            "left": 290.34,
+            "right": 322.44,
+            "bottom": 249.36,
+            "width": 32.09,
+            "height": 44.94
+          }
+        },
+        {
+          "index": 22,
+          "text": "3 of spades",
+          "tag": "div",
+          "rect": {
+            "top": 204.42,
+            "left": 324.31,
+            "right": 356.41,
+            "bottom": 249.36,
+            "width": 32.09,
+            "height": 44.94
+          }
+        }
+      ],
+      "crampedTapTargets": [],
+      "deadSpaceLevel": "review",
+      "nextActionExpectedControls": [
+        "stock action",
+        "tips"
+      ],
+      "nextActionExpectationMisses": [],
+      "nextActionDisabledExpected": [],
+      "nextActionExpectedMatches": [
+        {
+          "label": "stock action",
+          "action": "stock",
+          "text": "Deal next row from stock, 5 deals remaining"
+        },
+        {
+          "label": "tips",
+          "action": "tips",
+          "text": "Open Tips"
+        }
+      ],
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 8,
+        "beforeCardCount": 63,
+        "afterCardCount": 63,
+        "cardCountChanged": false
+      },
+      "runtimeExceptionCount": 0,
+      "consoleErrorCount": 0,
+      "logErrorCount": 0,
+      "runtimeExceptions": [],
+      "consoleErrors": [],
+      "logErrors": [],
+      "screenshotPath": "docs/analytics/mobile-viewport-audits/2026-08-22-live-screenshots/spider-375x812.png"
+    },
+    {
+      "label": "spider",
+      "path": "/spider",
+      "url": "https://playspidersolitaireonline.com/spider",
+      "title": "Spider Solitaire | Play Online Free — 1, 2 & 4 Suit",
+      "h1": "Play Spider Solitaire Online — Free, 1, 2 & 4 Suit",
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "scrollWidth": 390,
+        "scrollHeight": 12548,
+        "devicePixelRatio": 2
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 119.5,
+        "left": 12,
+        "right": 378,
+        "bottom": 423.91,
+        "width": 366,
+        "height": 304.41
+      },
+      "cardCount": 63,
+      "faceCardCount": 10,
+      "backCardCount": 53,
+      "visibleCardCount": 63,
+      "minCardWidth": 33.59,
+      "maxCardWidth": 33.59,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": true,
+      "unusedVerticalPx": 420.09375,
+      "unusedVerticalPct": 49.8,
+      "cascadeCount": 10,
+      "cascadeCards": [
+        7,
+        7,
+        6,
+        6,
+        6,
+        5,
+        5,
+        5,
+        5,
+        6
+      ],
+      "visibleInteractiveCount": 21,
+      "nextActionPanelCount": 1,
+      "visibleNextActionPanelCount": 1,
+      "nextActionActions": [
+        {
+          "text": "Deal next row from stock, 5 deals remaining",
+          "action": "stock",
+          "tag": "button",
+          "disabled": false,
+          "rect": {
+            "top": 361.11,
+            "left": 28.84,
+            "right": 191,
+            "bottom": 405.11,
+            "width": 162.16,
+            "height": 44
+          }
+        },
+        {
+          "text": "Open Tips",
+          "action": "tips",
+          "tag": "a",
+          "disabled": false,
+          "rect": {
+            "top": 361.11,
+            "left": 199,
+            "right": 361.16,
+            "bottom": 405.11,
+            "width": 162.16,
+            "height": 44
+          }
+        }
+      ],
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 14,
+      "crampedTapTargetCount": 0,
+      "smallTapTargets": [
+        {
+          "index": 1,
+          "text": "Switch solitaire game, currently Spider Solitaire",
+          "tag": "button",
+          "rect": {
+            "top": 11,
+            "left": 10,
+            "right": 189.41,
+            "bottom": 51.5,
+            "width": 179.41,
+            "height": 40.5
+          }
+        },
+        {
+          "index": 2,
+          "text": "One suit",
+          "tag": "button",
+          "rect": {
+            "top": 62.5,
+            "left": 10,
+            "right": 129.33,
+            "bottom": 98.5,
+            "width": 119.33,
+            "height": 36
+          }
+        },
+        {
+          "index": 3,
+          "text": "Two suits",
+          "tag": "button",
+          "rect": {
+            "top": 62.5,
+            "left": 135.33,
+            "right": 254.67,
+            "bottom": 98.5,
+            "width": 119.34,
+            "height": 36
+          }
+        },
+        {
+          "index": 4,
+          "text": "Four suits",
+          "tag": "button",
+          "rect": {
+            "top": 62.5,
+            "left": 260.67,
+            "right": 380,
+            "bottom": 98.5,
+            "width": 119.33,
+            "height": 36
+          }
+        },
+        {
+          "index": 13,
+          "text": "A of spades",
+          "tag": "div",
+          "rect": {
+            "top": 214.32,
+            "left": 18.31,
+            "right": 51.91,
+            "bottom": 261.35,
+            "width": 33.59,
+            "height": 47.03
+          }
+        },
+        {
+          "index": 14,
+          "text": "5 of spades",
+          "tag": "div",
+          "rect": {
+            "top": 214.32,
+            "left": 53.84,
+            "right": 87.44,
+            "bottom": 261.35,
+            "width": 33.59,
+            "height": 47.03
+          }
+        },
+        {
+          "index": 15,
+          "text": "7 of spades",
+          "tag": "div",
+          "rect": {
+            "top": 214.32,
+            "left": 89.38,
+            "right": 122.97,
+            "bottom": 261.35,
+            "width": 33.59,
+            "height": 47.03
+          }
+        },
+        {
+          "index": 16,
+          "text": "Q of spades",
+          "tag": "div",
+          "rect": {
+            "top": 214.32,
+            "left": 124.91,
+            "right": 158.5,
+            "bottom": 261.35,
+            "width": 33.59,
+            "height": 47.03
+          }
+        },
+        {
+          "index": 17,
+          "text": "10 of spades",
+          "tag": "div",
+          "rect": {
+            "top": 208.27,
+            "left": 160.44,
+            "right": 194.03,
+            "bottom": 255.3,
+            "width": 33.59,
+            "height": 47.03
+          }
+        },
+        {
+          "index": 18,
+          "text": "3 of spades",
+          "tag": "div",
+          "rect": {
+            "top": 208.27,
+            "left": 195.97,
+            "right": 229.56,
+            "bottom": 255.3,
+            "width": 33.59,
+            "height": 47.03
+          }
+        },
+        {
+          "index": 19,
+          "text": "9 of spades",
+          "tag": "div",
+          "rect": {
+            "top": 208.27,
+            "left": 231.5,
+            "right": 265.09,
+            "bottom": 255.3,
+            "width": 33.59,
+            "height": 47.03
+          }
+        },
+        {
+          "index": 20,
+          "text": "2 of spades",
+          "tag": "div",
+          "rect": {
+            "top": 208.27,
+            "left": 267.03,
+            "right": 300.63,
+            "bottom": 255.3,
+            "width": 33.59,
+            "height": 47.03
+          }
+        },
+        {
+          "index": 21,
+          "text": "2 of spades",
+          "tag": "div",
+          "rect": {
+            "top": 208.27,
+            "left": 302.56,
+            "right": 336.16,
+            "bottom": 255.3,
+            "width": 33.59,
+            "height": 47.03
+          }
+        },
+        {
+          "index": 22,
+          "text": "5 of spades",
+          "tag": "div",
+          "rect": {
+            "top": 208.27,
+            "left": 338.09,
+            "right": 371.69,
+            "bottom": 255.3,
+            "width": 33.59,
+            "height": 47.03
+          }
+        }
+      ],
+      "crampedTapTargets": [],
+      "deadSpaceLevel": "review",
+      "nextActionExpectedControls": [
+        "stock action",
+        "tips"
+      ],
+      "nextActionExpectationMisses": [],
+      "nextActionDisabledExpected": [],
+      "nextActionExpectedMatches": [
+        {
+          "label": "stock action",
+          "action": "stock",
+          "text": "Deal next row from stock, 5 deals remaining"
+        },
+        {
+          "label": "tips",
+          "action": "tips",
+          "text": "Open Tips"
+        }
+      ],
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 9,
+        "beforeCardCount": 63,
+        "afterCardCount": 63,
+        "cardCountChanged": false
+      },
+      "runtimeExceptionCount": 0,
+      "consoleErrorCount": 0,
+      "logErrorCount": 0,
+      "runtimeExceptions": [],
+      "consoleErrors": [],
+      "logErrors": [],
+      "screenshotPath": "docs/analytics/mobile-viewport-audits/2026-08-22-live-screenshots/spider-390x844.png"
+    },
+    {
+      "label": "spider",
+      "path": "/spider",
+      "url": "https://playspidersolitaireonline.com/spider",
+      "title": "Spider Solitaire | Play Online Free — 1, 2 & 4 Suit",
+      "h1": "Play Spider Solitaire Online — Free, 1, 2 & 4 Suit",
+      "viewport": {
+        "width": 414,
+        "height": 896,
+        "scrollWidth": 414,
+        "scrollHeight": 11950,
+        "devicePixelRatio": 2
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 119.5,
+        "left": 12,
+        "right": 402,
+        "bottom": 436.42,
+        "width": 390,
+        "height": 316.92
+      },
+      "cardCount": 63,
+      "faceCardCount": 10,
+      "backCardCount": 53,
+      "visibleCardCount": 63,
+      "minCardWidth": 36,
+      "maxCardWidth": 36,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": true,
+      "unusedVerticalPx": 459.578125,
+      "unusedVerticalPct": 51.3,
+      "cascadeCount": 10,
+      "cascadeCards": [
+        7,
+        7,
+        6,
+        6,
+        6,
+        5,
+        5,
+        5,
+        5,
+        6
+      ],
+      "visibleInteractiveCount": 21,
+      "nextActionPanelCount": 1,
+      "visibleNextActionPanelCount": 1,
+      "nextActionActions": [
+        {
+          "text": "Deal next row from stock, 5 deals remaining",
+          "action": "stock",
+          "tag": "button",
+          "disabled": false,
+          "rect": {
+            "top": 373.16,
+            "left": 29.2,
+            "right": 203,
+            "bottom": 417.16,
+            "width": 173.8,
+            "height": 44
+          }
+        },
+        {
+          "text": "Open Tips",
+          "action": "tips",
+          "tag": "a",
+          "disabled": false,
+          "rect": {
+            "top": 373.16,
+            "left": 211,
+            "right": 384.8,
+            "bottom": 417.16,
+            "width": 173.8,
+            "height": 44
+          }
+        }
+      ],
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 14,
+      "crampedTapTargetCount": 0,
+      "smallTapTargets": [
+        {
+          "index": 1,
+          "text": "Switch solitaire game, currently Spider Solitaire",
+          "tag": "button",
+          "rect": {
+            "top": 11,
+            "left": 10,
+            "right": 189.41,
+            "bottom": 51.5,
+            "width": 179.41,
+            "height": 40.5
+          }
+        },
+        {
+          "index": 2,
+          "text": "One suit",
+          "tag": "button",
+          "rect": {
+            "top": 62.5,
+            "left": 10,
+            "right": 137.33,
+            "bottom": 98.5,
+            "width": 127.33,
+            "height": 36
+          }
+        },
+        {
+          "index": 3,
+          "text": "Two suits",
+          "tag": "button",
+          "rect": {
+            "top": 62.5,
+            "left": 143.33,
+            "right": 270.67,
+            "bottom": 98.5,
+            "width": 127.34,
+            "height": 36
+          }
+        },
+        {
+          "index": 4,
+          "text": "Four suits",
+          "tag": "button",
+          "rect": {
+            "top": 62.5,
+            "left": 276.67,
+            "right": 404,
+            "bottom": 98.5,
+            "width": 127.33,
+            "height": 36
+          }
+        },
+        {
+          "index": 13,
+          "text": "8 of spades",
+          "tag": "div",
+          "rect": {
+            "top": 220.9,
+            "left": 17.72,
+            "right": 53.72,
+            "bottom": 271.29,
+            "width": 36,
+            "height": 50.39
+          }
+        },
+        {
+          "index": 14,
+          "text": "10 of spades",
+          "tag": "div",
+          "rect": {
+            "top": 220.9,
+            "left": 55.78,
+            "right": 91.78,
+            "bottom": 271.29,
+            "width": 36,
+            "height": 50.39
+          }
+        },
+        {
+          "index": 15,
+          "text": "3 of spades",
+          "tag": "div",
+          "rect": {
+            "top": 220.9,
+            "left": 93.84,
+            "right": 129.84,
+            "bottom": 271.29,
+            "width": 36,
+            "height": 50.39
+          }
+        },
+        {
+          "index": 16,
+          "text": "10 of spades",
+          "tag": "div",
+          "rect": {
+            "top": 220.9,
+            "left": 131.91,
+            "right": 167.91,
+            "bottom": 271.29,
+            "width": 36,
+            "height": 50.39
+          }
+        },
+        {
+          "index": 17,
+          "text": "9 of spades",
+          "tag": "div",
+          "rect": {
+            "top": 214.42,
+            "left": 169.97,
+            "right": 205.97,
+            "bottom": 264.81,
+            "width": 36,
+            "height": 50.39
+          }
+        },
+        {
+          "index": 18,
+          "text": "6 of spades",
+          "tag": "div",
+          "rect": {
+            "top": 214.42,
+            "left": 208.03,
+            "right": 244.03,
+            "bottom": 264.81,
+            "width": 36,
+            "height": 50.39
+          }
+        },
+        {
+          "index": 19,
+          "text": "8 of spades",
+          "tag": "div",
+          "rect": {
+            "top": 214.42,
+            "left": 246.09,
+            "right": 282.09,
+            "bottom": 264.81,
+            "width": 36,
+            "height": 50.39
+          }
+        },
+        {
+          "index": 20,
+          "text": "7 of spades",
+          "tag": "div",
+          "rect": {
+            "top": 214.42,
+            "left": 284.16,
+            "right": 320.16,
+            "bottom": 264.81,
+            "width": 36,
+            "height": 50.39
+          }
+        },
+        {
+          "index": 21,
+          "text": "8 of spades",
+          "tag": "div",
+          "rect": {
+            "top": 214.42,
+            "left": 322.22,
+            "right": 358.22,
+            "bottom": 264.81,
+            "width": 36,
+            "height": 50.39
+          }
+        },
+        {
+          "index": 22,
+          "text": "8 of spades",
+          "tag": "div",
+          "rect": {
+            "top": 214.42,
+            "left": 360.28,
+            "right": 396.28,
+            "bottom": 264.81,
+            "width": 36,
+            "height": 50.39
+          }
+        }
+      ],
+      "crampedTapTargets": [],
+      "deadSpaceLevel": "review",
+      "nextActionExpectedControls": [
+        "stock action",
+        "tips"
+      ],
+      "nextActionExpectationMisses": [],
+      "nextActionDisabledExpected": [],
+      "nextActionExpectedMatches": [
+        {
+          "label": "stock action",
+          "action": "stock",
+          "text": "Deal next row from stock, 5 deals remaining"
+        },
+        {
+          "label": "tips",
+          "action": "tips",
+          "text": "Open Tips"
+        }
+      ],
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 8,
+        "beforeCardCount": 63,
+        "afterCardCount": 63,
+        "cardCountChanged": false
+      },
+      "runtimeExceptionCount": 0,
+      "consoleErrorCount": 0,
+      "logErrorCount": 0,
+      "runtimeExceptions": [],
+      "consoleErrors": [],
+      "logErrors": [],
+      "screenshotPath": "docs/analytics/mobile-viewport-audits/2026-08-22-live-screenshots/spider-414x896.png"
+    },
+    {
+      "label": "spider",
+      "path": "/spider",
+      "url": "https://playspidersolitaireonline.com/spider",
+      "title": "Spider Solitaire | Play Online Free — 1, 2 & 4 Suit",
+      "h1": "Play Spider Solitaire Online — Free, 1, 2 & 4 Suit",
+      "viewport": {
+        "width": 768,
+        "height": 1024,
+        "scrollWidth": 768,
+        "scrollHeight": 8171,
+        "devicePixelRatio": 1
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 142,
+        "left": 16,
+        "right": 752,
+        "bottom": 491.59,
+        "width": 736,
+        "height": 349.59
+      },
+      "cardCount": 63,
+      "faceCardCount": 10,
+      "backCardCount": 53,
+      "visibleCardCount": 63,
+      "minCardWidth": 61.28,
+      "maxCardWidth": 61.28,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": false,
+      "unusedVerticalPx": 532.40625,
+      "unusedVerticalPct": 52,
+      "cascadeCount": 10,
+      "cascadeCards": [
+        7,
+        7,
+        6,
+        6,
+        6,
+        5,
+        5,
+        5,
+        5,
+        6
+      ],
+      "visibleInteractiveCount": 18,
+      "nextActionPanelCount": 1,
+      "visibleNextActionPanelCount": 0,
+      "nextActionActions": [],
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 1,
+      "crampedTapTargetCount": 0,
+      "smallTapTargets": [
+        {
+          "index": 5,
+          "text": "Switch solitaire game, currently Spider Solitaire",
+          "tag": "button",
+          "rect": {
+            "top": 16.25,
+            "left": 16,
+            "right": 195.41,
+            "bottom": 56.75,
+            "width": 179.41,
+            "height": 40.5
+          }
+        }
+      ],
+      "crampedTapTargets": [],
+      "deadSpaceLevel": "n/a",
+      "nextActionExpectedControls": [],
+      "nextActionExpectationMisses": [],
+      "nextActionDisabledExpected": [],
+      "nextActionExpectedMatches": [],
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 9,
+        "beforeCardCount": 63,
+        "afterCardCount": 63,
+        "cardCountChanged": false
+      },
+      "runtimeExceptionCount": 0,
+      "consoleErrorCount": 0,
+      "logErrorCount": 0,
+      "runtimeExceptions": [],
+      "consoleErrors": [],
+      "logErrors": [],
+      "screenshotPath": "docs/analytics/mobile-viewport-audits/2026-08-22-live-screenshots/spider-768x1024.png"
+    },
+    {
+      "label": "forty-thieves",
+      "path": "/forty-thieves",
+      "url": "https://solitairestack.com/forty-thieves",
+      "title": "Forty Thieves Solitaire | Play Online Free — 2-Deck Challenge",
+      "h1": "Forty Thieves Solitaire",
+      "viewport": {
+        "width": 375,
+        "height": 812,
+        "scrollWidth": 375,
+        "scrollHeight": 10560,
+        "devicePixelRatio": 2
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 190.5,
+        "left": 16,
+        "right": 359,
+        "bottom": 467.83,
+        "width": 343,
+        "height": 277.33
+      },
+      "cardCount": 41,
+      "faceCardCount": 40,
+      "backCardCount": 1,
+      "visibleCardCount": 41,
+      "minCardWidth": 32.09,
+      "maxCardWidth": 32.09,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": false,
+      "unusedVerticalPx": 344.171875,
+      "unusedVerticalPct": 42.4,
+      "cascadeCount": 10,
+      "cascadeCards": [
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "visibleInteractiveCount": 19,
+      "nextActionPanelCount": 1,
+      "visibleNextActionPanelCount": 1,
+      "nextActionActions": [
+        {
+          "text": "Show a hint for this game",
+          "action": "hint",
+          "tag": "button",
+          "disabled": false,
+          "rect": {
+            "top": 405.33,
+            "left": 32.63,
+            "right": 130.53,
+            "bottom": 449.33,
+            "width": 97.91,
+            "height": 44
+          }
+        },
+        {
+          "text": "Undo unavailable",
+          "action": "undo",
+          "tag": "button",
+          "disabled": true,
+          "rect": {
+            "top": 405.33,
+            "left": 138.53,
+            "right": 236.45,
+            "bottom": 449.33,
+            "width": 97.92,
+            "height": 44
+          }
+        },
+        {
+          "text": "Open Rules",
+          "action": "rules",
+          "tag": "a",
+          "disabled": false,
+          "rect": {
+            "top": 405.33,
+            "left": 244.45,
+            "right": 342.36,
+            "bottom": 449.33,
+            "width": 97.91,
+            "height": 44
+          }
+        }
+      ],
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 11,
+      "crampedTapTargetCount": 0,
+      "smallTapTargets": [
+        {
+          "index": 1,
+          "text": "Switch solitaire game, currently Forty Thieves",
+          "tag": "button",
+          "rect": {
+            "top": 8,
+            "left": 16,
+            "right": 193.52,
+            "bottom": 48.5,
+            "width": 177.52,
+            "height": 40.5
+          }
+        },
+        {
+          "index": 7,
+          "text": "10 of spades",
+          "tag": "div",
+          "rect": {
+            "top": 281.2,
+            "left": 18.59,
+            "right": 50.69,
+            "bottom": 326.14,
+            "width": 32.09,
+            "height": 44.94
+          }
+        },
+        {
+          "index": 8,
+          "text": "8 of diamonds",
+          "tag": "div",
+          "rect": {
+            "top": 281.2,
+            "left": 52.56,
+            "right": 84.66,
+            "bottom": 326.14,
+            "width": 32.09,
+            "height": 44.94
+          }
+        },
+        {
+          "index": 9,
+          "text": "4 of hearts",
+          "tag": "div",
+          "rect": {
+            "top": 281.2,
+            "left": 86.53,
+            "right": 118.63,
+            "bottom": 326.14,
+            "width": 32.09,
+            "height": 44.94
+          }
+        },
+        {
+          "index": 10,
+          "text": "9 of clubs",
+          "tag": "div",
+          "rect": {
+            "top": 281.2,
+            "left": 120.5,
+            "right": 152.59,
+            "bottom": 326.14,
+            "width": 32.09,
+            "height": 44.94
+          }
+        },
+        {
+          "index": 11,
+          "text": "6 of clubs",
+          "tag": "div",
+          "rect": {
+            "top": 281.2,
+            "left": 154.47,
+            "right": 186.56,
+            "bottom": 326.14,
+            "width": 32.09,
+            "height": 44.94
+          }
+        },
+        {
+          "index": 12,
+          "text": "2 of diamonds",
+          "tag": "div",
+          "rect": {
+            "top": 281.2,
+            "left": 188.44,
+            "right": 220.53,
+            "bottom": 326.14,
+            "width": 32.09,
+            "height": 44.94
+          }
+        },
+        {
+          "index": 13,
+          "text": "Q of clubs",
+          "tag": "div",
+          "rect": {
+            "top": 281.2,
+            "left": 222.41,
+            "right": 254.5,
+            "bottom": 326.14,
+            "width": 32.09,
+            "height": 44.94
+          }
+        },
+        {
+          "index": 14,
+          "text": "8 of diamonds",
+          "tag": "div",
+          "rect": {
+            "top": 281.2,
+            "left": 256.38,
+            "right": 288.47,
+            "bottom": 326.14,
+            "width": 32.09,
+            "height": 44.94
+          }
+        },
+        {
+          "index": 15,
+          "text": "7 of hearts",
+          "tag": "div",
+          "rect": {
+            "top": 281.2,
+            "left": 290.34,
+            "right": 322.44,
+            "bottom": 326.14,
+            "width": 32.09,
+            "height": 44.94
+          }
+        },
+        {
+          "index": 16,
+          "text": "3 of hearts",
+          "tag": "div",
+          "rect": {
+            "top": 281.2,
+            "left": 324.31,
+            "right": 356.41,
+            "bottom": 326.14,
+            "width": 32.09,
+            "height": 44.94
+          }
+        }
+      ],
+      "crampedTapTargets": [],
+      "deadSpaceLevel": "ok",
+      "nextActionExpectedControls": [
+        "hint",
+        "rules"
+      ],
+      "nextActionExpectationMisses": [],
+      "nextActionDisabledExpected": [],
+      "nextActionExpectedMatches": [
+        {
+          "label": "hint",
+          "action": "hint",
+          "text": "Show a hint for this game"
+        },
+        {
+          "label": "rules",
+          "action": "rules",
+          "text": "Open Rules"
+        }
+      ],
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 40,
+        "beforeCardCount": 41,
+        "afterCardCount": 41,
+        "cardCountChanged": false
+      },
+      "runtimeExceptionCount": 0,
+      "consoleErrorCount": 0,
+      "logErrorCount": 0,
+      "runtimeExceptions": [],
+      "consoleErrors": [],
+      "logErrors": [],
+      "screenshotPath": "docs/analytics/mobile-viewport-audits/2026-08-22-live-screenshots/forty-thieves-375x812.png"
+    },
+    {
+      "label": "forty-thieves",
+      "path": "/forty-thieves",
+      "url": "https://solitairestack.com/forty-thieves",
+      "title": "Forty Thieves Solitaire | Play Online Free — 2-Deck Challenge",
+      "h1": "Forty Thieves Solitaire",
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "scrollWidth": 390,
+        "scrollHeight": 10361,
+        "devicePixelRatio": 2
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 142,
+        "left": 16,
+        "right": 374,
+        "bottom": 426.23,
+        "width": 358,
+        "height": 284.23
+      },
+      "cardCount": 41,
+      "faceCardCount": 40,
+      "backCardCount": 1,
+      "visibleCardCount": 41,
+      "minCardWidth": 33.59,
+      "maxCardWidth": 33.59,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": false,
+      "unusedVerticalPx": 417.765625,
+      "unusedVerticalPct": 49.5,
+      "cascadeCount": 10,
+      "cascadeCards": [
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "visibleInteractiveCount": 19,
+      "nextActionPanelCount": 1,
+      "visibleNextActionPanelCount": 1,
+      "nextActionActions": [
+        {
+          "text": "Show a hint for this game",
+          "action": "hint",
+          "tag": "button",
+          "disabled": false,
+          "rect": {
+            "top": 363.44,
+            "left": 32.84,
+            "right": 135.61,
+            "bottom": 407.44,
+            "width": 102.77,
+            "height": 44
+          }
+        },
+        {
+          "text": "Undo unavailable",
+          "action": "undo",
+          "tag": "button",
+          "disabled": true,
+          "rect": {
+            "top": 363.44,
+            "left": 143.61,
+            "right": 246.38,
+            "bottom": 407.44,
+            "width": 102.77,
+            "height": 44
+          }
+        },
+        {
+          "text": "Open Rules",
+          "action": "rules",
+          "tag": "a",
+          "disabled": false,
+          "rect": {
+            "top": 363.44,
+            "left": 254.38,
+            "right": 357.16,
+            "bottom": 407.44,
+            "width": 102.78,
+            "height": 44
+          }
+        }
+      ],
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 11,
+      "crampedTapTargetCount": 0,
+      "smallTapTargets": [
+        {
+          "index": 1,
+          "text": "Switch solitaire game, currently Forty Thieves",
+          "tag": "button",
+          "rect": {
+            "top": 16.25,
+            "left": 16,
+            "right": 193.52,
+            "bottom": 56.75,
+            "width": 177.52,
+            "height": 40.5
+          }
+        },
+        {
+          "index": 7,
+          "text": "10 of diamonds",
+          "tag": "div",
+          "rect": {
+            "top": 236.82,
+            "left": 18.31,
+            "right": 51.91,
+            "bottom": 283.85,
+            "width": 33.59,
+            "height": 47.03
+          }
+        },
+        {
+          "index": 8,
+          "text": "8 of clubs",
+          "tag": "div",
+          "rect": {
+            "top": 236.82,
+            "left": 53.84,
+            "right": 87.44,
+            "bottom": 283.85,
+            "width": 33.59,
+            "height": 47.03
+          }
+        },
+        {
+          "index": 9,
+          "text": "Q of hearts",
+          "tag": "div",
+          "rect": {
+            "top": 236.82,
+            "left": 89.38,
+            "right": 122.97,
+            "bottom": 283.85,
+            "width": 33.59,
+            "height": 47.03
+          }
+        },
+        {
+          "index": 10,
+          "text": "Q of diamonds",
+          "tag": "div",
+          "rect": {
+            "top": 236.82,
+            "left": 124.91,
+            "right": 158.5,
+            "bottom": 283.85,
+            "width": 33.59,
+            "height": 47.03
+          }
+        },
+        {
+          "index": 11,
+          "text": "10 of spades",
+          "tag": "div",
+          "rect": {
+            "top": 236.82,
+            "left": 160.44,
+            "right": 194.03,
+            "bottom": 283.85,
+            "width": 33.59,
+            "height": 47.03
+          }
+        },
+        {
+          "index": 12,
+          "text": "10 of clubs",
+          "tag": "div",
+          "rect": {
+            "top": 236.82,
+            "left": 195.97,
+            "right": 229.56,
+            "bottom": 283.85,
+            "width": 33.59,
+            "height": 47.03
+          }
+        },
+        {
+          "index": 13,
+          "text": "Q of spades",
+          "tag": "div",
+          "rect": {
+            "top": 236.82,
+            "left": 231.5,
+            "right": 265.09,
+            "bottom": 283.85,
+            "width": 33.59,
+            "height": 47.03
+          }
+        },
+        {
+          "index": 14,
+          "text": "8 of spades",
+          "tag": "div",
+          "rect": {
+            "top": 236.82,
+            "left": 267.03,
+            "right": 300.63,
+            "bottom": 283.85,
+            "width": 33.59,
+            "height": 47.03
+          }
+        },
+        {
+          "index": 15,
+          "text": "2 of hearts",
+          "tag": "div",
+          "rect": {
+            "top": 236.82,
+            "left": 302.56,
+            "right": 336.16,
+            "bottom": 283.85,
+            "width": 33.59,
+            "height": 47.03
+          }
+        },
+        {
+          "index": 16,
+          "text": "2 of clubs",
+          "tag": "div",
+          "rect": {
+            "top": 236.82,
+            "left": 338.09,
+            "right": 371.69,
+            "bottom": 283.85,
+            "width": 33.59,
+            "height": 47.03
+          }
+        }
+      ],
+      "crampedTapTargets": [],
+      "deadSpaceLevel": "review",
+      "nextActionExpectedControls": [
+        "hint",
+        "rules"
+      ],
+      "nextActionExpectationMisses": [],
+      "nextActionDisabledExpected": [],
+      "nextActionExpectedMatches": [
+        {
+          "label": "hint",
+          "action": "hint",
+          "text": "Show a hint for this game"
+        },
+        {
+          "label": "rules",
+          "action": "rules",
+          "text": "Open Rules"
+        }
+      ],
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 40,
+        "beforeCardCount": 41,
+        "afterCardCount": 41,
+        "cardCountChanged": false
+      },
+      "runtimeExceptionCount": 0,
+      "consoleErrorCount": 0,
+      "logErrorCount": 0,
+      "runtimeExceptions": [],
+      "consoleErrors": [],
+      "logErrors": [],
+      "screenshotPath": "docs/analytics/mobile-viewport-audits/2026-08-22-live-screenshots/forty-thieves-390x844.png"
+    },
+    {
+      "label": "forty-thieves",
+      "path": "/forty-thieves",
+      "url": "https://solitairestack.com/forty-thieves",
+      "title": "Forty Thieves Solitaire | Play Online Free — 2-Deck Challenge",
+      "h1": "Forty Thieves Solitaire",
+      "viewport": {
+        "width": 414,
+        "height": 896,
+        "scrollWidth": 414,
+        "scrollHeight": 10032,
+        "devicePixelRatio": 2
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 142,
+        "left": 16,
+        "right": 398,
+        "bottom": 437.33,
+        "width": 382,
+        "height": 295.33
+      },
+      "cardCount": 41,
+      "faceCardCount": 40,
+      "backCardCount": 1,
+      "visibleCardCount": 41,
+      "minCardWidth": 36,
+      "maxCardWidth": 36,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": false,
+      "unusedVerticalPx": 458.671875,
+      "unusedVerticalPct": 51.2,
+      "cascadeCount": 10,
+      "cascadeCards": [
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "visibleInteractiveCount": 19,
+      "nextActionPanelCount": 1,
+      "visibleNextActionPanelCount": 1,
+      "nextActionActions": [
+        {
+          "text": "Show a hint for this game",
+          "action": "hint",
+          "tag": "button",
+          "disabled": false,
+          "rect": {
+            "top": 374.06,
+            "left": 33.2,
+            "right": 143.73,
+            "bottom": 418.06,
+            "width": 110.53,
+            "height": 44
+          }
+        },
+        {
+          "text": "Undo unavailable",
+          "action": "undo",
+          "tag": "button",
+          "disabled": true,
+          "rect": {
+            "top": 374.06,
+            "left": 151.73,
+            "right": 262.27,
+            "bottom": 418.06,
+            "width": 110.53,
+            "height": 44
+          }
+        },
+        {
+          "text": "Open Rules",
+          "action": "rules",
+          "tag": "a",
+          "disabled": false,
+          "rect": {
+            "top": 374.06,
+            "left": 270.27,
+            "right": 380.8,
+            "bottom": 418.06,
+            "width": 110.53,
+            "height": 44
+          }
+        }
+      ],
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 11,
+      "crampedTapTargetCount": 0,
+      "smallTapTargets": [
+        {
+          "index": 1,
+          "text": "Switch solitaire game, currently Forty Thieves",
+          "tag": "button",
+          "rect": {
+            "top": 16.25,
+            "left": 16,
+            "right": 193.52,
+            "bottom": 56.75,
+            "width": 177.52,
+            "height": 40.5
+          }
+        },
+        {
+          "index": 7,
+          "text": "7 of diamonds",
+          "tag": "div",
+          "rect": {
+            "top": 243.4,
+            "left": 17.72,
+            "right": 53.72,
+            "bottom": 293.79,
+            "width": 36,
+            "height": 50.39
+          }
+        },
+        {
+          "index": 8,
+          "text": "A of hearts",
+          "tag": "div",
+          "rect": {
+            "top": 243.4,
+            "left": 55.78,
+            "right": 91.78,
+            "bottom": 293.79,
+            "width": 36,
+            "height": 50.39
+          }
+        },
+        {
+          "index": 9,
+          "text": "10 of diamonds",
+          "tag": "div",
+          "rect": {
+            "top": 243.4,
+            "left": 93.84,
+            "right": 129.84,
+            "bottom": 293.79,
+            "width": 36,
+            "height": 50.39
+          }
+        },
+        {
+          "index": 10,
+          "text": "J of hearts",
+          "tag": "div",
+          "rect": {
+            "top": 243.4,
+            "left": 131.91,
+            "right": 167.91,
+            "bottom": 293.79,
+            "width": 36,
+            "height": 50.39
+          }
+        },
+        {
+          "index": 11,
+          "text": "5 of clubs",
+          "tag": "div",
+          "rect": {
+            "top": 243.4,
+            "left": 169.97,
+            "right": 205.97,
+            "bottom": 293.79,
+            "width": 36,
+            "height": 50.39
+          }
+        },
+        {
+          "index": 12,
+          "text": "J of clubs",
+          "tag": "div",
+          "rect": {
+            "top": 243.4,
+            "left": 208.03,
+            "right": 244.03,
+            "bottom": 293.79,
+            "width": 36,
+            "height": 50.39
+          }
+        },
+        {
+          "index": 13,
+          "text": "K of spades",
+          "tag": "div",
+          "rect": {
+            "top": 243.4,
+            "left": 246.09,
+            "right": 282.09,
+            "bottom": 293.79,
+            "width": 36,
+            "height": 50.39
+          }
+        },
+        {
+          "index": 14,
+          "text": "Q of clubs",
+          "tag": "div",
+          "rect": {
+            "top": 243.4,
+            "left": 284.16,
+            "right": 320.16,
+            "bottom": 293.79,
+            "width": 36,
+            "height": 50.39
+          }
+        },
+        {
+          "index": 15,
+          "text": "4 of hearts",
+          "tag": "div",
+          "rect": {
+            "top": 243.4,
+            "left": 322.22,
+            "right": 358.22,
+            "bottom": 293.79,
+            "width": 36,
+            "height": 50.39
+          }
+        },
+        {
+          "index": 16,
+          "text": "2 of spades",
+          "tag": "div",
+          "rect": {
+            "top": 243.4,
+            "left": 360.28,
+            "right": 396.28,
+            "bottom": 293.79,
+            "width": 36,
+            "height": 50.39
+          }
+        }
+      ],
+      "crampedTapTargets": [],
+      "deadSpaceLevel": "review",
+      "nextActionExpectedControls": [
+        "hint",
+        "rules"
+      ],
+      "nextActionExpectationMisses": [],
+      "nextActionDisabledExpected": [],
+      "nextActionExpectedMatches": [
+        {
+          "label": "hint",
+          "action": "hint",
+          "text": "Show a hint for this game"
+        },
+        {
+          "label": "rules",
+          "action": "rules",
+          "text": "Open Rules"
+        }
+      ],
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 40,
+        "beforeCardCount": 41,
+        "afterCardCount": 41,
+        "cardCountChanged": false
+      },
+      "runtimeExceptionCount": 0,
+      "consoleErrorCount": 0,
+      "logErrorCount": 0,
+      "runtimeExceptions": [],
+      "consoleErrors": [],
+      "logErrors": [],
+      "screenshotPath": "docs/analytics/mobile-viewport-audits/2026-08-22-live-screenshots/forty-thieves-414x896.png"
+    },
+    {
+      "label": "forty-thieves",
+      "path": "/forty-thieves",
+      "url": "https://solitairestack.com/forty-thieves",
+      "title": "Forty Thieves Solitaire | Play Online Free — 2-Deck Challenge",
+      "h1": "Forty Thieves Solitaire",
+      "viewport": {
+        "width": 768,
+        "height": 1024,
+        "scrollWidth": 768,
+        "scrollHeight": 7095,
+        "devicePixelRatio": 1
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 90,
+        "left": 16,
+        "right": 752,
+        "bottom": 393.78,
+        "width": 736,
+        "height": 303.78
+      },
+      "cardCount": 41,
+      "faceCardCount": 40,
+      "backCardCount": 1,
+      "visibleCardCount": 41,
+      "minCardWidth": 62.06,
+      "maxCardWidth": 62.06,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": false,
+      "unusedVerticalPx": 630.21875,
+      "unusedVerticalPct": 61.5,
+      "cascadeCount": 10,
+      "cascadeCards": [
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "visibleInteractiveCount": 16,
+      "nextActionPanelCount": 1,
+      "visibleNextActionPanelCount": 0,
+      "nextActionActions": [],
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 1,
+      "crampedTapTargetCount": 0,
+      "smallTapTargets": [
+        {
+          "index": 1,
+          "text": "Switch solitaire game, currently Forty Thieves",
+          "tag": "button",
+          "rect": {
+            "top": 16.25,
+            "left": 16,
+            "right": 193.52,
+            "bottom": 56.75,
+            "width": 177.52,
+            "height": 40.5
+          }
+        }
+      ],
+      "crampedTapTargets": [],
+      "deadSpaceLevel": "n/a",
+      "nextActionExpectedControls": [],
+      "nextActionExpectationMisses": [],
+      "nextActionDisabledExpected": [],
+      "nextActionExpectedMatches": [],
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 40,
+        "beforeCardCount": 41,
+        "afterCardCount": 41,
+        "cardCountChanged": false
+      },
+      "runtimeExceptionCount": 0,
+      "consoleErrorCount": 0,
+      "logErrorCount": 0,
+      "runtimeExceptions": [],
+      "consoleErrors": [],
+      "logErrors": [],
+      "screenshotPath": "docs/analytics/mobile-viewport-audits/2026-08-22-live-screenshots/forty-thieves-768x1024.png"
+    },
+    {
+      "label": "yukon",
+      "path": "/yukon",
+      "url": "https://playklondikeonline.com/yukon",
+      "title": "Yukon Solitaire | Play Online Free — No Download",
+      "h1": "Yukon Solitaire",
+      "viewport": {
+        "width": 375,
+        "height": 812,
+        "scrollWidth": 375,
+        "scrollHeight": 9854,
+        "devicePixelRatio": 2
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 142,
+        "left": 16,
+        "right": 359,
+        "bottom": 537.17,
+        "width": 343,
+        "height": 395.17
+      },
+      "cardCount": 52,
+      "faceCardCount": 31,
+      "backCardCount": 21,
+      "visibleCardCount": 52,
+      "minCardWidth": 39.25,
+      "maxCardWidth": 39.25,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": false,
+      "unusedVerticalPx": 274.828125,
+      "unusedVerticalPct": 33.8,
+      "cascadeCount": 7,
+      "cascadeCards": [
+        1,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "visibleInteractiveCount": 39,
+      "nextActionPanelCount": 1,
+      "visibleNextActionPanelCount": 1,
+      "nextActionActions": [
+        {
+          "text": "Show a hint for this game",
+          "action": "hint",
+          "tag": "button",
+          "disabled": false,
+          "rect": {
+            "top": 474.67,
+            "left": 32.63,
+            "right": 130.53,
+            "bottom": 518.67,
+            "width": 97.91,
+            "height": 44
+          }
+        },
+        {
+          "text": "Undo unavailable",
+          "action": "undo",
+          "tag": "button",
+          "disabled": true,
+          "rect": {
+            "top": 474.67,
+            "left": 138.53,
+            "right": 236.45,
+            "bottom": 518.67,
+            "width": 97.92,
+            "height": 44
+          }
+        },
+        {
+          "text": "Open Rules",
+          "action": "rules",
+          "tag": "a",
+          "disabled": false,
+          "rect": {
+            "top": 474.67,
+            "left": 244.45,
+            "right": 342.36,
+            "bottom": 518.67,
+            "width": 97.91,
+            "height": 44
+          }
+        }
+      ],
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 32,
+      "crampedTapTargetCount": 0,
+      "smallTapTargets": [
+        {
+          "index": 1,
+          "text": "Switch solitaire game, currently Yukon",
+          "tag": "button",
+          "rect": {
+            "top": 16.25,
+            "left": 16,
+            "right": 144.7,
+            "bottom": 56.75,
+            "width": 128.7,
+            "height": 40.5
+          }
+        },
+        {
+          "index": 6,
+          "text": "6 of hearts",
+          "tag": "div",
+          "rect": {
+            "top": 214.94,
+            "left": 41.13,
+            "right": 80.38,
+            "bottom": 269.88,
+            "width": 39.25,
+            "height": 54.94
+          }
+        },
+        {
+          "index": 7,
+          "text": "4 of spades",
+          "tag": "div",
+          "rect": {
+            "top": 222.47,
+            "left": 83.38,
+            "right": 122.63,
+            "bottom": 277.41,
+            "width": 39.25,
+            "height": 54.94
+          }
+        },
+        {
+          "index": 8,
+          "text": "9 of hearts",
+          "tag": "div",
+          "rect": {
+            "top": 235.03,
+            "left": 83.38,
+            "right": 122.63,
+            "bottom": 289.97,
+            "width": 39.25,
+            "height": 54.94
+          }
+        },
+        {
+          "index": 9,
+          "text": "4 of clubs",
+          "tag": "div",
+          "rect": {
+            "top": 247.59,
+            "left": 83.38,
+            "right": 122.63,
+            "bottom": 302.53,
+            "width": 39.25,
+            "height": 54.94
+          }
+        },
+        {
+          "index": 10,
+          "text": "8 of clubs",
+          "tag": "div",
+          "rect": {
+            "top": 260.15,
+            "left": 83.38,
+            "right": 122.63,
+            "bottom": 315.09,
+            "width": 39.25,
+            "height": 54.94
+          }
+        },
+        {
+          "index": 11,
+          "text": "J of diamonds",
+          "tag": "div",
+          "rect": {
+            "top": 272.71,
+            "left": 83.38,
+            "right": 122.63,
+            "bottom": 327.65,
+            "width": 39.25,
+            "height": 54.94
+          }
+        },
+        {
+          "index": 12,
+          "text": "10 of diamonds",
+          "tag": "div",
+          "rect": {
+            "top": 230.01,
+            "left": 125.63,
+            "right": 164.88,
+            "bottom": 284.95,
+            "width": 39.25,
+            "height": 54.94
+          }
+        },
+        {
+          "index": 13,
+          "text": "3 of hearts",
+          "tag": "div",
+          "rect": {
+            "top": 242.57,
+            "left": 125.63,
+            "right": 164.88,
+            "bottom": 297.51,
+            "width": 39.25,
+            "height": 54.94
+          }
+        },
+        {
+          "index": 14,
+          "text": "6 of diamonds",
+          "tag": "div",
+          "rect": {
+            "top": 255.13,
+            "left": 125.63,
+            "right": 164.88,
+            "bottom": 310.07,
+            "width": 39.25,
+            "height": 54.94
+          }
+        },
+        {
+          "index": 15,
+          "text": "9 of diamonds",
+          "tag": "div",
+          "rect": {
+            "top": 267.69,
+            "left": 125.63,
+            "right": 164.88,
+            "bottom": 322.63,
+            "width": 39.25,
+            "height": 54.94
+          }
+        },
+        {
+          "index": 16,
+          "text": "7 of spades",
+          "tag": "div",
+          "rect": {
+            "top": 280.25,
+            "left": 125.63,
+            "right": 164.88,
+            "bottom": 335.19,
+            "width": 39.25,
+            "height": 54.94
+          }
+        },
+        {
+          "index": 17,
+          "text": "A of spades",
+          "tag": "div",
+          "rect": {
+            "top": 237.55,
+            "left": 167.88,
+            "right": 207.13,
+            "bottom": 292.48,
+            "width": 39.25,
+            "height": 54.94
+          }
+        },
+        {
+          "index": 18,
+          "text": "2 of clubs",
+          "tag": "div",
+          "rect": {
+            "top": 250.11,
+            "left": 167.88,
+            "right": 207.13,
+            "bottom": 305.04,
+            "width": 39.25,
+            "height": 54.94
+          }
+        },
+        {
+          "index": 19,
+          "text": "K of spades",
+          "tag": "div",
+          "rect": {
+            "top": 262.67,
+            "left": 167.88,
+            "right": 207.13,
+            "bottom": 317.6,
+            "width": 39.25,
+            "height": 54.94
+          }
+        },
+        {
+          "index": 20,
+          "text": "4 of diamonds",
+          "tag": "div",
+          "rect": {
+            "top": 275.23,
+            "left": 167.88,
+            "right": 207.13,
+            "bottom": 330.16,
+            "width": 39.25,
+            "height": 54.94
+          }
+        },
+        {
+          "index": 21,
+          "text": "3 of clubs",
+          "tag": "div",
+          "rect": {
+            "top": 287.79,
+            "left": 167.88,
+            "right": 207.13,
+            "bottom": 342.72,
+            "width": 39.25,
+            "height": 54.94
+          }
+        },
+        {
+          "index": 22,
+          "text": "4 of hearts",
+          "tag": "div",
+          "rect": {
+            "top": 245.08,
+            "left": 210.13,
+            "right": 249.38,
+            "bottom": 300.02,
+            "width": 39.25,
+            "height": 54.94
+          }
+        },
+        {
+          "index": 23,
+          "text": "5 of hearts",
+          "tag": "div",
+          "rect": {
+            "top": 257.64,
+            "left": 210.13,
+            "right": 249.38,
+            "bottom": 312.58,
+            "width": 39.25,
+            "height": 54.94
+          }
+        },
+        {
+          "index": 24,
+          "text": "7 of clubs",
+          "tag": "div",
+          "rect": {
+            "top": 270.2,
+            "left": 210.13,
+            "right": 249.38,
+            "bottom": 325.14,
+            "width": 39.25,
+            "height": 54.94
+          }
+        },
+        {
+          "index": 25,
+          "text": "J of spades",
+          "tag": "div",
+          "rect": {
+            "top": 282.76,
+            "left": 210.13,
+            "right": 249.38,
+            "bottom": 337.7,
+            "width": 39.25,
+            "height": 54.94
+          }
+        },
+        {
+          "index": 26,
+          "text": "6 of spades",
+          "tag": "div",
+          "rect": {
+            "top": 295.32,
+            "left": 210.13,
+            "right": 249.38,
+            "bottom": 350.26,
+            "width": 39.25,
+            "height": 54.94
+          }
+        },
+        {
+          "index": 27,
+          "text": "5 of spades",
+          "tag": "div",
+          "rect": {
+            "top": 252.62,
+            "left": 252.38,
+            "right": 291.63,
+            "bottom": 307.55,
+            "width": 39.25,
+            "height": 54.94
+          }
+        },
+        {
+          "index": 28,
+          "text": "J of hearts",
+          "tag": "div",
+          "rect": {
+            "top": 265.18,
+            "left": 252.38,
+            "right": 291.63,
+            "bottom": 320.11,
+            "width": 39.25,
+            "height": 54.94
+          }
+        },
+        {
+          "index": 29,
+          "text": "Q of diamonds",
+          "tag": "div",
+          "rect": {
+            "top": 277.74,
+            "left": 252.38,
+            "right": 291.63,
+            "bottom": 332.67,
+            "width": 39.25,
+            "height": 54.94
+          }
+        },
+        {
+          "index": 30,
+          "text": "A of diamonds",
+          "tag": "div",
+          "rect": {
+            "top": 290.3,
+            "left": 252.38,
+            "right": 291.63,
+            "bottom": 345.23,
+            "width": 39.25,
+            "height": 54.94
+          }
+        },
+        {
+          "index": 31,
+          "text": "10 of hearts",
+          "tag": "div",
+          "rect": {
+            "top": 302.86,
+            "left": 252.38,
+            "right": 291.63,
+            "bottom": 357.79,
+            "width": 39.25,
+            "height": 54.94
+          }
+        },
+        {
+          "index": 32,
+          "text": "8 of hearts",
+          "tag": "div",
+          "rect": {
+            "top": 260.15,
+            "left": 294.63,
+            "right": 333.88,
+            "bottom": 315.09,
+            "width": 39.25,
+            "height": 54.94
+          }
+        },
+        {
+          "index": 33,
+          "text": "3 of spades",
+          "tag": "div",
+          "rect": {
+            "top": 272.71,
+            "left": 294.63,
+            "right": 333.88,
+            "bottom": 327.65,
+            "width": 39.25,
+            "height": 54.94
+          }
+        },
+        {
+          "index": 34,
+          "text": "K of hearts",
+          "tag": "div",
+          "rect": {
+            "top": 285.27,
+            "left": 294.63,
+            "right": 333.88,
+            "bottom": 340.21,
+            "width": 39.25,
+            "height": 54.94
+          }
+        },
+        {
+          "index": 35,
+          "text": "2 of spades",
+          "tag": "div",
+          "rect": {
+            "top": 297.83,
+            "left": 294.63,
+            "right": 333.88,
+            "bottom": 352.77,
+            "width": 39.25,
+            "height": 54.94
+          }
+        },
+        {
+          "index": 36,
+          "text": "A of hearts",
+          "tag": "div",
+          "rect": {
+            "top": 310.39,
+            "left": 294.63,
+            "right": 333.88,
+            "bottom": 365.33,
+            "width": 39.25,
+            "height": 54.94
+          }
+        }
+      ],
+      "crampedTapTargets": [],
+      "deadSpaceLevel": "ok",
+      "nextActionExpectedControls": [
+        "hint",
+        "rules"
+      ],
+      "nextActionExpectationMisses": [],
+      "nextActionDisabledExpected": [],
+      "nextActionExpectedMatches": [
+        {
+          "label": "hint",
+          "action": "hint",
+          "text": "Show a hint for this game"
+        },
+        {
+          "label": "rules",
+          "action": "rules",
+          "text": "Open Rules"
+        }
+      ],
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 31,
+        "beforeCardCount": 52,
+        "afterCardCount": 52,
+        "cardCountChanged": false
+      },
+      "runtimeExceptionCount": 0,
+      "consoleErrorCount": 0,
+      "logErrorCount": 0,
+      "runtimeExceptions": [],
+      "consoleErrors": [],
+      "logErrors": [],
+      "screenshotPath": "docs/analytics/mobile-viewport-audits/2026-08-22-live-screenshots/yukon-375x812.png"
+    },
+    {
+      "label": "yukon",
+      "path": "/yukon",
+      "url": "https://playklondikeonline.com/yukon",
+      "title": "Yukon Solitaire | Play Online Free — No Download",
+      "h1": "Yukon Solitaire",
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "scrollWidth": 390,
+        "scrollHeight": 9631,
+        "devicePixelRatio": 2
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 142,
+        "left": 16,
+        "right": 374,
+        "bottom": 549.83,
+        "width": 358,
+        "height": 407.83
+      },
+      "cardCount": 52,
+      "faceCardCount": 31,
+      "backCardCount": 21,
+      "visibleCardCount": 52,
+      "minCardWidth": 41.13,
+      "maxCardWidth": 41.13,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": false,
+      "unusedVerticalPx": 294.171875,
+      "unusedVerticalPct": 34.9,
+      "cascadeCount": 7,
+      "cascadeCards": [
+        1,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "visibleInteractiveCount": 39,
+      "nextActionPanelCount": 1,
+      "visibleNextActionPanelCount": 1,
+      "nextActionActions": [
+        {
+          "text": "Show a hint for this game",
+          "action": "hint",
+          "tag": "button",
+          "disabled": false,
+          "rect": {
+            "top": 487.03,
+            "left": 32.84,
+            "right": 135.61,
+            "bottom": 531.03,
+            "width": 102.77,
+            "height": 44
+          }
+        },
+        {
+          "text": "Undo unavailable",
+          "action": "undo",
+          "tag": "button",
+          "disabled": true,
+          "rect": {
+            "top": 487.03,
+            "left": 143.61,
+            "right": 246.38,
+            "bottom": 531.03,
+            "width": 102.77,
+            "height": 44
+          }
+        },
+        {
+          "text": "Open Rules",
+          "action": "rules",
+          "tag": "a",
+          "disabled": false,
+          "rect": {
+            "top": 487.03,
+            "left": 254.38,
+            "right": 357.16,
+            "bottom": 531.03,
+            "width": 102.78,
+            "height": 44
+          }
+        }
+      ],
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 32,
+      "crampedTapTargetCount": 0,
+      "smallTapTargets": [
+        {
+          "index": 1,
+          "text": "Switch solitaire game, currently Yukon",
+          "tag": "button",
+          "rect": {
+            "top": 16.25,
+            "left": 16,
+            "right": 144.7,
+            "bottom": 56.75,
+            "width": 128.7,
+            "height": 40.5
+          }
+        },
+        {
+          "index": 6,
+          "text": "3 of hearts",
+          "tag": "div",
+          "rect": {
+            "top": 218.27,
+            "left": 41.73,
+            "right": 82.86,
+            "bottom": 275.83,
+            "width": 41.13,
+            "height": 57.56
+          }
+        },
+        {
+          "index": 7,
+          "text": "J of hearts",
+          "tag": "div",
+          "rect": {
+            "top": 226.16,
+            "left": 85.97,
+            "right": 127.09,
+            "bottom": 283.72,
+            "width": 41.13,
+            "height": 57.56
+          }
+        },
+        {
+          "index": 8,
+          "text": "K of spades",
+          "tag": "div",
+          "rect": {
+            "top": 239.32,
+            "left": 85.97,
+            "right": 127.09,
+            "bottom": 296.88,
+            "width": 41.13,
+            "height": 57.56
+          }
+        },
+        {
+          "index": 9,
+          "text": "5 of clubs",
+          "tag": "div",
+          "rect": {
+            "top": 252.48,
+            "left": 85.97,
+            "right": 127.09,
+            "bottom": 310.04,
+            "width": 41.13,
+            "height": 57.56
+          }
+        },
+        {
+          "index": 10,
+          "text": "7 of clubs",
+          "tag": "div",
+          "rect": {
+            "top": 265.64,
+            "left": 85.97,
+            "right": 127.09,
+            "bottom": 323.2,
+            "width": 41.13,
+            "height": 57.56
+          }
+        },
+        {
+          "index": 11,
+          "text": "K of hearts",
+          "tag": "div",
+          "rect": {
+            "top": 278.8,
+            "left": 85.97,
+            "right": 127.09,
+            "bottom": 336.36,
+            "width": 41.13,
+            "height": 57.56
+          }
+        },
+        {
+          "index": 12,
+          "text": "3 of spades",
+          "tag": "div",
+          "rect": {
+            "top": 234.06,
+            "left": 130.2,
+            "right": 171.33,
+            "bottom": 291.62,
+            "width": 41.13,
+            "height": 57.56
+          }
+        },
+        {
+          "index": 13,
+          "text": "9 of spades",
+          "tag": "div",
+          "rect": {
+            "top": 247.22,
+            "left": 130.2,
+            "right": 171.33,
+            "bottom": 304.78,
+            "width": 41.13,
+            "height": 57.56
+          }
+        },
+        {
+          "index": 14,
+          "text": "10 of clubs",
+          "tag": "div",
+          "rect": {
+            "top": 260.38,
+            "left": 130.2,
+            "right": 171.33,
+            "bottom": 317.94,
+            "width": 41.13,
+            "height": 57.56
+          }
+        },
+        {
+          "index": 15,
+          "text": "A of spades",
+          "tag": "div",
+          "rect": {
+            "top": 273.54,
+            "left": 130.2,
+            "right": 171.33,
+            "bottom": 331.1,
+            "width": 41.13,
+            "height": 57.56
+          }
+        },
+        {
+          "index": 16,
+          "text": "6 of hearts",
+          "tag": "div",
+          "rect": {
+            "top": 286.7,
+            "left": 130.2,
+            "right": 171.33,
+            "bottom": 344.26,
+            "width": 41.13,
+            "height": 57.56
+          }
+        },
+        {
+          "index": 17,
+          "text": "Q of diamonds",
+          "tag": "div",
+          "rect": {
+            "top": 241.95,
+            "left": 174.44,
+            "right": 215.56,
+            "bottom": 299.52,
+            "width": 41.13,
+            "height": 57.56
+          }
+        },
+        {
+          "index": 18,
+          "text": "4 of hearts",
+          "tag": "div",
+          "rect": {
+            "top": 255.11,
+            "left": 174.44,
+            "right": 215.56,
+            "bottom": 312.68,
+            "width": 41.13,
+            "height": 57.56
+          }
+        },
+        {
+          "index": 19,
+          "text": "6 of diamonds",
+          "tag": "div",
+          "rect": {
+            "top": 268.27,
+            "left": 174.44,
+            "right": 215.56,
+            "bottom": 325.84,
+            "width": 41.13,
+            "height": 57.56
+          }
+        },
+        {
+          "index": 20,
+          "text": "9 of hearts",
+          "tag": "div",
+          "rect": {
+            "top": 281.43,
+            "left": 174.44,
+            "right": 215.56,
+            "bottom": 339,
+            "width": 41.13,
+            "height": 57.56
+          }
+        },
+        {
+          "index": 21,
+          "text": "J of spades",
+          "tag": "div",
+          "rect": {
+            "top": 294.59,
+            "left": 174.44,
+            "right": 215.56,
+            "bottom": 352.16,
+            "width": 41.13,
+            "height": 57.56
+          }
+        },
+        {
+          "index": 22,
+          "text": "8 of hearts",
+          "tag": "div",
+          "rect": {
+            "top": 249.85,
+            "left": 218.67,
+            "right": 259.8,
+            "bottom": 307.41,
+            "width": 41.13,
+            "height": 57.56
+          }
+        },
+        {
+          "index": 23,
+          "text": "Q of hearts",
+          "tag": "div",
+          "rect": {
+            "top": 263.01,
+            "left": 218.67,
+            "right": 259.8,
+            "bottom": 320.57,
+            "width": 41.13,
+            "height": 57.56
+          }
+        },
+        {
+          "index": 24,
+          "text": "8 of clubs",
+          "tag": "div",
+          "rect": {
+            "top": 276.17,
+            "left": 218.67,
+            "right": 259.8,
+            "bottom": 333.73,
+            "width": 41.13,
+            "height": 57.56
+          }
+        },
+        {
+          "index": 25,
+          "text": "4 of spades",
+          "tag": "div",
+          "rect": {
+            "top": 289.33,
+            "left": 218.67,
+            "right": 259.8,
+            "bottom": 346.89,
+            "width": 41.13,
+            "height": 57.56
+          }
+        },
+        {
+          "index": 26,
+          "text": "J of diamonds",
+          "tag": "div",
+          "rect": {
+            "top": 302.49,
+            "left": 218.67,
+            "right": 259.8,
+            "bottom": 360.05,
+            "width": 41.13,
+            "height": 57.56
+          }
+        },
+        {
+          "index": 27,
+          "text": "5 of hearts",
+          "tag": "div",
+          "rect": {
+            "top": 257.75,
+            "left": 262.91,
+            "right": 304.03,
+            "bottom": 315.31,
+            "width": 41.13,
+            "height": 57.56
+          }
+        },
+        {
+          "index": 28,
+          "text": "5 of diamonds",
+          "tag": "div",
+          "rect": {
+            "top": 270.91,
+            "left": 262.91,
+            "right": 304.03,
+            "bottom": 328.47,
+            "width": 41.13,
+            "height": 57.56
+          }
+        },
+        {
+          "index": 29,
+          "text": "A of clubs",
+          "tag": "div",
+          "rect": {
+            "top": 284.07,
+            "left": 262.91,
+            "right": 304.03,
+            "bottom": 341.63,
+            "width": 41.13,
+            "height": 57.56
+          }
+        },
+        {
+          "index": 30,
+          "text": "Q of spades",
+          "tag": "div",
+          "rect": {
+            "top": 297.23,
+            "left": 262.91,
+            "right": 304.03,
+            "bottom": 354.79,
+            "width": 41.13,
+            "height": 57.56
+          }
+        },
+        {
+          "index": 31,
+          "text": "7 of spades",
+          "tag": "div",
+          "rect": {
+            "top": 310.39,
+            "left": 262.91,
+            "right": 304.03,
+            "bottom": 367.95,
+            "width": 41.13,
+            "height": 57.56
+          }
+        },
+        {
+          "index": 32,
+          "text": "J of clubs",
+          "tag": "div",
+          "rect": {
+            "top": 265.64,
+            "left": 307.14,
+            "right": 348.27,
+            "bottom": 323.2,
+            "width": 41.13,
+            "height": 57.56
+          }
+        },
+        {
+          "index": 33,
+          "text": "3 of diamonds",
+          "tag": "div",
+          "rect": {
+            "top": 278.8,
+            "left": 307.14,
+            "right": 348.27,
+            "bottom": 336.36,
+            "width": 41.13,
+            "height": 57.56
+          }
+        },
+        {
+          "index": 34,
+          "text": "9 of diamonds",
+          "tag": "div",
+          "rect": {
+            "top": 291.96,
+            "left": 307.14,
+            "right": 348.27,
+            "bottom": 349.52,
+            "width": 41.13,
+            "height": 57.56
+          }
+        },
+        {
+          "index": 35,
+          "text": "8 of spades",
+          "tag": "div",
+          "rect": {
+            "top": 305.12,
+            "left": 307.14,
+            "right": 348.27,
+            "bottom": 362.68,
+            "width": 41.13,
+            "height": 57.56
+          }
+        },
+        {
+          "index": 36,
+          "text": "Q of clubs",
+          "tag": "div",
+          "rect": {
+            "top": 318.28,
+            "left": 307.14,
+            "right": 348.27,
+            "bottom": 375.84,
+            "width": 41.13,
+            "height": 57.56
+          }
+        }
+      ],
+      "crampedTapTargets": [],
+      "deadSpaceLevel": "ok",
+      "nextActionExpectedControls": [
+        "hint",
+        "rules"
+      ],
+      "nextActionExpectationMisses": [],
+      "nextActionDisabledExpected": [],
+      "nextActionExpectedMatches": [
+        {
+          "label": "hint",
+          "action": "hint",
+          "text": "Show a hint for this game"
+        },
+        {
+          "label": "rules",
+          "action": "rules",
+          "text": "Open Rules"
+        }
+      ],
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 31,
+        "beforeCardCount": 52,
+        "afterCardCount": 52,
+        "cardCountChanged": false
+      },
+      "runtimeExceptionCount": 0,
+      "consoleErrorCount": 0,
+      "logErrorCount": 0,
+      "runtimeExceptions": [],
+      "consoleErrors": [],
+      "logErrors": [],
+      "screenshotPath": "docs/analytics/mobile-viewport-audits/2026-08-22-live-screenshots/yukon-390x844.png"
+    },
+    {
+      "label": "yukon",
+      "path": "/yukon",
+      "url": "https://playklondikeonline.com/yukon",
+      "title": "Yukon Solitaire | Play Online Free — No Download",
+      "h1": "Yukon Solitaire",
+      "viewport": {
+        "width": 414,
+        "height": 896,
+        "scrollWidth": 414,
+        "scrollHeight": 9300,
+        "devicePixelRatio": 2
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 142,
+        "left": 16,
+        "right": 398,
+        "bottom": 570.11,
+        "width": 382,
+        "height": 428.11
+      },
+      "cardCount": 52,
+      "faceCardCount": 31,
+      "backCardCount": 21,
+      "visibleCardCount": 52,
+      "minCardWidth": 44.13,
+      "maxCardWidth": 44.13,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": false,
+      "unusedVerticalPx": 325.890625,
+      "unusedVerticalPct": 36.4,
+      "cascadeCount": 7,
+      "cascadeCards": [
+        1,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "visibleInteractiveCount": 39,
+      "nextActionPanelCount": 1,
+      "visibleNextActionPanelCount": 1,
+      "nextActionActions": [
+        {
+          "text": "Show a hint for this game",
+          "action": "hint",
+          "tag": "button",
+          "disabled": false,
+          "rect": {
+            "top": 506.84,
+            "left": 33.2,
+            "right": 143.73,
+            "bottom": 550.84,
+            "width": 110.53,
+            "height": 44
+          }
+        },
+        {
+          "text": "Undo unavailable",
+          "action": "undo",
+          "tag": "button",
+          "disabled": true,
+          "rect": {
+            "top": 506.84,
+            "left": 151.73,
+            "right": 262.27,
+            "bottom": 550.84,
+            "width": 110.53,
+            "height": 44
+          }
+        },
+        {
+          "text": "Open Rules",
+          "action": "rules",
+          "tag": "a",
+          "disabled": false,
+          "rect": {
+            "top": 506.84,
+            "left": 270.27,
+            "right": 380.8,
+            "bottom": 550.84,
+            "width": 110.53,
+            "height": 44
+          }
+        }
+      ],
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 1,
+      "crampedTapTargetCount": 0,
+      "smallTapTargets": [
+        {
+          "index": 1,
+          "text": "Switch solitaire game, currently Yukon",
+          "tag": "button",
+          "rect": {
+            "top": 16.25,
+            "left": 16,
+            "right": 144.7,
+            "bottom": 56.75,
+            "width": 128.7,
+            "height": 40.5
+          }
+        }
+      ],
+      "crampedTapTargets": [],
+      "deadSpaceLevel": "ok",
+      "nextActionExpectedControls": [
+        "hint",
+        "rules"
+      ],
+      "nextActionExpectationMisses": [],
+      "nextActionDisabledExpected": [],
+      "nextActionExpectedMatches": [
+        {
+          "label": "hint",
+          "action": "hint",
+          "text": "Show a hint for this game"
+        },
+        {
+          "label": "rules",
+          "action": "rules",
+          "text": "Open Rules"
+        }
+      ],
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 31,
+        "beforeCardCount": 52,
+        "afterCardCount": 52,
+        "cardCountChanged": false
+      },
+      "runtimeExceptionCount": 0,
+      "consoleErrorCount": 0,
+      "logErrorCount": 0,
+      "runtimeExceptions": [],
+      "consoleErrors": [],
+      "logErrors": [],
+      "screenshotPath": "docs/analytics/mobile-viewport-audits/2026-08-22-live-screenshots/yukon-414x896.png"
+    },
+    {
+      "label": "yukon",
+      "path": "/yukon",
+      "url": "https://playklondikeonline.com/yukon",
+      "title": "Yukon Solitaire | Play Online Free — No Download",
+      "h1": "Yukon Solitaire",
+      "viewport": {
+        "width": 768,
+        "height": 1024,
+        "scrollWidth": 768,
+        "scrollHeight": 6361,
+        "devicePixelRatio": 1
+      },
+      "boardFound": true,
+      "boardRect": {
+        "top": 90,
+        "left": 16,
+        "right": 752,
+        "bottom": 596.8,
+        "width": 736,
+        "height": 506.8
+      },
+      "cardCount": 52,
+      "faceCardCount": 31,
+      "backCardCount": 21,
+      "visibleCardCount": 52,
+      "minCardWidth": 74.41,
+      "maxCardWidth": 74.41,
+      "clippedCardCount": 0,
+      "horizontalOverflowPx": 0,
+      "topControlsVisible": true,
+      "bottomControlsVisible": false,
+      "unusedVerticalPx": 427.203125,
+      "unusedVerticalPct": 41.7,
+      "cascadeCount": 7,
+      "cascadeCards": [
+        1,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "visibleInteractiveCount": 36,
+      "nextActionPanelCount": 1,
+      "visibleNextActionPanelCount": 0,
+      "nextActionActions": [],
+      "blockedInteractiveCount": 0,
+      "blockedInteractive": [],
+      "smallTapTargetCount": 1,
+      "crampedTapTargetCount": 0,
+      "smallTapTargets": [
+        {
+          "index": 1,
+          "text": "Switch solitaire game, currently Yukon",
+          "tag": "button",
+          "rect": {
+            "top": 16.25,
+            "left": 16,
+            "right": 144.7,
+            "bottom": 56.75,
+            "width": 128.7,
+            "height": 40.5
+          }
+        }
+      ],
+      "crampedTapTargets": [],
+      "deadSpaceLevel": "n/a",
+      "nextActionExpectedControls": [],
+      "nextActionExpectationMisses": [],
+      "nextActionDisabledExpected": [],
+      "nextActionExpectedMatches": [],
+      "failureReasons": [],
+      "stability": {
+        "sampleDelayMs": 350,
+        "boardShiftPx": 0,
+        "maxCardShiftPx": 0,
+        "movedCardCount": 0,
+        "matchedCardCount": 31,
+        "beforeCardCount": 52,
+        "afterCardCount": 52,
+        "cardCountChanged": false
+      },
+      "runtimeExceptionCount": 0,
+      "consoleErrorCount": 0,
+      "logErrorCount": 0,
+      "runtimeExceptions": [],
+      "consoleErrors": [],
+      "logErrors": [],
+      "screenshotPath": "docs/analytics/mobile-viewport-audits/2026-08-22-live-screenshots/yukon-768x1024.png"
+    }
+  ]
+}

@@ -180,7 +180,7 @@ route, and never advertise a locale in hreflang that returns a 404.
 - Locale pages are audited on a rotating basis: H1 count, reciprocal hreflang,
   localized UI, and that each advertised alternate returns 200.
 
-### Current locale set (audited 2026-08-01; re-verified 2026-08-05, 2026-08-11, and 2026-08-12, all pass)
+### Current locale set (audited 2026-08-01; re-verified 2026-08-05, 2026-08-11, 2026-08-12, and 2026-08-23, all pass)
 
 The FreeCell property runs six locales, each with a landing page plus a
 localized play route, all sharing one reciprocal hreflang cluster
@@ -210,6 +210,28 @@ German pages). One standing observation for the U6 backlog: the raw SSR
 hydration — search engines that render JS see the right value, but emitting
 the localized `lang` in the server HTML would be a small future hardening.
 Not fixed here: it is a root-layout change, out of a same-run-safe slice.
+
+Re-verification note (2026-08-23, daily review — U5 FR audit checklist
+executed once per plan `2026-07-03-001` test scenario): the two French
+pages were audited live against the locale-gate bar and both pass. The
+French landing `/freecell-en-francais` returns 200 with exactly one H1
+("FreeCell en Francais"), a self-referential canonical, localized UI
+(Jouer / Nouvelle / Comment), and the full seven-entry hreflang cluster
+(`fr`/`en`/`es`/`de`/`it`/`pt`/`x-default`). The French play route
+`/freecell-en-francais/jouer` returns 200 with one H1, self-canonical, a
+live 52-card board, localized UI, and the full cluster. Reciprocity is
+confirmed bidirectionally: the Spanish landing `/freecell-en-espanol`
+points `fr` at `/freecell-en-francais` (ES↔FR), and the English default
+`/freecell/how-to-play` points `fr` at `/freecell-en-francais` (EN↔FR) —
+verified in both the hydrated DOM and the raw SSR HTML (the SSR serves
+the alternates with React's `hrefLang` casing, which HTML treats
+case-insensitively, so search engines read them correctly). Only the
+standing SSR `<html lang>` observation above remains (raw HTML serves
+`en`, corrected to `fr` on hydration); it is unchanged and stays gated to
+the U6 root-layout item — a fix needs either dynamic rendering (regresses
+the static-render guard `c7e8342`) or a locale route group (a new route
+family), both requiring a `docs/plans/` reference, so it is out of a
+same-run-safe daily slice.
 
 Re-verification note (2026-08-11, daily review): French landing + play routes
 re-fetched live — both return one H1 (`FreeCell en Francais`,

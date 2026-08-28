@@ -148,7 +148,6 @@ export function gameUrl(path: string): string {
   // Spoke games live at / (primaryGamePath), not /freecell or /spider
   if (ownerConfig.primaryGamePath === '/') {
     // The game IS the homepage on that spoke
-    const gameName = path.split('/')[1]; // e.g., 'spider' from '/spider'
     const spokeGameNames = Object.entries(GAME_DOMAIN_MAP)
       .filter(([, key]) => key === ownerKey)
       .map(([p]) => p);

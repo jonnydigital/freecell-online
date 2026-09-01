@@ -845,7 +845,7 @@ export class KlondikeScene extends Phaser.Scene {
 
   private handleDrawFromStock(): void {
     try {
-      const move = this.engine.drawFromStock();
+      this.engine.drawFromStock();
       soundManager.cardSelect();
 
       this.invalidateOverlapCache();

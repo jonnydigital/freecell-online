@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useEffect, useState, useCallback, useMemo, useRef } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import GenericSolitaireShell from '@/components/dom-generic/GenericSolitaireShell';
 import DomCard from '@/components/dom-freecell/DomCard';
 import '@/components/dom-freecell/dom-card-styles.css';
-import { GapsEngine, GapsLocation, GapsMove } from '@/engine/GapsEngine';
+import { GapsEngine, GapsLocation } from '@/engine/GapsEngine';
 import { dealGapsGame } from '@/engine/Deck';
 import { Card, RANK_NAMES } from '@/engine/Card';
 import { soundManager } from '@/lib/sounds';

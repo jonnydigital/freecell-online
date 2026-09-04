@@ -1,4 +1,4 @@
-import { Card, Suit, Rank, Color } from './Card';
+import { Card } from './Card';
 import { dealSpiderGame } from './Deck';
 
 export interface SpiderGameState {

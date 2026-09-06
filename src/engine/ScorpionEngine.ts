@@ -1,5 +1,5 @@
-import { Card, Suit, Rank } from './Card';
-import { MoveHistory, MoveEntry } from './MoveHistory';
+import { Card, Suit } from './Card';
+import { MoveHistory } from './MoveHistory';
 import { Move } from './FreeCellEngine';
 
 export interface ScorpionGameState {

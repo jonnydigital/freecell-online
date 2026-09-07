@@ -1,0 +1,100 @@
+---
+title: "Klondike Solitaire Probability: How the Math Shapes Your Decisions"
+slug: "klondike-solitaire-probability"
+date: "2026-09-07"
+description: "Klondike deals hide more than half the deck at the start. Understanding the probability behind face-down cards and stock draws helps you choose moves with the best expected payoff."
+metaDescription: "Klondike hides over half the deck face-down. Learn how probability thinking helps you pick better tableau moves and stock-draw decisions."
+author: "J. Foye"
+tags: ["klondike", "probability", "strategy", "tactics"]
+sites: ["playklondikeonline"]
+---
+
+Klondike Solitaire starts with 24 cards hidden face-down across the seven tableau columns. You see 7 cards. The remaining 24 sit in the stock, also hidden. You are making decisions with roughly 13% of the information the deck contains.
+
+Understanding basic probability does not let you solve Klondike by arithmetic. The numbers are too complex for mental calculation in real time. But they do tell you which moves are better bets, even when you cannot know the outcome.
+
+## Key Takeaways
+
+- At the start of Klondike, only 7 of 52 cards are visible. Every move is a bet on what is hidden.
+- The probability that a face-down card is the one you need depends on how many of that card type are still unplaced.
+- Digging tall stacks first gives you more information faster, even though each flip takes longer.
+- In Draw 3, fewer than a third of stock cards are accessible on any given pass due to the cycling constraint.
+- Probability thinking does not win games on its own, but it consistently guides you toward higher-percentage moves.
+
+## What You Cannot See at the Start
+
+A standard Klondike deal has 52 cards. The seven tableau columns hold 28 cards in total, with 21 face-down and 7 face-up. The remaining 24 cards sit in the stock.
+
+You start with 7 visible cards out of 52. That is about 13%.
+
+Every face-down card you flip adds one card to your visible information. Every stock draw temporarily adds more. The game is a long process of uncovering enough of the deck to route the right cards to the foundation.
+
+The face-down count per column matters too. Column one has zero face-down cards. Column seven has six. That difference tells you how many moves each column costs to unlock, and it directly affects which columns are worth prioritizing.
+
+The [Klondike probability page](/klondike-probability) has a full breakdown of starting-deal distributions and how the hidden card pool shrinks as the game progresses.
+
+## The Cost of Each Face-Down Card
+
+When you want to know what is under a face-down card, the probability depends on what you already know.
+
+At the start of the game, with 21 face-down tableau cards plus 24 in the stock, each hidden spot is equally likely to hold any one of those 45 unknown cards. Once you start drawing from the stock and flipping tableau cards, the unknown pool shrinks.
+
+The practical insight: if three of the four 9s are already visible and the red 9 is still missing, you know it is in the hidden pool. As that pool narrows, the probability that the missing card is in any specific hidden spot rises. You still cannot be certain, but you can reasonably narrow the search.
+
+This is why experienced players are careful about sending low-ranked cards to the foundation too early. A 3 on the foundation is gone. If a matching 4 was sitting under a face-down tableau card, you have broken the sequence before it had a chance to form.
+
+The [Klondike strategy page](/klondike/strategy) covers how foundation timing fits into the broader game plan. The probability reasoning above is a large part of why the timing matters.
+
+## Digging Toward Tall Stacks First
+
+Column seven starts with six face-down cards. Column two starts with one. A basic probability argument favors digging column seven earlier than many players expect.
+
+Here is the reasoning: every flip in a deep column is new information. Six flips from column seven give you six new data points about the hidden deck. Six moves made entirely on face-up cards give you zero new data. More information leads to better decisions later.
+
+The cards buried in tall stacks are just as likely to be Aces, 2s, or key sequence cards as the cards in shallow stacks. Digging deep stacks is not just about freeing space. It is about improving your future decisions by making them more informed.
+
+The [guide on which Klondike column to dig first](/blog/klondike-which-column-to-dig-first) works through the specific decision logic. The probability case is one part of that analysis.
+
+## Draw 1 vs Draw 3: The Accessibility Gap
+
+Draw 3 Klondike has a well-known probability wrinkle. When you draw three cards and take only the top one, the two underneath become inaccessible until the top card moves. In a 24-card stock dealt three at a time, only about a third of the stock is accessible on any given pass. If you need a specific card and it is in the stock, the probability that it is on top during a pass is roughly 1 in 3, not 1 in 1.
+
+This is a significant reason why Draw 3 games have a lower win rate. The constraint compounds over several cycles. For a full treatment of how the two modes differ, see the [Draw 1 vs Draw 3 guide](/klondike/draw-1-vs-draw-3).
+
+## When Probability Shifts Your Move Priority
+
+Probability thinking is most useful when you have two valid moves and no obvious reason to prefer one.
+
+Suppose you can build a sequence by moving a red 8 onto a black 9, or you can reveal a face-down card in another column. Both look useful. The probability case almost always favors flipping the face-down card. Building the sequence adds zero new information. Flipping a face-down card does. More information consistently improves your future decisions.
+
+The exception: if the sequence move lets you send an Ace or 2 to the foundation on the next move, take it. Foundation progress has concrete value that often outweighs the information gain from one new flip.
+
+The [Klondike cheat sheet](/klondike-cheat-sheet) has a quick reference for move priorities in common situations.
+
+## Tracking the Stock and the Point of No Return
+
+One of the clearest probability signals in Klondike is when the stock is nearly exhausted and the foundations are still far from complete.
+
+In Draw 1, you get one pass through the stock. Every card is accessible exactly once. If you missed placing cards that could have helped, there is no second chance.
+
+In Draw 3, you cycle through the stock multiple times, but each cycle has the accessibility constraint described above. After two full cycles with minimal progress, the probability of finding a useful card in the correct position drops considerably. If key cards are still buried under others you cannot move, the game may already be beyond recovery.
+
+This is why tracking the stock matters. Even a rough mental count of which key cards have appeared helps you judge whether a game is still winnable or whether you are in one of the roughly 15-20% of deals that are not solvable with optimal play.
+
+The [Klondike win rate explainer](/blog/klondike-win-rate-explained) covers the data on winnable vs unwinnable deals. Even perfect play does not win every game, which is why probability thinking is more about making the best decision on each move than guaranteeing an outcome.
+
+[Play Klondike online](/klondike) to practice applying probability thinking in real games. The more deals you play, the faster you develop pattern recognition for higher-percentage moves.
+
+## Frequently Asked Questions
+
+### What percentage of Klondike Solitaire games are winnable?
+
+With Draw 1 and optimal play, around 80-85% of deals are theoretically winnable. Draw 3 has a lower winnable percentage because of the cycling constraint that hides roughly two-thirds of the stock on each pass. The exact numbers are hard to pin down because computing optimal play for every possible deal is computationally expensive.
+
+### Does drawing from the stock change the probability for tableau decisions?
+
+Yes. Every card you see from the stock removes it from the hidden pool. If you draw a black 10 and cannot use it, you now know the black 10 is not under any face-down tableau card. That information narrows the probability for every remaining hidden position in the tableau.
+
+### Why do some Klondike deals feel impossible from the first few moves?
+
+Some deals are genuinely impossible. The specific arrangement of hidden cards can create a state where no sequence of legal moves leads to a completed game, regardless of your choices. These deals are a real fraction of all possible arrangements, not just cases where you played badly. If you have exhausted the stock twice in Draw 3 with minimal progress, the deal may be unwinnable rather than unsolved.

@@ -10,8 +10,8 @@
  * Win rate is very low (~1-2%).
  */
 
-import { Card, Suit, Rank } from './Card';
-import { MoveHistory, MoveEntry } from './MoveHistory';
+import { Card } from './Card';
+import { MoveHistory } from './MoveHistory';
 import { Move } from './FreeCellEngine';
 
 export interface AccordionGameState {

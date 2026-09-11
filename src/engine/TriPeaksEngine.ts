@@ -1,4 +1,4 @@
-import { Card, Rank } from './Card';
+import { Card } from './Card';
 import { MoveHistory } from './MoveHistory';
 import { Move } from './FreeCellEngine';
 

@@ -13,8 +13,8 @@
  * Win when all foundations are complete (ascending + descending meet for each suit).
  */
 
-import { Card, Suit, Rank } from './Card';
-import { MoveHistory, MoveEntry } from './MoveHistory';
+import { Card, Suit } from './Card';
+import { MoveHistory } from './MoveHistory';
 import { Move } from './FreeCellEngine';
 
 export interface BisleyGameState {

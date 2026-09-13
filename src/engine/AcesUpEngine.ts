@@ -11,7 +11,7 @@
  * Win rate: ~10%.
  */
 
-import { Card, Suit, Rank } from './Card';
+import { Card, Rank } from './Card';
 import { MoveHistory } from './MoveHistory';
 import { Move } from './FreeCellEngine';
 

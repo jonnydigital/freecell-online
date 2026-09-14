@@ -8,7 +8,7 @@
  * Kings cannot be placed in empty fans. Win by moving all 52 to foundations.
  */
 
-import { Card, Suit } from './Card';
+import { Card } from './Card';
 import { MoveHistory } from './MoveHistory';
 import { Move } from './FreeCellEngine';
 

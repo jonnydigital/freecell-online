@@ -130,30 +130,13 @@ function buildMetadata(): Metadata {
 export const metadata: Metadata = buildMetadata();
 
 export default function Home() {
-  const webSiteJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'WebSite',
-    name: siteConfig.siteName,
-    url: siteConfig.url,
-    description: siteConfig.defaultDescription,
-    potentialAction: {
-      '@type': 'SearchAction',
-      target: `${siteConfig.url}/game/{game_number}`,
-      'query-input': 'required name=game_number',
-    },
-  };
+  // Canonical WebSite JSON-LD (with publisher Organization + SearchAction) is emitted
+  // once site-wide in layout.tsx (id="ld-website-site"); homepages must NOT re-emit it.
 
   // Hub — JSON-LD emitted here (server component) to avoid client hydration duplication
   if (isHubSite) {
     const HUB_DESCRIPTION =
       'Play FreeCell, Spider Solitaire, Klondike, and 25 more solitaire variants — free, no signup. Strategy guides, daily challenges, leaderboards.';
-    const hubWebSiteJsonLd = {
-      '@context': 'https://schema.org',
-      '@type': 'WebSite',
-      name: siteConfig.brandName,
-      url: absoluteUrl('/'),
-      description: HUB_DESCRIPTION,
-    };
     const hubWebAppJsonLd = {
       '@context': 'https://schema.org',
       '@type': 'WebApplication',
@@ -186,7 +169,6 @@ export default function Home() {
     };
     return (
       <>
-        <script id="ld-website-hub" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(hubWebSiteJsonLd) }} />
         <script id="ld-webapplication-hub" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(hubWebAppJsonLd) }} />
         <script id="ld-itemlist-hub" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(hubCollectionJsonLd) }} />
         <script id="ld-faqpage-hub" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(hubFaqJsonLd) }} />
@@ -209,7 +191,6 @@ export default function Home() {
     };
     return (
       <>
-        <script id="ld-website" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteJsonLd) }} />
         <script id="ld-game-klondike-solitaire" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(gameJsonLd) }} />
         <KlondikeGamePage />
         <KlondikeBelowFold />
@@ -231,7 +212,6 @@ export default function Home() {
     };
     return (
       <>
-        <script id="ld-website" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteJsonLd) }} />
         <script id="ld-game-spider-solitaire" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(gameJsonLd) }} />
         <SpiderGamePage />
         <SpiderBelowFold />
@@ -254,7 +234,6 @@ export default function Home() {
   const useDom = shouldUseDomEngine();
   return (
     <>
-      <script id="ld-website" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteJsonLd) }} />
       <script id="ld-game-freecell-solitaire" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(freecellGameJsonLd) }} />
       {useDom ? <DomFreecellClient /> : <FreecellHomeClient />}
       <FreecellBelowFold />

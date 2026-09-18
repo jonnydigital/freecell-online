@@ -27,19 +27,6 @@ function foundationsToMap(foundations: Card[][]): Map<Suit, Card[]> {
   return map;
 }
 
-function toBristolLoc(generic: any): BristolLocation {
-  if (generic.type === 'cascade') {
-    const idx = generic.index;
-    if (idx < 8) return { type: 'fan', index: idx };
-    return { type: 'reserve', index: idx - 8 };
-  }
-  if (generic.type === 'foundation') {
-    // Find which foundation index matches the suit
-    return { type: 'foundation', index: 0 }; // resolved dynamically in executeMove
-  }
-  throw new Error(`Unknown location type: ${generic.type}`);
-}
-
 const adapter = {
   createEngine: (gameNumber: number) => {
     const { fans, stock } = dealBristolGame(gameNumber);

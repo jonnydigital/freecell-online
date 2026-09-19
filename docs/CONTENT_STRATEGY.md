@@ -180,7 +180,7 @@ route, and never advertise a locale in hreflang that returns a 404.
 - Locale pages are audited on a rotating basis: H1 count, reciprocal hreflang,
   localized UI, and that each advertised alternate returns 200.
 
-### Current locale set (audited 2026-08-01; re-verified 2026-08-05, 2026-08-11, 2026-08-12, and 2026-08-23, all pass)
+### Current locale set (audited 2026-08-01; re-verified 2026-08-05, 2026-08-11, 2026-08-12, 2026-08-23, and 2026-09-19, all pass)
 
 The FreeCell property runs six locales, each with a landing page plus a
 localized play route, all sharing one reciprocal hreflang cluster
@@ -210,6 +210,25 @@ German pages). One standing observation for the U6 backlog: the raw SSR
 hydration — search engines that render JS see the right value, but emitting
 the localized `lang` in the server HTML would be a small future hardening.
 Not fixed here: it is a root-layout change, out of a same-run-safe slice.
+
+Re-verification note (2026-09-19, daily review — U5 FR audit checklist
+re-executed per plan `2026-07-03-001` test scenario): the French locale
+was re-audited live against the locale-gate bar and passes unchanged. The
+landing `/freecell-en-francais` returns 200 with exactly one localized H1
+(`FreeCell en Francais`, a single `<h1>` wrapping a `<span>en Francais</span>`
+— note a `<h1>[^<]*` scrape truncates to the bare "FreeCell " prefix and looks
+like a regression; the full node is localized), a self-referential canonical,
+localized UI (`Jouer` / `Nouvelle` / `Annuler`), and the full seven-entry
+hreflang cluster (`fr`/`en`/`es`/`de`/`it`/`pt`/`x-default`). The play route
+`/freecell-en-francais/jouer` returns 200 with one localized H1
+(`Jouer a FreeCell en Francais — Gratuit en Ligne`) and self-canonical.
+Every advertised alternate resolves live: the Spanish landing
+`/freecell-en-espanol` points `fr` at `/freecell-en-francais` (ES↔FR
+reciprocity holds) and the Portuguese sibling `/freecell-em-portugues/jogar`
+returns 200 (`Jogar FreeCell em portugues`), so no alternate 404s. Only the
+standing SSR `<html lang>` observation remains (raw HTML serves `en`,
+hydration-corrected to `fr`); unchanged and still gated to the U6 root-layout
+item, out of a same-run-safe daily slice. No locale regression.
 
 Re-verification note (2026-08-23, daily review — U5 FR audit checklist
 executed once per plan `2026-07-03-001` test scenario): the two French

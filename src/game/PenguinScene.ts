@@ -1346,7 +1346,6 @@ export class PenguinScene extends Phaser.Scene {
         this.isDragging = false;
         this.isSettlingDrag = true;
         const tgtRow = this.engine.getState().tableau[col].length;
-        const overlap = this.getCurrentOverlap();
         this.settleTargets = this.activeDragCards.map((_, i) =>
           this.getCascadeCardPosition(col, tgtRow + i)
         );

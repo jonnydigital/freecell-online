@@ -5,7 +5,7 @@ import Link from '@/components/NetworkLink';
 import { useRouter } from 'next/navigation';
 import { Search, Shuffle, ChevronDown, ChevronUp } from 'lucide-react';
 import AdUnit from '@/components/AdUnit';
-import { famousDeals, beginnerDeals, expertDeals, communityDeals, type Difficulty, type DealInfo } from '@/lib/curatedDeals';
+import { famousDeals, beginnerDeals, expertDeals, communityDeals, type DealInfo } from '@/lib/curatedDeals';
 
 const ranges = [
   { label: '1-100', start: 1, end: 100 },

@@ -836,7 +836,7 @@ export class FortyThievesScene extends Phaser.Scene {
 
   private handleDrawFromStock(): void {
     try {
-      const move = this.engine.drawFromStock();
+      this.engine.drawFromStock();
       soundManager.cardSelect();
 
       this.invalidateOverlapCache();
@@ -847,7 +847,7 @@ export class FortyThievesScene extends Phaser.Scene {
         moveCount: this.engine.getMoveCount(),
         gameNumber: this.gameNumber,
       });
-    } catch (e) {
+    } catch {
       soundManager.invalidMove();
     }
   }

@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from '@/components/NetworkLink';
 import AdUnit from '@/components/AdUnit';
 import ScrollUnlock from '@/components/ScrollUnlock';
-import { absoluteUrl, gameUrl } from '@/lib/siteConfig';
+import { gameUrl } from '@/lib/siteConfig';
 
 const faqItems = [
   {

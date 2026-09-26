@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import ContentLayout from "@/components/ContentLayout";
-import { ContentHero, JsonLd, CtaSection, ContentLinkCard } from "@/components/content";
+import { ContentHero, JsonLd, ContentLinkCard } from "@/components/content";
 import DealsExplorer from "./DealsExplorer";
 
 export const metadata: Metadata = {

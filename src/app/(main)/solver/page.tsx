@@ -2,7 +2,7 @@ import Link from "@/components/NetworkLink";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import ContentLayout from "@/components/ContentLayout";
-import { ContentHero, JsonLd, CtaSection, ContentLinkCard } from "@/components/content";
+import { ContentHero, JsonLd, ContentLinkCard } from "@/components/content";
 import AdUnit from "@/components/AdUnit";
 import SolverWidget from "./SolverWidget";
 

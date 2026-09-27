@@ -856,7 +856,7 @@ export class KlondikeScene extends Phaser.Scene {
         moveCount: this.engine.getMoveCount(),
         gameNumber: this.gameNumber,
       });
-    } catch (e) {
+    } catch {
       soundManager.invalidMove();
     }
   }

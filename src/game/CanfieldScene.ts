@@ -898,7 +898,7 @@ export class CanfieldScene extends Phaser.Scene {
           this.handleWin();
         }
       });
-    } catch (e) {
+    } catch {
       soundManager.invalidMove();
     }
   }

@@ -1,0 +1,127 @@
+---
+title: "Spider Solitaire Scoring Explained: How Your Score Is Calculated"
+slug: "spider-solitaire-scoring"
+date: "2026-09-28"
+description: "Most Spider Solitaire players focus on winning or losing. But the score tells you how efficiently you played. Here is how Spider scoring actually works."
+metaDescription: "Spider Solitaire scoring explained: starting score, point deductions per move, suit completion bonuses, and how to finish with the best possible number."
+author: "J. Foye"
+tags: ["spider solitaire", "scoring", "strategy", "game mechanics"]
+sites: ["playspidersolitaireonline"]
+---
+
+Spider Solitaire keeps score, but most players don't pay attention to it until the win screen appears. You won or lost, you close the game, you start again. The number is almost an afterthought.
+
+It shouldn't be. The score measures how efficiently you played. Once you understand how it's calculated, it becomes a useful feedback signal rather than a number to ignore.
+
+## Key Takeaways
+
+- Spider starts at 500. Every move subtracts 1 point.
+- Completing a full suit of 13 cards adds 100 points.
+- A won game earns an additional completion bonus in most versions.
+- Higher scores come from making fewer total moves, not from finishing faster.
+- [Play Spider Solitaire free](/spider) to track your live score while you play.
+
+## The Basic Formula
+
+Most Spider Solitaire implementations use a straightforward system:
+
+**Starting score:** 500  
+**Each move made:** -1  
+**Each suit completed:** +100  
+
+So if you finish a game in 150 moves and complete all 8 suits:
+
+500 - 150 + 800 = **1,150**
+
+If you take 300 moves to complete the same 8 suits:
+
+500 - 300 + 800 = **1,000**
+
+The difference is entirely move count. Two players who complete every suit finish with different scores based on how directly they got there.
+
+## What Counts as a Move
+
+Every individual card or sequence move counts as one move. Dealing a row from the stock adds 10 moves instantly (one per card placed). Some implementations count each dealt card separately; others count the entire deal as one action.
+
+Things that typically don't count:
+- Undo (in most versions)
+- Auto-complete animations at the end
+- Selecting a card without moving it
+
+Dealing from the stock is the most expensive single action you take. Each deal row adds 10 to your move count at once. This is why the [when to deal guide](/blog/spider-solitaire-when-to-deal) matters so much: each deal should be earning its cost in new suit progress.
+
+## Why Suit Completions Are the Core of Good Scoring
+
+The 100-point bonus per completed suit is the mechanism that makes efficient play pay off. In a 4-suit game with 8 potential suits, you can earn up to 800 points in bonuses if you complete everything.
+
+The math creates a clear incentive: a player who completes all 8 suits in 200 moves scores 1,100. A player who completes only 6 suits in 120 moves scores 500 - 120 + 600 = 980. Even fewer moves can lose to more completions.
+
+This is why building toward suit completion rather than just moving cards around is the defining habit of strong Spider play. The [suit completion guide](/blog/spider-solitaire-suit-completion) covers the tactical side of this in detail.
+
+## How Scoring Differs Across Difficulty Levels
+
+The formula is the same at 1-suit, 2-suit, and 4-suit, but what scores are realistic varies significantly.
+
+**1-suit:** You're working with only one suit, so any sequence moves as a unit. Move counts stay lower because you can shift large sequences without breaking them. Finishing with a score of 1,000 or higher is achievable for most players once they're past the beginner stage.
+
+**2-suit:** Cross-suit moves that can't combine into a unit add to your move count without advancing suit completion. Scores in the 800 to 1,000 range are solid. The [2-suit strategy guide](/blog/spider-solitaire-2-suit-strategy) explains how suit discipline reduces wasted moves.
+
+**4-suit:** Move counts are much higher because every cross-suit placement is an extra move that delays completion. Finishing with any positive score is an accomplishment, and experienced players aim for 700 to 900 on good runs.
+
+## The Move Count Problem
+
+Every move you make costs you a point. This sounds obvious, but the consequences stack up quickly.
+
+Moving a card from one column to another, then moving it back five turns later, cost you 2 points for no net gain. Building a long mixed-suit sequence that you later have to dismantle to complete a suit cost you all those assembly moves plus all the disassembly moves.
+
+The practical implication: before moving a card, ask whether this move gets you closer to a suit completion or just rearranges the board. If you can't answer, it's probably a move worth skipping.
+
+The [Spider mid-game guide](/blog/spider-solitaire-mid-game) covers this in more depth. Mid-game is where move count most often spirals because the board feels like it has a lot of options without any of them clearly advancing a suit.
+
+## How Empty Columns Factor In
+
+Empty columns don't score on their own, but they reduce your future move count significantly. A free column lets you shift a sequence directly rather than breaking it into multiple individual moves. Those saved moves preserve your score.
+
+Spending moves to open a column is almost always worth it in scoring terms. The immediate cost is a handful of moves. The benefit is fewer moves on every subsequent sequence shift.
+
+## Score vs Win Rate
+
+For most players, win rate is more useful to track than score. If you're losing frequently, score doesn't matter.
+
+Once you're winning consistently at a given difficulty level, score becomes the next feedback layer. It tells you whether you're winning efficiently or winning by brute force with 500 moves. The [Spider win rates guide](/blog/spider-solitaire-win-rates) covers how win rate and game difficulty interact. Once your win rate is stable, start paying attention to score.
+
+## Practical Tips for Higher Scores
+
+**Deal later, not earlier.** Each deal costs 10 points. If you can get three more useful moves from the current tableau before dealing, take them.
+
+**Avoid reversible moves.** If a move only makes sense if a specific card appears next, it's probably a low-value move that's adding to your count without advancing suit completion.
+
+**Track which suits are closest to finishing.** Prioritize the suits you're two or three cards from completing. Each completion adds 100 points, which offsets many extra moves.
+
+**Use undo sparingly in scored modes.** Most implementations penalize undo or don't penalize it at all. Know your game's rules. If undo is free, use it to avoid costly mistakes. If it costs moves, treat it like any other action.
+
+## Frequently Asked Questions
+
+### What score is considered good in Spider Solitaire?
+
+For 1-suit, anything above 1,000 is solid. For 2-suit, 850 to 950 is a good range for experienced players. For 4-suit, breaking 700 is a strong result. These vary by implementation since some add time bonuses or handle deal costs differently.
+
+### Does dealing from the stock hurt your score?
+
+Yes. Dealing a full row from the stock adds 10 moves at once (or equivalent). Each deal should be justified by what the new cards enable, not just done because the tableau feels stuck.
+
+### What's the highest possible score?
+
+Theoretically, a game completed in the minimum possible moves with all 8 suits completed. In practice, the minimum-move count for a legal winning game is far from zero, so there's no "perfect" score to target. Improving your score relative to your previous games is the practical goal.
+
+### Is there a time bonus in Spider Solitaire?
+
+Some implementations add a time bonus for fast completions. Others are purely move-based. If your game shows a timer, check the win screen to see whether the final score includes time. The scoring formula here describes the most common move-based system.
+
+### Does undo count as a move in Spider Solitaire?
+
+Usually not. Most versions let you undo without penalizing your move count. A few implementations do count undos. If you're in a scoring run and unsure, test it: make a move, note your score, undo, and see if the score changes.
+
+### Why did my score go up during the game?
+
+You completed a suit. Each completion adds 100 points, which can more than offset the moves you spent on that suit. A jump in the score counter is always a suit completion.

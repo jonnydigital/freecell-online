@@ -1,5 +1,5 @@
 import { Card, Suit, Rank } from './Card';
-import { MoveHistory, MoveEntry } from './MoveHistory';
+import { MoveHistory } from './MoveHistory';
 import { Location, Move } from './FreeCellEngine';
 
 export type KlondikeDrawMode = 1 | 3;

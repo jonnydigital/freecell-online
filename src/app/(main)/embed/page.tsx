@@ -5,7 +5,7 @@ import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 import { isOwnedBy } from "@/lib/routeOwnership";
 import ContentLayout from "@/components/ContentLayout";
 import AdUnit from "@/components/AdUnit";
-import { ContentHero, JsonLd, CtaSection, ContentLinkCard, CardSection, SectionHeading, ContentBody } from "@/components/content";
+import { ContentHero, JsonLd, CtaSection, ContentLinkCard } from "@/components/content";
 
 export const metadata: Metadata = {
   title: "Embed Free FreeCell Solitaire on Your Website | No Cost, No Ads",

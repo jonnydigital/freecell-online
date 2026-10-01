@@ -1,6 +1,4 @@
-import { Card, Suit, Rank, Color } from './Card';
-import { MoveHistory } from './MoveHistory';
-import { GameTimer } from './GameTimer';
+import { Card, Suit, Rank } from './Card';
 
 export interface BaseGameState {
     cascades: Card[][];

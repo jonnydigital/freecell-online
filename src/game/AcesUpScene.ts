@@ -310,7 +310,6 @@ export class AcesUpScene extends Phaser.Scene {
     const topPad = Math.max(Math.floor(h * 0.03), 8);
     const maxPileLen = Math.max(...this.engine.getState().tableau.map(p => p.length), 1);
     const overlapPerCard = Math.min(Math.floor(cardHeightFromWidth * MAX_CASCADE_OVERLAP_FRAC), 30);
-    const pileVisualHeight = cardHeightFromWidth + Math.max(0, maxPileLen - 1) * overlapPerCard;
     const vertBudget = h - topPad - 10;
     const maxCardHeightFromVert = Math.floor((vertBudget - Math.max(0, maxPileLen - 1) * overlapPerCard));
 

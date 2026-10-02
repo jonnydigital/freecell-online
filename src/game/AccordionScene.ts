@@ -305,7 +305,6 @@ export class AccordionScene extends Phaser.Scene {
     // Calculate card height to fit vertically
     const maxPileLen = Math.max(...this.engine.getState().piles.map(p => p.length), 1);
     const overlapPerCard = maxPileLen > 1 ? Math.min(MIN_CASCADE_OVERLAP_PX, 12) : 0;
-    const pileVisualHeight = cardHeightFromWidth + (maxPileLen - 1) * overlapPerCard;
     const vertBudget = h - topPad - (numRows - 1) * rowGap - 4;
     const maxCardHeightFromVert = Math.floor(vertBudget / numRows - (maxPileLen - 1) * overlapPerCard);
 

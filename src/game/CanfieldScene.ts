@@ -1,7 +1,7 @@
 import * as Phaser from 'phaser';
 import { CanfieldEngine, CanfieldLocation, CanfieldMove } from '../engine/CanfieldEngine';
 import { dealCanfieldGame } from '../engine/Deck';
-import { Card, Suit, Rank, SUIT_SYMBOLS } from '../engine/Card';
+import { Card, Suit } from '../engine/Card';
 import { gameBridge } from './GameBridge';
 import { getCardAssetKey, getCardBackAssetKey, getAllCardAssets } from './CardAssets';
 import { soundManager } from '../lib/sounds';

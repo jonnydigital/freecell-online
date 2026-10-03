@@ -1,7 +1,7 @@
 import * as Phaser from 'phaser';
 import { BakersDozenEngine, BakersDozenLocation, BakersDozenMove } from '../engine/BakersDozenEngine';
 import { dealBakersDozenGame } from '../engine/Deck';
-import { Card, Suit, Rank, SUIT_SYMBOLS } from '../engine/Card';
+import { Card, Suit } from '../engine/Card';
 import { gameBridge } from './GameBridge';
 import { getCardAssetKey, getCardBackAssetKey, getAllCardAssets } from './CardAssets';
 import { soundManager } from '../lib/sounds';

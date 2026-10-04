@@ -13,8 +13,6 @@
  */
 
 import { Card, Rank } from './Card';
-import { MoveHistory } from './MoveHistory';
-import { Move } from './FreeCellEngine';
 
 export interface ClockGameState {
   piles: Card[][];          // 13 piles (0-11 = clock face A-Q, 12 = center Kings)

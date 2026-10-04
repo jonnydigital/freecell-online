@@ -5,7 +5,7 @@
  * Handles move validation, sequence moves, auto-moves, and win detection.
  */
 
-import { Card, Suit, type Rank, Color } from './Card';
+import { Card, Suit, type Rank } from './Card';
 import { dealGame, dealEightOff } from './Deck';
 
 export interface GameState {

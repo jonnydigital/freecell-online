@@ -10,7 +10,6 @@
 
 import { Card, Suit, Rank } from './Card';
 import { SpiderDifficulty } from './SpiderEngine';
-import { KlondikeDrawMode } from './KlondikeEngine';
 
 
 const SUITS_MS_ORDER: Suit[] = [Suit.Clubs, Suit.Diamonds, Suit.Hearts, Suit.Spades];

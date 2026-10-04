@@ -11,7 +11,7 @@
  * Win when all 52 cards are on foundations.
  */
 
-import { Card, Suit, Rank } from './Card';
+import { Card, Suit } from './Card';
 import { MoveHistory } from './MoveHistory';
 import { Move } from './FreeCellEngine';
 

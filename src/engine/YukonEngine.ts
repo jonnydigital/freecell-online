@@ -1,6 +1,6 @@
-import { Card, Suit, Rank, Color } from './Card';
+import { Card, Suit, Rank } from './Card';
 import { MoveHistory } from './MoveHistory';
-import { Location, Move } from './FreeCellEngine';
+import { Move } from './FreeCellEngine';
 
 export interface YukonGameState {
     cascades: Card[][];         // 7 tableau columns

@@ -20,7 +20,6 @@ const MAX_CASCADE_OVERLAP_FRAC = 0.55;
 const SIDE_MARGIN = 0.015;
 const GAP = 0.01;
 const NUM_COLS = 6;        // 6 columns per row
-const NUM_ROWS = 2;        // 2 rows of piles
 const NUM_PILES = 12;      // total piles
 const NUM_FOUNDATIONS = 4;
 

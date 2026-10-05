@@ -369,7 +369,6 @@ export class FlowerGardenScene extends Phaser.Scene {
   }
 
   private getColumnX(col: number): number {
-    const totalTopCols = NUM_COLS + NUM_FOUNDATIONS;
     return this.boardOffsetX + col * (this.cardWidth + this.scale.width * GAP);
   }
 

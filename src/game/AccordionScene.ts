@@ -577,7 +577,7 @@ export class AccordionScene extends Phaser.Scene {
 
   private executeMoveAndAnimate(fromIndex: number, toIndex: number): void {
     try {
-      const move = this.engine.executeMove(fromIndex, toIndex);
+      this.engine.executeMove(fromIndex, toIndex);
       soundManager.cardPlace();
 
       this.selectedPileIndex = -1;

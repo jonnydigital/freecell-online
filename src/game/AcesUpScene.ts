@@ -746,7 +746,7 @@ export class AcesUpScene extends Phaser.Scene {
 
   private executeMoveToEmptyAndAnimate(fromPile: number, toPile: number): void {
     try {
-      const move = this.engine.moveToEmpty(fromPile, toPile);
+      this.engine.moveToEmpty(fromPile, toPile);
       soundManager.cardPlace();
 
       this.selectedPileIndex = -1;

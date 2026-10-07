@@ -723,7 +723,6 @@ export class ClockScene extends Phaser.Scene {
     // Card is now face-up, recreate sprite to show face
     const oldX = sprite.x;
     const oldY = sprite.y;
-    const oldDepth = sprite.depth;
     sprite.destroy();
     this.cardSprites.delete(card.id);
 

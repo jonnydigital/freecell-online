@@ -2,7 +2,7 @@
  * Card asset mapping
  * Maps our Card model to SVG-cards PNG filenames
  */
-import { Suit, Rank, RANK_NAMES } from '../engine/Card';
+import { Suit, Rank } from '../engine/Card';
 
 const SUIT_FILE_NAMES: Record<Suit, string> = {
   [Suit.Clubs]: 'club',

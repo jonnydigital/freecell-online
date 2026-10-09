@@ -241,7 +241,6 @@ export class LaBelleLucieEngine {
 
         // Save snapshot for undo
         const preRedealTableau = this.state.tableau.map(pile => [...pile]);
-        const prevRngState = this.rngState;
 
         // Gather all tableau cards
         const gathered: Card[] = [];

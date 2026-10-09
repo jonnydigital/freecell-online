@@ -411,8 +411,6 @@ export class CanfieldScene extends Phaser.Scene {
     this.slotGraphics.forEach(g => g.destroy());
     this.slotGraphics = [];
 
-    const slotColor = hexToInt(this.currentTheme.feltNoiseLight);
-
     // Reserve slot
     const reservePos = this.getReservePosition();
     this.createSlot(reservePos.x, reservePos.y, 'RES');

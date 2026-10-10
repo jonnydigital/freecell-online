@@ -1,5 +1,4 @@
 import { FreeCellEngine } from '../FreeCellEngine';
-import { Card, Suit } from '../Card';
 
 describe('FreeCellEngine', () => {
   let engine: FreeCellEngine;
@@ -54,7 +53,7 @@ describe('FreeCellEngine', () => {
       const to = { type: 'freecell' as const, index: 0 };
 
       expect(engine.isLegalMove(from, to)).toBe(true);
-      const move = engine.executeMove(from, to);
+      engine.executeMove(from, to);
       expect(engine.getState().freeCells[0]).not.toBeNull();
       expect(engine.getState().freeCells[0]!.equals(topCard)).toBe(true);
       expect(engine.emptyFreeCells).toBe(3);

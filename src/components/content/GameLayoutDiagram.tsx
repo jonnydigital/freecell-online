@@ -420,7 +420,6 @@ const GAME_LAYOUTS: Record<GameLayoutKey, LayoutSpec> = {
 
   "eight-off": (() => {
     const topY = 16;
-    const tableauY = topY + CARD_H + 28;
     const cols = 8;
     const startX = 16;
     const boardWidth = cols * CARD_W + (cols - 1) * COL_GAP;

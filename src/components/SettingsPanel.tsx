@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Settings, Volume2, Sparkles, Wand2, Monitor, Hand, MousePointer2, Ghost, Eye, Layers, Coffee } from 'lucide-react';
+import { X, Settings, Volume2, Sparkles, Wand2, Monitor, Ghost, Eye, Layers, Coffee } from 'lucide-react';
 import { GameSettings } from '../lib/storage';
 import ThemeSelector from './ThemeSelector';
 import { getHighContrast, setHighContrast, getReducedMotion, setReducedMotion } from '../lib/accessibility';

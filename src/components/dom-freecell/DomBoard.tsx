@@ -394,7 +394,6 @@ export default function DomBoard({ hint, footer }: DomBoardProps) {
       >
         {cascades.map((cascade, colIdx) => {
           const run = validRuns[colIdx];
-          const runCardIds = run.map((c) => c.id);
           const runStartIndex = cascade.length - run.length;
           const cascadeHeight =
             cascade.length > 1

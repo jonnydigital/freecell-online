@@ -6,7 +6,7 @@ import DomCard from '@/components/dom-freecell/DomCard';
 import '@/components/dom-freecell/dom-card-styles.css';
 import { CalculationEngine, FOUNDATION_SEQUENCES } from '@/engine/CalculationEngine';
 import { dealCalculationGame } from '@/engine/Deck';
-import { Card, RANK_NAMES, Rank, SUIT_SYMBOLS } from '@/engine/Card';
+import { Card, RANK_NAMES, SUIT_SYMBOLS } from '@/engine/Card';
 import { soundManager } from '@/lib/sounds';
 
 export default function CalculationGamePage() {

@@ -10,7 +10,6 @@ function combinedFoundations(engine: BisleyEngine): Map<Suit, Card[]> {
   const result = new Map<Suit, Card[]>();
   for (const suit of [Suit.Spades, Suit.Hearts, Suit.Diamonds, Suit.Clubs]) {
     const aceF = (s.aceFoundations as Map<Suit, Card[]>).get(suit) ?? [];
-    const kingF = (s.kingFoundations as Map<Suit, Card[]>).get(suit) ?? [];
     // Show ace foundation progress (building up) for the display
     result.set(suit, [...aceF]);
   }

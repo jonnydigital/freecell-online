@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Link from '@/components/NetworkLink';
 import { ChevronDown } from 'lucide-react';
-import { isHubSite, gameUrl } from '@/lib/siteConfig';
+import { gameUrl } from '@/lib/siteConfig';
 
 // ---------------------------------------------------------------------------
 // Game catalog — shared across all shells

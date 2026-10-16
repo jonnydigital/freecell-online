@@ -555,7 +555,6 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
   }, []);
 
   const iconBtnClass = "p-3 hover:bg-white/10 text-white/80 rounded-full transition-all active:scale-95";
-  const iconSize = 16;
 
   return (
     <div className="flex w-full h-dvh transition-colors duration-500" style={{ backgroundColor: 'var(--theme-base)' }}>

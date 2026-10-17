@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { gameBridge } from '../game/GameBridge';
-import { GameStats, createEmptyStats, recordWin, recordLoss } from '../lib/stats';
+import { GameStats, createEmptyStats, recordWin } from '../lib/stats';
 import { loadStats, saveStats, GameVariant } from '../lib/storage';
 import { recordGameResult } from '../lib/gameHistory';
 import { trackGameStart, trackWin, trackAbandoned, trackHint, trackUndo, trackMove, trackDeadlock, gameSession } from '../lib/analytics';
@@ -19,7 +19,6 @@ import WinScreen from './WinScreen';
 import SolutionReplay from './SolutionReplay';
 import { useSolver } from '@/hooks/useSolver';
 import HomeOverlay from './HomeOverlay';
-import DailyBanner from './DailyBanner';
 import AchievementsPanel from './AchievementsPanel';
 import AchievementToast from './AchievementToast';
 import KeyboardShortcuts from './KeyboardShortcuts';

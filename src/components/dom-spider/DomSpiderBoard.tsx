@@ -2,7 +2,7 @@
 
 import React, { useRef, useMemo, useCallback } from 'react';
 import { useDomSpiderStore, domSpiderStore } from '@/lib/dom-spider/useDomSpiderStore';
-import { Suit, SUIT_SYMBOLS } from '@/engine/Card';
+import { SUIT_SYMBOLS } from '@/engine/Card';
 import type { SpiderLocation } from '@/engine/SpiderEngine';
 import DomCard from '../dom-freecell/DomCard';
 import DomPile from '../dom-freecell/DomPile';
@@ -61,7 +61,7 @@ export default function DomSpiderBoard({ hint, footer }: DomSpiderBoardProps) {
       const store = domSpiderStore.getState();
       const sel = store.selection;
       if (!sel) return;
-      const moved = store.tryMove(sel.sourceLocation, targetLoc);
+      store.tryMove(sel.sourceLocation, targetLoc);
       store.clearSelection();
     },
     [],

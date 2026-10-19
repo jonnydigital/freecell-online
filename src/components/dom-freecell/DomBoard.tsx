@@ -10,7 +10,7 @@ import { useDrag } from './useDrag';
 import { useSoundEffects } from './useSoundEffects';
 import type { HintHighlight } from './useHint';
 import { announceToScreenReader } from '@/lib/accessibility';
-import { playCardSelectSound, playInvalidMoveSound } from './useSoundEffects';
+import { playInvalidMoveSound } from './useSoundEffects';
 import { triggerHaptic } from '@/lib/haptics';
 
 // ---------------------------------------------------------------------------

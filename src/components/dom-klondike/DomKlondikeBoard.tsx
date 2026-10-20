@@ -45,7 +45,6 @@ export default function DomKlondikeBoard({ hint, footer }: DomKlondikeBoardProps
   const getEngine = useDomKlondikeStore((s) => s.getEngine);
   const selection = useDomKlondikeStore((s) => s.selection);
   const drawFromStock = useDomKlondikeStore((s) => s.drawFromStock);
-  const tryMove = useDomKlondikeStore((s) => s.tryMove);
   const autoPlace = useDomKlondikeStore((s) => s.autoPlace);
 
   // Selected card IDs

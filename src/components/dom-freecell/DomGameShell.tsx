@@ -26,7 +26,6 @@ import DomBoard from './DomBoard';
 import { useHint } from './useHint';
 import { announceToScreenReader } from '@/lib/accessibility';
 import AdUnit from '@/components/AdUnit';
-import Link from '@/components/NetworkLink';
 import { isHubSite } from '@/lib/siteConfig';
 import SidebarDailyChallenge from '../sidebar/SidebarDailyChallenge';
 import SidebarLeaderboard from '../sidebar/SidebarLeaderboard';

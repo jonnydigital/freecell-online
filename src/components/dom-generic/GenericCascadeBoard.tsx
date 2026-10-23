@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useMemo, useCallback, useRef } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { Card, Suit, SUIT_SYMBOLS } from '@/engine/Card';
 import DomCard from '../dom-freecell/DomCard';
 import DomPile from '../dom-freecell/DomPile';

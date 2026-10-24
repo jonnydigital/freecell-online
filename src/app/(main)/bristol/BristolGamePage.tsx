@@ -104,7 +104,6 @@ const adapter = {
   },
 
   executeMove: (engine: BristolEngine, from: any, to: any) => {
-    const s = engine.getState();
     let fromLoc: BristolLocation;
 
     // Determine source location

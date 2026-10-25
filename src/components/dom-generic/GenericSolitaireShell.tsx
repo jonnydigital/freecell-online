@@ -2,7 +2,6 @@
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Link from '@/components/NetworkLink';
-import { isHubSite } from '@/lib/siteConfig';
 import { loadStats, saveStats, type GameVariant } from '@/lib/storage';
 import { recordWin, recordLoss, getWinPercent, type GameStats } from '@/lib/stats';
 import GameSwitcher from '../GameSwitcher';

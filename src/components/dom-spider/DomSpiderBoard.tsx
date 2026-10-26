@@ -28,7 +28,6 @@ export default function DomSpiderBoard({ hint, footer }: DomSpiderBoardProps) {
   const selection = useDomSpiderStore((s) => s.selection);
   const getEngine = useDomSpiderStore((s) => s.getEngine);
   const dealFromStock = useDomSpiderStore((s) => s.dealFromStock);
-  const tryMove = useDomSpiderStore((s) => s.tryMove);
 
   const selectedCardIds = useMemo(() => {
     if (!selection) return new Set<string>();

@@ -111,7 +111,7 @@ export default function GenericGamePage({ gameName, gameIcon, gameHref, adapter 
 
   const handleEmptyPileClick = useCallback((target: any) => {
     if (!selection) return;
-    const moved = tryMove(selection.source, target);
+    tryMove(selection.source, target);
     setSelection(null);
   }, [selection, tryMove]);
 

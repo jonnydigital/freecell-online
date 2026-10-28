@@ -31,7 +31,7 @@ export default function ContentHero({
           className="max-w-3xl mx-auto mb-4 text-sm text-[#6B7280]"
         >
           <ol className="flex items-center justify-center gap-1.5 flex-wrap">
-            {crumbs.map((crumb, i) => (
+            {crumbs.map((crumb) => (
               <li key={crumb.href} className="flex items-center gap-1.5">
                 <Link
                   href={crumb.href}

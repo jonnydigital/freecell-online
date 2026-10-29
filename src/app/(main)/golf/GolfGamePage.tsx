@@ -35,7 +35,7 @@ const adapter = {
     if (engine.canPlay(card)) return [card];
     return [card]; // Still show as selectable
   },
-  isLegalMove: (engine: GolfEngine, from: any, to: any) => {
+  isLegalMove: (engine: GolfEngine, from: any) => {
     // Golf: cards move from cascade to waste only
     if (from.type === 'cascade') {
       const card = engine.getExposedCard(from.index);

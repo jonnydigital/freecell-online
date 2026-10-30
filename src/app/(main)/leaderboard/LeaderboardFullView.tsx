@@ -19,7 +19,7 @@ export default function LeaderboardFullView() {
   const [entries, setEntries] = useState<LeaderboardEntry[]>([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(0);
-  const [playerId, setPlayerId] = useState(() => {
+  const [playerId] = useState(() => {
     if (typeof window === 'undefined') return '';
     return getPlayerIdentity().id;
   });

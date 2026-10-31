@@ -21,7 +21,7 @@ export default function StreakGameShell() {
   const [phase, setPhase] = useState<Phase>('playing');
   const [currentStreak, setCurrentStreak] = useState(0);
   const [bestStreak, setBestStreak] = useState(0);
-  const [gameNumber, setGameNumber] = useState<number | null>(null);
+  const [, setGameNumber] = useState<number | null>(null);
   const [moveCount, setMoveCount] = useState(0);
   const [timeElapsed, setTimeElapsed] = useState(0);
   const [isTimerRunning, setIsTimerRunning] = useState(false);

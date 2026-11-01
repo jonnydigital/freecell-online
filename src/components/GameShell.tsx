@@ -48,7 +48,6 @@ interface GameShellProps {
 export default function GameShell({ initialGameNumber, variant = 'freecell' }: GameShellProps = {}) {
   const containerRef = useRef<HTMLDivElement>(null);
   const gameRef = useRef<Phaser.Game | null>(null);
-  const mountedRef = useRef(false);
   const [gameNumber, setGameNumber] = useState<number | null>(null);
   const [moveCount, setMoveCount] = useState(0);
   const [isWon, setIsWon] = useState(false);

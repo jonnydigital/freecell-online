@@ -61,7 +61,6 @@ export default function GameShell({ initialGameNumber, variant = 'freecell' }: G
   const [isDeadlocked, setIsDeadlocked] = useState(false);
   const [streakMilestone, setStreakMilestone] = useState<number | null>(null);
   const [isMuted, setIsMuted] = useState(() => soundManager.muted);
-  const [showMoreMenu, setShowMoreMenu] = useState(false);
   const [showHome, setShowHome] = useState(false);
   const [showAchievements, setShowAchievements] = useState(false);
   const [showShortcuts, setShowShortcuts] = useState(false);

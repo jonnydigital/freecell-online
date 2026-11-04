@@ -29,8 +29,8 @@ export default function StormGameShell() {
   const [timeRemaining, setTimeRemaining] = useState(STORM_DURATION);
   const [gameTimer, setGameTimer] = useState(0); // per-game timer
   const [isGameTimerRunning, setIsGameTimerRunning] = useState(false);
-  const [moveCount, setMoveCount] = useState(0);
-  const [gameNumber, setGameNumber] = useState<number | null>(null);
+  const [, setMoveCount] = useState(0);
+  const [, setGameNumber] = useState<number | null>(null);
   const [autoCompletable, setAutoCompletable] = useState(false);
   const [isLandscapeMobile, setIsLandscapeMobile] = useState(false);
   const [shareStatus, setShareStatus] = useState<'idle' | 'copied'>('idle');

@@ -89,7 +89,6 @@ interface WinRecord {
 export default function GenericSolitaireShell({
   gameName,
   gameIcon,
-  gameHref,
   children,
   gameNumber,
   moveCount,

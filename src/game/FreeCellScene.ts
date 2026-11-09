@@ -1251,11 +1251,11 @@ export class FreeCellScene extends Phaser.Scene {
         this.mouseDownCardId = container.cardData.id;
       });
 
-      container.on('pointerup', (pointer: Phaser.Input.Pointer) => {
+      container.on('pointerup', () => {
         if (this.mouseDownCardId !== container.cardData.id) return;
         if (this.suppressPointerClick || this.mouseMoved || this.isDragging || this.isSettlingDrag) return;
         this.cardTappedThisFrame = true;
-        this.onCardClick(container, pointer);
+        this.onCardClick(container);
       });
     }
 
@@ -2387,7 +2387,7 @@ export class FreeCellScene extends Phaser.Scene {
 
   // ── Click-to-Move System (Desktop) ─────────────────────────
 
-  private onCardClick(sprite: CardSprite, pointer: Phaser.Input.Pointer): void {
+  private onCardClick(sprite: CardSprite): void {
     this.cancelInitialAutoMoves();
     if (!this.isTouchDevice && Date.now() < this.blockCardClicksUntil) {
       return;
@@ -3349,7 +3349,7 @@ export class FreeCellScene extends Phaser.Scene {
           if (this.settings.autoMove) {
             this.smartAutoMove(sprite);
           } else {
-            this.onCardClick(sprite, { x: sprite.x, y: sprite.y } as Phaser.Input.Pointer);
+            this.onCardClick(sprite);
           }
         }
       }
@@ -3382,7 +3382,7 @@ export class FreeCellScene extends Phaser.Scene {
           if (this.settings.autoMove) {
             this.smartAutoMove(sprite);
           } else {
-            this.onCardClick(sprite, { x: sprite.x, y: sprite.y } as Phaser.Input.Pointer);
+            this.onCardClick(sprite);
           }
         }
       }

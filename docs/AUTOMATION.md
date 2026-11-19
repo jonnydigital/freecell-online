@@ -71,6 +71,16 @@ rules. If you add a producer, register it here.
   route the git command through the documented Mac/osascript path so it can use
   local filesystem permissions and stored GitHub credentials.
 
+- **Per-domain audit bursts can trip Vercel rate-limiting.** Running
+  `qa:mobile` as a tight burst against one domain (several viewports
+  back-to-back) can make that domain drop the runner IP connections
+  (curl -> HTTP 000 / timeout, curl error 28) for several minutes, while
+  sibling domains stay 200 and the board still renders from a second
+  egress. Do NOT read this as a site outage: re-verify from the in-app
+  browser (or cloud WebFetch) before alarming, and prefer staggering
+  domains / adding a delay between cells. Evidence + mitigation:
+  docs/analytics/mobile-viewport-audits/2026-11-19-vercel-rate-limit-during-burst-audit.md
+
 ## Producers
 
 ### Cowork daily review (user-managed, Claude Cowork)
